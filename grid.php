@@ -75,15 +75,15 @@ function grid_get_grid($post_id){
   global $wpdb;
   $grid = array();
   //print_r($slug);
-  $content = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = '".$post_id."' and meta_key LIKE 'grid_%'", 'ARRAY_N');
+  $content = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = '".$post_id."' and meta_key LIKE '_grid_%'", 'ARRAY_N');
   //print_r($content);
   foreach($content as $container){  
     $my_conainter = array();    
     // Explode the Container-ID and separate the Parts
     $parts = explode("_", $container[2]);
-    $no_region = $parts[2];
-    $no_container = $parts[4];
-    $type = $parts[5];    
+    $no_region = $parts[3];
+    $no_container = $parts[5];
+    $type = $parts[6];    
     // Build the Container Array.
     $my_container["meta_id"] = $container[0];
     $my_container["post_id"] = $container[1];
@@ -152,13 +152,23 @@ function grid_inner_custom_box( $post ) {
   $grid = grid_get_grid($post->ID);
   
   if(count($grid)>0){     
-    echo '<div id="grid">';    
+    echo '<div id="grid">';   
+    print '<script type="text/javascript" src="http://anmutunddemut.de/wp-content/plugins/grid/grid.js"> </script> '; 
     foreach($grid as $no_region => $region){
-      echo " <div id='sortable$no_region' class='region region-no-$no_region connectedSortable' meta-region='$no_region'>";   
+      echo "<div id='gridsortable$no_region' class='region region-no-$no_region connectedGridSortable' meta-region='$no_region'>";   
         foreach($region as $no_container => $container){           
-            $file = "container-".$container["type"].".php";             
-            
-                print '<div class="container container-'.$container["type"].' container-'.$no_container.'">'.$container["content"]."</div>";
+                
+                              
+                print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget ">';
+                print "<div class='widget-top'>";
+                //print '<a class="widget-action hide-if-no-js" href="#available-widgets"></a>';
+                print "<div class='widget-title'>".$container["type"]."</div>";
+                print "</div>";
+                print "<div class='widget-inside'>";
+                print $container["content"];
+                print "</div>";
+                print "</div>";
+                
                        
         }
       echo "</div>";	      
