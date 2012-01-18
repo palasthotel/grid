@@ -154,12 +154,20 @@ function grid_inner_custom_box( $post ) {
   if(count($grid)>0){     
     echo '<div id="grid">';   
     print '<script type="text/javascript" src="http://anmutunddemut.de/wp-content/plugins/grid/grid.js"> </script> '; 
+    print '<style type="text/css">';
+    print "#grid_sectionid {min-width:660px;}";
+    print "#grid {min-width:650px;}";
+    print ".region { border:1px solid gray; padding:5px; margin:5px; border-radius: 3px 3px 3px 3px; }";
+    print ".region-no-1 {width:300px; float:right;}";
+    print ".region-no-2 {width:300px; float:left;}";
+    print ".region-no-3 {clear:both}";
+    print '</style>';
     foreach($grid as $no_region => $region){
       echo "<div id='gridsortable$no_region' class='region region-no-$no_region connectedGridSortable' meta-region='$no_region'>";   
         foreach($region as $no_container => $container){           
                 
                               
-                print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget ">';
+                print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget " meta-id="'.$container["meta_id"].'" meta-type="'.$container["type"].'">';
                 print "<div class='widget-top'>";
                 //print '<a class="widget-action hide-if-no-js" href="#available-widgets"></a>';
                 print "<div class='widget-title'>".$container["type"]."</div>";
