@@ -14,11 +14,12 @@ Author URI: http://birkenhake.org
 add_action( 'widgets_init', create_function( '', 'register_widget("Grid_Container_Get_Posts");' ) );
 /* Define the custom box */
 add_action( 'add_meta_boxes', 'grid_add_custom_box' );
-// backwards compatible (before WP 3.0)
-// add_action( 'admin_init', 'grid_add_custom_box', 1 );
-/* Do something with the data entered */
+
 add_action( 'save_post', 'grid_save_postdata' );
 
+add_action('admin_head', 'grid_move_widget_javascript');
+
+add_action('wp_ajax_grid_move_widget', 'grid_move_widget_callback');
 
 
 /**
@@ -143,6 +144,13 @@ function grid_add_custom_box() {
     );
 }
 
+/* Add the Javascript and CSS to the Admin Header */
+function grid_move_widget_javascript() {  
+  print '<link rel="stylesheet" id="grid-css"  href="http://anmutunddemut.de/wp-content/plugins/grid/grid.css" type="text/css" media="all" />';
+  print '<script type="text/javascript" src="http://anmutunddemut.de/wp-content/plugins/grid/grid.js"> </script> '; 
+}
+
+
 /* Prints the box content */
 function grid_inner_custom_box( $post ) {
 
@@ -152,16 +160,7 @@ function grid_inner_custom_box( $post ) {
   $grid = grid_get_grid($post->ID);
   
   if(count($grid)>0){     
-    echo '<div id="grid">';   
-    print '<script type="text/javascript" src="http://anmutunddemut.de/wp-content/plugins/grid/grid.js"> </script> '; 
-    print '<style type="text/css">';
-    print "#grid_sectionid {min-width:660px;}";
-    print "#grid {min-width:650px;}";
-    print ".region { border:1px solid gray; padding:5px; margin:5px; border-radius: 3px 3px 3px 3px; }";
-    print ".region-no-1 {width:300px; float:right;}";
-    print ".region-no-2 {width:300px; float:left;}";
-    print ".region-no-3 {clear:both}";
-    print '</style>';
+    echo '<div id="grid">';           
     foreach($grid as $no_region => $region){
       echo "<div id='gridsortable$no_region' class='region region-no-$no_region connectedGridSortable' meta-region='$no_region'>";   
         foreach($region as $no_container => $container){           
@@ -185,6 +184,14 @@ function grid_inner_custom_box( $post ) {
   }
   
   
+}
+
+function grid_move_widget_callback(){
+  $old_meta_id = $_POST['old_meta_id'];
+  $new_meta_key = $_POST['new_meta_key'];
+  print $old_meta_id."-".$new_meta_key;
+  grid_update_meta_key($old_meta_id, $new_meta_key);
+  die;
 }
 
 
