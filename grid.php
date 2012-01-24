@@ -163,24 +163,19 @@ function grid_inner_custom_box( $post ) {
     echo '<div id="grid">';           
     foreach($grid as $no_region => $region){
       echo "<div id='gridsortable$no_region' class='region region-no-$no_region connectedGridSortable' meta-region='$no_region'>";   
-        foreach($region as $no_container => $container){           
-                
-                              
-                print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget " meta-id="'.$container["meta_id"].'" meta-type="'.$container["type"].'">';
-                print "<div class='widget-top'>";
-                //print '<a class="widget-action hide-if-no-js" href="#available-widgets"></a>';
-                print "<div class='widget-title'>".$container["type"]."</div>";
-                print "</div>";
-                print "<div class='widget-inside'>";
-                print $container["content"];
-                print "</div>";
-                print "</div>";
-                
-                       
+        foreach($region as $no_container => $container){                                  
+            print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget " meta-id="'.$container["meta_id"].'" meta-type="'.$container["type"].'">\n';
+            print "<div class='widget-top'>\n";            
+            print "<div class='widget-title'>".$container["type"]."</div>\n";
+            print "</div>\n";
+            print "<div class='widget-inside'>\n";
+            print $container["content"];
+            print "</div>\n";
+            print "</div> <!-- // Container No. $no_container  -->\n";                        
         }
-      echo "</div>";	      
+      echo "</div> <!-- // Region No. $no_region -->\n";	      
     }  
-    echo "</div>";	  
+    echo "</div> <!-- // The Grid-->\n";	  
   }
   
   
