@@ -76,7 +76,7 @@ function grid_get_grid($post_id){
   global $wpdb;
   $grid = array();
   //print_r($slug);
-  $content = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = '".$post_id."' and meta_key LIKE '_grid_%'", 'ARRAY_N');
+  $content = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = '".$post_id."' and meta_key LIKE '_grid_%' ORDER BY 'meta_key' ASC", 'ARRAY_N');
   //print_r($content);
   foreach($content as $container){  
     $my_conainter = array();    
@@ -93,7 +93,12 @@ function grid_get_grid($post_id){
     $my_container["content"] = $container[3];
     // Put the Container in the Grid-Array
     $grid[$no_region][$no_container] = $my_container;
+    // Sort the region, so that the Containers are in correct order
+    ksort($grid[$no_region]);
   }
+  // Sort the Grid, so that the regions are in correct order
+  ksort($grid);
+  //print_r($grid);
   return $grid;
 }
 
@@ -164,7 +169,7 @@ function grid_inner_custom_box( $post ) {
     foreach($grid as $no_region => $region){
       echo "<div id='gridsortable$no_region' class='region region-no-$no_region connectedGridSortable' meta-region='$no_region'>";   
         foreach($region as $no_container => $container){                                  
-            print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget " meta-id="'.$container["meta_id"].'" meta-type="'.$container["type"].'">\n';
+            print '<div class="container container-'.$container["type"].' container-'.$no_container.' widget " meta-id="'.$container["meta_id"].'" meta-type="'.$container["type"].'">'."\n";
             print "<div class='widget-top'>\n";            
             print "<div class='widget-title'>".$container["type"]."</div>\n";
             print "</div>\n";
