@@ -18,6 +18,9 @@ Each container could contain
 * Plain Text/HTML
 * A reference / teaser to a post or page or anyother thing in the post table
 
+Development takes place in this Test-Site:
+http://argo.exmachina.ws/
+
 == Installation ==
 
 
