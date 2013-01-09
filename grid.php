@@ -79,7 +79,7 @@ function grid_get_grid($post_id){
   $content = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE post_id = '".$post_id."' and meta_key LIKE '_grid_%' ORDER BY 'meta_key' ASC", 'ARRAY_N');
   //print_r($content);
   foreach($content as $container){  
-    $my_conainter = array();    
+    $my_container = array();    
     // Explode the Container-ID and separate the Parts
     $parts = explode("_", $container[2]);
     $no_region = $parts[3];
@@ -151,8 +151,8 @@ function grid_add_custom_box() {
 
 /* Add the Javascript and CSS to the Admin Header */
 function grid_move_widget_javascript() {  
-  print '<link rel="stylesheet" id="grid-css"  href="http://anmutunddemut.de/wp-content/plugins/grid/grid.css" type="text/css" media="all" />';
-  print '<script type="text/javascript" src="http://anmutunddemut.de/wp-content/plugins/grid/grid.js"> </script> '; 
+  print '<link rel="stylesheet" id="grid-css"  href="' . plugin_dir_url(__FILE__) . '/grid.css" type="text/css" media="all" />';
+  print '<script type="text/javascript" src="' . plugin_dir_url(__FILE__) . '/grid.js"> </script> '; 
 }
 
 
