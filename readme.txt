@@ -30,6 +30,9 @@ The Plugin stores Widgets in Meta-Table.
 It is using the Meta-Key to store the position within the Grid.
 And it is using the Meta-Values to store the Widgets themselves.
 
+The Meta-Key is build up like this:
+_grid_[no_region]_[no_container]_[widget_type_container]
+
 
 
 
