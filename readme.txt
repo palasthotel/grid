@@ -24,6 +24,16 @@ http://argo.exmachina.ws/
 == Installation ==
 
 
+== Documentation ==
+
+The Plugin stores Widgets in Meta-Table.
+It is using the Meta-Key to store the position within the Grid.
+And it is using the Meta-Values to store the Widgets themselves.
+
+
+
+
+
 == Changelog ==
 
 = 0.1 =
