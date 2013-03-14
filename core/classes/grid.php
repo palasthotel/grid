@@ -2,18 +2,18 @@
 
 class grid extends gridbase {
 	
-	public $regions;
+	public $container;
 	public $gridid;
 
 	public function render($editmode)
 	{
-		$regionmap=array();
-		$regions=array();
-		foreach($this->regions as $region)
+		$containermap=array();
+		$containerlist=array();
+		foreach($this->container as $container)
 		{
-			$html=$region->render($editmode);
-			$renderedregions[$region->regionid]=$html;
-			$regions[]=$html;
+			$html=$container->render($editmode);
+			$containermap[$container->containerid]=$html;
+			$containerlist[]=$html;
 		}
 		ob_start();
 		include dirname(__FILE__).'/../templates/grid.tpl.php';

@@ -15,10 +15,10 @@ class griddb {
 		$grid->storage=$this;
 		$grid->gridid=$gridId;
 
-		$region=new region();
+		$region=new container();
 		$region->storage=$this;
 		$region->regionid=1;
-		$grid->regions[]=$region;
+		$grid->container[]=$region;
 
 		$box=new box();
 		$box->storage=$this;

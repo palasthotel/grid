@@ -1,3 +1,3 @@
 <div class="grid">
-	<?=implode("", $regions)?>
+	<?=implode("", $containerlist)?>
 </div>
