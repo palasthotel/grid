@@ -2,7 +2,7 @@
 
 include 'classes/bootstrap.php';
 
-$storage=new griddb();
+$storage=new grid_db();
 if(isset($_REQUEST['path']) && $_REQUEST['path']=='/ajax')
 {
 	$storage->handleAjaxCall();

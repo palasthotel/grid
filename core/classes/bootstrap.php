@@ -1,8 +1,8 @@
 <?php
 
-include 'gridbase.php';
-include 'box.php';
-include 'grid.php';
-include 'container.php';
-include 'griddb.php';
-include 'ajaxendpoint.php';
+include 'grid_base.php';
+include 'grid_box.php';
+include 'grid_grid.php';
+include 'grid_container.php';
+include 'grid_db.php';
+include 'grid_ajaxendpoint.php';
