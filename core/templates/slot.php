@@ -1,7 +1,7 @@
-<div class="region">
+<div class="slot">
 	<a href="<?=$this->titleurl?>" class="region-title"><?=$this->title?></a>
 	<?=$this->prolog?>
-	<?=implode("", $slots)?>
+	<?=implode("", $boxes)?>
 	<a href="<?=$this->readmoreurl?>"><?=$this->readmore?></a>
 	<?=$this->epilog?>
 </div>

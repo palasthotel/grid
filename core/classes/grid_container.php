@@ -9,14 +9,14 @@ class grid_container extends grid_base {
 	public $prolog;
 	public $epilog;
 
-	public $boxes;
+	public $slots;
 
 	public function render($editmode)
 	{
-		$boxes=array();
-		foreach($this->boxes as $box)
+		$slots=array();
+		foreach($this->slots as $slot)
 		{
-			$boxes[]=$box->render($editmode);
+			$slots[]=$slot->render($editmode);
 		}
 		ob_start();
 		include dirname(__FILE__).'/../templates/container.tpl.php';
