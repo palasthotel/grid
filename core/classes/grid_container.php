@@ -2,6 +2,8 @@
 
 class grid_container extends grid_base {
 	public $containerid;
+	public $type; // The Type defines how many Slots a Container has, an how they are proportioned.
+	public $style // Allows to separete diffente Styles of Containers.
 	public $title;
 	public $titleurl;
 	public $readmore;
@@ -24,19 +26,19 @@ class grid_container extends grid_base {
 		return $output;
 	}
 	
-	public function create_container () {
+	public function create () {
 	  
 	}
 	
-	public function read_container(){
+	public function read(){
 	  
 	}
 	
-	public function update_container(){
+	public function update(){
 	  
 	}
 	
-	public function delete_container() {
+	public function delete() {
 	  
 	}
 	

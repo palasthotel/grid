@@ -2,6 +2,7 @@
 
 class grid_box extends grid_base {
 	public $boxid;
+	public $type; // Defines the Type of box, which describes where the Content of the Box comes from.
 	public $title;
 	public $titleurl;
 	public $readmore;
@@ -29,19 +30,19 @@ class grid_box extends grid_base {
 		return $output;
 	}
 	
-	public function create_box () {
+	public function create() {
 	  
 	}
 	
-	public function read_box(){
+	public function read(){
 	  
 	}
 	
-	public function update_box(){
+	public function update(){
 	  
 	}
 	
-	public function delete_box() {
+	public function delete() {
 	  
 	}
 	

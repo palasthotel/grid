@@ -24,19 +24,19 @@ class grid_slot extends grid_base {
 		return $output;
 	}
 	
-	public function create_slot () {
+	public function create() {
 	  
 	}
 	
-	public function read_slot(){
+	public function read(){
 	  
 	}
 	
-	public function update_slot(){
+	public function update(){
 	  
 	}
 	
-	public function delete_slot() {
+	public function delete() {
 	  
 	}
 	
