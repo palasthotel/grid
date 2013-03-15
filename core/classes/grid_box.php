@@ -28,4 +28,21 @@ class grid_box extends grid_base {
 		$output=ob_get_clean();
 		return $output;
 	}
+	
+	public function create_box () {
+	  
+	}
+	
+	public function read_box(){
+	  
+	}
+	
+	public function update_box(){
+	  
+	}
+	
+	public function delete_box() {
+	  
+	}
+	
 }

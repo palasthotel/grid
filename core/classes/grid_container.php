@@ -23,4 +23,34 @@ class grid_container extends grid_base {
 		$output=ob_get_clean();
 		return $output;
 	}
+	
+	public function create_container () {
+	  
+	}
+	
+	public function read_container(){
+	  
+	}
+	
+	public function update_container(){
+	  
+	}
+	
+	public function delete_container() {
+	  
+	}
+	
+	public function add_slot ($slotid) {
+	  
+	}
+	
+	public function move_slot ($slotid) {
+	  
+	}
+	
+	public function remove_slot ($slotid) {
+	  
+	}
+	
+	
 }

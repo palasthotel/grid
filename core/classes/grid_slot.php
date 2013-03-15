@@ -23,4 +23,33 @@ class grid_slot extends grid_base {
 		$output=ob_get_clean();
 		return $output;
 	}
+	
+	public function create_slot () {
+	  
+	}
+	
+	public function read_slot(){
+	  
+	}
+	
+	public function update_slot(){
+	  
+	}
+	
+	public function delete_slot() {
+	  
+	}
+	
+	public function add_box ($boxid) {
+	  
+	}
+	
+	public function move_box ($boxid) {
+	  
+	}
+	
+	public function remove_box ($boxid) {
+	  
+	}
+	
 }
