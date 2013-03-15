@@ -26,7 +26,7 @@ class grid_grid extends grid_base {
 	}
 	
 	public function read(){
-	  
+	  $query = "SELECT container_id FROM grid_grid2container WHERE grid_id ='".$this->gridid."'";
 	}
 	
 	public function update(){

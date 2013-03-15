@@ -46,4 +46,21 @@ class grid_box extends grid_base {
 	  
 	}
 	
+	public function create_type() {
+	  
+	}
+	
+	public function read_type(){
+	  
+	}
+	
+	public function update_type(){
+	  
+	}
+	
+	public function delete_type() {
+	  
+	}
+	
+	
 }
