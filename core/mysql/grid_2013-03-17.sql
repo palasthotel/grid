@@ -28,6 +28,7 @@ DROP TABLE IF EXISTS `grid_box`;
 CREATE TABLE `grid_box` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` int(11) unsigned DEFAULT NULL,
+  `style` int(11) unsigned DEFAULT NULL,
   `title` mediumtext,
   `title_url` mediumtext,
   `prolog` mediumtext,
@@ -36,7 +37,8 @@ CREATE TABLE `grid_box` (
   `readmore_url` mediumtext,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
-  CONSTRAINT `grid_box_ibfk_1` FOREIGN KEY (`type`) REFERENCES `grid_box_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `grid_box_ibfk_1` FOREIGN KEY (`type`) REFERENCES `grid_box_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `grid_box_ibfk_2` FOREIGN KEY (`style`) REFERENCES `grid_box_style` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -52,6 +54,17 @@ CREATE TABLE `grid_box_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+# Export von Tabelle grid_box_style
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `grid_box_style`;
+
+CREATE TABLE `grid_box_style` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `style` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 # Export von Tabelle grid_container
