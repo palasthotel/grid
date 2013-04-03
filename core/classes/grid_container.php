@@ -3,7 +3,7 @@
 class grid_container extends grid_base {
 	public $containerid;
 	public $type; // The Type defines how many Slots a Container has, an how they are proportioned.
-	public $style // Allows to separete diffente Styles of Containers.
+	public $style; // Allows to separete diffente Styles of Containers.
 	public $title;
 	public $titleurl;
 	public $readmore;

@@ -4,6 +4,7 @@ class grid_grid extends grid_base {
 	
 	public $container;
 	public $gridid;
+	public $isDraft;
 
 	public function render($editmode)
 	{
@@ -20,34 +21,90 @@ class grid_grid extends grid_base {
 		$output=ob_get_clean();
 		return $output;
 	}
-	
-	public function create() {
-	  
+
+	public function insertContainer($containertype,$idx)
+	{
+		$container=$this->storage->createContainer($containertype);
+
+		$list=$this->container;
+		array_splice($list, $idx,0,array($container));
+		$this->container=$list;
+		$this->storeContainerOrder();
+		return $container;
 	}
-	
-	public function read(){
-	  $query = "SELECT container_id FROM grid_grid2container WHERE grid_id ='".$this->gridid."'";
+
+	public function storeContainerOrder()
+	{
+		$this->storage->storeContainerOrder($this);
 	}
-	
-	public function update(){
-	  
+
+	public function draftify()
+	{
+		$grid=$this->storage->cloneGrid($this);
+		$this->storage->setDraft($this,$grid);
+		return $grid;
 	}
-	
-	public function delete() {
-	  
+
+	public function moveContainer($containerid,$newidx)
+	{
+		$oldidx=-1;
+		for($i=0;$i<count($this->container);$i++)
+		{
+			if($this->container[$i]->containerid==$containerid)
+			{
+				$oldidx=$i;
+			}
+		}
+		if($oldidx==-1)
+		{
+			return false;
+		}
+		$array=$this->container;
+		$container=$array[$oldidx];
+		$offset=0;
+		$direction=0;
+		$stop=0;
+		if($oldidx<$newidx)
+		{
+			$offset=+1;
+			$direction=+1;
+			$stop=$newidx;
+		}
+		else
+		{
+			$offset=-1;
+			$direction=-1;
+			$stop=$newidx;
+		}
+		$i=$oldidx;
+		while($i!=$stop)
+		{
+			$array[$i]=$array[$i+$offset];
+			$i=$i+$direction;
+		}
+		$array[$newidx]=$container;
+		$this->container=$array;
+		$this->storeContainerOrder();
 	}
-	
-	public function add_container ($containerid) {
-	  
+
+	public function removeContainer($containerid)
+	{
+		$idx=-1;
+		for($i=0;$i<count($this->container);$i++)
+		{
+			if($this->container[$i]->containerid==$containerid)
+			{
+				$idx=$i;
+			}
+		}
+		if($idx==-1)
+		{
+			return false;
+		}
+		$container=$this->container[$idx];
+		array_splice($this->container, $idx,1);
+		$this->storeContainerOrder();
+		$this->storage->destroyContainer($container);
+		return true;
 	}
-	
-	public function move_container ($containerid) {
-	  
-	}
-	
-	public function remove_container ($containerid) {
-	  
-	}
-	
-	
 }

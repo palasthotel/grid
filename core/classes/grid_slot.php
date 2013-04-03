@@ -2,12 +2,6 @@
 
 class grid_slot extends grid_base {
 	public $slotid;
-	public $title;
-	public $titleurl;
-	public $readmore;
-	public $readmoreurl;
-	public $prolog;
-	public $epilog;
 
 	public $boxes;
 

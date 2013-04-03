@@ -12,12 +12,12 @@ class grid_box extends grid_base {
 	public $epilog;
 	public $layout;
 	public $language;
-	public $jason;
+	public $content;
 
 	public function type() {
 		return 'box';
 	}
-	
+
 	public function build($editmode) {
 		//boxes render their content in here
 		return '';
@@ -26,7 +26,10 @@ class grid_box extends grid_base {
 	public function render($editmode) {
 		$content=$this->build($editmode);
 		ob_start();
-		include dirname(__FILE__).'/../templates/box.tpl.php';
+		if(file_exists(dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php'))
+			include dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php';
+		else
+			include dirname(__FILE__).'/../templates/box-box.tpl.php';
 		$output=ob_get_clean();
 		return $output;
 	}
