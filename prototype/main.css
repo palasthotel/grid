@@ -17,11 +17,29 @@ body{
 #toolbar{
 	margin-bottom:20px;
 }
+#toolbar .state-display{
+	color:#999;
+	margin-bottom: 4px;
+}
 #toolbar > ul{
 }
 #toolbar > ul > li{
 	float:left;
 	margin-right:10px;
+}
+#toolbar .tool-details{
+	border:1px solid #e0e0e0;
+	border-top:none;
+	padding:10px;
+}
+.tool-details select{
+	width:140px;
+}
+.tool-details .draggable{
+	height:50px;
+	width:50px;
+	background-color:#e0e0e0;
+	border:1px solid#333;
 }
 /** Toolbar rules ENDE **/
 
@@ -33,6 +51,11 @@ body{
 	box-sizing:border-box;
 	padding:10px;
 	position:relative;
+}
+#grid .container-drop-area{
+	background-color:#FF9;
+	height:40px;
+	margin-bottom:4px;
 }
 /** Allgemeine Container styles **/
 .container{
@@ -131,67 +154,67 @@ body{
 				14px 14px 0 #fff;
 }
 
-/** Container c-12 **/
-.c-12{
+/** Container C-12 **/
+.C-12{
 	
 }
-.c-12 .slot{
+.C-12 .slot{
 	width:100%;
 }
 
-/** Container c-4-4-4 **/
-.c-4-4-4{
+/** Container C-4-4-4 **/
+.C-4-4-4{
 }
-.c-4-4-4 .slot{
+.C-4-4-4 .slot{
 	width:33%;
 	float:left;
 	margin-right:1%;
 }
-.c-4-4-4 .slot:last-child{
+.C-4-4-4 .slot:last-child{
 	width:32%;
 	float:right;
 	margin-right:0px;
 }
 
-/** Container c-8-4 **/
-.c-8-4{
+/** Container C-8-4 **/
+.C-8-4{
 	
 }
-.c-8-4 .slot:nth-child(1){
+.C-8-4 .slot:nth-child(1){
 	width:66%;
 	float:left;
 	
 }
-.c-8-4 .slot:nth-child(2){
+.C-8-4 .slot:nth-child(2){
 	width:33%;
 	float:right;
 	margin-left:1%;
 }
 
-/** Container c-4-8 **/
-.c-4-8{
+/** Container C-4-8 **/
+.C-4-8{
 	
 }
-.c-4-8 .slot:nth-child(1){
+.C-4-8 .slot:nth-child(1){
 	width:33%;
 	float:left;
 	margin-right:1%;
 }
-.c-4-8 .slot:nth-child(2){
+.C-4-8 .slot:nth-child(2){
 	width:66%;
 	float:right;
 }
 
-/** Container c-2-2-2-2-2-2 **/
-.c-2-2-2-2-2-2{
+/** Container C-2-2-2-2-2-2 **/
+.C-2-2-2-2-2-2{
 	
 }
-.c-2-2-2-2-2-2 .slot{
+.C-2-2-2-2-2-2 .slot{
 	width:15.8%;
 	float:left;
 	margin-right:1%;
 }
-.c-2-2-2-2-2-2 .slot:last-child{
+.C-2-2-2-2-2-2 .slot:last-child{
 	margin-right:0px;
 	float:right;
 }
