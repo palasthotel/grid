@@ -6,6 +6,8 @@
 
 <script src="../js/jquery-1.9.1.js"></script>
 <script src="../js/jquery-ui-1.10.2.custom.js"></script>
+<script src="../js/jquery.tmpl.min.js"></script>
+<script src="../js/templates.js"></script>
 <script src="../js/grid2.0.js"></script>
 
 <link rel="stylesheet" type="text/css" href="reset.css" />
@@ -15,13 +17,23 @@
 
 <body>
 	<menu id="toolbar">
+    	<p class="state-display">Aktuell!</p>
     	<ul class="clearfix">
+        	<li><button role="load">Laden</button></li>
         	<li><button role="save">Speichern</button></li>
+            <li><button role="revoke">Änderunge Rückgängig</button></li>
+            <li><button role="publish">Öffentlich machen</button></li>
         	<li><button role="add_container">+ Container</button></li>
             <li><button role="add_box">+ Box</button></li>
             <li><button role="hide_boxes">x toggle Boxes</button></li>
         </ul>
-        <div class="info">
+        <div class="tool-details">
+        	<select name="container-type" size="4">
+            	<option value="C-12">C-12</option>
+                <option value="C-8-4">C-8-4</option>
+                <option value="C-4-8">C-4-8</option>
+            </select>
+            <div id="container-dragger" class="draggable new-container">zieh mich</div>
         </div>
     </menu>
     <section id="grid">
