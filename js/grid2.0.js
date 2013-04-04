@@ -139,7 +139,7 @@ $(function() {
 		});
 	}
 	// Serverkommunikation
-	var SERVER = "http://192.168.0.103/grid/core/index.php?path=/ajax";
+	var SERVER = "http://emma-dev.ia-code.ws/grid/core/index.php?path=/ajax";
 	var ID = 43;
 	function sendAjax(method, params_array, success, error){
 		json = {};
