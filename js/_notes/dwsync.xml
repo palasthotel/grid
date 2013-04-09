@@ -7,4 +7,6 @@
 <file name="jquery.tmpl.min.js" server="192.168.0.103//var/www/grid/" local="130094648348348819" remote="130094465980000000" Dst="2" />
 <file name="templates.js" server="192.168.0.103//var/www/grid/" local="130094745815270940" remote="130094563200000000" Dst="2" />
 <file name="jquery.tmplPlus.min.js" server="192.168.0.103//var/www/grid/" local="130094698600742225" remote="130094515930000000" Dst="2" />
+<file name="grid2.0.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130099867886913604" remote="130099868400000000" Dst="2" />
+<file name="templates.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130099862104043700" remote="130099862400000000" Dst="2" />
 </dwsync>

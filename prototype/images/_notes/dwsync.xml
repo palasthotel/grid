@@ -5,4 +5,8 @@
 <file name="header-test.jpg" server="192.168.0.103//var/www/grid/" local="130082461925538370" remote="130094340770000000" Dst="2" />
 <file name="sort-handler.png" server="192.168.0.103//var/www/grid/" local="130082662569791204" remote="130094340770000000" Dst="2" />
 <file name="trash.png" server="192.168.0.103//var/www/grid/" local="130082656798790546" remote="130094340770000000" Dst="2" />
+<file name="sort-handler.png" server="emma-dev.ia-code.ws//var/sites/grid/" local="130099764726796880" remote="130099827600000000" Dst="2" />
+<file name="trash.png" server="emma-dev.ia-code.ws//var/sites/grid/" local="130099746236523440" remote="130099827600000000" Dst="2" />
+<file name="edit.png" server="emma-dev.ia-code.ws//var/sites/grid/" local="130099832044057271" remote="130099833600000000" Dst="2" />
+<file name="ok.png" server="emma-dev.ia-code.ws//var/sites/grid/" local="130099880833359376" remote="130099881600000000" Dst="2" />
 </dwsync>
