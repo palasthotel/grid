@@ -1,6 +1,7 @@
 <?php
 
 class grid_container extends grid_base {
+	public $grid;
 	public $containerid;
 	public $type; // The Type defines how many Slots a Container has, an how they are proportioned.
 	public $style; // Allows to separete diffente Styles of Containers.

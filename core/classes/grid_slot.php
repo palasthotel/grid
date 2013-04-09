@@ -1,6 +1,7 @@
 <?php
 
 class grid_slot extends grid_base {
+	public $grid;
 	public $slotid;
 
 	public $boxes;

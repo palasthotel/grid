@@ -2,6 +2,7 @@
 
 class grid_box extends grid_base {
 	public $boxid;
+	public $grid;
 	public $type; // Defines the Type of box, which describes where the Content of the Box comes from.
 	public $style; // Define the Style of Boxes
 	public $title;

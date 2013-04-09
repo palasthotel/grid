@@ -4,6 +4,8 @@ class grid_grid extends grid_base {
 	
 	public $container;
 	public $gridid;
+	public $gridrevision;
+	public $isPublished;
 	public $isDraft;
 
 	public function render($editmode)
@@ -24,7 +26,7 @@ class grid_grid extends grid_base {
 
 	public function insertContainer($containertype,$idx)
 	{
-		$container=$this->storage->createContainer($containertype);
+		$container=$this->storage->createContainer($this,$containertype);
 
 		$list=$this->container;
 		array_splice($list, $idx,0,array($container));
@@ -40,8 +42,7 @@ class grid_grid extends grid_base {
 
 	public function draftify()
 	{
-		$grid=$this->storage->cloneGrid($this);
-		$this->storage->setDraft($this,$grid);
+		$grid=$this->storage->createRevision($this);
 		return $grid;
 	}
 
