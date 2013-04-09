@@ -26,65 +26,15 @@ class grid_container extends grid_base {
 		return $output;
 	}
 	
-	public function create() {
-	  
-	}
-	
-	public function read(){
-	  
-	}
-	
-	public function update(){
-	  
-	}
-	
-	public function delete() {
-	  
-	}
-	
-	public function create_type() {
-	  
-	}
-	
-	public function read_type(){
-	  
-	}
-	
-	public function update_type(){
-	  
-	}
-	
-	public function delete_type() {
-	  
-	}
-	
-	public function create_style() {
-	  
-	}
-	
-	public function read_style(){
-	  
-	}
-	
-	public function update_style(){
-	  
-	}
-	
-	public function delete_style() {
-	  
-	}
-	
-	public function add_slot ($slotid) {
-	  
-	}
-	
-	public function move_slot ($slotid) {
-	  
-	}
-	
-	public function remove_slot ($slotid) {
-	  
-	}
-	
-	
+	public function update($data)
+	{
+		$this->style=$data->style;
+		$this->title=$data->title;
+		$this->titleurl=$data->titleurl;
+		$this->readmore=$data->readmore;
+		$this->readmoreurl=$data->readmoreurl;
+		$this->prolog=$data->prolog;
+		$this->epilog=$data->epilog;
+		return $this->storage->persistContainer($this);
+	}	
 }

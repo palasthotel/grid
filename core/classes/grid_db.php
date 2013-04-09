@@ -43,6 +43,7 @@ class grid_db {
 
 		$query="select 
 grid_container.id as container_id,
+grid_container_style.style as container_style,
 grid_container.title as container_title,
 grid_container.title_url as container_titleurl,
 grid_container.prolog as container_prolog,
@@ -63,6 +64,7 @@ grid_box_type.type as box_type
 
 from grid_grid2container 
 left join grid_container on container_id=grid_container.id 
+left join grid_container_style on grid_container.style=grid_container_style.id
 left join grid_container2slot on grid_container.id=grid_container2slot.container_id
 left join grid_slot2box on grid_container2slot.slot_id=grid_slot2box.slot_id
 left join grid_box on grid_slot2box.box_id=grid_box.id
@@ -80,6 +82,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			{
 				$currentcontainer=new grid_container();
 				$currentcontainer->containerid=$row['container_id'];
+				$currentcontainer->style=$row['container_style'];
 				$currentcontainer->type=$row['container_type'];
 				$currentcontainer->title=$row['container_title'];
 				$currentcontainer->titleurl=$row['container_titleurl'];
@@ -248,5 +251,18 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		$query="delete from grid_container where id=".$container->containerid;
 		mysql_query($query,$this->connection) or die(mysql_error());
+	}
+	
+	public function persistContainer($container)
+	{
+		$query="select id from grid_container_style where style='".$container->style."'";
+		$result=mysql_query($query,$this->connection);
+		$row=mysql_fetch_assoc($result);
+		if(!isset($row['id']))
+			return false;
+		$styleid=$row['id'];
+		$query="update grid_container set style=".$styleid.", title='".$container->title."', title_url='".$container->titleurl."', prolog='".$container->prolog."', epilog='".$container->epilog."', readmore='".$container->readmore."', readmore_url='".$container->readmoreurl."' where id=".$container->containerid;
+		mysql_query($query,$this->connection) or die(mysql_error());
+		return true;
 	}
 }

@@ -75,18 +75,31 @@ class grid_ajaxendpoint {
 	public function moveContainer($gridid,$containerid,$newidx)
 	{
 		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
 		return $grid->moveContainer($containerid,$newidx);
 	}
 
 	public function deleteContainer($gridid,$containerid)
 	{
 		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
 		return $grid->removeContainer($containerid);
 	}
 
-	public function updateContainer()
+	public function updateContainer($gridid,$containerid,$containerdata)
 	{
-		//TODO: CONTINUE HERE!!!
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		return $grid->updateContainer($containerid,$containerdata);
 	}
 
 	public function addBox()

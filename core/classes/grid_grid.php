@@ -85,6 +85,7 @@ class grid_grid extends grid_base {
 		$array[$newidx]=$container;
 		$this->container=$array;
 		$this->storeContainerOrder();
+		return true;
 	}
 
 	public function removeContainer($containerid)
@@ -106,5 +107,23 @@ class grid_grid extends grid_base {
 		$this->storeContainerOrder();
 		$this->storage->destroyContainer($container);
 		return true;
+	}
+	
+	public function updateContainer($containerid,$containerdata)
+	{
+		$idx=-1;
+		for($i=0;$i<count($this->container);$i++)
+		{
+			if($this->container[$i]->containerid==$containerid)
+			{
+				$idx=$i;
+			}
+		}
+		if($idx==-1)
+		{
+			return false;
+		}
+		$container=$this->container[$idx];
+		return $container->update($containerdata);
 	}
 }
