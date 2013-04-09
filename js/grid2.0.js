@@ -6,7 +6,7 @@ $(function() {
 		ID = 43;
 		loadGrid();
 	}
-	//$(document).ready(init);
+	$(document).ready(init);
 	// Elemente
 	$stateDisplay = $(".state-display");
 	// Warnung beim verlassen ohne Speichern
@@ -109,7 +109,6 @@ $(function() {
 	});
 	$grid.on("click",".container > .tools > .c-trash", function(e){
 		$this = $(this);
-		console.log($this);
 		$container = $this.parents(".container");
 		params = [ID, $container.data("id")];
 		console.log($container.data("id"));
@@ -124,6 +123,40 @@ $(function() {
 		}, function(jqXHR, textStatus, error){
 			console.log(textStatus);
 		});
+	});
+	$grid.on("click",".container > .tools > .c-edit", function(e){
+		$this = $(this);
+		$container = $this.parents(".container");
+		params = {
+					id:$container.data("id"), 
+					title: $container.find(".c-title").text(),
+					titleurl: "url",
+					type: $container.find(".c-title").text(),
+					prolog: "test",
+					epilog: "test",
+					readmore: "readmore",
+					readmoreurl: "url"
+				};
+		$newContainer = $.tmpl( "containerEditorTemplate", params ).insertAfter( $container );
+		$newContainer.find(".slots-wrapper").append($container.find(".slots-wrapper"));
+		$container.remove();
+	});
+	$grid.on("click",".container > .tools > .c-ok", function(e){
+		$this = $(this);
+		$container = $this.parents(".container");
+		params = {
+					id:$container.data("id"), 
+					title: $container.find("#f-c-title").val(),
+					titleurl: $container.find("#f-c-titleurl").val(),
+					type: $container.data("type"),
+					prolog: $container.find("#f-c-prolog").val(),
+					epilog: $container.find("#f-c-epilog").val(),
+					readmore: $container.find("#f-c-readmore").val(),
+					readmoreurl: $container.find("#f-c-readmoreurl").val()
+				};
+		$newContainer = $.tmpl( "containerTemplate", params ).prependTo( $grid );
+		$newContainer.find(".slots-wrapper").append($container.find(".slots-wrapper"));
+		$container.remove();
 	});
 	// slot funktionen
 	

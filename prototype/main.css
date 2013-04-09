@@ -155,8 +155,20 @@ body{
 /** Container inplace **/
 .container textarea, .container input{
 	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing:border-box;
 }
-
+.container fieldset{
+	width:33%;
+	margin-right:1%;
+	float:left;
+}
+.container fieldset:last-child{
+	float:right;
+	width:32%;
+	margin-right:0px;
+}
 /** Allgemeine Slot styles **/
 .slot{
 	background-color:#e0e0e0;
