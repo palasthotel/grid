@@ -1,5 +1,12 @@
 
 $(function() {
+	// init Methode
+	var ID;
+	function init() {
+		ID = 43;
+		loadGrid();
+	}
+	//$(document).ready(init);
 	// Elemente
 	$stateDisplay = $(".state-display");
 	// Warnung beim verlassen ohne Speichern
@@ -36,7 +43,7 @@ $(function() {
 	});
 	// container funktionen
 	var GRID_SORTABLE = "#grid";
-	var $grid = $( GRID_SORTABLE).sortable({
+	var $grid = $(GRID_SORTABLE).sortable({
 		handle: ".c-sort-handle",
 		//axis: "y",
 		//cursor: "row-resize",
@@ -48,7 +55,17 @@ $(function() {
 		},
 		stop: function(event, ui){
 			//$(".box").slideDown(100);
-			console.log("stopped sorting container");
+		},
+		update: function( event, ui ){
+			params = [ID, ui.item.data("id"), ui.item.index()];
+			sendAjax("moveContainer",params,
+					function(data){
+						if(data.result != true){
+							console.log("Fehler! Element muss an originalposition zurück");
+						}
+					}, function(jqXHR, textStatus, error){
+						console.log(error);
+					});
 		}
 	});
 	var CONTAINER_DROP_AREA_CLASS = "container-drop-area";
@@ -63,16 +80,54 @@ $(function() {
 				accept: ".new-container",
 				drop: function( event, ui ) {
 					containerType =  $("select[name=container-type]").val();
-					$.tmpl( "containerTemplate", [{"type": containerType, "containerid" : 1 }] ).insertBefore( $(this) );
-					console.log("ok?");
+					$temp = $.tmpl( "containerTemplate", [{
+											"type": containerType, 
+											"id" : "new",
+											"prolog": "prolog",
+											"epilog": "epilog" }] ).insertBefore( $(this) );
+					
+					$grid.children().remove("."+CONTAINER_DROP_AREA_CLASS);
+					params = [ID, containerType, $temp.index()];
+					sendAjax("addContainer",params,function(data){
+						console.log(data.result.id);
+						$temp.data("id", data.result.id);
+						$slots_wrapper = $temp.find(".slots-wrapper");
+						$.each( data.result.slots, function(index,value){
+							console.log(index+" "+value);
+							$.tmpl( "slotTemplate", [{ 
+											"id" : value }] ).appendTo( $slots_wrapper );
+						});
+					}, function(jqXHR, textStatus, error){
+						console.log(error);
+					});
 				}
 			});
 		},
 		stop: function( event, ui ){
-			$grid.children().remove("."+CONTAINER_DROP_AREA_CLASS)
+			$grid.children().remove("."+CONTAINER_DROP_AREA_CLASS);
 		}
 	});
+	$grid.on("click",".container > .tools > .c-trash", function(e){
+		$this = $(this);
+		console.log($this);
+		$container = $this.parents(".container");
+		params = [ID, $container.data("id")];
+		console.log($container.data("id"));
+		sendAjax("deleteContainer",params,function(data){
+			if(data.result != true){
+				alert("fehler beim Löschen!");
+				return;
+			}
+			$container.slideUp(300,function(){
+				$container.remove();
+			});
+		}, function(jqXHR, textStatus, error){
+			console.log(textStatus);
+		});
+	});
 	// slot funktionen
+	
+	
 	// Box funktionen
 	$(".slot").sortable({
 		items: ".box",
@@ -91,7 +146,7 @@ $(function() {
 	function loadGrid(){	
 		json = {};
 		json["method"] = "loadGrid";
-		json["params"] = [ID];	
+		json["params"] = [ID];
 		sendAjax(
 			"loadGrid", 
 			[ID], 
@@ -140,7 +195,6 @@ $(function() {
 	}
 	// Serverkommunikation
 	var SERVER = "http://emma-dev.ia-code.ws/grid/core/index.php?path=/ajax";
-	var ID = 43;
 	function sendAjax(method, params_array, success, error){
 		json = {};
 		json["method"] = method;
@@ -153,23 +207,6 @@ $(function() {
 		   success: success,
 		   error: error
 		 });
-		 /*	
-		 $.ajax({
-		   url: SERVER,
-		   dataType:"json",
-		   type:'POST',
-		   data: JSON.stringify(json),
-		   success:function(data){
-				   console.log(data);
-				   // container auslesen
-						// solots auslesen
-							// Boxen auslesen
-		   },
-		   error:function(jqXHR,textStatus,error){
-				   console.log(jqXHR);console.log(textStatus);console.log(error);
-		   }
-		 });
-		 */
 	}
 });
 

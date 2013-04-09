@@ -12,7 +12,6 @@ body{
 	margin-top:20px;
 	margin-bottom:60px;
 }
-
 /** Toolbar rules **/
 #toolbar{
 	margin-bottom:20px;
@@ -63,7 +62,7 @@ body{
 	margin-bottom:10px;
 	border:1px solid #e6e6e6;
 	background-color:#efefef;
-	padding-top:26px;
+	padding-top:28px;
 }
 .container:before{
 	content:'Container:';
@@ -86,34 +85,76 @@ body{
 }
 .c-sort-handle{
 	position:absolute;
-	top:0px;
+	top:2px;
 	right:10px;
 	display:block;
-	height:30px;
-	width:30px;
+	height:21px;
+	width:15px;
 	cursor:move;
 	background-image:url(images/sort-handler.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
+	border-bottom:1px solid #666;
 }
 .c-sort-handle:hover{
 	cursor:pointer;
 	background-position: center 0px;
+	border-bottom:1px solid #999;
 }
 .c-trash{
 	display:block;
-	height:30px;
-	width:30px;
+	height:21px;
+	width:15px;
 	background-image:url(images/trash.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	position:absolute;
-	top:0;
+	top:2px;
 	right:45px;
+	border-bottom:1px solid #666;
 }
 .c-trash:hover{
 	cursor:pointer;
 	background-position: center 0px;
+	border-bottom:1px solid #999;
+}
+.c-edit{
+	display:block;
+	height:21px;
+	width:21px;
+	background-image:url(images/edit.png);
+	background-position:center 4px;
+	background-repeat:no-repeat;
+	position:absolute;
+	top:2px;
+	right:84px;
+	border-bottom:1px solid #666;
+}
+.c-edit:hover{
+	cursor:pointer;
+	background-position: center 0px;
+	border-bottom:1px solid #999;
+}
+.c-ok{
+	display:block;
+	height:21px;
+	width:21px;
+	background-image:url(images/ok.png);
+	background-position:center 4px;
+	background-repeat:no-repeat;
+	position:absolute;
+	top:2px;
+	right:84px;
+	border-bottom:1px solid #666;
+}
+.c-ok:hover{
+	cursor:pointer;
+	background-position: center 0px;
+	border-bottom:1px solid #999;
+}
+/** Container inplace **/
+.container textarea, .container input{
+	width:100%;
 }
 
 /** Allgemeine Slot styles **/
