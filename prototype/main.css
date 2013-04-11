@@ -26,20 +26,40 @@ body{
 	float:left;
 	margin-right:10px;
 }
-#toolbar .tool-details{
+#toolbar .grid-tools{
 	border:1px solid #e0e0e0;
 	border-top:none;
 	padding:10px;
 }
-.tool-details select{
+.grid-tools .g-tool{
+	display:none;
+}
+.grid-tools select{
 	width:140px;
 }
-.tool-details .draggable{
+.grid-tools .draggable{
 	height:50px;
 	width:50px;
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
+.g-box .box-list{
+	border:1px solid#efefef;
+	padding:10px;
+}
+.g-box .box-list li{
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	width:228px;
+	padding:10px;
+	margin-right:10px;
+	float:left;
+	height:50px;
+	margin-bottom:10px;
+	border:1px solid #efefef;
+}
+
 /** Toolbar rules ENDE **/
 
 #grid{
@@ -152,6 +172,23 @@ body{
 	background-position: center 0px;
 	border-bottom:1px solid #999;
 }
+.c-revert{
+	display:block;
+	height:21px;
+	width:23px;
+	background-image:url(images/revert.png);
+	background-position:center 4px;
+	background-repeat:no-repeat;
+	position:absolute;
+	top:2px;
+	right:130px;
+	border-bottom:1px solid #666;
+}
+.c-revert:hover{
+	cursor:pointer;
+	background-position: center 0px;
+	border-bottom:1px solid #999;
+}
 /** Container inplace **/
 .container textarea, .container input{
 	width:100%;
@@ -183,9 +220,14 @@ body{
 	left:10px;
 	color:#888;
 }
+/** Allgemeine Box styles **/
 .box{
 	background-color:#fff;
 	border:1px solid #d3d3d3;
+}
+.box .handle{
+	height:10px;
+	background-color:#000;
 }
 .box:nth-child(n+1){
 	border-bottom:0px;
@@ -205,6 +247,13 @@ body{
 				9px 9px 0 #fff,
 				10px 10px 0 #ccc,
 				14px 14px 0 #fff;
+}
+.box-drop-area{
+	background-color:#F93;
+}
+.box-drop-area.hover{
+	height:50px;
+	background-color:#F93;
 }
 
 /** Container C-12 **/

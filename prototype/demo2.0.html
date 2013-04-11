@@ -20,36 +20,45 @@
 	<menu id="toolbar">
     	<p class="state-display">Aktuell!</p>
     	<ul class="clearfix">
+       		<!--
         	<li><button role="load">Laden</button></li>
         	<li><button role="save">Speichern</button></li>
+            -->
             <li><button role="revoke">Änderunge Rückgängig</button></li>
             <li><button role="publish">Öffentlich machen</button></li>
-        	<li><button role="add_container">+ Container</button></li>
-            <li><button role="add_box">+ Box</button></li>
+        	<li><button role="add_container">+ Container hinzufügen</button></li>
+            <li><button role="add_box">+ Box hinzufügen</button></li>
             <li><button role="hide_boxes">x toggle Boxes</button></li>
         </ul>
-        <div class="tool-details">
-        	<select name="container-type" size="6">
-            	<option value="C-12" selected="selected">C-12</option>
-                <option value="C-8-4">C-8-4</option>
-                <option value="C-4-8">C-4-8</option>
-                <option value="C-4-4-4">C-4-4-4</option>
-                <option value="C-2-2-2-2-2-2">C-2-2-2-2-2-2</option>
-            </select>
-            <div id="container-dragger" class="draggable new-container">zieh mich</div>
+        <div class="grid-tools">
+        	<!-- Tools für Container hinzufügen -->
+        	<div class="g-tool g-container">
+                <select name="container-type" size="6">
+                    <option value="C-12" selected="selected">C-12</option>
+                    <option value="C-8-4">C-8-4</option>
+                    <option value="C-4-8">C-4-8</option>
+                    <option value="C-4-4-4">C-4-4-4</option>
+                    <option value="C-2-2-2-2-2-2">C-2-2-2-2-2-2</option>
+                </select>
+                <div id="container-dragger" class="draggable new-container">zieh mich</div>
+            </div>
+            <!-- Tools für Box hinzufügen -->
+            <div class="g-tool g-box">
+            	<ul class="box-list clearfix"></ul>
+            </div>
         </div>
     </menu>
     <section id="grid">
     
-    	<!-- Inplace edit dummie -->
+    	<!-- Inplace edit dummie 
         <div class="container C-4-4-4 clearfix">
-        	<div class="tools">
+        	<div class="c-tools">
                 <span class="c-title">c-4-4-4</span>
                 <span class="c-ok"></span>
                 <span class="c-sort-handle"></span>
                 <span class="c-trash"></span>
             </div>
-        	<div class="c_before">
+        	<div class="c-before">
             	<label for="f-c-title">Title:</label><br />
                 <input name="f-c-title" id="f-c-title" /><br />
                 <label for="f-c-title-url">Titel URL:</label><br />
@@ -57,7 +66,7 @@
                 <label for="f-c-prolog">Prolog:</label><br />
                 <textarea name="f-c-prolog" id="f-c-prolog"></textarea>
             </div>
-        	<div class="slot-wrapper">
+        	<div class="slots-wrapper">
                 <div class="slot">
                 </div>
                 <div class="slot">
@@ -65,7 +74,7 @@
                 <div class="slot">
                 </div>
             </div>
-            <div class="c_after">
+            <div class="c-after">
                 <label for="f-c-epilog">Epilog:</label><br />
         		<textarea name="f-c-epilog" id="f-c-epilog"></textarea>                
             </div>
@@ -91,7 +100,7 @@
         </div>
         <!-- ---------------------------------------->
     
-    
+    	<!-- Datendummie 
     
     	<div class="container C-12 clearfix">
         	<div class="tools">
@@ -100,23 +109,23 @@
                 <span class="c-sort-handle"></span>
                 <span class="c-trash"></span>
             </div>
-        	<div class="c_before">
+        	<div class="c-before">
             	<p>Prolog</p>
             </div>
-        	<div class="slot-wrapper">
+        	<div class="slots-wrapper">
                 <div class="slot">
                     <div class="box">
                         <img src="images/header-test.jpg" alt="test" />
                     </div>
                 </div>
             </div>
-            <div class="c_after">
+            <div class="c-after">
             	<p>epilog</p>
                 <a href="http://www.google.de">Readmore</a>
             </div>
         </div>
         <div class="container C-4-4-4 clearfix">
-        	<div class="slot-wrapper">
+        	<div class="slots-wrapper">
                 <div class="slot">
                     <div class="box">
                         <img src="images/header-test.jpg" alt="test" />
@@ -142,7 +151,7 @@
             <a href="http://www.google.de">Readmore</a>
         </div>
         <div class="container C-4-8 clearfix">
-        	<div class="slot-wrapper">
+        	<div class="slots-wrapper">
                 <div class="slot">
                     <div class="box">
                         <img src="images/header-test.jpg" alt="test" />
@@ -188,7 +197,7 @@
             <a href="http://www.google.de">Readmore</a>
         </div>
         <div class="container C-8-4 clearfix">
-            <div class="slot-wrapper">
+            <div class="slots-wrapper">
                 <div class="slot">
                     <div class="box">
                         <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
@@ -273,7 +282,7 @@
             <a href="http://www.google.de">Readmore</a>
         </div>
         <div class="container C-2-2-2-2-2-2 clearfix">
-        	<div class="slot-wrapper">
+        	<div class="slots-wrapper">
                 <div class="slot">
                     <div class="box">
                         <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
@@ -321,7 +330,7 @@
             </div>
             <a href="http://www.google.de">Readmore</a>
         </div> 
-        
+        <!-- -->
      </section><!-- workspace ENDE -->
 </body>
 </html>
