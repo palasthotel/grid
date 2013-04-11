@@ -37,5 +37,5 @@ class grid_container extends grid_base {
 		$this->prolog=$data->prolog;
 		$this->epilog=$data->epilog;
 		return $this->storage->persistContainer($this);
-	}	
+	}
 }

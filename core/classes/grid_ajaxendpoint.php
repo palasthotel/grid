@@ -7,6 +7,22 @@ class grid_ajaxendpoint {
 	public function add($a,$b) {
 		return $a+$b;
 	}
+	
+	private function encodeBox($box)
+	{
+		$bx=array();
+		foreach(get_object_vars($box) as $key=>$value)
+		{
+			if($key!='storage' && $key!='content' && $key!='boxid')
+			{
+				$bx[$key]=$value;
+			}
+		}
+		$bx['id']=$box->boxid;
+		$bx['content']=$box->build(true);
+		$bx['type']=$box->type();
+		return $bx;
+	}
 
 	public function loadGrid($gridid) {
 		$grid=$this->storage->loadGrid($gridid);
@@ -34,16 +50,7 @@ class grid_ajaxendpoint {
 				$slt['boxes']=array();
 				foreach($slot->boxes as $box)
 				{
-					$bx=array();
-					foreach(get_object_vars($box) as $key=>$value)
-					{
-						if($key!='storage' && $key!='content' && $key!='boxid')
-						{
-							$bx[$key]=$value;
-						}
-					}
-					$bx['id']=$box->boxid;
-					$bx['content']=$box->build(true);
+					$bx=$this->encodeBox($box);
 					$slt['boxes'][]=$bx;
 				}
 				$cnt['slots'][]=$slt;
@@ -101,20 +108,80 @@ class grid_ajaxendpoint {
 		}
 		return $grid->updateContainer($containerid,$containerdata);
 	}
-
-	public function addBox()
+	
+	public function addBox($gridid,$containerid,$slotid,$boxid,$idx)
 	{
-		//TODO: WORK HERE!!!
+		$grid=$this->storage->loadGrid($gridid);
+		$box=$this->storage->loadBox($boxid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						return $slot->addBox($idx,$box);
+					}
+				}
+			}
+		}
+		return false;
 	}
 
-	public function moveBox()
+	public function moveBox($gridid,$oldcontainerid,$oldslotid,$oldidx,$newcontainerid,$newslotid,$newidx)
 	{
-		//TODO: WORK HERE!!!
+		$grid=$this->storage->loadGrid($gridid);
+		$box=null;
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$oldcontainerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$oldslotid)
+					{
+						$box=$slot->boxes[$oldidx];
+						$slot->removeBox($oldidx);
+					}
+				}
+			}
+		}
+		if($box==null)
+			return false;
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$newcontainerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$newslotid)
+					{
+						return $slot->addBox($newidx,$box);
+					}
+				}
+			}
+		}
+		return false;
 	}
 
-	public function deleteBox()
+	public function removeBox($gridid,$containerid,$slotid,$idx)
 	{
-		//TODO: WORK HERE!!!
+		$grid=$this->storage->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						return $slot->removeBox($idx);
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 
@@ -127,4 +194,21 @@ class grid_ajaxendpoint {
 	{
 		//TODO: WORK HERE!!!
 	}
+	
+	public function getStyles()
+	{
+		return $this->storage->fetchStyles();
+	}
+	
+	public function searchBox($searchstring)
+	{
+		$boxes=$this->storage->fetchBoxesMatchingTitle($searchstring);
+		$return=array();
+		foreach($boxes as $box)
+		{
+			$return[]=$this->encodeBox($box);
+		}
+		return $return;
+	}
+
 }

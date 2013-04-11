@@ -19,32 +19,21 @@ class grid_slot extends grid_base {
 		return $output;
 	}
 	
-	public function create() {
-	  
+	public function addBox($idx,$box)
+	{
+		$list=$this->boxes;
+		array_splice($list, $idx,0,array($box));
+		$this->boxes=$list;
+		$this->storage->storeSlotOrder($this);
+		return true;		
 	}
 	
-	public function read(){
-	  
+	public function removeBox($idx)
+	{
+		$list=$this->boxes;
+		array_splice($list, $idx,1);
+		$this->boxes=$list;
+		$this->storage->storeSlotOrder($this);
+		return true;
 	}
-	
-	public function update(){
-	  
-	}
-	
-	public function delete() {
-	  
-	}
-	
-	public function add_box ($boxid) {
-	  
-	}
-	
-	public function move_box ($boxid) {
-	  
-	}
-	
-	public function remove_box ($boxid) {
-	  
-	}
-	
 }

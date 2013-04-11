@@ -7,6 +7,7 @@ class grid_db {
 
 	public function __construct($host,$user,$password,$database) {
 		$this->connection=mysql_connect($host,$user,$password,true);
+		mysql_set_charset("utf8",$this->connection);
 		mysql_select_db($database,$this->connection);
 
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
@@ -37,6 +38,24 @@ class grid_db {
 		{
 			$revision=$maxRevision;
 		}
+		return $this->loadGridByRevision($gridId,$revision);
+	}
+	
+	private function parseBox($row)
+	{
+		$boxtype=$row['box_type'];
+		$class="grid_".$boxtype."_box";
+		$box=new $class();
+		$box->storage=$this;
+		$box->boxid=$row['box_id'];
+		$box->title=$row['box_title'];
+		$box->titleurl=$row['box_titleurl'];
+		$box->prolog=$row['box_prolog'];
+		$box->epilog=$row['box_epilog'];
+		$box->readmore=$row['box_readmore'];
+		$box->readmoreurl=$row['box_readmoreurl'];
+		$box->content=json_decode($row['box_content']);
+		return $box;
 	}
 
 	public function loadGridByRevision($gridId,$revision)
@@ -91,8 +110,6 @@ left join grid_slot2box
      and grid_container2slot.grid_revision=grid_slot2box.grid_revision
 left join grid_box 
      on grid_slot2box.box_id=grid_box.id
-     and grid_slot2box.grid_id=grid_box.grid_id
-     and grid_slot2box.grid_revision=grid_box.grid_revision
 left join grid_container_type on grid_container.type=grid_container_type.id
 left join grid_box_type on grid_box.type=grid_box_type.id
 where grid_grid2container.grid_id=$gridId and grid_grid2container.grid_revision=$revision
@@ -134,18 +151,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$boxtype=$row['box_type'];
 			if($boxtype!=NULL)
 			{
-				$class="grid_".$boxtype."_box";
-				$box=new $class();
-				$box->grid=$grid;
-				$box->storage=$this;
-				$box->boxid=$row['box_id'];
-				$box->title=$row['box_title'];
-				$box->titleurl=$row['box_titleurl'];
-				$box->prolog=$row['box_prolog'];
-				$box->epilog=$row['box_epilog'];
-				$box->readmore=$row['box_readmore'];
-				$box->readmoreurl=$row['box_readmoreurl'];
-				$box->content=json_decode($row['box_content']);
+				$box=$this->parseBox($row);
 				$currentslot->boxes[]=$box;
 			}
 		}
@@ -155,6 +161,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	//manages ajax call routing
 	public function handleAjaxCall()
 	{
+		header("Content-Type: application/json; charset=UTF-8");
 		if($_SERVER['REQUEST_METHOD']!='POST')
 		{
 			echo json_encode(array('error'=>'only POSTing is allowed'));
@@ -188,11 +195,11 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		//how to fetch the ID? well, how about max+1? know nothing better. but... that might generate sync problems.
 		//OK, i need a container counter, slot counter and box counter on grid to do this.
 		$query="select next_containerid from grid_grid where id=$gridid and revision=$gridrevision";
-		$row=mysql_query($query,$this->connection);
-		$id=$row['next_containerid'];
+		$nextid=mysql_fetch_assoc(mysql_query($query,$this->connection));
+		$id=$nextid['next_containerid'];
 		$query="update grid_grid set next_containerid=next_containerid+1 where id=$gridid and revision=$gridrevision";
 		mysql_query($query,$this->connection);
-		$query="insert into grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,\"$type\")";
+		$query="insert into grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
 		mysql_query($query,$this->connection) or die(mysql_error());
 		$container=new grid_container();
 		$container->grid=$grid;
@@ -200,15 +207,15 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$container->containerid=$id;
 		$container->type=$containertype;
 		$container->slots=array();
-
-		for($i=1;$i<=$row['numslots'];$i++)
+		$numslots=$row['numslots'];
+		for($i=1;$i<=$numslots;$i++)
 		{
 			$query="select next_slotid from grid_grid where id=$gridid and revision=$gridrevision";
 			$result=mysql_query($query,$this->connection);
-			$row=mysql_fetch_assoc($query);
+			$row=mysql_fetch_assoc($result);
 			$slotid=$row['next_slotid'];
 			mysql_query("update grid_grid set next_slotid=next_slotid+1 where id=$gridid and revision=$gridrevision",$this->connection);
-			$query="insert into grid_slot (id,gridid,gridrevision) values ($slotid,$gridid,$gridrevision)";
+			$query="insert into grid_slot (id,grid_id,grid_revision) values ($slotid,$gridid,$gridrevision)";
 			mysql_query($query,$this->connection) or die(mysql_error());
 			$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
 			mysql_query($query,$this->connection) or die(mysql_error());
@@ -231,6 +238,20 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		{
 			$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight) values (".$grid->gridid.",".$grid->gridrevision.",".$cnt->containerid.",".$i.")";
 			mysql_query($query,$this->connection) or die(mysql_error());
+			$i++;
+		}
+	}
+	
+	public function storeSlotOrder($slot)
+	{
+		$grid=$slot->grid;
+		$query="delete from grid_slot2box where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision." and slot_id=".$slot->slotid;
+		mysql_query($query,$this->connection)or die(mysql_error());
+		$i=1;
+		foreach($slot->boxes as $box)
+		{
+			$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$slot->slotid.",".$grid->gridid.",".$grid->gridrevision.",".$box->boxid.",$i)";
+			mysql_query($query,$this->connection);
 			$i++;
 		}
 	}
@@ -271,28 +292,96 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		foreach($container->slots as $slot)
 		{
+/*
 			foreach($slot->boxes as $box)
 			{
 				$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-				mysql_query($query,$this->connection) or die(mysql_error());
+				mysql_query($query,$this->connection) or die("Box deletion: ".mysql_error());
 			}
-			$query="delete from grid_slot where id=".$slot->slotid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-			mysql_query($query,$this->connection) or die(mysql_error());
+*/
+			$query="delete from grid_slot where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
+			mysql_query($query,$this->connection) or die("Slot deletion: ".mysql_error());
 		}
-		$query="delete from grid_container where id=".$container->containerid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-		mysql_query($query,$this->connection) or die(mysql_error());
+		$query="delete from grid_container where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
+		mysql_query($query,$this->connection) or die("Container deletion: ".mysql_error());
 	}
 	
 	public function persistContainer($container)
 	{
-		$query="select id from grid_container_style where style='".$container->style."'";
-		$result=mysql_query($query,$this->connection);
-		$row=mysql_fetch_assoc($result);
-		if(!isset($row['id']))
-			return false;
-		$styleid=$row['id'];
-		$query="update grid_container set style=".$styleid.", title='".$container->title."', title_url='".$container->titleurl."', prolog='".$container->prolog."', epilog='".$container->epilog."', readmore='".$container->readmore."', readmore_url='".$container->readmoreurl."' where id=".$container->containerid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+		if($container->style==NULL)
+		{
+			$styleid="NULL";			
+		}
+		else
+		{
+			$query="select id from grid_container_style where style='".$container->style."'";
+			$result=mysql_query($query,$this->connection);
+			$row=mysql_fetch_assoc($result);
+			if(!isset($row['id']))
+				return false;
+			$styleid=$row['id'];
+		}
+		$query="update grid_container set style=".$styleid.", title='".$container->title."', title_url='".$container->titleurl."', prolog='".$container->prolog."', epilog='".$container->epilog."', readmore='".$container->readmore."', readmore_url='".$container->readmoreurl."' where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
 		mysql_query($query,$this->connection) or die(mysql_error());
 		return true;
+	}
+	
+	public function fetchStyles()
+	{
+		$query="select style from grid_container_style order by style asc";
+		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$return=array();
+		while($row=mysql_fetch_assoc($result))
+		{
+			$return[]=$row['style'];
+		}
+		return $return;
+	}
+	
+	public function fetchBoxesMatchingTitle($title)
+	{
+		$query="select 
+		grid_box.id as box_id,
+		grid_box_type.type as box_type,
+		title as box_title,
+		title_url as box_titleurl,
+		prolog as box_prolog,
+		epilog as box_epilog,
+		readmore as box_readmore,
+		readmore_url as box_readmoreurl,
+		content as box_content
+		from grid_box
+		left join grid_box_type on grid_box.type=grid_box_type.id ";
+		if($title!="" && $title!=NULL)
+			$query.="where title like '%$title%' ";
+		$query.="order by title asc";
+		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$boxes=array();
+		while($row=mysql_fetch_assoc($result))
+		{
+			$box=$this->parseBox($row);
+			$boxes[]=$box;
+		}
+		return $boxes;
+	}
+	
+	public function loadBox($boxId)
+	{
+		$query="select 
+		grid_box.id as box_id,
+		grid_box_type.type as box_type,
+		title as box_title,
+		title_url as box_titleurl,
+		prolog as box_prolog,
+		epilog as box_epilog,
+		readmore as box_readmore,
+		readmore_url as box_readmoreurl,
+		content as box_content
+		from grid_box
+		left join grid_box_type on grid_box.type=grid_box_type.id ";
+		$query.="where grid_box.id=$boxId";
+		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$row=mysql_fetch_assoc($result);
+		return $this->parseBox($row);
 	}
 }
