@@ -56,14 +56,22 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
                     '<label for="f-c-style">Style</label><br />'+ 
                     '<select name="f-c-style" id="f-c-style">'+
                         '<option value="">ohne style</option>'+
-                        '<option value="freeform">FreeForm</option>'+
+						'{{if styles}}{{each styles}}'+
+							'<option {{if $value == style }}selected="selected"{{/if}} value="${$value}">${$value}</option>'+
+						'{{/each}}{{/if}}'
                    '</select>'
                 '</fieldset>'+
             '</div>'+
         '</div>';
 $.template( "containerEditorTemplate", container_editor_markup );
 
-var slot_markup = '<div class="slot" data-id="${id}">{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}</div>';
+var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
+						'<div class="style-changer">'+
+							'<span>{{if style}}${style}{{else}}ohne Style{{/if}}</span>'+
+							'<ul class="choose-style"></ul>'+
+						'</div>'+
+						'{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}'+
+				'</div>';
 $.template( "slotTemplate", slot_markup );
 
 var box_markup = '<div class="box" data-id="${id}">'+
@@ -75,7 +83,11 @@ var box_markup = '<div class="box" data-id="${id}">'+
 				'</div>';
 $.template( "boxTemplate", box_markup );
 
-var box_draggable_markup = '<li class="box-dragger" data-id="${id}">'+
-							'<div class="handle"></div><div>${title}</div>'+
+var box_draggable_markup = '<li class="box-dragger" data-id="${id}"'+
+							' data-titleurl="${titleurl}" data-readmore="${readmore}" data-readmoreurl="${readmoreurl}">'+
+							'<div class="prolog">{{html prolog}}</div>'+
+							'<div class="handle"></div><div class="title">${title}</div>'+
+							'<div class="content">${content}</div>'+
+							'<div class="epilog">{{html epilog}}</div>'+
 							'</li>';
 $.template( "boxDraggableTemplate", box_draggable_markup );

@@ -43,21 +43,42 @@ body{
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
-.g-box .box-list{
-	border:1px solid#efefef;
+.g-tool{
+	position:relative;
 	padding:10px;
+	border:1px solid#efefef;
+	background-color:#f6f6f6;
+}
+.g-box .search-bar{
+	margin-bottom:10px;
+}
+.g-box .search-bar .loading{
+	position:absolute;
+	top:12px;
+	left:170px;
+}
+.g-box .box-list{
+	height:140px;
+	overflow:hidden;
+	overflow-y:auto;
 }
 .g-box .box-list li{
 	box-sizing:border-box;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
-	width:228px;
+	width:224px;
 	padding:10px;
 	margin-right:10px;
 	float:left;
 	height:50px;
 	margin-bottom:10px;
-	border:1px solid #efefef;
+	border:1px solid #e6e6e6;
+	background-color:#fff;
+}
+.box-dragger .content,
+.box-dragger .prolog,
+.box-dragger .epilog{
+	display:none;
 }
 
 /** Toolbar rules ENDE **/
@@ -208,6 +229,7 @@ body{
 }
 /** Allgemeine Slot styles **/
 .slot{
+	position:relative;
 	background-color:#e0e0e0;
 	border:1px solid #d3d3d3;
 	padding-top:26px;
@@ -219,6 +241,51 @@ body{
 	top:4px;
 	left:10px;
 	color:#888;
+}
+.slot > .style-changer{
+	position:absolute;
+	z-index:10;
+	top:4px;
+	left:44px;
+	padding-bottom:10px;
+}
+.style-changer > span:before{
+	content:'» ';
+}
+.style-changer > span:after{
+	content:' «';
+}
+.style-changer > .choose-style{
+	display:none;
+	position:absolute;
+	bottom:21px;
+	left:0px;
+	color:#fff;
+	background-color:#333;
+	border:1px solid #ccc;
+}
+.style-changer:hover > .choose-style{
+	display:block;
+}
+.style-changer > .choose-style:before{
+	content:"";
+	border: 6px solid #444;
+	font-size:0;line-height:0;height:0;padding:0;margin:0;
+	border-top-color:    transparent;
+	border-right-color:  transparent;
+	border-left-color:   transparent;
+	position:absolute;
+	top:-12px;
+	left:7px;
+}
+.choose-style li{
+	padding:6px;
+	border-bottom:1px solid #666;
+	white-space:nowrap;
+	cursor:pointer;
+}
+.choose-style li:hover{
+	color:#6CF;
 }
 /** Allgemeine Box styles **/
 .box{
@@ -324,4 +391,29 @@ body{
 /** content rules **/
 .box img{
 	max-width:100%;
+}
+
+/** animations **/
+div.loading{
+	width:16px;
+	height:16px;
+	background-image:url(images/reload.png);
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.rotate{
+	-webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         1s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
 }
