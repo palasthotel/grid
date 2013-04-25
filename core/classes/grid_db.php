@@ -116,6 +116,8 @@ left join grid_slot2box
      and grid_container2slot.grid_revision=grid_slot2box.grid_revision
 left join grid_box 
      on grid_slot2box.box_id=grid_box.id
+     and grid_slot2box.grid_id=grid_box.grid_id
+     and grid_slot2box.grid_revision=grid_box.grid_revision
 left join grid_container_type 
 	 on grid_container.type=grid_container_type.id
 left join grid_box_type 
@@ -163,6 +165,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			if($boxtype!=NULL)
 			{
 				$box=$this->parseBox($row);
+				$box->grid=$grid;
 				$currentslot->boxes[]=$box;
 			}
 		}
@@ -262,7 +265,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		foreach($slot->boxes as $box)
 		{
 			$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$slot->slotid.",".$grid->gridid.",".$grid->gridrevision.",".$box->boxid.",$i)";
-			mysql_query($query,$this->connection);
+			mysql_query($query,$this->connection) or die(mysql_error());
 			$i++;
 		}
 	}
@@ -303,18 +306,22 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		foreach($container->slots as $slot)
 		{
-/*
 			foreach($slot->boxes as $box)
 			{
 				$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
 				mysql_query($query,$this->connection) or die("Box deletion: ".mysql_error());
 			}
-*/
 			$query="delete from grid_slot where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
 			mysql_query($query,$this->connection) or die("Slot deletion: ".mysql_error());
 		}
 		$query="delete from grid_container where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
 		mysql_query($query,$this->connection) or die("Container deletion: ".mysql_error());
+	}
+	
+	public function deleteBox($box)
+	{
+		$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+		mysql_query($query,$this->connection) or die(mysql_error());
 	}
 	
 	public function persistContainer($container)
@@ -357,6 +364,61 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		return true;
 	}
 	
+	private function saveStr($str)
+	{
+		if($str==NULL)
+			return "";
+		return $str;
+	}
+	
+	public function persistBox($box)
+	{
+		//no matter what we have to resolve the style
+		$styleid="NULL";
+		if($box->style!=NULL)
+		{
+			$query="select id from grid_box_style where slug='".$box->style."'";
+			$result=mysql_query($query,$this->connection) or die(mysql_error());
+			$row=mysql_fetch_assoc($result);
+			$styleid=$row['id'];
+		}
+		//no matter what we have to resolve the type
+		$query="select id from grid_box_type where type='".$box->type()."'";
+		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$row=mysql_fetch_assoc($result);
+		if(!isset($row['id']))
+			return FALSE;
+		$type=$row['id'];
+		if($box->boxid==NULL)
+		{
+			$query="select next_boxid from grid_grid where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
+			$result=mysql_query($query,$this->connection) or die(mysql_error());
+			$row=mysql_fetch_assoc($result);
+			$query="update grid_grid set next_boxid=next_boxid+1 where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
+			mysql_query($query,$this->connection) or die(mysql_error());
+			
+			$query="insert into grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content,style) values 
+			(".$row['next_boxid'].",".$box->grid->gridid.",".$box->grid->gridrevision.",".$type."
+			,'".$this->saveStr($box->title)."','".$this->saveStr($box->titleurl)."','".$this->saveStr($box->prolog)."','".$this->saveStr($box->epilog)."'
+			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".json_encode($box->content)."',".$styleid.")";
+			mysql_query($query,$this->connection) or die(mysql_error());
+			$box->boxid=$row['next_boxid'];
+		}
+		else
+		{
+			$query="update grid_box set title='".$this->saveStr($box->title)."',
+			 title_url='".$this->saveStr($box->titleurl)."',
+			 prolog='".$this->saveStr($box->prolog)."',
+			 epilog='".$this->saveStr($box->epilog)."',
+			 readmore='".$this->saveStr($box->readmore)."',
+			 readmore_url='".$this->saveStr($box->readmoreurl)."',
+			 content='".json_encode($box->content)."',
+			 style=".$styleid." where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+			mysql_query($query,$this->connection) or die(mysql_error());
+		}
+		return TRUE;
+	}
+	
 	public function fetchContainerStyles()
 	{
 		$query="select style,slug from grid_container_style order by style asc";
@@ -392,37 +454,6 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		return $return;
 	}
-
-
-	
-	public function fetchBoxesMatchingTitle($title)
-	{
-		$query="select 
-		grid_box.id as box_id,
-		grid_box_type.type as box_type,
-		grid_box_style.slug as box_style,
-		title as box_title,
-		title_url as box_titleurl,
-		prolog as box_prolog,
-		epilog as box_epilog,
-		readmore as box_readmore,
-		readmore_url as box_readmoreurl,
-		content as box_content
-		from grid_box
-		left join grid_box_type on grid_box.type=grid_box_type.id 
-		left join grid_box_style on grid_box.style=grid_box_style.style ";
-		if($title!="" && $title!=NULL)
-			$query.="where title like '%$title%' ";
-		$query.="order by title asc";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
-		$boxes=array();
-		while($row=mysql_fetch_assoc($result))
-		{
-			$box=$this->parseBox($row);
-			$boxes[]=$box;
-		}
-		return $boxes;
-	}
 	
 	public function loadBox($boxId)
 	{
@@ -444,5 +475,22 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$result=mysql_query($query,$this->connection) or die(mysql_error());
 		$row=mysql_fetch_assoc($result);
 		return $this->parseBox($row);
+	}
+	
+	public function getMetaTypes() {
+		$classes=get_declared_classes();
+		$metaboxes=array();
+		foreach($classes as $class)
+		{
+			if(is_subclass_of($class,"grid_box"))
+			{
+				$obj=new $class();
+				if($obj->isMetaType())
+				{
+					$metaboxes[]=$obj;
+				}
+			}
+		}
+		return $metaboxes;		
 	}
 }
