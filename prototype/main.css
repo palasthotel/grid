@@ -9,21 +9,27 @@ SMACK
 body{
 	width:1000px;
 	margin:0px auto;
-	margin-top:20px;
+	margin-top:10px;
 	margin-bottom:60px;
 	background-color:#fff;
 }
 /** Toolbar rules **/
 #toolbar{
-	margin-bottom:20px;
 	display:block;
 	width:1000px;;
 	background-color:#fff;
+	border:1px solid #e0e0e0;
+	border-top:none;
+	padding-top:10px;
+	margin-bottom:10px;
 }
 .fixed #toolbar{
 	position:fixed;
 	top:0px;
 	z-index:999;
+	-webkit-box-shadow: #ccc 0px 2px 5px;
+	-moz-box-shadow: #ccc 0px 2px 5px; 
+	box-shadow: #ccc 0px 2px 5px;
 }
 #toolbar .state-display{
 	color:#999;
@@ -36,12 +42,10 @@ body{
 	margin-right:10px;
 }
 #toolbar .grid-tools{
-	border:1px solid #e0e0e0;
-	border-top:none;
 	padding:10px;
 }
 .fixed #grid{
-	margin-top:140px;
+	display:block;
 }
 .grid-tools .g-tool{
 	display:none;
@@ -61,13 +65,35 @@ body{
 	border:1px solid#efefef;
 	background-color:#f6f6f6;
 }
-.g-box .search-bar{
-	margin-bottom:10px;
+.g-box .box-type-tabs{
+	border-bottom:1px solid #333;
+	margin-bottom: 10px;
 }
-.g-box .search-bar .loading{
+.g-box .box-type-tabs li{
+	float:left;
+	padding:4px 8px 2px 8px;
+	margin-right:25px;
+	border-bottom:5px solid #CCC;
+	cursor:pointer;
+}
+.g-box .box-type-tabs li:not(.active):hover{
+	border-bottom-color:#6cf;
+}
+.g-box .box-type-tabs li.active{
+	background-color:#333;
+	color:#fff;
+	border-bottom-color:#333;
+}
+.g-box .search-bar{
+	display:none;
+	margin-bottom:10px;
+	position:relative;
+}
+.g-box .loading{
+	display:none;
 	position:absolute;
-	top:12px;
-	left:170px;
+	top:10px;
+	right:18px;
 }
 .g-box .box-list{
 	height:140px;
@@ -87,7 +113,7 @@ body{
 	border:1px solid #e6e6e6;
 	background-color:#fff;
 }
-.box-dragger .content,
+.box-dragger .title,
 .box-dragger .prolog,
 .box-dragger .epilog{
 	display:none;
@@ -116,6 +142,10 @@ body{
 	border:1px solid #e6e6e6;
 	background-color:#efefef;
 	padding-top:28px;
+}
+.container > div > p{
+	color:#666;
+	margin-bottom:5px;
 }
 .container:before{
 	content:'Container:';
