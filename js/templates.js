@@ -14,8 +14,9 @@ var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${s
         	'<div class="slots-wrapper clearfix">{{if slots}}{{tmpl(slots) "slotTemplate"}}{{/if}}</div>'+
             '<div class="c-after">'+
             	'<p class="c-epilog">${epilog}</p>'+
-				'<p class="c-readmore">${readmore}</p>'+
-				'<p class="c-readmoreurl">${readmoreurl}</p>'+
+				'<p><span class="c-readmore">${readmore}</span>'+
+					'{{if readmoreurl}} [ <span class="c-readmoreurl">${readmoreurl}</span> ]'+
+					' {{else}} <span class="c-readmoreurl">${readmoreurl}</span>{{/if}}</p>'+
 				'<p class="c-style">${style}</p>'+
             '</div>'+
         '</div>';
@@ -78,7 +79,7 @@ $.template( "slotTemplate", slot_markup );
 var box_markup = '<div class="box" data-id="${id}">'+
 						'<h3><a href="${titleurl}" class="box-title">${title}</a></h3>'+
                         '<div class="prolog">{{html prolog}}</div>'+
-                        '<div class="content">${content}</div>'+
+                        '<div class="content">{{html html}}</div>'+
                         '<div class="epilog">{{html epilog}}</div>'+
                         '<p class="readmore"><a href="${readmoreurl}">${readmore}</a></p>'+
 				'</div>';
@@ -88,7 +89,7 @@ var box_draggable_markup = '<li class="box-dragger" data-id="${id}"'+
 							' data-titleurl="${titleurl}" data-readmore="${readmore}" data-readmoreurl="${readmoreurl}">'+
 							'<div class="prolog">{{html prolog}}</div>'+
 							'<div class="handle"></div><div class="title">${title}</div>'+
-							'<div class="content">${content}</div>'+
+							'<div class="content">{{html html}}</div>'+
 							'<div class="epilog">{{html epilog}}</div>'+
 							'</li>';
 $.template( "boxDraggableTemplate", box_draggable_markup );

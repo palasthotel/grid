@@ -11,6 +11,7 @@ $(function() {
 	// ---------------------------
 	// Allgemeine Elemente und konstanten
 	// --------------------------
+	var arr_box_types;
 	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
 	var $slot_styles;
 	var $stateDisplay = $(".state-display");
@@ -28,6 +29,8 @@ $(function() {
 	var $gridTools = $(".grid-tools");
 	var $toolContainer = $gridTools.children(".g-container");
 	var $toolBox = $gridTools.children(".g-box");
+	var $toolBoxTypeTabs = $toolBox.children(".box-type-tabs");
+	var $search_bar = $toolBox.find(".search-bar");
 	var $search_box = $toolBox.find("input");
 	
 	var $toolBoxList = $(".g-box .box-list");
@@ -40,19 +43,21 @@ $(function() {
 	var initFunctionStack = [];
 	function init() {
 		ID = 42;
+		console.log("lade BoxTypes");
+		loadBoxTypes();
 		console.log("lade Styles");
 		loadStyles();
 		console.log("lade Grid");
 		loadGrid();
 		// scrollable toolbar
 		top = $toolbar.offset().top;
-		height = $toolbar.height();
 		$(window).scroll(function() {
-			console.log("scroll"+top+" "+height);
-			if($(this).scrollTop() > (top)) {
-			  $body.addClass('fixed');
+			if( $(this).scrollTop() > (top) ) {
+				$grid.css("margin-top",$toolbar.height());
+			  	$body.addClass('fixed');
 			} else {
-			  $body.removeClass('fixed');
+				$grid.css("margin-top",0);
+			  	$body.removeClass('fixed');
 			}
 		});
 	}
@@ -60,6 +65,21 @@ $(function() {
 	// --------------------
 	// Werte die vor dem Grid geladen werden müssen
 	// --------------------
+	function loadBoxTypes(){
+		sendAjax(
+			"getMetaTypesAndSearchCriteria",
+			[],
+			function(data){
+				arr_box_types = data.result;
+				console.log("box types geladen");
+				console.log(arr_box_types);
+				$toolBoxTypeTabs.empty();
+				$.each(arr_box_types,function(index,value){
+					$temp_li = $("<li>"+value.title+"</li>").attr("data-index",index).addClass("test");
+					$toolBoxTypeTabs.append($temp_li);
+				});
+			},null,false);
+	}
 	function loadStyles(){
 		sendAjax(
 			"getContainerStyles",
@@ -140,6 +160,10 @@ $(function() {
 				toggleContainerTools();
 				break;
 			case "add_box":
+				if($toolBoxTypeTabs.children(".active").length < 1){
+					$toolBoxTypeTabs.children().first().addClass("active");
+				}
+				buildBoxTypeInterface();
 				toggleBoxTools();
 				break;
 			case "hide_boxes":
@@ -150,10 +174,60 @@ $(function() {
 				break;
 		}
 	});
+	// ------------------------------
+	// Box Tools
+	// -----------------------------
+	var searchTimeout;
+	var $loading_boxes = $(".g-box .loading");
+	var active_box_type = null;
+	$toolBoxTypeTabs.on("click","li:not(.active)",function(e){
+		clearTimeout(searchTimeout);
+		$toolBoxTypeTabs.children().removeClass("active");
+		$(this).addClass("active");
+		buildBoxTypeInterface();
+	});
+	function buildBoxTypeInterface(){
+		active_box_type = arr_box_types[$toolBoxTypeTabs.children(".active").data("index")];
+		if(active_box_type.criteria.length > 0){
+			$search_bar.show();
+			console.log("suchen bitte");
+		} else {
+			$search_bar.hide();
+			searchBoxes();
+		}
+		$toolBoxList.empty();
+	}
+	$search_box.on("keyup",function(e){
+		searchBoxes($(this).val());
+	});
+	function searchBoxes(searchString){
+		$loading_boxes.show();
+		clearTimeout(searchTimeout);
+		searchTimeout = setTimeout(function(){
+			sendAjax("Search",[active_box_type.type,searchString,active_box_type.criteria] ,function(data){
+					console.log("Search Results:");
+					$toolBoxList.empty();
+					$.each(data.result,function(index, value){
+						console.log(value);
+						$toolBoxList.append(buildBoxDraggable(
+							{	
+								id: value.id, title: value.title, titleurl:value.titleurl, 
+								prolog: value.prolog, html: value.html, epilog: value.epilog,
+								readmore: value.readmore, readmoreurl: value.readmoreurl
+							}
+						));
+					});
+					refreshBoxDraggables();
+					$loading_boxes.hide();
+				});
+		},500);
+	}
+	function buildBoxDraggable(templateParams){
+		return $.tmpl( "boxDraggableTemplate", templateParams );
+	}
 	// ----------------------------
 	// container funktionen
 	// --------------------------
-	
 	function toggleContainerTools(){
 		if($toolContainer.css("display") == "none"){
 			$gridTools.children().hide();
@@ -331,7 +405,6 @@ $(function() {
 	// ---------------------
 	// slot funktionen
 	// ----------------------
-	
 	$grid.on("mouseover",".slot > .style-changer",function(e){
 		refreshSlotStyles($(this))
 	});
@@ -373,35 +446,10 @@ $(function() {
 	function buildSlot(templateParams){
 		return $.tmpl( "slotTemplate", templateParams );
 	}
-	
 	// --------------------
 	// Box Funktionen
 	// -------------------
-	$search_box.on("keyup",function(e){
-		searchBoxes($(this).val());
-	});
-	var searchTimeout;
-	var $loading_search = $(".g-box .search-bar .loading");
-	function searchBoxes(searchString){
-		$loading_search.show();
-		clearTimeout(searchTimeout);
-		searchTimeout = setTimeout(function(){
-			sendAjax("searchBox",[searchString] ,function(data){
-					$toolBoxList.empty();
-					$.each(data.result,function(index, value){
-						$toolBoxList.append(buildBoxDraggable(
-							{	
-								id: value.id, title: value.title, titleurl:value.titleurl, 
-								prolog: value.prolog, content: value.content, epilog: value.epilog,
-								readmore: value.readmore, readmoreurl: value.readmoreurl
-							}
-						));
-					});
-					refreshBoxDraggables();
-					$loading_search.hide();
-				});
-		},500);
-	}
+	
 	var old_slot_id, old_container_id, old_box_index;
 	function refreshBoxSortable(){
 		$(".boxes-wrapper").sortable({
@@ -444,7 +492,7 @@ $(function() {
 						}
 				});
 			},
-			cursorAt: { left: 0, top:30 }
+			cursorAt: { left: 30, top:30 }
 		});
 	}
 	var boxDeleted = false;
@@ -518,9 +566,6 @@ $(function() {
 	function buildBox(templateParams){
 		return $.tmpl( "boxTemplate", templateParams );
 	}
-	function buildBoxDraggable(templateParams){
-		return $.tmpl( "boxDraggableTemplate", templateParams );
-	}
 	
 	// --------------------
 	// GUI manipulation
@@ -544,7 +589,6 @@ $(function() {
 	function showBoxTools(){
 		$gridTools.children().hide();
 		$toolBox.show();
-		searchBoxes("");
 	}
 	var box_toggling = false;
 	function toggleBoxes(){
@@ -558,7 +602,7 @@ $(function() {
 	// --------------------
 	// Serverkommunikation
 	// -------------------
-	var SERVER = "http://emma-dev.ia-code.ws/grid/core/index.php?path=/ajax";
+	var SERVER = "../core/index.php?path=/ajax"; 
 	function sendAjax(method, params_array, success, error, async){
 		json = {};
 		json["method"] = method;
