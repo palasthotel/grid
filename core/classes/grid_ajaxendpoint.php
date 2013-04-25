@@ -47,6 +47,7 @@ class grid_ajaxendpoint {
 			{
 				$slt=array();
 				$slt['id']=$slot->slotid;
+				$slt['style']=$slot->style;
 				$slt['boxes']=array();
 				foreach($slot->boxes as $box)
 				{
@@ -195,10 +196,40 @@ class grid_ajaxendpoint {
 		//TODO: WORK HERE!!!
 	}
 	
-	public function getStyles()
+	public function getContainerStyles()
 	{
-		return $this->storage->fetchStyles();
+		return $this->storage->fetchContainerStyles();
 	}
+
+	public function getSlotStyles()
+	{
+		return $this->storage->fetchSlotStyles();
+	}
+
+	public function getBoxStyles()
+	{
+		return $this->storage->fetchBoxStyles();
+	}
+	
+	public function updateSlotStyle($gridid,$containerid,$slotid,$style)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						return $slot->setStyle($style);
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	
 	public function searchBox($searchstring)
 	{

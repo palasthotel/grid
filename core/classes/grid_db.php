@@ -48,6 +48,7 @@ class grid_db {
 		$box=new $class();
 		$box->storage=$this;
 		$box->boxid=$row['box_id'];
+		$box->style=$row['box_style'];
 		$box->title=$row['box_title'];
 		$box->titleurl=$row['box_titleurl'];
 		$box->prolog=$row['box_prolog'];
@@ -74,7 +75,7 @@ class grid_db {
 
 		$query="select 
 grid_container.id as container_id,
-grid_container_style.style as container_style,
+grid_container_style.slug as container_style,
 grid_container.title as container_title,
 grid_container.title_url as container_titleurl,
 grid_container.prolog as container_prolog,
@@ -83,6 +84,7 @@ grid_container.readmore as container_readmore,
 grid_container.readmore_url as container_readmoreurl,
 grid_container_type.type as container_type,
 grid_container2slot.slot_id as slot_id,
+grid_slot_style.slug as slot_style,
 grid_box.id as box_id,
 grid_box.title as box_title,
 grid_box.title_url as box_titleurl,
@@ -91,8 +93,8 @@ grid_box.epilog as box_epilog,
 grid_box.content as box_content,
 grid_box.readmore as box_readmore,
 grid_box.readmore_url as box_readmoreurl,
-grid_box_type.type as box_type
-
+grid_box_type.type as box_type,
+grid_box_style.slug as box_style
 from grid_grid2container 
 left join grid_container 
      on container_id=grid_container.id 
@@ -104,14 +106,22 @@ left join grid_container2slot
      on grid_container.id=grid_container2slot.container_id
      and grid_container.grid_id=grid_container2slot.grid_id
      and grid_container.grid_revision=grid_container2slot.grid_revision
+left join grid_slot
+     on grid_container2slot.slot_id=grid_slot.id
+left join grid_slot_style
+     on grid_slot.style=grid_slot_style.id
 left join grid_slot2box 
      on grid_container2slot.slot_id=grid_slot2box.slot_id
      and grid_container2slot.grid_id=grid_slot2box.grid_id
      and grid_container2slot.grid_revision=grid_slot2box.grid_revision
 left join grid_box 
      on grid_slot2box.box_id=grid_box.id
-left join grid_container_type on grid_container.type=grid_container_type.id
-left join grid_box_type on grid_box.type=grid_box_type.id
+left join grid_container_type 
+	 on grid_container.type=grid_container_type.id
+left join grid_box_type 
+	 on grid_box.type=grid_box_type.id
+left join grid_box_style
+	 on grid_box.style=grid_box_style.id
 where grid_grid2container.grid_id=$gridId and grid_grid2container.grid_revision=$revision
 order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.weight;";
 		$result=mysql_query($query,$this->connection);
@@ -144,6 +154,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				$currentslot=new grid_slot();
 				$currentslot->grid=$grid;
 				$currentslot->slotid=$row['slot_id'];
+				$currentslot->style=$row['slot_style'];
 				$currentslot->boxes=array();
 				$currentslot->storage=$this;
 				$currentcontainer->slots[]=$currentslot;
@@ -314,7 +325,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		else
 		{
-			$query="select id from grid_container_style where style='".$container->style."'";
+			$query="select id from grid_container_style where slug='".$container->style."'";
 			$result=mysql_query($query,$this->connection);
 			$row=mysql_fetch_assoc($result);
 			if(!isset($row['id']))
@@ -326,23 +337,70 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		return true;
 	}
 	
-	public function fetchStyles()
+	public function persistSlot($slot)
 	{
-		$query="select style from grid_container_style order by style asc";
+		if($slot->style==NULL)
+		{
+			$styleid="NULL";
+		}
+		else
+		{
+			$query="select id from grid_slot_style where slug='".$slot->style."'";
+			$result=mysql_query($query,$this->connection);
+			$row=mysql_fetch_assoc($result);
+			if(!isset($row['id']))
+				return false;
+			$styleid=$row['id'];
+		}
+		$query="update grid_slot set style=".$styleid." where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
+		mysql_query($query,$this->connection) or die(mysql_error());
+		return true;
+	}
+	
+	public function fetchContainerStyles()
+	{
+		$query="select style,slug from grid_container_style order by style asc";
 		$result=mysql_query($query,$this->connection) or die(mysql_error());
 		$return=array();
 		while($row=mysql_fetch_assoc($result))
 		{
-			$return[]=$row['style'];
+			$return[]=array('title'=>$row['style'],'slug'=>$row['slug']);
 		}
 		return $return;
 	}
+
+	public function fetchSlotStyles()
+	{
+		$query="select style,slug from grid_slot_style order by style asc";
+		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$return=array();
+		while($row=mysql_fetch_assoc($result))
+		{
+			$return[]=array('title'=>$row['style'],'slug'=>$row['slug']);
+		}
+		return $return;
+	}
+	
+	public function fetchBoxStyles()
+	{
+		$query="select style,slug from grid_box_style order by style asc";
+		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$return=array();
+		while($row=mysql_fetch_assoc($result))
+		{
+			$return[]=array('title'=>$row['style'],'slug'=>$row['slug']);
+		}
+		return $return;
+	}
+
+
 	
 	public function fetchBoxesMatchingTitle($title)
 	{
 		$query="select 
 		grid_box.id as box_id,
 		grid_box_type.type as box_type,
+		grid_box_style.slug as box_style,
 		title as box_title,
 		title_url as box_titleurl,
 		prolog as box_prolog,
@@ -351,7 +409,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		readmore_url as box_readmoreurl,
 		content as box_content
 		from grid_box
-		left join grid_box_type on grid_box.type=grid_box_type.id ";
+		left join grid_box_type on grid_box.type=grid_box_type.id 
+		left join grid_box_style on grid_box.style=grid_box_style.style ";
 		if($title!="" && $title!=NULL)
 			$query.="where title like '%$title%' ";
 		$query.="order by title asc";
@@ -370,6 +429,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$query="select 
 		grid_box.id as box_id,
 		grid_box_type.type as box_type,
+		grid_box_style.slug as box_style,
 		title as box_title,
 		title_url as box_titleurl,
 		prolog as box_prolog,
@@ -378,7 +438,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		readmore_url as box_readmoreurl,
 		content as box_content
 		from grid_box
-		left join grid_box_type on grid_box.type=grid_box_type.id ";
+		left join grid_box_type on grid_box.type=grid_box_type.id
+		left join grid_box_style on grid_box.style=grid_box_style.id ";
 		$query.="where grid_box.id=$boxId";
 		$result=mysql_query($query,$this->connection) or die(mysql_error());
 		$row=mysql_fetch_assoc($result);

@@ -3,7 +3,7 @@
 class grid_slot extends grid_base {
 	public $grid;
 	public $slotid;
-
+	public $style;
 	public $boxes;
 
 	public function render($editmode)
@@ -35,5 +35,11 @@ class grid_slot extends grid_base {
 		$this->boxes=$list;
 		$this->storage->storeSlotOrder($this);
 		return true;
+	}
+	
+	public function setStyle($style)
+	{
+		$this->style=$style;
+		return $this->storage->persistSlot($this);
 	}
 }
