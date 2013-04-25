@@ -1,10 +1,10 @@
 
 var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}" class="container ${type} clearfix">'+
         	'<div class="c-tools">'+
-				
                 '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
                 '<span role="trash" class="c-trash c-tool"></span>'+
 				'<span role="edit" class="c-edit c-tool"></span>'+
+				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
 			'<p class="c-title">${title}</p>'+
         	'<div class="c-before">'+
@@ -27,6 +27,7 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
 				'<span role="revert" class="c-revert c-tool"></span>'+
                 '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
                 '<span role="trash" class="c-trash c-tool"></span>'+
+				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
         	'<div class="c-before">'+
             	'<label for="f-c-title">Title:</label><br />'+
@@ -57,7 +58,7 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
                     '<select name="f-c-style" id="f-c-style">'+
                         '<option value="">ohne style</option>'+
 						'{{if styles}}{{each styles}}'+
-							'<option {{if $value == style }}selected="selected"{{/if}} value="${$value}">${$value}</option>'+
+							'<option {{if $value.slug == style }}selected="selected"{{/if}} value="${$value.slug}">${$value.title}</option>'+
 						'{{/each}}{{/if}}'
                    '</select>'
                 '</fieldset>'+
@@ -68,9 +69,9 @@ $.template( "containerEditorTemplate", container_editor_markup );
 var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 						'<div class="style-changer">'+
 							'<span>{{if style}}${style}{{else}}ohne Style{{/if}}</span>'+
-							'<ul class="choose-style"></ul>'+
+							//'<ul class="choose-style"></ul>'+
 						'</div>'+
-						'{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}'+
+						'<div class="boxes-wrapper">{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}</div>'+
 				'</div>';
 $.template( "slotTemplate", slot_markup );
 

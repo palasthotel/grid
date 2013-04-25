@@ -11,10 +11,19 @@ body{
 	margin:0px auto;
 	margin-top:20px;
 	margin-bottom:60px;
+	background-color:#fff;
 }
 /** Toolbar rules **/
 #toolbar{
 	margin-bottom:20px;
+	display:block;
+	width:1000px;;
+	background-color:#fff;
+}
+.fixed #toolbar{
+	position:fixed;
+	top:0px;
+	z-index:999;
 }
 #toolbar .state-display{
 	color:#999;
@@ -30,6 +39,9 @@ body{
 	border:1px solid #e0e0e0;
 	border-top:none;
 	padding:10px;
+}
+.fixed #grid{
+	margin-top:140px;
 }
 .grid-tools .g-tool{
 	display:none;
@@ -210,6 +222,29 @@ body{
 	background-position: center 0px;
 	border-bottom:1px solid #999;
 }
+.c-box-trash{
+	display:none;
+	height:60px;
+	width:60px;
+	background-color:#fff;
+	position:absolute;
+	z-index:12;
+	top:-15px;
+	right:25px;
+	border-radius: 30px; 
+	-moz-border-radius: 30px; 
+	-webkit-border-radius: 30px; 
+	border: 1px solid #cecece;
+	background-image:url(images/trash_big.png);
+	background-position:center;
+	background-repeat:no-repeat;
+	-webkit-box-shadow: #ccc 0px 0px 5px;
+	-moz-box-shadow: #ccc 0px 0px 5px; 
+	box-shadow: #ccc 0px 0px 5px;
+}
+.c-box-trash.ui-state-hover{
+	background-color:#f22;
+}
 /** Container inplace **/
 .container textarea, .container input{
 	width:100%;
@@ -248,6 +283,13 @@ body{
 	top:4px;
 	left:44px;
 	padding-bottom:10px;
+	max-width:70%;
+}
+.style-changer > span{
+	white-space:nowrap;
+	overflow:hidden;
+	max-width:100%;
+	display:block;
 }
 .style-changer > span:before{
 	content:'» ';
@@ -258,7 +300,7 @@ body{
 .style-changer > .choose-style{
 	display:none;
 	position:absolute;
-	bottom:21px;
+	top:21px;
 	left:0px;
 	color:#fff;
 	background-color:#333;
@@ -288,6 +330,13 @@ body{
 	color:#6CF;
 }
 /** Allgemeine Box styles **/
+.boxes-wrapper{
+	min-height:10px;
+}
+.boxes-wrapper.min-height{
+	min-height:30px;
+	background-color:#999;
+}
 .box{
 	background-color:#fff;
 	border:1px solid #d3d3d3;
@@ -302,6 +351,7 @@ body{
 .b-sort-placeholder{
 	border:1px solid #a5a5a5;
 	display:block;
+	background-color:#efefef;
 }
 .b-sort-helper{
 	display:block;

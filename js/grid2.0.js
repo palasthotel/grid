@@ -12,6 +12,7 @@ $(function() {
 	// Allgemeine Elemente und konstanten
 	// --------------------------
 	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
+	var $slot_styles;
 	var $stateDisplay = $(".state-display");
 	var CSS_GRID_ID = "#grid";
 	var $grid = $(CSS_GRID_ID);
@@ -22,6 +23,7 @@ $(function() {
 	var BOX_DROP_AREA_CLASS = "box-drop-area";
 	var CSS_BOX_DROP_AREA_CLASS = ".box-drop-area";
 	
+	var $body = $("body");
 	var $toolbar = $("#toolbar");
 	var $gridTools = $(".grid-tools");
 	var $toolContainer = $gridTools.children(".g-container");
@@ -29,6 +31,7 @@ $(function() {
 	var $search_box = $toolBox.find("input");
 	
 	var $toolBoxList = $(".g-box .box-list");
+	var top = 0;
 	
 	// ----------------
 	// init Methode
@@ -41,6 +44,17 @@ $(function() {
 		loadStyles();
 		console.log("lade Grid");
 		loadGrid();
+		// scrollable toolbar
+		top = $toolbar.offset().top;
+		height = $toolbar.height();
+		$(window).scroll(function() {
+			console.log("scroll"+top+" "+height);
+			if($(this).scrollTop() > (top)) {
+			  $body.addClass('fixed');
+			} else {
+			  $body.removeClass('fixed');
+			}
+		});
 	}
 	$(document).ready(init);
 	// --------------------
@@ -62,6 +76,11 @@ $(function() {
 				arr_slot_styles = data.result;
 				console.log("slot styles geladen");
 				console.log(arr_slot_styles);
+				$slot_styles = $("<ul class='choose-style'></div>");
+				$slot_styles.append("<li class='slot-style' data-style=''>ohne Style</li>");
+				$.each(arr_slot_styles, function(index,value){
+					$slot_styles.append("<li class='slot-style' data-style='"+value.slug+"'>"+value.title+"</li>");
+				});
 			},null,false);
 		sendAjax(
 			"getBoxStyles",
@@ -195,6 +214,7 @@ $(function() {
 							console.log(index+" "+value);
 							buildSlot([{"id" : value }]).appendTo( $slots_wrapper );
 						});
+						refreshBoxSortable();
 					});
 				}
 			});
@@ -208,6 +228,10 @@ $(function() {
 		$container = $this.parents(".container");
 		switch($this.attr("role")){
 			case "edit":
+				if($grid.children(".editor").length > 0){
+					alert("Ein anderer Container wird momentan bearbeitet!");
+					return;
+				}
 				showContainerEditor($container);
 				break;
 			case "ok":
@@ -259,7 +283,6 @@ $(function() {
 	}
 	function saveContainer($editContainer){
 		var style = $editContainer.find("#f-c-style").val();
-		console.log(style);
 		if( style == "") style = null;
 		templateParams = {
 					id:$editContainer.data("id"), 
@@ -310,23 +333,42 @@ $(function() {
 	// ----------------------
 	
 	$grid.on("mouseover",".slot > .style-changer",function(e){
-		$this = $(this);
-		style = $this.parents(".slot").data("style");
-		$ul = $this.find(".choose-style");
-		$ul.empty();
-		if(style != ""){
-			$ul.append("<li data-style=''>ohne Style</li>");
+		refreshSlotStyles($(this))
+	});
+	function refreshSlotStyles($style_changer){
+		style = $style_changer.parents(".slot").data("style");
+		$ul_styles = $style_changer.children(".choose-style");
+		if($ul_styles.length == 0 ){
+			$ul_styles = $slot_styles.clone();
+			$style_changer.append($ul_styles);
 		}
-		$.each(arr_slot_styles,function(index, value){
-			if(style != value){
-				$ul.append("<li data-style='"+value+"'>"+value+"</li>");
+		$ul_styles.children().show();
+		$active_child = $ul_styles.children("[data-style="+style+"]").hide();
+		if(style == ""){
+			$style_changer.children("span").text("ohne Style");
+		} else {
+			$style_changer.children("span").text($active_child.text());
+		}
+	}
+	$grid.delegate("li.slot-style","click",function(e){
+		$this = $(this);
+		style = $this.data("style");
+		$container = $this.parents(".container");
+		$slot = $this.parents(".slot");
+		$style_changer = $this.parents(".style-changer");
+		// commit changes
+		params =[ID,$container.data("id"),$slot.data("id"),style];
+		sendAjax("updateSlotStyle",params,
+		function(data){
+			if(data.result == true){
+				$slot.data("style", $this.data("style"));
+				refreshSlotStyles($style_changer);
+				
+			} else {
+				alert("Konnte Slotstyle nicht änderns.");
 			}
 		});
-		
 	});
-	$("body").delegate(".choose-style li", "click", function(){
-      console.log("dsdf");
-    });
 	
 	function buildSlot(templateParams){
 		return $.tmpl( "slotTemplate", templateParams );
@@ -338,21 +380,6 @@ $(function() {
 	$search_box.on("keyup",function(e){
 		searchBoxes($(this).val());
 	});
-	function toggleBoxTools(){
-		if($toolBox.css("display") == "none"){
-			showBoxTools();
-		} else {
-			hideBoxTools();
-		}
-	}
-	function hideBoxTools(){
-		$toolBox.hide();
-	}
-	function showBoxTools(){
-		$gridTools.children().hide();
-		$toolBox.show();
-		searchBoxes("");
-	}
 	var searchTimeout;
 	var $loading_search = $(".g-box .search-bar .loading");
 	function searchBoxes(searchString){
@@ -377,21 +404,31 @@ $(function() {
 	}
 	var old_slot_id, old_container_id, old_box_index;
 	function refreshBoxSortable(){
-		$(".slot").sortable({
+		$(".boxes-wrapper").sortable({
 			items: ".box",
-			connectWith: ".slot",
+			connectWith: ".boxes-wrapper, .c-box-trash",
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
 			helper: function(event, element){
 				return $("<div class='b-sort-helper'></div>");
 			},
 			start: function(e, ui){
+				$(".boxes-wrapper").addClass("min-height");
 				ui.placeholder.height(ui.item.height());
 				old_box_index = ui.item.index();
 				old_slot_id = ui.item.parents(".slot").data("id");
 				old_container_id = ui.item.parents(".container").data("id");
+				refreshBoxTrashs();
 			},
 			stop: function(e, ui){
+				console.log("STOP sort");
+				$(".boxes-wrapper").removeClass("min-height");
+				hideBoxTrash();
+				if(boxDeleted){
+					boxDeleted = false;
+					console.log("trash!!!!");
+					return;
+				}
 				sendAjax(
 					"moveBox",
 					[
@@ -402,11 +439,33 @@ $(function() {
 					function(data){
 						if(data.result != true){
 							// TODO: Rückmeldung geben und Box zurück sortieren!!!
+							console.log(data);
 							console.log("Rückmeldung geben und Box zurück sortieren!!!");
 						}
 				});
 			},
-			cursorAt: { left: 30, top:30 }
+			cursorAt: { left: 0, top:30 }
+		});
+	}
+	var boxDeleted = false;
+	function refreshBoxTrashs(){
+		showBoxTrash();
+		$(".c-box-trash").droppable({
+			accept: ".slot .box",
+			hoverClass: "ui-state-hover",
+			drop: function(e, ui) {
+				console.log("dropped in trash");
+				boxDeleted = true;
+				sendAjax("removeBox",[ID,old_container_id,old_slot_id,old_box_index],
+				function(data){
+					if(data.result == false){
+						alert("Konnte die Box nicht entfernen");
+						return;
+					}
+					ui.draggable.remove();
+					hideBoxTrash();
+				});
+			}
 		});
 	}
 	function refreshBoxDraggables(){
@@ -415,7 +474,7 @@ $(function() {
 			zIndex: 199, 
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
-				$slots = $grid.find(".slot");
+				$slots = $grid.find(".slot .boxes-wrapper");
 				$slots.children(".box").before("<div class='"+BOX_DROP_AREA_CLASS+"'>Drop Box</div>");
 				$slots.append("<div class='"+BOX_DROP_AREA_CLASS+"'>Drop Box</div>");
 				$slots.children(CSS_BOX_DROP_AREA_CLASS).droppable({ 
@@ -466,6 +525,27 @@ $(function() {
 	// --------------------
 	// GUI manipulation
 	// -------------------
+	function showBoxTrash(){
+		$(".c-box-trash").show();
+	}
+	function hideBoxTrash(){
+		$(".c-box-trash").hide();
+	}
+	function toggleBoxTools(){
+		if($toolBox.css("display") == "none"){
+			showBoxTools();
+		} else {
+			hideBoxTools();
+		}
+	}
+	function hideBoxTools(){
+		$toolBox.hide();
+	}
+	function showBoxTools(){
+		$gridTools.children().hide();
+		$toolBox.show();
+		searchBoxes("");
+	}
 	var box_toggling = false;
 	function toggleBoxes(){
 		if(box_toggling) return;
