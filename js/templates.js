@@ -1,10 +1,10 @@
 
 var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}" class="container ${type} clearfix">'+
         	'<div class="c-tools">'+
-				
                 '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
                 '<span role="trash" class="c-trash c-tool"></span>'+
 				'<span role="edit" class="c-edit c-tool"></span>'+
+				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
 			'<p class="c-title">${title}</p>'+
         	'<div class="c-before">'+
@@ -27,6 +27,7 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
 				'<span role="revert" class="c-revert c-tool"></span>'+
                 '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
                 '<span role="trash" class="c-trash c-tool"></span>'+
+				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
         	'<div class="c-before">'+
             	'<label for="f-c-title">Title:</label><br />'+
@@ -56,14 +57,22 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
                     '<label for="f-c-style">Style</label><br />'+ 
                     '<select name="f-c-style" id="f-c-style">'+
                         '<option value="">ohne style</option>'+
-                        '<option value="freeform">FreeForm</option>'+
+						'{{if styles}}{{each styles}}'+
+							'<option {{if $value.slug == style }}selected="selected"{{/if}} value="${$value.slug}">${$value.title}</option>'+
+						'{{/each}}{{/if}}'
                    '</select>'
                 '</fieldset>'+
             '</div>'+
         '</div>';
 $.template( "containerEditorTemplate", container_editor_markup );
 
-var slot_markup = '<div class="slot" data-id="${id}">{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}</div>';
+var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
+						'<div class="style-changer">'+
+							'<span>{{if style}}${style}{{else}}ohne Style{{/if}}</span>'+
+							//'<ul class="choose-style"></ul>'+
+						'</div>'+
+						'<div class="boxes-wrapper">{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}</div>'+
+				'</div>';
 $.template( "slotTemplate", slot_markup );
 
 var box_markup = '<div class="box" data-id="${id}">'+
@@ -75,7 +84,11 @@ var box_markup = '<div class="box" data-id="${id}">'+
 				'</div>';
 $.template( "boxTemplate", box_markup );
 
-var box_draggable_markup = '<li class="box-dragger" data-id="${id}">'+
-							'<div class="handle"></div><div>${title}</div>'+
+var box_draggable_markup = '<li class="box-dragger" data-id="${id}"'+
+							' data-titleurl="${titleurl}" data-readmore="${readmore}" data-readmoreurl="${readmoreurl}">'+
+							'<div class="prolog">{{html prolog}}</div>'+
+							'<div class="handle"></div><div class="title">${title}</div>'+
+							'<div class="content">${content}</div>'+
+							'<div class="epilog">{{html epilog}}</div>'+
 							'</li>';
 $.template( "boxDraggableTemplate", box_draggable_markup );

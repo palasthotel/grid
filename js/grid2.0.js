@@ -7,15 +7,92 @@ $(function() {
 		if(!saved) return "Es wurden noch nicht alle Änderungen gespeichert!";
 	}
 	*/
+	
+	// ---------------------------
+	// Allgemeine Elemente und konstanten
+	// --------------------------
+	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
+	var $slot_styles;
+	var $stateDisplay = $(".state-display");
+	var CSS_GRID_ID = "#grid";
+	var $grid = $(CSS_GRID_ID);
+	
+	var CONTAINER_DROP_AREA_CLASS = "container-drop-area";
+	var CSS_CONTAINER_DROP_AREA_CLASS = ".container-drop-area";
+	
+	var BOX_DROP_AREA_CLASS = "box-drop-area";
+	var CSS_BOX_DROP_AREA_CLASS = ".box-drop-area";
+	
+	var $body = $("body");
+	var $toolbar = $("#toolbar");
+	var $gridTools = $(".grid-tools");
+	var $toolContainer = $gridTools.children(".g-container");
+	var $toolBox = $gridTools.children(".g-box");
+	var $search_box = $toolBox.find("input");
+	
+	var $toolBoxList = $(".g-box .box-list");
+	var top = 0;
+	
 	// ----------------
 	// init Methode
 	// ---------------
 	var ID;
+	var initFunctionStack = [];
 	function init() {
 		ID = 42;
+		console.log("lade Styles");
+		loadStyles();
+		console.log("lade Grid");
 		loadGrid();
+		// scrollable toolbar
+		top = $toolbar.offset().top;
+		height = $toolbar.height();
+		$(window).scroll(function() {
+			console.log("scroll"+top+" "+height);
+			if($(this).scrollTop() > (top)) {
+			  $body.addClass('fixed');
+			} else {
+			  $body.removeClass('fixed');
+			}
+		});
 	}
 	$(document).ready(init);
+	// --------------------
+	// Werte die vor dem Grid geladen werden müssen
+	// --------------------
+	function loadStyles(){
+		sendAjax(
+			"getContainerStyles",
+			[],
+			function(data){
+				arr_container_styles = data.result;
+				console.log("container styles geladen");
+				console.log(arr_container_styles);
+			},null,false);
+		sendAjax(
+			"getSlotStyles",
+			[],
+			function(data){
+				arr_slot_styles = data.result;
+				console.log("slot styles geladen");
+				console.log(arr_slot_styles);
+				$slot_styles = $("<ul class='choose-style'></div>");
+				$slot_styles.append("<li class='slot-style' data-style=''>ohne Style</li>");
+				$.each(arr_slot_styles, function(index,value){
+					$slot_styles.append("<li class='slot-style' data-style='"+value.slug+"'>"+value.title+"</li>");
+				});
+			},null,false);
+		sendAjax(
+			"getBoxStyles",
+			[],
+			function(data){
+				arr_box_styles = data.result;
+				console.log("Box styles geladen");
+				console.log(arr_box_styles);
+			},null,false);
+	}
+	
+	
 	// --------------------
 	// Grid laden
 	// -------------------
@@ -27,7 +104,6 @@ $(function() {
 			"loadGrid", 
 			[ID],
 			function(data){
-				console.log("loadGrid:");
 				console.log(data);
 				$grid.empty();
 				var result = data.result;
@@ -39,30 +115,11 @@ $(function() {
 				var container_arr = result.container;
 				buildContainer(container_arr).appendTo( $grid );
 				console.log(container_arr);
-				refreshBoxSortable()
+				refreshBoxSortable();
 			}
 		);
 	}
-		
-	// ---------------------------
-	// Allgemeine Elemente und konstanten
-	// --------------------------
-	var $stateDisplay = $(".state-display");
-	var CSS_GRID_ID = "#grid";
-	var $grid = $(CSS_GRID_ID);
 	
-	var CONTAINER_DROP_AREA_CLASS = "container-drop-area";
-	var CSS_CONTAINER_DROP_AREA_CLASS = ".container-drop-area";
-	
-	var BOX_DROP_AREA_CLASS = "box-drop-area";
-	var CSS_BOX_DROP_AREA_CLASS = ".box-drop-area";
-	
-	var $toolbar = $("#toolbar");
-	var $gridTools = $(".grid-tools");
-	var $toolContainer = $gridTools.children(".g-container");
-	var $toolBox = $gridTools.children(".g-box");
-	
-	var $toolBoxList = $(".g-box .box-list");
 	
 	// ---------------------------------
 	// Handler für die Werkzeuge
@@ -78,12 +135,12 @@ $(function() {
 				break;
 			case "publish":
 				console.log("Veröffentlichen");
+				break;
 			case "add_container":
-				$gridTools.children().hide();
-				$toolContainer.show();
+				toggleContainerTools();
 				break;
 			case "add_box":
-				showBoxTools();
+				toggleBoxTools();
 				break;
 			case "hide_boxes":
 				toggleBoxes();
@@ -96,6 +153,15 @@ $(function() {
 	// ----------------------------
 	// container funktionen
 	// --------------------------
+	
+	function toggleContainerTools(){
+		if($toolContainer.css("display") == "none"){
+			$gridTools.children().hide();
+		$toolContainer.show();
+		} else {
+			$toolContainer.hide();
+		}
+	}
 	
 	$grid.sortable({
 		handle: ".c-sort-handle",
@@ -148,6 +214,7 @@ $(function() {
 							console.log(index+" "+value);
 							buildSlot([{"id" : value }]).appendTo( $slots_wrapper );
 						});
+						refreshBoxSortable();
 					});
 				}
 			});
@@ -161,6 +228,10 @@ $(function() {
 		$container = $this.parents(".container");
 		switch($this.attr("role")){
 			case "edit":
+				if($grid.children(".editor").length > 0){
+					alert("Ein anderer Container wird momentan bearbeitet!");
+					return;
+				}
 				showContainerEditor($container);
 				break;
 			case "ok":
@@ -199,7 +270,9 @@ $(function() {
 					prolog: $container.find(".c-prolog").html(),
 					epilog: $container.find(".c-epilog").html(),
 					readmore: $container.find(".c-readmore").text(),
-					readmoreurl: $container.find(".c-readmoreurl").text()
+					readmoreurl: $container.find(".c-readmoreurl").text(),
+					style: $container.data("style"),
+					styles: arr_container_styles
 				};
 				console.log(params);
 		revert_data = {};
@@ -209,7 +282,7 @@ $(function() {
 		$container.remove();
 	}
 	function saveContainer($editContainer){
-		var style = $editContainer.find(".f-c-style").val();
+		var style = $editContainer.find("#f-c-style").val();
 		if( style == "") style = null;
 		templateParams = {
 					id:$editContainer.data("id"), 
@@ -258,6 +331,45 @@ $(function() {
 	// ---------------------
 	// slot funktionen
 	// ----------------------
+	
+	$grid.on("mouseover",".slot > .style-changer",function(e){
+		refreshSlotStyles($(this))
+	});
+	function refreshSlotStyles($style_changer){
+		style = $style_changer.parents(".slot").data("style");
+		$ul_styles = $style_changer.children(".choose-style");
+		if($ul_styles.length == 0 ){
+			$ul_styles = $slot_styles.clone();
+			$style_changer.append($ul_styles);
+		}
+		$ul_styles.children().show();
+		$active_child = $ul_styles.children("[data-style="+style+"]").hide();
+		if(style == ""){
+			$style_changer.children("span").text("ohne Style");
+		} else {
+			$style_changer.children("span").text($active_child.text());
+		}
+	}
+	$grid.delegate("li.slot-style","click",function(e){
+		$this = $(this);
+		style = $this.data("style");
+		$container = $this.parents(".container");
+		$slot = $this.parents(".slot");
+		$style_changer = $this.parents(".style-changer");
+		// commit changes
+		params =[ID,$container.data("id"),$slot.data("id"),style];
+		sendAjax("updateSlotStyle",params,
+		function(data){
+			if(data.result == true){
+				$slot.data("style", $this.data("style"));
+				refreshSlotStyles($style_changer);
+				
+			} else {
+				alert("Konnte Slotstyle nicht änderns.");
+			}
+		});
+	});
+	
 	function buildSlot(templateParams){
 		return $.tmpl( "slotTemplate", templateParams );
 	}
@@ -265,42 +377,104 @@ $(function() {
 	// --------------------
 	// Box Funktionen
 	// -------------------
-	function showBoxTools(){
-		sendAjax("searchBox",[""],function(data){
-			console.log(data);
-			$toolBoxList.empty();
-			$.each(data.result,function(index, value){
-				console.log(value);
-				$toolBoxList.append(buildBoxDraggable({id: value.id, title: value.title}));
-			});
-			$gridTools.children().hide();
-			$toolBox.show();
-			refreshBoxDraggables();
-		});
+	$search_box.on("keyup",function(e){
+		searchBoxes($(this).val());
+	});
+	var searchTimeout;
+	var $loading_search = $(".g-box .search-bar .loading");
+	function searchBoxes(searchString){
+		$loading_search.show();
+		clearTimeout(searchTimeout);
+		searchTimeout = setTimeout(function(){
+			sendAjax("searchBox",[searchString] ,function(data){
+					$toolBoxList.empty();
+					$.each(data.result,function(index, value){
+						$toolBoxList.append(buildBoxDraggable(
+							{	
+								id: value.id, title: value.title, titleurl:value.titleurl, 
+								prolog: value.prolog, content: value.content, epilog: value.epilog,
+								readmore: value.readmore, readmoreurl: value.readmoreurl
+							}
+						));
+					});
+					refreshBoxDraggables();
+					$loading_search.hide();
+				});
+		},500);
 	}
+	var old_slot_id, old_container_id, old_box_index;
 	function refreshBoxSortable(){
-		$(".slot").sortable({
+		$(".boxes-wrapper").sortable({
 			items: ".box",
-			connectWith: ".slot",
+			connectWith: ".boxes-wrapper, .c-box-trash",
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
 			helper: function(event, element){
 				return $("<div class='b-sort-helper'></div>");
 			},
 			start: function(e, ui){
+				$(".boxes-wrapper").addClass("min-height");
 				ui.placeholder.height(ui.item.height());
+				old_box_index = ui.item.index();
+				old_slot_id = ui.item.parents(".slot").data("id");
+				old_container_id = ui.item.parents(".container").data("id");
+				refreshBoxTrashs();
 			},
-			cursorAt: { left: 30, top:30 }
+			stop: function(e, ui){
+				console.log("STOP sort");
+				$(".boxes-wrapper").removeClass("min-height");
+				hideBoxTrash();
+				if(boxDeleted){
+					boxDeleted = false;
+					console.log("trash!!!!");
+					return;
+				}
+				sendAjax(
+					"moveBox",
+					[
+						ID,
+						old_container_id,old_slot_id,old_box_index,
+						ui.item.parents(".container").data("id"),ui.item.parents(".slot").data("id"),ui.item.index()
+					],
+					function(data){
+						if(data.result != true){
+							// TODO: Rückmeldung geben und Box zurück sortieren!!!
+							console.log(data);
+							console.log("Rückmeldung geben und Box zurück sortieren!!!");
+						}
+				});
+			},
+			cursorAt: { left: 0, top:30 }
+		});
+	}
+	var boxDeleted = false;
+	function refreshBoxTrashs(){
+		showBoxTrash();
+		$(".c-box-trash").droppable({
+			accept: ".slot .box",
+			hoverClass: "ui-state-hover",
+			drop: function(e, ui) {
+				console.log("dropped in trash");
+				boxDeleted = true;
+				sendAjax("removeBox",[ID,old_container_id,old_slot_id,old_box_index],
+				function(data){
+					if(data.result == false){
+						alert("Konnte die Box nicht entfernen");
+						return;
+					}
+					ui.draggable.remove();
+					hideBoxTrash();
+				});
+			}
 		});
 	}
 	function refreshBoxDraggables(){
-		console.log("refresh Dragger");
 		$(".box-dragger").draggable({ 
 			helper: "clone", 
 			zIndex: 199, 
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
-				$slots = $grid.find(".slot");
+				$slots = $grid.find(".slot .boxes-wrapper");
 				$slots.children(".box").before("<div class='"+BOX_DROP_AREA_CLASS+"'>Drop Box</div>");
 				$slots.append("<div class='"+BOX_DROP_AREA_CLASS+"'>Drop Box</div>");
 				$slots.children(CSS_BOX_DROP_AREA_CLASS).droppable({ 
@@ -312,17 +486,25 @@ $(function() {
 						$this_slot = $this_drop.parents(".slot");
 						$this_container = $this_slot.parents(".container");
 						$temp = buildBox( 
-								[{ 	id : $this_box.data("id"), content: $this_box.text() }] )
-								.insertBefore( $this_drop );
+								[{ 	
+									id : $this_box.data("id"), 
+									title: $this_box.find(".title").text(), 
+									titleurl: $this_box.data("titleurl"),
+									prolog: $this_box.find(".prolog").html(),
+									content: $this_box.find(".title").text(),
+									epilog: $this_box.find(".epilog").html(),
+									readmore: $this_box.data("readmore"),
+									readmoreurl: $this_box.data("readmoreurl")
+								}] ).insertBefore( $this_drop );
 						$slots.find(CSS_BOX_DROP_AREA_CLASS).remove();
 						
 						params = [ID, $this_container.data("id"),$this_slot.data("id"),$this_box.data("id"), $temp.index()];
-						console.log(params);
 						sendAjax("addBox",params,
 						function(data){
 							if(data.result == false){
 								alert("Konnte die Box nicht hinzufügen");
 								$this_box.remove();
+								return;
 							}
 						});
 					}
@@ -343,6 +525,27 @@ $(function() {
 	// --------------------
 	// GUI manipulation
 	// -------------------
+	function showBoxTrash(){
+		$(".c-box-trash").show();
+	}
+	function hideBoxTrash(){
+		$(".c-box-trash").hide();
+	}
+	function toggleBoxTools(){
+		if($toolBox.css("display") == "none"){
+			showBoxTools();
+		} else {
+			hideBoxTools();
+		}
+	}
+	function hideBoxTools(){
+		$toolBox.hide();
+	}
+	function showBoxTools(){
+		$gridTools.children().hide();
+		$toolBox.show();
+		searchBoxes("");
+	}
 	var box_toggling = false;
 	function toggleBoxes(){
 		if(box_toggling) return;
@@ -356,7 +559,7 @@ $(function() {
 	// Serverkommunikation
 	// -------------------
 	var SERVER = "http://emma-dev.ia-code.ws/grid/core/index.php?path=/ajax";
-	function sendAjax(method, params_array, success, error){
+	function sendAjax(method, params_array, success, error, async){
 		json = {};
 		json["method"] = method;
 		json["params"] = params_array;
@@ -367,13 +570,17 @@ $(function() {
 				console.log(error);
 			};
 		}
+		if(async != false){
+			async = true;
+		}
 		$.ajax({
 		   url: SERVER,
 		   dataType:"json",
 		   type:'POST',
 		   data: JSON.stringify(json),
 		   success: success,
-		   error: error
+		   error: error,
+		   async:async
 		 });
 	}
 });

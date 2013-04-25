@@ -11,10 +11,19 @@ body{
 	margin:0px auto;
 	margin-top:20px;
 	margin-bottom:60px;
+	background-color:#fff;
 }
 /** Toolbar rules **/
 #toolbar{
 	margin-bottom:20px;
+	display:block;
+	width:1000px;;
+	background-color:#fff;
+}
+.fixed #toolbar{
+	position:fixed;
+	top:0px;
+	z-index:999;
 }
 #toolbar .state-display{
 	color:#999;
@@ -31,6 +40,9 @@ body{
 	border-top:none;
 	padding:10px;
 }
+.fixed #grid{
+	margin-top:140px;
+}
 .grid-tools .g-tool{
 	display:none;
 }
@@ -43,21 +55,42 @@ body{
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
-.g-box .box-list{
-	border:1px solid#efefef;
+.g-tool{
+	position:relative;
 	padding:10px;
+	border:1px solid#efefef;
+	background-color:#f6f6f6;
+}
+.g-box .search-bar{
+	margin-bottom:10px;
+}
+.g-box .search-bar .loading{
+	position:absolute;
+	top:12px;
+	left:170px;
+}
+.g-box .box-list{
+	height:140px;
+	overflow:hidden;
+	overflow-y:auto;
 }
 .g-box .box-list li{
 	box-sizing:border-box;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
-	width:228px;
+	width:224px;
 	padding:10px;
 	margin-right:10px;
 	float:left;
 	height:50px;
 	margin-bottom:10px;
-	border:1px solid #efefef;
+	border:1px solid #e6e6e6;
+	background-color:#fff;
+}
+.box-dragger .content,
+.box-dragger .prolog,
+.box-dragger .epilog{
+	display:none;
 }
 
 /** Toolbar rules ENDE **/
@@ -189,6 +222,29 @@ body{
 	background-position: center 0px;
 	border-bottom:1px solid #999;
 }
+.c-box-trash{
+	display:none;
+	height:60px;
+	width:60px;
+	background-color:#fff;
+	position:absolute;
+	z-index:12;
+	top:-15px;
+	right:25px;
+	border-radius: 30px; 
+	-moz-border-radius: 30px; 
+	-webkit-border-radius: 30px; 
+	border: 1px solid #cecece;
+	background-image:url(images/trash_big.png);
+	background-position:center;
+	background-repeat:no-repeat;
+	-webkit-box-shadow: #ccc 0px 0px 5px;
+	-moz-box-shadow: #ccc 0px 0px 5px; 
+	box-shadow: #ccc 0px 0px 5px;
+}
+.c-box-trash.ui-state-hover{
+	background-color:#f22;
+}
 /** Container inplace **/
 .container textarea, .container input{
 	width:100%;
@@ -208,6 +264,7 @@ body{
 }
 /** Allgemeine Slot styles **/
 .slot{
+	position:relative;
 	background-color:#e0e0e0;
 	border:1px solid #d3d3d3;
 	padding-top:26px;
@@ -220,7 +277,66 @@ body{
 	left:10px;
 	color:#888;
 }
+.slot > .style-changer{
+	position:absolute;
+	z-index:10;
+	top:4px;
+	left:44px;
+	padding-bottom:10px;
+	max-width:70%;
+}
+.style-changer > span{
+	white-space:nowrap;
+	overflow:hidden;
+	max-width:100%;
+	display:block;
+}
+.style-changer > span:before{
+	content:'» ';
+}
+.style-changer > span:after{
+	content:' «';
+}
+.style-changer > .choose-style{
+	display:none;
+	position:absolute;
+	top:21px;
+	left:0px;
+	color:#fff;
+	background-color:#333;
+	border:1px solid #ccc;
+}
+.style-changer:hover > .choose-style{
+	display:block;
+}
+.style-changer > .choose-style:before{
+	content:"";
+	border: 6px solid #444;
+	font-size:0;line-height:0;height:0;padding:0;margin:0;
+	border-top-color:    transparent;
+	border-right-color:  transparent;
+	border-left-color:   transparent;
+	position:absolute;
+	top:-12px;
+	left:7px;
+}
+.choose-style li{
+	padding:6px;
+	border-bottom:1px solid #666;
+	white-space:nowrap;
+	cursor:pointer;
+}
+.choose-style li:hover{
+	color:#6CF;
+}
 /** Allgemeine Box styles **/
+.boxes-wrapper{
+	min-height:10px;
+}
+.boxes-wrapper.min-height{
+	min-height:30px;
+	background-color:#999;
+}
 .box{
 	background-color:#fff;
 	border:1px solid #d3d3d3;
@@ -235,6 +351,7 @@ body{
 .b-sort-placeholder{
 	border:1px solid #a5a5a5;
 	display:block;
+	background-color:#efefef;
 }
 .b-sort-helper{
 	display:block;
@@ -324,4 +441,29 @@ body{
 /** content rules **/
 .box img{
 	max-width:100%;
+}
+
+/** animations **/
+div.loading{
+	width:16px;
+	height:16px;
+	background-image:url(images/reload.png);
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.rotate{
+	-webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         1s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
 }

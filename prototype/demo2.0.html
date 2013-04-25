@@ -10,9 +10,12 @@
 <script src="../js/jquery.tmpl.min.js"></script>
 <script src="../js/templates.js"></script>
 <script src="../js/grid2.0.js"></script>
+<script src="../js/jquery.mCustomScrollbar.min.js"></script>
+<script src="../js/jquery.mousewheel.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="reset.css" />
 <link rel="stylesheet" type="text/css" href="main.css" />
+<link rel="stylesheet" type="text/css" href="jquery.mCustomScrollbar.css" />
 
 </head>
 
@@ -44,6 +47,9 @@
             </div>
             <!-- Tools für Box hinzufügen -->
             <div class="g-tool g-box">
+            	<div class="search-bar">
+                	<input name="box-search" type="text" placeholder="Boxen suchen" /><div class="loading rotate" ></div>
+                </div>
             	<ul class="box-list clearfix"></ul>
             </div>
         </div>
