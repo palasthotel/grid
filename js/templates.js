@@ -76,7 +76,7 @@ var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 				'</div>';
 $.template( "slotTemplate", slot_markup );
 
-var box_markup = '<div class="box" data-id="${id}">'+
+var box_markup = '<div class="box" data-id="${id}" data-type="${type}">'+
 						'<h3><a href="${titleurl}" class="box-title">${title}</a></h3>'+
                         '<div class="prolog">{{html prolog}}</div>'+
                         '<div class="content">{{html html}}</div>'+
@@ -85,7 +85,7 @@ var box_markup = '<div class="box" data-id="${id}">'+
 				'</div>';
 $.template( "boxTemplate", box_markup );
 
-var box_draggable_markup = '<li class="box-dragger" data-id="${id}"'+
+var box_draggable_markup = '<li class="box-dragger" data-id="${id}" data-type="${type}" data-index="${index}"'+
 							' data-titleurl="${titleurl}" data-readmore="${readmore}" data-readmoreurl="${readmoreurl}">'+
 							'<div class="prolog">{{html prolog}}</div>'+
 							'<div class="handle"></div><div class="title">${title}</div>'+

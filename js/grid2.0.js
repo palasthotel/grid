@@ -11,7 +11,7 @@ $(function() {
 	// ---------------------------
 	// Allgemeine Elemente und konstanten
 	// --------------------------
-	var arr_box_types;
+	var arr_box_types, arr_box_search_results;
 	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
 	var $slot_styles;
 	var $stateDisplay = $(".state-display");
@@ -136,6 +136,9 @@ $(function() {
 				buildContainer(container_arr).appendTo( $grid );
 				console.log(container_arr);
 				refreshBoxSortable();
+				$.each($(".slot .style-changer"), function(index, style_changer){
+					refreshSlotStyles($(style_changer));
+				});
 			}
 		);
 	}
@@ -182,6 +185,7 @@ $(function() {
 	var active_box_type = null;
 	$toolBoxTypeTabs.on("click","li:not(.active)",function(e){
 		clearTimeout(searchTimeout);
+		$loading_boxes.hide();
 		$toolBoxTypeTabs.children().removeClass("active");
 		$(this).addClass("active");
 		buildBoxTypeInterface();
@@ -195,6 +199,7 @@ $(function() {
 			$search_bar.hide();
 			searchBoxes();
 		}
+		arr_box_search_results = [];
 		$toolBoxList.empty();
 	}
 	$search_box.on("keyup",function(e){
@@ -207,13 +212,14 @@ $(function() {
 			sendAjax("Search",[active_box_type.type,searchString,active_box_type.criteria] ,function(data){
 					console.log("Search Results:");
 					$toolBoxList.empty();
+					arr_box_search_results = data.result;
 					$.each(data.result,function(index, value){
 						console.log(value);
 						$toolBoxList.append(buildBoxDraggable(
 							{	
 								id: value.id, title: value.title, titleurl:value.titleurl, 
 								prolog: value.prolog, html: value.html, epilog: value.epilog,
-								readmore: value.readmore, readmoreurl: value.readmoreurl
+								readmore: value.readmore, readmoreurl: value.readmoreurl, type: value.type, index: index
 							}
 						));
 					});
@@ -262,6 +268,7 @@ $(function() {
 	$("#container-dragger").draggable({ 
 		helper: "clone", 
 		zIndex: 99, 
+		scroll: true,
 		//connectToSortable: GRID_SORTABLE,
 		start: function(event, ui){
 			$grid.children().before("<div class='"+CONTAINER_DROP_AREA_CLASS+"'>Drop Area</div>");
@@ -519,7 +526,9 @@ $(function() {
 	function refreshBoxDraggables(){
 		$(".box-dragger").draggable({ 
 			helper: "clone", 
-			zIndex: 199, 
+			zIndex: 199,
+			appendTo: $grid,
+			addClass: true,
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
 				$slots = $grid.find(".slot .boxes-wrapper");
@@ -533,27 +542,26 @@ $(function() {
 						$this_drop = $(this);
 						$this_slot = $this_drop.parents(".slot");
 						$this_container = $this_slot.parents(".container");
+						box_obj = arr_box_search_results[$this_box.data("index")];
+						
 						$temp = buildBox( 
 								[{ 	
-									id : $this_box.data("id"), 
-									title: $this_box.find(".title").text(), 
-									titleurl: $this_box.data("titleurl"),
-									prolog: $this_box.find(".prolog").html(),
-									content: $this_box.find(".title").text(),
-									epilog: $this_box.find(".epilog").html(),
-									readmore: $this_box.data("readmore"),
-									readmoreurl: $this_box.data("readmoreurl")
+									id : box_obj.id, 
+									title: box_obj.title, 
+									titleurl: box_obj.titleurl,
+									prolog: box_obj.prolog,
+									html: box_obj.html,
+									epilog: box_obj.epilog,
+									readmore: box_obj.readmore,
+									readmoreurl: box_obj.readmoreurl,
+									type: box_obj.type
 								}] ).insertBefore( $this_drop );
 						$slots.find(CSS_BOX_DROP_AREA_CLASS).remove();
-						
-						params = [ID, $this_container.data("id"),$this_slot.data("id"),$this_box.data("id"), $temp.index()];
-						sendAjax("addBox",params,
+						params = [ID, $this_container.data("id"),$this_slot.data("id"),$temp.index(),box_obj.type,box_obj.content];
+						sendAjax("createBox",params,
 						function(data){
-							if(data.result == false){
-								alert("Konnte die Box nicht hinzufügen");
-								$this_box.remove();
-								return;
-							}
+							$temp.data("id",data.result.id);
+							console.log(data);
 						});
 					}
 				});
