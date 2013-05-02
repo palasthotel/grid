@@ -6,9 +6,8 @@ class grid_db {
 	private $connection;
 
 	public function __construct($host,$user,$password,$database) {
-		$this->connection=mysql_connect($host,$user,$password,true);
-		mysql_set_charset("utf8",$this->connection);
-		mysql_select_db($database,$this->connection);
+		$this->connection=new mysqli($host,$user,$password,$database);
+		$this->connection->set_charset("utf8");
 
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 	}
@@ -18,16 +17,16 @@ class grid_db {
 	{
 		//before we begin, we have to fetch the correct revision so we can fire off the right queries.
 		$query="select max(revision) as revision from grid_grid where id=$gridId and published=1";
-		$result=mysql_query($query,$this->connection);
-		$row=mysql_fetch_assoc($result);
+		$result=$this->connection->query($query);
+		$row=$result->fetch_assoc();
 		if(isset($row['revision']))
 			$publishedRevision=$row['revision'];
 		else
 			$publishedRevision=-1;
 
 		$query="select max(revision) as revision from grid_grid where id=$gridId";
-		$result=mysql_query($query,$this->connection);
-		$row=mysql_fetch_assoc($result);
+		$result=$this->connection->query($query);
+		$row=$result->fetch_assoc();
 		if(isset($row['revision']))
 			$maxRevision=$row['revision'];
 		else
@@ -62,8 +61,8 @@ class grid_db {
 	public function loadGridByRevision($gridId,$revision)
 	{
 		$query="select published from grid_grid where id=$gridId and revision=$revision";
-		$result=mysql_query($query,$this->connection);
-		$row=mysql_fetch_assoc($result);
+		$result=$this->connection->query($query);
+		$row=$result->fetch_assoc();
 
 		$grid=new grid_grid();
 		$grid->gridid=$gridId;
@@ -126,11 +125,11 @@ left join grid_box_style
 	 on grid_box.style=grid_box_style.id
 where grid_grid2container.grid_id=$gridId and grid_grid2container.grid_revision=$revision
 order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.weight;";
-		$result=mysql_query($query,$this->connection);
+		$result=$this->connection->query($query);
 		$currentcontainer=NULL;
 		$currentslot=NULL;
 
-		while($row=mysql_fetch_assoc($result))
+		while($row=$result->fetch_assoc())
 		{
 			if($currentcontainer==NULL || $currentcontainer->containerid!=$row['container_id'])
 			{
@@ -146,7 +145,6 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				$currentcontainer->readmore=$row['container_readmore'];
 				$currentcontainer->readmoreurl=$row['container_readmoreurl'];
 				$currentcontainer->slots=array();
-				//TODO: STYLE FEHLT!!!
 				$currentcontainer->storage=$this;
 				$grid->container[]=$currentcontainer;
 				$currentslot=NULL;
@@ -201,20 +199,20 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function createContainer($grid,$containertype)
 	{
 		$query="select id,type,numslots from grid_container_type where type=\"$containertype\"";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
-		$row=mysql_fetch_assoc($result);
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$row=$result->fetch_assoc();
 		$type=$row['id'];
 		$gridid=$grid->gridid;
 		$gridrevision=$grid->gridrevision;
 		//how to fetch the ID? well, how about max+1? know nothing better. but... that might generate sync problems.
 		//OK, i need a container counter, slot counter and box counter on grid to do this.
 		$query="select next_containerid from grid_grid where id=$gridid and revision=$gridrevision";
-		$nextid=mysql_fetch_assoc(mysql_query($query,$this->connection));
+		$nextid=$this->connection->query($query)->fetch_assoc();
 		$id=$nextid['next_containerid'];
 		$query="update grid_grid set next_containerid=next_containerid+1 where id=$gridid and revision=$gridrevision";
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
-		mysql_query($query,$this->connection) or die(mysql_error());
+		$this->connection->query($query) or die($this->connection->error);
 		$container=new grid_container();
 		$container->grid=$grid;
 		$container->storage=$this;
@@ -225,14 +223,14 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		for($i=1;$i<=$numslots;$i++)
 		{
 			$query="select next_slotid from grid_grid where id=$gridid and revision=$gridrevision";
-			$result=mysql_query($query,$this->connection);
-			$row=mysql_fetch_assoc($result);
+			$result=$this->connection->query($query);
+			$row=$result->fetch_assoc();
 			$slotid=$row['next_slotid'];
-			mysql_query("update grid_grid set next_slotid=next_slotid+1 where id=$gridid and revision=$gridrevision",$this->connection);
+			$this->connection->query("update grid_grid set next_slotid=next_slotid+1 where id=$gridid and revision=$gridrevision");
 			$query="insert into grid_slot (id,grid_id,grid_revision) values ($slotid,$gridid,$gridrevision)";
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 			$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 
 			$slot=new grid_slot();
 			$slot->grid=$grid;
@@ -246,12 +244,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function storeContainerOrder($grid)
 	{
 		$query="delete from grid_grid2container where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection) or die(mysql_error());
+		$this->connection->query($query) or die($this->connection->error);
 		$i=1;
 		foreach($grid->container as $cnt)
 		{
 			$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight) values (".$grid->gridid.",".$grid->gridrevision.",".$cnt->containerid.",".$i.")";
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 			$i++;
 		}
 	}
@@ -260,12 +258,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$grid=$slot->grid;
 		$query="delete from grid_slot2box where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision." and slot_id=".$slot->slotid;
-		mysql_query($query,$this->connection)or die(mysql_error());
+		$this->connection->query($query) or die($this->connection->error);
 		$i=1;
 		foreach($slot->boxes as $box)
 		{
 			$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$slot->slotid.",".$grid->gridid.",".$grid->gridrevision.",".$box->boxid.",$i)";
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 			$i++;
 		}
 	}
@@ -274,31 +272,31 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$newrevision=$grid->gridrevision+1;
 		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) select id,$newrevision,0,next_containerid,next_slotid,next_boxid from grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url)
 		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url from grid_container
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight)
 		select grid_id,$newrevision,container_id,weight from grid_grid2container
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_slot (id,grid_id,grid_revision) 
 		select id,grid_id,$newrevision from grid_slot
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight)
 		select container_id,grid_id,$newrevision,slot_id,weight from grid_container2slot
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content)
 		select id,grid_id,$newrevision,type,title,title_url,prolog,epilog,readmore,readmore_url,content from grid_box
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) 
 		select slot_id,grid_id,$newrevision,box_id,weight from grid_slot2box
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
-		mysql_query($query,$this->connection);
+		$this->connection->query($query);
 		return $this->loadGridByRevision($grid->gridid,$newrevision);
 	}
 
@@ -309,19 +307,19 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			foreach($slot->boxes as $box)
 			{
 				$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-				mysql_query($query,$this->connection) or die("Box deletion: ".mysql_error());
+				$this->connection->query($query) or die("Box deletion: ".$this->connection->error);
 			}
 			$query="delete from grid_slot where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
-			mysql_query($query,$this->connection) or die("Slot deletion: ".mysql_error());
+			$this->connection->query($query) or die("Slot deletion: ".$this->connection->error);
 		}
 		$query="delete from grid_container where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
-		mysql_query($query,$this->connection) or die("Container deletion: ".mysql_error());
+		$this->connection->query($query) or die("Container deletion: ".$this->connection->error);
 	}
 	
 	public function deleteBox($box)
 	{
 		$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-		mysql_query($query,$this->connection) or die(mysql_error());
+		$this->connection->query($query) or die($this->connection->error);
 	}
 	
 	public function persistContainer($container)
@@ -333,14 +331,14 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		else
 		{
 			$query="select id from grid_container_style where slug='".$container->style."'";
-			$result=mysql_query($query,$this->connection);
-			$row=mysql_fetch_assoc($result);
+			$result=$this->connection->query($query);
+			$row=$result->fetch_assoc();
 			if(!isset($row['id']))
 				return false;
 			$styleid=$row['id'];
 		}
 		$query="update grid_container set style=".$styleid.", title='".$container->title."', title_url='".$container->titleurl."', prolog='".$container->prolog."', epilog='".$container->epilog."', readmore='".$container->readmore."', readmore_url='".$container->readmoreurl."' where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
-		mysql_query($query,$this->connection) or die(mysql_error());
+		$this->connection->query($query) or die($this->connection->error);
 		return true;
 	}
 	
@@ -353,14 +351,14 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		else
 		{
 			$query="select id from grid_slot_style where slug='".$slot->style."'";
-			$result=mysql_query($query,$this->connection);
-			$row=mysql_fetch_assoc($result);
+			$result=$this->connection->query($query);
+			$row=$result->fetch_assoc();
 			if(!isset($row['id']))
 				return false;
 			$styleid=$row['id'];
 		}
 		$query="update grid_slot set style=".$styleid." where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
-		mysql_query($query,$this->connection) or die(mysql_error());
+		$this->connection->query($query) or die($this->connection->error);
 		return true;
 	}
 	
@@ -378,30 +376,30 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		if($box->style!=NULL)
 		{
 			$query="select id from grid_box_style where slug='".$box->style."'";
-			$result=mysql_query($query,$this->connection) or die(mysql_error());
-			$row=mysql_fetch_assoc($result);
+			$result=$this->connection->query($query) or die($this->connection->error);
+			$row=$result->fetch_assoc();
 			$styleid=$row['id'];
 		}
 		//no matter what we have to resolve the type
 		$query="select id from grid_box_type where type='".$box->type()."'";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
-		$row=mysql_fetch_assoc($result);
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$row=$result->fetch_assoc();
 		if(!isset($row['id']))
 			return FALSE;
 		$type=$row['id'];
 		if($box->boxid==NULL)
 		{
 			$query="select next_boxid from grid_grid where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
-			$result=mysql_query($query,$this->connection) or die(mysql_error());
-			$row=mysql_fetch_assoc($result);
+			$result=$this->connection->query($query) or die($this->connection->error);
+			$row=$result->fetch_assoc();
 			$query="update grid_grid set next_boxid=next_boxid+1 where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 			
 			$query="insert into grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content,style) values 
 			(".$row['next_boxid'].",".$box->grid->gridid.",".$box->grid->gridrevision.",".$type."
 			,'".$this->saveStr($box->title)."','".$this->saveStr($box->titleurl)."','".$this->saveStr($box->prolog)."','".$this->saveStr($box->epilog)."'
 			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".json_encode($box->content)."',".$styleid.")";
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 			$box->boxid=$row['next_boxid'];
 		}
 		else
@@ -414,7 +412,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			 readmore_url='".$this->saveStr($box->readmoreurl)."',
 			 content='".json_encode($box->content)."',
 			 style=".$styleid." where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-			mysql_query($query,$this->connection) or die(mysql_error());
+			$this->connection->query($query) or die($this->connection->error);
 		}
 		return TRUE;
 	}
@@ -422,9 +420,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function fetchContainerStyles()
 	{
 		$query="select style,slug from grid_container_style order by style asc";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$result=$this->connection->query($query) or die($this->connection->error);
 		$return=array();
-		while($row=mysql_fetch_assoc($result))
+		while($row=$result->fetch_assoc())
 		{
 			$return[]=array('title'=>$row['style'],'slug'=>$row['slug']);
 		}
@@ -434,9 +432,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function fetchSlotStyles()
 	{
 		$query="select style,slug from grid_slot_style order by style asc";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$result=$this->connection->query($query) or die($this->connection->error);
 		$return=array();
-		while($row=mysql_fetch_assoc($result))
+		while($row=$result->fetch_assoc())
 		{
 			$return[]=array('title'=>$row['style'],'slug'=>$row['slug']);
 		}
@@ -446,9 +444,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function fetchBoxStyles()
 	{
 		$query="select style,slug from grid_box_style order by style asc";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
+		$result=$this->connection->query($query) or die($this->connection->error);
 		$return=array();
-		while($row=mysql_fetch_assoc($result))
+		while($row=$result->fetch_assoc())
 		{
 			$return[]=array('title'=>$row['style'],'slug'=>$row['slug']);
 		}
@@ -472,8 +470,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		left join grid_box_type on grid_box.type=grid_box_type.id
 		left join grid_box_style on grid_box.style=grid_box_style.id ";
 		$query.="where grid_box.id=$boxId";
-		$result=mysql_query($query,$this->connection) or die(mysql_error());
-		$row=mysql_fetch_assoc($result);
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$row=$result->fetch_assoc();
 		return $this->parseBox($row);
 	}
 	
