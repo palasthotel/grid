@@ -337,7 +337,15 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				return false;
 			$styleid=$row['id'];
 		}
-		$query="update grid_container set style=".$styleid.", title='".$container->title."', title_url='".$container->titleurl."', prolog='".$container->prolog."', epilog='".$container->epilog."', readmore='".$container->readmore."', readmore_url='".$container->readmoreurl."' where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
+		$query="update grid_container set 
+		 style=".$styleid.", 
+		 title='".$this->saveStr($container->title)."',
+		 title_url='".$this->saveStr($container->titleurl)."', 
+		 prolog='".$this->saveStr($container->prolog)."', 
+		 epilog='".$this->saveStr($container->epilog)."', 
+		 readmore='".$this->saveStr($container->readmore)."', 
+		 readmore_url='".$this->saveStr($container->readmoreurl)."' 
+		 where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
 		$this->connection->query($query) or die($this->connection->error);
 		return true;
 	}
@@ -366,7 +374,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		if($str==NULL)
 			return "";
-		return $str;
+		return $this->connection->real_escape_string($str);
 	}
 	
 	public function persistBox($box)
@@ -398,7 +406,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$query="insert into grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content,style) values 
 			(".$row['next_boxid'].",".$box->grid->gridid.",".$box->grid->gridrevision.",".$type."
 			,'".$this->saveStr($box->title)."','".$this->saveStr($box->titleurl)."','".$this->saveStr($box->prolog)."','".$this->saveStr($box->epilog)."'
-			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".json_encode($box->content)."',".$styleid.")";
+			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".$this->saveStr(json_encode($box->content))."',".$styleid.")";
 			$this->connection->query($query) or die($this->connection->error);
 			$box->boxid=$row['next_boxid'];
 		}
@@ -410,7 +418,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			 epilog='".$this->saveStr($box->epilog)."',
 			 readmore='".$this->saveStr($box->readmore)."',
 			 readmore_url='".$this->saveStr($box->readmoreurl)."',
-			 content='".json_encode($box->content)."',
+			 content='".$this->saveStr(json_encode($box->content))."',
 			 style=".$styleid." where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
 			$this->connection->query($query) or die($this->connection->error);
 		}
