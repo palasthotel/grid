@@ -107,6 +107,8 @@ left join grid_container2slot
      and grid_container.grid_revision=grid_container2slot.grid_revision
 left join grid_slot
      on grid_container2slot.slot_id=grid_slot.id
+     and grid_slot.grid_id=grid_grid2container.grid_id
+     and grid_slot.grid_revision=grid_grid2container.grid_revision
 left join grid_slot_style
      on grid_slot.style=grid_slot_style.id
 left join grid_slot2box 
@@ -298,6 +300,38 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
 		return $this->loadGridByRevision($grid->gridid,$newrevision);
+	}
+
+	public function publishGrid($grid)
+	{
+		$id=$grid->gridid;
+		$revision=$grid->gridrevision;
+		$query="update grid_grid set published=0 where id=$id";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="update grid_grid set published=1 where id=$id and revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		return true;
+	}
+
+	public function revokeGrid($grid)
+	{
+		$id=$grid->gridid;
+		$revision=$grid->gridrevision;
+		$query="delete from grid_box where grid_id=$id and grid_revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="delete from grid_slot2box where grid_id=$id and grid_revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="delete from grid_slot where grid_id=$id and grid_revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="delete from grid_container2slot where grid_id=$id and grid_revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="delete from grid_container where grid_id=$id and grid_revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="delete from grid_grid2container where grid_id=$id and grid_revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="delete from grid_grid where id=$id and revision=$revision";
+		$this->connection->query($query) or die($this->connection->error);
+		return true;
 	}
 
 	public function destroyContainer($container)

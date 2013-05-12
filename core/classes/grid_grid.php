@@ -24,6 +24,16 @@ class grid_grid extends grid_base {
 		return $output;
 	}
 
+	public function publish()
+	{
+		return $this->storage->publishGrid($this);
+	}
+
+	public function revoke()
+	{
+		return $this->storage->revokeGrid($this);
+	}
+
 	public function insertContainer($containertype,$idx)
 	{
 		$container=$this->storage->createContainer($this,$containertype);

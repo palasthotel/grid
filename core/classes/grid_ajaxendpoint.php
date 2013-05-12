@@ -115,6 +115,10 @@ class grid_ajaxendpoint {
 	public function moveBox($gridid,$oldcontainerid,$oldslotid,$oldidx,$newcontainerid,$newslotid,$newidx)
 	{
 		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
 		$box=null;
 		$newslot=null;
 		foreach($grid->container as $container)
@@ -154,6 +158,10 @@ class grid_ajaxendpoint {
 	public function removeBox($gridid,$containerid,$slotid,$idx)
 	{
 		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
 		foreach($grid->container as $container)
 		{
 			if($container->containerid==$containerid)
@@ -179,14 +187,26 @@ class grid_ajaxendpoint {
 	}
 
 
-	public function publishDraft()
+	public function publishDraft($gridid)
 	{
-		//TODO: WORK HERE!!!
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			return false;
+		}
+		return $grid->publish();
+
 	}
 
-	public function revertDraft()
+	public function revertDraft($gridid)
 	{
-		//TODO: WORK HERE!!!
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			return false;
+		}
+		$grid->revoke();
+		return $this->loadGrid($gridid);
 	}
 	
 	public function getContainerStyles()
@@ -207,6 +227,10 @@ class grid_ajaxendpoint {
 	public function updateSlotStyle($gridid,$containerid,$slotid,$style)
 	{
 		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
 		foreach($grid->container as $container)
 		{
 			if($container->containerid==$containerid)
