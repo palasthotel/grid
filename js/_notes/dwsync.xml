@@ -7,8 +7,9 @@
 <file name="jquery.tmpl.min.js" server="192.168.0.103//var/www/grid/" local="130094648348348819" remote="130094465980000000" Dst="2" />
 <file name="templates.js" server="192.168.0.103//var/www/grid/" local="130094745815270940" remote="130094563200000000" Dst="2" />
 <file name="jquery.tmplPlus.min.js" server="192.168.0.103//var/www/grid/" local="130094698600742225" remote="130094515930000000" Dst="2" />
-<file name="grid2.0.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130119628343577333" remote="130119629400000000" Dst="2" />
-<file name="templates.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130119583212014274" remote="130119584400000000" Dst="2" />
+<file name="grid2.0.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130131025601738811" remote="130131027000000000" Dst="2" />
+<file name="templates.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130130995267728915" remote="130130997000000000" Dst="2" />
 <file name="jquery.mCustomScrollbar.min.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130107459873498228" remote="130107462000000000" Dst="2" />
 <file name="jquery.mousewheel.min.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130107459869115315" remote="130107462000000000" Dst="2" />
+<file name="grid.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130094835600000000" remote="130094835600000000" Dst="2" />
 </dwsync>

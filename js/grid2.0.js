@@ -17,6 +17,7 @@ $(function() {
 	var $stateDisplay = $(".state-display");
 	var CSS_GRID_ID = "#grid";
 	var $grid = $(CSS_GRID_ID);
+	var $box_editor = $("#box-editor");
 	
 	var CONTAINER_DROP_AREA_CLASS = "container-drop-area";
 	var CSS_CONTAINER_DROP_AREA_CLASS = ".container-drop-area";
@@ -114,35 +115,56 @@ $(function() {
 	
 	
 	// --------------------
-	// Grid laden
+	// load, revert, publish grid
 	// -------------------
-	function loadGrid(){	
-		json = {};
-		json["method"] = "loadGrid";
-		json["params"] = [ID];
+	function loadGrid(){
 		sendAjax(
 			"loadGrid", 
 			[ID],
 			function(data){
 				console.log(data);
-				$grid.empty();
-				var result = data.result;
-				if(result.isDraft == true){
-					$stateDisplay.text("Entwurf...");
-				} else {
-					$stateDisplay.text("Aktuell!");
-				}
-				var container_arr = result.container;
-				buildContainer(container_arr).appendTo( $grid );
-				console.log(container_arr);
-				refreshBoxSortable();
+				fillGrid(data.result);
 				$.each($(".slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
 				});
 			}
 		);
 	}
-	
+	function fillGrid(result){
+		$grid.empty();
+		changeIsDraftDisplay(result.isDraft);
+		var container_arr = result.container;
+		buildContainer(container_arr).appendTo($grid);
+		console.log(container_arr);
+		refreshBoxSortable();
+	}
+	function publishGrid(){
+		sendAjax(
+			"publishDraft", 
+			[ID],
+			function(data){
+				console.log(data);
+				if( data.result != true){
+					alert("could not publish...");
+				}
+			}
+		);
+	}
+	function revertGrid(){
+		sendAjax(
+			"revertDraft", 
+			[ID],
+			function(data){
+				console.log(data);
+				if(data.result != false && data.result != null){
+					$grid.empty();
+					fillGrid(data.result);
+				} else {
+					alert("Could not revert grid...");
+				}
+			}
+		);
+	}
 	
 	// ---------------------------------
 	// Handler für die Werkzeuge
@@ -153,11 +175,11 @@ $(function() {
 			case "load":
 				loadGrid();
 				break;
-			case "save":
-				saveGrid();
-				break;
 			case "publish":
-				console.log("Veröffentlichen");
+				publishGrid();
+				break;
+			case "revert":
+				revertGrid();
 				break;
 			case "add_container":
 				toggleContainerTools();
@@ -546,7 +568,7 @@ $(function() {
 						
 						$temp = buildBox( 
 								[{ 	
-									id : box_obj.id, 
+									id : box_obj.id,
 									title: box_obj.title, 
 									titleurl: box_obj.titleurl,
 									prolog: box_obj.prolog,
@@ -557,7 +579,7 @@ $(function() {
 									type: box_obj.type
 								}] ).insertBefore( $this_drop );
 						$slots.find(CSS_BOX_DROP_AREA_CLASS).remove();
-						params = [ID, $this_container.data("id"),$this_slot.data("id"),$temp.index(),box_obj.type,box_obj.content];
+						params = [ID, $this_container.data("id"), $this_slot.data("id"), $temp.index(), box_obj.type, box_obj.content];
 						sendAjax("createBox",params,
 						function(data){
 							$temp.data("id",data.result.id);
@@ -575,9 +597,124 @@ $(function() {
 		return $.tmpl( "boxTemplate", templateParams );
 	}
 	
+	// Box Editor
+	var $box_editor_content = $box_editor.children(".content");
+	$box_editor.on("click",".controls button",function(){
+		$this = $(this);
+		switch ($this.attr("role")){
+			case "cancle":
+				$box_editor.animate({
+					width:0
+				},220,
+				function(){
+					$box_editor.hide();
+					$box_editor_content.empty();
+				});
+				setTimeout(function(){
+					$grid.show();
+					$grid.animate({width:"100%"},250);
+				},50);
+				break;
+			case "save":
+				updateBox();
+				break;
+		}
+	});
+	
+	function updateBox(){
+		$data = $box_editor_content.find(".box-editor");
+		style = $data.find("[name=f-b-style]").val();
+		if(style == "") style = null;
+		// make content array
+		content = {};
+		$.each($data.find(".dynamic-value"),function(index,element){
+			content[$(element).data("key")] = $(element).val();
+		});
+		box_content = {
+				id: $data.data("id"),
+				type: $data.data("type"),
+				title: $data.find("input[name=f-b-title]").val(),
+				titleurl: $data.find("input[name=f-b-titleurl]").val(),
+				prolog: $data.find("[name=f-b-prolog]").val(),
+				epilog: $data.find("[name=f-b-epilog]").val(),
+				readmore: $data.find("input[name=f-b-readmore]").val(),
+				readmoreurl: $data.find("input[name=f-b-readmoreurl]").val(),
+				style: style,
+				content: content
+			};
+		sendAjax(
+			"UpdateBox",
+			[ID, $data.data("c-id"), $data.data("s-id"), $data.data("b-index"), box_content],
+			function(data){
+				console.log(data);
+				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
+			});
+	}
+	
+	$grid.on("click", ".box > .edit",function(data){
+		$this = $(this);
+		c_id = $this.parents(".container").data("id");
+		s_id = $this.parents(".slot").data("id");
+		b_index = $this.parents(".box").index();
+		console.log("edit!");
+		$box_editor_content.empty();
+		$grid.animate(
+			{	
+				width:0
+			},
+			220,
+			function(){
+				$grid.hide();			
+		});
+		setTimeout(function(){
+			$box_editor.show();
+			$box_editor.animate({width:"100%"},250);
+			sendAjax(
+				"fetchBox",
+				[ID,c_id,s_id,b_index],
+				function(data){
+					console.log(data);
+					result = data.result;
+					params = {
+						"box":result,
+						"b_index":b_index,
+						"s_id":s_id,
+						"c_id":c_id,
+						"styles": arr_box_styles
+					};
+					$box_editor_content.append(buildBoxEditor(params));
+					$dynamic_fields = $box_editor_content.find(".dynamic-fields");
+					$.each(result.contentstructure,function(index,element){
+						console.log(result.content[element.key]);
+						switch(element.type){
+							case "html":
+								// editor
+								$dynamic_fields.append("<textarea class='dynamic-value' data-key='"+element.key+"' name='key-"+index+"'>"+
+														result.content[element.key]+
+														"</textarea>");
+								break;
+							default:
+								console.log(element.type);
+								$dynamic_fields.append("<input class='dynamic-value' data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
+								break;
+						}
+					});
+				});
+		},50);
+	});
+	function buildBoxEditor(templateParams){
+		return $.tmpl( "boxEditorTemplate", templateParams );
+	}
+	
 	// --------------------
 	// GUI manipulation
 	// -------------------
+	function showGrid(box_id){
+		
+	}
+	function showBoxEditor(){
+		
+	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
 	}
@@ -607,6 +744,14 @@ $(function() {
 			box_toggling = false;
 		});
 	}
+	function changeIsDraftDisplay(isDraft){
+		if(isDraft == true){
+			$stateDisplay.text("Entwurf...");
+		} else {
+			$stateDisplay.text("Veröffentlicht!");
+		}
+	}
+	
 	// --------------------
 	// Serverkommunikation
 	// -------------------
@@ -630,9 +775,31 @@ $(function() {
 		   dataType:"json",
 		   type:'POST',
 		   data: JSON.stringify(json),
-		   success: success,
+		   success: function(data){
+			   success(data);
+			   isDraft();
+			},
 		   error: error,
 		   async:async
+		 });
+	}
+	function isDraft(){
+		json = {};
+		json["method"] = "checkDraftStatus";
+		json["params"] = [ID];
+		$.ajax({
+		   url: SERVER,
+		   dataType:"json",
+		   type:'POST',
+		   data: JSON.stringify(json),
+		   success: function(data){
+			   changeIsDraftDisplay(data.result);
+			},
+		   error: function(jqXHR, textStatus, error){
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(error);
+			}
 		 });
 	}
 });

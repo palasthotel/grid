@@ -19,15 +19,12 @@
 
 </head>
 
-<body>
+<body class="clearfix">
+
 	<menu id="toolbar">
-    	<p class="state-display">Aktuell!</p>
+    	<p class="state-display"></p>
     	<ul class="clearfix">
-       		<!--
-        	<li><button role="load">Laden</button></li>
-        	<li><button role="save">Speichern</button></li>
-            -->
-            <li><button role="revoke">Änderunge Rückgängig</button></li>
+            <li><button role="revert">Änderunge Rückgängig</button></li>
             <li><button role="publish">Öffentlich machen</button></li>
         	<li><button role="add_container">+ Container hinzufügen</button></li>
             <li><button role="add_box">+ Box hinzufügen</button></li>
@@ -53,293 +50,25 @@
                 	<input name="box-search" type="text" placeholder="Boxen suchen" />
                 </div>
             	<ul class="box-list clearfix"></ul>
-                
             </div>
         </div>
     </menu>
+    
+    <!-- grid display -->
     <section id="grid">
-    
-    	<!-- Inplace edit dummie 
-        <div class="container C-4-4-4 clearfix">
-        	<div class="c-tools">
-                <span class="c-title">c-4-4-4</span>
-                <span class="c-ok"></span>
-                <span class="c-sort-handle"></span>
-                <span class="c-trash"></span>
-            </div>
-        	<div class="c-before">
-            	<label for="f-c-title">Title:</label><br />
-                <input name="f-c-title" id="f-c-title" /><br />
-                <label for="f-c-title-url">Titel URL:</label><br />
-                <input name="f-c-title-url" id="f-c-title-url" /><br />
-                <label for="f-c-prolog">Prolog:</label><br />
-                <textarea name="f-c-prolog" id="f-c-prolog"></textarea>
-            </div>
-        	<div class="slots-wrapper">
-                <div class="slot">
-                </div>
-                <div class="slot">
-                </div>
-                <div class="slot">
-                </div>
-            </div>
-            <div class="c-after">
-                <label for="f-c-epilog">Epilog:</label><br />
-        		<textarea name="f-c-epilog" id="f-c-epilog"></textarea>                
-            </div>
-            <div class="clearfix">
-            	<fieldset>
-                    <label for="f-c-readmore-text">Readmore Text:</label><br />
-                    <input name="f-c-readmore-text" id="f-c-readmore-text" />
-                </fieldset>
-                <fieldset>
-                    <label for="f-c-readmore-link">Readmore URL:</label><br />
-                    <input name="f-c-readmore-link" id="f-c-readmore-link" />
-                </fieldset>
-                <fieldset>
-                    <label for="f-c-style">Style</label><br /> 
-                    <select name="f-c-style" id="f-c-style">
-                        <option value="">ohne style</option>
-                        <option value="style1">Style 1</option>
-                        <option value="style2">Style 2</option>
-                        <option value="style3">Style 3</option>
-                    </select>
-                </fieldset>
-            </div>
+     </section>
+     <!-- grid display END -->
+     
+     <!-- box editor -->
+     <section id="box-editor">
+     	<div class="content">
         </div>
-        <!-- ---------------------------------------->
-    
-    	<!-- Datendummie 
-    
-    	<div class="container C-12 clearfix">
-        	<div class="tools">
-                <span class="c-title">c-12</span>
-                <span class="c-edit"></span>
-                <span class="c-sort-handle"></span>
-                <span class="c-trash"></span>
-            </div>
-        	<div class="c-before">
-            	<p>Prolog</p>
-            </div>
-        	<div class="slots-wrapper">
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-            </div>
-            <div class="c-after">
-            	<p>epilog</p>
-                <a href="http://www.google.de">Readmore</a>
-            </div>
+        <div class="controls">
+        	<button role="cancle">Abbrechen</button><button role="save">Speichern</button>
         </div>
-        <div class="container C-4-4-4 clearfix">
-        	<div class="slots-wrapper">
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test-2.jpg" alt="test" />
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test-3.jpg" alt="test" />
-                    </div>
-                </div>
-            </div>
-            <div class="elements">
-                <span class="c-title">c-4-4-4</span>
-                <span class="c-edit"></span>
-                <span class="c-sort-handle"></span>
-                <span class="c-trash"></span>
-            </div>
-            <a href="http://www.google.de">Readmore</a>
-        </div>
-        <div class="container C-4-8 clearfix">
-        	<div class="slots-wrapper">
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="elements">
-                <span class="c-title">c-4-8</span>
-                <span class="c-edit"></span>
-                <span class="c-sort-handle"></span>
-                <span class="c-trash"></span>
-            </div>
-            <a href="http://www.google.de">Readmore</a>
-        </div>
-        <div class="container C-8-4 clearfix">
-            <div class="slots-wrapper">
-                <div class="slot">
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="elements">
-            	<span class="c-title">c-8-4</span>
-            	<span class="c-edit"></span>
-                <span class="c-sort-handle"></span>
-                <span class="c-trash"></span>
-            </div>
-            <a href="http://www.google.de">Readmore</a>
-        </div>
-        <div class="container C-2-2-2-2-2-2 clearfix">
-        	<div class="slots-wrapper">
-                <div class="slot">
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <h3><a href="#boxtitleurl" class="box-title">Box 2 Title</a></h3>
-                        <div class="prolog">Box 2 Prolog</div>
-                        <p>Lorem Ipsum</p>
-                        <div class="epilog">Box 2 Epilog</div>
-                        <p class="readmore"><a href="readmore">container 2 Readmore</a></p>
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-                <div class="slot">
-                    <div class="box">
-                        <img src="images/header-test.jpg" alt="test" />
-                    </div>
-                </div>
-            </div>
-            <div class="elements">
-            	<span class="c-title">c-2-2-2-2-2-2</span>
-            	<span class="c-edit"></span>
-                <span class="c-sort-handle"></span>
-                <span class="c-trash"></span>
-            </div>
-            <a href="http://www.google.de">Readmore</a>
-        </div> 
-        <!-- -->
-     </section><!-- workspace ENDE -->
+     </section>
+     <!-- box editor END -->
+     
+     <!-- workspace END -->
 </body>
 </html>

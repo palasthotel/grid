@@ -125,8 +125,8 @@ body{
 }
 
 /** Toolbar rules ENDE **/
-
 #grid{
+	float:left;
 }
 .container, .slot, .box{
 	-webkit-box-sizing: border-box;
@@ -373,9 +373,20 @@ body{
 	background-color:#999;
 }
 .box{
+	position:relative;
 	background-color:#fff;
 	border:1px solid #d3d3d3;
 }
+.box > .edit{
+	position:absolute;
+	right:5px;
+	top:5px;
+	width:10px;
+	height:10px;
+	background-color:#666;
+	cursor:pointer;
+}
+
 .box .handle{
 	height:10px;
 	background-color:#000;
@@ -406,7 +417,42 @@ body{
 .box-drop-area.hover{
 	background-color:#F30;
 }
-
+/** Box Editor **/
+#box-editor{
+	display:none;
+	width:0px;
+	position:relative;
+	padding-left:20px;
+	background-color:#fff;
+	min-height:200px;
+	float:right;
+	border:8px solid #e0e0e0; 
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+#box-editor:after{
+	content:'';
+	position:absolute;
+	top:10px;
+	left:0px;
+	border: 16px solid #e0e0e0;
+	font-size:0;line-height:0;height:0;padding:0;margin:0;
+	border-top-color:    transparent;
+	border-bottom-color:  transparent;
+	border-right-color:   transparent;
+} 
+#box-editor .content{
+	padding: 10px 10px 10px 0;
+}
+#box-editor .content fieldset{
+	margin-bottom:10px;
+	padding-bottom:5px;
+	border-bottom:1px solid #e0e0e0;
+}
+#box-editor .controls{
+	margin-bottom:10px;
+}
 /** Container C-12 **/
 .C-12{
 	
