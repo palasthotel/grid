@@ -1,4 +1,4 @@
-
+(function($){
 $(function() {
 	// Warnung beim verlassen ohne Speichern
 	/*
@@ -40,10 +40,10 @@ $(function() {
 	// ----------------
 	// init Methode
 	// ---------------
-	var ID;
+	var ID=document.ID;
 	var initFunctionStack = [];
 	function init() {
-		ID = 42;
+//		ID = 42;
 		console.log("lade BoxTypes");
 		loadBoxTypes();
 		console.log("lade Styles");
@@ -755,7 +755,7 @@ $(function() {
 	// --------------------
 	// Serverkommunikation
 	// -------------------
-	var SERVER = "../core/index.php?path=/ajax"; 
+	var SERVER = "/grid_ajax_endpoint"; 
 	function sendAjax(method, params_array, success, error, async){
 		json = {};
 		json["method"] = method;
@@ -802,6 +802,6 @@ $(function() {
 			}
 		 });
 	}
-});
+});})(jQuery);
 
 

@@ -11,6 +11,18 @@ class grid_db {
 
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 	}
+	
+	public function createGrid()
+	{
+		$query="select max(id) as id from grid_grid";
+		$result=$this->connection->query($query);
+		$row=$result->fetch_assoc();
+		$id=$row['id'];
+		$id++;
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) values ($id,0,0,0,0,0)";
+		$this->connection->query($query);
+		return $id;
+	}
 
 	//loads a complete grid with all regions and boxes belonging to it.
 	public function loadGrid($gridId,$preferDrafts=TRUE)

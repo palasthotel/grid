@@ -20,7 +20,7 @@ var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${s
 				'<p class="c-style">${style}</p>'+
             '</div>'+
         '</div>';
-$.template( "containerTemplate", container_markup );
+jQuery.template( "containerTemplate", container_markup );
 
 var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="container editor ${type} clearfix">'+
 			'<div class="c-tools">'+
@@ -65,7 +65,7 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
                 '</fieldset>'+
             '</div>'+
         '</div>';
-$.template( "containerEditorTemplate", container_editor_markup );
+jQuery.template( "containerEditorTemplate", container_editor_markup );
 
 var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 						'<div class="style-changer">'+
@@ -74,7 +74,7 @@ var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 						'</div>'+
 						'<div class="boxes-wrapper">{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}</div>'+
 				'</div>';
-$.template( "slotTemplate", slot_markup );
+jQuery.template( "slotTemplate", slot_markup );
 
 var box_markup = '<div class="box" data-id="${id}" data-type="${type}">'+
 						'<h3><a href="${titleurl}" class="box-title">${title}</a></h3>'+
@@ -84,7 +84,7 @@ var box_markup = '<div class="box" data-id="${id}" data-type="${type}">'+
                         '<div class="epilog">{{html epilog}}</div>'+
                         '<p class="readmore"><a href="${readmoreurl}">${readmore}</a></p>'+
 				'</div>';
-$.template( "boxTemplate", box_markup );
+jQuery.template( "boxTemplate", box_markup );
 
 var box_draggable_markup = '<li class="box-dragger" data-id="${id}" data-type="${type}" data-index="${index}"'+
 							' data-titleurl="${titleurl}" data-readmore="${readmore}" data-readmoreurl="${readmoreurl}">'+
@@ -93,7 +93,7 @@ var box_draggable_markup = '<li class="box-dragger" data-id="${id}" data-type="$
 							'<div class="content">{{html html}}</div>'+
 							'<div class="epilog">{{html epilog}}</div>'+
 							'</li>';
-$.template( "boxDraggableTemplate", box_draggable_markup );
+jQuery.template( "boxDraggableTemplate", box_draggable_markup );
 
 var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-id="${box.id}" '+
 							'data-c-id="${c_id}" data-s-id="${s_id}" data-type="${box.type}">'+
@@ -129,4 +129,4 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 								'</select>'
 							'</fieldset>'+
 						'</div>';
-$.template("boxEditorTemplate", box_editor_markup);
+jQuery.template("boxEditorTemplate", box_editor_markup);
