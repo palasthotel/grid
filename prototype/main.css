@@ -13,6 +13,9 @@ body{
 	margin-bottom:60px;
 	background-color:#fff;
 }
+#grid-wrapper{
+	width:1000px;
+}
 /** Toolbar rules **/
 #toolbar{
 	display:block;
