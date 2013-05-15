@@ -62,6 +62,39 @@ class grid_ajaxendpoint {
 		}
 		return $converted;
 	}
+	
+	public function fetchBox($gridid,$containerid,$slotid,$boxidx)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						$box=$slot->boxes[$boxidx];
+						if(!isset($box))return false;
+						return $this->encodeBox($box);
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public function checkDraftStatus($gridid) {
+		$grid=$this->storage->loadGrid($gridid);
+		if($grid->isDraft)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	public function addContainer($gridid,$containertype,$idx)
 	{
@@ -306,7 +339,7 @@ class grid_ajaxendpoint {
 		//now we can save the box. which is important.
 		$ret=$box->persist();
 		if($ret)
-			$ret=$slot->addBox($idx,$box);
+			$ret=$destslot->addBox($idx,$box);
 		if($ret)
 		{
 			return $this->encodeBox($box);
@@ -331,7 +364,11 @@ class grid_ajaxendpoint {
 					{
 						if(isset($slot->boxes[$idx]))
 						{
-							return $slot->boxes[$idx]->updateBox($boxdata);
+							$ret=$slot->boxes[$idx]->updateBox($boxdata);
+							if($ret)
+							{
+								return $this->encodeBox($slot->boxes[$idx]);
+							}
 						}
 						return FALSE;
 					}
