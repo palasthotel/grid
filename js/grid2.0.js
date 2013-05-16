@@ -721,6 +721,9 @@ $(function() {
 	// GUI manipulation
 	// -------------------
 	function showGrid(box_id){
+		if(box_id == null || typeof box_id == 'undefined'){
+			box_id = null;
+		}
 		console.log("scroll to box: "+box_id);
 		$box_editor.animate({
 			width:0
@@ -732,7 +735,13 @@ $(function() {
 		setTimeout(function(){
 			$grid.show();
 			$grid.animate({width:"100%"},250);
-			$toolbar.slideDown(200);
+			$toolbar.slideDown(250,function(){
+				console.log("scrollto");
+				if(box_id == null) return;
+				$('html, body').animate({
+					 scrollTop: $(".box[data-id="+box_id+"]").offset().top
+				 }, 200);
+			});
 		},50);
 	}
 	function showBoxEditor(){
