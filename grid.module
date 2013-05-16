@@ -1,0 +1,126 @@
+<?php 
+require_once("core/classes/bootstrap.php");
+
+function grid_menu() {
+	return array(
+		'node/%node/grid' => array(
+			'title'=>t('Grid'),
+			'page callback'=>'grid_grid',
+			'access arguments'=>array(1,'administer grid'),
+			'access callback'=>'grid_access',
+			'type'=>MENU_LOCAL_TASK,
+			'page arguments'=>array(1),
+		),
+		'admin/config/grid'=>array(
+			'title'=>'Grid settings',
+			'description'=>'Configure Grid',
+			'page callback'=>'drupal_get_form',
+			'page arguments'=>array('grid_admin_settings'),
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_NORMAL_ITEM,
+		),
+		'grid_ajax_endpoint'=>array(
+			'title'=>'Grid AJAX Endpoint',
+			'page callback'=>'grid_ajax',
+			'access callback'=>TRUE,//TODO
+		),
+	);
+}
+
+function grid_admin_paths() 
+{
+	return array(
+		'node/*/grid'=>TRUE
+	);
+}
+
+function grid_access($node,$right)
+{
+	$type=$node->type;
+	$enabled=variable_get("grid_".$type."_enabled",0);
+	if($enabled==0)return FALSE;
+	return user_access($right);
+}
+
+function grid_grid($node) {
+	$type=$node->type;
+	$enabled=variable_get("grid_".$type."_enabled",0);
+	if($enabled==1)
+	{
+		$grid_id=db_select("grid_nodes")->fields("grid_nodes",array("grid_id"))->condition("nid",$node->nid)->execute()->fetchAssoc();
+		if($grid_id===FALSE)
+		{
+			return drupal_get_form('grid_build_grid',$node->nid);
+		}
+		else
+		{
+			$grid_id=$grid_id["grid_id"];
+			$base=drupal_get_path('module','grid');
+			drupal_add_js("document.ID=".$grid_id,'inline');
+			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
+			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
+			drupal_add_js($base.'/js/templates.js','file');
+			drupal_add_js($base.'/js/grid2.0.js','file');
+			drupal_add_css($base.'/core/templates/reset.css',array('type'=>'file'));
+			drupal_add_css($base.'/core/templates/main.css',array('type'=>'file'));
+			$input=file_get_contents($base.'/core/templates/editor.html');
+			return $input;
+		}
+	}
+	else
+	{
+		drupal_not_found();
+	}
+}
+
+//TODO: delete hook on node to remove grid
+
+function grid_build_grid($form_id,&$form_state,$nid)
+{
+	$form=array();
+	$form['question']=array(
+		'#type'=>'markup',
+		'#markup'=>'<div>'.t('There is no Grid. Boot one?').'</div>',
+	);
+	$form['submit']=array(
+		'#type'=>'submit',
+		'#value'=>'Create Grid',
+		'#executes_submit_callback'=>TRUE,
+	);
+	$form_state['nid']=$nid;
+	return $form;
+}
+
+function grid_build_grid_submit($form_id,&$form_state)
+{
+	$nid=$form_state['nid'];
+	$conn=Database::getConnection();
+	$opts=$conn->getConnectionOptions();
+	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	$id=$storage->createGrid();
+	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$nid,'grid_id'=>$id))->execute();
+}
+
+function grid_ajax()
+{
+	$conn=Database::getConnection();
+	$opts=$conn->getConnectionOptions();
+	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	$storage->handleAjaxCall();
+}
+
+function grid_admin_settings()
+{
+	$form=array();
+	$types=node_type_get_types();
+	$keys=array_keys($types);
+	foreach($keys as $key)
+	{
+		$form['grid_'.$key.'_enabled']=array(
+			'#type'=>'checkbox',
+			'#default_value'=>variable_get('grid_'.$key.'_enabled',0),
+			'#title'=>t('enable Grid on '.$key.' nodes'),
+		);
+	}
+	return system_settings_form($form);
+}

@@ -24,7 +24,9 @@ class grid_dump_box extends grid_box {
 	}
 	
 	public function metaSearch($criteria,$query) {
-		return array();
+		$box=new grid_dump_box();
+		$box->content=new stdClass();
+		return array($box);
 	}
 	
 	public function contentStructure () {

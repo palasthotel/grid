@@ -1,0 +1,525 @@
+<?php
+
+function grid_schema()
+{
+	return array(
+		'grid_grid'=>array(
+			'description'=>t('Stores all grids and their revisions.'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'published'=>array(
+					'description'=>t('Published Flag'),
+					'type'=>'int',
+					'size'=>'tiny',
+				),
+				'next_containerid'=>array(
+					'description'=>t('ID for next container'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'next_slotid'=>array(
+					'description'=>t('ID for next slot'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'next_boxid'=>array(
+					'description'=>t('ID for next box'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+			),
+			'primary key'=>array('id','revision'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_container'=>array(
+			'description'=>t('Stores all container'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('container id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'type'=>array(
+					'description'=>t('container type'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'style'=>array(
+					'description'=>t('container style'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'title'=>array(
+					'description'=>t('title'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'title_url'=>array(
+					'description'=>t('title url'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'prolog'=>array(
+					'description'=>t('prolog'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'epilog'=>array(
+					'description'=>t('epilog'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'readmore'=>array(
+					'description'=>t('readmore text'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'readmore_url'=>array(
+					'description'=>t('readmore url'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+			),
+			'primary key'=>array('id','grid_id','grid_revision'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_slot'=>array(
+			'description'=>t('stores all slots'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('slot id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'style'=>array(
+					'description'=>t('slot style'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+			),
+			'primary key'=>array('id','grid_id','grid_revision'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_box'=>array(
+			'description'=>t('stores all boxes'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('box id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'type'=>array(
+					'description'=>t('box type'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'style'=>array(
+					'description'=>t('box style'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'title'=>array(
+					'description'=>t('title'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'title_url'=>array(
+					'description'=>t('title url'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'prolog'=>array(
+					'description'=>t('prolog'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'epilog'=>array(
+					'description'=>t('epilog'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'readmore'=>array(
+					'description'=>t('readmore text'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'readmore_url'=>array(
+					'description'=>t('readmore url'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+				'content'=>array(
+					'description'=>t('content'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
+			),
+			'primary key'=>array('id','grid_id','grid_revision'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_grid2container'=>array(
+			'description'=>t('links grid to container'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'container_id'=>array(
+					'description'=>t('referenced container'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'weight'=>array(
+					'description'=>t('weight within grid'),
+					'type'=>'int',
+					'size'=>'normal',
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_container2slot'=>array(
+			'description'=>t('links container to slot'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'container_id'=>array(
+					'description'=>t('referenced container'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'slot_id'=>array(
+					'description'=>t('referenced slot'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'weight'=>array(
+					'description'=>t('weight within grid'),
+					'type'=>'int',
+					'size'=>'normal',
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_slot2box'=>array(
+			'description'=>t('links box to slot'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'slot_id'=>array(
+					'description'=>t('referenced slot'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'grid_revision'=>array(
+					'description'=>t('grid revision'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+				),
+				'box_id'=>array(
+					'description'=>t('referenced box'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+				),
+				'weight'=>array(
+					'description'=>t('weight within grid'),
+					'type'=>'int',
+					'size'=>'normal',
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_box_style'=>array(
+			'description'=> t('Box Styles'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('style id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'style'=>array(
+					'description'=>t('style'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+				'slug'=>array(
+					'description'=>t('slug'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_box_type'=>array(
+			'description'=>t('Box types'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('type id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'type'=>array(
+					'description'=>t('type'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_container_style'=>array(
+			'description'=>t('Container Styles'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('style id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'style'=>array(
+					'description'=>t('style'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+				'slug'=>array(
+					'description'=>t('slug'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_container_type'=>array(
+			'description'=>t('Container Types'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('type id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'type'=>array(
+					'description'=>t('type name'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+				'numslots'=>array(
+					'description'=>t('number of slots this container has'),
+					'type'=>'int',
+					'size'=>'normal',
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_slot_style'=>array(
+			'description'=>t('slot styles'),
+			'fields'=>array(
+				'id'=>array(
+					'description'=>t('style id'),
+					'type'=>'serial',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'style'=>array(
+					'description'=>t('style'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+				'slug'=>array(
+					'description'=>t('slug'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+			),
+			'primary key'=>array('id'),
+			'mysql_engine'=>'InnoDB',
+		),
+		'grid_nodes'=>array(
+			'description'=>t('references nodes'),
+			'fields'=>array(
+				'nid'=>array(
+					'description'=>t('node id'),
+					'type' => 'int',
+					'unsigned'=>true,
+					'not null'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+					'not null'=>true,
+				),
+			),
+			'primary key'=>array('nid'),
+			'mysql_engine'=>'InnoDB',
+		),
+	);
+}
+
+function grid_install() 
+{
+	db_query("alter table {grid_box} add constraint fk_box_type foreign key (type) references {grid_box_type} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_box} add constraint fk_box_style foreign key (style) references {grid_box_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container} add constraint fk_container_type foreign key (type) references {grid_container_type} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container} add constraint fk_container_style foreign key (style) references {grid_container_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container2slot} add constraint fk_container_container foreign key (container_id,grid_id,grid_revision) references {grid_container} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_container2slot} add constraint fk_container_slot foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_grid2container} add constraint fk_grid_grid foreign key (grid_id,grid_revision) references {grid_grid} (id,revision) on update cascade on delete cascade");
+	db_query("alter table {grid_grid2container} add constraint fk_grid_container foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_slot} add constraint fk_slot_style foreign key (style) references {grid_slot_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_slot2box} add constraint fk_slot_slot foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_slot2box} add constraint fk_slot_box foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
+}
+
+function grid_uninstall()
+{
+	db_query("alter table {grid_box} drop foreign key fk_box_type");
+	db_query("alter table {grid_box} drop foreign key fk_box_style");
+	db_query("alter table {grid_container} drop foreign key fk_container_type");
+	db_query("alter table {grid_container} drop foreign key fk_container_style");
+	db_query("alter table {grid_container2slot} drop foreign key fk_container_container");
+	db_query("alter table {grid_container2slot} drop foreign key fk_container_slot");
+	db_query("alter table {grid_grid2container} drop foreign key fk_grid_grid");
+	db_query("alter table {grid_grid2container} drop foreign key fk_grid_container");
+	db_query("alter table {grid_slot} drop foreign key fk_slot_style");
+	db_query("alter table {grid_slot2box} drop foreign key fk_slot_slot");
+	db_query("alter table {grid_slot2box} drop foreign key fk_slot_box");
+}
