@@ -23,6 +23,24 @@ class grid_db {
 		$this->connection->query($query);
 		return $id;
 	}
+	
+	public function destroyGrid($grid_id)
+	{
+		$query="delete from grid_box where grid_id=$grid_id";
+		$this->connection->query($query);
+		$query="delete from grid_container where grid_id=$grid_id";
+		$this->connection->query($query);
+		$query="delete from grid_container2slot where grid_id=$grid_id";
+		$this->connection->query($query);
+		$query="delete from grid_grid where id=$grid_id";
+		$this->connection->query($query);
+		$query="delete from grid_grid2container where grid_id=$grid_id";
+		$this->connection->query($query);
+		$query="delete from grid_slot where grid_id=$grid_id";
+		$this->connection->query($query);
+		$query="delete from grid_slot2box where grid_id=$grid_id";
+		$this->connection->query($query);
+	}
 
 	//loads a complete grid with all regions and boxes belonging to it.
 	public function loadGrid($gridId,$preferDrafts=TRUE)

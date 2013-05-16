@@ -1,6 +1,10 @@
 <?php 
 require_once("core/classes/bootstrap.php");
 
+//drupal-specific boxes
+require_once("core/classes/grid_block_box.php");
+require_once("core/classes/grid_node_box.php");
+
 function grid_menu() {
 	return array(
 		'node/%node/grid' => array(
@@ -9,6 +13,14 @@ function grid_menu() {
 			'access arguments'=>array(1,'administer grid'),
 			'access callback'=>'grid_access',
 			'type'=>MENU_LOCAL_TASK,
+			'page arguments'=>array(1),
+		),
+		'node/%node/grid/preview' =>array(
+			'title'=>t('Preview'),
+			'page callback'=>'grid_preview',
+			'access arguments'=>array(1,'administer grid'),
+			'access callback'=>'grid_access',
+			'type'=>MENU_CALLBACK,
 			'page arguments'=>array(1),
 		),
 		'admin/config/grid'=>array(
@@ -23,6 +35,7 @@ function grid_menu() {
 			'title'=>'Grid AJAX Endpoint',
 			'page callback'=>'grid_ajax',
 			'access callback'=>TRUE,//TODO
+			'type'=>MENU_CALLBACK,
 		),
 	);
 }
@@ -42,27 +55,48 @@ function grid_access($node,$right)
 	return user_access($right);
 }
 
+function grid_get_grid_by_nid($nodeid)
+{
+	$grid_id=db_select("grid_nodes")->fields("grid_nodes",array("grid_id"))->condition("nid",$nodeid)->execute()->fetchAssoc();
+	if($grid_id===FALSE)
+	{
+		return FALSE;
+	}
+	else
+	{
+		return $grid_id['grid_id'];
+	}
+}
+
+function grid_get_storage()
+{
+	$conn=Database::getConnection();
+	$opts=$conn->getConnectionOptions();
+	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	return $storage;
+}
+
 function grid_grid($node) {
 	$type=$node->type;
 	$enabled=variable_get("grid_".$type."_enabled",0);
 	if($enabled==1)
 	{
-		$grid_id=db_select("grid_nodes")->fields("grid_nodes",array("grid_id"))->condition("nid",$node->nid)->execute()->fetchAssoc();
+		$grid_id=grid_get_grid_by_nid($node->nid);
 		if($grid_id===FALSE)
 		{
 			return drupal_get_form('grid_build_grid',$node->nid);
 		}
 		else
 		{
-			$grid_id=$grid_id["grid_id"];
+//			$grid_id=$grid_id["grid_id"];
 			$base=drupal_get_path('module','grid');
 			drupal_add_js("document.ID=".$grid_id,'inline');
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 			drupal_add_js($base.'/js/templates.js','file');
 			drupal_add_js($base.'/js/grid2.0.js','file');
-			drupal_add_css($base.'/core/templates/reset.css',array('type'=>'file'));
-			drupal_add_css($base.'/core/templates/main.css',array('type'=>'file'));
+//			drupal_add_css($base.'/core/templates/reset.css',array('type'=>'file'));
+			drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
 			$input=file_get_contents($base.'/core/templates/editor.html');
 			return $input;
 		}
@@ -73,7 +107,66 @@ function grid_grid($node) {
 	}
 }
 
-//TODO: delete hook on node to remove grid
+function grid_preview($node) {
+	$type=$node->type;
+	$enabled=variable_get("grid_".$type."_enabled",0);
+	if($enabled==1)
+	{
+		$grid_id=grid_get_grid_by_nid($node->nid);
+		if($grid_id===FALSE)
+		{
+			drupal_not_found();
+		}
+		else
+		{
+			$storage=grid_get_storage();
+			$grid=$storage->loadGrid($grid_id);
+			return $grid->render(FALSE);
+		}
+	}
+}
+
+function grid_node_delete($node)
+{
+	$grid_id=grid_get_grid_by_nid($node->nid);
+	if($grid_id!==FALSE)
+	{
+		$conn=Database::getConnection();
+		$opts=$conn->getConnectionOptions();
+		$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+		$storage->destroyGrid($grid_id);
+		db_delete("grid_nodes")->condition("nid",$node->nid)->execute();
+	}
+}
+
+function grid_node_load($nodes,$types)
+{
+	$storage=grid_get_storage();
+	foreach($nodes as $nid=>$node)
+	{
+		$grid_id=grid_get_grid_by_nid($nid);
+		if($grid_id!==FALSE)
+		{
+			$grid=$storage->loadGrid($grid_id,FALSE);
+			if(!$grid->isDraft)
+			{
+				$node->grid=$grid;
+			}
+		}
+	}
+}
+
+function grid_node_view($node,$view_mode,$langcode)
+{
+	if(isset($node->grid))
+	{
+		$html=$node->grid->render(FALSE);
+		$node->content['grid']=array(
+			'#type'=>'markup',
+			'#markup'=>$html,
+		);
+	}
+}
 
 function grid_build_grid($form_id,&$form_state,$nid)
 {

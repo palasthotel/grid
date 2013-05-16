@@ -1,3 +1,3 @@
-<div class="<?=$this->style?>">
+<div class="grid">
 	<?=implode("", $containerlist)?>
 </div>
