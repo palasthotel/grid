@@ -9,4 +9,6 @@
 <file name="templates.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130130995267728915" remote="130130997000000000" Dst="2" />
 <file name="jquery.mCustomScrollbar.min.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130107459873498228" remote="130107462000000000" Dst="2" />
 <file name="jquery.mousewheel.min.js" server="emma-dev.ia-code.ws//var/sites/grid/" local="130107459869115315" remote="130107462000000000" Dst="2" />
+<file name="templates.js" server="grid-dev.palasthotel.net//var/sites/drupal/sites/all/modules/grid/" local="130131719450000000" remote="130131719450000000" Dst="2" />
+<file name="grid2.0.js" server="grid-dev.palasthotel.net//var/sites/drupal/sites/all/modules/grid/" local="130131777992736262" remote="130131777940000000" Dst="2" />
 </dwsync>
