@@ -3,29 +3,30 @@
 SMACK
 
 */
-*{
-	font:"Arial Black", Gadget, sans-serif;
-}
-/*body{
+#grid-wrapper{
 	width:1000px;
 	margin:0px auto;
 	margin-top:10px;
 	margin-bottom:60px;
 	background-color:#fff;
-}*/
-
-#grid-wrapper{
-	width:1000px;
+}
+#grid-wrapper ul{
+	list-style:none;
+	margin:0px;
 }
 /** Toolbar rules **/
 #toolbar{
 	display:block;
-	width:1000px;;
+	width:1000px;
 	background-color:#fff;
 	border:1px solid #e0e0e0;
 	border-top:none;
 	padding-top:10px;
 	margin-bottom:10px;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	padding:0px;
 }
 .fixed #toolbar{
 	position:fixed;
@@ -40,6 +41,8 @@ SMACK
 	margin-bottom: 4px;
 }
 #toolbar > ul{
+	margin:0px !important;
+	margin-bottom:10px;
 }
 #toolbar > ul > li{
 	float:left;
@@ -57,21 +60,30 @@ SMACK
 .grid-tools select{
 	width:140px;
 }
-.grid-tools .draggable{
-	height:50px;
-	width:50px;
-	background-color:#e0e0e0;
-	border:1px solid#333;
-}
 .g-tool{
 	position:relative;
 	padding:10px;
 	border:1px solid#efefef;
 	background-color:#f6f6f6;
 }
+/** container toolbar **/
+.g-container .container-selection{
+	float:left;
+	margin-right:14px;
+}
+.g-container .container-dragger-wrapper{
+	float:left;
+}
+#grid-wrapper .draggable.new-container{
+	height:50px;
+	width:50px;
+	background-color:#e0e0e0;
+	border:1px solid#333;
+}
+/** box toolbar **/
 .g-box .box-type-tabs{
 	border-bottom:1px solid #333;
-	margin-bottom: 10px;
+	margin-bottom: 10px !important;
 }
 .g-box .box-type-tabs li{
 	float:left;
@@ -131,6 +143,7 @@ SMACK
 /** Toolbar rules ENDE **/
 #grid{
 	float:left;
+	width:1000px;
 }
 .container, .slot, .box{
 	-webkit-box-sizing: border-box;
@@ -166,8 +179,8 @@ SMACK
 }
 .container .c-title{
 	position:absolute;
-	top:4px; 
-	left:85px;
+	top:-8px; 
+	left:82px;
 }
 .c-sort-placeholder{
 	background-color:#fafafa;
@@ -295,6 +308,8 @@ SMACK
 	width:33%;
 	margin-right:1%;
 	float:left;
+	border:none;
+	padding:0px;
 }
 .container fieldset:last-child{
 	float:right;
@@ -318,7 +333,6 @@ SMACK
 }
 .slot > .style-changer{
 	position:absolute;
-	z-index:10;
 	top:4px;
 	left:44px;
 	padding-bottom:10px;
@@ -339,14 +353,17 @@ SMACK
 .style-changer > .choose-style{
 	display:none;
 	position:absolute;
-	top:21px;
+	top:22px;
 	left:0px;
 	color:#fff;
 	background-color:#333;
 	border:1px solid #ccc;
+	z-index:111;
+	list-style:none;
 }
 .style-changer:hover > .choose-style{
 	display:block;
+	z-index:111;
 }
 .style-changer > .choose-style:before{
 	content:"";
@@ -364,6 +381,7 @@ SMACK
 	border-bottom:1px solid #666;
 	white-space:nowrap;
 	cursor:pointer;
+	z-index:111;
 }
 .choose-style li:hover{
 	color:#6CF;
@@ -385,12 +403,21 @@ SMACK
 	position:absolute;
 	right:5px;
 	top:5px;
-	width:10px;
-	height:10px;
-	background-color:#666;
+	width:16px;
+	height:16px;
+	background-image:url(images/edit_small.png);
+	border-bottom:1px solid #666;
+	background-position: 0px 2px;
+	background-repeat:no-repeat;
 	cursor:pointer;
 }
-
+.box > .edit:hover{
+	background-position:0px 0px;
+	border-color:#999;
+}
+.container.editor .box > .edit{
+	display:none;
+}
 .box .handle{
 	height:10px;
 	background-color:#000;
@@ -451,8 +478,15 @@ SMACK
 }
 #box-editor .content fieldset{
 	margin-bottom:10px;
-	padding-bottom:5px;
+	padding: 0 5px 5px 5px;
 	border-bottom:1px solid #e0e0e0;
+}
+#box-editor .content fieldset input,
+#box-editor .content fieldset textarea{
+	width:100%;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
 }
 #box-editor .controls{
 	margin-bottom:10px;

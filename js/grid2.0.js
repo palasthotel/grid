@@ -178,6 +178,9 @@ $(function() {
 			case "publish":
 				publishGrid();
 				break;
+			case "preview":
+				window.open(window.location.pathname+'/preview',"_blank");
+				break;
 			case "revert":
 				revertGrid();
 				break;
@@ -216,6 +219,7 @@ $(function() {
 		active_box_type = arr_box_types[$toolBoxTypeTabs.children(".active").data("index")];
 		if(active_box_type.criteria.length > 0){
 			$search_bar.show();
+			searchBoxes("");
 			console.log("suchen bitte");
 		} else {
 			$search_bar.hide();
@@ -289,9 +293,9 @@ $(function() {
 	});
 	$("#container-dragger").draggable({ 
 		helper: "clone", 
-		zIndex: 99, 
+		zIndex: 99,
+		appendTo: $("#grid-wrapper"),
 		scroll: true,
-		//connectToSortable: GRID_SORTABLE,
 		start: function(event, ui){
 			$grid.children().before("<div class='"+CONTAINER_DROP_AREA_CLASS+"'>Drop Area</div>");
 			$grid.append("<div class='"+CONTAINER_DROP_AREA_CLASS+"'>Drop Area</div>");
@@ -302,8 +306,8 @@ $(function() {
 					$temp = buildContainer( 
 							[{ 	"type": containerType, 
 								"id" : "new",
-								"prolog": "prolog",
-								"epilog": "epilog" }] )
+								"prolog": "",
+								"epilog": "" }] )
 							.insertBefore( $(this) );
 					
 					$grid.children().remove(CSS_CONTAINER_DROP_AREA_CLASS);
@@ -483,6 +487,7 @@ $(function() {
 	function refreshBoxSortable(){
 		$(".boxes-wrapper").sortable({
 			items: ".box",
+			cancel: "span.edit",
 			connectWith: ".boxes-wrapper, .c-box-trash",
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
@@ -603,17 +608,7 @@ $(function() {
 		$this = $(this);
 		switch ($this.attr("role")){
 			case "cancle":
-				$box_editor.animate({
-					width:0
-				},220,
-				function(){
-					$box_editor.hide();
-					$box_editor_content.empty();
-				});
-				setTimeout(function(){
-					$grid.show();
-					$grid.animate({width:"100%"},250);
-				},50);
+				showGrid($box_editor_content.data("id"));
 				break;
 			case "save":
 				updateBox();
@@ -648,6 +643,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
+				showGrid($data.data("id"));
 			});
 	}
 	
@@ -657,7 +653,91 @@ $(function() {
 		s_id = $this.parents(".slot").data("id");
 		b_index = $this.parents(".box").index();
 		console.log("edit!");
+		showBoxEditor();
+		sendAjax(
+			"fetchBox",
+			[ID,c_id,s_id,b_index],
+			function(data){
+				console.log(data);
+				result = data.result;
+				params = {
+					"box":result,
+					"b_index":b_index,
+					"s_id":s_id,
+					"c_id":c_id,
+					"styles": arr_box_styles
+				};
+				$box_editor_content.append(buildBoxEditor(params));
+				$dynamic_fields = $box_editor_content.find(".dynamic-fields");
+				$.each(result.contentstructure,function(index,element){						
+					switch(element.type){
+						case "html":
+							$dynamic_fields.append("<label>"+element.key+"</label>");
+							$dynamic_fields.append(
+								"<textarea class='dynamic-value form-textarea' "+
+								"data-key='"+element.key+"' name='key-"+index+"'>"+
+								result.content[element.key]+
+								"</textarea>");
+							break;
+						case "number":
+							$dynamic_fields.append("<label>"+element.key+"</label>");
+							$dynamic_fields.append(
+								"<input type='number' class='dynamic-value form-text' "+
+								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
+							break;
+						case "text":
+							$dynamic_fields.append("<label>"+element.key+"</label>");
+							$dynamic_fields.append(
+								"<input type='text' class='dynamic-value form-text' "+
+								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
+							break;
+						case "select":
+							$dynamic_fields.append("<label>"+element.key+"</label>");
+							$select = $("<select class='dynamic-value form-select' "+
+								"data-key='"+element.key+"'></select>");
+							$.each(result.contentstructure[index].selections,function(i,sel){
+								selected = "";
+								if(result.content[element.key] == sel.key) selected = "selected='selected' ";
+								$select.append("<option "+selected+"value='"+sel.key+"'>"+sel.text+"</option");
+							});
+							$dynamic_fields.append($select);
+							break;
+						case "hidden":
+							$dynamic_fields.append(
+								"<input type='hidden' class='dynamic-value' "+
+								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
+							break;
+						default:
+							console.log("unbekannter typ: "+element.type);
+					}
+				});
+			});
+	});
+	function buildBoxEditor(templateParams){
+		return $.tmpl( "boxEditorTemplate", templateParams );
+	}
+	
+	// --------------------
+	// GUI manipulation
+	// -------------------
+	function showGrid(box_id){
+		console.log("scroll to box: "+box_id);
+		$box_editor.animate({
+			width:0
+		},220,
+		function(){
+			$box_editor.hide();
+			$box_editor_content.empty();
+		});
+		setTimeout(function(){
+			$grid.show();
+			$grid.animate({width:"100%"},250);
+			$toolbar.slideDown(200);
+		},50);
+	}
+	function showBoxEditor(){
 		$box_editor_content.empty();
+		$toolbar.slideUp(200);
 		$grid.animate(
 			{	
 				width:0
@@ -669,51 +749,7 @@ $(function() {
 		setTimeout(function(){
 			$box_editor.show();
 			$box_editor.animate({width:"100%"},250);
-			sendAjax(
-				"fetchBox",
-				[ID,c_id,s_id,b_index],
-				function(data){
-					console.log(data);
-					result = data.result;
-					params = {
-						"box":result,
-						"b_index":b_index,
-						"s_id":s_id,
-						"c_id":c_id,
-						"styles": arr_box_styles
-					};
-					$box_editor_content.append(buildBoxEditor(params));
-					$dynamic_fields = $box_editor_content.find(".dynamic-fields");
-					$.each(result.contentstructure,function(index,element){
-						console.log(result.content[element.key]);
-						switch(element.type){
-							case "html":
-								// editor
-								$dynamic_fields.append("<textarea class='dynamic-value' data-key='"+element.key+"' name='key-"+index+"'>"+
-														result.content[element.key]+
-														"</textarea>");
-								break;
-							default:
-								console.log(element.type);
-								$dynamic_fields.append("<input class='dynamic-value' data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
-								break;
-						}
-					});
-				});
 		},50);
-	});
-	function buildBoxEditor(templateParams){
-		return $.tmpl( "boxEditorTemplate", templateParams );
-	}
-	
-	// --------------------
-	// GUI manipulation
-	// -------------------
-	function showGrid(box_id){
-		
-	}
-	function showBoxEditor(){
-		
 	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
@@ -744,11 +780,17 @@ $(function() {
 			box_toggling = false;
 		});
 	}
+	$btn_publish = $toolbar.find("button[role=publish]");
+	$btn_revert = $toolbar.find("button[role=revert]");
 	function changeIsDraftDisplay(isDraft){
 		if(isDraft == true){
 			$stateDisplay.text("Entwurf...");
+			$btn_publish.removeAttr("disabled");
+			$btn_revert.removeAttr("disabled");
 		} else {
 			$stateDisplay.text("Veröffentlicht!");
+			$btn_publish.attr("disabled","disabled");
+			$btn_revert.attr("disabled","disabled");
 		}
 	}
 	
