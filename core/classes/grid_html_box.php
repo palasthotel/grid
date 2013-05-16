@@ -8,8 +8,15 @@ class grid_html_box extends grid_box {
 	}
 
 	public function build($editmode) {
-		//boxes render their content in here
-		return $this->content->html;
+		if($editmode && empty($this->content->html))
+		{
+			return "Statischer HTML-Inhalt";
+		}
+		else
+		{
+			//boxes render their content in here
+			return $this->content->html;
+		}
 	}
 	
 	public function isMetaType() {
@@ -26,7 +33,7 @@ class grid_html_box extends grid_box {
 	
 	public function metaSearch($criteria,$query) {
 		$this->content=new stdClass();
-		$this->content->html="<p>Box für beliebigen statischen Inhalt</p>";
+		$this->content->html="";
 		return array($this);
 	}
 	

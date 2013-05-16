@@ -9,9 +9,13 @@ class grid_node_box extends grid_box {
 
 	public function build($editmode) {
 		$node=node_load($this->content->nid);
+		if($node==FALSE)
+		{
+			return "Node is lost";
+		}
 		if($editmode)
 		{
-			return $node->type.': '.$node->title;
+			return $node->type.': '.$node->title.' ('.date("Y-m-d h:i:s",$node->created).")";
 		}
 		else
 		{
@@ -39,7 +43,8 @@ class grid_node_box extends grid_box {
 		$results=array();
 		$query=new EntityFieldQuery();
 		$query->entityCondition('entity_type','node')
-		      ->propertyCondition('title','%'.$search.'%','LIKE');
+		      ->propertyCondition('title','%'.$search.'%','LIKE')
+		      ->propertyOrderBy('created','DESC');
 		$result=$query->execute();
 		if(isset($result['node']))
 		{
