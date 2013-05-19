@@ -23,7 +23,7 @@ class grid_container extends grid_base {
 			if ($slot == end($this->slots)){
 				$pos="last";
 			}		
-			$slots[]=$slot->render($editmode, $pos);
+			$slots[]=$slot->render($editmode, $pos, $this);
 		}
 		ob_start();
 		include dirname(__FILE__).'/../templates/container.tpl.php';

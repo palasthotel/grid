@@ -313,16 +313,16 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		select grid_id,$newrevision,container_id,weight from grid_grid2container
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_slot (id,grid_id,grid_revision) 
-		select id,grid_id,$newrevision from grid_slot
+		$query="insert into grid_slot (id,grid_id,grid_revision,style) 
+		select id,grid_id,$newrevision,style from grid_slot
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
 		$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight)
 		select container_id,grid_id,$newrevision,slot_id,weight from grid_container2slot
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content)
-		select id,grid_id,$newrevision,type,title,title_url,prolog,epilog,readmore,readmore_url,content from grid_box
+		$query="insert into grid_box (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content)
+		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content from grid_box
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
 		$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) 
