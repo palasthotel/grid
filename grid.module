@@ -40,6 +40,15 @@ function grid_menu() {
 	);
 }
 
+function grid_js_alter(&$javascript)
+{
+	$item=menu_get_item();
+	if($item['page_callback']=='grid_grid')
+	{
+		$javascript['misc/jquery.js']['data']=drupal_get_path('module','grid').'/js/jquery-1.9.1.min.js';
+	}
+}
+
 function grid_admin_paths() 
 {
 	return array(
