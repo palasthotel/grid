@@ -298,7 +298,9 @@ SMACK
 	background-color:#f22;
 }
 /** Container inplace **/
-.container textarea, .container input{
+.container textarea, 
+.container input[type=number],
+.container input[type=text]{
 	width:100%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -387,6 +389,9 @@ SMACK
 	color:#6CF;
 }
 /** Allgemeine Box styles **/
+.container.editor .box{
+	display:none;
+}
 .boxes-wrapper{
 	min-height:10px;
 }
@@ -481,7 +486,8 @@ SMACK
 	padding: 0 5px 5px 5px;
 	border-bottom:1px solid #e0e0e0;
 }
-#box-editor .content fieldset input,
+#box-editor .content fieldset input[text],
+#box-editor .content fieldset input[number],
 #box-editor .content fieldset textarea{
 	width:100%;
 	box-sizing:border-box;
