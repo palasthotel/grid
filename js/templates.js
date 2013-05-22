@@ -1,5 +1,5 @@
 
-var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}" class="container ${type} clearfix">'+
+var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}" class="container display ${type} clearfix">'+
         	'<div class="c-tools">'+
                 '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
                 '<span role="trash" class="c-trash c-tool"></span>'+
@@ -32,9 +32,9 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
             '</div>'+
         	'<div class="c-before">'+
             	'<label for="f-c-title">Title:</label>'+
-                '<input name="f-c-title" id="f-c-title" value="${title}" class="form-text" />'+
+                '<input type="text" name="f-c-title" id="f-c-title" value="${title}" class="form-text" />'+
                 '<label for="f-c-titleurl">Titel URL:</label>'+
-                '<input name="f-c-titleurl" id="f-c-titleurl" value="${titleurl}" class="form-text" />'+
+                '<input type="text" name="f-c-titleurl" id="f-c-titleurl" value="${titleurl}" class="form-text" />'+
                 '<label for="f-c-prolog">Prolog:</label>'+
                 '<textarea name="f-c-prolog" id="f-c-prolog" class="form-textarea">${prolog}</textarea>'+
             '</div>'+
@@ -44,26 +44,26 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
             '<div class="c-after">'+
                 '<label for="f-c-epilog">Epilog:</label>'+
         		'<textarea name="f-c-epilog" id="f-c-epilog" class="form-textarea">${epilog}</textarea> ' +              
-            '</div>'+
-            '<div class="clearfix">'+
-            	'<fieldset>'+
-                    '<label for="f-c-readmore">Readmore Text:</label>'+
-                    '<input name="f-c-readmore" id="f-c-readmore" value="${readmore}" class="form-text" />'+
-                '</fieldset>'+
-                '<fieldset>'+
-                    '<label for="f-c-readmoreurl">Readmore URL:</label>'+
-                    '<input name="f-c-readmoreurl" id="f-c-readmoreurl" value="${readmoreurl}" class="form-text" />'+
-                '</fieldset>'+
-                '<fieldset>'+
-                    '<label for="f-c-style">Style</label>'+ 
-                    '<select name="f-c-style" id="f-c-style" class="form-select">'+
-                        '<option value="">ohne style</option>'+
-						'{{if styles}}{{each styles}}'+
-							'<option {{if $value.slug == style }}selected="selected"{{/if}} value="${$value.slug}">${$value.title}</option>'+
-						'{{/each}}{{/if}}'
-                   '</select>'
-                '</fieldset>'+
-            '</div>'+
+				'<div class="clearfix">'+
+					'<fieldset>'+
+						'<label for="f-c-readmore">Readmore Text:</label>'+
+						'<input type="text" name="f-c-readmore" id="f-c-readmore" value="${readmore}" class="form-text" />'+
+					'</fieldset>'+
+					'<fieldset>'+
+						'<label for="f-c-readmoreurl">Readmore URL:</label>'+
+						'<input type="text" name="f-c-readmoreurl" id="f-c-readmoreurl" value="${readmoreurl}" class="form-text" />'+
+					'</fieldset>'+
+					'<fieldset>'+
+						'<label for="f-c-style">Style</label>'+ 
+						'<select name="f-c-style" id="f-c-style" class="form-select">'+
+							'<option value="">ohne style</option>'+
+							'{{if styles}}{{each styles}}'+
+								'<option {{if $value.slug == style }}selected="selected"{{/if}} value="${$value.slug}">${$value.title}</option>'+
+							'{{/each}}{{/if}}'
+					   '</select>'
+					'</fieldset>'+
+				'</div>'+
+			'</div>'+
         '</div>';
 jQuery.template( "containerEditorTemplate", container_editor_markup );
 

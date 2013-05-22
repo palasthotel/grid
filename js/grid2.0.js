@@ -64,7 +64,7 @@ $(function() {
 	}
 	$(document).ready(init);
 	// --------------------
-	// Werte die vor dem Grid geladen werden müssen
+	// values to load before grid
 	// --------------------
 	function loadBoxTypes(){
 		sendAjax(
@@ -260,15 +260,6 @@ $(function() {
 	// ----------------------------
 	// container funktionen
 	// --------------------------
-	function toggleContainerTools(){
-		if($toolContainer.css("display") == "none"){
-			$gridTools.children().hide();
-		$toolContainer.show();
-		} else {
-			$toolContainer.hide();
-		}
-	}
-	
 	$grid.sortable({
 		handle: ".c-sort-handle",
 		//axis: "y",
@@ -386,6 +377,7 @@ $(function() {
 		revert_data = params;
 		$newContainer = buildContainerEditor(params).insertAfter( $container );
 		$newContainer.find(".slots-wrapper").replaceWith($container.find(".slots-wrapper"));
+		$newContainer.find(".box").hide();
 		$container.remove();
 	}
 	function saveContainer($editContainer){
@@ -417,6 +409,7 @@ $(function() {
 			if(data.result == true){
 				$newContainer = buildContainer( templateParams ).insertAfter( $editContainer );
 				$newContainer.find(".slots-wrapper").replaceWith($editContainer.find(".slots-wrapper"));
+				$newContainer.find(".box").show();
 				$editContainer.remove();
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
@@ -426,6 +419,7 @@ $(function() {
 	function revertContainerChanges($container){
 		$oldContainer =	buildContainer(revert_data );
 		$oldContainer.find(".slots-wrapper").replaceWith($container.find(".slots-wrapper"));
+		$oldContainer.find(".box").show();
 		$container.after($oldContainer);
 		$container.remove();
 	}
@@ -587,7 +581,7 @@ $(function() {
 						params = [ID, $this_container.data("id"), $this_slot.data("id"), $temp.index(), box_obj.type, box_obj.content];
 						sendAjax("createBox",params,
 						function(data){
-							$temp.data("id",data.result.id);
+							$temp.attr("data-id",data.result.id);
 							console.log(data);
 						});
 					}
@@ -608,7 +602,7 @@ $(function() {
 		$this = $(this);
 		switch ($this.attr("role")){
 			case "cancle":
-				showGrid($box_editor_content.data("id"));
+				showGrid($box_editor_content.children().data("id"));
 				break;
 			case "save":
 				updateBox();
@@ -623,7 +617,16 @@ $(function() {
 		// make content array
 		content = {};
 		$.each($data.find(".dynamic-value"),function(index,element){
-			content[$(element).data("key")] = $(element).val();
+			$element = $(element);
+			if($element.hasClass("form-checkbox")){
+				if($element.prop("checked")){
+					content[$element.data("key")] = 1;
+				} else {
+					content[$element.data("key")] = 0;
+				}
+			} else {
+				content[$element.data("key")] = $element.val();
+			}
 		});
 		box_content = {
 				id: $data.data("id"),
@@ -707,6 +710,14 @@ $(function() {
 								"<input type='hidden' class='dynamic-value' "+
 								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
 							break;
+						case "checkbox":
+							checked = "";
+							if(result.content[element.key] == 1){
+								checked = "checked";
+							}
+							$dynamic_fields.append("<div class='form-item'><input type='checkbox' checked='"+checked+"' class='dynamic-value form-checkbox' "+
+								"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.info+"</label></div>");
+							break;
 						default:
 							console.log("unbekannter typ: "+element.type);
 					}
@@ -734,17 +745,18 @@ $(function() {
 		});
 		setTimeout(function(){
 			$grid.show();
-			$grid.animate({width:"100%"},250);
-			$toolbar.slideDown(250,function(){
+			$grid.animate({width:"100%"},200);
+			$toolbar.slideDown(200,function(){
 				console.log("scrollto");
 				if(box_id == null) return;
 				$('html, body').animate({
-					 scrollTop: $(".box[data-id="+box_id+"]").offset().top
+					 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
 				 }, 200);
 			});
 		},50);
 	}
 	function showBoxEditor(){
+		hideBoxTools();
 		$box_editor_content.empty();
 		$toolbar.slideUp(200);
 		$grid.animate(
@@ -766,6 +778,14 @@ $(function() {
 	function hideBoxTrash(){
 		$(".c-box-trash").hide();
 	}
+	function toggleContainerTools(){
+		if($toolContainer.css("display") == "none"){
+			$gridTools.children().hide();
+		$toolContainer.show();
+		} else {
+			$toolContainer.hide();
+		}
+	}
 	function toggleBoxTools(){
 		if($toolBox.css("display") == "none"){
 			showBoxTools();
@@ -782,6 +802,11 @@ $(function() {
 	}
 	var box_toggling = false;
 	function toggleBoxes(){
+		console.log($grid.find(".container.editor").size());
+		if($grid.find(".container.editor").length > 0){
+			alert("Bitte zuerst den Container fertig bearbeiten.");
+			return;
+		}
 		if(box_toggling) return;
 		toggling = true;
 		$(".c-edit, .c-ok, .c-revert").toggle();
