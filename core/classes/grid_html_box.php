@@ -14,8 +14,15 @@ class grid_html_box extends grid_box {
 		}
 		else
 		{
+			$preWrap="";
+			$postWrap="";
+			if(isset($this->content->wrapDiv) && $this->content->wrapDiv)
+			{
+				$preWrap="<div>";
+				$postWrap="</div>";
+			}
 			//boxes render their content in here
-			return $this->content->html;
+			return $preWrap.$this->content->html.$postWrap;
 		}
 	}
 	
@@ -34,6 +41,7 @@ class grid_html_box extends grid_box {
 	public function metaSearch($criteria,$query) {
 		$this->content=new stdClass();
 		$this->content->html="";
+		$this->content->wrapDiv=FALSE;
 		return array($this);
 	}
 	
@@ -42,7 +50,12 @@ class grid_html_box extends grid_box {
 			array(
 				'key'=>'html',
 				'type'=>'html'
-			)
+			),
+			array(
+				'key'=>'wrapDiv',
+				'type'=>'checkbox',
+				'info'=>'Inhalt in Div wrappen'
+			),
 		);
 	}
 
