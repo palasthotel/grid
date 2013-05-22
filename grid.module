@@ -5,6 +5,39 @@ require_once("core/classes/bootstrap.php");
 require_once("core/classes/grid_block_box.php");
 require_once("core/classes/grid_node_box.php");
 
+class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
+{
+	public function Rights()
+	{
+		$rights=parent::Rights();
+		$results=array();
+		foreach($rights as $right)
+		{
+			if(user_access("grid: ".$right))
+			{
+				$results[]=$right;
+			}
+		}
+		return $results;
+	}
+}
+
+function grid_permission() {
+	$storage=grid_get_storage();
+	$rights=$storage->ajaxEndpoint->Rights();
+	$results=array();
+	foreach($rights as $right)
+	{
+		$results["grid: ".$right]=array(
+			'title'=>"grid: ".$right,
+		);
+	}
+	$results["administer grid"]=array(
+		'title'=>'administer grid',
+	);
+	return $results;
+}
+
 function grid_menu() {
 	return array(
 		'node/%node/grid' => array(
@@ -82,6 +115,8 @@ function grid_get_storage()
 	$conn=Database::getConnection();
 	$opts=$conn->getConnectionOptions();
 	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
+	$storage->ajaxEndpoint->storage=$storage;
 	return $storage;
 }
 
@@ -140,9 +175,7 @@ function grid_node_delete($node)
 	$grid_id=grid_get_grid_by_nid($node->nid);
 	if($grid_id!==FALSE)
 	{
-		$conn=Database::getConnection();
-		$opts=$conn->getConnectionOptions();
-		$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+		$storage=grid_get_storage();
 		$storage->destroyGrid($grid_id);
 		db_delete("grid_nodes")->condition("nid",$node->nid)->execute();
 	}
@@ -195,19 +228,14 @@ function grid_build_grid($form_id,&$form_state,$nid)
 
 function grid_build_grid_submit($form_id,&$form_state)
 {
-	$nid=$form_state['nid'];
-	$conn=Database::getConnection();
-	$opts=$conn->getConnectionOptions();
-	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	$storage=grid_get_storage();
 	$id=$storage->createGrid();
 	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$nid,'grid_id'=>$id))->execute();
 }
 
 function grid_ajax()
 {
-	$conn=Database::getConnection();
-	$opts=$conn->getConnectionOptions();
-	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	$storage=grid_get_storage();
 	$storage->handleAjaxCall();
 }
 

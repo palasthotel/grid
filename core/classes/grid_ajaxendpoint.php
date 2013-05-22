@@ -377,4 +377,18 @@ class grid_ajaxendpoint {
 		}
 		return FALSE;
 	}
+	
+	public function Rights()
+	{
+		return array(
+			'create-container',
+			'edit-container',
+			'delete-container',
+			'move-container',
+			'create-box',
+			'edit-box',
+			'delete-box',
+			'move-box'
+		);
+	}
 }
