@@ -1,4 +1,4 @@
 
-<div class="slot <?=$this->style?> <? if ($pos=="last"){ echo "slot_final"; }?>">
+<div class="slot <? echo $slotstyle; ?>">
 	<?=implode("", $boxes)?>
 </div>

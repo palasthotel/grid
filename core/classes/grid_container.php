@@ -14,16 +14,28 @@ class grid_container extends grid_base {
 
 	public $slots;
 
+		
 	public function render($editmode)
 	{
-		$slots=array();
+		$slots = array();
+		$slotstyle = explode("-", $this->type);
+		// print_r($slotstyle);
+		
+		$counter = 0;
 		foreach($this->slots as $slot)
 		{
-			$pos = "notlast";
+		  $counter++;
+		  $pos ="";
 			if ($slot == end($this->slots)){
-				$pos="last";
-			}		
-			$slots[]=$slot->render($editmode, $pos, $this);
+			   // style: set flag for last slot element
+				$pos=" slot_final";
+			}
+			if ($slot == reset($this->slots)){
+			   // style: set flag for last slot element
+				$pos=" slot_first";
+			}
+			$style = " slot_".$slotstyle[$counter].$pos;
+			$slots[]=$slot->render($editmode, $style, $this);
 		}
 		ob_start();
 		include dirname(__FILE__).'/../templates/container.tpl.php';
