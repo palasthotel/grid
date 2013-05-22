@@ -457,7 +457,13 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$result=$this->connection->query($query) or die($this->connection->error);
 		$row=$result->fetch_assoc();
 		if(!isset($row['id']))
-			return FALSE;
+		{
+			$insertquery="insert into grid_box_type (type) values ('".$box->type()."')";
+			$this->connection->query($insertquery);
+			$result=$this->connection->query($query);
+			$row=$result->fetch_assoc();
+//			return FALSE;
+		}
 		$type=$row['id'];
 		if($box->boxid==NULL)
 		{
