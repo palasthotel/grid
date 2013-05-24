@@ -67,8 +67,7 @@ class grid_node_box extends grid_box {
 	}
 	
 	public function contentStructure () {
-		$info=entity_get_info('node');
-		$view_modes=$info['view modes'];
+		$view_modes=grid_viewmodes();
 		$modes=array();
 		foreach($view_modes as $key=>$info)
 		{
