@@ -26,10 +26,27 @@ class grid_box extends grid_base {
 	public function render($editmode) {
 		$content=$this->build($editmode);
 		ob_start();
-		if(file_exists(dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php'))
-			include dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php';
-		else
-			include dirname(__FILE__).'/../templates/box-box.tpl.php';
+		$found=FALSE;
+		if($this->storage->templatesPath!=NULL)
+		{
+			if(file_exists($this->storage->templatesPath.'/box-'.$this->type().'.tpl.php'))
+			{
+				$found=TRUE;
+				include $this->storage->templatesPath.'/box-'.$this->type().'tpl.php';
+			}
+			else if(file_exists($this->storage->templatesPath.'/box-box.tpl.php'))
+			{
+				$found=TRUE;
+				include $this->storage->templatesPath.'/box-box.tpl.php';
+			}
+		}
+		if(!$found)
+		{
+			if(file_exists(dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php'))
+				include dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php';
+			else
+				include dirname(__FILE__).'/../templates/box-box.tpl.php';
+		}
 		$output=ob_get_clean();
 		return $output;
 	}

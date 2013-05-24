@@ -116,6 +116,8 @@ function grid_get_storage()
 	$conn=Database::getConnection();
 	$opts=$conn->getConnectionOptions();
 	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
+	global $theme_path;
+	$storage->templatesPath=$theme_path.'/grid/';
 	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
 	$storage->ajaxEndpoint->storage=$storage;
 	return $storage;
@@ -201,7 +203,7 @@ function grid_node_load($nodes,$types)
 
 function grid_node_view($node,$view_mode,$langcode)
 {
-	if(isset($node->grid))
+	if(isset($node->grid) && $view_mode=="full")
 	{
 		$html=$node->grid->render(FALSE);
 		$node->content['grid']=array(

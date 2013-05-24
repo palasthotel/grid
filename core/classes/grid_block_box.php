@@ -19,7 +19,10 @@ class grid_block_box extends grid_box {
 		else
 		{
 			$block=module_invoke($this->content->module,'block_view',$this->content->delta);
-			return drupal_render($block);
+			if(is_string($block['content']))
+				return $block['content'];
+			else
+				return drupal_render($block);
 		}
 	}
 	

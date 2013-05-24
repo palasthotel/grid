@@ -38,7 +38,10 @@ class grid_container extends grid_base {
 			$slots[]=$slot->render($editmode, $style, $this);
 		}
 		ob_start();
-		include dirname(__FILE__).'/../templates/container.tpl.php';
+		if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath."/container.tpl.php"))
+			include $this->storage->templatesPath."/container.tpl.php";
+		else
+			include dirname(__FILE__).'/../templates/container.tpl.php';
 		$output=ob_get_clean();
 		return $output;
 	}

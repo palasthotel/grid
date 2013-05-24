@@ -53,14 +53,11 @@ class grid_node_box extends grid_box {
 			foreach($nodes as $node)
 			{
 				$type=$node->type;
-				if(variable_get('grid_'.$type.'_enabled',0)==0)
-				{
-					$box=new grid_node_box();
-					$box->content=new StdClass();
-					$box->content->nid=$node->nid;
-					$box->content->viewmode="teaser";
-					$results[]=$box;
-				}
+				$box=new grid_node_box();
+				$box->content=new StdClass();
+				$box->content->nid=$node->nid;
+				$box->content->viewmode="teaser";
+				$results[]=$box;
 			}
 		}
 		return $results;
@@ -69,9 +66,20 @@ class grid_node_box extends grid_box {
 	public function contentStructure () {
 		$view_modes=grid_viewmodes();
 		$modes=array();
+		$node=node_load($this->content->nid);
 		foreach($view_modes as $key=>$info)
 		{
-			$modes[]=array('key'=>$key,'text'=>$info['label']);
+			if($key=='full')
+			{
+				if(variable_get('grid_'.$node->type.'_enabled',0)==0)
+				{
+					$modes[]=array('key'=>$key,'text'=>$info['label']);
+				}
+			}
+			else
+			{
+				$modes[]=array('key'=>$key,'text'=>$info['label']);
+			}
 		}
 		$params=array(
 			array(

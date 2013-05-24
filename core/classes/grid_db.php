@@ -1,7 +1,7 @@
 <?php
 
 class grid_db {
-
+	public $templatesPath=NULL;
 	public $ajaxEndpoint;
 	private $connection;
 
