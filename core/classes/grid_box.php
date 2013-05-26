@@ -32,7 +32,7 @@ class grid_box extends grid_base {
 			if(file_exists($this->storage->templatesPath.'/box-'.$this->type().'.tpl.php'))
 			{
 				$found=TRUE;
-				include $this->storage->templatesPath.'/box-'.$this->type().'tpl.php';
+				include $this->storage->templatesPath.'/box-'.$this->type().'.tpl.php';
 			}
 			else if(file_exists($this->storage->templatesPath.'/box-box.tpl.php'))
 			{

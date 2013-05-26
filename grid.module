@@ -205,11 +205,15 @@ function grid_node_view($node,$view_mode,$langcode)
 {
 	if(isset($node->grid) && $view_mode=="full")
 	{
+		global $theme_path;
+		$storage=$node->grid->storage;
+		$storage->templatesPath=$theme_path.'/grid/';
 		$html=$node->grid->render(FALSE);
 		$node->content['grid']=array(
 			'#type'=>'markup',
 			'#markup'=>$html,
 		);
+		return $node;
 	}
 }
 
@@ -233,7 +237,7 @@ function grid_build_grid_submit($form_id,&$form_state)
 {
 	$storage=grid_get_storage();
 	$id=$storage->createGrid();
-	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$nid,'grid_id'=>$id))->execute();
+	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
 }
 
 function grid_ajax()
