@@ -217,6 +217,26 @@ function grid_node_view($node,$view_mode,$langcode)
 	}
 }
 
+function grid_field_extra_fields()
+{
+	$array=array();
+	$array['node']=array();
+	$types=node_type_get_types();
+	$keys=array_keys($types);
+	foreach($keys as $nodetype)
+	{
+		if(variable_get("grid_".$nodetype."_enabled",0))
+		{
+			$array['node'][$nodetype]['display']['grid']=array(
+				'label'=>t("Grid"),
+				'weight'=>1,
+				'description'=>t("Renders the Grid associated to a node")
+			);
+		}
+	}
+	return $array;
+}
+
 function grid_build_grid($form_id,&$form_state,$nid)
 {
 	$form=array();
