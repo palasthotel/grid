@@ -1,6 +1,7 @@
 ; $Id$
 name = Grid
 description = A Module for composing Boxes in a Grid within Nodes.
+package = Grid
 core = 7.x
 ;dependencies = 
 ;package = 

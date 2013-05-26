@@ -1,0 +1,146 @@
+<?php
+
+require_once 'twitteroauth/twitteroauth.php';
+
+function grid_twitterbox_menu()
+{
+	return array(
+		'admin/config/grid/twitterbox'=>array(
+			'title'=>'Twitter Authentication',
+			'description'=>'Configure Grid',
+			'page callback'=>'drupal_get_form',
+			'page arguments'=>array('grid_twitterbox_admin_settings'),
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_NORMAL_ITEM,
+		),
+		'grid_twittercallback'=>array(
+			'title'=>'Grid AJAX Endpoint',
+			'page callback'=>'grid_twitterbox_callback',
+			'access callback'=>TRUE,//TODO
+			'type'=>MENU_CALLBACK,
+		),
+	);
+}
+
+function grid_twitterbox_admin_settings()
+{
+	$form=array();
+	$form['grid_twitterbox_consumer_key']=array(
+		'#type'=>'textfield',
+		'#title'=>'Consumer Key',
+		'#default_value'=>variable_get('grid_twitterbox_consumer_key',''),
+	);
+	$form['grid_twitterbox_consumer_secret']=array(
+		'#type'=>'textfield',
+		'#title'=>'Consumer Secret',
+		'#default_value'=>variable_get('grid_twitterbox_consumer_secret',''),
+	);
+	if(variable_get('grid_twitterbox_consumer_secret','')!='' && variable_get('grid_twitterbox_consumer_key','')!='')
+	{
+		$form['grid_twitterbox_authenticate']=array(
+			'#type'=>'button',
+			'#value'=>t('Sign into Twitter'),
+			'#executes_submit_callback'=>TRUE,
+			'#submit'=>array('grid_twitterbox_signin'),
+			
+		);
+		if(variable_get('grid_twitterbox_accesstoken','')!=='')
+		{
+			$form['grid_twitterbox_accesstokenpresent']=array(
+				'#type'=>'markup',
+				'#markup'=>'Authorization is complete',
+			);
+		}
+	}
+	return system_settings_form($form);
+}
+
+function grid_twitterbox_callback()
+{
+	$connection = new TwitterOAuth(variable_get('grid_twitterbox_consumer_key',''), variable_get('grid_twitterbox_consumer_secret',''), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+	
+	/* Request access tokens from twitter */
+	$access_token = $connection->getAccessToken($_REQUEST['oauth_verifier']);
+	variable_set('grid_twitterbox_accesstoken',$access_token);
+	drupal_goto('admin/config/grid/twitterbox');
+}
+
+function grid_twitterbox_signin()
+{
+	$connection = new TwitterOAuth(variable_get('grid_twitterbox_consumer_key',''), variable_get('grid_twitterbox_consumer_secret',''));
+	$request_token=$connection->getRequestToken(url('/grid_twittercallback',array('absolute'=>TRUE)));
+	
+	$_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
+	$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
+    $url = $connection->getAuthorizeURL($token);
+    header('Location: ' . $url);
+    die();
+}
+
+function grid_twitterbox_theme($existing, $type, $theme, $path)
+{
+	return array(
+		'grid_twitterbox'=>array(
+			'variables'=>array('content'=>array()),
+			'template'=>'grid_twitterbox',
+		)
+	);
+}
+
+class grid_twitter_box extends grid_static_base_box {
+	
+	public function __construct()
+	{
+		$this->content=new Stdclass();
+		$this->content->limit=5;
+		$this->content->user="";
+	}
+	
+	public function type()
+	{
+		return 'twitter';
+	}
+
+	public function build($editmode) {
+		if($editmode && empty($this->content->html))
+		{
+			return "Twitter Box";
+		}
+		else
+		{
+			if($this->content->user=="")
+				return "";
+			else
+			{
+				$token=variable_get('grid_twitterbox_accesstoken');
+				$connection=new TwitterOAuth(variable_get('grid_twitterbox_consumer_key',''),variable_get('grid_twitterbox_consumer_secret',''),$token['oauth_token'],$token['oauth_token_secret']);
+				$result=$connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json",array("screen_name"=>$this->content->user));
+				if(count($result)>$this->content->limit)
+				{
+					$result=array_slice($result, 0,$this->content->limit);
+				}
+				return theme('grid_twitterbox',array('content'=>$result));
+			}
+		}
+	}
+	
+	public function contentStructure () {
+		return array(
+			array(
+				'key'=>'limit',
+				'type'=>'number',
+			),
+			array(
+				'key'=>'user',
+				'type'=>'text',
+			),
+		);
+	}
+	
+	public function metaSearch($criteria,$query) {
+		if(variable_get('grid_twitterbox_consumer_key','')=='' || variable_get('grid_twitterbox_consumer_secret','')=='' || variable_get('grid_twitterbox_accesstoken','')=='')
+			return array();
+		return array($this);
+	}
+
+}
