@@ -1,6 +1,6 @@
 <?php
 
-class grid_html_box extends grid_box {
+class grid_html_box extends grid_static_base_box {
 	
 	public function type()
 	{
@@ -24,25 +24,6 @@ class grid_html_box extends grid_box {
 			//boxes render their content in here
 			return $preWrap.$this->content->html.$postWrap;
 		}
-	}
-	
-	public function isMetaType() {
-		return TRUE;
-	}
-	
-	public function metaTitle() {
-		return "Statischer Inhalt";
-	}
-	
-	public function metaSearchCriteria() {
-		return array();
-	}
-	
-	public function metaSearch($criteria,$query) {
-		$this->content=new stdClass();
-		$this->content->html="";
-		$this->content->wrapDiv=FALSE;
-		return array($this);
 	}
 	
 	public function contentStructure () {
