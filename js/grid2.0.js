@@ -15,35 +15,28 @@ $(function() {
 	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
 	var $slot_styles;
 	var $stateDisplay = $(".state-display");
-	var CSS_GRID_ID = "#grid";
-	var $grid = $(CSS_GRID_ID);
-	var $box_editor = $("#box-editor");
-	
-	var CONTAINER_DROP_AREA_CLASS = "container-drop-area";
-	var CSS_CONTAINER_DROP_AREA_CLASS = ".container-drop-area";
-	
-	var BOX_DROP_AREA_CLASS = "box-drop-area";
-	var CSS_BOX_DROP_AREA_CLASS = ".box-drop-area";
 	
 	var $body = $("body");
-	var $toolbar = $("#toolbar");
-	var $gridTools = $(".grid-tools");
+	var $grid_wrapper = $("#grid-wrapper");
+	var $grid = $grid_wrapper.find("#grid");
+	var $box_editor = $grid_wrapper.find("#box-editor");
+	var $toolbar = $grid_wrapper.find("#toolbar");
+	var $gridTools = $grid_wrapper.find(".grid-tools");
 	var $toolContainer = $gridTools.children(".g-container");
 	var $toolBox = $gridTools.children(".g-box");
 	var $toolBoxTypeTabs = $toolBox.children(".box-type-tabs");
 	var $search_bar = $toolBox.find(".search-bar");
 	var $search_box = $toolBox.find("input");
 	
-	var $toolBoxList = $(".g-box .box-list");
+	var $toolBoxList = $gridTools.find(".g-box .box-list");
 	var top = 0;
 	
 	// ----------------
 	// init Methode
 	// ---------------
-	var ID=document.ID;
-	var initFunctionStack = [];
+	var ID = document.ID;
 	function init() {
-//		ID = 42;
+		// ID = 42;
 		console.log("lade BoxTypes");
 		loadBoxTypes();
 		console.log("lade Styles");
@@ -60,6 +53,7 @@ $(function() {
 				$grid.css("margin-top",0);
 			  	$body.removeClass('fixed');
 			}
+			resizeGridTools();
 		});
 	}
 	$(document).ready(init);
@@ -76,7 +70,7 @@ $(function() {
 				console.log(arr_box_types);
 				$toolBoxTypeTabs.empty();
 				$.each(arr_box_types,function(index,value){
-					$temp_li = $("<li>"+value.title+"</li>").attr("data-index",index).addClass("test");
+					$temp_li = $("<li>"+index+"</li>").attr("data-index",index).attr("title", value.title);
 					$toolBoxTypeTabs.append($temp_li);
 				});
 			},null,false);
@@ -286,7 +280,7 @@ $(function() {
 			});
 		}
 	});
-	$("#container-dragger").draggable({ 
+	$(".container-dragger").draggable({ 
 		helper: function(event, element){
 			return $("<div class='dragger-helper'></div>");
 		},
@@ -303,7 +297,7 @@ $(function() {
 				accept: ".new-container",
 				hoverClass: "hover",
 				drop: function( event, ui ) {
-					containerType =  $("select[name=container-type]").val();
+					containerType =  $(ui.draggable).data("type");
 					$temp = buildContainer( 
 							[{ 	"type": containerType, 
 								"id" : "new",
@@ -854,6 +848,20 @@ $(function() {
 		}
 	}
 	
+	$(window).resize(function(e){
+		resizeGridTools();
+	});
+	function resizeGridTools(){
+		var tool_height = $(window).height();
+		if(!$body.hasClass("fixed")){
+			tool_height = tool_height - $grid_wrapper.offset().top + $(window).scrollTop();
+		}
+		$gridTools.css("height",tool_height);
+		$toolBoxList.css("height", $gridTools.outerHeight()- 110);
+		console.log();
+	}
+	resizeGridTools();
+
 	// --------------------
 	// Serverkommunikation
 	// -------------------

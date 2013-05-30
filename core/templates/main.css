@@ -7,6 +7,7 @@ html{
 	margin-top:10px;
 	margin-bottom:60px;
 	background-color:#fff;
+	padding-right: 300px;
 }
 #grid-wrapper ul{
 	list-style:none;
@@ -25,11 +26,12 @@ html{
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	padding:0px;
+	position:relative;
 }
 .fixed #toolbar{
 	position:fixed;
 	top:0px;
-	z-index:99;
+	z-index:112;
 	-webkit-box-shadow: #ccc 0px 2px 5px;
 	-moz-box-shadow: #ccc 0px 2px 5px; 
 	box-shadow: #ccc 0px 2px 5px;
@@ -46,11 +48,14 @@ html{
 	float:left;
 	margin-right:10px;
 }
-#toolbar .grid-tools{
-	padding:10px;
-}
 .fixed #grid{
 	display:block;
+}
+.grid-tools{
+	top:0px;
+	right:-301px;
+	width:300px;
+	position:absolute;
 }
 .grid-tools .g-tool{
 	display:none;
@@ -63,6 +68,26 @@ html{
 	padding:10px;
 	border:1px solid#efefef;
 	background-color:#f6f6f6;
+	max-height: 100%;
+}
+.g-tool .element-type-tabs{
+	border-bottom:1px solid #333;
+	margin-bottom: 10px !important;
+}
+.g-tool .element-type-tabs li{
+	float:left;
+	padding:4px 8px 2px 8px;
+	margin-right:25px;
+	border-bottom:5px solid #CCC;
+	cursor:pointer;
+}
+.g-tool .element-type-tabs li:not(.active):hover{
+	border-bottom-color:#6cf;
+}
+.g-tool .element-type-tabs li.active{
+	background-color:#333;
+	color:#fff;
+	border-bottom-color:#333;
 }
 /** container toolbar **/
 .g-container .container-selection{
@@ -78,26 +103,13 @@ html{
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
+.container-type-chooser li{
+	margin-bottom: 10px;
+	border: 1px solid #e6e6e6;
+	background-color: #efefef;
+	padding:2px;
+}
 /** box toolbar **/
-.g-box .box-type-tabs{
-	border-bottom:1px solid #333;
-	margin-bottom: 10px !important;
-}
-.g-box .box-type-tabs li{
-	float:left;
-	padding:4px 8px 2px 8px;
-	margin-right:25px;
-	border-bottom:5px solid #CCC;
-	cursor:pointer;
-}
-.g-box .box-type-tabs li:not(.active):hover{
-	border-bottom-color:#6cf;
-}
-.g-box .box-type-tabs li.active{
-	background-color:#333;
-	color:#fff;
-	border-bottom-color:#333;
-}
 .g-box .search-bar{
 	display:none;
 	margin-bottom:10px;
@@ -110,21 +122,20 @@ html{
 	right:18px;
 }
 .g-box .box-list{
-	height:140px;
+	min-height:200px;
 	overflow:hidden;
 	overflow-y:auto;
+	max-height: 80%;
 }
 .g-box .box-list li,
 .box-dragger.ui-draggable{
 	box-sizing:border-box;
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
-	width:224px;
 	padding:10px;
-	margin-right:10px;
-	float:left;
 	height:50px;
 	margin-bottom:10px;
+	margin-right: 5px;
 	border:1px solid #e6e6e6;
 	background-color:#fff;
 	z-index:9999;
@@ -145,6 +156,7 @@ html{
 	max-height: 50px;
 	border:1px solid #ccc;
 	background-color:#fff;
+	z-index: 1000;
 	box-shadow: 4px 4px 0 #fff,
 				5px 5px 0 #ccc,
 				9px 9px 0 #fff,
