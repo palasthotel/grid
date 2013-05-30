@@ -7,6 +7,12 @@ class grid_html_box extends grid_static_base_box {
 		return 'html';
 	}
 
+	public function __construct()
+	{
+		$this->content=new Stdclass();
+		$this->content->html='';
+	}
+
 	public function build($editmode) {
 		if($editmode && empty($this->content->html))
 		{
