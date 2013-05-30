@@ -266,6 +266,10 @@ $(function() {
 		//cursor: "row-resize",
 		items:".container",
 		placeholder: "c-sort-placeholder",
+		helper: function(event, element){
+				return $("<div class='c-sort-helper'></div>");
+		},
+		cursorAt: { left: 30, top:30 },
 		start: function( event, ui ){
 			//$(".box").slideUp(100);
 		},
@@ -283,15 +287,21 @@ $(function() {
 		}
 	});
 	$("#container-dragger").draggable({ 
-		helper: "clone", 
+		helper: function(event, element){
+			return $("<div class='dragger-helper'></div>");
+		},
+		cursorAt: { left: 30, top:30 },
 		zIndex: 99,
 		appendTo: $("#grid-wrapper"),
 		scroll: true,
 		start: function(event, ui){
-			$grid.children().before("<div class='"+CONTAINER_DROP_AREA_CLASS+"'>Drop Area</div>");
-			$grid.append("<div class='"+CONTAINER_DROP_AREA_CLASS+"'>Drop Area</div>");
-			$grid.children(CSS_CONTAINER_DROP_AREA_CLASS).droppable({ 
+			$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper"));
+			$grid.append($(document.createElement("div")).addClass("container-drop-area-wrapper"));
+			$grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
+
+			$grid.find(".container-drop-area").droppable({ 
 				accept: ".new-container",
+				hoverClass: "hover",
 				drop: function( event, ui ) {
 					containerType =  $("select[name=container-type]").val();
 					$temp = buildContainer( 
@@ -299,9 +309,9 @@ $(function() {
 								"id" : "new",
 								"prolog": "",
 								"epilog": "" }] )
-							.insertBefore( $(this) );
+							.insertBefore( $(this).parent() );
 					
-					$grid.children().remove(CSS_CONTAINER_DROP_AREA_CLASS);
+					$grid.children().remove(".container-drop-area-wrapper");
 					params = [ID, containerType, $temp.index()];
 					sendAjax("addContainer",params,
 					function(data){
@@ -318,7 +328,7 @@ $(function() {
 			});
 		},
 		stop: function( event, ui ){
-			$grid.children().remove(CSS_CONTAINER_DROP_AREA_CLASS);
+			$grid.children().remove(".container-drop-area-wrapper");
 		}
 	});
 	$grid.on("click",".c-tools > .c-tool", function(e){
@@ -485,12 +495,14 @@ $(function() {
 			connectWith: ".boxes-wrapper, .c-box-trash",
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
+			distance: 10,
 			helper: function(event, element){
-				return $("<div class='b-sort-helper'></div>");
+				return $("<div class='dragger-helper'></div>");
 			},
+			cursorAt: { left: 30, top:30 },
 			start: function(e, ui){
-				$(".boxes-wrapper").addClass("min-height");
-				ui.placeholder.height(ui.item.height());
+				//$(".boxes-wrapper").addClass("min-height");
+				//ui.placeholder.height(ui.item.height());
 				old_box_index = ui.item.index();
 				old_slot_id = ui.item.parents(".slot").data("id");
 				old_container_id = ui.item.parents(".container").data("id");
@@ -498,7 +510,7 @@ $(function() {
 			},
 			stop: function(e, ui){
 				console.log("STOP sort");
-				$(".boxes-wrapper").removeClass("min-height");
+				//$(".boxes-wrapper").removeClass("min-height");
 				hideBoxTrash();
 				if(boxDeleted){
 					boxDeleted = false;
@@ -519,8 +531,7 @@ $(function() {
 							console.log("Rückmeldung geben und Box zurück sortieren!!!");
 						}
 				});
-			},
-			cursorAt: { left: 30, top:30 }
+			}
 		});
 	}
 	var boxDeleted = false;
@@ -546,19 +557,29 @@ $(function() {
 	}
 	function refreshBoxDraggables(){
 		$(".box-dragger").draggable({ 
-			helper: "clone", 
+			helper: function(event, element){
+				return $("<div class='dragger-helper'></div>");
+			},
+			cursorAt: { left: 30, top:30 },
 			zIndex: 199,
 			appendTo: $grid,
 			addClass: true,
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
 				$slots = $grid.find(".slot .boxes-wrapper");
-				$slots.children(".box").before("<div class='"+BOX_DROP_AREA_CLASS+"'>Drop Box</div>");
-				$slots.append("<div class='"+BOX_DROP_AREA_CLASS+"'>Drop Box</div>");
-				$slots.children(CSS_BOX_DROP_AREA_CLASS).droppable({ 
+				// drop place template
+				$slots.children(".box").before($( document.createElement('div'))
+								.addClass("box-drop-area-wrapper"));
+				$slots.append($( document.createElement('div'))
+								.addClass("box-drop-area-wrapper"));
+				$slots.find(".box-drop-area-wrapper").append($( document.createElement('div'))
+								.addClass("box-drop-area"));
+
+				$slots.find(".box-drop-area").droppable({ 
 					accept: ".box-dragger",
 					hoverClass: "hover",
 					drop: function( event, ui ) {
+						console.log("Box dropped on area.");
 						$this_box = $(ui.draggable);
 						$this_drop = $(this);
 						$this_slot = $this_drop.parents(".slot");
@@ -576,8 +597,8 @@ $(function() {
 									readmore: box_obj.readmore,
 									readmoreurl: box_obj.readmoreurl,
 									type: box_obj.type
-								}] ).insertBefore( $this_drop );
-						$slots.find(CSS_BOX_DROP_AREA_CLASS).remove();
+								}] ).insertBefore( $this_drop.parent() );
+						$grid.find(".box-drop-area-wrapper").remove();
 						params = [ID, $this_container.data("id"), $this_slot.data("id"), $temp.index(), box_obj.type, box_obj.content];
 						sendAjax("createBox",params,
 						function(data){
@@ -588,7 +609,7 @@ $(function() {
 				});
 			},
 			stop: function( event, ui ){
-				$grid.find(CSS_BOX_DROP_AREA_CLASS).remove();
+				$grid.find(".box-drop-area-wrapper").remove();
 			}
 		});
 	}
@@ -671,7 +692,7 @@ $(function() {
 					"styles": arr_box_styles
 				};
 				$box_editor_content.append(buildBoxEditor(params));
-				$dynamic_fields = $box_editor_content.find(".dynamic-fields");
+				$dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");
 				$.each(result.contentstructure,function(index,element){						
 					switch(element.type){
 						case "html":
@@ -713,9 +734,9 @@ $(function() {
 						case "checkbox":
 							checked = "";
 							if(result.content[element.key] == 1){
-								checked = "checked";
+								checked = "checked='checked'";
 							}
-							$dynamic_fields.append("<div class='form-item'><input type='checkbox' checked='"+checked+"' class='dynamic-value form-checkbox' "+
+							$dynamic_fields.append("<div class='form-item'><input type='checkbox' "+checked+" class='dynamic-value form-checkbox' "+
 								"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.info+"</label></div>");
 							break;
 						default:
@@ -771,6 +792,11 @@ $(function() {
 			$box_editor.show();
 			$box_editor.animate({width:"100%"},250);
 		},50);
+	}
+	$box_editor_content.on("click","legend",function(ev){
+		$(this).siblings(".field-wrapper").slideToggle(300);
+	});
+	function toggleBoxEditorField(){
 	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();

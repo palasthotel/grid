@@ -95,43 +95,43 @@ var box_draggable_markup = '<li class="box-dragger" data-id="${id}" data-type="$
 							'</li>';
 jQuery.template( "boxDraggableTemplate", box_draggable_markup );
 
+var box_drop_place = "<div class=''><div></div></div>";
+jQuery.template( 'boxDropPlace', box_drop_place );
+
 var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-id="${box.id}" '+
 							'data-c-id="${c_id}" data-s-id="${s_id}" data-type="${box.type}">'+
-							'<fieldset>'+
-								'<legend>Title</legend>'+
-								'<label>Text</label>'+
-								'<input name="f-b-title" type="text" value="${box.title}" class="form-text" /> '+
-								'<label>URL</label>'+
-								'<input name="f-b-titleurl" type="text" value="${box.titleurl}" class="form-text" />'+
-							'</fieldset>'+
-							'<fieldset>'+
-								'<legend>Prolog:</legend>'+
-								'<textarea name="f-b-prolog" class="form-textarea">${box.prolog}</textarea>'+
-							'</fieldset>'+
-							'<fieldset class="dynamic-fields">'+
-								'<legend>Dynamische Felder</legend>'+
+							'<fieldset class="collapsable dynamic-fields">'+
+								'<legend>Konfiguration</legend>'+
+								'<div class="field-wrapper"></div>'+
 								// inputs for types added by script
 							'</fieldset>'+
-							'<fieldset>'+
-								'<legend>Epilog:</legend>'+
-								'<textarea name="f-b-epilog"  class="form-textarea">${box.epilog}</textarea>'+
-							'</fieldset>'+
-							'<fieldset>'+
-								'<legend>Readmore</legend>'+
-								'<label>Text</label>'+
-								'<input name="f-b-readmore" type="text" value="${box.readmore}" class="form-text" /> '+
-								'<label>URL</label>'+
-								'<input name="f-b-readmoreurl" type="text" value="${box.readmoreurl}" class="form-text" />'+
-							'</fieldset>'+
-							'<fieldset>'+
-								'<legend for="f-b-style">Style</legend>'+ 
-								'<select name="f-b-style" class="form-select"  id="f-b-style">'+
-									'<option value="">ohne style</option>'+
-									'{{if styles}}{{each styles}}'+
-										'<option {{if $value.slug == box.style }}selected="selected"{{/if}} value="${$value.slug}">'+
-										'${$value.title}</option>'+
-									'{{/each}}{{/if}}'
-								'</select>'
+							'<fieldset class="collapsable collapsable-hidden text-fields">'+
+								'<legend>Texte</legend>'+
+								'<div class="field-wrapper">'+
+									'<label>Titel</label>'+
+									'<input name="f-b-title" type="text" value="${box.title}" class="form-text" /> '+
+									'<label>URL</label>'+
+									'<input name="f-b-titleurl" type="text" value="${box.titleurl}" class="form-text" />'+
+
+									'<label>Prolog</label>'+
+									'<textarea name="f-b-prolog" class="form-textarea">${box.prolog}</textarea>'+
+									'<label>Epilog</label>'+
+									'<textarea name="f-b-epilog"  class="form-textarea">${box.epilog}</textarea>'+
+
+									'<label>Readmore</label>'+
+									'<input name="f-b-readmore" type="text" value="${box.readmore}" class="form-text" /> '+
+									'<label>URL</label>'+
+									'<input name="f-b-readmoreurl" type="text" value="${box.readmoreurl}" class="form-text" />'+
+
+									'<label for="f-b-style">Style</label>'+ 
+									'<select name="f-b-style" class="form-select"  id="f-b-style">'+
+										'<option value="">ohne style</option>'+
+										'{{if styles}}{{each styles}}'+
+											'<option {{if $value.slug == box.style }}selected="selected"{{/if}} value="${$value.slug}">'+
+											'${$value.title}</option>'+
+										'{{/each}}{{/if}}'+
+									'</select>'+
+								'</div>'+
 							'</fieldset>'+
 						'</div>';
 jQuery.template("boxEditorTemplate", box_editor_markup);

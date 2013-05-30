@@ -1,8 +1,6 @@
-/* CSS Document
-
-SMACK
-
-*/
+html{
+	overflow-y:scroll;
+}
 #grid-wrapper{
 	width:1000px;
 	margin:0px auto;
@@ -139,6 +137,20 @@ SMACK
 .box-dragger .epilog{
 	display:none;
 }
+.dragger-helper{
+	display:block;
+	height:50px;
+	width:38px;
+	max-width: 38px;
+	max-height: 50px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	box-shadow: 4px 4px 0 #fff,
+				5px 5px 0 #ccc,
+				9px 9px 0 #fff,
+				10px 10px 0 #ccc,
+				14px 14px 0 #fff;
+}
 
 /** Toolbar rules ENDE **/
 #grid{
@@ -152,14 +164,29 @@ SMACK
 	padding:10px;
 	position:relative;
 }
-#grid .container-drop-area{
-	background-color:#FF9;
-	height:40px;
+.container-drop-area-wrapper{
+	position:relative;
+}
+.container-drop-area{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing:border-box;
+	border:1px solid #a5a5a5;
+	position:absolute;
+	top:-16px;
+	left:0px;
+	background-color:#58ff3c;
+	height:24px;
+	width:100%;
 	margin-bottom:4px;
+	z-index: 1;
+}
+.container-drop-area.hover{
+	background-color: #95f985;
 }
 /** Allgemeine Container styles **/
 .container{
-	width: 100%;
+	width: 1000px !important;
 	margin-bottom:10px;
 	border:1px solid #e6e6e6;
 	background-color:#efefef;
@@ -183,8 +210,8 @@ SMACK
 	left:82px;
 }
 .c-sort-placeholder{
-	background-color:#fafafa;
-	border:1px solid #e6e6e6;
+	background-color:#58ff3c;
+	border:1px solid #a5a5a5;
 	height:60px;
 	margin-bottom:10px
 }
@@ -200,6 +227,18 @@ SMACK
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	border-bottom:1px solid #666;
+}
+.c-sort-helper{
+	display:block;
+	max-height:50px;
+	max-width:38px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	box-shadow: 4px 4px 0 #fff,
+				5px 5px 0 #ccc,
+				9px 9px 0 #fff,
+				10px 10px 0 #ccc,
+				14px 14px 0 #fff;
 }
 .c-sort-handle:hover{
 	cursor:pointer;
@@ -434,6 +473,7 @@ SMACK
 	border:1px solid #a5a5a5;
 	display:block;
 	background-color:#efefef;
+	background-color:#58ff3c;
 }
 .b-sort-helper{
 	display:block;
@@ -447,11 +487,24 @@ SMACK
 				10px 10px 0 #ccc,
 				14px 14px 0 #fff;
 }
+.box-drop-area-wrapper{
+	position:relative;
+}
 .box-drop-area{
-	background-color:#F93;
+	box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	position:absolute;
+	top: -12px;
+	left:0px;
+	width:100%;
+	background-color:#58ff3c;
+	height: 24px;
+	z-index: 2;
+	border:1px solid #a5a5a5;
 }
 .box-drop-area.hover{
-	background-color:#F30;
+	background-color:#95f985;
 }
 /** Box Editor **/
 #box-editor{
@@ -496,6 +549,12 @@ SMACK
 }
 #box-editor .controls{
 	margin-bottom:10px;
+}
+.collapsable legend{
+	cursor:pointer;
+}
+.collapsable-hidden > .field-wrapper{
+	display:none;
 }
 /** Container C-12 **/
 .C-12{
