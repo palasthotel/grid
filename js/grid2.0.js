@@ -151,6 +151,9 @@ $(function() {
 		);
 	}
 	function revertGrid(){
+		if(!confirm("Alle Änderungen werden verworfen und zum letzten veröffentlichten Stand zurückgesetzt. Fortsetzen?")){
+			return;
+		}
 		sendAjax(
 			"revertDraft", 
 			[ID],
