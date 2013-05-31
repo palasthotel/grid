@@ -14,10 +14,10 @@ class grid_slot extends grid_base {
 			$boxes[]=$box->render($editmode);
 		}
 		ob_start();
-		if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath.'/slot.tpl.php'))
-			include $this->storage->templatesPath.'/slot.tpl.php';
+		if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath.'/grid_slot.tpl.php'))
+			include $this->storage->templatesPath.'/grid_slot.tpl.php';
 		else
-			include dirname(__FILE__).'/../templates/slot.tpl.php';
+			include dirname(__FILE__).'/../templates/grid_slot.tpl.php';
 		$output=ob_get_clean();
 		return $output;
 	}
