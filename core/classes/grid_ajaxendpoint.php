@@ -234,7 +234,7 @@ class grid_ajaxendpoint {
 	public function revertDraft($gridid)
 	{
 		$grid=$this->storage->loadGrid($gridid);
-		if(!$grid->isDraft)
+		if(!$grid->isDraft || count($grid->revisions())==1)
 		{
 			return false;
 		}
