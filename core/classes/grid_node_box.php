@@ -19,7 +19,14 @@ class grid_node_box extends grid_box {
 		}
 		else
 		{
-			return drupal_render(node_view($node,$this->content->viewmode));
+		  $view_modes=grid_viewmodes();
+		  		  
+		  // print_r($view_modes);		  
+		  
+		  if (!array_key_exists($this->content->viewmode, $view_modes)){
+			    $this->content->viewmode = "teaser";     
+      } 
+      return drupal_render(node_view($node,$this->content->viewmode));        
 		}
 	}
 	

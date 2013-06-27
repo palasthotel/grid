@@ -17,9 +17,9 @@ class grid_block_box extends grid_box {
 			return "Block: ".$block['info'];
 		}
 		else
-		{
+		{		
 			$block=module_invoke($this->content->module,'block_view',$this->content->delta);
-			if(is_string($block['content']))
+			if(@is_string($block['content']))
 				return $block['content'];
 			else
 				return drupal_render($block);
