@@ -12,6 +12,9 @@ class grid_db {
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 	}
 	
+	public function __destruct() {
+		$this->connection->close();
+	}
 	public function createGrid()
 	{
 		$query="select max(id) as id from grid_grid";

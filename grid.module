@@ -192,12 +192,14 @@ function grid_node_delete($node)
 
 function grid_node_load($nodes,$types)
 {
-	$storage=grid_get_storage();
+	$storage=NULL;
 	foreach($nodes as $nid=>$node)
 	{
 		$grid_id=grid_get_grid_by_nid($nid);
 		if($grid_id!==FALSE)
 		{
+			if($storage==NULL)
+				$storage=grid_get_storage();
 			$grid=$storage->loadGrid($grid_id,FALSE);
 			if(!$grid->isDraft)
 			{
