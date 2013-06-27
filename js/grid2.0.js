@@ -70,7 +70,7 @@ $(function() {
 				console.log(arr_box_types);
 				$toolBoxTypeTabs.empty();
 				$.each(arr_box_types,function(index,value){
-					$temp_li = $("<li>"+index+"</li>").attr("data-index",index).attr("title", value.title);
+					$temp_li = $("<li>"+index+"</li>").attr("data-index",index).attr("title", value.title).attr("data-type", value.type);
 					$toolBoxTypeTabs.append($temp_li);
 				});
 			},null,false);

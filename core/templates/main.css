@@ -76,10 +76,28 @@ html{
 }
 .g-tool .element-type-tabs li{
 	float:left;
-	padding:4px 8px 2px 8px;
+	height: 35px;
+	width: 35px;
 	margin-right:25px;
 	border-bottom:5px solid #CCC;
 	cursor:pointer;
+	text-indent: -2000em;
+}
+.element-type-tabs li[data-type=static]{
+	background-image: url(images/box-type-static.png);
+
+}
+.element-type-tabs li[data-type=abstract_list]{
+	background-image: url(images/box-type-abstract_list.png);
+
+}
+.element-type-tabs li[data-type=block]{
+	background-image: url(images/box-type-block.png);
+
+}
+.element-type-tabs li[data-type=node]{
+	background-image: url(images/box-type-node.png);
+
 }
 .g-tool .element-type-tabs li:not(.active):hover{
 	border-bottom-color:#6cf;
@@ -510,13 +528,13 @@ html{
 	top: -12px;
 	left:0px;
 	width:100%;
-	background-color:#58ff3c;
+	background-color:#95f985;	
 	height: 24px;
 	z-index: 2;
 	border:1px solid #a5a5a5;
 }
 .box-drop-area.hover{
-	background-color:#95f985;
+	background-color:#58ff3c;
 }
 /** Box Editor **/
 #box-editor{
