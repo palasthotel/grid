@@ -12,6 +12,7 @@
         <div class="grid-tools">
         	<!-- Tools für Container hinzufügen -->
         	<div class="g-tool g-container clearfix">
+                <!--
             	<div class="container-selection">
                     <select name="container-type" class="form-select" size="3">
                         <option value="C-12" selected="selected">C-12</option>
@@ -24,11 +25,39 @@
                 <div class="container-dragger-wrapper">
                 	<div id="container-dragger" class="draggable new-container">Neu</div>
                 </div>
+                -->
+                <ul class="clearfix element-type-tabs">
+                    <li class="active">Container</li>
+                </ul>
+                <ul class="container-type-chooser">
+                    <li class="container-dragger new-container C-12 clearfix" data-type="C-12">
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-8-4 clearfix" data-type="C-8-4">
+                        <div class="slot"></div><div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-4-8 clearfix" data-type="C-4-8">
+                        <div class="slot"></div><div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container  C-4-4-4 clearfix" data-type="C-4-4-4">
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-2-2-2-2-2-2 clearfix" data-type="C-2-2-2-2-2-2">
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                    </li>
+                </ul>
             </div>
             <!-- Tools für Box hinzufügen -->
             <div class="g-tool g-box">
             	<div class="loading rotate"></div>
-            	<ul class="box-type-tabs clearfix"></ul>
+            	<ul class="box-type-tabs element-type-tabs clearfix"></ul>
             	<div class="search-bar">
                 	<input name="box-search" type="text" class="form-text" placeholder="Boxen suchen" />
                 </div>
