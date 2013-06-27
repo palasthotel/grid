@@ -23,6 +23,11 @@ class grid_grid extends grid_base {
 		$output=ob_get_clean();
 		return $output;
 	}
+	
+	public function revisions()
+	{
+		return $this->storage->gridRevisions($this);
+	}
 
 	public function publish()
 	{

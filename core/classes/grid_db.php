@@ -345,6 +345,19 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$this->connection->query($query) or die($this->connection->error);
 		return true;
 	}
+	
+	public function gridRevisions($grid)
+	{
+		$id=$grid->gridid;
+		$query="select revision from grid_grid where id=$id";
+		$result=$this->connection->query($query);
+		$return=array();
+		while($row=$result->fetch_assoc())
+		{
+			$return[]=$row['revision'];
+		}
+		return $return;
+	}
 
 	public function revokeGrid($grid)
 	{
