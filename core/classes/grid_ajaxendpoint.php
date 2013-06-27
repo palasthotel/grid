@@ -391,4 +391,27 @@ class grid_ajaxendpoint {
 			'move-box'
 		);
 	}
+	
+	public function typeAheadSearch($gridid,$containerid,$slotid,$idx,$field,$query)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						if(isset($slot->boxes[$idx]))
+						{
+							$ret=$slot->boxes[$idx]->performElementSearch($field,$query);
+							return $ret;
+						}
+					}
+				}
+			}
+		}
+		return array(array('key'=>-2,'value'=>'Box not found'));
+	}
 }

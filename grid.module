@@ -146,6 +146,7 @@ function grid_grid($node) {
 			drupal_add_js("document.ID=".$grid_id,'inline');
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
+			drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 			drupal_add_js($base.'/js/templates.js','file');
 			drupal_add_js($base.'/js/grid2.0.js','file');
 //			drupal_add_css($base.'/core/templates/reset.css',array('type'=>'file'));

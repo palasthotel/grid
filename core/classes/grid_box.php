@@ -92,4 +92,9 @@ class grid_box extends grid_base {
 		return $this->persist();
 	}
 	
+	public function performElementSearch($key,$query)
+	{
+		return array(array('key'=>-1,'value'=>'This box seems not to implement search'));
+	}
+	
 }

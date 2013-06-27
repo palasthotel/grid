@@ -7,7 +7,6 @@ $(function() {
 		if(!saved) return "Es wurden noch nicht alle Änderungen gespeichert!";
 	}
 	*/
-	
 	// ---------------------------
 	// Allgemeine Elemente und konstanten
 	// --------------------------
@@ -145,9 +144,6 @@ $(function() {
 		);
 	}
 	function revertGrid(){
-		if(!confirm("Alle Änderungen werden verworfen und zum letzten veröffentlichten Stand zurückgesetzt. Fortsetzen?")){
-			return;
-		}
 		sendAjax(
 			"revertDraft", 
 			[ID],
@@ -642,7 +638,11 @@ $(function() {
 				} else {
 					content[$element.data("key")] = 0;
 				}
-			} else {
+			} else if($element.hasClass("form-html")){
+				content[$element.data("key")] = CKEDITOR.instances[$element.attr("name")].getData();
+			} else if($element.hasClass("form-autocomplete")){
+				content[$element.find("input").data("key")] = $element.find("input").data("value-key");
+			}else {
 				content[$element.data("key")] = $element.val();
 			}
 		});
@@ -692,13 +692,22 @@ $(function() {
 				$dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");
 				$.each(result.contentstructure,function(index,element){						
 					switch(element.type){
-						case "html":
+						case "textarea":
 							$dynamic_fields.append("<label>"+element.key+"</label>");
 							$dynamic_fields.append(
 								"<textarea class='dynamic-value form-textarea' "+
 								"data-key='"+element.key+"' name='key-"+index+"'>"+
 								result.content[element.key]+
 								"</textarea>");
+							break;
+						case "html":
+							$dynamic_fields.append("<label>"+element.key+"</label>");
+							$html_area = $("<textarea class='dynamic-value form-html' "+
+								"data-key='"+element.key+"' name='key-"+index+"'>"+
+								result.content[element.key]+
+								"</textarea>");
+							$dynamic_fields.append($html_area);
+							CKEDITOR.replace('key-'+index);
 							break;
 						case "number":
 							$dynamic_fields.append("<label>"+element.key+"</label>");
@@ -723,6 +732,19 @@ $(function() {
 							});
 							$dynamic_fields.append($select);
 							break;
+						case "autocomplete":
+							console.log("autocomplete");
+							console.log(element);
+							console.log(result.content[element.key]);
+							$dynamic_fields.append("<label>"+element.key+"</label>");
+							$dynamic_fields.append($.tmpl( "inBoxAutocompleteTemplate", {
+								// need to load label
+								label: element.valuekey,
+								val: result.content[element.key],
+								key: element.key,
+								type: element.type
+							} ));
+							break;
 						case "hidden":
 							$dynamic_fields.append(
 								"<input type='hidden' class='dynamic-value' "+
@@ -742,6 +764,63 @@ $(function() {
 				});
 			});
 	});
+	var old_search_string = "";
+	$box_editor_content.on("keyup", "input[data-type=autocomplete]",function(e){
+		$this = $(this);
+		if(e.which == 13){
+			$autocomplete_items = $this.siblings(".suggestion-list").children();
+			if($autocomplete_items.size() == 1){
+				pickAutocompleteItem($autocomplete_items.first());
+			}
+			return;
+		}
+		if($this.val() == old_search_string) return;
+		$this.siblings(".loading").show();
+		boxAutocompleteSearch($this);
+	});
+	var boxAutocompleteTimeout;	
+	function boxAutocompleteSearch($input){
+		clearTimeout(boxAutocompleteTimeout);
+		boxAutocompleteTimeout = setTimeout(function(){
+			$data = $box_editor_content.find(".box-editor");
+			sendAjax("typeAheadSearch",[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),$input.data("key"),$input.val()] ,function(data){
+					old_search_string = $input.val();
+					$input.siblings(".loading").hide();
+					$autocompleteList = $input.siblings(".suggestion-list");
+					$autocompleteList.empty();
+					console.log(data);
+					$.each(data.result,function(index, value){
+						$autocompleteList.append($("<li>"+value.value+"</li>").attr("data-key",value.key));
+					});
+				});
+		},500);
+	}
+	$box_editor_content.on("click",".suggestion-list li",function(e){
+		pickAutocompleteItem($(this));
+	});
+	function pickAutocompleteItem($li){
+		$wrapper = $li.parents(".autocomplete-wrapper")
+					.addClass("locked");
+		$wrapper.find("input")
+			.val($li.text())
+			.attr("disabled", "disabled")
+			.data("value-key", $li.data("key"));
+		$li.parent().empty();
+	}
+	$box_editor_content.on("blur", "input[data-type=autocomplete]",function(e){
+		/*clearTimeout(boxAutocompleteTimeout);
+		$this.val("");
+		$this.siblings(".loading").hide();
+		$this.siblings(".suggestion-list").empty();*/
+	});
+	$box_editor_content.on("click", ".autocomplete-wrapper .cancle",function(e){
+		$this = $(this);
+		$wrapper = $this.parents(".autocomplete-wrapper").removeClass("locked");
+		$wrapper.find("input")
+			.removeAttr("disabled")
+			.val("")
+			.data("value-key", "");
+	});
 	function buildBoxEditor(templateParams){
 		return $.tmpl( "boxEditorTemplate", templateParams );
 	}
@@ -753,7 +832,6 @@ $(function() {
 		if(box_id == null || typeof box_id == 'undefined'){
 			box_id = null;
 		}
-		console.log("scroll to box: "+box_id);
 		$box_editor.animate({
 			width:0
 		},220,
@@ -765,7 +843,6 @@ $(function() {
 			$grid.show();
 			$grid.animate({width:"100%"},200);
 			$toolbar.slideDown(200,function(){
-				console.log("scrollto");
 				if(box_id == null) return;
 				$('html, body').animate({
 					 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
@@ -825,7 +902,6 @@ $(function() {
 	}
 	var box_toggling = false;
 	function toggleBoxes(){
-		console.log($grid.find(".container.editor").size());
 		if($grid.find(".container.editor").length > 0){
 			alert("Bitte zuerst den Container fertig bearbeiten.");
 			return;
@@ -861,7 +937,6 @@ $(function() {
 		}
 		$gridTools.css("height",tool_height);
 		$toolBoxList.css("height", $gridTools.outerHeight()- 110);
-		console.log();
 	}
 	resizeGridTools();
 

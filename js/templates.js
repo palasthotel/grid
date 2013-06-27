@@ -135,3 +135,14 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 							'</fieldset>'+
 						'</div>';
 jQuery.template("boxEditorTemplate", box_editor_markup);
+
+var in_box_autocomplete_markup = "<div class='"+
+									"{{if val != ''}}locked {{/if}}"+
+									"autocomplete-wrapper form-autocomplete dynamic-value' >"+
+									"<input type='text' class='form-text autocomplete' {{if val !=''}}disabled=disabled {{/if}}"+
+									"data-key='${key}' data-type='${type}' data-value-key='${val}' value='${label}' />"+
+									"<div class='loading rotate'></div>"+
+									"<div class='cancle'></div>"+
+									"<ul class='suggestion-list'></ul>"+
+								"</div>";
+jQuery.template("inBoxAutocompleteTemplate", in_box_autocomplete_markup);

@@ -577,6 +577,53 @@ html{
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 }
+/*
+* Autocomplete Boxtype
+*/
+.autocomplete-wrapper{
+	position: relative;
+}
+.autocomplete-wrapper .loading{
+	position: absolute;
+	top: 2px;
+	left: 160px;
+	display: none;
+}
+.autocomplete-wrapper .cancle{
+	position: absolute;
+	top: 4px;
+	left: 138px;
+	height: 14px;
+	width: 14px;
+	cursor: pointer;
+	background-image: url(images/input-cancle-grey.png);
+	display: none;
+}
+.autocomplete-wrapper.locked .cancle{
+	display: block;
+}
+.autocomplete-wrapper.locked input{
+	background-color: #efefef;
+}
+.autocomplete-wrapper .suggestion-list{
+	position: absolute;
+	z-index: 10;
+	top: 20px;
+	left: 0;
+	border: 1px solid #5e5e5e;
+	border-bottom: none;
+	background-color: #333;
+}
+.suggestion-list:empty{
+	border: none;
+}
+.suggestion-list li{
+	cursor: pointer;
+	padding: 4px;
+	border-bottom: 1px solid #5e5e5e;
+	color: #fff;
+}
+
 #box-editor .controls{
 	margin-bottom:10px;
 }
