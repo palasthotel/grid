@@ -53,7 +53,10 @@ class grid_block_box extends grid_box {
 			foreach($modblocks as $delta=>$block)
 			{
 				$info=$block['info'];
-				if(strstr($info, $query)!==FALSE || $query=='')
+				if ($info==""){
+					$info="~~~~~";
+				}
+				if($query=='' || strstr($info, $query)!==FALSE)
 				{
 					$box=new grid_block_box();
 					$box->content=new StdClass();
