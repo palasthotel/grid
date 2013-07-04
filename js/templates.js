@@ -17,7 +17,7 @@ var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${s
 				'<p><span class="c-readmore">${readmore}</span>'+
 					'{{if readmoreurl}} [ <span class="c-readmoreurl">${readmoreurl}</span> ]'+
 					' {{else}} <span class="c-readmoreurl">${readmoreurl}</span>{{/if}}</p>'+
-				'<p class="c-style">${style}</p>'+
+				'<p class="c-style">${styleTitle}</p>'+
             '</div>'+
         '</div>';
 jQuery.template( "containerTemplate", container_markup );

@@ -17,24 +17,47 @@
  CKEDITOR.stylesSet.add( 'grid_styles',
 [
     // Block-level styles
-    { name : 'Fett', element : 'h2', attributes : { 'class' : 'emm-headline-bold' } },
-    { name : 'Mittel' , element : 'p', attributes : { 'class' : 'emm-medium' } }
+    <?php 
+    $tmp=array();
+    foreach($styles as $style)
+    {
+    	$tmp[]=json_encode($style);
+    }
+    echo implode(",", $tmp);
+    ?>
+    //{ name : 'Fett', element : 'h2', attributes : { 'class' : 'emm-headline-bold' } },
+    //{ name : 'Mittel' , element : 'p', attributes : { 'class' : 'emm-medium' } }
 ]);
-
+<?php
+	$items=array();
+	if(count($styles)>0)
+	{
+		$items[]="Styles";
+	}
+	if(count($formats)>0)
+	{
+		$items[]="Format";
+	}
+	if(!in_array("p",$formats))
+	{
+		$formats[]="p";
+	}
+?>
 
 CKEDITOR.editorConfig = function( config ) {
 	config.language = 'de';
 	config.toolbar = [
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike'] },
 
-		{ name: "format", items: ['Styles', 'Format']},
+		{ name: "format", items: <?=json_encode($items)?>},
 		
 		{ name: 'blockstyles', items: [  'NumberedList','BulletedList', 'Blockquote' ] },
 	    { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
 	    { name: 'document', items: [ 'Source' ] }
 	];
 
-	config.format_tags = 'h2;p';
+	config.format_tags = '<?=implode(";",$formats)?>';
+	<?php if(count($styles)>0) {?>
 	config.stylesSet = 'grid_styles';
-
+    <?php } ?>
 };

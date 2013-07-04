@@ -1,13 +1,15 @@
 	<div id="grid-wrapper" class="clearfix">
-	<menu id="toolbar">
-    	<p class="state-display"></p>
-    	<ul class="clearfix">
-            <li><button role="revert">Änderungen verwerfen</button></li>
+	<menu id="toolbar" class="clearfix">
+    	<ul role="data">
+            <li class="state-display">State</li>
             <li><button role="publish">Veröffentlichen</button></li>
-            <li><button role="preview">Vorschau</button></li>
-        	<li><button role="add_container">+ Container hinzufügen</button></li>
-            <li><button role="add_box">+ Box hinzufügen</button></li>
+            <li><button role="preview">Vorschau</button></li>  
+            <li><button role="revert">Änderungen verwerfen</button></li>         
+        </ul>
+        <ul role="gui">
             <li><button role="hide_boxes">x Boxen ein/ausblenden</button></li>
+            <li><button role="add_container">+ Container hinzufügen</button></li>
+            <li><button role="add_box">+ Box hinzufügen</button></li>
         </ul>
         <div class="grid-tools">
         	<!-- Tools für Container hinzufügen -->
