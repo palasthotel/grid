@@ -308,6 +308,31 @@ function grid_admin_settings()
 			'#title'=>$viewmode['label'],
 		);
 	}
+	
+	$form['blocks']=array(
+		'#type'=>'fieldset',
+		'#titlle'=>t('Supported Blocks'),
+	);
+	$blocks=array();
+	$results=array();
+	foreach(module_implements('block_info') as $module)
+	{
+		$module_blocks=module_invoke($module,'block_info');
+		$blocks[$module]=$module_blocks;
+	}
+	drupal_alter('block_info',$blocks,$theme_key,$blocks);
+	foreach($blocks as $module=>$modblocks)
+	{
+		foreach($modblocks as $delta=>$block)
+		{
+			$form['blocks']['grid_block_'.$module.'_'.$delta.'_enabled']=array(
+				'#type'=>'checkbox',
+				'#default_value'=>variable_get("grid_block_".$module."_".$delta."_enabled",0),
+				'#title'=>$block['info'],
+			);
+		}
+	}
+	
 	return system_settings_form($form);
 }
 

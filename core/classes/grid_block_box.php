@@ -52,18 +52,21 @@ class grid_block_box extends grid_box {
 		{
 			foreach($modblocks as $delta=>$block)
 			{
-				$info=$block['info'];
-				if ($info==""){
-					$info="~~~~~";
-				}
-				if($query=='' || strstr($info, $query)!==FALSE)
+				if(variable_get("grid_block_".$module."_".$delta."_enabled",0))
 				{
-					$box=new grid_block_box();
-					$box->content=new StdClass();
-					$box->content->module=$module;
-					$box->content->delta=$delta;
-					$results[]=$box;
-					
+					$info=$block['info'];
+					if ($info==""){
+						$info="~~~~~";
+					}
+					if($query=='' || strstr($info, $query)!==FALSE)
+					{
+						$box=new grid_block_box();
+						$box->content=new StdClass();
+						$box->content->module=$module;
+						$box->content->delta=$delta;
+						$results[]=$box;
+						
+					}
 				}
 			}
 		}
