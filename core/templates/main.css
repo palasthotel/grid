@@ -30,7 +30,7 @@ html{
 }
 .fixed #toolbar{
 	position:fixed;
-	top:0px;
+	top:7px;
 	z-index:112;
 	-webkit-box-shadow: #ccc 0px 2px 5px;
 	-moz-box-shadow: #ccc 0px 2px 5px; 
@@ -43,6 +43,12 @@ html{
 #toolbar > ul{
 	margin:0px !important;
 	margin-bottom:10px;
+}
+#toolbar > ul[role=gui]{
+	float: right;
+}
+#toolbar > ul[role=data]{
+	float: left;
 }
 #toolbar > ul > li{
 	float:left;
@@ -82,6 +88,7 @@ html{
 	border-bottom:5px solid #CCC;
 	cursor:pointer;
 	text-indent: -2000em;
+	background-color: #666;
 }
 .element-type-tabs li[data-type=static]{
 	background-image: url(images/box-type-static.png);
@@ -182,6 +189,10 @@ html{
 				14px 14px 0 #fff;
 }
 
+.ui-draggable{
+	cursor: move;
+}
+
 /** Toolbar rules ENDE **/
 #grid{
 	float:left;
@@ -205,14 +216,14 @@ html{
 	position:absolute;
 	top:-16px;
 	left:0px;
-	background-color:#58ff3c;
+	background-color:#95f985;
 	height:24px;
 	width:100%;
 	margin-bottom:4px;
 	z-index: 1;
 }
 .container-drop-area.hover{
-	background-color: #95f985;
+	background-color: #58ff3c;
 }
 /** Allgemeine Container styles **/
 .container{
@@ -409,6 +420,9 @@ html{
 	padding-bottom:10px;
 	max-width:70%;
 }
+.style-changer.empty{
+	display: none;
+}
 .style-changer > span{
 	white-space:nowrap;
 	overflow:hidden;
@@ -472,6 +486,7 @@ html{
 	position:relative;
 	background-color:#fff;
 	border:1px solid #d3d3d3;
+	cursor: move;
 }
 .box > .edit{
 	position:absolute;

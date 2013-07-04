@@ -49,6 +49,13 @@ function grid_menu() {
 			'context'=>MENU_CONTEXT_PAGE|MENU_CONTEXT_INLINE,
 			'page arguments'=>array(1),
 		),
+		'grid/ckeditor_config.js' =>array(
+			'title'=>t('Grid CKEditor Config JS File'),
+			'page callback'=>'grid_ckeditor_config',
+			'access callback'=>'user_access',
+			'acces arguments'=>array('administer grid'),
+			'type'=>MENU_CALLBACK,
+		),
 		'node/%node/grid/preview' =>array(
 			'title'=>t('Preview'),
 			'page callback'=>'grid_preview',
@@ -94,6 +101,34 @@ function grid_admin_paths()
 	return array(
 		'node/*/grid'=>TRUE
 	);
+}
+
+function grid_theme()
+{
+	return array(
+		'grid_htmlbox_ckeditor_config_js'=>array(
+			'variables'=>array('styles'=>array(),'formats'=>array()),
+			'template'=>'grid_htmlbox_ckeditor_config_js',
+		),
+	);
+
+}
+
+function grid_ckeditor_config()
+{
+	$styles=array();
+	$formats=array();
+	$formats_input=module_invoke_all("grid_formats");
+	$styles_input=module_invoke_all("grid_styles");
+	foreach($formats_input as $format)
+	{
+		if(!in_array($format, $formats))
+		{
+			$formats[]=$format;
+		}
+	}
+	$styles=$styles_input;
+	echo theme('grid_htmlbox_ckeditor_config_js',array('styles'=>$styles,'formats'=>$formats));
 }
 
 function grid_access($node,$right)
@@ -144,6 +179,7 @@ function grid_grid($node) {
 //			$grid_id=$grid_id["grid_id"];
 			$base=drupal_get_path('module','grid');
 			drupal_add_js("document.ID=".$grid_id,'inline');
+			drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 			drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');

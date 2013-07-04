@@ -12,6 +12,7 @@ $(function() {
 	// --------------------------
 	var arr_box_types, arr_box_search_results;
 	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
+	var arr_container_style_titles = Array();
 	var $slot_styles;
 	var $stateDisplay = $(".state-display");
 	
@@ -80,8 +81,12 @@ $(function() {
 			[],
 			function(data){
 				arr_container_styles = data.result;
+				$.each(arr_container_styles,function(index, s){
+					arr_container_style_titles[s["slug"]] = s["title"];
+				});
 				console.log("container styles geladen");
 				console.log(arr_container_styles);
+				console.log(arr_container_style_titles);
 			},null,false);
 		sendAjax(
 			"getSlotStyles",
@@ -130,6 +135,13 @@ $(function() {
 		buildContainer(container_arr).appendTo($grid);
 		console.log(container_arr);
 		refreshBoxSortable();
+		refreshContainerStyles();
+	}
+	function refreshContainerStyles(){
+		$.each($grid.find(".container"), function(index, c){
+			$c = $(c);			
+			$c.find(".c-style").text(arr_container_style_titles[$c.data("style")]);
+		});
 	}
 	function publishGrid(){
 		sendAjax(
@@ -427,6 +439,7 @@ $(function() {
 		$container.remove();
 	}
 	function buildContainer(templateParams){
+		templateParams["styleTitle"] = arr_container_style_titles[templateParams["style"]];
 		return $.tmpl( "containerTemplate", templateParams );
 	}
 	function buildContainerEditor(templateParams){
@@ -451,6 +464,9 @@ $(function() {
 			$style_changer.children("span").text("ohne Style");
 		} else {
 			$style_changer.children("span").text($active_child.text());
+		}
+		if(arr_slot_styles.length < 1){
+			$style_changer.hide();
 		}
 	}
 	$grid.delegate("li.slot-style","click",function(e){
@@ -707,7 +723,11 @@ $(function() {
 								result.content[element.key]+
 								"</textarea>");
 							$dynamic_fields.append($html_area);
-							CKEDITOR.replace('key-'+index);
+							CKEDITOR.replace(
+								'key-'+index,{
+									customConfig : document.PathToConfig
+								}
+							);
 							break;
 						case "number":
 							$dynamic_fields.append("<label>"+element.key+"</label>");
