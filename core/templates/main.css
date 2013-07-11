@@ -36,10 +36,6 @@ html{
 	-moz-box-shadow: #ccc 0px 2px 5px; 
 	box-shadow: #ccc 0px 2px 5px;
 }
-#toolbar .state-display{
-	color:#999;
-	margin-bottom: 4px;
-}
 #toolbar > ul{
 	margin:0px !important;
 	margin-bottom:10px;
@@ -54,6 +50,57 @@ html{
 	float:left;
 	margin-right:10px;
 }
+/** Toolbar Buttons **/
+#toolbar button{
+	border: none;
+	background-color: #fff;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: center 4px;
+	padding-top: 32px;
+	margin-bottom: 0px;
+	padding-bottom: 3px;
+	position: relative;;
+}
+.state-display{
+	cursor: default !important;
+	color: #666 !important;
+	width: 80px !important;
+	background-position: center 10px !important;
+	background-image: url(images/rev-published.png);
+}
+.state-display.draft{
+	background-image: url(images/rev-draft.png);
+}
+.state-display.old{
+	background-image: url(images/rev-old.png);
+}
+#toolbar button:hover:not(.state-display){
+	background-color: #efefef;
+}
+#toolbar button[disabled=disabled]:hover{
+	background-color: #fff;
+	cursor: default;
+}
+#toolbar button[role=publish]{
+	background-image: url(images/btn-world.png);
+}
+#toolbar button[role=publish][disabled=disabled]{
+	background-image: url(images/btn-world-disabled.png);
+}
+#toolbar button[role=preview]{
+	background-image: url(images/btn-eye.png);
+}
+#toolbar button[role*=add]:before{
+	content:"+";
+	position: absolute;
+	font-size: 40px;
+	top: -6px;
+	margin: 0px auto;
+	width: 90%;
+}
+
+/*********************/
 .fixed #grid{
 	display:block;
 }
@@ -87,8 +134,10 @@ html{
 	margin-right:25px;
 	border-bottom:5px solid #CCC;
 	cursor:pointer;
-	text-indent: -2000em;
+	line-height: 3.2em;
+	text-align: center;
 	background-color: #666;
+	color:#fff;
 }
 .element-type-tabs li[data-type=static]{
 	background-image: url(images/box-type-static.png);
@@ -111,7 +160,6 @@ html{
 }
 .g-tool .element-type-tabs li.active{
 	background-color:#333;
-	color:#fff;
 	border-bottom-color:#333;
 }
 /** container toolbar **/

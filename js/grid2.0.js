@@ -70,7 +70,7 @@ $(function() {
 				console.log(arr_box_types);
 				$toolBoxTypeTabs.empty();
 				$.each(arr_box_types,function(index,value){
-					$temp_li = $("<li>"+index+"</li>").attr("data-index",index).attr("title", value.title).attr("data-type", value.type);
+					$temp_li = $("<li></li>").attr("data-index",index).attr("title", value.title).attr("data-type", value.type);
 					$toolBoxTypeTabs.append($temp_li);
 				});
 			},null,false);
@@ -393,6 +393,7 @@ $(function() {
 		$newContainer = buildContainerEditor(params).insertAfter( $container );
 		$newContainer.find(".slots-wrapper").replaceWith($container.find(".slots-wrapper"));
 		$newContainer.find(".box").hide();
+		if(arr_container_styles.length < 1){ $newContainer.find(".fieldset-c-style").hide();}
 		$container.remove();
 	}
 	function saveContainer($editContainer){
@@ -705,6 +706,7 @@ $(function() {
 					"styles": arr_box_styles
 				};
 				$box_editor_content.append(buildBoxEditor(params));
+				if(arr_box_styles.length < 1){ $box_editor_content.find(".box-styles-wrapper").hide();}
 				$dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");
 				$.each(result.contentstructure,function(index,element){						
 					switch(element.type){
@@ -937,11 +939,11 @@ $(function() {
 	$btn_revert = $toolbar.find("button[role=revert]");
 	function changeIsDraftDisplay(isDraft){
 		if(isDraft == true){
-			$stateDisplay.text("Entwurf...");
+			$stateDisplay.text("Draft...").addClass("draft");
 			$btn_publish.removeAttr("disabled");
 			$btn_revert.removeAttr("disabled");
-		} else {
-			$stateDisplay.text("Veröffentlicht!");
+		} else {			
+			$stateDisplay.text("Published!").removeClass("draft");
 			$btn_publish.attr("disabled","disabled");
 			$btn_revert.attr("disabled","disabled");
 		}
@@ -956,7 +958,7 @@ $(function() {
 			tool_height = tool_height - $grid_wrapper.offset().top + $(window).scrollTop();
 		}
 		$gridTools.css("height",tool_height);
-		$toolBoxList.css("height", $gridTools.outerHeight()- 110);
+		$toolBoxList.css("height", $gridTools.outerHeight()- 120);
 	}
 	resizeGridTools();
 
