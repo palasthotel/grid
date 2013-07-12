@@ -73,12 +73,17 @@ class grid_node_box extends grid_box {
 	public function contentStructure () {
 		$view_modes=grid_viewmodes();
 		$modes=array();
-		$node=node_load($this->content->nid);
+		$node=NULL;
+		if($this->content->nid!="")
+		{
+			$node=node_load($this->content->nid);
+		}
 		foreach($view_modes as $key=>$info)
 		{
 			if($key=='full')
 			{
-				if(variable_get('grid_'.$node->type.'_enabled',0)==0)
+				// noticegefahr durch nicht immer gesetztes $node Objekt
+				if($node!=NULL && variable_get('grid_'.$node->type.'_enabled',0)==0)
 				{
 					$modes[]=array('key'=>$key,'text'=>$info['label']);
 				}
