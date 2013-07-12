@@ -48,7 +48,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.language = 'de';
 	config.toolbar = [
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike'] },
-
+		{ name: 'links', items: ['Link', 'Unlink', 'Anchor']},
 		{ name: "format", items: <?=json_encode($items)?>},
 		
 		{ name: 'blockstyles', items: [  'NumberedList','BulletedList', 'Blockquote' ] },
