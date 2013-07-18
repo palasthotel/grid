@@ -23,6 +23,8 @@ $(function() {
 	var $toolbar = $grid_wrapper.find("#toolbar");
 	var $gridTools = $grid_wrapper.find(".grid-tools");
 	var $toolContainer = $gridTools.children(".g-container");
+	var $toolContainerTypeTabs = $toolContainer.find(".container-type-tabs");
+	var $containerTypeChooser = $toolContainer.find(".container-type-chooser");
 	var $toolBox = $gridTools.children(".g-box");
 	var $toolBoxTypeTabs = $toolBox.children(".box-type-tabs");
 	var $search_bar = $toolBox.find(".search-bar");
@@ -122,6 +124,12 @@ $(function() {
 			function(data){
 				console.log(data);
 				fillGrid(data.result);
+				if(data.result.isSidebar){
+					console.log("is Sidebar");
+					$(".hide-from-sidebar").remove();
+				} else {
+					
+				}
 				$.each($(".slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
 				});
@@ -136,6 +144,7 @@ $(function() {
 		console.log(container_arr);
 		refreshBoxSortable();
 		refreshContainerStyles();
+		$body.trigger("struktureChange");
 	}
 	function refreshContainerStyles(){
 		$.each($grid.find(".container"), function(index, c){
@@ -207,6 +216,17 @@ $(function() {
 				break;
 		}
 	});
+	// ------------------------------
+	// Container Tools
+	// -----------------------------
+	$toolContainerTypeTabs.on("click","li:not(.active)",function(e){
+		$this = $(this);
+		$containerTypeChooser.children().hide();
+		$this.addClass("active").siblings().removeClass("active");
+		$containerTypeChooser.children("[class*="+$this.attr("role")+"]").show();
+	});
+
+
 	// ------------------------------
 	// Box Tools
 	// -----------------------------
@@ -288,6 +308,7 @@ $(function() {
 				if(data.result != true){
 					console.log("Fehler! Element muss an originalposition zurück");
 				}
+				$body.trigger("struktureChange");
 			});
 		}
 	});
@@ -325,9 +346,10 @@ $(function() {
 						$slots_wrapper = $temp.find(".slots-wrapper");
 						$.each( data.result.slots, function(index,value){
 							console.log(index+" "+value);
-							buildSlot([{"id" : value }]).appendTo( $slots_wrapper );
+							buildSlot([value]).appendTo( $slots_wrapper );
 						});
 						refreshBoxSortable();
+						$body.trigger("struktureChange");
 					});
 				}
 			});
@@ -499,7 +521,7 @@ $(function() {
 	
 	var old_slot_id, old_container_id, old_box_index;
 	function refreshBoxSortable(){
-		$(".boxes-wrapper").sortable({
+		$("[data-type*=C-] .boxes-wrapper").sortable({
 			items: ".box",
 			cancel: "span.edit",
 			connectWith: ".boxes-wrapper, .c-box-trash",
@@ -517,6 +539,7 @@ $(function() {
 				old_slot_id = ui.item.parents(".slot").data("id");
 				old_container_id = ui.item.parents(".container").data("id");
 				refreshBoxTrashs();
+				$body.trigger("struktureChange");
 			},
 			stop: function(e, ui){
 				console.log("STOP sort");
@@ -540,6 +563,7 @@ $(function() {
 							console.log(data);
 							console.log("Rückmeldung geben und Box zurück sortieren!!!");
 						}
+						$body.trigger("struktureChange");
 				});
 			}
 		});
@@ -614,7 +638,9 @@ $(function() {
 						function(data){
 							$temp.attr("data-id",data.result.id);
 							console.log(data);
+							$body.trigger("struktureChange");
 						});
+						
 					}
 				});
 			},
@@ -892,8 +918,6 @@ $(function() {
 	$box_editor_content.on("click","legend",function(ev){
 		$(this).siblings(".field-wrapper").slideToggle(300);
 	});
-	function toggleBoxEditorField(){
-	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
 	}
@@ -948,7 +972,30 @@ $(function() {
 			$btn_revert.attr("disabled","disabled");
 		}
 	}
-	
+	// Gui modification that need to be calculated when structure changes
+	$body.on('struktureChange', function(e, eventInfo) { 
+		// sidebars calculation
+		console.log("Sidebar calculation");
+		$grid.children(".container").css("margin-top", "0px");
+		$.each($grid.children("[class*=S-]"),function(index, tmp_sidebar){
+			$tmp_sidebar = $(tmp_sidebar);
+			c_height = 0;
+			var $tmp_c = $;
+			$.each($tmp_sidebar.nextUntil(":not([class*=0])"), function(indx, tmp_c){
+				$tmp_c = $(tmp_c);
+				c_height += $tmp_c.outerHeight();
+			});
+			var puffer_height = 0;
+			$tmp_slot = $tmp_sidebar.find(".slot");
+			if($tmp_slot.outerHeight() > c_height){
+				puffer_height = $tmp_slot.outerHeight()-c_height;
+			}
+			console.log(puffer_height);
+			$tmp_c.next().css("margin-top", puffer_height+"px");
+			
+		});
+	});
+
 	$(window).resize(function(e){
 		resizeGridTools();
 	});
@@ -959,6 +1006,7 @@ $(function() {
 		}
 		$gridTools.css("height",tool_height);
 		$toolBoxList.css("height", $gridTools.outerHeight()- 120);
+		$(".container-type-chooser").css("height", $gridTools.outerHeight()-120);
 	}
 	resizeGridTools();
 

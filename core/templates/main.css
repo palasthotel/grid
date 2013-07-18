@@ -176,6 +176,11 @@ html{
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
+.container-type-chooser{
+	overflow: hidden;
+	overflow-y:auto;
+	max-height: 80%;
+}
 .container-type-chooser li{
 	margin-bottom: 10px;
 	border: 1px solid #e6e6e6;
@@ -280,6 +285,9 @@ html{
 	border:1px solid #e6e6e6;
 	background-color:#efefef;
 	padding-top:28px;
+}
+.container.editor{
+	z-index: 101;	
 }
 .container > div > p{
 	color:#666;
@@ -519,6 +527,29 @@ html{
 .choose-style li:hover{
 	color:#6CF;
 }
+/** Slots in Sidebar Containers **/
+#grid [data-type*=S-]:not(.editor) > * > .slot{
+	position: absolute;
+	z-index: 100;
+}
+#grid [data-type=S-0-4] > * > .slot,
+#grid [data-type*=S-] > * > .slot:nth-child(2){
+	right:10px;
+}
+.box .grid .slot{
+	width: 100%;
+	clear: both;
+	border: none;
+	background-color: transparent;
+	padding-top: 10px;
+}
+.box .grid .slot:before{
+	content: '';
+}
+.box .grid .slot > div{
+	border-top: 1px solid #e6e6e6;
+}
+
 /** Allgemeine Box styles **/
 .container.editor .box{
 	display:none;
@@ -535,6 +566,9 @@ html{
 	background-color:#fff;
 	border:1px solid #d3d3d3;
 	cursor: move;
+}
+[data-type*=S-] .box{
+	cursor:default;
 }
 .box > .edit{
 	position:absolute;
@@ -720,7 +754,6 @@ html{
 
 /** Container C-8-4 **/
 .C-8-4{
-	
 }
 .C-8-4 .slot:nth-child(1){
 	width:66%;
@@ -759,6 +792,85 @@ html{
 .C-2-2-2-2-2-2 .slot:last-child{
 	margin-right:0px;
 	float:right;
+}
+
+/** Container C-0-8 and C-8-0 **/
+.C-0-8 .slot{
+	width:66.6%;
+	float:right;
+}
+.C-8-0 .slot{
+	width:66.6%;
+	float:left;
+}
+#grid .C-8-0,
+#grid .C-0-8{
+	width: 66.6% !important;
+}
+#grid .C-0-8{
+	margin-left: 33.3%;
+}
+#grid .C-8-0 .slot,
+#grid .C-0-8 .slot{
+	width: 100%;
+}
+
+/** Container C-0-4-4 and C-4-4-0 **/
+.C-4-4-0 .slot{
+	width:33%;
+	float:left;
+	margin-right:1%;
+}
+.C-0-4-4 .slot{
+	width:33%;
+	float:right;
+	margin-left:1%;
+}
+#grid .C-0-4-4,
+#grid .C-4-4-0{
+	width: 66.6% !important;
+}
+#grid .C-0-4-4{
+	margin-left: 270px;
+}
+#grid .C-4-4-0 .slot,
+#grid .C-0-4-4 .slot{
+	width: 49%;
+}
+
+/** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
+.C-2-2-2-2-0 .slot{
+	width:24%;
+	float:left;
+	margin-right:1%;
+}
+.C-0-2-2-2-2 .slot{
+	margin-left: 1%;
+	float:right;
+}
+#grid .C-2-2-2-2-0{
+	width: 66.6% !important;
+}
+#grid .C-2-2-2-2-0 .slot,
+#grid .C-0-2-2-2-2 .slot{
+	width: 24%;
+}
+
+/** Container Sidebars */
+.S-0-4 .slot{
+	width: 31.5%;
+	float: right;
+}
+.S-4-0 .slot{
+	width: 31.5%;
+}
+.S-4-4 .slot:nth-child(1){
+	width: 31.5%;
+	float: left;
+}
+.S-4-4 .slot:nth-child(2){
+	width: 31.5%;
+	float: right;
 }
 
 /** content rules **/

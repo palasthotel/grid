@@ -20,6 +20,23 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 		}
 		return $results;
 	}
+	
+	public function loadGrid($gridid)
+	{
+		$return=parent::loadGrid($gridid);
+		$nid=grid_get_nid_by_gridid($gridid);
+		$node=node_load($nid);
+		$type=$node->type;
+		if($type==variable_get('grid_sidebar',''))
+		{
+			$return['isSidebar']=TRUE;
+		}
+		else
+		{
+			$return['isSidebar']=FALSE;
+		}
+		return $return;
+	}
 }
 
 function grid_permission() {
@@ -149,6 +166,19 @@ function grid_get_grid_by_nid($nodeid)
 	else
 	{
 		return $grid_id['grid_id'];
+	}
+}
+
+function grid_get_nid_by_gridid($gridid)
+{
+	$nid=db_select("grid_nodes")->fields("grid_nodes",array("nid"))->condition("grid_id",$gridid)->execute()->fetchAssoc();
+	if($nid==FALSE)
+	{
+		return FALSE;
+	}
+	else
+	{
+		return $nid['nid'];
 	}
 }
 
@@ -302,6 +332,13 @@ function grid_build_grid_submit($form_id,&$form_state)
 {
 	$storage=grid_get_storage();
 	$id=$storage->createGrid();
+	$node=node_load($form_state['nid']);
+	if($node->type==variable_get('grid_sidebar',''))
+	{
+		$grid=$storage->loadGrid($id);
+		$grid->insertContainer("C-4",0);		
+	}
+	
 	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
 }
 
@@ -330,6 +367,29 @@ function grid_admin_settings()
 		);
 	}
 	
+	$form['sidebar']=array(
+		'#type'=>'fieldset',
+		'#title'=>t('Content to be used as a sidebar'),
+	);
+	$options=array();
+	
+	foreach($keys as $key)
+	{
+		if(variable_get('grid_'.$key.'_enabled',0))
+		{
+			$options[$key]=$key;
+		}
+	}
+
+
+	$form['sidebar']['grid_sidebar']=array(
+		'#type'=>'select',
+		'#title'=>'Node Type',
+		'#options'=>$options,
+		'#default_value'=>variable_get('grid_sidebar','')
+	);
+	
+	
 	$form['displays']=array(
 		'#type'=>'fieldset',
 		'#title'=>t('Supported Displays for nodes within grid'),
@@ -347,7 +407,7 @@ function grid_admin_settings()
 	
 	$form['blocks']=array(
 		'#type'=>'fieldset',
-		'#titlle'=>t('Supported Blocks'),
+		'#title'=>t('Supported Blocks'),
 	);
 	$blocks=array();
 	$results=array();

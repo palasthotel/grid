@@ -6,6 +6,11 @@ class grid_slot extends grid_base {
 	public $style;
 	public $boxes;
 
+	public function __construct()
+	{
+		$this->boxes=array();
+	}	
+
 	public function render($editmode, $slotstyle,$container)
 	{
 		$boxes=array();

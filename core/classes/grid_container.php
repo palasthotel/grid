@@ -20,30 +20,40 @@ class grid_container extends grid_base {
 		$slots = array();
 		$slotstyle = explode("-", $this->type);
 		// print_r($slotstyle);
-		
-		$counter = 0;
-		foreach($this->slots as $slot)
+		if($this->type[0]=='S' && $editmode==FALSE)
 		{
-		  $counter++;
-		  $pos ="";
-			if ($slot == end($this->slots)){
-			   // style: set flag for last slot element
-				$pos=" slot_final";
-			}
-			if ($slot == reset($this->slots)){
-			   // style: set flag for last slot element
-				$pos=" slot_first";
-			}
-			$style = " slot_".$slotstyle[$counter].$pos;
-			$slots[]=$slot->render($editmode, $style, $this);
+			$slot=$this->slots[0];
+			$style="sidebar ".$this->type." slot_first slot_final";
+			$output=$slot->render($editmode,$style,$this);
+			return $output;
 		}
-		ob_start();
-		if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath."/grid_container.tpl.php"))
-			include $this->storage->templatesPath.'/grid_container.tpl.php';
 		else
-			include dirname(__FILE__).'/../templates/grid_container.tpl.php';
-		$output=ob_get_clean();
-		return $output;
+		{
+			$counter = 0;
+			foreach($this->slots as $slot)
+			{
+			  $counter++;
+			  $pos ="";
+				if ($slot == end($this->slots)){
+				   // style: set flag for last slot element
+					$pos=" slot_final";
+				}
+				if ($slot == reset($this->slots)){
+				   // style: set flag for last slot element
+					$pos=" slot_first";
+				}
+				$style = " slot_".$slotstyle[$counter].$pos;
+				$slots[]=$slot->render($editmode, $style, $this);
+			}
+			ob_start();
+			if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath."/grid_container.tpl.php"))
+				include $this->storage->templatesPath.'/grid_container.tpl.php';
+			else
+				include dirname(__FILE__).'/../templates/grid_container.tpl.php';
+			$output=ob_get_clean();
+			return $output;
+			
+		}
 	}
 	
 	public function update($data)

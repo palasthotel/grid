@@ -110,7 +110,15 @@ class grid_ajaxendpoint {
 		);
 		foreach($container->slots as $slot)
 		{
-			$result['slots'][]=$slot->slotid;
+			$slt=array();
+			$slt['id']=$slot->slotid;
+			$slt['style']=$slot->style;
+			$slt['boxes']=array();
+			foreach($slot->boxes as $box)
+			{
+				$slt['boxes'][]=$this->encodeBox($box);
+			}
+			$result['slots'][]=$slt;
 		}
 		return $result;
 	}
