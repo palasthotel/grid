@@ -32,6 +32,16 @@ class grid_image_box extends grid_static_base_box
 		);
 	}
 	
+	public function delete() {
+		if($this->content->fileid!="")
+		{
+			$file=file_load($this->content->fileid);
+			file_delete($file);
+		}
+		parent::delete();
+	}
+
+	
 	public function performFileUpload($key,$path)
 	{
 		if($key!='fileid')
