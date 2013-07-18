@@ -696,6 +696,28 @@ html{
 .collapsable-hidden > .field-wrapper{
 	display:none;
 }
+/** file upload box **/
+.form-item.file-upload{
+	position: relative;
+}
+.form-item.file-upload .progress{
+	position:absolute;
+	left: 240px;
+	top: 18px
+}
+.progress-bar-wrapper{
+	height: 5px;
+	width: 210px;
+}
+.progress-bar-wrapper .bar{
+	height: 100%;
+	background-color: #004899;
+}
+.progress-bar-wrapper .bar.done{
+	background-color: #30cb29;
+	width: 100%;
+}
+
 /** Container C-12 **/
 .C-12{
 	

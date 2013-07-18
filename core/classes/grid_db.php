@@ -230,6 +230,33 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			}
 		}
 	}
+	
+	public function handleUpload()
+	{
+		$gridid=$_POST['gridid'];
+		$containerid=$_POST['container'];
+		$slotid=$_POST['slot'];
+		$idx=$_POST['box'];
+		$file=$_FILES['file']['tmp_name'];
+		$key=$_POST['key'];
+		$grid=$this->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						$box=$slot->boxes[$idx];
+						return $box->performFileUpload($key,$file);
+					}
+				}
+			}
+		}
+		return FALSE;//array('result'=>FALSE,'error'=>'box or slot or container or grid not found','gridid'=>$gridid,'container'=>$containerid,'slotid'=>$slotid,'box'=>$idx);
+	}
+
 
 	public function createContainer($grid,$containertype)
 	{

@@ -4,6 +4,7 @@ require_once("core/classes/bootstrap.php");
 //drupal-specific boxes
 require_once("core/classes/grid_block_box.php");
 require_once("core/classes/grid_node_box.php");
+require_once("core/classes/grid_image_box.php");
 
 class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 {
@@ -76,6 +77,12 @@ function grid_menu() {
 			'title'=>'Grid AJAX Endpoint',
 			'page callback'=>'grid_ajax',
 			'access callback'=>TRUE,//TODO
+			'type'=>MENU_CALLBACK,
+		),
+		'grid_file_endpoint'=>array(
+			'title'=>'Grid file upload Endpoint',
+			'page callback'=>'grid_fileupload',
+			'access callback'=>TRUE,
 			'type'=>MENU_CALLBACK,
 		),
 	);
@@ -184,6 +191,8 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 			drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 			drupal_add_js($base.'/js/templates.js','file');
+			drupal_add_js($base.'/js/jquery.iframe-transport.js');
+			drupal_add_js($base.'/js/jquery.fileupload.js');
 			drupal_add_js($base.'/js/grid2.0.js','file');
 //			drupal_add_css($base.'/core/templates/reset.css',array('type'=>'file'));
 			drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
@@ -309,6 +318,13 @@ function grid_ajax()
 {
 	$storage=grid_get_storage();
 	$storage->handleAjaxCall();
+}
+
+function grid_fileupload()
+{
+	$storage=grid_get_storage();
+	$result=$storage->handleUpload();
+	drupal_json_output(array('result'=>$result));
 }
 
 function grid_admin_settings()
