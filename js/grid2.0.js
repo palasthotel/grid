@@ -780,6 +780,70 @@ $(function() {
 							$dynamic_fields.append("<div class='form-item'><input type='checkbox' "+checked+" class='dynamic-value form-checkbox' "+
 								"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.info+"</label></div>");
 							break;
+						case "file":
+						console.log("FILE!");
+							$upload_form_item = $("<div class='form-item file-upload'>");
+							$upload_form_item.append("<label>"+element.key+"</label>");
+							$file_input = $("<input type='file' class='form-file' />");
+							$upload_form_item.append($file_input);
+							$key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+result.content[element.key]+"' class='dynamic-value' />");
+							$upload_form_item.append($key_field);
+							$progress_display = $("<p>").addClass("progress");
+							$progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
+							$progress_bar_status = $progress_bar_wrapper.children(".bar");
+							if(result.content[element.key] == ""){
+								$progress_display.text("Please choose a picture...");
+							} else {
+								$progress_display.text("Choose another picture to override the old one.");
+								$progress_bar_status.addClass("done");
+							}
+							$upload_form_item.append($progress_display).append($progress_bar_wrapper);
+							// grid_id, container id, slot_id, box_id, field_id
+							$file_input.fileupload({
+						        url: element.uploadpath,
+						        dataType: 'json',
+						        paramName: "file",
+						        done: function (e, data) {
+						        	result  = data.result;
+						            $dynamic_fields.find("input[data-key="+element.key+"]").val(result.result);
+						            $progress_display.text("OK!");
+						            $progress_bar_status.addClass("done");
+						        },
+						        progressall: function (e, data) {
+						        	var percent = (data.loaded/data.total)*100;
+						        	console.log(percent);
+						        	$progress_display.text(Math.round(percent)+"%");
+						        	$progress_bar_status.css("width", percent+"%");
+						            /*var progress = parseInt(data.loaded / data.total * 100, 10);
+						            $('#progress .bar').css(
+						                'width',
+						                progress + '%'
+						            );*/
+						        },
+						        always: function(e, data){
+						        	console.log(data);
+						        }
+						    }).bind('fileuploadsubmit', function (e, data) {
+							    // The example input, doesn't have to be part of the upload form:
+							    var input = $('#input');
+							    $data = $box_editor_content.find(".box-editor");
+							    data.formData = {
+							    		"gridid" : ID, 
+							    		container: $data.data("c-id"), 
+							    		slot : $data.data("s-id"), 
+							    		box : $data.data("b-index"), 
+							    		key: element.key
+							    	};
+							    $progress_bar_status.removeClass("done");					    
+							}).bind('fileuploadcompleted', function (e, data) {
+								console.log(data);
+							}).bind('fileuploadfinished', function (e, data) {
+								console.log(data);
+							});
+						    $dynamic_fields.append($upload_form_item);
+							break;
+						case "autocomplete-with-link":
+							break;
 						default:
 							console.log("unbekannter typ: "+element.type);
 					}
