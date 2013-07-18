@@ -49,9 +49,15 @@ class grid_node_box extends grid_box {
 		}
 		$results=array();
 		$query=new EntityFieldQuery();
+		$words=explode(" ", $search);
 		$query->entityCondition('entity_type','node')
-		      ->propertyCondition('title','%'.$search.'%','LIKE')
 		      ->propertyOrderBy('created','DESC');
+		$wordquery=array();
+		foreach($words as $word)
+		{
+			$query->propertyCondition('title','%'.$word.'%','LIKE');
+		}
+		$query->range(0,50);
 		$result=$query->execute();
 		if(isset($result['node']))
 		{
