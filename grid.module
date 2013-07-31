@@ -367,6 +367,19 @@ function grid_admin_settings()
 		);
 	}
 	
+	$options=array();
+	foreach($view_modes as $key=>$viewmode)
+	{
+		$options[$key]=$viewmode['label'];
+	}
+	
+	$form['grid_default_viewmode']=array(
+		'#type'=>'select',
+		'#title'=>'Default View Mode',
+		'#options'=>$options,
+		'#default_value'=>variable_get('grid_default_viewmode','teaser'),
+	);
+	
 	$form['blocks']=array(
 		'#type'=>'fieldset',
 		'#titlle'=>t('Supported Blocks'),
@@ -407,4 +420,9 @@ function grid_viewmodes()
 		}
 	}
 	return $results;
+}
+
+function grid_default_viewmode()
+{
+	return variable_get('grid_default_viewmode','teaser');
 }

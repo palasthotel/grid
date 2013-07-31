@@ -24,7 +24,7 @@ class grid_node_box extends grid_box {
 			// print_r($view_modes);		  
 			
 			if (!array_key_exists($this->content->viewmode, $view_modes)){
-			    $this->content->viewmode = "teaser";
+			    $this->content->viewmode = grid_default_viewmode();
 			}
 			if(node_access("view",$node))
 				return drupal_render(node_view($node,$this->content->viewmode));
@@ -72,7 +72,7 @@ class grid_node_box extends grid_box {
 				$box=new grid_node_box();
 				$box->content=new StdClass();
 				$box->content->nid=$node->nid;
-				$box->content->viewmode="teaser";
+				$box->content->viewmode=grid_default_viewmode();
 				$results[]=$box;
 			}
 		}
