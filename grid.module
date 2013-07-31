@@ -161,6 +161,12 @@ function grid_get_grid_by_nid($nodeid)
 
 function grid_get_storage()
 {
+	$loaded=&drupal_static(__FUNCTION__);
+	if(!isset($loaded))
+	{
+		module_invoke_all('grid_load_classes');
+		$loaded=TRUE;
+	}
 	$conn=Database::getConnection();
 	$opts=$conn->getConnectionOptions();
 	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database']);
