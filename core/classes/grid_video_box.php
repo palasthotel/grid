@@ -6,14 +6,14 @@ class grid_video_box extends grid_static_base_box
 	{
 		return "video";
 	}
-	
+
 	public function __construct()
 	{
 		$this->content=new Stdclass();
 		$this->content->url='';
 		$this->content->html='';
 	}
-	
+
 	public function build($editmode)
 	{
 		if($editmode)
@@ -25,7 +25,7 @@ class grid_video_box extends grid_static_base_box
 			return $this->content->html;
 		}
 	}
-	
+
 	public function contentStructure()
 	{
 		return array(
@@ -39,7 +39,7 @@ class grid_video_box extends grid_static_base_box
 			),
 		);
 	}
-	
+
 	public function persist()
 	{
 		if(isset($this->content->url) && !empty($this->content->url))
@@ -55,7 +55,10 @@ class grid_video_box extends grid_static_base_box
 				$result=curl_exec($request);
 				curl_close($request);
 				$result=json_decode($result);
-				$this->content->html=$result->html;
+				$html=$result->html;
+				// prevents flash bug in Firefox (no playback on click)
+				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1', $html);
+				$this->content->html=$html;
 			}
 			else if(preg_match("/(\w*?\.)?vimeo\./um", $result['host']))
 			{
