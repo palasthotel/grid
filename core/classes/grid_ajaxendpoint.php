@@ -218,6 +218,70 @@ class grid_ajaxendpoint {
 		}
 		return false;
 	}
+	
+	public function reuseBox($gridid,$containerid,$slotid,$idx)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						$box=null;
+						if(isset($slot->boxes[$idx]))
+							$box=$slot->boxes[$idx];
+						//next steps:
+						//1. create copy of box
+						$class="grid_".$box->type()."_box";
+						$clone=new $class();
+						//2. add box to reuse grid
+						$reuseGrid=$this->storage->getReuseGrid();
+						$clone->grid=$reuseGrid;
+						$clone->storage=$this->storage;
+						$clone->updateBox($box);
+						$clone->persist();
+						//3. remove box from this slot
+						$slot->removeBox($idx);
+						$box->delete();
+						
+						//4. add new reference box to this slot
+						$reference=new grid_reference_box();
+						$reference->content->boxid=$clone->boxid;
+						$reference->storage=$this->storage;
+						$reference->grid=$grid;
+						$reference->persist();
+						$slot->addBox($idx,$reference);
+						return $this->encodeBox($reference);
+					}
+				}
+			}
+		}
+	}
+	
+	public function reuseContainer($gridid,$containerid,$title)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				$this->storage->reuseContainer($grid,$container,$title);
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 	public function publishDraft($gridid)
@@ -299,6 +363,7 @@ class grid_ajaxendpoint {
 	{
 		$class="grid_".$metatype."_box";
 		$obj=new $class();
+		$obj->storage=$this->storage;
 		$searchresult=$obj->metaSearch($criteria,$searchstring);
 		$return=array();
 		foreach($searchresult as $box)

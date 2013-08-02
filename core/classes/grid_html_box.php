@@ -20,15 +20,8 @@ class grid_html_box extends grid_static_base_box {
 		}
 		else
 		{
-			$preWrap="";
-			$postWrap="";
-			if(isset($this->content->wrapDiv) && $this->content->wrapDiv)
-			{
-				$preWrap="<div>";
-				$postWrap="</div>";
-			}
 			//boxes render their content in here
-			return $preWrap.$this->content->html.$postWrap;
+			return $this->content->html;
 		}
 	}
 	
@@ -36,12 +29,8 @@ class grid_html_box extends grid_static_base_box {
 		return array(
 			array(
 				'key'=>'html',
+				'label'=>'Text',
 				'type'=>'html'
-			),
-			array(
-				'key'=>'wrapDiv',
-				'type'=>'checkbox',
-				'info'=>'Inhalt in Div wrappen'
 			),
 		);
 	}

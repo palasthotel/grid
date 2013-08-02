@@ -116,6 +116,7 @@ $(function() {
 	// load, revert, publish grid
 	// -------------------
 	function loadGrid(){
+		console.log("Grid_id: "+ID+" document:"+document.ID);
 		sendAjax(
 			"loadGrid", 
 			[ID],
@@ -395,6 +396,16 @@ $(function() {
 		$newContainer.find(".box").hide();
 		if(arr_container_styles.length < 1){ $newContainer.find(".fieldset-c-style").hide();}
 		$container.remove();
+		CKEDITOR.replace(
+			"f-c-prolog",{
+				customConfig : document.PathToConfig
+			}
+		);
+		CKEDITOR.replace(
+			"f-c-epilog",{
+				customConfig : document.PathToConfig
+			}
+		);
 	}
 	function saveContainer($editContainer){
 		var style = $editContainer.find("#f-c-style").val();
@@ -404,8 +415,8 @@ $(function() {
 					title: $editContainer.find("#f-c-title").val(),
 					titleurl: $editContainer.find("#f-c-titleurl").val(),
 					type: $editContainer.data("type"),
-					prolog: $editContainer.find("#f-c-prolog").val(),
-					epilog: $editContainer.find("#f-c-epilog").val(),
+					prolog: CKEDITOR.instances["f-c-prolog"].getData(),
+					epilog: CKEDITOR.instances["f-c-epilog"].getData(),
 					readmore: $editContainer.find("#f-c-readmore").val(),
 					readmoreurl: $editContainer.find("#f-c-readmoreurl").val(),
 					style: style
@@ -427,6 +438,7 @@ $(function() {
 				$newContainer.find(".slots-wrapper").replaceWith($editContainer.find(".slots-wrapper"));
 				$newContainer.find(".box").show();
 				$editContainer.remove();
+				destroyCKEDITORs();
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
 			}
@@ -629,6 +641,17 @@ $(function() {
 	
 	// Box Editor
 	var $box_editor_content = $box_editor.children(".content");
+	function getBoxEditorIDs(){
+		var $data = $box_editor_content.find(".box-editor");
+		console.log($data);
+		return{ 
+			ID:ID, 
+			c_id: $data.data("c-id"), 
+			s_id: $data.data("s-id"),
+			b_idx: $data.data("b-index"),
+			b_id: $data.data("id")
+		};
+	}
 	$box_editor.on("click",".controls button",function(){
 		$this = $(this);
 		switch ($this.attr("role")){
@@ -638,38 +661,40 @@ $(function() {
 			case "save":
 				updateBox();
 				break;
+			case "reusable":
+				if(!confirm("Once a box is reusable you cannot modify it within this grid anymore.\nProceed?")) return;
+				makeBoxReusable();
+				break;
 		}
 	});
-	
+	function makeBoxReusable(){
+		var params = getBoxEditorIDs();
+		console.log(params);
+		sendAjax(
+			"reuseBox",
+			[params["ID"], params["c_id"], params["s_id"], params["b_idx"]],
+			function(data){
+				console.log(data);
+				$grid.find(".box[data-id="+params["b_id"]+"]").replaceWith(buildBox(data.result));
+				showGrid(params["b_id"]);
+				destroyCKEDITORs();
+			}
+		);
+	}
 	function updateBox(){
 		$data = $box_editor_content.find(".box-editor");
 		style = $data.find("[name=f-b-style]").val();
 		if(style == "") style = null;
 		// make content array
-		content = {};
-		$.each($data.find(".dynamic-value"),function(index,element){
-			$element = $(element);
-			if($element.hasClass("form-checkbox")){
-				if($element.prop("checked")){
-					content[$element.data("key")] = 1;
-				} else {
-					content[$element.data("key")] = 0;
-				}
-			} else if($element.hasClass("form-html")){
-				content[$element.data("key")] = CKEDITOR.instances[$element.attr("name")].getData();
-			} else if($element.hasClass("form-autocomplete")){
-				content[$element.find("input").data("key")] = $element.find("input").data("value-key");
-			}else {
-				content[$element.data("key")] = $element.val();
-			}
-		});
+		content = collectBoxEditorData($data, 0);
+		console.log(content);
 		box_content = {
 				id: $data.data("id"),
 				type: $data.data("type"),
 				title: $data.find("input[name=f-b-title]").val(),
 				titleurl: $data.find("input[name=f-b-titleurl]").val(),
-				prolog: $data.find("[name=f-b-prolog]").val(),
-				epilog: $data.find("[name=f-b-epilog]").val(),
+				prolog: CKEDITOR.instances["f-b-prolog"].getData(),
+				epilog: CKEDITOR.instances["f-b-epilog"].getData(),
 				readmore: $data.find("input[name=f-b-readmore]").val(),
 				readmoreurl: $data.find("input[name=f-b-readmoreurl]").val(),
 				style: style,
@@ -682,7 +707,44 @@ $(function() {
 				console.log(data);
 				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
 				showGrid($data.data("id"));
+				destroyCKEDITORs();
 			});
+	}
+	function collectBoxEditorData($data, lvl){
+		var content = {};
+		$.each($data.find("[lvl="+lvl+"] > .dynamic-field"), function(index, element){
+			$element = $(element);
+			switch($element.data("type")){
+				case "html":
+					content[$element.data("key")] = CKEDITOR.instances[$element.find(".dynamic-value").attr("name")].getData();
+					break;
+				case "checkbox":
+					$e_value = $element.find(".dynamic-value");
+					if($e_value.prop("checked")){
+						content[$e_value.data("key")] = 1;
+					} else {
+						content[$e_value.data("key")] = 0;
+					}
+					break;
+				case "list":
+					var new_lvl = lvl+1;
+					var values = new Array();
+					var key = $element.data("key");
+					$.each($element.find("[lvl="+new_lvl+"].fields"), function(indx, entry){
+						values.push(collectBoxEditorData($(entry).parent(), new_lvl));
+					});
+					content[key] = values;
+					break;
+				case "autocomplete":
+					content[$element.find("input").data("key")] = $element.find("input").data("value-key");
+					break;
+				default:
+					content[$element.find(".dynamic-value").data("key")] = $element.find(".dynamic-value").val();
+					break;
+
+			}
+		});
+		return content;
 	}
 	
 	$grid.on("click", ".box > .edit",function(data){
@@ -707,148 +769,205 @@ $(function() {
 				};
 				$box_editor_content.append(buildBoxEditor(params));
 				if(arr_box_styles.length < 1){ $box_editor_content.find(".box-styles-wrapper").hide();}
-				$dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");
-				$.each(result.contentstructure,function(index,element){						
-					switch(element.type){
-						case "textarea":
-							$dynamic_fields.append("<label>"+element.key+"</label>");
-							$dynamic_fields.append(
-								"<textarea class='dynamic-value form-textarea' "+
-								"data-key='"+element.key+"' name='key-"+index+"'>"+
-								result.content[element.key]+
-								"</textarea>");
-							break;
-						case "html":
-							$dynamic_fields.append("<label>"+element.key+"</label>");
-							$html_area = $("<textarea class='dynamic-value form-html' "+
-								"data-key='"+element.key+"' name='key-"+index+"'>"+
-								result.content[element.key]+
-								"</textarea>");
-							$dynamic_fields.append($html_area);
-							CKEDITOR.replace(
-								'key-'+index,{
-									customConfig : document.PathToConfig
-								}
-							);
-							break;
-						case "number":
-							$dynamic_fields.append("<label>"+element.key+"</label>");
-							$dynamic_fields.append(
-								"<input type='number' class='dynamic-value form-text' "+
-								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
-							break;
-						case "text":
-							$dynamic_fields.append("<label>"+element.key+"</label>");
-							$dynamic_fields.append(
-								"<input type='text' class='dynamic-value form-text' "+
-								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
-							break;
-						case "select":
-							$dynamic_fields.append("<label>"+element.key+"</label>");
-							$select = $("<select class='dynamic-value form-select' "+
-								"data-key='"+element.key+"'></select>");
-							$.each(result.contentstructure[index].selections,function(i,sel){
-								selected = "";
-								if(result.content[element.key] == sel.key) selected = "selected='selected' ";
-								$select.append("<option "+selected+"value='"+sel.key+"'>"+sel.text+"</option");
-							});
-							$dynamic_fields.append($select);
-							break;
-						case "autocomplete":
-							console.log("autocomplete");
-							console.log(element);
-							console.log(result.content[element.key]);
-							$dynamic_fields.append("<label>"+element.key+"</label>");
-							$dynamic_fields.append($.tmpl( "inBoxAutocompleteTemplate", {
-								// need to load label
-								label: element.valuekey,
-								val: result.content[element.key],
-								key: element.key,
-								type: element.type
-							} ));
-							break;
-						case "hidden":
-							$dynamic_fields.append(
-								"<input type='hidden' class='dynamic-value' "+
-								"data-key='"+element.key+"' value='"+result.content[element.key]+"' />");
-							break;
-						case "checkbox":
-							checked = "";
-							if(result.content[element.key] == 1){
-								checked = "checked='checked'";
-							}
-							$dynamic_fields.append("<div class='form-item'><input type='checkbox' "+checked+" class='dynamic-value form-checkbox' "+
-								"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.info+"</label></div>");
-							break;
-						case "file":
-						console.log("FILE!");
-							$upload_form_item = $("<div class='form-item file-upload'>");
-							$upload_form_item.append("<label>"+element.key+"</label>");
-							$file_input = $("<input type='file' class='form-file' />");
-							$upload_form_item.append($file_input);
-							$key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+result.content[element.key]+"' class='dynamic-value' />");
-							$upload_form_item.append($key_field);
-							$progress_display = $("<p>").addClass("progress");
-							$progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
-							$progress_bar_status = $progress_bar_wrapper.children(".bar");
-							if(result.content[element.key] == ""){
-								$progress_display.text("Please choose a picture...");
-							} else {
-								$progress_display.text("Choose another picture to override the old one.");
-								$progress_bar_status.addClass("done");
-							}
-							$upload_form_item.append($progress_display).append($progress_bar_wrapper);
-							// grid_id, container id, slot_id, box_id, field_id
-							$file_input.fileupload({
-						        url: element.uploadpath,
-						        dataType: 'json',
-						        paramName: "file",
-						        done: function (e, data) {
-						        	result  = data.result;
-						            $dynamic_fields.find("input[data-key="+element.key+"]").val(result.result);
-						            $progress_display.text("OK!");
-						            $progress_bar_status.addClass("done");
-						        },
-						        progressall: function (e, data) {
-						        	var percent = (data.loaded/data.total)*100;
-						        	console.log(percent);
-						        	$progress_display.text(Math.round(percent)+"%");
-						        	$progress_bar_status.css("width", percent+"%");
-						            /*var progress = parseInt(data.loaded / data.total * 100, 10);
-						            $('#progress .bar').css(
-						                'width',
-						                progress + '%'
-						            );*/
-						        },
-						        always: function(e, data){
-						        	console.log(data);
-						        }
-						    }).bind('fileuploadsubmit', function (e, data) {
-							    // The example input, doesn't have to be part of the upload form:
-							    var input = $('#input');
-							    $data = $box_editor_content.find(".box-editor");
-							    data.formData = {
-							    		"gridid" : ID, 
-							    		container: $data.data("c-id"), 
-							    		slot : $data.data("s-id"), 
-							    		box : $data.data("b-index"), 
-							    		key: element.key
-							    	};
-							    $progress_bar_status.removeClass("done");					    
-							}).bind('fileuploadcompleted', function (e, data) {
-								console.log(data);
-							}).bind('fileuploadfinished', function (e, data) {
-								console.log(data);
-							});
-						    $dynamic_fields.append($upload_form_item);
-							break;
-						case "autocomplete-with-link":
-							break;
-						default:
-							console.log("unbekannter typ: "+element.type);
-					}
+				var $dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");					
+				var $fields = makeDynamicFields(result.contentstructure, result.content, 0);
+				$dynamic_fields.append($fields);
+				$.each($dynamic_fields.find(".form-html"), function(index, editor){
+					$editor = $(editor);
+					CKEDITOR.replace(
+						$editor.attr("name"),{
+							customConfig : document.PathToConfig
+						}
+					);
 				});
+				CKEDITOR.replace("f-b-prolog",{customConfig : document.PathToConfig});
+				CKEDITOR.replace("f-b-epilog",{customConfig : document.PathToConfig});
 			});
+	});
+	function makeDynamicFields(contentstructure, content, lvl){
+		var $dynamic_fields = $("<div>").addClass("fields").attr("lvl", lvl);
+		$.each(contentstructure,function(index,element){
+			var c_val = content[element.key];
+			if(c_val === undefined){
+				c_val = "";
+			}	
+			var $dynamic_field = $("<div>")
+				.addClass("dynamic-field")
+				.attr("data-key", element.key)
+				.attr("data-index", index)
+				.attr("data-type", element.type);
+			switch(element.type){
+				case "textarea":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					$dynamic_field.append(
+						"<textarea class='dynamic-value form-textarea' "+
+						"data-key='"+element.key+"' name='key-"+index+"'>"+
+						c_val+
+						"</textarea>");
+					break;
+				case "html":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					var $html_area = $("<textarea class='dynamic-value form-html' "+
+						"data-key='"+element.key+"' name='"+element.key+"'>"+
+						c_val+
+						"</textarea>");
+					$dynamic_field.append($html_area);
+					break;
+				case "number":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					$dynamic_field.append(
+						"<input type='number' class='dynamic-value form-text' "+
+						"data-key='"+element.key+"' value='"+c_val+"' />");
+					break;
+				case "text":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					$dynamic_field.append(
+						"<input type='text' class='dynamic-value form-text' "+
+						"data-key='"+element.key+"' value='"+c_val+"' />");
+					break;
+				case "select":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					var $select = $("<select class='dynamic-value form-select' "+
+						"data-key='"+element.key+"'></select>");
+					$.each(element.selections,function(i,sel){
+						selected = "";
+						if(content[element.key] == sel.key) selected = "selected='selected' ";
+						$select.append("<option "+selected+"value='"+sel.key+"'>"+sel.text+"</option");
+					});
+					$dynamic_field.append($select);
+					break;
+				case "autocomplete":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					$dynamic_field.append($.tmpl( "inBoxAutocompleteTemplate", {
+						// need to load label
+						label: element.valuekey,
+						val: c_val,
+						key: element.key,
+						type: element.type
+					} ));
+					break;
+				case "hidden":
+					$dynamic_field.append(
+						"<input type='hidden' class='dynamic-value' "+
+						"data-key='"+element.key+"' value='"+c_val+"' />");
+					break;
+				case "checkbox":
+					checked = "";
+					if(c_val== 1){
+						checked = "checked='checked'";
+					}
+					$dynamic_field.append("<div class='form-item'><input type='checkbox' "+checked+" class='dynamic-value form-checkbox' "+
+						"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.info+"</label></div>");
+					break;
+				case "file":
+					$upload_form_item = $("<div class='form-item file-upload'>");
+					$upload_form_item.append("<label>"+element.label+"</label>");
+					$file_input = $("<input type='file' class='form-file' />");
+					$upload_form_item.append($file_input);
+					$key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+c_val+"' class='dynamic-value' />");
+					$upload_form_item.append($key_field);
+					$progress_display = $("<p>").addClass("progress");
+					$progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
+					$progress_bar_status = $progress_bar_wrapper.children(".bar");
+					if(content[element.key] == ""){
+						$progress_display.text("Please choose a picture...");
+					} else {
+						$progress_display.text("Choose another picture to override the old one.");
+						$progress_bar_status.addClass("done");
+					}
+					$upload_form_item.append($progress_display).append($progress_bar_wrapper);
+					// grid_id, container id, slot_id, box_id, field_id
+					$file_input.fileupload({
+				        url: element.uploadpath,
+				        dataType: 'json',
+				        paramName: "file",
+				        done: function (e, data) {
+				        	result  = data.result;
+				            $dynamic_fields.find("input[data-key="+element.key+"]").val(result.result);
+				            $progress_display.text("OK!");
+				            $progress_bar_status.addClass("done");
+				        },
+				        progressall: function (e, data) {
+				        	var percent = (data.loaded/data.total)*100;
+				        	console.log(percent);
+				        	$progress_display.text(Math.round(percent)+"%");
+				        	$progress_bar_status.css("width", percent+"%");
+				            /*var progress = parseInt(data.loaded / data.total * 100, 10);
+				            $('#progress .bar').css(
+				                'width',
+				                progress + '%'
+				            );*/
+				        },
+				        always: function(e, data){
+				        	console.log(data);
+				        }
+				    }).bind('fileuploadsubmit', function (e, data) {
+					    // The example input, doesn't have to be part of the upload form:
+					    $data = $box_editor_content.find(".box-editor");
+					    var element_key = element.key;
+					    console.log(calculateListPath($("[data-key="+element_key+"]")));
+					    data.formData = {
+					    		"gridid" : ID, 
+					    		container: $data.data("c-id"), 
+					    		slot : $data.data("s-id"), 
+					    		box : $data.data("b-index"), 
+					    		key: element.key
+					    	};
+					    $progress_bar_status.removeClass("done");					    
+					}).bind('fileuploadcompleted', function (e, data) {
+						console.log(data);
+					}).bind('fileuploadfinished', function (e, data) {
+						console.log(data);
+					});
+				    $dynamic_field.append($upload_form_item);
+					break;
+				case "autocomplete-with-link":
+					break;
+				case "list":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					var $sub_fields = renderListData(element.contentstructure, c_val, lvl);
+					$dynamic_field
+					.addClass("dynamic-list")
+					.addClass("form-list")
+					.addClass("dynamic-value")
+					.attr("data-key", element.key)
+					.append($sub_fields);
+					var $button = $("<button>NEW Entry</button>").on(
+						"click",{
+							structure: element.contentstructure, 
+							field_list: $dynamic_field.children(".list-fields"),
+							lvl: lvl+1
+						}, function(e){
+						var $new_li = $("<li>").append(makeDynamicFields(e.data.structure,{}, e.data.lvl));
+						$new_li.find("input").val("");
+						e.data.field_list.append($new_li);
+					}).appendTo($dynamic_field);
+					break;
+				default:
+					console.log("unbekannter typ: "+element.type);
+			}
+			$dynamic_fields.append($dynamic_field);
+		});
+		return $dynamic_fields;
+	}
+	function renderListData(contentstructure, listdata, lvl){
+		var $dynamic_fields = $("<ul>").addClass("list-fields");
+		lvl++;
+		if(!$.isArray(listdata)){
+			return $("");
+		}
+		$.each(listdata, function(index, content){
+			$dynamic_fields.append(renderListEntry(contentstructure, content,lvl));
+		});
+		return $dynamic_fields;
+	}
+	function renderListEntry(contentstructure, content, lvl){
+		return $("<li>")
+			.append(makeDynamicFields(contentstructure, content,lvl))
+			.append( $("<button>X</button>").addClass("delete-item"));
+	}
+	$box_editor_content.on("click","button.delete-item",function(e){
+		$(this).closest("li").remove();
 	});
 	var old_search_string = "";
 	$box_editor_content.on("keyup", "input[data-type=autocomplete]",function(e){
@@ -869,7 +988,7 @@ $(function() {
 		clearTimeout(boxAutocompleteTimeout);
 		boxAutocompleteTimeout = setTimeout(function(){
 			$data = $box_editor_content.find(".box-editor");
-			sendAjax("typeAheadSearch",[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),$input.data("key"),$input.val()] ,function(data){
+			sendAjax("typeAheadSearch",[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input),$input.val()] ,function(data){
 					old_search_string = $input.val();
 					$input.siblings(".loading").hide();
 					$autocompleteList = $input.siblings(".suggestion-list");
@@ -893,12 +1012,15 @@ $(function() {
 			.data("value-key", $li.data("key"));
 		$li.parent().empty();
 	}
-	$box_editor_content.on("blur", "input[data-type=autocomplete]",function(e){
-		/*clearTimeout(boxAutocompleteTimeout);
-		$this.val("");
-		$this.siblings(".loading").hide();
-		$this.siblings(".suggestion-list").empty();*/
-	});
+	function calculateListPath($key_element){
+		var $path_search = $key_element.parents(".dynamic-list");
+			var key_path = "";
+			while($path_search.length > 0){
+				key_path = $path_search.data("key")+".";
+				$path_search = $path_search.parents(".dynamic-list");
+			}
+			return key_path + $key_element.data("key");
+	}
 	$box_editor_content.on("click", ".autocomplete-wrapper .cancle",function(e){
 		$this = $(this);
 		$wrapper = $this.parents(".autocomplete-wrapper").removeClass("locked");
@@ -1010,6 +1132,11 @@ $(function() {
 			$stateDisplay.text("Published!").removeClass("draft");
 			$btn_publish.attr("disabled","disabled");
 			$btn_revert.attr("disabled","disabled");
+		}
+	}
+	function destroyCKEDITORs(){
+		for(name in CKEDITOR.instances){
+		    CKEDITOR.instances[name].destroy();
 		}
 	}
 	

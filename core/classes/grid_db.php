@@ -90,7 +90,168 @@ class grid_db {
 		$box->content=json_decode($row['box_content']);
 		return $box;
 	}
+	
+	public function getReuseGrid()
+	{
+		$query="select id,revision from grid_grid where id=-1 and revision=0";
+		$result=$this->connection->query($query);
+		while($row=$result->fetch_assoc())
+		{
+			$grid=new grid_grid();
+			$grid->gridid=-1;
+			$grid->isPublished=FALSE;
+			$grid->isDraft=TRUE;
+			$grid->gridrevision=0;
+			$grid->storage=$this;
+			$grid->container=array();
+			return $grid;
+		}
+		//if we end up here there is no reuse grid yet.
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) values (-1,0,0,0,0,0)";
+		$this->connection->query($query) or die($this->connection->error);
+		$grid=new grid_grid();
+		$grid->gridid=-1;
+		$grid->isPublished=FALSE;
+		$grid->isDraft=TRUE;
+		$grid->gridrevision=0;
+		$grid->storage=$this;
+		$grid->container=array();
+		return $grid;
+	}
+	
+	public function loadReuseBox($boxid)
+	{
+		$query="select 
+		grid_box.id box_id,
+		title box_title, 
+		title_url box_titleurl,
+		prolog box_prolog,
+		epilog box_epilog,
+		readmore box_readmore,
+		readmore_url box_readmoreurl,
+		content box_content,
+		grid_box_style.slug box_style,
+		grid_box_type.type box_type
+		
+		from grid_box
+		left join grid_box_style on grid_box_style.id=grid_box.style
+		left join grid_box_type on grid_box_type.id=grid_box.type
+		where grid_id=-1 and grid_revision=0 and grid_box.id=$boxid";
+		$result=$this->connection->query($query) or die($query."\n".$this->connection->error);
+		$row=$result->fetch_assoc();
+		return $this->parseBox($row);
+	}
+	
+	public function getReuseableBoxIds()
+	{
+		$query="select id from grid_box where grid_id=-1 and grid_revision=0 and id not in (select box_id from grid_slot2box where grid_id=-1 and grid_revision=0)";
+		$result=$this->connection->query($query);
+		$results=array();
+		while($row=$result->fetch_assoc())
+		{
+			$results[]=$row['id'];
+		}
+		return $results;
+	}
 
+	public function loadReuseContainer($container)
+	{
+		$query="select grid_container.id as container_id,
+grid_container_style.slug as container_style,
+grid_container.title as container_title,
+grid_container.title_url as container_titleurl,
+grid_container.prolog as container_prolog,
+grid_container.epilog as container_epilog,
+grid_container.readmore as container_readmore,
+grid_container.readmore_url as container_readmoreurl,
+grid_container.reuse_containerid as container_reuseid,
+grid_container_type.type as container_type,
+grid_container2slot.slot_id as slot_id,
+grid_slot_style.slug as slot_style,
+grid_box.id as box_id,
+grid_box.title as box_title,
+grid_box.title_url as box_titleurl,
+grid_box.prolog as box_prolog,
+grid_box.epilog as box_epilog,
+grid_box.content as box_content,
+grid_box.readmore as box_readmore,
+grid_box.readmore_url as box_readmoreurl,
+grid_box_type.type as box_type,
+grid_box_style.slug as box_style
+from grid_container 
+left join grid_container_style 
+     on grid_container.style=grid_container_style.id
+left join grid_container2slot 
+     on grid_container.id=grid_container2slot.container_id
+     and grid_container.grid_id=grid_container2slot.grid_id
+     and grid_container.grid_revision=grid_container2slot.grid_revision
+left join grid_slot
+     on grid_container2slot.slot_id=grid_slot.id
+     and grid_slot.grid_id=grid_container.grid_id
+     and grid_slot.grid_revision=grid_container.grid_revision
+left join grid_slot_style
+     on grid_slot.style=grid_slot_style.id
+left join grid_slot2box 
+     on grid_container2slot.slot_id=grid_slot2box.slot_id
+     and grid_container2slot.grid_id=grid_slot2box.grid_id
+     and grid_container2slot.grid_revision=grid_slot2box.grid_revision
+left join grid_box 
+     on grid_slot2box.box_id=grid_box.id
+     and grid_slot2box.grid_id=grid_box.grid_id
+     and grid_slot2box.grid_revision=grid_box.grid_revision
+left join grid_container_type 
+	 on grid_container.type=grid_container_type.id
+left join grid_box_type 
+	 on grid_box.type=grid_box_type.id
+left join grid_box_style
+	 on grid_box.style=grid_box_style.id
+where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_container.id=$container
+";
+		$result=$this->connection->query($query);
+		$currentcontainer=NULL;
+		while($row=$result->fetch_assoc())
+		{
+			if($currentcontainer==NULL || $currentcontainer->containerid!=$row['container_id'])
+			{
+				$currentcontainer=new grid_container();
+				$currentcontainer->reused=TRUE;
+				$currentcontainer->grid=NULL;
+				$currentcontainer->containerid=$row['container_id'];
+				$currentcontainer->style=$row['container_style'];
+				$currentcontainer->type=$row['container_type'];
+				$currentcontainer->title=$row['container_title'];
+				$currentcontainer->titleurl=$row['container_titleurl'];
+				$currentcontainer->prolog=$row['container_prolog'];
+				$currentcontainer->epilog=$row['container_epilog'];
+				$currentcontainer->readmore=$row['container_readmore'];
+				$currentcontainer->readmoreurl=$row['container_readmoreurl'];
+				$currentcontainer->slots=array();
+				$currentcontainer->storage=$this;
+				$grid->container[]=$currentcontainer;
+				$currentslot=NULL;
+			}
+			if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
+			{
+				$currentslot=new grid_slot();
+				$currentslot->grid=$grid;
+				$currentslot->slotid=$row['slot_id'];
+				$currentslot->style=$row['slot_style'];
+				$currentslot->boxes=array();
+				$currentslot->storage=$this;
+				$currentcontainer->slots[]=$currentslot;
+			}
+			$boxtype=$row['box_type'];
+			if($boxtype!=NULL)
+			{
+				$box=$this->parseBox($row);
+				$box->grid=$grid;
+				$currentslot->boxes[]=$box;
+			}
+		}
+		
+		return $currentcontainer;
+	}
+	
 	public function loadGridByRevision($gridId,$revision)
 	{
 		$query="select published from grid_grid where id=$gridId and revision=$revision";
@@ -114,6 +275,7 @@ grid_container.prolog as container_prolog,
 grid_container.epilog as container_epilog,
 grid_container.readmore as container_readmore,
 grid_container.readmore_url as container_readmoreurl,
+grid_container.reuse_containerid as container_reuseid,
 grid_container_type.type as container_type,
 grid_container2slot.slot_id as slot_id,
 grid_slot_style.slug as slot_style,
@@ -168,38 +330,61 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		{
 			if($currentcontainer==NULL || $currentcontainer->containerid!=$row['container_id'])
 			{
-				$currentcontainer=new grid_container();
-				$currentcontainer->grid=$grid;
-				$currentcontainer->containerid=$row['container_id'];
-				$currentcontainer->style=$row['container_style'];
-				$currentcontainer->type=$row['container_type'];
-				$currentcontainer->title=$row['container_title'];
-				$currentcontainer->titleurl=$row['container_titleurl'];
-				$currentcontainer->prolog=$row['container_prolog'];
-				$currentcontainer->epilog=$row['container_epilog'];
-				$currentcontainer->readmore=$row['container_readmore'];
-				$currentcontainer->readmoreurl=$row['container_readmoreurl'];
-				$currentcontainer->slots=array();
-				$currentcontainer->storage=$this;
-				$grid->container[]=$currentcontainer;
-				$currentslot=NULL;
+				if($row['container_reuseid']!='')
+				{
+					//TODO: we should load the referenced container instead
+					$currentcontainer=$this->loadReuseContainer($row['container_reuseid']);
+					$currentcontainer->grid=$grid;
+					foreach($currentcontainer->slots as $slot)
+					{
+						$slot->grid=$grid;
+						foreach($slot->boxes as $box)
+						{
+							$box->grid=$grid;
+						}
+					}
+					$currentcontainer->containerid=$row['container_id'];
+					$grid->container[]=$currentcontainer;
+				}
+				else
+				{
+					$currentcontainer=new grid_container();
+					$currentcontainer->reused=FALSE;
+					$currentcontainer->grid=$grid;
+					$currentcontainer->containerid=$row['container_id'];
+					$currentcontainer->style=$row['container_style'];
+					$currentcontainer->type=$row['container_type'];
+					$currentcontainer->title=$row['container_title'];
+					$currentcontainer->titleurl=$row['container_titleurl'];
+					$currentcontainer->prolog=$row['container_prolog'];
+					$currentcontainer->epilog=$row['container_epilog'];
+					$currentcontainer->readmore=$row['container_readmore'];
+					$currentcontainer->readmoreurl=$row['container_readmoreurl'];
+					$currentcontainer->slots=array();
+					$currentcontainer->storage=$this;
+					$grid->container[]=$currentcontainer;
+					$currentslot=NULL;
+				}
 			}
-			if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
+			if(!$currentcontainer->reused)
 			{
-				$currentslot=new grid_slot();
-				$currentslot->grid=$grid;
-				$currentslot->slotid=$row['slot_id'];
-				$currentslot->style=$row['slot_style'];
-				$currentslot->boxes=array();
-				$currentslot->storage=$this;
-				$currentcontainer->slots[]=$currentslot;
-			}
-			$boxtype=$row['box_type'];
-			if($boxtype!=NULL)
-			{
-				$box=$this->parseBox($row);
-				$box->grid=$grid;
-				$currentslot->boxes[]=$box;
+				if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
+				{
+					$currentslot=new grid_slot();
+					$currentslot->grid=$grid;
+					$currentslot->slotid=$row['slot_id'];
+					$currentslot->style=$row['slot_style'];
+					$currentslot->boxes=array();
+					$currentslot->storage=$this;
+					$currentcontainer->slots[]=$currentslot;
+				}
+				$boxtype=$row['box_type'];
+				if($boxtype!=NULL)
+				{
+					$box=$this->parseBox($row);
+					$box->grid=$grid;
+					$currentslot->boxes[]=$box;
+				}
 			}
 		}
 		return $grid;
@@ -257,6 +442,42 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		return FALSE;//array('result'=>FALSE,'error'=>'box or slot or container or grid not found','gridid'=>$gridid,'container'=>$containerid,'slotid'=>$slotid,'box'=>$idx);
 	}
 
+	public function reuseContainer($grid,$container,$title)
+	{
+		//it's a lot easier to create a complete copy. so...
+		
+		$reuse=$this->getReuseGrid();
+		$copy=$this->createContainer($reuse,$container->type);
+		if($copy===FALSE)die("copy failed");
+		for($i=0;$i<count($container->slots);$i++)
+		{
+			$newslot=$copy->slots[$i];
+			if($newslot->boxew)
+			$newslot->boxes=array();
+			$oldslot=$container->slots[$i];
+			foreach($oldslot->boxes as $box)
+			{
+				$type=$box->type();
+				$classname="grid_".$type."_box";
+				$boxcopy=new $classname();
+				$boxcopy->storage=$this;
+				$boxcopy->grid=$reuse;
+				$boxcopy->updateBox($box);
+				$ret=$boxcopy->persist();
+				$result=$newslot->addBox(count($newslot->boxes),$boxcopy);
+			}
+		}
+		$query="update grid_container set reuse_title=\"".$this->saveStr($title)."\" where id=".$copy->containerid." and grid_id=-1 and grid_revision=0";
+		$this->connection->query($query) or die($this->connection->error);
+		$idx=array_search($container, $grid->container);
+		if($idx===FALSE)die("index not found");
+		$grid->removeContainer($container->containerid);
+		$replacement=$grid->insertContainer($container->type,$idx);
+		if($replacement===FALSE)die("replacement not created");
+		$query="update grid_container set reuse_containerid=".$copy->containerid." where id=".$replacement->containerid." and grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		$this->connection->query($query) or die($this->connection->error);
+		return $replacement;
+	}
 
 	public function createContainer($grid,$containertype)
 	{
@@ -290,9 +511,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$slotid=$row['next_slotid'];
 			$this->connection->query("update grid_grid set next_slotid=next_slotid+1 where id=$gridid and revision=$gridrevision");
 			$query="insert into grid_slot (id,grid_id,grid_revision) values ($slotid,$gridid,$gridrevision)";
-			$this->connection->query($query) or die($this->connection->error);
+			$this->connection->query($query) or die($query."\n".$this->connection->error);
 			$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
-			$this->connection->query($query) or die($this->connection->error);
+			$this->connection->query($query) or die($query."\n".$this->connection->error);
 
 			$slot=new grid_slot();
 			$slot->grid=$grid;
@@ -511,7 +732,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		if($box->boxid==NULL)
 		{
 			$query="select next_boxid from grid_grid where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
-			$result=$this->connection->query($query) or die($this->connection->error);
+			$result=$this->connection->query($query) or die($query."\n".$this->connection->error);
 			$row=$result->fetch_assoc();
 			$query="update grid_grid set next_boxid=next_boxid+1 where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
 			$this->connection->query($query) or die($this->connection->error);
@@ -520,7 +741,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			(".$row['next_boxid'].",".$box->grid->gridid.",".$box->grid->gridrevision.",".$type."
 			,'".$this->saveStr($box->title)."','".$this->saveStr($box->titleurl)."','".$this->saveStr($box->prolog)."','".$this->saveStr($box->epilog)."'
 			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".$this->saveStr(json_encode($box->content))."',".$styleid.")";
-			$this->connection->query($query) or die($this->connection->error);
+			$this->connection->query($query) or die($query."\n".$this->connection->error);
 			$box->boxid=$row['next_boxid'];
 		}
 		else

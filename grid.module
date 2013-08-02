@@ -382,7 +382,7 @@ function grid_admin_settings()
 	
 	$form['blocks']=array(
 		'#type'=>'fieldset',
-		'#titlle'=>t('Supported Blocks'),
+		'#title'=>t('Supported Blocks'),
 	);
 	$blocks=array();
 	$results=array();

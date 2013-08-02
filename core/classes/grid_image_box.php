@@ -27,6 +27,7 @@ class grid_image_box extends grid_static_base_box
 			array(
 				'key'=>'fileid',
 				'type'=>'file',
+				'label'=>'Bild',
 				'uploadpath'=>'/grid_file_endpoint',
 			),
 		);

@@ -131,7 +131,7 @@ html{
 	float:left;
 	height: 35px;
 	width: 35px;
-	margin-right:25px;
+	margin-right:20px;
 	border-bottom:5px solid #CCC;
 	cursor:pointer;
 	line-height: 3.2em;
@@ -153,6 +153,10 @@ html{
 }
 .element-type-tabs li[data-type=node]{
 	background-image: url(images/box-type-node.png);
+
+}
+.element-type-tabs li[data-type=reference]{
+	background-image: url(images/box-type-reference.png);
 
 }
 .g-tool .element-type-tabs li:not(.active):hover{
@@ -192,7 +196,7 @@ html{
 	display:none;
 	position:absolute;
 	top:10px;
-	right:18px;
+	right:10px;
 }
 .g-box .box-list{
 	min-height:200px;
@@ -555,6 +559,21 @@ html{
 .container.editor .box > .edit{
 	display:none;
 }
+.box[data-type=reference]:after,
+.box-dragger[data-type=reference]:after{
+	position: absolute;
+	content: '';
+	display: block;
+	width: 18px;
+	height: 18px;
+	background-image: url(images/reuse_small.png);
+	background-repeat: no-repeat;
+	top: 5px;
+	right: 5px;
+}
+.box-dragger[data-type=reference]{
+	position: relative;
+}
 .box .handle{
 	height:10px;
 	background-color:#000;
@@ -716,6 +735,19 @@ html{
 .progress-bar-wrapper .bar.done{
 	background-color: #30cb29;
 	width: 100%;
+}
+.dynamic-list .list-fields{
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.dynamic-list li{
+	border-top: 1px solid #e0e0e0;
+	padding: 5px 0px  10px 10px;
+}
+.dynamic-list li:last-child{
+	border-bottom: 1px solid #e0e0e0;
 }
 
 /** Container C-12 **/

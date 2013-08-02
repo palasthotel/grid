@@ -11,7 +11,8 @@ class grid_container extends grid_base {
 	public $readmoreurl;
 	public $prolog;
 	public $epilog;
-
+	public $reused;
+	
 	public $slots;
 
 		

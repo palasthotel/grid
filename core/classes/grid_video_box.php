@@ -31,6 +31,7 @@ class grid_video_box extends grid_static_base_box
 		return array(
 			array(
 				'key'=>'url',
+				'label'=>'Video-URL',
 				'type'=>'text',
 			),
 			array(

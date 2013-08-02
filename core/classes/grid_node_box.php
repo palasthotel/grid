@@ -106,6 +106,7 @@ class grid_node_box extends grid_box {
 			array(
 				'key'=>'viewmode',
 				'type'=>'select',
+				'label'=>'Ansicht',
 				'selections'=>$modes,
 			),
 			array(
