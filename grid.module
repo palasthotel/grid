@@ -42,7 +42,7 @@ function grid_permission() {
 function grid_menu() {
 	return array(
 		'node/%node/grid' => array(
-			'title'=>t('Grid'),
+			'title'=>'Grid',
 			'page callback'=>'grid_grid',
 			'access arguments'=>array(1,'administer grid'),
 			'access callback'=>'grid_access',
@@ -73,6 +73,68 @@ function grid_menu() {
 			'access arguments'=>array('administer grid'),
 			'type'=>MENU_NORMAL_ITEM,
 		),
+		'admin/config/grid/boxes'=>array(
+			'title'=>t('Reusable Boxes'),
+			'description'=>'Manage reusable boxes',
+			'page callback'=>'grid_reuse_boxes',
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_NORMAL_ITEM,
+		),
+		'admin/config/grid/boxes/%'=>array(
+			'title'=>t('Edit Box'),
+			'description'=>'Edit reusable box',
+			'page callback'=>'grid_reuse_box_edit',
+			'page arguments'=>array(4),
+			'type'=>MENU_CALLBACK,
+			'access arguments'=>array('administer grid'),
+		),
+		'admin/config/grid/boxes/%/preview'=>array(
+			'title'=>t('Box Preview'),
+			'description'=>t('Previews a box'),
+			'page callback'=>'grid_reuse_box_preview',
+			'page arguments'=>array(4),
+			'type'=>MENU_CALLBACK,
+			'access arguments'=>array('administer grid'),
+		),
+		'admin/config/grid/boxes/%/delete'=>array(
+			'title'=>t('Delete Box'),
+			'description'=>'Deletes a reusable box',
+			'page callback'=>'grid_reuse_box_delete',
+			'page arguments'=>array(4),
+			'type'=>MENU_CALLBACK,
+			'access arguments'=>array('administer grid'),
+		),
+		'admin/config/grid/container'=>array(
+			'title'=>t('Reusable Container'),
+			'description'=>t('Manage reusable container'),
+			'page callback'=>'grid_reuse_container',
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_NORMAL_ITEM,
+		),
+		'admin/config/grid/container/%/delete'=>array(
+			'title'=>t('Delete Container'),
+			'description'=>t('Deletes a reusable container'),
+			'page callback'=>'grid_reuse_container_delete',
+			'page arguments'=>array(4),
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_CALLBACK,
+		),
+		'admin/config/grid/container/%'=>array(
+			'title'=>t('Edit Container'),
+			'description'=>t('Edits a reusable container'),
+			'page callback'=>'grid_reuse_container_edit',
+			'page arguments'=>array(4),
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_CALLBACK,
+		),
+		'admin/config/grid/container/%/preview'=>array(
+			'title'=>t('Container Preview'),
+			'description'=>t('Previews a reusable container'),
+			'page callback'=>'grid_reuse_container_preview',
+			'page arguments'=>array(4),
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_CALLBACK,
+		),
 		'grid_ajax_endpoint'=>array(
 			'title'=>'Grid AJAX Endpoint',
 			'page callback'=>'grid_ajax',
@@ -91,7 +153,7 @@ function grid_menu() {
 function grid_js_alter(&$javascript)
 {
 	$item=menu_get_item();
-	if($item['page_callback']=='grid_grid')
+	if($item['page_callback']=='grid_grid' || $item['page_callback']=='grid_reuse_box_edit' || $item['page_callback']=='grid_reuse_container_edit')
 	{
 		$javascript['misc/jquery.js']['data']=drupal_get_path('module','grid').'/js/jquery-1.8.3.min.js';
 		unset($javascript['misc/ui/jquery.ui.core.min.js']);
@@ -106,7 +168,9 @@ function grid_js_alter(&$javascript)
 function grid_admin_paths() 
 {
 	return array(
-		'node/*/grid'=>TRUE
+		'node/*/grid'=>TRUE,
+		'admin/config/grid/boxes'=>TRUE,
+		'admin/config/grid/boxes/*'=>TRUE,
 	);
 }
 
@@ -192,6 +256,7 @@ function grid_grid($node) {
 //			$grid_id=$grid_id["grid_id"];
 			$base=drupal_get_path('module','grid');
 			drupal_add_js("document.ID=".$grid_id,'inline');
+			drupal_add_js("document.gridmode=\"grid\";",'inline');
 			drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
@@ -425,4 +490,193 @@ function grid_viewmodes()
 function grid_default_viewmode()
 {
 	return variable_get('grid_default_viewmode','teaser');
+}
+
+function grid_reuse_boxes()
+{
+	$storage=grid_get_storage();
+
+	$usedIds=$storage->getReusedBoxIds();
+	$boxids=$storage->getReuseableBoxIds();
+	$boxes=array();
+	foreach($boxids as $boxid)
+	{
+		$boxes[]=$storage->loadReuseBox($boxid);
+	}
+	$grid=new grid_grid();
+	$grid->storage=$storage;
+	$grid->container=array();
+	foreach($boxes as $box)
+	{
+		$container=new grid_container();
+		$container->storage=$storage;
+		$container->type="C-12";
+		$container->stype="container";
+		$container->readmore=t("edit");
+		$container->readmoreurl=url("admin/config/grid/boxes/".$box->boxid);
+		if(!in_array($box->boxid, $usedIds))
+		{
+			$container->epilog=l(t('delete'),'admin/config/grid/boxes/'.$box->boxid.'/delete');
+		}
+		
+		$container->slots=array();
+		$container->slots[]=new grid_slot();
+		$container->slots[0]->storage=$storage;
+		$container->slots[0]->boxes=array();
+		$container->slots[0]->boxes[]=$box;
+		$grid->container[]=$container;
+	}
+	$html=$grid->render(TRUE);
+
+	$base=drupal_get_path('module','grid');
+	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
+
+	return $html;
+}
+
+function grid_reuse_box_edit($boxid)
+{
+	$base=drupal_get_path('module','grid');
+	drupal_add_js("document.ID=\"box:".$boxid."\";",'inline');
+	drupal_add_js("document.gridmode=\"box\";",'inline');
+	drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
+	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
+	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
+	drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+	drupal_add_js($base.'/js/templates.js','file');
+	drupal_add_js($base.'/js/jquery.iframe-transport.js');
+	drupal_add_js($base.'/js/jquery.fileupload.js');
+	drupal_add_js($base.'/js/grid2.0.js','file');
+	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
+	$input=file_get_contents($base.'/core/templates/editor.html');
+	return $input;
+}
+
+function grid_reuse_box_preview($boxid)
+{
+	$storage=grid_get_storage();
+	$grid=$storage->loadGrid("box:".$boxid);
+	return $grid->render(FALSE);
+}
+
+function grid_reuse_box_delete($boxid)
+{
+	return drupal_get_form('grid_reuse_box_delete_form',$boxid);
+}
+
+function grid_reuse_box_delete_form($form_id,&$form_state,$boxid)
+{
+	$form=array();
+	$form['question']=array(
+		'#type'=>'markup',
+		'#markup'=>'<div>'.t('Do you really want to delete this reusable box?').'</div>',
+	);
+	$form['submit']=array(
+		'#type'=>'submit',
+		'#value'=>t('Delete'),
+		'#executes_submit_callback'=>TRUE,
+	);
+	$form_state['boxid']=$boxid;
+	return $form;
+}
+
+
+function grid_reuse_box_delete_form_submit($form,&$form_state)
+{
+	$boxid=$form_state['boxid'];
+	$storage=grid_get_storage();
+	$storage->deleteReusableBox($boxid);
+	drupal_goto("admin/config/grid/boxes");
+}
+
+function grid_reuse_container()
+{
+	$storage=grid_get_storage();
+	$containerIds=$storage->getReuseContainerIds();
+	$usedIds=$storage->getReusedContainerIds();
+	
+	$grid=new grid_grid();
+	$grid->storage=$storage;
+	$grid->container=array();
+	foreach($containerIds as $id)
+	{
+		$container=$storage->loadReuseContainer($id);
+		$container->grid=$grid;
+		$grid->container[]=$container;
+		
+		$edit=new grid_container();
+		$edit->grid=$grid;
+		$edit->storage=$storage;
+		$edit->type="C-12";
+		$edit->readmore="edit";
+		$edit->slots=array();
+		$edit->prolog=$container->reusetitle;
+		$edit->readmoreurl=url("admin/config/grid/container/".$id);
+		if(!in_array($id, $usedIds))
+		{
+			$edit->epilog=l("delete","admin/config/grid/container/".$id."/delete");
+		}
+		$grid->container[]=$edit;
+	}
+	
+	$base=drupal_get_path('module','grid');
+	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
+
+	
+	return $grid->render(TRUE);
+}
+
+function grid_reuse_container_delete($containerid)
+{
+	return drupal_get_form('grid_reuse_container_delete_form',$containerid);
+}
+
+function grid_reuse_container_delete_form($form_id,&$form_state,$containerid)
+{
+	$form=array();
+	$form['question']=array(
+		'#type'=>'markup',
+		'#markup'=>'<div>'.t('Do you really want to delete this reusable container?').'</div>',
+	);
+	$form['submit']=array(
+		'#type'=>'submit',
+		'#value'=>t('Delete'),
+		'#executes_submit_callback'=>TRUE,
+	);
+	$form_state['containerid']=$containerid;
+	return $form;
+}
+
+
+function grid_reuse_container_delete_form_submit($form,&$form_state)
+{
+	$containerid=$form_state['containerid'];
+	$storage=grid_get_storage();
+	$storage->deleteReusableContainer($containerid);
+	drupal_goto("admin/config/grid/container");
+}
+
+function grid_reuse_container_edit($containerid)
+{
+	$base=drupal_get_path('module','grid');
+	drupal_add_js("document.ID=\"container:".$containerid."\";",'inline');
+	drupal_add_js("document.gridmode=\"container\";",'inline');
+	drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
+	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
+	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
+	drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+	drupal_add_js($base.'/js/templates.js','file');
+	drupal_add_js($base.'/js/jquery.iframe-transport.js');
+	drupal_add_js($base.'/js/jquery.fileupload.js');
+	drupal_add_js($base.'/js/grid2.0.js','file');
+	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
+	$input=file_get_contents($base.'/core/templates/editor.html');
+	return $input;
+}
+
+function grid_reuse_container_preview($containerid)
+{
+	$storage=grid_get_storage();
+	$grid=$storage->loadGrid("container:".$containerid);
+	return $grid->render(FALSE);
 }

@@ -1,5 +1,5 @@
 	<div id="grid-wrapper" class="clearfix">
-	<menu id="toolbar" class="clearfix">
+	<menu id="grid-toolbar" class="clearfix">
     	<ul role="data">
             <li><button class="state-display"></button></li>
             <li><button role="publish">Publish</button></li>
@@ -7,7 +7,7 @@
             <li><button role="revert">Revert</button></li>         
         </ul>
         <ul role="gui">
-            <li><button role="hide_boxes">Toggle boxes</button></li>
+            <li><button data-hidden="false" role="hide_boxes">Toggle boxes</button></li>
             <li><button role="add_container">Add container</button></li>
             <li><button role="add_box">Add box</button></li>
         </ul>
@@ -28,12 +28,12 @@
                 	<div id="container-dragger" class="draggable new-container">Neu</div>
                 </div>
                 -->
-                <ul class="clearfix element-type-tabs">
-                    <li class="active">12</li>
-                    <li>8</li>
-                    <li>4</li>
+                <ul class="clearfix element-type-tabs container-type-tabs">
+                    <li role="show-containers" class="active">C</li>
+                    <li role="show-sidebars">S</li>
+                    <li role="show-reusable">R</li>
                 </ul>
-                <ul class="container-type-chooser">
+                <ul class="container-type-chooser element-list" ref="show-containers">
                     <li class="container-dragger new-container C-12 clearfix" data-type="C-12">
                         <div class="slot"></div>
                     </li>
@@ -56,6 +56,9 @@
                         <div class="slot"></div>
                         <div class="slot"></div>
                     </li>
+                </ul>
+                <ul class="reusable-elements element-list" ref="show-reusable">
+                    <li class="container-dragger reusable">REUSABLE</li>
                 </ul>
             </div>
             <!-- Tools für Box hinzufügen -->
@@ -80,7 +83,7 @@
      	<div class="content">
         </div>
         <div class="controls">
-        	<button role="cancle">Cancle</button><button role="save">Save</button><button role="reusable">Make reusable</button>
+        	<button role="cancle">Cancel</button><button role="save">Save</button><button role="reusable">Make reusable</button>
         </div>
      </section>
      <!-- box editor END -->

@@ -20,9 +20,11 @@ $(function() {
 	var $grid_wrapper = $("#grid-wrapper");
 	var $grid = $grid_wrapper.find("#grid");
 	var $box_editor = $grid_wrapper.find("#box-editor");
-	var $toolbar = $grid_wrapper.find("#toolbar");
+	var $toolbar = $grid_wrapper.find("#grid-toolbar");
 	var $gridTools = $grid_wrapper.find(".grid-tools");
 	var $toolContainer = $gridTools.children(".g-container");
+	var $toolContainerTypeTabs = $toolContainer.children(".container-type-tabs");
+	var $toolReusableElements = $toolContainer.find(".reusable-elements");
 	var $toolBox = $gridTools.children(".g-box");
 	var $toolBoxTypeTabs = $toolBox.children(".box-type-tabs");
 	var $search_bar = $toolBox.find(".search-bar");
@@ -35,6 +37,7 @@ $(function() {
 	// init Methode
 	// ---------------
 	var ID = document.ID;
+	var GRIDMODE = document.gridmode;
 	function init() {
 		// ID = 42;
 		console.log("lade BoxTypes");
@@ -43,6 +46,7 @@ $(function() {
 		loadStyles();
 		console.log("lade Grid");
 		loadGrid();
+		$grid_wrapper.attr("data-mode",GRIDMODE);
 		// scrollable toolbar
 		top = $toolbar.offset().top;
 		$(window).scroll(function() {
@@ -123,7 +127,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				fillGrid(data.result);
-				$.each($(".slot .style-changer"), function(index, style_changer){
+				$.each($(".container[data-reused=false] .slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
 				});
 			}
@@ -185,7 +189,8 @@ $(function() {
 				publishGrid();
 				break;
 			case "preview":
-				window.open(window.location.pathname+'/preview',"_blank");
+				var location = window.location.pathname+'/preview';
+				window.open(location.replace("//","/"),"_blank");
 				break;
 			case "revert":
 				revertGrid();
@@ -208,6 +213,32 @@ $(function() {
 				break;
 		}
 	});
+	// ------------------------------
+	// Container Tools
+	// -----------------------------
+	$toolContainerTypeTabs.on("click","li:not(.active)",function(e){
+		$toolContainerTypeTabs.children().removeClass("active");
+		$this = $(this).addClass("active");
+		$toolContainerTypeTabs.siblings().hide();
+		$toolContainerTypeTabs.siblings("[ref="+$this.attr("role")+"]").show();
+		loadReusableElements();
+	});
+	function loadReusableElements(){
+		$toolReusableElements.empty();
+		sendAjax("getReusableContainers",[],function(data){
+			console.log(data);
+			$.each(data.result, function(index,e){
+				$toolReusableElements.append(
+					$("<li>"+e.title+"</li>")
+					.addClass("container-dragger new-container")
+					.attr("data-type","reusable")
+					.attr("data-id", e.id)
+				);
+			});
+
+			reloadContainerDraggables($toolReusableElements.children());
+		});
+	}
 	// ------------------------------
 	// Box Tools
 	// -----------------------------
@@ -292,51 +323,70 @@ $(function() {
 			});
 		}
 	});
-	$(".container-dragger").draggable({ 
-		helper: function(event, element){
-			return $("<div class='dragger-helper'></div>");
-		},
-		cursorAt: { left: 30, top:30 },
-		zIndex: 99,
-		appendTo: $("#grid-wrapper"),
-		scroll: true,
-		start: function(event, ui){
-			$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper"));
-			$grid.append($(document.createElement("div")).addClass("container-drop-area-wrapper"));
-			$grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
+	function reloadContainerDraggables($draggables){
+			$draggables.draggable({ 
+			helper: function(event, element){
+				return $("<div class='dragger-helper'></div>");
+			},
+			cursorAt: { left: 30, top:30 },
+			zIndex: 99,
+			appendTo: $("#grid-wrapper"),
+			scroll: true,
+			start: function(event, ui){
+				$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper"));
+				$grid.append($(document.createElement("div")).addClass("container-drop-area-wrapper"));
+				$grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
 
-			$grid.find(".container-drop-area").droppable({ 
-				accept: ".new-container",
-				hoverClass: "hover",
-				drop: function( event, ui ) {
-					containerType =  $(ui.draggable).data("type");
-					$temp = buildContainer( 
-							[{ 	"type": containerType, 
-								"id" : "new",
-								"prolog": "",
-								"epilog": "" }] )
-							.insertBefore( $(this).parent() );
-					
-					$grid.children().remove(".container-drop-area-wrapper");
-					params = [ID, containerType, $temp.index()];
-					sendAjax("addContainer",params,
-					function(data){
-						console.log(data);
-						$temp.data("id", data.result.id);
-						$slots_wrapper = $temp.find(".slots-wrapper");
-						$.each( data.result.slots, function(index,value){
-							console.log(index+" "+value);
-							buildSlot([{"id" : value }]).appendTo( $slots_wrapper );
-						});
-						refreshBoxSortable();
-					});
-				}
-			});
-		},
-		stop: function( event, ui ){
-			$grid.children().remove(".container-drop-area-wrapper");
-		}
-	});
+				$grid.find(".container-drop-area").droppable({ 
+					accept: ".new-container",
+					hoverClass: "hover",
+					drop: function( event, ui ) {
+						var containerType =  $(ui.draggable).data("type");
+						var $this = $(this);
+						if(containerType == "reusable"){
+							console.log("reuse");
+							$working_placeholder = $("<div class='working-placeholder'>").insertBefore($this.parent());
+							//reused container
+							sendAjax(
+								"addReuseContainer",
+								[ID,$this.parent().index(),$(ui.draggable).data("id")],
+								function(data){
+									console.log(data);
+									console.log(buildContainer(data.result));
+									$working_placeholder.replaceWith(buildContainer(data.result));
+							});
+						} else {
+							// new container
+							$temp = buildContainer([{ 	"type": containerType, 
+									"id" : "new",
+									"prolog": "",
+									"epilog": "" }] )
+								.insertBefore( $(this).parent() );
+						
+							$grid.children().remove(".container-drop-area-wrapper");
+							params = [ID, containerType, $temp.index()];
+							sendAjax("addContainer",params,
+							function(data){
+								console.log(data);
+								$temp.data("id", data.result.id);
+								$slots_wrapper = $temp.find(".slots-wrapper");
+								$.each( data.result.slots, function(index,value){
+									console.log(index+" "+value);
+									buildSlot([{"id" : value }]).appendTo( $slots_wrapper );
+								});
+								refreshBoxSortable();
+							});
+						}
+						
+					}
+				});
+			},
+			stop: function( event, ui ){
+				$grid.children().remove(".container-drop-area-wrapper");
+			}
+		});
+	}
+	reloadContainerDraggables($(".container-dragger"));
 	$grid.on("click",".c-tools > .c-tool", function(e){
 		$this = $(this);
 		$container = $this.parents(".container");
@@ -357,12 +407,35 @@ $(function() {
 			case "trash":
 				deleteContainer($container);
 				break;
+			case "reuse":
+				console.log("reuse");
+				if($container.data("reused") == true) return;
+				var adminTitle = prompt(
+					"Once a container is reusable you cannot modify it within this grid anymore. "+
+					"If you want to proceed choose a REUSE-TITLE and confirm:");
+				if(adminTitle == null) return;
+				if(adminTitle == ""){
+					alert("The container needs a title to be reusable. Please try again.");
+					return;
+				}
+				reuseContainer($container, adminTitle);
+				break;
 			default:
 				console.log($this.attr("role"));
 		}
 	});
+	function reuseContainer($container, adminTitle){
+  		var params =[ID,$container.data("id"),adminTitle];
+		sendAjax("reuseContainer",params,function(data){
+			if(data.result != true){
+				alert("fehler beim Löschen!");
+				return;
+			}
+			window.location.reload();
+		});
+	}
 	function deleteContainer($container){
-		params = [ID, $container.data("id")];
+		var params = [ID, $container.data("id")];
 		sendAjax("deleteContainer",params,function(data){
 			if(data.result != true){
 				alert("fehler beim Löschen!");
@@ -461,7 +534,7 @@ $(function() {
 	// ---------------------
 	// slot funktionen
 	// ----------------------
-	$grid.on("mouseover",".slot > .style-changer",function(e){
+	$grid.on("mouseover",".container[data-reused=false] .slot > .style-changer",function(e){
 		refreshSlotStyles($(this))
 	});
 	function refreshSlotStyles($style_changer){
@@ -511,10 +584,10 @@ $(function() {
 	
 	var old_slot_id, old_container_id, old_box_index;
 	function refreshBoxSortable(){
-		$(".boxes-wrapper").sortable({
+		$(".container[data-reused=false] .boxes-wrapper").sortable({
 			items: ".box",
 			cancel: "span.edit",
-			connectWith: ".boxes-wrapper, .c-box-trash",
+			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
@@ -588,7 +661,7 @@ $(function() {
 			addClass: true,
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
-				$slots = $grid.find(".slot .boxes-wrapper");
+				$slots = $grid.find(".container[data-reused=false] .slot .boxes-wrapper");
 				// drop place template
 				$slots.children(".box").before($( document.createElement('div'))
 								.addClass("box-drop-area-wrapper"));
@@ -772,16 +845,19 @@ $(function() {
 				var $dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");					
 				var $fields = makeDynamicFields(result.contentstructure, result.content, 0);
 				$dynamic_fields.append($fields);
-				$.each($dynamic_fields.find(".form-html"), function(index, editor){
-					$editor = $(editor);
+				CKEDITOR.replaceAll("form-html");
+				/*
+				$.each($dynamic_fields.find(".form-html"), function(index, ckeditor){
+					$ckeditor = $(ckeditor);
 					CKEDITOR.replace(
-						$editor.attr("name"),{
+						$ckeditor.attr("name"),{
 							customConfig : document.PathToConfig
 						}
 					);
 				});
-				CKEDITOR.replace("f-b-prolog",{customConfig : document.PathToConfig});
-				CKEDITOR.replace("f-b-epilog",{customConfig : document.PathToConfig});
+*/
+				//CKEDITOR.replace("f-b-prolog",{customConfig : document.PathToConfig});
+				//CKEDITOR.replace("f-b-epilog",{customConfig : document.PathToConfig});
 			});
 	});
 	function makeDynamicFields(contentstructure, content, lvl){
@@ -857,7 +933,7 @@ $(function() {
 						checked = "checked='checked'";
 					}
 					$dynamic_field.append("<div class='form-item'><input type='checkbox' "+checked+" class='dynamic-value form-checkbox' "+
-						"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.info+"</label></div>");
+						"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.label+"</label></div>");
 					break;
 				case "file":
 					$upload_form_item = $("<div class='form-item file-upload'>");
@@ -932,15 +1008,19 @@ $(function() {
 					.addClass("dynamic-value")
 					.attr("data-key", element.key)
 					.append($sub_fields);
-					var $button = $("<button>NEW Entry</button>").on(
+					$("<button>NEW Entry</button>").on(
 						"click",{
 							structure: element.contentstructure, 
 							field_list: $dynamic_field.children(".list-fields"),
 							lvl: lvl+1
 						}, function(e){
-						var $new_li = $("<li>").append(makeDynamicFields(e.data.structure,{}, e.data.lvl));
-						$new_li.find("input").val("");
+						var $new_li = renderListEntry(e.data.structure,{}, e.data.lvl);
+						//$new_li.find("input").val("");
 						e.data.field_list.append($new_li);
+						$.each($new_li.find(".form-html"),function(i,e){
+							console.log("fekd");
+							CKEDITOR.replace(e);
+						});
 					}).appendTo($dynamic_field);
 					break;
 				default:
@@ -1050,12 +1130,14 @@ $(function() {
 		setTimeout(function(){
 			$grid.show();
 			$grid.animate({width:"100%"},200);
-			$toolbar.slideDown(200,function(){
-				if(box_id == null) return;
-				$('html, body').animate({
-					 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
-				 }, 200);
-			});
+			if(GRIDMODE != "box"){
+				$toolbar.slideDown(200,function(){
+					if(box_id == null) return;
+					$('html, body').animate({
+						 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
+					 }, 200);
+				});
+			}
 		},50);
 	}
 	function showBoxEditor(){
@@ -1078,8 +1160,6 @@ $(function() {
 	$box_editor_content.on("click","legend",function(ev){
 		$(this).siblings(".field-wrapper").slideToggle(300);
 	});
-	function toggleBoxEditorField(){
-	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
 	}
@@ -1116,10 +1196,21 @@ $(function() {
 		}
 		if(box_toggling) return;
 		toggling = true;
-		$(".c-edit, .c-ok, .c-revert").toggle();
-		$(".box, .c-before, .c-after").slideToggle(200,function(){
-			box_toggling = false;
-		});
+		var $toggle_btn = $toolbar.find("[role=hide_boxes]");
+		if($toggle_btn.attr("data-hidden") == "true"){
+			$(".c-edit, .c-ok, .c-revert").show();
+			$(".box, .c-before, .c-after").slideDown(200,function(){
+				box_toggling = false;
+				$toggle_btn.attr("data-hidden", false);
+			});
+		} else{
+			$(".c-edit, .c-ok, .c-revert").hide();
+			$(".box, .c-before, .c-after").slideUp(200,function(){
+				box_toggling = false;
+				$toggle_btn.attr("data-hidden", true);
+			});
+		}
+		
 	}
 	$btn_publish = $toolbar.find("button[role=publish]");
 	$btn_revert = $toolbar.find("button[role=revert]");

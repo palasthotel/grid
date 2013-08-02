@@ -114,6 +114,46 @@ class grid_ajaxendpoint {
 		}
 		return $result;
 	}
+	
+	public function addReuseContainer($gridid,$idx,$containerid)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		$container=$grid->insertContainer("C-0",$idx);
+		$this->storage->convertToReferenceContainer($container,$containerid);
+		$reusecontainer=$this->storage->loadReuseContainer($containerid);		
+		$reusecontainer->containerid=$container->containerid;
+
+		$cnt=array();
+		foreach(get_object_vars($reusecontainer) as $key=>$value)
+		{
+			if($key!='storage' && $key!='slots' && $key!='containerid' && $key!='grid')
+			{
+				$cnt[$key]=$value;
+			}
+		}
+		$cnt['id']=$reusecontainer->containerid;
+		$cnt['slots']=array();
+		foreach($reusecontainer->slots as $slot)
+		{
+			$slt=array();
+			$slt['id']=$slot->slotid;
+			$slt['style']=$slot->style;
+			$slt['boxes']=array();
+			foreach($slot->boxes as $box)
+			{
+				$bx=$this->encodeBox($box);
+				$slt['boxes'][]=$bx;
+			}
+			$cnt['slots'][]=$slt;
+		}
+		
+		return $cnt;
+	}
+	
 
 	public function moveContainer($gridid,$containerid,$newidx)
 	{
@@ -281,6 +321,19 @@ class grid_ajaxendpoint {
 			}
 		}
 		return false;
+	}
+	
+	public function getReusableContainers()
+	{
+		$ids=$this->storage->getReuseContainerIds();
+		$result=array();
+		
+		foreach($ids as $id)
+		{
+			$container=$this->storage->loadReuseContainer($id);
+			$result[]=array('id'=>$id,'title'=>$container->reusetitle);
+		}
+		return $result;
 	}
 
 

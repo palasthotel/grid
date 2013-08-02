@@ -1,9 +1,14 @@
 
-var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}" class="container display ${type} clearfix">'+
+var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}"'+
+							' data-reused="{{if reused}}true{{else}}false{{/if}}" class="container display ${type} clearfix">'+
         	'<div class="c-tools">'+
-                '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
-                '<span role="trash" class="c-trash c-tool"></span>'+
+                '<span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>'+
+                '<span role="trash" class="c-trash c-tool hide-c-editor"></span>'+
 				'<span role="edit" class="c-edit c-tool"></span>'+
+				
+				'{{if reused}}<span role="reuse" class="c-reuse" title="${reusetitle}"></span>{{else}}'+
+				'<span role="reuse" class="c-reuse c-tool hide-c-editor"></span>{{/if}}'+
+				
 				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
 			'<p class="c-title">${title}</p>'+
@@ -26,8 +31,8 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
 			'<div class="c-tools">'+
                 '<span role="ok" class="c-ok c-tool"></span>'+
 				'<span role="revert" class="c-revert c-tool"></span>'+
-                '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
-                '<span role="trash" class="c-trash c-tool"></span>'+
+                '<span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>'+
+                '<span role="trash" class="c-trash c-tool hide-c-editor"></span>'+
 				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
         	'<div class="c-before">'+

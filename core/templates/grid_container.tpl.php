@@ -1,4 +1,4 @@
-<div class="container_12 <?=$this->style?> clearfix">
+<div class="container <?=$this->style?> <?=$this->type?> clearfix">
 	<div class="clearfix">
 	<?
 	if ($this->title!=""){
@@ -8,12 +8,14 @@
   
   <?=$this->prolog?>
 	</div>
+	<div class="slots-wrapper">
 	<?=implode("", $slots)?>
+	</div>
 	<div class="clearfix">
+	<?=$this->epilog?>
 	<?
 	if ($this->readmore!=""){?>
 	<a href="<?=$this->readmoreurl?>"><?=$this->readmore?></a>
 	<?}?>
-	<?=$this->epilog?>
 	</div>
 </div>

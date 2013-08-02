@@ -1,4 +1,4 @@
-<div class="<?=$this->style?>">
+<div class="box <?=$this->style?>">
 <?
 if ($this->title!=""){
   if ($this->titleurl !=""){

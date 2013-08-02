@@ -48,6 +48,49 @@ class grid_db {
 	//loads a complete grid with all regions and boxes belonging to it.
 	public function loadGrid($gridId,$preferDrafts=TRUE)
 	{
+		if(!strncmp("container:",$gridId,strlen("container:")))
+		{
+			$grid=$this->getReuseGrid();
+			$split=explode(":",$gridId);
+			$id=$split[1];
+			$container=$this->loadReuseContainer($id);
+			$container->reused=FALSE;
+			$grid->container=array();
+			$grid->container[]=$container;
+			$container->grid=$grid;
+			foreach($container->slots as $slot)
+			{
+				$slot->grid=$grid;
+				foreach($slot->boxes as $box)
+				{
+					$box->grid=$grid;
+				}
+			}
+			return $grid;
+		}
+		if(!strncmp("box:",$gridId,strlen("box:")))
+		{
+			$grid=$this->getReuseGrid();
+			$split=explode(":", $gridId);
+			$id=$split[1];
+			$box=$this->loadReuseBox($id);
+			$grid->container=array();
+			$grid->container[]=new grid_container();
+			$grid->container[0]->grid=$grid;
+			$grid->container[0]->storage=$this;
+			$grid->container[0]->type="C-12";
+			$grid->container[0]->containerid=-1;
+			$grid->container[0]->slots=array();
+			$grid->container[0]->slots[]=new grid_slot();
+			$grid->container[0]->slots[0]->storage=$this;
+			$grid->container[0]->slots[0]->grid=$grid;
+			$grid->container[0]->slots[0]->slotid=-1;
+			$grid->container[0]->slots[0]->boxes=array();
+			$grid->container[0]->slots[0]->boxes[]=$box;
+			$box->grid=$grid;
+			$box->storage=$this;
+			return $grid;
+		}
 		//before we begin, we have to fetch the correct revision so we can fire off the right queries.
 		$query="select max(revision) as revision from grid_grid where id=$gridId and published=1";
 		$result=$this->connection->query($query);
@@ -153,10 +196,74 @@ class grid_db {
 		}
 		return $results;
 	}
+	
+	public function deleteReusableBox($id)
+	{
+		$query="delete from grid_box where grid_id=-1 and grid_revision=0 and id=$id";
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function getReusedBoxIds()
+	{
+		$query="select content from grid_box left join grid_box_type on grid_box.type=grid_box_type.id where grid_box_type.type='reference'";
+		$result=$this->connection->query($query);
+		$usedIds=array();
+		while($row=$result->fetch_assoc())
+		{
+			$data=$row['content'];
+			$data=json_decode($data);
+			if(!in_array($data->boxid, $usedIds))
+				$usedIds[]=$data->boxid;
+		}
+		return $usedIds;
+	}
+	
+	public function getReuseContainerIds()
+	{
+		$query="select id from grid_container where grid_id=-1 and grid_revision=0";
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$ids=array();
+		while($row=$result->fetch_assoc())
+		{
+			$ids[]=$row['id'];
+		}
+		return $ids;
+	}
+	
+	public function getReusedContainerIds()
+	{
+		$query="select id from grid_container where grid_id=-1 and grid_revision=0 and id in (select reuse_containerid from grid_container)";
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$ids=array();
+		while($row=$result->fetch_assoc())
+		{
+			$ids[]=$row['id'];
+		}
+		return $ids;
+	}
+
+	public function deleteReusableContainer($containerid)
+	{
+		$container=$this->loadReuseContainer($containerid);
+		$container->grid=new grid_grid;
+		$container->grid->gridid=-1;
+		$container->grid->gridrevision=0;
+		$container->grid->storage=$this;
+		foreach($container->slots as $slot)
+		{
+			$slot->grid=$container->grid;
+			foreach($slot->boxes as $box)
+			{
+				$box->grid=$container->grid;
+			}
+		}
+		$this->destroyContainer($container);
+	}
 
 	public function loadReuseContainer($container)
 	{
 		$query="select grid_container.id as container_id,
+grid_container.reuse_title as container_reuse_title,
 grid_container_style.slug as container_style,
 grid_container.title as container_title,
 grid_container.title_url as container_titleurl,
@@ -217,6 +324,7 @@ where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_cont
 				$currentcontainer->reused=TRUE;
 				$currentcontainer->grid=NULL;
 				$currentcontainer->containerid=$row['container_id'];
+				$currentcontainer->reusetitle=$row['container_reuse_title'];
 				$currentcontainer->style=$row['container_style'];
 				$currentcontainer->type=$row['container_type'];
 				$currentcontainer->title=$row['container_title'];
@@ -452,8 +560,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		for($i=0;$i<count($container->slots);$i++)
 		{
 			$newslot=$copy->slots[$i];
-			if($newslot->boxew)
-			$newslot->boxes=array();
+			if($newslot->boxes==NULL)
+				$newslot->boxes=array();
 			$oldslot=$container->slots[$i];
 			foreach($oldslot->boxes as $box)
 			{
@@ -472,11 +580,17 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$idx=array_search($container, $grid->container);
 		if($idx===FALSE)die("index not found");
 		$grid->removeContainer($container->containerid);
-		$replacement=$grid->insertContainer($container->type,$idx);
+		$replacement=$grid->insertContainer("C-0",$idx);
 		if($replacement===FALSE)die("replacement not created");
 		$query="update grid_container set reuse_containerid=".$copy->containerid." where id=".$replacement->containerid." and grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query) or die($this->connection->error);
 		return $replacement;
+	}
+	
+	public function convertToReferenceContainer($container,$reuseid)
+	{
+		$query="update grid_container set reuse_containerid=$reuseid where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
+		$this->connection->query($query) or die($this->connection->error);
 	}
 
 	public function createContainer($grid,$containertype)
@@ -630,15 +744,19 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function destroyContainer($container)
 	{
-		foreach($container->slots as $slot)
+		if(!$container->reused)
 		{
-			foreach($slot->boxes as $box)
+			foreach($container->slots as $slot)
 			{
-				$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-				$this->connection->query($query) or die("Box deletion: ".$this->connection->error);
+				foreach($slot->boxes as $box)
+				{
+					$query="delete from grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+					$this->connection->query($query) or die("Box deletion: ".$this->connection->error);
+				}
+				$query="delete from grid_slot where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
+				$this->connection->query($query) or die("Slot deletion: ".$this->connection->error);
 			}
-			$query="delete from grid_slot where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
-			$this->connection->query($query) or die("Slot deletion: ".$this->connection->error);
+			
 		}
 		$query="delete from grid_container where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
 		$this->connection->query($query) or die("Container deletion: ".$this->connection->error);
