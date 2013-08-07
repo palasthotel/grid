@@ -1,0 +1,82 @@
+/** Default frontend grid */
+.container, .slot, .box{
+	box-sizing: border-box;
+}
+
+/** container styles **/
+.container{
+	margin-bottom: 30px;
+}
+.c-title{
+	font-size: 1.6em;
+}
+
+/** Container C-12 **/
+.C-12 .slot{
+	width:100%;
+}
+
+/** Container C-4-4-4 **/
+.C-4-4-4 .slot{
+	width:33.333%;
+	float:left;
+}
+
+/** Container C-8-4 **/
+.C-8-4 .slot:nth-child(1){
+	width:66.666%;
+	float:left;
+	
+}
+.C-8-4 .slot:nth-child(2){
+	width:33.333%;
+	float: right;
+}
+
+/** Container C-4-8 **/
+.C-4-8 .slot:nth-child(1){
+	width:33.333%;
+	float:left;
+}
+.C-4-8 .slot:nth-child(2){
+	width:66.666%;
+	float: right;
+}
+
+/** Container C-2-2-2-2-2-2 **/
+.C-2-2-2-2-2-2 .slot{
+	width:16.666%;
+	float:left;
+}
+
+/* slot styles */
+.slots-wrapper{
+	border-top: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
+}
+.slot{
+	padding-top: 8px;
+}
+.slot:nth-child(2n){
+	background-color: #efefef;
+}
+
+/** box styles **/
+.box{
+	padding-right: 15px; 
+}
+.box:nth-child(n+2){
+	padding-top: 15px;
+}
+.slot:nth-child(n+2) .box{
+	padding-left: 15px;
+}
+.box img{
+	max-width: 100%;
+}
+.b-epilog,
+.b-prolog{
+	border-left: 4px solid #333;
+	padding-left: 4px;
+}
+

@@ -82,7 +82,7 @@ var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 jQuery.template( "slotTemplate", slot_markup );
 
 var box_markup = '<div class="box" data-id="${id}" data-type="${type}">'+
-						'<h3><a href="${titleurl}" class="box-title">${title}</a></h3>'+
+						'<h3>{{if titleurl!=""}}<a href="${titleurl}" class="box-title">${title}</a>{{else}}${title}{{/if}}</h3>'+
 						"{{if type !='reference'}}<span class='edit'></span>{{/if}}"+
                         '<div class="prolog">{{html prolog}}</div>'+
                         '<div class="content">{{html html}}</div>'+
@@ -152,3 +152,16 @@ var in_box_autocomplete_markup = "<div class='"+
 									"<ul class='suggestion-list'></ul>"+
 								"</div>";
 jQuery.template("inBoxAutocompleteTemplate", in_box_autocomplete_markup);
+
+var reuse_container_markup = '<li class="container-dragger new-container ${type}" '+
+							'data-type="${type}" data-reusable="reusable" data-id="${id}">'+
+								'<div class="r-title">${reusetitle}</div>'+
+								'<div class="clearfix">'+
+								'{{if slots}}{{each slots}}'+
+									'<div class="slot"></div>'+
+								'{{/each}}{{/if}}'+
+								'</div>'+
+							'</li>';
+jQuery.template("containerReusableTemplate", reuse_container_markup);
+
+

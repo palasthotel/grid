@@ -102,6 +102,9 @@ html{
 #grid-toolbar button[role=revert]{
 	background-image: url(images/btn-revert.png);
 }
+#grid-toolbar button[role=revert][disabled=disabled]{
+	background-image: url(images/btn-revert-disabled.png);
+}
 #grid-toolbar button[role=hide_boxes]{
 	background-image: url(images/btn-toggle-opend.png);
 }
@@ -190,6 +193,12 @@ html{
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
+.g-container .reusable-elements{
+	min-height:200px;
+	overflow:hidden;
+	overflow-y:auto;
+	max-height: 80%;
+}
 .g-tool.g-container .element-list li{
 	margin-bottom: 10px;
 	border: 1px solid #e6e6e6;
@@ -208,7 +217,7 @@ html{
 .g-box .loading{
 	display:none;
 	position:absolute;
-	top:10px;
+	top:30px;
 	right:10px;
 }
 .g-box .box-list{

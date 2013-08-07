@@ -228,16 +228,22 @@ $(function() {
 		sendAjax("getReusableContainers",[],function(data){
 			console.log(data);
 			$.each(data.result, function(index,e){
+				console.log(e);
+				$toolReusableElements.append(buildReuseContainer(e));
+				/*
 				$toolReusableElements.append(
-					$("<li>"+e.title+"</li>")
+					$("<li>"+e.reusetitle+"</li>")
 					.addClass("container-dragger new-container")
 					.attr("data-type","reusable")
 					.attr("data-id", e.id)
 				);
+*/
 			});
-
 			reloadContainerDraggables($toolReusableElements.children());
 		});
+	}
+	function buildReuseContainer(templateParams){
+		return $.tmpl( "containerReusableTemplate", templateParams );
 	}
 	// ------------------------------
 	// Box Tools
@@ -341,15 +347,18 @@ $(function() {
 					accept: ".new-container",
 					hoverClass: "hover",
 					drop: function( event, ui ) {
-						var containerType =  $(ui.draggable).data("type");
+						var $draggable = $(ui.draggable);
+						var containerReusable = $draggable.data("reusable"); 
+						var containerType =  $draggable.data("type");
 						var $this = $(this);
-						if(containerType == "reusable"){
-							console.log("reuse");
+						if(containerReusable == "reusable"){
 							$working_placeholder = $("<div class='working-placeholder'>").insertBefore($this.parent());
+							$grid.children().remove(".container-drop-area-wrapper");
+							console.log($working_placeholder.index());
 							//reused container
 							sendAjax(
 								"addReuseContainer",
-								[ID,$this.parent().index(),$(ui.draggable).data("id")],
+								[ID, $working_placeholder.index(), $draggable.data("id")],
 								function(data){
 									console.log(data);
 									console.log(buildContainer(data.result));
@@ -507,11 +516,12 @@ $(function() {
 		sendAjax("updateContainer",params,
 		function(data){
 			if(data.result == true){
+				destroyCKEDITORs();
 				$newContainer = buildContainer( templateParams ).insertAfter( $editContainer );
 				$newContainer.find(".slots-wrapper").replaceWith($editContainer.find(".slots-wrapper"));
 				$newContainer.find(".box").show();
 				$editContainer.remove();
-				destroyCKEDITORs();
+				isDraft();
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
 			}
@@ -781,6 +791,7 @@ $(function() {
 				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
 				showGrid($data.data("id"));
 				destroyCKEDITORs();
+				isDraft();
 			});
 	}
 	function collectBoxEditorData($data, lvl){
@@ -922,6 +933,9 @@ $(function() {
 						type: element.type
 					} ));
 					break;
+				case "autocomplete-with-links":
+					
+					break;
 				case "hidden":
 					$dynamic_field.append(
 						"<input type='hidden' class='dynamic-value' "+
@@ -996,8 +1010,6 @@ $(function() {
 						console.log(data);
 					});
 				    $dynamic_field.append($upload_form_item);
-					break;
-				case "autocomplete-with-link":
 					break;
 				case "list":
 					$dynamic_field.append("<label>"+element.label+"</label>");
@@ -1241,6 +1253,7 @@ $(function() {
 		}
 		$gridTools.css("height",tool_height);
 		$toolBoxList.css("height", $gridTools.outerHeight()- 120);
+		$toolReusableElements.css( "height", $gridTools.outerHeight()-120);
 	}
 	resizeGridTools();
 

@@ -1,20 +1,25 @@
 <div class="box <?=$this->style?>">
-<?
-if ($this->title!=""){
-  if ($this->titleurl !=""){
-  ?>
-	<a href="<?=$this->titleurl?>" class="box-title"><?=$this->title?></a>
-	<?}else{?>
-	<h3><?=$this->title?></h3>
+	<?
+	if ($this->title!=""){
+
+		if ($this->titleurl !=""){
+		?>
+			<h3 class="b-title"><a href="<?=$this->titleurl?>"><?=$this->title?></a></h3>
+		<?}else{?>
+			<h3 class="b-title"><?=$this->title?></h3>
+		<?}?>
 	<?}?>
-	<?}?>
-	<?=$this->prolog?>
+	<div class="b-prolog">
+		<?=$this->prolog?>
+	</div>
 	
 	<?=$content?>
-
-  <?
+	<div class="b-epilog">
+		<?=$this->epilog?>
+	</div>
+  	<?
 	if ($this->readmore!=""){?>
-	<a href="<?=$this->readmoreurl?>"><?=$this->readmore?></a>
+	<a href="<?=$this->readmoreurl?>" class="b-readmore-link"><?=$this->readmore?></a>
 	<?}?>
-	<?=$this->epilog?>
+	
 </div>

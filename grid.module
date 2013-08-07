@@ -278,6 +278,7 @@ function grid_grid($node) {
 }
 
 function grid_preview($node) {
+
 	$type=$node->type;
 	$enabled=variable_get("grid_".$type."_enabled",0);
 	if($enabled==1)
@@ -289,6 +290,10 @@ function grid_preview($node) {
 		}
 		else
 		{
+			// default grid css
+			$base=drupal_get_path('module','grid');
+			drupal_add_css($base.'/core/templates/default-frontend.css',array('type'=>'file','group'=>CSS_DEFAULT));
+
 			$storage=grid_get_storage();
 			$grid=$storage->loadGrid($grid_id);
 			return $grid->render(FALSE);
@@ -330,6 +335,10 @@ function grid_node_view($node,$view_mode,$langcode)
 {
 	if(isset($node->grid) && $view_mode=="full")
 	{
+		// default grid css
+		$base=drupal_get_path('module','grid');
+		drupal_add_css($base.'/core/templates/default-frontend.css',array('type'=>'file','group'=>CSS_DEFAULT));
+
 		global $theme_path;
 		$storage=$node->grid->storage;
 		$storage->templatesPath=$theme_path.'/grid/';
@@ -338,6 +347,7 @@ function grid_node_view($node,$view_mode,$langcode)
 			'#type'=>'markup',
 			'#markup'=>$html,
 		);
+		
 		return $node;
 	}
 }
