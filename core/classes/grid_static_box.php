@@ -29,6 +29,7 @@ class grid_static_box extends grid_box {
 	    foreach($result as $class)
 	    {
 		    $instance=new $class();
+		    $instance->storage=$this->storage;
 		    $subresults=$instance->metaSearch($criteria,$query);
 		    foreach($subresults as $subresult)
 		    {

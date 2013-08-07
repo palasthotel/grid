@@ -11,7 +11,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'revision'=>array(
 					'description'=>t('grid revision'),
@@ -61,7 +61,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'grid_revision'=>array(
 					'description'=>t('grid revision'),
@@ -111,6 +111,18 @@ function grid_schema()
 					'type'=>'text',
 					'size'=>'normal',
 				),
+				'reuse_containerid'=>array(
+					'description'=>t('reuse id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'not null'=>true,
+					'unsigned'=>true,
+				),
+				'reuse_title'=>array(
+					'description'=>t('reuse title'),
+					'type'=>'text',
+					'size'=>'normal',
+				),
 			),
 			'primary key'=>array('id','grid_id','grid_revision'),
 			'mysql_engine'=>'InnoDB',
@@ -130,7 +142,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'grid_revision'=>array(
 					'description'=>t('grid revision'),
@@ -163,7 +175,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'grid_revision'=>array(
 					'description'=>t('grid revision'),
@@ -237,7 +249,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'grid_revision'=>array(
 					'description'=>t('grid revision'),
@@ -281,7 +293,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'grid_revision'=>array(
 					'description'=>t('grid revision'),
@@ -325,7 +337,7 @@ function grid_schema()
 					'type'=>'int',
 					'size'=>'normal',
 					'not null'=>true,
-					'unsigned'=>true,
+					'unsigned'=>false,
 				),
 				'grid_revision'=>array(
 					'description'=>t('grid revision'),
@@ -558,4 +570,14 @@ function grid_update_7101($sandbox)
 	db_query("alter table {grid_slot} add constraint fk_slot_style foreign key (style) references {grid_slot_style} (id) on update cascade on delete cascade");
 	db_query("alter table {grid_slot2box} add constraint fk_slot_slot foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
 	db_query("alter table {grid_slot2box} add constraint fk_slot_box foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
+}
+
+function grid_update_7102($sandbox)
+{
+	db_query("alter table {grid_container} add column reuse_containerid INT(10) UNSIGNED");
+}
+
+function grid_update_7103($sandbox)
+{
+	db_query("alter table {grid_container} add column reuse_title TEXT");
 }

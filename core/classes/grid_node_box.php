@@ -19,14 +19,17 @@ class grid_node_box extends grid_box {
 		}
 		else
 		{
-		  $view_modes=grid_viewmodes();
-		  		  
-		  // print_r($view_modes);		  
-		  
-		  if (!array_key_exists($this->content->viewmode, $view_modes)){
-			    $this->content->viewmode = "teaser";     
-      } 
-      return drupal_render(node_view($node,$this->content->viewmode));        
+			$view_modes=grid_viewmodes();
+					  
+			// print_r($view_modes);		  
+			
+			if (!array_key_exists($this->content->viewmode, $view_modes)){
+			    $this->content->viewmode = grid_default_viewmode();
+			}
+			if(node_access("view",$node))
+				return drupal_render(node_view($node,$this->content->viewmode));
+			else
+				return "";
 		}
 	}
 	
@@ -49,9 +52,15 @@ class grid_node_box extends grid_box {
 		}
 		$results=array();
 		$query=new EntityFieldQuery();
+		$words=explode(" ", $search);
 		$query->entityCondition('entity_type','node')
-		      ->propertyCondition('title','%'.$search.'%','LIKE')
 		      ->propertyOrderBy('created','DESC');
+		$wordquery=array();
+		foreach($words as $word)
+		{
+			$query->propertyCondition('title','%'.$word.'%','LIKE');
+		}
+		$query->range(0,50);
 		$result=$query->execute();
 		if(isset($result['node']))
 		{
@@ -63,7 +72,7 @@ class grid_node_box extends grid_box {
 				$box=new grid_node_box();
 				$box->content=new StdClass();
 				$box->content->nid=$node->nid;
-				$box->content->viewmode="teaser";
+				$box->content->viewmode=grid_default_viewmode();
 				$results[]=$box;
 			}
 		}
@@ -73,12 +82,17 @@ class grid_node_box extends grid_box {
 	public function contentStructure () {
 		$view_modes=grid_viewmodes();
 		$modes=array();
-		$node=node_load($this->content->nid);
+		$node=NULL;
+		if($this->content->nid!="")
+		{
+			$node=node_load($this->content->nid);
+		}
 		foreach($view_modes as $key=>$info)
 		{
 			if($key=='full')
 			{
-				if(variable_get('grid_'.$node->type.'_enabled',0)==0)
+				// noticegefahr durch nicht immer gesetztes $node Objekt
+				if($node!=NULL && variable_get('grid_'.$node->type.'_enabled',0)==0)
 				{
 					$modes[]=array('key'=>$key,'text'=>$info['label']);
 				}
@@ -92,6 +106,7 @@ class grid_node_box extends grid_box {
 			array(
 				'key'=>'viewmode',
 				'type'=>'select',
+				'label'=>'Ansicht',
 				'selections'=>$modes,
 			),
 			array(

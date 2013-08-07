@@ -25,6 +25,34 @@ class grid_ajaxendpoint {
 		$bx['contentstructure']=$box->contentStructure();
 		return $bx;
 	}
+	
+	private function encodeContainer($container)
+	{
+		$cnt=array();
+		foreach(get_object_vars($container) as $key=>$value)
+		{
+			if($key!='storage' && $key!='slots' && $key!='containerid' && $key!='grid')
+			{
+				$cnt[$key]=$value;
+			}
+		}
+		$cnt['id']=$container->containerid;
+		$cnt['slots']=array();
+		foreach($container->slots as $slot)
+		{
+			$slt=array();
+			$slt['id']=$slot->slotid;
+			$slt['style']=$slot->style;
+			$slt['boxes']=array();
+			foreach($slot->boxes as $box)
+			{
+				$bx=$this->encodeBox($box);
+				$slt['boxes'][]=$bx;
+			}
+			$cnt['slots'][]=$slt;
+		}
+		return $cnt;
+	}
 
 	public function loadGrid($gridid) {
 		$grid=$this->storage->loadGrid($gridid);
@@ -35,29 +63,7 @@ class grid_ajaxendpoint {
 		$converted['container']=array();
 		foreach($grid->container as $container)
 		{
-			$cnt=array();
-			foreach(get_object_vars($container) as $key=>$value)
-			{
-				if($key!='storage' && $key!='slots' && $key!='containerid' && $key!='grid')
-				{
-					$cnt[$key]=$value;
-				}
-			}
-			$cnt['id']=$container->containerid;
-			$cnt['slots']=array();
-			foreach($container->slots as $slot)
-			{
-				$slt=array();
-				$slt['id']=$slot->slotid;
-				$slt['style']=$slot->style;
-				$slt['boxes']=array();
-				foreach($slot->boxes as $box)
-				{
-					$bx=$this->encodeBox($box);
-					$slt['boxes'][]=$bx;
-				}
-				$cnt['slots'][]=$slt;
-			}
+			$cnt=$this->encodeContainer($container);
 			$converted['container'][]=$cnt;
 		}
 		return $converted;
@@ -122,6 +128,46 @@ class grid_ajaxendpoint {
 		}
 		return $result;
 	}
+	
+	public function addReuseContainer($gridid,$idx,$containerid)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		$container=$grid->insertContainer("C-0",$idx);
+		$this->storage->convertToReferenceContainer($container,$containerid);
+		$reusecontainer=$this->storage->loadReuseContainer($containerid);		
+		$reusecontainer->containerid=$container->containerid;
+
+		$cnt=array();
+		foreach(get_object_vars($reusecontainer) as $key=>$value)
+		{
+			if($key!='storage' && $key!='slots' && $key!='containerid' && $key!='grid')
+			{
+				$cnt[$key]=$value;
+			}
+		}
+		$cnt['id']=$reusecontainer->containerid;
+		$cnt['slots']=array();
+		foreach($reusecontainer->slots as $slot)
+		{
+			$slt=array();
+			$slt['id']=$slot->slotid;
+			$slt['style']=$slot->style;
+			$slt['boxes']=array();
+			foreach($slot->boxes as $box)
+			{
+				$bx=$this->encodeBox($box);
+				$slt['boxes'][]=$bx;
+			}
+			$cnt['slots'][]=$slt;
+		}
+		
+		return $cnt;
+	}
+	
 
 	public function moveContainer($gridid,$containerid,$newidx)
 	{
@@ -226,6 +272,83 @@ class grid_ajaxendpoint {
 		}
 		return false;
 	}
+	
+	public function reuseBox($gridid,$containerid,$slotid,$idx)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						$box=null;
+						if(isset($slot->boxes[$idx]))
+							$box=$slot->boxes[$idx];
+						//next steps:
+						//1. create copy of box
+						$class="grid_".$box->type()."_box";
+						$clone=new $class();
+						//2. add box to reuse grid
+						$reuseGrid=$this->storage->getReuseGrid();
+						$clone->grid=$reuseGrid;
+						$clone->storage=$this->storage;
+						$clone->updateBox($box);
+						$clone->persist();
+						//3. remove box from this slot
+						$slot->removeBox($idx);
+						$box->delete();
+						
+						//4. add new reference box to this slot
+						$reference=new grid_reference_box();
+						$reference->content->boxid=$clone->boxid;
+						$reference->storage=$this->storage;
+						$reference->grid=$grid;
+						$reference->persist();
+						$slot->addBox($idx,$reference);
+						return $this->encodeBox($reference);
+					}
+				}
+			}
+		}
+	}
+	
+	public function reuseContainer($gridid,$containerid,$title)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		if(!$grid->isDraft)
+		{
+			$grid=$grid->draftify();
+		}
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				$this->storage->reuseContainer($grid,$container,$title);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public function getReusableContainers()
+	{
+		$ids=$this->storage->getReuseContainerIds();
+		$result=array();
+		
+		foreach($ids as $id)
+		{
+			$container=$this->storage->loadReuseContainer($id);
+			$result[]=$this->encodeContainer($container);
+		}
+		return $result;
+	}
 
 
 	public function publishDraft($gridid)
@@ -307,6 +430,7 @@ class grid_ajaxendpoint {
 	{
 		$class="grid_".$metatype."_box";
 		$obj=new $class();
+		$obj->storage=$this->storage;
 		$searchresult=$obj->metaSearch($criteria,$searchstring);
 		$return=array();
 		foreach($searchresult as $box)

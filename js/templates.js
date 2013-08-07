@@ -1,19 +1,24 @@
 
-var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}" class="container display ${type} clearfix">'+
+var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${style}"'+
+							' data-reused="{{if reused}}true{{else}}false{{/if}}" class="container display ${type} clearfix">'+
         	'<div class="c-tools">'+
-                '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
-                '<span role="trash" class="c-trash c-tool"></span>'+
+                '<span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>'+
+                '<span role="trash" class="c-trash c-tool hide-c-editor"></span>'+
 				'<span role="edit" class="c-edit c-tool"></span>'+
+				
+				'{{if reused}}<span role="reuse" class="c-reuse" title="${reusetitle}"></span>{{else}}'+
+				'<span role="reuse" class="c-reuse c-tool hide-c-editor"></span>{{/if}}'+
+				
 				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
 			'<p class="c-title">${title}</p>'+
         	'<div class="c-before">'+
 				'<p class="c-titleurl">${titleurl}</p>'+
-            	'<p class="c-prolog">${prolog}</p>'+
+            	'<div class="c-prolog">{{html prolog}}</div>'+
             '</div>'+
         	'<div class="slots-wrapper clearfix">{{if slots}}{{tmpl(slots) "slotTemplate"}}{{/if}}</div>'+
             '<div class="c-after">'+
-            	'<p class="c-epilog">${epilog}</p>'+
+            	'<div class="c-epilog">{{html epilog}}</div>'+
 				'<p><span class="c-readmore">${readmore}</span>'+
 					'{{if readmoreurl}} [ <span class="c-readmoreurl">${readmoreurl}</span> ]'+
 					' {{else}} <span class="c-readmoreurl">${readmoreurl}</span>{{/if}}</p>'+
@@ -26,8 +31,8 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
 			'<div class="c-tools">'+
                 '<span role="ok" class="c-ok c-tool"></span>'+
 				'<span role="revert" class="c-revert c-tool"></span>'+
-                '<span role="sort-handle" class="c-sort-handle c-tool"></span>'+
-                '<span role="trash" class="c-trash c-tool"></span>'+
+                '<span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>'+
+                '<span role="trash" class="c-trash c-tool hide-c-editor"></span>'+
 				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
         	'<div class="c-before">'+
@@ -36,14 +41,14 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
                 '<label for="f-c-titleurl">Titel URL:</label>'+
                 '<input type="text" name="f-c-titleurl" id="f-c-titleurl" value="${titleurl}" class="form-text" />'+
                 '<label for="f-c-prolog">Prolog:</label>'+
-                '<textarea name="f-c-prolog" id="f-c-prolog" class="form-textarea">${prolog}</textarea>'+
+                '<textarea name="f-c-prolog" id="f-c-prolog" class="form-html">${prolog}</textarea>'+
             '</div>'+
         	'<div class="slots-wrapper clearfix">'+
 				// slots hier anheften
             '</div>'+
             '<div class="c-after">'+
                 '<label for="f-c-epilog">Epilog:</label>'+
-        		'<textarea name="f-c-epilog" id="f-c-epilog" class="form-textarea">${epilog}</textarea> ' +              
+        		'<textarea name="f-c-epilog" id="f-c-epilog" class="form-html">${epilog}</textarea> ' +              
 				'<div class="clearfix">'+
 					'<fieldset>'+
 						'<label for="f-c-readmore">Readmore Text:</label>'+
@@ -77,8 +82,8 @@ var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 jQuery.template( "slotTemplate", slot_markup );
 
 var box_markup = '<div class="box" data-id="${id}" data-type="${type}">'+
-						'<h3><a href="${titleurl}" class="box-title">${title}</a></h3>'+
-						'<span class="edit"></span>'+
+						'<h3>{{if titleurl!=""}}<a href="${titleurl}" class="box-title">${title}</a>{{else}}${title}{{/if}}</h3>'+
+						"{{if type !='reference'}}<span class='edit'></span>{{/if}}"+
                         '<div class="prolog">{{html prolog}}</div>'+
                         '<div class="content">{{html html}}</div>'+
                         '<div class="epilog">{{html epilog}}</div>'+
@@ -114,9 +119,9 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 									'<input name="f-b-titleurl" type="text" value="${box.titleurl}" class="form-text" />'+
 
 									'<label>Prolog</label>'+
-									'<textarea name="f-b-prolog" class="form-textarea">${box.prolog}</textarea>'+
+									'<textarea name="f-b-prolog" class="form-html">${box.prolog}</textarea>'+
 									'<label>Epilog</label>'+
-									'<textarea name="f-b-epilog"  class="form-textarea">${box.epilog}</textarea>'+
+									'<textarea name="f-b-epilog"  class="form-html">${box.epilog}</textarea>'+
 
 									'<label>Readmore</label>'+
 									'<input name="f-b-readmore" type="text" value="${box.readmore}" class="form-text" /> '+
@@ -147,3 +152,16 @@ var in_box_autocomplete_markup = "<div class='"+
 									"<ul class='suggestion-list'></ul>"+
 								"</div>";
 jQuery.template("inBoxAutocompleteTemplate", in_box_autocomplete_markup);
+
+var reuse_container_markup = '<li class="container-dragger new-container ${type}" '+
+							'data-type="${type}" data-reusable="reusable" data-id="${id}">'+
+								'<div class="r-title">${reusetitle}</div>'+
+								'<div class="clearfix">'+
+								'{{if slots}}{{each slots}}'+
+									'<div class="slot"></div>'+
+								'{{/each}}{{/if}}'+
+								'</div>'+
+							'</li>';
+jQuery.template("containerReusableTemplate", reuse_container_markup);
+
+

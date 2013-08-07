@@ -176,7 +176,10 @@ class grid_twitter_hashtag_box extends grid_twitter_box {
 	public function fetch($connection)
 	{
 		$output=$connection->get("https://api.twitter.com/1.1/search/tweets.json",array("q"=>$this->content->hashtag));
-		$result=$output->statuses;
+		if(isset($output->statuses))
+			$result=$output->statuses;
+		else
+			$result=array();
 		return $result;
 	}
 	

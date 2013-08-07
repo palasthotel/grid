@@ -97,4 +97,8 @@ class grid_box extends grid_base {
 		return array(array('key'=>-1,'value'=>'This box seems not to implement search'));
 	}
 	
+	public function performFileUpload($key,$path)
+	{
+		return FALSE;//array('result'=>FALSE,'error'=>'wrong box');
+	}
 }
