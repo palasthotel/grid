@@ -546,4 +546,25 @@ class grid_ajaxendpoint {
 		}
 		return array(array('key'=>-2,'value'=>'Box not found'));
 	}
+	
+	public function typeAheadGetText($gridid,$containerid,$slotid,$idx,$path,$id)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						$box=$slot->boxes[$idx];
+						return $box->getElementValue($path,$id);
+					}
+				}
+				return "WRONG SLOT";
+			}
+		}
+		return "WRONG CONTAINER";
+	}
 }

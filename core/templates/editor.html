@@ -61,7 +61,13 @@
                         <div class="slot"></div>
                         <div class="slot"></div>
                     </li>
+                    <li class="container-dragger new-container C-0-4-0 clearfix" data-type="C-0-4-0">
+                        <div class="slot"></div>
+                    </li>
 
+                </ul>
+
+                <ul class="sidebar-elements container-type-chooser element-list" ref="show-sidebars">
                     <li class="container-dragger new-container S-0-4 clearfix" data-type="S-0-4">
                         <div class="slot"></div>
                     </li>
@@ -69,15 +75,19 @@
                         <div class="slot"></div>
                     </li>
                 </ul>
+
                 <ul class="reusable-elements element-list" ref="show-reusable">
                 </ul>
+
             </div>
             <script>
+            /*
             (function($){
                 var role = $(".g-tool.g-container").find(".container-type-tabs li.active").attr("role");
                 $(".container-type-chooser").find("li").hide();
                 $(".container-type-chooser").find("[class*="+role+"]").show();
             })(jQuery);
+            */
             </script>
             <!-- Tools für Box hinzufügen -->
             <div class="g-tool g-box">

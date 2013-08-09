@@ -26,6 +26,7 @@ $(function() {
 	var $toolContainerTypeTabs = $toolContainer.find(".container-type-tabs");
 	var $containerTypeChooser = $toolContainer.find(".container-type-chooser");
 	var $toolReusableElements = $toolContainer.find(".reusable-elements");
+	var $toolContainerElementLists = $toolContainer.find(".element-list");
 	var $toolBox = $gridTools.children(".g-box");
 	var $toolBoxTypeTabs = $toolBox.children(".box-type-tabs");
 	var $search_bar = $toolBox.find(".search-bar");
@@ -148,7 +149,7 @@ $(function() {
 		console.log(container_arr);
 		refreshBoxSortable();
 		refreshContainerStyles();
-		$body.trigger("struktureChange");
+		$body.trigger("structureChange");
 	}
 	function refreshContainerStyles(){
 		$.each($grid.find(".container"), function(index, c){
@@ -238,14 +239,6 @@ $(function() {
 			$.each(data.result, function(index,e){
 				console.log(e);
 				$toolReusableElements.append(buildReuseContainer(e));
-				/*
-				$toolReusableElements.append(
-					$("<li>"+e.reusetitle+"</li>")
-					.addClass("container-dragger new-container")
-					.attr("data-type","reusable")
-					.attr("data-id", e.id)
-				);
-*/
 			});
 			reloadContainerDraggables($toolReusableElements.children());
 		});
@@ -315,7 +308,7 @@ $(function() {
 		handle: ".c-sort-handle",
 		//axis: "y",
 		//cursor: "row-resize",
-		items:".container",
+		items:".container:not(.C-4)",
 		placeholder: "c-sort-placeholder",
 		helper: function(event, element){
 				return $("<div class='c-sort-helper'></div>");
@@ -323,6 +316,8 @@ $(function() {
 		cursorAt: { left: 30, top:30 },
 		start: function( event, ui ){
 			//$(".box").slideUp(100);
+			ui.placeholder.outerHeight(30);
+			$(this).sortable('refreshPositions');
 		},
 		stop: function(event, ui){
 			//$(".box").slideDown(100);
@@ -334,7 +329,7 @@ $(function() {
 				if(data.result != true){
 					console.log("Fehler! Element muss an originalposition zurück");
 				}
-				$body.trigger("struktureChange");
+				$body.trigger("structureChange");
 			});
 		}
 	});
@@ -393,7 +388,7 @@ $(function() {
 									buildSlot([value]).appendTo( $slots_wrapper );
 								});
 								refreshBoxSortable();
-								$body.trigger("struktureChange");
+								$body.trigger("structureChange");
 							});
 						}
 						
@@ -462,6 +457,7 @@ $(function() {
 			}
 			$container.slideUp(300,function(){
 				$container.remove();
+				$body.trigger("structureChange");
 			});
 		});
 	}
@@ -532,6 +528,7 @@ $(function() {
 				$newContainer.find(".box").show();
 				$editContainer.remove();
 				isDraft();
+				$body.trigger('structureChange');
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
 			}
@@ -543,6 +540,7 @@ $(function() {
 		$oldContainer.find(".box").show();
 		$container.after($oldContainer);
 		$container.remove();
+		$body.trigger('structureChange');
 	}
 	function buildContainer(templateParams){
 		templateParams["styleTitle"] = arr_container_style_titles[templateParams["style"]];
@@ -622,7 +620,7 @@ $(function() {
 				old_slot_id = ui.item.parents(".slot").data("id");
 				old_container_id = ui.item.parents(".container").data("id");
 				refreshBoxTrashs();
-				$body.trigger("struktureChange");
+				$body.trigger("structureChange");
 			},
 			stop: function(e, ui){
 				console.log("STOP sort");
@@ -646,7 +644,7 @@ $(function() {
 							console.log(data);
 							console.log("Rückmeldung geben und Box zurück sortieren!!!");
 						}
-						$body.trigger("struktureChange");
+						$body.trigger("structureChange");
 				});
 			}
 		});
@@ -672,8 +670,9 @@ $(function() {
 			}
 		});
 	}
+	var $box_draggables;
 	function refreshBoxDraggables(){
-		$(".box-dragger").draggable({ 
+		$box_draggables = $(".box-dragger").draggable({ 
 			helper: function(event, element){
 				return $("<div class='dragger-helper'></div>");
 			},
@@ -683,7 +682,7 @@ $(function() {
 			addClass: true,
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
-				$slots = $grid.find(".container[data-reused=false] .slot .boxes-wrapper");
+				$slots = $grid.find(".container[data-reused=false][data-type*=C-] .slot .boxes-wrapper");
 				// drop place template
 				$slots.children(".box").before($( document.createElement('div'))
 								.addClass("box-drop-area-wrapper"));
@@ -721,7 +720,7 @@ $(function() {
 						function(data){
 							$temp.attr("data-id",data.result.id);
 							console.log(data);
-							$body.trigger("struktureChange");
+							$body.trigger("structureChange");
 						});
 						
 					}
@@ -834,12 +833,12 @@ $(function() {
 					content[key] = values;
 					break;
 				case "autocomplete":
-					content[$element.find("input").data("key")] = $element.find("input").data("value-key");
+				case "autocomplete-with-links":
+					content[$element.data("key")] = $element.find("input").data("value-key");
 					break;
 				default:
 					content[$element.find(".dynamic-value").data("key")] = $element.find(".dynamic-value").val();
 					break;
-
 			}
 		});
 		return content;
@@ -871,18 +870,6 @@ $(function() {
 				var $fields = makeDynamicFields(result.contentstructure, result.content, 0);
 				$dynamic_fields.append($fields);
 				CKEDITOR.replaceAll("form-html");
-				/*
-				$.each($dynamic_fields.find(".form-html"), function(index, ckeditor){
-					$ckeditor = $(ckeditor);
-					CKEDITOR.replace(
-						$ckeditor.attr("name"),{
-							customConfig : document.PathToConfig
-						}
-					);
-				});
-*/
-				//CKEDITOR.replace("f-b-prolog",{customConfig : document.PathToConfig});
-				//CKEDITOR.replace("f-b-epilog",{customConfig : document.PathToConfig});
 			});
 	});
 	function makeDynamicFields(contentstructure, content, lvl){
@@ -946,9 +933,25 @@ $(function() {
 						key: element.key,
 						type: element.type
 					} ));
+					getReadableAutocompleteValue($dynamic_field.find(".i-autocomplete"));
 					break;
 				case "autocomplete-with-links":
-					
+					console.log(element);
+					console.log(content[element.key]);
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					$dynamic_field.append($.tmpl( "inBoxAutocompleteTemplate", {
+						label: c_val,
+						val: c_val,
+						key: element.key,
+						type: element.type,
+						urlraw: element.url,
+						url: element.url.replace("%",content[element.key]),
+						emptyurlraw: element.emptyurl,
+						emptyurl: element.emptyurl.replace("%",content[element.key]),
+						linktext: element.linktext,
+						emptylinktext: element.emptylinktext
+					}));
+					getReadableAutocompleteValue($dynamic_field.find(".i-autocomplete"));
 					break;
 				case "hidden":
 					$dynamic_field.append(
@@ -1056,6 +1059,21 @@ $(function() {
 		});
 		return $dynamic_fields;
 	}
+	function getReadableAutocompleteValue($input){
+		var $data = $box_editor_content.find(".box-editor");
+		sendAjax("typeAheadGetText",
+				[
+					ID,
+					$data.data("c-id"),
+					$data.data("s-id"),
+					$data.data("b-index"),
+					calculateListPath($input),
+					$input.val()
+				],
+				function(data){
+					$input.val(data.result);
+				});
+	}
 	function renderListData(contentstructure, listdata, lvl){
 		var $dynamic_fields = $("<ul>").addClass("list-fields");
 		lvl++;
@@ -1076,7 +1094,7 @@ $(function() {
 		$(this).closest("li").remove();
 	});
 	var old_search_string = "";
-	$box_editor_content.on("keyup", "input[data-type=autocomplete]",function(e){
+	$box_editor_content.on("keyup", "input.i-autocomplete",function(e){
 		$this = $(this);
 		if(e.which == 13){
 			$autocomplete_items = $this.siblings(".suggestion-list").children();
@@ -1094,16 +1112,19 @@ $(function() {
 		clearTimeout(boxAutocompleteTimeout);
 		boxAutocompleteTimeout = setTimeout(function(){
 			$data = $box_editor_content.find(".box-editor");
-			sendAjax("typeAheadSearch",[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input),$input.val()] ,function(data){
-					old_search_string = $input.val();
-					$input.siblings(".loading").hide();
-					$autocompleteList = $input.siblings(".suggestion-list");
-					$autocompleteList.empty();
-					console.log(data);
-					$.each(data.result,function(index, value){
-						$autocompleteList.append($("<li>"+value.value+"</li>").attr("data-key",value.key));
+			sendAjax(
+					"typeAheadSearch",
+					[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input),$input.val()] ,
+					function(data){
+						old_search_string = $input.val();
+						$input.siblings(".loading").hide();
+						$autocompleteList = $input.siblings(".suggestion-list");
+						$autocompleteList.empty();
+						console.log(data);
+						$.each(data.result,function(index, value){
+							$autocompleteList.append($("<li>"+value.value+"</li>").attr("data-key",value.key));
+						});
 					});
-				});
 		},500);
 	}
 	$box_editor_content.on("click",".suggestion-list li",function(e){
@@ -1116,6 +1137,10 @@ $(function() {
 			.val($li.text())
 			.attr("disabled", "disabled")
 			.data("value-key", $li.data("key"));
+		var $emptyurl = $wrapper.find("a.empty");
+		var $url = $wrapper.find("a.full");
+		$emptyurl.attr("href",$emptyurl.data("raw").replace("%",$li.data("key")));
+		$url.attr("href",$url.data("raw").replace("%",$li.data("key")));
 		$li.parent().empty();
 	}
 	function calculateListPath($key_element){
@@ -1163,6 +1188,7 @@ $(function() {
 						 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
 					 }, 200);
 				});
+				$body.trigger('structureChange');
 			}
 		},50);
 	}
@@ -1224,19 +1250,23 @@ $(function() {
 		toggling = true;
 		var $toggle_btn = $toolbar.find("[role=hide_boxes]");
 		if($toggle_btn.attr("data-hidden") == "true"){
+			refreshBoxDraggables();
 			$(".c-edit, .c-ok, .c-revert").show();
 			$(".box, .c-before, .c-after").slideDown(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", false);
+				$body.trigger("structureChange");	
 			});
 		} else{
+			$box_draggables.draggable("destroy");
 			$(".c-edit, .c-ok, .c-revert").hide();
 			$(".box, .c-before, .c-after").slideUp(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", true);
+				$body.trigger("structureChange");	
 			});
 		}
-		
+
 	}
 	$btn_publish = $toolbar.find("button[role=publish]");
 	$btn_revert = $toolbar.find("button[role=revert]");
@@ -1252,28 +1282,53 @@ $(function() {
 		}
 	}
 	// Gui modification that need to be calculated when structure changes
-	$body.on('struktureChange', function(e, eventInfo) { 
+	$body.on('structureChange', function(e, eventInfo) { 
 		// sidebars calculation
-		console.log("Sidebar calculation");
 		$grid.children(".container").css("margin-top", "0px");
-		$.each($grid.children("[class*=S-]"),function(index, tmp_sidebar){
-			$tmp_sidebar = $(tmp_sidebar);
-			c_height = 0;
-			var $tmp_c = $;
-			$.each($tmp_sidebar.nextUntil(":not([class*=0])"), function(indx, tmp_c){
-				$tmp_c = $(tmp_c);
-				c_height += $tmp_c.outerHeight();
-			});
-			var puffer_height = 0;
-			$tmp_slot = $tmp_sidebar.find(".slot");
-			if($tmp_slot.outerHeight() > c_height){
-				puffer_height = $tmp_slot.outerHeight()-c_height;
-			}
-			console.log(puffer_height);
-			$tmp_c.next().css("margin-top", puffer_height+"px");
-			
+		$.each($grid.children('[class*=S]'), function(index, sidebar) {
+			console.log(sidebar);
+			makeSidebarPuffer($(sidebar));
 		});
 	});
+	function makeSidebarPuffer($sidebar){
+		// if there is no next container
+		if( $sidebar.next().length < 1) return;
+		// if next container is a sidebar too
+		var permissionsList = getFloatablePermissions($sidebar);
+		var result = calculateSidebarableContainerHeight($sidebar.next(), permissionsList);
+		console.log(result);
+		var needed_margin = $sidebar.find(".slot").outerHeight() - result["c_height"];
+		console.log("needed_margin", needed_margin);
+		console.log("target_container margin:"+parseInt(result["target_container"].css("margin-top")) );
+		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-top")) ){
+			result["target_container"].css("margin-top", needed_margin+"px");
+		}
+	}
+	function getFloatablePermissions($sidebar){
+		switch($sidebar.data("type")){
+			case "S-0-4":
+				return {"C-8-0":true,"C-4-4-0":true, "S-4-0":true, "C-0-4-0":true};
+				break;
+			case "S-4-0":
+				return {"C-0-8":true,"C-0-4-4":true, "S-0-4":true, "C-0-4-0":true};
+				break;
+		}
+		return {};
+	}
+	/**
+	*	$container
+	*	the first container after the sidebar element
+	*	floatingTypes
+	*	an array with the element types that can float next to the sidebar element
+	*/
+	function calculateSidebarableContainerHeight($container, floatablePermissionList){
+		var c_height = 0;
+		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
+			c_height += $container.height();
+			$container = $container.next();
+		}
+		return {"c_height": c_height, "target_container": $container};
+	}
 
 	function destroyCKEDITORs(){
 		for(name in CKEDITOR.instances){
@@ -1291,7 +1346,7 @@ $(function() {
 		}
 		$gridTools.css("height",tool_height);
 		$toolBoxList.css("height", $gridTools.outerHeight()- 120);
-		$toolReusableElements.css( "height", $gridTools.outerHeight()-120);
+		$toolContainerElementLists.css( "height", $gridTools.outerHeight()-120);
 	}
 	resizeGridTools();
 

@@ -193,7 +193,7 @@ html{
 	background-color:#e0e0e0;
 	border:1px solid#333;
 }
-.g-container .reusable-elements{
+.g-container .element-list{
 	min-height:200px;
 	overflow:hidden;
 	overflow-y:auto;
@@ -205,9 +205,11 @@ html{
 	background-color: #efefef;
 	padding:2px;
 }
-.reusable-elements{
+.reusable-elements,
+.sidebar-elements{
 	display: none;
 }
+.
 /** box toolbar **/
 .g-box .search-bar{
 	display:none;
@@ -580,6 +582,9 @@ html{
 	position: absolute;
 	z-index: 100;
 }
+#grid [data-type*=S-]:not(.editor):hover{
+	z-index: 101;
+}
 #grid [data-type=S-0-4] > * > .slot,
 #grid [data-type*=S-] > * > .slot:nth-child(2){
 	right:10px;
@@ -609,7 +614,7 @@ html{
 	min-height:30px;
 	background-color:#999;
 }
-.container[data-reused=false] .box{
+.container[data-reused=false][data-type*=C-] .box{
 	cursor: move;
 }
 .box{
@@ -770,6 +775,15 @@ html{
 .autocomplete-wrapper.locked input{
 	background-color: #efefef;
 }
+.autocomplete-wrapper .links .full{
+	display: none;
+}
+.autocomplete-wrapper.locked .links .empty{
+	display: none;
+}
+.autocomplete-wrapper.locked .links .full{
+	display: inline;
+}
 .autocomplete-wrapper .suggestion-list{
 	position: absolute;
 	z-index: 10;
@@ -918,7 +932,7 @@ html{
 	width: 100%;
 }
 
-/** Container C-0-4-4 and C-4-4-0 **/
+/** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
 .C-4-4-0 .slot{
 	width:33%;
 	float:left;
@@ -929,16 +943,28 @@ html{
 	float:right;
 	margin-left:1%;
 }
+.C-0-4-0 .slot{
+	width: 33.3%;
+	margin-left: 33.3%;
+}
 #grid .C-0-4-4,
 #grid .C-4-4-0{
 	width: 66.6% !important;
 }
 #grid .C-0-4-4{
-	margin-left: 270px;
+	margin-left: 33.3%;
 }
 #grid .C-4-4-0 .slot,
 #grid .C-0-4-4 .slot{
 	width: 49%;
+}
+#grid .C-0-4-0{
+	width: 33.3% !important;
+	margin-left: 33.3%;
+}
+#grid .C-0-4-0 .slot{
+	width: 100%;
+	margin-left: 0px;
 }
 
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
@@ -974,6 +1000,20 @@ html{
 .S-4-4 .slot:nth-child(2){
 	width: 31.5%;
 	float: right;
+}
+[data-type*=S-] .grid .container{
+	width: 100% !important;
+	padding:0px;
+	margin: 0px;
+	background-color: transparent;
+	border:none;
+	border-bottom: 1px solid #e6e6e6;
+}
+[data-type*=S-] .grid .container:before{
+	content: "";
+}
+[data-type*=S-] .grid .container .slot{
+	padding: 5px 0 0 0;
 }
 
 /** content rules **/

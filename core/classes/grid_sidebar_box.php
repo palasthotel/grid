@@ -39,7 +39,12 @@ class grid_sidebar_box extends grid_box
 		$content = array(
 			array(
 				'key'=>'nodeid',
-				'type'=>'autocomplete',
+				'label'=>'Sidebar',
+				'type'=>'autocomplete-with-links',
+				'url'=>'/node/%/grid',
+				'linktext'=>'Edit Sidebar',
+				'emptyurl'=>'/node/add/'.variable_get('grid_sidebar',''),
+				'emptylinktext'=>'Create Sidebar',
 			),
 			array(
 				'key'=>'html',
@@ -82,4 +87,11 @@ class grid_sidebar_box extends grid_box
 		return $results;
 	}
 	
+	public function getElementValue($path,$id)
+	{
+		if($path!='nodeid')
+			return 'WRONG PATH: '.$path;
+		$node=node_load($id);
+		return $node->title;
+	}
 }
