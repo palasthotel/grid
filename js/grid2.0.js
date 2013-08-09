@@ -670,7 +670,7 @@ $(function() {
 			}
 		});
 	}
-	var $box_draggables;
+	var $box_draggables = $;
 	function refreshBoxDraggables(){
 		$box_draggables = $(".box-dragger").draggable({ 
 			helper: function(event, element){
@@ -684,13 +684,15 @@ $(function() {
 			start: function(event, ui){
 				$slots = $grid.find(".container[data-reused=false][data-type*=C-] .slot .boxes-wrapper");
 				// drop place template
-				$slots.children(".box").before($( document.createElement('div'))
-								.addClass("box-drop-area-wrapper"));
-				$slots.append($( document.createElement('div'))
-								.addClass("box-drop-area-wrapper"));
-				$slots.find(".box-drop-area-wrapper").append($( document.createElement('div'))
-								.addClass("box-drop-area"));
-
+				var $toggle_btn = $toolbar.find("[role=hide_boxes]");
+				if($toggle_btn.attr("data-hidden") != "true"){
+					$slots.children(".box").before($( document.createElement('div'))
+									.addClass("box-drop-area-wrapper"));
+					$slots.append($( document.createElement('div'))
+									.addClass("box-drop-area-wrapper"));
+					$slots.find(".box-drop-area-wrapper").append($( document.createElement('div'))
+									.addClass("box-drop-area"));
+				}
 				$slots.find(".box-drop-area").droppable({ 
 					accept: ".box-dragger",
 					hoverClass: "hover",
@@ -722,9 +724,9 @@ $(function() {
 							console.log(data);
 							$body.trigger("structureChange");
 						});
-						
 					}
 				});
+				
 			},
 			stop: function( event, ui ){
 				$grid.find(".box-drop-area-wrapper").remove();
@@ -1187,8 +1189,9 @@ $(function() {
 					$('html, body').animate({
 						 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
 					 }, 200);
+					$body.trigger('structureChange');
 				});
-				$body.trigger('structureChange');
+				
 			}
 		},50);
 	}
@@ -1258,7 +1261,6 @@ $(function() {
 				$body.trigger("structureChange");	
 			});
 		} else{
-			$box_draggables.draggable("destroy");
 			$(".c-edit, .c-ok, .c-revert").hide();
 			$(".box, .c-before, .c-after").slideUp(200,function(){
 				box_toggling = false;
@@ -1296,7 +1298,6 @@ $(function() {
 		// if next container is a sidebar too
 		var permissionsList = getFloatablePermissions($sidebar);
 		var result = calculateSidebarableContainerHeight($sidebar.next(), permissionsList);
-		console.log(result);
 		var needed_margin = $sidebar.find(".slot").outerHeight() - result["c_height"];
 		console.log("needed_margin", needed_margin);
 		console.log("target_container margin:"+parseInt(result["target_container"].css("margin-top")) );

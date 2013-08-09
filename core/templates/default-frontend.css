@@ -1,4 +1,7 @@
-/** Default frontend grid */
+/** 
+*	Default frontend structure for grid 
+*	NO DESIGN, JUST STRUCTURE
+*/
 .container, .slot, .box{
 	box-sizing: border-box;
 }
@@ -49,26 +52,45 @@
 	float:left;
 }
 
+/** Container for sidebars */
+.C-8-0,
+.C-4-4-0{
+	width: 66.6%;
+	float: left;
+}
+.C-0-8,
+.C-0-4-4{
+	width: 66.6%;
+	float: right;
+}
+.C-0-4-0{
+	width: 33.3%;
+	margin-left: 33.3%;
+}
+
+/** Sidebars **/
+.S-0-4{
+	width: 33.3%;
+	float: right;
+}
+.S-4-0{
+	width: 33.3%;
+	float: left;
+}
+
 /* slot styles */
-.slots-wrapper{
-	border-top: 1px solid #dfdfdf;
-	border-bottom: 1px solid #dfdfdf;
-}
-.slot{
+.container .slot{
 	padding-top: 8px;
-}
-.slot:nth-child(2n){
-	background-color: #efefef;
 }
 
 /** box styles **/
 .box{
 	padding-right: 15px; 
 }
-.box:nth-child(n+2){
+.container .box:nth-child(n+2){
 	padding-top: 15px;
 }
-.slot:nth-child(n+2) .box{
+.container .slot:nth-child(n+2) .box{
 	padding-left: 15px;
 }
 .box img{
@@ -76,7 +98,6 @@
 }
 .b-epilog,
 .b-prolog{
-	border-left: 4px solid #333;
-	padding-left: 4px;
+	padding-left: 10px;
 }
 
