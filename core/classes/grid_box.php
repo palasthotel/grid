@@ -107,4 +107,9 @@ class grid_box extends grid_base {
 		return FALSE;//array('result'=>FALSE,'error'=>'wrong box');
 	}
 	
+	public function prepareReuseDeletion()
+	{
+		
+	}
+	
 }

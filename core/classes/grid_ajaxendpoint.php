@@ -302,6 +302,7 @@ class grid_ajaxendpoint {
 						$clone->updateBox($box);
 						$clone->persist();
 						//3. remove box from this slot
+						$box->prepareReuseDeletion();
 						$slot->removeBox($idx);
 						$box->delete();
 						

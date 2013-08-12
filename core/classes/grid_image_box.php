@@ -52,6 +52,11 @@ class grid_image_box extends grid_static_base_box
 		$file=file_save_data($content,"public://".$filename);
 		return $file->fid;
 	}
+	
+	public function prepareReuseDeletion()
+	{
+		$this->content->fileid="";
+	}
 
 
 }
