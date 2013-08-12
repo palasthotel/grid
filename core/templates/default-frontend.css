@@ -9,12 +9,20 @@
 /** container styles **/
 .container{
 	margin-bottom: 30px;
+	float: left;
 }
 .c-title{
 	font-size: 1.6em;
 }
-
+.C-12,
+.C-4-8,
+.C-8-4,
+.C-4-4-4,
+.C-2-2-2-2-2-2{
+	width: 100%;
+}
 /** Container C-12 **/
+
 .C-12 .slot{
 	width:100%;
 }
@@ -63,9 +71,13 @@
 	width: 66.6%;
 	float: right;
 }
+.C-4-4-0 .slot,
+.C-0-4-4 .slot{
+	width: 50%;
+	float: left;
+}
 .C-0-4-0{
 	width: 33.3%;
-	margin-left: 33.3%;
 }
 
 /** Sidebars **/
@@ -100,4 +112,12 @@
 .b-prolog{
 	padding-left: 10px;
 }
+
+/** sidebar floating fix for following content */
+/*
+.btcf:before {
+    content:"";
+    display:table;
+    clear:both;
+}*/
 

@@ -1,17 +1,14 @@
+/**
+*	Grid controller.
+*	@autor Edward Bock
+*/
 (function($){
 $(function() {
-	// Warnung beim verlassen ohne Speichern
-	/*
-	var saved = true;
-	window.onbeforeunload = function(){
-		if(!saved) return "Es wurden noch nicht alle Änderungen gespeichert!";
-	}
-	*/
-	// ---------------------------
-	// Allgemeine Elemente und konstanten
-	// --------------------------
-	var arr_box_types, arr_box_search_results;
-	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
+
+	/** --------------------------------
+	* generel elements and variables
+	---------------------------------- */
+	
 	var arr_container_style_titles = Array();
 	var $slot_styles;
 	var $stateDisplay = $(".state-display");
@@ -35,9 +32,9 @@ $(function() {
 	var $toolBoxList = $gridTools.find(".g-box .box-list");
 	var top = 0;
 	
-	// ----------------
-	// init Methode
-	// ---------------
+	/** --------------------------
+	*	Grid gets initiated
+	------------------------------ */
 	var ID = document.ID;
 	var GRIDMODE = document.gridmode;
 	function init() {
@@ -53,7 +50,7 @@ $(function() {
 		top = $toolbar.offset().top;
 		$(window).scroll(function() {
 			if( $(this).scrollTop() > (top) ) {
-				$grid.css("margin-top",$toolbar.height());
+				$grid.css("margin-top",$toolbar.outerHeight());
 			  	$body.addClass('fixed');
 			} else {
 				$grid.css("margin-top",0);
@@ -61,11 +58,19 @@ $(function() {
 			}
 			resizeGridTools();
 		});
+		setTimeout(function(){
+			console.log("GO!");
+			$body.trigger('structureChange');
+		},600);
 	}
 	$(document).ready(init);
-	// --------------------
-	// values to load before grid
-	// --------------------
+	/** --------------------------------
+	*	load available box types
+	*
+	*	@array arr_box_types
+	*
+	------------------------------------ */
+	var arr_box_types = [], arr_box_search_results;
 	function loadBoxTypes(){
 		sendAjax(
 			"getMetaTypesAndSearchCriteria",
@@ -81,6 +86,15 @@ $(function() {
 				});
 			},null,false);
 	}
+	/** --------------------------------
+	*	values to load before grid
+	*
+	*	@array arr_container_styles
+	*	@array arr_slot_styles
+	*	@array arr_box_styles
+	*
+	------------------------------------ */
+	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
 	function loadStyles(){
 		sendAjax(
 			"getContainerStyles",
@@ -115,12 +129,11 @@ $(function() {
 				console.log("Box styles geladen");
 				console.log(arr_box_styles);
 			},null,false);
-	}
-	
-	
-	// --------------------
-	// load, revert, publish grid
-	// -------------------
+	}	
+	/** --------------------------------
+	*	load the grid from database
+	*
+	------------------------------------ */
 	function loadGrid(){
 		console.log("Grid_id: "+ID+" document:"+document.ID);
 		sendAjax(
@@ -132,8 +145,6 @@ $(function() {
 				if(data.result.isSidebar){
 					console.log("is Sidebar");
 					$(".hide-from-sidebar").remove();
-				} else {
-					
 				}
 				$.each($(".container[data-reused=false] .slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
@@ -141,6 +152,12 @@ $(function() {
 			}
 		);
 	}
+	/** --------------------------------
+	*	builds the grid with database information
+	*
+	*	@param result from loadGrid Request
+	*
+	------------------------------------ */
 	function fillGrid(result){
 		$grid.empty();
 		changeIsDraftDisplay(result.isDraft);
@@ -310,14 +327,16 @@ $(function() {
 		//cursor: "row-resize",
 		items:".container:not(.C-4)",
 		placeholder: "c-sort-placeholder",
+		pullPlaceholder: true,
 		helper: function(event, element){
 				return $("<div class='c-sort-helper'></div>");
 		},
 		cursorAt: { left: 30, top:30 },
 		start: function( event, ui ){
 			//$(".box").slideUp(100);
-			ui.placeholder.outerHeight(30);
+			//ui.placeholder.outerHeight(ui.outerHeight);
 			$(this).sortable('refreshPositions');
+			//$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
 		},
 		stop: function(event, ui){
 			//$(".box").slideDown(100);
@@ -330,6 +349,7 @@ $(function() {
 					console.log("Fehler! Element muss an originalposition zurück");
 				}
 				$body.trigger("structureChange");
+				scrollToContainer(params[1]);
 			});
 		}
 	});
@@ -367,6 +387,8 @@ $(function() {
 									console.log(data);
 									console.log(buildContainer(data.result));
 									$working_placeholder.replaceWith(buildContainer(data.result));
+									$body.trigger("structureChange");
+									scrollToContainer(data.result.id);
 							});
 						} else {
 							// new container
@@ -380,15 +402,14 @@ $(function() {
 							params = [ID, containerType, $temp.index()];
 							sendAjax("addContainer",params,
 							function(data){
-								console.log(data);
-								$temp.data("id", data.result.id);
+								$temp.attr("data-id", data.result.id);
 								$slots_wrapper = $temp.find(".slots-wrapper");
 								$.each( data.result.slots, function(index,value){
-									console.log(index+" "+value);
 									buildSlot([value]).appendTo( $slots_wrapper );
 								});
 								refreshBoxSortable();
 								$body.trigger("structureChange");
+								scrollToContainer(data.result.id);
 							});
 						}
 						
@@ -456,8 +477,19 @@ $(function() {
 				return;
 			}
 			$container.slideUp(300,function(){
+				var $next = $container.next();
+				var $prev = $container.prev();
+				var target_c_id = null;
+				if($next.length>0){
+					target_c_id = $next.data("id");
+				} else if($prev.length > 0){
+					target_c_id = $prev.data("id");
+				}
 				$container.remove();
 				$body.trigger("structureChange");
+				if(target_c_id != null){
+					scrollToContainer(target_c_id);	
+				}
 			});
 		});
 	}
@@ -528,7 +560,6 @@ $(function() {
 				$newContainer.find(".box").show();
 				$editContainer.remove();
 				isDraft();
-				$body.trigger('structureChange');
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
 			}
@@ -540,7 +571,6 @@ $(function() {
 		$oldContainer.find(".box").show();
 		$container.after($oldContainer);
 		$container.remove();
-		$body.trigger('structureChange');
 	}
 	function buildContainer(templateParams){
 		templateParams["styleTitle"] = arr_container_style_titles[templateParams["style"]];
@@ -620,7 +650,6 @@ $(function() {
 				old_slot_id = ui.item.parents(".slot").data("id");
 				old_container_id = ui.item.parents(".container").data("id");
 				refreshBoxTrashs();
-				$body.trigger("structureChange");
 			},
 			stop: function(e, ui){
 				console.log("STOP sort");
@@ -645,6 +674,7 @@ $(function() {
 							console.log("Rückmeldung geben und Box zurück sortieren!!!");
 						}
 						$body.trigger("structureChange");
+						scrollToBox(ui.item.data("id"));
 				});
 			}
 		});
@@ -666,6 +696,7 @@ $(function() {
 					}
 					ui.draggable.remove();
 					hideBoxTrash();
+					$body.trigger('structureChange');
 				});
 			}
 		});
@@ -723,6 +754,7 @@ $(function() {
 							$temp.attr("data-id",data.result.id);
 							console.log(data);
 							$body.trigger("structureChange");
+							scrollToBox(data.result.id);
 						});
 					}
 				});
@@ -1186,10 +1218,8 @@ $(function() {
 			if(GRIDMODE != "box"){
 				$toolbar.slideDown(200,function(){
 					if(box_id == null) return;
-					$('html, body').animate({
-						 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
-					 }, 200);
 					$body.trigger('structureChange');
+					scrollToBox(box_id);
 				});
 				
 			}
@@ -1215,6 +1245,16 @@ $(function() {
 	$box_editor_content.on("click","legend",function(ev){
 		$(this).siblings(".field-wrapper").slideToggle(300);
 	});
+	function scrollToContainer(container_id){
+		$('html, body').animate({
+			 scrollTop: ($(".container[data-id="+container_id+"]").offset().top-160)
+		 }, 200);
+	}
+	function scrollToBox(box_id){
+		$('html, body').animate({
+			 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-160)
+		 }, 200);
+	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
 	}
@@ -1286,7 +1326,7 @@ $(function() {
 	// Gui modification that need to be calculated when structure changes
 	$body.on('structureChange', function(e, eventInfo) { 
 		// sidebars calculation
-		$grid.children(".container").css("margin-top", "0px");
+		$grid.children(".container").css("margin-bottom", "0px");
 		$.each($grid.children('[class*=S]'), function(index, sidebar) {
 			console.log(sidebar);
 			makeSidebarPuffer($(sidebar));
@@ -1298,11 +1338,9 @@ $(function() {
 		// if next container is a sidebar too
 		var permissionsList = getFloatablePermissions($sidebar);
 		var result = calculateSidebarableContainerHeight($sidebar.next(), permissionsList);
-		var needed_margin = $sidebar.find(".slot").outerHeight() - result["c_height"];
-		console.log("needed_margin", needed_margin);
-		console.log("target_container margin:"+parseInt(result["target_container"].css("margin-top")) );
-		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-top")) ){
-			result["target_container"].css("margin-top", needed_margin+"px");
+		var needed_margin = ($sidebar.find(".slot").outerHeight() - result["c_height"])- parseInt($sidebar.css("padding-top"));
+		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-bottom")) ){
+			result["target_container"].css("margin-bottom", needed_margin+"px");
 		}
 	}
 	function getFloatablePermissions($sidebar){
@@ -1325,10 +1363,10 @@ $(function() {
 	function calculateSidebarableContainerHeight($container, floatablePermissionList){
 		var c_height = 0;
 		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
-			c_height += $container.height();
+			c_height += $container.outerHeight();
 			$container = $container.next();
 		}
-		return {"c_height": c_height, "target_container": $container};
+		return {"c_height": c_height, "target_container": $container.prev()};
 	}
 
 	function destroyCKEDITORs(){

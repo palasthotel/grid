@@ -1,4 +1,4 @@
-<div class="container <?=$this->style?> <?=$this->type?> clearfix">
+<div class="container <?=$this->style?> <?=$this->type?> clearfix btcf">
 
 	<div class="c-before">
 		<?
