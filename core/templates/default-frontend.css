@@ -105,9 +105,10 @@
 .container .box:nth-child(n+2){
 	padding-top: 15px;
 }
+/*
 .container .slot:nth-child(n+2) .box{
 	padding-left: 15px;
-}
+}*/
 .box img{
 	max-width: 100%;
 }

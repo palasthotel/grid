@@ -450,7 +450,7 @@ html{
 	width:60px;
 	background-color:#fff;
 	position:absolute;
-	z-index:12;
+	z-index:102;
 	top:-15px;
 	right:25px;
 	border-radius: 30px; 
@@ -954,7 +954,7 @@ html{
 }
 .C-4-4-0 .slot:last-child{
 	margin-right: 0;
-	float: right;
+	float: left;
 }
 .C-0-4-4 .slot{
 	width:33%;
@@ -975,6 +975,9 @@ html{
 #grid .C-4-4-0 .slot,
 #grid .C-0-4-4 .slot{
 	width: 49%;
+}
+#grid .C-4-4-0 .slot:last-child{
+	float: right;
 }
 #grid .C-0-4-0{
 	width: 33.3% !important;
