@@ -59,7 +59,6 @@ $(function() {
 			resizeGridTools();
 		});
 		setTimeout(function(){
-			console.log("GO!");
 			$body.trigger('structureChange');
 		},600);
 	}
@@ -153,7 +152,7 @@ $(function() {
 		);
 	}
 	/** --------------------------------
-	*	builds the grid with database information
+	*	fills the grid with database information
 	*
 	*	@param result from loadGrid Request
 	*
@@ -174,6 +173,9 @@ $(function() {
 			$c.find(".c-style").text(arr_container_style_titles[$c.data("style")]);
 		});
 	}
+	/**
+	*	Changes status from draft to published.
+	*/
 	function publishGrid(){
 		sendAjax(
 			"publishDraft", 
@@ -186,6 +188,9 @@ $(function() {
 			}
 		);
 	}
+	/**
+	*	deletes the draft and goes back to last published revision
+	*/
 	function revertGrid(){
 		sendAjax(
 			"revertDraft", 
@@ -202,9 +207,9 @@ $(function() {
 		);
 	}
 	
-	// ---------------------------------
-	// Handler für die Werkzeuge
-	// ---------------------------------
+	/** ---------------------------------
+	* Click handler for main toolbar
+	 --------------------------------- */
 	$toolbar.on("click","button",function(e){
 		$this = $(this);
 		switch($this.attr("role")){
@@ -239,17 +244,21 @@ $(function() {
 				break;
 		}
 	});
-	// ------------------------------
-	// Container Tools
-	// -----------------------------
+	/* ------------------------------
+	* Container Tools
+	* ----------------------------- */
 	$toolContainerTypeTabs.on("click","li:not(.active)",function(e){
 		$toolContainerTypeTabs.children().removeClass("active");
 		$this = $(this).addClass("active");
 		$toolContainerTypeTabs.siblings().hide();
 		$toolContainerTypeTabs.siblings("[ref="+$this.attr("role")+"]").show();
-		loadReusableElements();
+		if($this.attr("role").indexOf("reus") > -1){
+			loadReusableElements();
+		}
 	});
 	function loadReusableElements(){
+		$toolReusableElements.empty();
+		var $c_t_loading = $toolContainer.find(".loading").show();
 		$toolReusableElements.empty();
 		sendAjax("getReusableContainers",[],function(data){
 			console.log(data);
@@ -258,6 +267,7 @@ $(function() {
 				$toolReusableElements.append(buildReuseContainer(e));
 			});
 			reloadContainerDraggables($toolReusableElements.children());
+			$c_t_loading.hide();
 		});
 	}
 	function buildReuseContainer(templateParams){
@@ -1310,6 +1320,11 @@ $(function() {
 		}
 
 	}
+	/**
+	*	Displays the status of the grid
+	*	@param isDraft
+	*	boolean if published (false) or draft (true)
+	*/
 	$btn_publish = $toolbar.find("button[role=publish]");
 	$btn_revert = $toolbar.find("button[role=revert]");
 	function changeIsDraftDisplay(isDraft){
@@ -1323,26 +1338,39 @@ $(function() {
 			$btn_revert.attr("disabled","disabled");
 		}
 	}
-	// Gui modification that need to be calculated when structure changes
+	/**
+	*	Eventhandler for an structureChange event
+	*	called when sidebars could need a collision recalculation
+	*/
 	$body.on('structureChange', function(e, eventInfo) { 
 		// sidebars calculation
 		$grid.children(".container").css("margin-bottom", "0px");
 		$.each($grid.children('[class*=S]'), function(index, sidebar) {
-			console.log(sidebar);
 			makeSidebarPuffer($(sidebar));
 		});
 	});
+	/**
+	*	builds the margins to prevent that the sidebar overlays an container
+	*	@param $sidebar
+	*	the sidebar container
+	*/
 	function makeSidebarPuffer($sidebar){
 		// if there is no next container
 		if( $sidebar.next().length < 1) return;
 		// if next container is a sidebar too
 		var permissionsList = getFloatablePermissions($sidebar);
 		var result = calculateSidebarableContainerHeight($sidebar.next(), permissionsList);
-		var needed_margin = ($sidebar.find(".slot").outerHeight() - result["c_height"])- parseInt($sidebar.css("padding-top"));
+		var needed_margin = ($sidebar.find(".slot").outerHeight() - result["c_height"]) - parseInt($sidebar.css("padding-top"));
 		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-bottom")) ){
 			result["target_container"].css("margin-bottom", needed_margin+"px");
 		}
 	}
+	/**
+	*	Gets the whitelists for elements that can be next to a sidebartype
+	*
+	*	@param $sidebar
+	*	the sidebar
+	*/
 	function getFloatablePermissions($sidebar){
 		switch($sidebar.data("type")){
 			case "S-0-4":
@@ -1355,9 +1383,11 @@ $(function() {
 		return {};
 	}
 	/**
-	*	$container
+	*	Calculates the hight of the elements that can float next to the sidebar and returns the element that eventually needs a margin-bottom
+	*	
+	*	@param $container
 	*	the first container after the sidebar element
-	*	floatingTypes
+	*	@param $floatingTypes
 	*	an array with the element types that can float next to the sidebar element
 	*/
 	function calculateSidebarableContainerHeight($container, floatablePermissionList){
@@ -1402,6 +1432,8 @@ $(function() {
 				console.log(jqXHR);
 				console.log(textStatus);
 				console.log(error);
+				//alert("There was an error. Editor must be reloaded!");
+				//window.location.reload();
 			};
 		}
 		if(async != false){

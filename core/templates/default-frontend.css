@@ -89,6 +89,9 @@
 	width: 33.3%;
 	float: left;
 }
+.C-4{
+	float: none;
+}
 
 /* slot styles */
 .container .slot{
