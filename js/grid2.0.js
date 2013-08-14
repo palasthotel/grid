@@ -356,7 +356,8 @@ $(function() {
 			sendAjax("moveContainer",params,
 			function(data){
 				if(data.result != true){
-					console.log("Fehler! Element muss an originalposition zurück");
+					console.log("Error while re-sorting containers. Site will reload.");
+					window.location.reload();
 				}
 				$body.trigger("structureChange");
 				scrollToContainer(params[1]);
@@ -1432,8 +1433,6 @@ $(function() {
 				console.log(jqXHR);
 				console.log(textStatus);
 				console.log(error);
-				//alert("There was an error. Editor must be reloaded!");
-				//window.location.reload();
 			};
 		}
 		if(async != false){
@@ -1462,7 +1461,7 @@ $(function() {
 		   type:'POST',
 		   data: JSON.stringify(json),
 		   success: function(data){
-			   changeIsDraftDisplay(data.result);
+		   		changeIsDraftDisplay(data.result);
 			},
 		   error: function(jqXHR, textStatus, error){
 				console.log(jqXHR);
