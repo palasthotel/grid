@@ -1023,15 +1023,18 @@ $(function() {
 						"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.label+"</label></div>");
 					break;
 				case "file":
-					$upload_form_item = $("<div class='form-item file-upload'>");
+					console.log("FILE");
+					console.log(element);
+					console.log(c_val);
+					var $upload_form_item = $("<div class='form-item file-upload'>");
 					$upload_form_item.append("<label>"+element.label+"</label>");
-					$file_input = $("<input type='file' class='form-file' />");
+					var $file_input = $("<input type='file' class='form-file' />");
 					$upload_form_item.append($file_input);
-					$key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+c_val+"' class='dynamic-value' />");
+					var $key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+c_val+"' class='dynamic-value' />");
 					$upload_form_item.append($key_field);
-					$progress_display = $("<p>").addClass("progress");
-					$progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
-					$progress_bar_status = $progress_bar_wrapper.children(".bar");
+					var $progress_display = $("<p>").addClass("progress");
+					var $progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
+					var $progress_bar_status = $progress_bar_wrapper.children(".bar");
 					if(content[element.key] == ""){
 						$progress_display.text("Please choose a picture...");
 					} else {
@@ -1046,6 +1049,8 @@ $(function() {
 				        paramName: "file",
 				        done: function (e, data) {
 				        	result  = data.result;
+				        	console.log("DONE: ");
+				        	console.log(data.result);
 				            $dynamic_fields.find("input[data-key="+element.key+"]").val(result.result);
 				            $progress_display.text("OK!");
 				            $progress_bar_status.addClass("done");
@@ -1055,16 +1060,13 @@ $(function() {
 				        	console.log(percent);
 				        	$progress_display.text(Math.round(percent)+"%");
 				        	$progress_bar_status.css("width", percent+"%");
-				            /*var progress = parseInt(data.loaded / data.total * 100, 10);
-				            $('#progress .bar').css(
-				                'width',
-				                progress + '%'
-				            );*/
 				        },
 				        always: function(e, data){
 				        	console.log(data);
 				        }
 				    }).bind('fileuploadsubmit', function (e, data) {
+				    	console.log("FILE upload submit");
+				    	console.log(data);
 					    // The example input, doesn't have to be part of the upload form:
 					    $data = $box_editor_content.find(".box-editor");
 					    var element_key = element.key;
@@ -1074,12 +1076,16 @@ $(function() {
 					    		container: $data.data("c-id"), 
 					    		slot : $data.data("s-id"), 
 					    		box : $data.data("b-index"), 
-					    		key: element.key
+					    		key: element.key,
+					    		path: calculateListPath($("[data-key="+element_key+"]"))
 					    	};
+					   	console.log(data);
 					    $progress_bar_status.removeClass("done");					    
 					}).bind('fileuploadcompleted', function (e, data) {
+						console.log("FILE upload completed:");
 						console.log(data);
 					}).bind('fileuploadfinished', function (e, data) {
+						console.log("FILE upload finished");
 						console.log(data);
 					});
 				    $dynamic_field.append($upload_form_item);

@@ -391,7 +391,6 @@ html{
 	border-bottom:1px solid #999;
 }
 .c-trash.loading{
-	border: none;
 	top: 8px;
 }
 .c-edit{
@@ -432,7 +431,6 @@ html{
 	border-bottom:1px solid #999;
 }
 .c-ok.loading{
-	border:none;
 	top: 8px;
 }
 .c-revert{
@@ -499,7 +497,6 @@ html{
 	top: 5px;
 }
 .c-reuse.loading{
-	border:none;
 	top: 8px;
 }
 .container[class*=S] .c-edit,
@@ -1101,7 +1098,7 @@ html{
   }
 }
 **/
-
+/*
 .loading{
 	position: absolute;
 	height: 16px;
@@ -1149,5 +1146,46 @@ html{
 	from{ background: rgb(0,0,0);}
 	to{ background: rgb(200,200,200); }
 }
+*/
+.loading{
+  position:absolute;
+  width:16px;
+  height:16px;
+  border: 1px solid #ccc;
+  background: #e6e6e6;
+}
+.loading:after{
+  content: '';
+  position:absolute;
+  top:45%;
+  display: block;
+  height:40%;
+  width: 40%;
+  background: #333;
+  -webkit-animation: move 0.5s linear 0 infinite;
+  -o-animation: move 0.5s linear 0 infinite;
+  animation: move 0.5s linear 0 infinite;
+}
 
+@keyframes move{
+  0% { top:0%; left: 30%; }
+  25% { top: 30%; left: 70%; }
+  50% { top: 70%; left: 30% }
+  75% { top: 30%; left: 0%; }
+  100% { top: 0%; left: 30%; }
+}
+@-webkit-keyframes move{
+  0% { top:0%; left: 30%; }
+  25% { top: 30%; left: 70%; }
+  50% { top: 70%; left: 30% }
+  75% { top: 30%; left: 0%; }
+  100% { top: 0%; left: 30%; }
+}
+@-moz-keyframes move{
+  0% { top:0%; left: 30%; }
+  25% { top: 30%; left: 70%; }
+  50% { top: 70%; left: 30% }
+  75% { top: 30%; left: 0%; }
+  100% { top: 0%; left: 30%; }
+}
 
