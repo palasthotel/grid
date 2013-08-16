@@ -385,10 +385,14 @@ html{
 	right:45px;
 	border-bottom:1px solid #666;
 }
-.c-trash:hover{
+.c-trash:not(.loading):hover{
 	cursor:pointer;
 	background-position: center 0px;
 	border-bottom:1px solid #999;
+}
+.c-trash.loading{
+	border: none;
+	top: 8px;
 }
 .c-edit{
 	display:block;
@@ -422,10 +426,14 @@ html{
 	right:84px;
 	border-bottom:1px solid #666;
 }
-.c-ok:hover{
+.c-ok:not(.loading):hover{
 	cursor:pointer;
 	background-position: center 0px;
 	border-bottom:1px solid #999;
+}
+.c-ok.loading{
+	border:none;
+	top: 8px;
 }
 .c-revert{
 	display:block;
@@ -479,7 +487,7 @@ html{
 	right:84px;
 	border-bottom:1px solid #666;
 }
-.container[data-reused=false] .c-reuse:hover{
+.container[data-reused=false] .c-reuse:not(.loading):hover{
 	cursor:pointer;
 	background-position: center 0px;
 	border-bottom:1px solid #999;
@@ -489,6 +497,10 @@ html{
 	border:none;
 	background-position: center 0px;
 	top: 5px;
+}
+.c-reuse.loading{
+	border:none;
+	top: 8px;
 }
 .container[class*=S] .c-edit,
 .container[class*=S] .c-reuse{
@@ -1064,8 +1076,8 @@ html{
 	right: 60px;
 }
 
-/** loading animations **/
-div.loading{
+/** loading animations 
+.loading{
 	width:16px;
 	height:16px;
 	background-image:url(images/reload.png);
@@ -1088,3 +1100,54 @@ div.loading{
     -webkit-transform: rotate(360deg);
   }
 }
+**/
+
+.loading{
+	position: absolute;
+	height: 16px;
+	width: 16px;
+	border: 1px solid #ccc;
+	-webkit-animation: flash 0.3s infinite alternate;
+	-o-animation: flash 0.3s infinite alternate;
+	animation: flash 0.3s infinite alternate;
+}
+.loading:before{
+	content: '';
+	display: block;
+	position: absolute;
+	top: 35%;
+	height: 25%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.6);
+	-webkit-animation: flash 0.3s infinite 0.2s alternate;
+	-o-animation: flash 0.3s infinite 0.2s alternate;
+	animation: flash 0.3s infinite 0.2s alternate;
+}
+.loading:after{
+	content: '';
+	display: block;
+	position: absolute;
+	height: 100%;
+	width: 30%;
+	left: 35%;
+	background-color: rgba(0,0,0,0.6);
+	-webkit-animation: flash 0.3s infinite 0.2s alternate;
+	-o-animation: flash 0.3s infinite 0.2s alternate;
+	animation: flash 0.3s infinite 0.2s alternate;
+}
+
+
+@-webkit-keyframes flash{
+	from{ background: rgb(0,0,0); }
+	to{ background: rgb(200,200,200); }
+}
+@-moz-keyframes flash{
+	from{ background: rgb(0,0,0); }
+	to{ background: rgb(200,200,200); }
+}
+@keyframes flash	{
+	from{ background: rgb(0,0,0);}
+	to{ background: rgb(200,200,200); }
+}
+
+

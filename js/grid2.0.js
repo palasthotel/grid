@@ -454,37 +454,44 @@ $(function() {
 				deleteContainer($container);
 				break;
 			case "reuse":
-				console.log("reuse");
-				if($container.data("reused") == true) return;
-				var adminTitle = prompt(
-					"Once a container is reusable you cannot modify it within this grid anymore. "+
-					"If you want to proceed choose a REUSE-TITLE and confirm:");
-				if(adminTitle == null) return;
-				if(adminTitle == ""){
-					alert("The container needs a title to be reusable. Please try again.");
-					return;
-				}
-				reuseContainer($container, adminTitle);
+				reuseContainer($container);
 				break;
 			default:
 				console.log($this.attr("role"));
 		}
 	});
-	function reuseContainer($container, adminTitle){
+	function reuseContainer($container){
+		var $c_reuse = $container.find(".c-reuse");
+		if($container.data("reused") == true) return;
+		if($c_reuse.hasClass('loading')) return;
+		$c_reuse.addClass('loading rotate');
+		var adminTitle = prompt(
+			"Once a container is reusable you cannot modify it within this grid anymore. "+
+			"If you want to proceed choose a REUSE-TITLE and confirm:");
+		if(adminTitle == null || adminTitle == ""){
+			alert("The container needs a title to be reusable. Please try again.");
+			$c_reuse.removeClass('loading rotate');
+			return;
+		}
   		var params =[ID,$container.data("id"),adminTitle];
 		sendAjax("reuseContainer",params,function(data){
 			if(data.result != true){
-				alert("fehler beim Löschen!");
+				$c_reuse.removeClass('loading rotate');
+				alert("Error while trying to make container reusable!");
 				return;
 			}
 			window.location.reload();
 		});
 	}
 	function deleteContainer($container){
-		var params = [ID, $container.data("id")];
+		var $c_trash = $container.find(".c-trash");
+		if($c_trash.hasClass('loading')) return;
+		var $c_trash = $container.find(".c-trash").addClass('loading rotate');
+		var params = [ID, $container.data("id")];		
 		sendAjax("deleteContainer",params,function(data){
 			if(data.result != true){
-				alert("fehler beim Löschen!");
+				alert("Error while trying to delete container!");
+				$c_trash.removeClass('loading rotate');
 				return;
 			}
 			$container.slideUp(300,function(){
@@ -539,6 +546,9 @@ $(function() {
 		);
 	}
 	function saveContainer($editContainer){
+		var $c_ok = $editContainer.find(".c-ok");
+		if($c_ok.hasClass('loading')) return;
+		$c_ok.addClass('loading rotate');
 		var style = $editContainer.find("#f-c-style").val();
 		if( style == "") style = null;
 		templateParams = {
@@ -573,6 +583,7 @@ $(function() {
 				isDraft();
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
+				$c_ok.removeClass('loading rotate');
 			}
 		});
 	}
