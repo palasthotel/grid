@@ -923,18 +923,22 @@ $(function() {
 				$box_editor_content.append(buildBoxEditor(params));
 				if(arr_box_styles.length < 1){ $box_editor_content.find(".box-styles-wrapper").hide();}
 				var $dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");					
-				var $fields = makeDynamicFields(result.contentstructure, result.content, 0);
+				var $fields = makeDynamicFields(result.contentstructure, result.content, 0, []);
 				$dynamic_fields.append($fields);
 				CKEDITOR.replaceAll("form-html");
 			});
 	});
-	function makeDynamicFields(contentstructure, content, lvl){
+	function makeDynamicFields(contentstructure, content, lvl, cs_path){
 		var $dynamic_fields = $("<div>").addClass("fields").attr("lvl", lvl);
 		$.each(contentstructure,function(index,element){
 			var c_val = content[element.key];
+			console.log("key:");
+			console.log(element.key);
+			console.log("contentvalue:");
+			console.log(c_val);
 			if(c_val === undefined){
 				c_val = "";
-			}	
+			}
 			var $dynamic_field = $("<div>")
 				.addClass("dynamic-field")
 				.attr("data-key", element.key)
@@ -1043,6 +1047,7 @@ $(function() {
 					}
 					$upload_form_item.append($progress_display).append($progress_bar_wrapper);
 					// grid_id, container id, slot_id, box_id, field_id
+					console.log("uploadpath: "+element.uploadpath);
 					$file_input.fileupload({
 				        url: element.uploadpath,
 				        dataType: 'json',
@@ -1070,14 +1075,14 @@ $(function() {
 					    // The example input, doesn't have to be part of the upload form:
 					    $data = $box_editor_content.find(".box-editor");
 					    var element_key = element.key;
-					    console.log(calculateListPath($("[data-key="+element_key+"]")));
+					    console.log(calculateListPath($("[data-key="+element_key+"]"))["key-path"]);
 					    data.formData = {
 					    		"gridid" : ID, 
 					    		container: $data.data("c-id"), 
 					    		slot : $data.data("s-id"), 
 					    		box : $data.data("b-index"), 
-					    		key: element.key,
-					    		path: calculateListPath($("[data-key="+element_key+"]"))
+					    		key: calculateListPath($("[data-key="+element_key+"]"))["key-path"],
+					    		uploadpath: calculateListPath($("[data-key="+element_key+"]"))["key-path"]
 					    	};
 					   	console.log(data);
 					    $progress_bar_status.removeClass("done");					    
@@ -1092,7 +1097,8 @@ $(function() {
 					break;
 				case "list":
 					$dynamic_field.append("<label>"+element.label+"</label>");
-					var $sub_fields = renderListData(element.contentstructure, c_val, lvl);
+					cs_path.push(element.key);
+					var $sub_fields = renderListData(element.contentstructure, c_val, lvl,cs_path);
 					$dynamic_field
 					.addClass("dynamic-list")
 					.addClass("form-list")
@@ -1105,7 +1111,7 @@ $(function() {
 							field_list: $dynamic_field.children(".list-fields"),
 							lvl: lvl+1
 						}, function(e){
-						var $new_li = renderListEntry(e.data.structure,{}, e.data.lvl);
+						var $new_li = renderListEntry(e.data.structure,{}, e.data.lvl,cs_path);
 						//$new_li.find("input").val("");
 						e.data.field_list.append($new_li);
 						$.each($new_li.find(".form-html"),function(i,e){
@@ -1129,27 +1135,27 @@ $(function() {
 					$data.data("c-id"),
 					$data.data("s-id"),
 					$data.data("b-index"),
-					calculateListPath($input),
+					calculateListPath($input)["key-path"],
 					$input.val()
 				],
 				function(data){
 					$input.val(data.result);
 				});
 	}
-	function renderListData(contentstructure, listdata, lvl){
-		var $dynamic_fields = $("<ul>").addClass("list-fields");
+	function renderListData(contentstructure, listdata, lvl, cs_path){
+		var $dynamic_fields = $("<ul>").addClass("list-fields").attr("data-path", cs_path.join("."));
 		lvl++;
 		if(!$.isArray(listdata)){
 			return $("");
 		}
 		$.each(listdata, function(index, content){
-			$dynamic_fields.append(renderListEntry(contentstructure, content,lvl));
+			$dynamic_fields.append(renderListEntry(contentstructure, content,lvl, cs_path));
 		});
 		return $dynamic_fields;
 	}
-	function renderListEntry(contentstructure, content, lvl){
+	function renderListEntry(contentstructure, content, lvl, cs_path){
 		return $("<li>")
-			.append(makeDynamicFields(contentstructure, content,lvl))
+			.append(makeDynamicFields(contentstructure, content,lvl, cs_path))
 			.append( $("<button>X</button>").addClass("delete-item"));
 	}
 	$box_editor_content.on("click","button.delete-item",function(e){
@@ -1176,7 +1182,7 @@ $(function() {
 			$data = $box_editor_content.find(".box-editor");
 			sendAjax(
 					"typeAheadSearch",
-					[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input),$input.val()] ,
+					[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input)["key-path"],$input.val()] ,
 					function(data){
 						old_search_string = $input.val();
 						$input.siblings(".loading").hide();
@@ -1199,20 +1205,23 @@ $(function() {
 			.val($li.text())
 			.attr("disabled", "disabled")
 			.data("value-key", $li.data("key"));
+
 		var $emptyurl = $wrapper.find("a.empty");
 		var $url = $wrapper.find("a.full");
-		$emptyurl.attr("href",$emptyurl.data("raw").replace("%",$li.data("key")));
-		$url.attr("href",$url.data("raw").replace("%",$li.data("key")));
+		if($emptyurl.length > 0) $emptyurl.attr("href",$emptyurl.data("raw").replace("%",$li.data("key")));
+		if($url.length > 0) $url.attr("href",$url.data("raw").replace("%",$li.data("key")));
 		$li.parent().empty();
 	}
 	function calculateListPath($key_element){
 		var $path_search = $key_element.parents(".dynamic-list");
-			var key_path = "";
-			while($path_search.length > 0){
-				key_path = $path_search.data("key")+".";
-				$path_search = $path_search.parents(".dynamic-list");
-			}
-			return key_path + $key_element.data("key");
+		var key_path = "";
+		var arr_path = [];
+		while($path_search.length > 0){
+			arr_path.push($path_search.data("key"));
+			key_path = $path_search.data("key")+".";
+			$path_search = $path_search.parents(".dynamic-list");
+		}
+		return {"key-path": key_path+$key_element.data("key"),"arr-path":arr_path}; 
 	}
 	$box_editor_content.on("click", ".autocomplete-wrapper .cancle",function(e){
 		$this = $(this);
