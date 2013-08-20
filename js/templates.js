@@ -143,11 +143,11 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 jQuery.template("boxEditorTemplate", box_editor_markup);
 
 var in_box_autocomplete_markup = "<div class='"+
-									"{{if val != ''}}locked {{/if}}"+
+									"{{if val != '' || val === 0}}locked {{/if}}"+
 									"autocomplete-wrapper form-autocomplete dynamic-value' >"+
 									"<input type='text' class='form-text autocomplete i-autocomplete' "+
-									"{{if val !=''}}disabled=disabled {{/if}}"+
-									"data-key='${key}' data-type='${type}' data-value-key='${val}' value='${val}' />"+
+									"{{if val !='' || val === 0}}disabled=disabled {{/if}}"+
+									"data-key='${key}' data-type='${type}' data-value-key='${val}' value='${val}' data-path='${path}' />"+
 									"<div class='loading rotate'></div>"+
 									"<div class='cancle'></div>"+
 									"<ul class='suggestion-list'></ul>"+
