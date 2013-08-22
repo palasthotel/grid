@@ -330,6 +330,9 @@ html{
 	left:10px;
 	color:#999;
 }
+.container[data-type*=S]:before{
+	content:'Sidebar:';
+}
 .container .c-title{
 	position:absolute;
 	top:-8px; 
@@ -601,14 +604,17 @@ html{
 #grid [data-type*=S-]:not(.editor) > * > .slot{
 	position: absolute;
 	z-index: 100;
+	bottom: 65px;
 }
 #grid [data-type*=S-]:not(.editor):hover{
 	z-index: 101;
 }
+#grid [data-type*=S-]:not(.editor):hover .slot{
+	border-color: #aaa;
+}
 #grid [data-type=S-0-4] > * > .slot,
 #grid [data-type*=S-] > * > .slot:nth-child(2){
 	right:10px;
-	top: 28px;
 }
 .box .grid .slot{
 	width: 100%;

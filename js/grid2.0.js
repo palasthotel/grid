@@ -1334,6 +1334,7 @@ $(function() {
 		setTimeout(function(){
 			$box_editor.show();
 			$box_editor.animate({width:"100%"},250);
+			window.scrollTo(0, 0);
 		},50);
 	}
 	$box_editor_content.on("click","legend",function(ev){
@@ -1429,6 +1430,8 @@ $(function() {
 	$body.on('structureChange', function(e, eventInfo) { 
 		// sidebars calculation
 		$grid.children(".container").css("margin-bottom", "0px");
+		$grid.find(".container[data-type*=S] .slot")
+							.css("padding-bottom", parseInt($grid.find(".container[data-type*=C]:first-child .slot").css("padding-bottom")));
 		$.each($grid.children('[class*=S]'), function(index, sidebar) {
 			makeSidebarPuffer($(sidebar));
 		});
@@ -1439,15 +1442,45 @@ $(function() {
 	*	the sidebar container
 	*/
 	function makeSidebarPuffer($sidebar){
-		// if there is no next container
-		if( $sidebar.next().length < 1) return;
+		// if there is no prev container
+		if( $sidebar.prev().length < 1) return;
 		// if next container is a sidebar too
 		var permissionsList = getFloatablePermissions($sidebar);
-		var result = calculateSidebarableContainerHeight($sidebar.next(), permissionsList);
+		var c_height = calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
+		var $sidebar_slot = $sidebar.children(".slots-wrapper").children('.slot');
+		var container_padding = $sidebar.css("padding-bottom");
+		if(c_height < $sidebar_slot.outerHeight()){
+			// if container are not as high as sidebar than add margin to prev container
+			var bottom_offset = parseInt($sidebar_slot.css("bottom"));
+			$sidebar.prev().css("margin-bottom", $sidebar_slot.outerHeight() - (c_height-bottom_offset));
+		} else {
+			// if container are higher than sidebar that change sidebar slot position
+			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
+			console.log("sidebar margin bottom: "+need_bottom_offset);
+			$sidebar_slot.css("padding-bottom",need_bottom_offset);
+		}
+		/*
 		var needed_margin = ($sidebar.find(".slot").outerHeight() - result["c_height"]) - parseInt($sidebar.css("padding-top"));
 		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-bottom")) ){
 			result["target_container"].css("margin-bottom", needed_margin+"px");
+		}*/
+	}
+	
+	/**
+	*	Calculates the hight of the elements that can float next to the sidebar and returns the element that eventually needs a margin-bottom
+	*	
+	*	@param $container
+	*	the first container after the sidebar element
+	*	@param $floatingTypes
+	*	an array with the element types that can float next to the sidebar element
+	*/
+	function calculateSidebarableContainerHeight($container, floatablePermissionList){
+		var c_height = 0;
+		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
+			c_height += $container.outerHeight();
+			$container = $container.prev();
 		}
+		return c_height;
 	}
 	/**
 	*	Gets the whitelists for elements that can be next to a sidebartype
@@ -1465,22 +1498,6 @@ $(function() {
 				break;
 		}
 		return {};
-	}
-	/**
-	*	Calculates the hight of the elements that can float next to the sidebar and returns the element that eventually needs a margin-bottom
-	*	
-	*	@param $container
-	*	the first container after the sidebar element
-	*	@param $floatingTypes
-	*	an array with the element types that can float next to the sidebar element
-	*/
-	function calculateSidebarableContainerHeight($container, floatablePermissionList){
-		var c_height = 0;
-		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
-			c_height += $container.outerHeight();
-			$container = $container.next();
-		}
-		return {"c_height": c_height, "target_container": $container.prev()};
 	}
 
 	//--------------------------
