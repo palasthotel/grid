@@ -1,17 +1,14 @@
+/**
+*	Grid controller.
+*	@autor Edward Bock
+*/
 (function($){
 $(function() {
-	// Warnung beim verlassen ohne Speichern
-	/*
-	var saved = true;
-	window.onbeforeunload = function(){
-		if(!saved) return "Es wurden noch nicht alle Änderungen gespeichert!";
-	}
-	*/
-	// ---------------------------
-	// Allgemeine Elemente und konstanten
-	// --------------------------
-	var arr_box_types, arr_box_search_results;
-	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
+
+	/** --------------------------------
+	* generel elements and variables
+	---------------------------------- */
+	
 	var arr_container_style_titles = Array();
 	var $slot_styles;
 	var $stateDisplay = $(".state-display");
@@ -23,8 +20,10 @@ $(function() {
 	var $toolbar = $grid_wrapper.find("#grid-toolbar");
 	var $gridTools = $grid_wrapper.find(".grid-tools");
 	var $toolContainer = $gridTools.children(".g-container");
-	var $toolContainerTypeTabs = $toolContainer.children(".container-type-tabs");
+	var $toolContainerTypeTabs = $toolContainer.find(".container-type-tabs");
+	var $containerTypeChooser = $toolContainer.find(".container-type-chooser");
 	var $toolReusableElements = $toolContainer.find(".reusable-elements");
+	var $toolContainerElementLists = $toolContainer.find(".element-list");
 	var $toolBox = $gridTools.children(".g-box");
 	var $toolBoxTypeTabs = $toolBox.children(".box-type-tabs");
 	var $search_bar = $toolBox.find(".search-bar");
@@ -33,9 +32,9 @@ $(function() {
 	var $toolBoxList = $gridTools.find(".g-box .box-list");
 	var top = 0;
 	
-	// ----------------
-	// init Methode
-	// ---------------
+	/** --------------------------
+	*	Grid gets initiated
+	------------------------------ */
 	var ID = document.ID;
 	var GRIDMODE = document.gridmode;
 	function init() {
@@ -51,7 +50,7 @@ $(function() {
 		top = $toolbar.offset().top;
 		$(window).scroll(function() {
 			if( $(this).scrollTop() > (top) ) {
-				$grid.css("margin-top",$toolbar.height());
+				$grid.css("margin-top",$toolbar.outerHeight());
 			  	$body.addClass('fixed');
 			} else {
 				$grid.css("margin-top",0);
@@ -59,11 +58,18 @@ $(function() {
 			}
 			resizeGridTools();
 		});
+		setTimeout(function(){
+			$body.trigger('structureChange');
+		},600);
 	}
 	$(document).ready(init);
-	// --------------------
-	// values to load before grid
-	// --------------------
+	/** --------------------------------
+	*	load available box types
+	*
+	*	@array arr_box_types
+	*
+	------------------------------------ */
+	var arr_box_types = [], arr_box_search_results;
 	function loadBoxTypes(){
 		sendAjax(
 			"getMetaTypesAndSearchCriteria",
@@ -79,6 +85,15 @@ $(function() {
 				});
 			},null,false);
 	}
+	/** --------------------------------
+	*	values to load before grid
+	*
+	*	@array arr_container_styles
+	*	@array arr_slot_styles
+	*	@array arr_box_styles
+	*
+	------------------------------------ */
+	var arr_container_styles = [], arr_slot_styles = [], arr_box_styles = [];
 	function loadStyles(){
 		sendAjax(
 			"getContainerStyles",
@@ -113,12 +128,11 @@ $(function() {
 				console.log("Box styles geladen");
 				console.log(arr_box_styles);
 			},null,false);
-	}
-	
-	
-	// --------------------
-	// load, revert, publish grid
-	// -------------------
+	}	
+	/** --------------------------------
+	*	load the grid from database
+	*
+	------------------------------------ */
 	function loadGrid(){
 		console.log("Grid_id: "+ID+" document:"+document.ID);
 		sendAjax(
@@ -127,20 +141,32 @@ $(function() {
 			function(data){
 				console.log(data);
 				fillGrid(data.result);
+				if(data.result.isSidebar){
+					console.log("is Sidebar");
+					$(".hide-from-sidebar").remove();
+				}
 				$.each($(".container[data-reused=false] .slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
 				});
 			}
 		);
 	}
+	/** --------------------------------
+	*	fills the grid with database information
+	*
+	*	@param result from loadGrid Request
+	*
+	------------------------------------ */
 	function fillGrid(result){
 		$grid.empty();
 		changeIsDraftDisplay(result.isDraft);
 		var container_arr = result.container;
 		buildContainer(container_arr).appendTo($grid);
+		console.log("fillGrid()-----------");
 		console.log(container_arr);
 		refreshBoxSortable();
 		refreshContainerStyles();
+		$body.trigger("structureChange");
 	}
 	function refreshContainerStyles(){
 		$.each($grid.find(".container"), function(index, c){
@@ -148,6 +174,9 @@ $(function() {
 			$c.find(".c-style").text(arr_container_style_titles[$c.data("style")]);
 		});
 	}
+	/**
+	*	Changes status from draft to published.
+	*/
 	function publishGrid(){
 		sendAjax(
 			"publishDraft", 
@@ -160,6 +189,9 @@ $(function() {
 			}
 		);
 	}
+	/**
+	*	deletes the draft and goes back to last published revision
+	*/
 	function revertGrid(){
 		sendAjax(
 			"revertDraft", 
@@ -176,9 +208,9 @@ $(function() {
 		);
 	}
 	
-	// ---------------------------------
-	// Handler für die Werkzeuge
-	// ---------------------------------
+	/** ---------------------------------
+	* Click handler for main toolbar
+	 --------------------------------- */
 	$toolbar.on("click","button",function(e){
 		$this = $(this);
 		switch($this.attr("role")){
@@ -213,31 +245,33 @@ $(function() {
 				break;
 		}
 	});
-	// ------------------------------
-	// Container Tools
-	// -----------------------------
+	/* ------------------------------
+	* Container Tools
+	* ----------------------------- */
 	$toolContainerTypeTabs.on("click","li:not(.active)",function(e){
 		$toolContainerTypeTabs.children().removeClass("active");
 		$this = $(this).addClass("active");
 		$toolContainerTypeTabs.siblings().hide();
 		$toolContainerTypeTabs.siblings("[ref="+$this.attr("role")+"]").show();
-		loadReusableElements();
+		if($this.attr("role").indexOf("reus") > -1){
+			loadReusableElements();
+		}
 	});
 	function loadReusableElements(){
+		$toolReusableElements.empty();
+		var $c_t_loading = $toolContainer.find(".loading").show();
 		$toolReusableElements.empty();
 		sendAjax("getReusableContainers",[],function(data){
 			console.log(data);
 			$.each(data.result, function(index,e){
-				$toolReusableElements.append(
-					$("<li>"+e.title+"</li>")
-					.addClass("container-dragger new-container")
-					.attr("data-type","reusable")
-					.attr("data-id", e.id)
-				);
+				$toolReusableElements.append(buildReuseContainer(e));
 			});
-
 			reloadContainerDraggables($toolReusableElements.children());
+			$c_t_loading.hide();
 		});
+	}
+	function buildReuseContainer(templateParams){
+		return $.tmpl( "containerReusableTemplate", templateParams );
 	}
 	// ------------------------------
 	// Box Tools
@@ -257,7 +291,6 @@ $(function() {
 		if(active_box_type.criteria.length > 0){
 			$search_bar.show();
 			searchBoxes("");
-			console.log("suchen bitte");
 		} else {
 			$search_bar.hide();
 			searchBoxes();
@@ -301,14 +334,18 @@ $(function() {
 		handle: ".c-sort-handle",
 		//axis: "y",
 		//cursor: "row-resize",
-		items:".container",
+		items:".container:not(.C-4)",
 		placeholder: "c-sort-placeholder",
+		pullPlaceholder: true,
 		helper: function(event, element){
 				return $("<div class='c-sort-helper'></div>");
 		},
 		cursorAt: { left: 30, top:30 },
 		start: function( event, ui ){
 			//$(".box").slideUp(100);
+			//ui.placeholder.outerHeight(ui.outerHeight);
+			$(this).sortable('refreshPositions');
+			//$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
 		},
 		stop: function(event, ui){
 			//$(".box").slideDown(100);
@@ -318,8 +355,11 @@ $(function() {
 			sendAjax("moveContainer",params,
 			function(data){
 				if(data.result != true){
-					console.log("Fehler! Element muss an originalposition zurück");
+					console.log("Error while re-sorting containers. Site will reload.");
+					window.location.reload();
 				}
+				$body.trigger("structureChange");
+				scrollToContainer(params[1]);
 			});
 		}
 	});
@@ -341,19 +381,21 @@ $(function() {
 					accept: ".new-container",
 					hoverClass: "hover",
 					drop: function( event, ui ) {
-						var containerType =  $(ui.draggable).data("type");
+						var $draggable = $(ui.draggable);
+						var containerReusable = $draggable.data("reusable"); 
+						var containerType =  $draggable.data("type");
 						var $this = $(this);
-						if(containerType == "reusable"){
-							console.log("reuse");
+						if(containerReusable == "reusable"){
 							$working_placeholder = $("<div class='working-placeholder'>").insertBefore($this.parent());
+							$grid.children().remove(".container-drop-area-wrapper");
 							//reused container
 							sendAjax(
 								"addReuseContainer",
-								[ID,$this.parent().index(),$(ui.draggable).data("id")],
+								[ID, $working_placeholder.index(), $draggable.data("id")],
 								function(data){
-									console.log(data);
-									console.log(buildContainer(data.result));
 									$working_placeholder.replaceWith(buildContainer(data.result));
+									$body.trigger("structureChange");
+									scrollToContainer(data.result.id);
 							});
 						} else {
 							// new container
@@ -367,14 +409,14 @@ $(function() {
 							params = [ID, containerType, $temp.index()];
 							sendAjax("addContainer",params,
 							function(data){
-								console.log(data);
-								$temp.data("id", data.result.id);
+								$temp.attr("data-id", data.result.id);
 								$slots_wrapper = $temp.find(".slots-wrapper");
 								$.each( data.result.slots, function(index,value){
-									console.log(index+" "+value);
-									buildSlot([{"id" : value }]).appendTo( $slots_wrapper );
+									buildSlot([value]).appendTo( $slots_wrapper );
 								});
 								refreshBoxSortable();
+								$body.trigger("structureChange");
+								scrollToContainer(data.result.id);
 							});
 						}
 						
@@ -408,41 +450,60 @@ $(function() {
 				deleteContainer($container);
 				break;
 			case "reuse":
-				console.log("reuse");
-				if($container.data("reused") == true) return;
-				var adminTitle = prompt(
-					"Once a container is reusable you cannot modify it within this grid anymore. "+
-					"If you want to proceed choose a REUSE-TITLE and confirm:");
-				if(adminTitle == null) return;
-				if(adminTitle == ""){
-					alert("The container needs a title to be reusable. Please try again.");
-					return;
-				}
-				reuseContainer($container, adminTitle);
+				reuseContainer($container);
 				break;
 			default:
 				console.log($this.attr("role"));
 		}
 	});
-	function reuseContainer($container, adminTitle){
+	function reuseContainer($container){
+		var $c_reuse = $container.find(".c-reuse");
+		if($container.data("reused") == true) return;
+		if($c_reuse.hasClass('loading')) return;
+		$c_reuse.addClass('loading rotate');
+		var adminTitle = prompt(
+			"Once a container is reusable you cannot modify it within this grid anymore. "+
+			"If you want to proceed choose a REUSE-TITLE and confirm:");
+		if(adminTitle == null || adminTitle == ""){
+			alert("The container needs a title to be reusable. Please try again.");
+			$c_reuse.removeClass('loading rotate');
+			return;
+		}
   		var params =[ID,$container.data("id"),adminTitle];
 		sendAjax("reuseContainer",params,function(data){
 			if(data.result != true){
-				alert("fehler beim Löschen!");
+				$c_reuse.removeClass('loading rotate');
+				alert("Error while trying to make container reusable!");
 				return;
 			}
 			window.location.reload();
 		});
 	}
 	function deleteContainer($container){
-		var params = [ID, $container.data("id")];
+		var $c_trash = $container.find(".c-trash");
+		if($c_trash.hasClass('loading')) return;
+		var $c_trash = $container.find(".c-trash").addClass('loading rotate');
+		var params = [ID, $container.data("id")];		
 		sendAjax("deleteContainer",params,function(data){
 			if(data.result != true){
-				alert("fehler beim Löschen!");
+				alert("Error while trying to delete container!");
+				$c_trash.removeClass('loading rotate');
 				return;
 			}
 			$container.slideUp(300,function(){
+				var $next = $container.next();
+				var $prev = $container.prev();
+				var target_c_id = null;
+				if($next.length>0){
+					target_c_id = $next.data("id");
+				} else if($prev.length > 0){
+					target_c_id = $prev.data("id");
+				}
 				$container.remove();
+				$body.trigger("structureChange");
+				if(target_c_id != null){
+					scrollToContainer(target_c_id);	
+				}
 			});
 		});
 	}
@@ -461,7 +522,6 @@ $(function() {
 					style: $container.data("style"),
 					styles: arr_container_styles
 				};
-				console.log(params);
 		revert_data = {};
 		revert_data = params;
 		$newContainer = buildContainerEditor(params).insertAfter( $container );
@@ -481,6 +541,9 @@ $(function() {
 		);
 	}
 	function saveContainer($editContainer){
+		var $c_ok = $editContainer.find(".c-ok");
+		if($c_ok.hasClass('loading')) return;
+		$c_ok.addClass('loading rotate');
 		var style = $editContainer.find("#f-c-style").val();
 		if( style == "") style = null;
 		templateParams = {
@@ -507,13 +570,15 @@ $(function() {
 		sendAjax("updateContainer",params,
 		function(data){
 			if(data.result == true){
+				destroyCKEDITORs();
 				$newContainer = buildContainer( templateParams ).insertAfter( $editContainer );
 				$newContainer.find(".slots-wrapper").replaceWith($editContainer.find(".slots-wrapper"));
 				$newContainer.find(".box").show();
 				$editContainer.remove();
-				destroyCKEDITORs();
+				isDraft();
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
+				$c_ok.removeClass('loading rotate');
 			}
 		});
 	}
@@ -584,7 +649,7 @@ $(function() {
 	
 	var old_slot_id, old_container_id, old_box_index;
 	function refreshBoxSortable(){
-		$(".container[data-reused=false] .boxes-wrapper").sortable({
+		$(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
 			items: ".box",
 			cancel: "span.edit",
 			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
@@ -604,8 +669,6 @@ $(function() {
 				refreshBoxTrashs();
 			},
 			stop: function(e, ui){
-				console.log("STOP sort");
-				//$(".boxes-wrapper").removeClass("min-height");
 				hideBoxTrash();
 				if(boxDeleted){
 					boxDeleted = false;
@@ -625,6 +688,8 @@ $(function() {
 							console.log(data);
 							console.log("Rückmeldung geben und Box zurück sortieren!!!");
 						}
+						$body.trigger("structureChange");
+						scrollToBox(ui.item.data("id"));
 				});
 			}
 		});
@@ -646,12 +711,14 @@ $(function() {
 					}
 					ui.draggable.remove();
 					hideBoxTrash();
+					$body.trigger('structureChange');
 				});
 			}
 		});
 	}
+	var $box_draggables = $;
 	function refreshBoxDraggables(){
-		$(".box-dragger").draggable({ 
+		$box_draggables = $(".box-dragger").draggable({ 
 			helper: function(event, element){
 				return $("<div class='dragger-helper'></div>");
 			},
@@ -661,15 +728,17 @@ $(function() {
 			addClass: true,
 			//connectToSortable: GRID_SORTABLE,
 			start: function(event, ui){
-				$slots = $grid.find(".container[data-reused=false] .slot .boxes-wrapper");
+				$slots = $grid.find(".container[data-reused=false][data-type*=C-] .slot .boxes-wrapper");
 				// drop place template
-				$slots.children(".box").before($( document.createElement('div'))
-								.addClass("box-drop-area-wrapper"));
-				$slots.append($( document.createElement('div'))
-								.addClass("box-drop-area-wrapper"));
-				$slots.find(".box-drop-area-wrapper").append($( document.createElement('div'))
-								.addClass("box-drop-area"));
-
+				var $toggle_btn = $toolbar.find("[role=hide_boxes]");
+				if($toggle_btn.attr("data-hidden") != "true"){
+					$slots.children(".box").before($( document.createElement('div'))
+									.addClass("box-drop-area-wrapper"));
+					$slots.append($( document.createElement('div'))
+									.addClass("box-drop-area-wrapper"));
+					$slots.find(".box-drop-area-wrapper").append($( document.createElement('div'))
+									.addClass("box-drop-area"));
+				}
 				$slots.find(".box-drop-area").droppable({ 
 					accept: ".box-dragger",
 					hoverClass: "hover",
@@ -699,9 +768,12 @@ $(function() {
 						function(data){
 							$temp.attr("data-id",data.result.id);
 							console.log(data);
+							$body.trigger("structureChange");
+							scrollToBox(data.result.id);
 						});
 					}
 				});
+				
 			},
 			stop: function( event, ui ){
 				$grid.find(".box-drop-area-wrapper").remove();
@@ -716,7 +788,6 @@ $(function() {
 	var $box_editor_content = $box_editor.children(".content");
 	function getBoxEditorIDs(){
 		var $data = $box_editor_content.find(".box-editor");
-		console.log($data);
 		return{ 
 			ID:ID, 
 			c_id: $data.data("c-id"), 
@@ -781,6 +852,7 @@ $(function() {
 				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
 				showGrid($data.data("id"));
 				destroyCKEDITORs();
+				isDraft();
 			});
 	}
 	function collectBoxEditorData($data, lvl){
@@ -809,12 +881,12 @@ $(function() {
 					content[key] = values;
 					break;
 				case "autocomplete":
-					content[$element.find("input").data("key")] = $element.find("input").data("value-key");
+				case "autocomplete-with-links":
+					content[$element.data("key")] = $element.find("input").data("value-key");
 					break;
 				default:
 					content[$element.find(".dynamic-value").data("key")] = $element.find(".dynamic-value").val();
 					break;
-
 			}
 		});
 		return content;
@@ -825,7 +897,7 @@ $(function() {
 		c_id = $this.parents(".container").data("id");
 		s_id = $this.parents(".slot").data("id");
 		b_index = $this.parents(".box").index();
-		console.log("edit!");
+		console.log("edit!-------------------");
 		showBoxEditor();
 		sendAjax(
 			"fetchBox",
@@ -843,33 +915,28 @@ $(function() {
 				$box_editor_content.append(buildBoxEditor(params));
 				if(arr_box_styles.length < 1){ $box_editor_content.find(".box-styles-wrapper").hide();}
 				var $dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");					
-				var $fields = makeDynamicFields(result.contentstructure, result.content, 0);
+				var $fields = makeDynamicFields(result.contentstructure, result.content, 0, "");
 				$dynamic_fields.append($fields);
 				CKEDITOR.replaceAll("form-html");
-				/*
-				$.each($dynamic_fields.find(".form-html"), function(index, ckeditor){
-					$ckeditor = $(ckeditor);
-					CKEDITOR.replace(
-						$ckeditor.attr("name"),{
-							customConfig : document.PathToConfig
-						}
-					);
-				});
-*/
-				//CKEDITOR.replace("f-b-prolog",{customConfig : document.PathToConfig});
-				//CKEDITOR.replace("f-b-epilog",{customConfig : document.PathToConfig});
 			});
 	});
-	function makeDynamicFields(contentstructure, content, lvl){
+	function makeDynamicFields(contentstructure, content, lvl, cs_path){
 		var $dynamic_fields = $("<div>").addClass("fields").attr("lvl", lvl);
 		$.each(contentstructure,function(index,element){
 			var c_val = content[element.key];
+			console.log("key:");
+			console.log(element.key);
+			console.log("contentvalue:");
+			console.log(c_val);
+			console.log("contentstructure path");
+			console.log(cs_path);
 			if(c_val === undefined){
 				c_val = "";
-			}	
+			}
 			var $dynamic_field = $("<div>")
 				.addClass("dynamic-field")
 				.attr("data-key", element.key)
+				.attr("data-path", cs_path)
 				.attr("data-index", index)
 				.attr("data-type", element.type);
 			switch(element.type){
@@ -877,6 +944,7 @@ $(function() {
 					$dynamic_field.append("<label>"+element.label+"</label>");
 					$dynamic_field.append(
 						"<textarea class='dynamic-value form-textarea' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' name='key-"+index+"'>"+
 						c_val+
 						"</textarea>");
@@ -884,6 +952,7 @@ $(function() {
 				case "html":
 					$dynamic_field.append("<label>"+element.label+"</label>");
 					var $html_area = $("<textarea class='dynamic-value form-html' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' name='"+element.key+"'>"+
 						c_val+
 						"</textarea>");
@@ -893,17 +962,20 @@ $(function() {
 					$dynamic_field.append("<label>"+element.label+"</label>");
 					$dynamic_field.append(
 						"<input type='number' class='dynamic-value form-text' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' value='"+c_val+"' />");
 					break;
 				case "text":
 					$dynamic_field.append("<label>"+element.label+"</label>");
 					$dynamic_field.append(
 						"<input type='text' class='dynamic-value form-text' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' value='"+c_val+"' />");
 					break;
 				case "select":
 					$dynamic_field.append("<label>"+element.label+"</label>");
 					var $select = $("<select class='dynamic-value form-select' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"'></select>");
 					$.each(element.selections,function(i,sel){
 						selected = "";
@@ -919,12 +991,36 @@ $(function() {
 						label: element.valuekey,
 						val: c_val,
 						key: element.key,
-						type: element.type
+						type: element.type,
+						path: cs_path+element.key
 					} ));
+					if(c_val != "" || c_val === 0){
+						getReadableAutocompleteValue($dynamic_field.find(".i-autocomplete"));
+					}
+					break;
+				case "autocomplete-with-links":
+					$dynamic_field.append("<label>"+element.label+"</label>");
+					$dynamic_field.append($.tmpl( "inBoxAutocompleteTemplate", {
+						label: c_val,
+						val: c_val,
+						key: element.key,
+						type: element.type,
+						urlraw: element.url,
+						url: element.url.replace("%",content[element.key]),
+						emptyurlraw: element.emptyurl,
+						emptyurl: element.emptyurl.replace("%",content[element.key]),
+						linktext: element.linktext,
+						emptylinktext: element.emptylinktext,
+						path: cs_path+element.key
+					}));
+					if(c_val != "" || c_val === 0){
+						getReadableAutocompleteValue($dynamic_field.find(".i-autocomplete"));
+					}
 					break;
 				case "hidden":
 					$dynamic_field.append(
 						"<input type='hidden' class='dynamic-value' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' value='"+c_val+"' />");
 					break;
 				case "checkbox":
@@ -933,33 +1029,35 @@ $(function() {
 						checked = "checked='checked'";
 					}
 					$dynamic_field.append("<div class='form-item'><input type='checkbox' "+checked+" class='dynamic-value form-checkbox' "+
+						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' value='1' /> <label class='option'>"+element.label+"</label></div>");
 					break;
 				case "file":
-					$upload_form_item = $("<div class='form-item file-upload'>");
+					var $upload_form_item = $("<div class='form-item file-upload'>");
 					$upload_form_item.append("<label>"+element.label+"</label>");
-					$file_input = $("<input type='file' class='form-file' />");
+					var $file_input = $("<input type='file' data-path='"+cs_path+element.key+"' class='form-file' />");
 					$upload_form_item.append($file_input);
-					$key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+c_val+"' class='dynamic-value' />");
+					var $key_field = $("<input type='hidden' data-key='"+element.key+"' value='"+c_val+"' class='dynamic-value' />");
 					$upload_form_item.append($key_field);
-					$progress_display = $("<p>").addClass("progress");
-					$progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
-					$progress_bar_status = $progress_bar_wrapper.children(".bar");
-					if(content[element.key] == ""){
+					var $progress_display = $("<p>").addClass("progress");
+					var $progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
+					var $progress_bar_status = $progress_bar_wrapper.children(".bar");
+					if(content[element.key] == "" || content[element.key] == undefined){
 						$progress_display.text("Please choose a picture...");
 					} else {
 						$progress_display.text("Choose another picture to override the old one.");
 						$progress_bar_status.addClass("done");
 					}
 					$upload_form_item.append($progress_display).append($progress_bar_wrapper);
-					// grid_id, container id, slot_id, box_id, field_id
 					$file_input.fileupload({
 				        url: element.uploadpath,
 				        dataType: 'json',
 				        paramName: "file",
 				        done: function (e, data) {
 				        	result  = data.result;
-				            $dynamic_fields.find("input[data-key="+element.key+"]").val(result.result);
+				        	console.log("DONE: ");
+				        	console.log(data.result);
+				            $(this).siblings('[data-key='+element.key+']').val(result.result);
 				            $progress_display.text("OK!");
 				            $progress_bar_status.addClass("done");
 				        },
@@ -968,40 +1066,37 @@ $(function() {
 				        	console.log(percent);
 				        	$progress_display.text(Math.round(percent)+"%");
 				        	$progress_bar_status.css("width", percent+"%");
-				            /*var progress = parseInt(data.loaded / data.total * 100, 10);
-				            $('#progress .bar').css(
-				                'width',
-				                progress + '%'
-				            );*/
 				        },
 				        always: function(e, data){
 				        	console.log(data);
 				        }
 				    }).bind('fileuploadsubmit', function (e, data) {
+				    	console.log("-------- FILE upload submit");
 					    // The example input, doesn't have to be part of the upload form:
 					    $data = $box_editor_content.find(".box-editor");
 					    var element_key = element.key;
-					    console.log(calculateListPath($("[data-key="+element_key+"]")));
 					    data.formData = {
 					    		"gridid" : ID, 
 					    		container: $data.data("c-id"), 
 					    		slot : $data.data("s-id"), 
 					    		box : $data.data("b-index"), 
-					    		key: element.key
+					    		key: $(this).data("path")
 					    	};
+					   	console.log(data);
 					    $progress_bar_status.removeClass("done");					    
 					}).bind('fileuploadcompleted', function (e, data) {
+						console.log("FILE upload completed:");
 						console.log(data);
 					}).bind('fileuploadfinished', function (e, data) {
+						console.log("FILE upload finished");
 						console.log(data);
 					});
 				    $dynamic_field.append($upload_form_item);
 					break;
-				case "autocomplete-with-link":
-					break;
 				case "list":
 					$dynamic_field.append("<label>"+element.label+"</label>");
-					var $sub_fields = renderListData(element.contentstructure, c_val, lvl);
+					var new_cs_path = cs_path+element.key+".";
+					var $sub_fields = renderListData(element.contentstructure, c_val, lvl, new_cs_path);
 					$dynamic_field
 					.addClass("dynamic-list")
 					.addClass("form-list")
@@ -1014,11 +1109,10 @@ $(function() {
 							field_list: $dynamic_field.children(".list-fields"),
 							lvl: lvl+1
 						}, function(e){
-						var $new_li = renderListEntry(e.data.structure,{}, e.data.lvl);
+						var $new_li = renderListEntry(e.data.structure,{}, e.data.lvl, new_cs_path);
 						//$new_li.find("input").val("");
 						e.data.field_list.append($new_li);
 						$.each($new_li.find(".form-html"),function(i,e){
-							console.log("fekd");
 							CKEDITOR.replace(e);
 						});
 					}).appendTo($dynamic_field);
@@ -1030,27 +1124,54 @@ $(function() {
 		});
 		return $dynamic_fields;
 	}
-	function renderListData(contentstructure, listdata, lvl){
+	function getReadableAutocompleteValue($input){
+		var $data = $box_editor_content.find(".box-editor");
+		var path = $input.attr("data-path");
+		console.log("AUTOCOMPLETE PATH:"+path);
+		console.log([
+					ID,
+					$data.data("c-id"),
+					$data.data("s-id"),
+					$data.data("b-index"),
+					path,
+					$input.val()
+				]);
+		sendAjax("typeAheadGetText",
+				[
+					ID,
+					$data.data("c-id"),
+					$data.data("s-id"),
+					$data.data("b-index"),
+					path,
+					$input.val()
+				],
+				function(data){
+					console.log("---- ReadableAutocomplete");
+					console.log(data);
+					$input.val(data.result);
+				});
+	}
+	function renderListData(contentstructure, listdata, lvl, cs_path){
 		var $dynamic_fields = $("<ul>").addClass("list-fields");
 		lvl++;
 		if(!$.isArray(listdata)){
 			return $("");
 		}
 		$.each(listdata, function(index, content){
-			$dynamic_fields.append(renderListEntry(contentstructure, content,lvl));
+			$dynamic_fields.append(renderListEntry(contentstructure, content,lvl, cs_path));
 		});
 		return $dynamic_fields;
 	}
-	function renderListEntry(contentstructure, content, lvl){
+	function renderListEntry(contentstructure, content, lvl, cs_path){
 		return $("<li>")
-			.append(makeDynamicFields(contentstructure, content,lvl))
+			.append(makeDynamicFields(contentstructure, content,lvl, cs_path))
 			.append( $("<button>X</button>").addClass("delete-item"));
 	}
 	$box_editor_content.on("click","button.delete-item",function(e){
 		$(this).closest("li").remove();
 	});
 	var old_search_string = "";
-	$box_editor_content.on("keyup", "input[data-type=autocomplete]",function(e){
+	$box_editor_content.on("keyup", "input.i-autocomplete",function(e){
 		$this = $(this);
 		if(e.which == 13){
 			$autocomplete_items = $this.siblings(".suggestion-list").children();
@@ -1068,16 +1189,18 @@ $(function() {
 		clearTimeout(boxAutocompleteTimeout);
 		boxAutocompleteTimeout = setTimeout(function(){
 			$data = $box_editor_content.find(".box-editor");
-			sendAjax("typeAheadSearch",[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input),$input.val()] ,function(data){
-					old_search_string = $input.val();
-					$input.siblings(".loading").hide();
-					$autocompleteList = $input.siblings(".suggestion-list");
-					$autocompleteList.empty();
-					console.log(data);
-					$.each(data.result,function(index, value){
-						$autocompleteList.append($("<li>"+value.value+"</li>").attr("data-key",value.key));
+			sendAjax(
+					"typeAheadSearch",
+					[ID,$data.data("c-id"),$data.data("s-id"),$data.data("b-index"),calculateListPath($input)["key-path"],$input.val()] ,
+					function(data){
+						old_search_string = $input.val();
+						$input.siblings(".loading").hide();
+						$autocompleteList = $input.siblings(".suggestion-list");
+						$autocompleteList.empty();
+						$.each(data.result,function(index, value){
+							$autocompleteList.append($("<li>"+value.value+"</li>").attr("data-key",value.key));
+						});
 					});
-				});
 		},500);
 	}
 	$box_editor_content.on("click",".suggestion-list li",function(e){
@@ -1090,16 +1213,24 @@ $(function() {
 			.val($li.text())
 			.attr("disabled", "disabled")
 			.data("value-key", $li.data("key"));
+
+		var $emptyurl = $wrapper.find("a.empty");
+		var $url = $wrapper.find("a.full");
+		if($emptyurl.length > 0) $emptyurl.attr("href",$emptyurl.data("raw").replace("%",$li.data("key")));
+		if($url.length > 0) $url.attr("href",$url.data("raw").replace("%",$li.data("key")));
 		$li.parent().empty();
 	}
 	function calculateListPath($key_element){
 		var $path_search = $key_element.parents(".dynamic-list");
-			var key_path = "";
-			while($path_search.length > 0){
-				key_path = $path_search.data("key")+".";
-				$path_search = $path_search.parents(".dynamic-list");
-			}
-			return key_path + $key_element.data("key");
+		console.log($path_search);
+		var key_path = "";
+		var arr_path = [];
+		while($path_search.length > 0){
+			arr_path.push($path_search.data("key"));
+			key_path = $path_search.data("key")+".";
+			$path_search = $path_search.parents(".dynamic-list");
+		}
+		return {"key-path": key_path+$key_element.data("key"),"arr-path":arr_path}; 
 	}
 	$box_editor_content.on("click", ".autocomplete-wrapper .cancle",function(e){
 		$this = $(this);
@@ -1133,10 +1264,10 @@ $(function() {
 			if(GRIDMODE != "box"){
 				$toolbar.slideDown(200,function(){
 					if(box_id == null) return;
-					$('html, body').animate({
-						 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-120)
-					 }, 200);
+					$body.trigger('structureChange');
+					scrollToBox(box_id);
 				});
+				
 			}
 		},50);
 	}
@@ -1160,6 +1291,16 @@ $(function() {
 	$box_editor_content.on("click","legend",function(ev){
 		$(this).siblings(".field-wrapper").slideToggle(300);
 	});
+	function scrollToContainer(container_id){
+		$('html, body').animate({
+			 scrollTop: ($(".container[data-id="+container_id+"]").offset().top-160)
+		 }, 200);
+	}
+	function scrollToBox(box_id){
+		$('html, body').animate({
+			 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-160)
+		 }, 200);
+	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
 	}
@@ -1198,20 +1339,28 @@ $(function() {
 		toggling = true;
 		var $toggle_btn = $toolbar.find("[role=hide_boxes]");
 		if($toggle_btn.attr("data-hidden") == "true"){
+			refreshBoxDraggables();
 			$(".c-edit, .c-ok, .c-revert").show();
 			$(".box, .c-before, .c-after").slideDown(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", false);
+				$body.trigger("structureChange");	
 			});
 		} else{
 			$(".c-edit, .c-ok, .c-revert").hide();
 			$(".box, .c-before, .c-after").slideUp(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", true);
+				$body.trigger("structureChange");	
 			});
 		}
-		
+
 	}
+	/**
+	*	Displays the status of the grid
+	*	@param isDraft
+	*	boolean if published (false) or draft (true)
+	*/
 	$btn_publish = $toolbar.find("button[role=publish]");
 	$btn_revert = $toolbar.find("button[role=revert]");
 	function changeIsDraftDisplay(isDraft){
@@ -1225,6 +1374,67 @@ $(function() {
 			$btn_revert.attr("disabled","disabled");
 		}
 	}
+	/**
+	*	Eventhandler for an structureChange event
+	*	called when sidebars could need a collision recalculation
+	*/
+	$body.on('structureChange', function(e, eventInfo) { 
+		// sidebars calculation
+		$grid.children(".container").css("margin-bottom", "0px");
+		$.each($grid.children('[class*=S]'), function(index, sidebar) {
+			makeSidebarPuffer($(sidebar));
+		});
+	});
+	/**
+	*	builds the margins to prevent that the sidebar overlays an container
+	*	@param $sidebar
+	*	the sidebar container
+	*/
+	function makeSidebarPuffer($sidebar){
+		// if there is no next container
+		if( $sidebar.next().length < 1) return;
+		// if next container is a sidebar too
+		var permissionsList = getFloatablePermissions($sidebar);
+		var result = calculateSidebarableContainerHeight($sidebar.next(), permissionsList);
+		var needed_margin = ($sidebar.find(".slot").outerHeight() - result["c_height"]) - parseInt($sidebar.css("padding-top"));
+		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-bottom")) ){
+			result["target_container"].css("margin-bottom", needed_margin+"px");
+		}
+	}
+	/**
+	*	Gets the whitelists for elements that can be next to a sidebartype
+	*
+	*	@param $sidebar
+	*	the sidebar
+	*/
+	function getFloatablePermissions($sidebar){
+		switch($sidebar.data("type")){
+			case "S-0-4":
+				return {"C-8-0":true,"C-4-4-0":true, "S-4-0":true, "C-0-4-0":true};
+				break;
+			case "S-4-0":
+				return {"C-0-8":true,"C-0-4-4":true, "S-0-4":true, "C-0-4-0":true};
+				break;
+		}
+		return {};
+	}
+	/**
+	*	Calculates the hight of the elements that can float next to the sidebar and returns the element that eventually needs a margin-bottom
+	*	
+	*	@param $container
+	*	the first container after the sidebar element
+	*	@param $floatingTypes
+	*	an array with the element types that can float next to the sidebar element
+	*/
+	function calculateSidebarableContainerHeight($container, floatablePermissionList){
+		var c_height = 0;
+		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
+			c_height += $container.outerHeight();
+			$container = $container.next();
+		}
+		return {"c_height": c_height, "target_container": $container.prev()};
+	}
+
 	function destroyCKEDITORs(){
 		for(name in CKEDITOR.instances){
 		    CKEDITOR.instances[name].destroy();
@@ -1241,6 +1451,7 @@ $(function() {
 		}
 		$gridTools.css("height",tool_height);
 		$toolBoxList.css("height", $gridTools.outerHeight()- 120);
+		$toolContainerElementLists.css( "height", $gridTools.outerHeight()-120);
 	}
 	resizeGridTools();
 
@@ -1285,7 +1496,7 @@ $(function() {
 		   type:'POST',
 		   data: JSON.stringify(json),
 		   success: function(data){
-			   changeIsDraftDisplay(data.result);
+		   		changeIsDraftDisplay(data.result);
 			},
 		   error: function(jqXHR, textStatus, error){
 				console.log(jqXHR);

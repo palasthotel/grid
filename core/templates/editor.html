@@ -7,31 +7,22 @@
             <li><button role="revert">Revert</button></li>         
         </ul>
         <ul role="gui">
-            <li><button data-hidden="false" role="hide_boxes">Toggle boxes</button></li>
-            <li><button role="add_container">Add container</button></li>
+            <li class="hide-from-sidebar">
+                <button data-hidden="false" role="hide_boxes">Toggle boxes</button>
+            </li>
+            <li class="hide-from-sidebar">
+                <button role="add_container">Add container</button>
+            </li>
             <li><button role="add_box">Add box</button></li>
         </ul>
         <div class="grid-tools">
         	<!-- Tools für Container hinzufügen -->
         	<div class="g-tool g-container clearfix">
-                <!--
-            	<div class="container-selection">
-                    <select name="container-type" class="form-select" size="3">
-                        <option value="C-12" selected="selected">C-12</option>
-                        <option value="C-8-4">C-8-4</option>
-                        <option value="C-4-8">C-4-8</option>
-                        <option value="C-4-4-4">C-4-4-4</option>
-                        <option value="C-2-2-2-2-2-2">C-2-2-2-2-2-2</option>
-                    </select>
-                </div>
-                <div class="container-dragger-wrapper">
-                	<div id="container-dragger" class="draggable new-container">Neu</div>
-                </div>
-                -->
+                <div class="loading rotate"></div>
                 <ul class="clearfix element-type-tabs container-type-tabs">
-                    <li role="show-containers" class="active">C</li>
-                    <li role="show-sidebars">S</li>
-                    <li role="show-reusable">R</li>
+                    <li role="show-containers" class="active" title="Empty container">C</li>
+                    <li role="show-sidebars" title="Sidebars">S</li>
+                    <li role="show-reusable" title="Reusable container">R</li>
                 </ul>
                 <ul class="container-type-chooser element-list" ref="show-containers">
                     <li class="container-dragger new-container C-12 clearfix" data-type="C-12">
@@ -56,11 +47,49 @@
                         <div class="slot"></div>
                         <div class="slot"></div>
                     </li>
+                    
+                    <li class="container-dragger new-container C-0-8 clearfix" data-type="C-0-8">
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-8-0 clearfix" data-type="C-8-0">
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-0-4-4 clearfix" data-type="C-0-4-4">
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-4-4-0 clearfix" data-type="C-4-4-0">
+                        <div class="slot"></div>
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container C-0-4-0 clearfix" data-type="C-0-4-0">
+                        <div class="slot"></div>
+                    </li>
+
                 </ul>
+
+                <ul class="sidebar-elements container-type-chooser element-list" ref="show-sidebars">
+                    <li class="container-dragger new-container S-0-4 clearfix" data-type="S-0-4">
+                        <div class="slot"></div>
+                    </li>
+                    <li class="container-dragger new-container S-4-0 clearfix" data-type="S-4-0">
+                        <div class="slot"></div>
+                    </li>
+                </ul>
+
                 <ul class="reusable-elements element-list" ref="show-reusable">
-                    <li class="container-dragger reusable">REUSABLE</li>
                 </ul>
+
             </div>
+            <script>
+            /*
+            (function($){
+                var role = $(".g-tool.g-container").find(".container-type-tabs li.active").attr("role");
+                $(".container-type-chooser").find("li").hide();
+                $(".container-type-chooser").find("[class*="+role+"]").show();
+            })(jQuery);
+            */
+            </script>
             <!-- Tools für Box hinzufügen -->
             <div class="g-tool g-box">
             	<div class="loading rotate"></div>

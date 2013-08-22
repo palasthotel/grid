@@ -25,6 +25,34 @@ class grid_ajaxendpoint {
 		$bx['contentstructure']=$box->contentStructure();
 		return $bx;
 	}
+	
+	private function encodeContainer($container)
+	{
+		$cnt=array();
+		foreach(get_object_vars($container) as $key=>$value)
+		{
+			if($key!='storage' && $key!='slots' && $key!='containerid' && $key!='grid')
+			{
+				$cnt[$key]=$value;
+			}
+		}
+		$cnt['id']=$container->containerid;
+		$cnt['slots']=array();
+		foreach($container->slots as $slot)
+		{
+			$slt=array();
+			$slt['id']=$slot->slotid;
+			$slt['style']=$slot->style;
+			$slt['boxes']=array();
+			foreach($slot->boxes as $box)
+			{
+				$bx=$this->encodeBox($box);
+				$slt['boxes'][]=$bx;
+			}
+			$cnt['slots'][]=$slt;
+		}
+		return $cnt;
+	}
 
 	public function loadGrid($gridid) {
 		$grid=$this->storage->loadGrid($gridid);
@@ -35,29 +63,7 @@ class grid_ajaxendpoint {
 		$converted['container']=array();
 		foreach($grid->container as $container)
 		{
-			$cnt=array();
-			foreach(get_object_vars($container) as $key=>$value)
-			{
-				if($key!='storage' && $key!='slots' && $key!='containerid' && $key!='grid')
-				{
-					$cnt[$key]=$value;
-				}
-			}
-			$cnt['id']=$container->containerid;
-			$cnt['slots']=array();
-			foreach($container->slots as $slot)
-			{
-				$slt=array();
-				$slt['id']=$slot->slotid;
-				$slt['style']=$slot->style;
-				$slt['boxes']=array();
-				foreach($slot->boxes as $box)
-				{
-					$bx=$this->encodeBox($box);
-					$slt['boxes'][]=$bx;
-				}
-				$cnt['slots'][]=$slt;
-			}
+			$cnt=$this->encodeContainer($container);
 			$converted['container'][]=$cnt;
 		}
 		return $converted;
@@ -110,7 +116,15 @@ class grid_ajaxendpoint {
 		);
 		foreach($container->slots as $slot)
 		{
-			$result['slots'][]=$slot->slotid;
+			$slt=array();
+			$slt['id']=$slot->slotid;
+			$slt['style']=$slot->style;
+			$slt['boxes']=array();
+			foreach($slot->boxes as $box)
+			{
+				$slt['boxes'][]=$this->encodeBox($box);
+			}
+			$result['slots'][]=$slt;
 		}
 		return $result;
 	}
@@ -288,6 +302,7 @@ class grid_ajaxendpoint {
 						$clone->updateBox($box);
 						$clone->persist();
 						//3. remove box from this slot
+						$box->prepareReuseDeletion();
 						$slot->removeBox($idx);
 						$box->delete();
 						
@@ -331,7 +346,7 @@ class grid_ajaxendpoint {
 		foreach($ids as $id)
 		{
 			$container=$this->storage->loadReuseContainer($id);
-			$result[]=array('id'=>$id,'title'=>$container->reusetitle);
+			$result[]=$this->encodeContainer($container);
 		}
 		return $result;
 	}
@@ -531,5 +546,26 @@ class grid_ajaxendpoint {
 			}
 		}
 		return array(array('key'=>-2,'value'=>'Box not found'));
+	}
+	
+	public function typeAheadGetText($gridid,$containerid,$slotid,$idx,$path,$id)
+	{
+		$grid=$this->storage->loadGrid($gridid);
+		foreach($grid->container as $container)
+		{
+			if($container->containerid==$containerid)
+			{
+				foreach($container->slots as $slot)
+				{
+					if($slot->slotid==$slotid)
+					{
+						$box=$slot->boxes[$idx];
+						return $box->getElementValue($path,$id);
+					}
+				}
+				return "WRONG SLOT";
+			}
+		}
+		return "WRONG CONTAINER";
 	}
 }

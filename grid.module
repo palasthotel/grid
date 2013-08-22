@@ -21,6 +21,23 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 		}
 		return $results;
 	}
+	
+	public function loadGrid($gridid)
+	{
+		$return=parent::loadGrid($gridid);
+		$nid=grid_get_nid_by_gridid($gridid);
+		$node=node_load($nid);
+		$type=$node->type;
+		if($type==variable_get('grid_sidebar',''))
+		{
+			$return['isSidebar']=TRUE;
+		}
+		else
+		{
+			$return['isSidebar']=FALSE;
+		}
+		return $return;
+	}
 }
 
 function grid_permission() {
@@ -223,6 +240,19 @@ function grid_get_grid_by_nid($nodeid)
 	}
 }
 
+function grid_get_nid_by_gridid($gridid)
+{
+	$nid=db_select("grid_nodes")->fields("grid_nodes",array("nid"))->condition("grid_id",$gridid)->execute()->fetchAssoc();
+	if($nid==FALSE)
+	{
+		return FALSE;
+	}
+	else
+	{
+		return $nid['nid'];
+	}
+}
+
 function grid_get_storage()
 {
 	$loaded=&drupal_static(__FUNCTION__);
@@ -278,6 +308,7 @@ function grid_grid($node) {
 }
 
 function grid_preview($node) {
+
 	$type=$node->type;
 	$enabled=variable_get("grid_".$type."_enabled",0);
 	if($enabled==1)
@@ -289,6 +320,10 @@ function grid_preview($node) {
 		}
 		else
 		{
+			// default grid css
+			$base=drupal_get_path('module','grid');
+			drupal_add_css($base.'/core/templates/default-frontend.css',array('type'=>'file','group'=>CSS_DEFAULT));
+
 			$storage=grid_get_storage();
 			$grid=$storage->loadGrid($grid_id);
 			return $grid->render(FALSE);
@@ -330,6 +365,10 @@ function grid_node_view($node,$view_mode,$langcode)
 {
 	if(isset($node->grid) && $view_mode=="full")
 	{
+		// default grid css
+		$base=drupal_get_path('module','grid');
+		drupal_add_css($base.'/core/templates/default-frontend.css',array('type'=>'file','group'=>CSS_DEFAULT));
+
 		global $theme_path;
 		$storage=$node->grid->storage;
 		$storage->templatesPath=$theme_path.'/grid/';
@@ -338,6 +377,7 @@ function grid_node_view($node,$view_mode,$langcode)
 			'#type'=>'markup',
 			'#markup'=>$html,
 		);
+		
 		return $node;
 	}
 }
@@ -382,6 +422,13 @@ function grid_build_grid_submit($form_id,&$form_state)
 {
 	$storage=grid_get_storage();
 	$id=$storage->createGrid();
+	$node=node_load($form_state['nid']);
+	if($node->type==variable_get('grid_sidebar',''))
+	{
+		$grid=$storage->loadGrid($id);
+		$grid->insertContainer("C-4",0);		
+	}
+	
 	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
 }
 
@@ -416,6 +463,29 @@ function grid_admin_settings()
 			'#title'=>$key,
 		);
 	}
+	
+	$form['sidebar']=array(
+		'#type'=>'fieldset',
+		'#title'=>t('Content to be used as a sidebar'),
+	);
+	$options=array();
+	
+	foreach($keys as $key)
+	{
+		if(variable_get('grid_'.$key.'_enabled',0))
+		{
+			$options[$key]=$key;
+		}
+	}
+
+
+	$form['sidebar']['grid_sidebar']=array(
+		'#type'=>'select',
+		'#title'=>'Node Type',
+		'#options'=>$options,
+		'#default_value'=>variable_get('grid_sidebar','')
+	);
+	
 	
 	$form['displays']=array(
 		'#type'=>'fieldset',

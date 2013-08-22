@@ -634,6 +634,14 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$slot->slotid=$slotid;
 			$slot->storage=$this;
 			$container->slots[]=$slot;
+			if($containertype[0]=='S')
+			{
+				$box=new grid_sidebar_box();
+				$box->storage=$this;
+				$box->grid=$grid;
+				$box->persist();
+				$slot->addBox(0,$box);
+			}
 		}
 		return $container;
 	}

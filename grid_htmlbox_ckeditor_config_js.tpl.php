@@ -56,6 +56,8 @@ CKEDITOR.editorConfig = function( config ) {
 	    { name: 'document', items: [ 'Source' ] }
 	];
 
+	config.allowedContent = true;
+
 	config.format_tags = '<?=implode(";",$formats)?>';
 	<?php if(count($styles)>0) {?>
 	config.stylesSet = 'grid_styles';
