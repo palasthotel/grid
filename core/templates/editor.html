@@ -20,11 +20,12 @@
         	<div class="g-tool g-container clearfix">
                 <div class="loading rotate"></div>
                 <ul class="clearfix element-type-tabs container-type-tabs">
-                    <li role="show-containers" class="active" title="Empty container">C</li>
-                    <li role="show-sidebars" title="Sidebars">S</li>
-                    <li role="show-reusable" title="Reusable container">R</li>
+                    <li role="show-containers" scope="containers" class="active" title="Empty container">C</li>
+                    <li role="show-containers" scope="sidebars" title="Sidebars">S</li>
+                    <li role="show-reusable" scope="reuse" title="Reusable container">R</li>
                 </ul>
                 <ul class="container-type-chooser element-list" ref="show-containers">
+                    <!--
                     <li class="container-dragger new-container C-12 clearfix" data-type="C-12">
                         <div class="slot"></div>
                     </li>
@@ -65,9 +66,10 @@
                     <li class="container-dragger new-container C-0-4-0 clearfix" data-type="C-0-4-0">
                         <div class="slot"></div>
                     </li>
+                -->
 
                 </ul>
-
+                <!--
                 <ul class="sidebar-elements container-type-chooser element-list" ref="show-sidebars">
                     <li class="container-dragger new-container S-0-4 clearfix" data-type="S-0-4">
                         <div class="slot"></div>
@@ -76,7 +78,7 @@
                         <div class="slot"></div>
                     </li>
                 </ul>
-
+                -->
                 <ul class="reusable-elements element-list" ref="show-reusable">
                 </ul>
 

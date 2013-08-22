@@ -39,11 +39,13 @@ $(function() {
 	var GRIDMODE = document.gridmode;
 	function init() {
 		// ID = 42;
-		console.log("lade BoxTypes");
+		console.log("load container types");
+		loadContainerTypes();
+		console.log("load box types");
 		loadBoxTypes();
-		console.log("lade Styles");
+		console.log("load styles");
 		loadStyles();
-		console.log("lade Grid");
+		console.log("load grid");
 		loadGrid();
 		$grid_wrapper.attr("data-mode",GRIDMODE);
 		// scrollable toolbar
@@ -103,7 +105,7 @@ $(function() {
 				$.each(arr_container_styles,function(index, s){
 					arr_container_style_titles[s["slug"]] = s["title"];
 				});
-				console.log("container styles geladen");
+				console.log("container styles loaded");
 				console.log(arr_container_styles);
 				console.log(arr_container_style_titles);
 			},null,false);
@@ -112,7 +114,7 @@ $(function() {
 			[],
 			function(data){
 				arr_slot_styles = data.result;
-				console.log("slot styles geladen");
+				console.log("slot styles loaded");
 				console.log(arr_slot_styles);
 				$slot_styles = $("<ul class='choose-style'></div>");
 				$slot_styles.append("<li class='slot-style' data-style=''>ohne Style</li>");
@@ -125,7 +127,7 @@ $(function() {
 			[],
 			function(data){
 				arr_box_styles = data.result;
-				console.log("Box styles geladen");
+				console.log("Box styles loaded");
 				console.log(arr_box_styles);
 			},null,false);
 	}	
@@ -248,13 +250,51 @@ $(function() {
 	/* ------------------------------
 	* Container Tools
 	* ----------------------------- */
+	var arr_container_types = [];
+	function loadContainerTypes(){
+		sendAjax(
+			"getContainerTypes",
+			[],
+			function(data){
+				arr_container_types = data.result;
+				console.log("container types loaded:");
+				console.log(arr_container_types);
+				var $ul_list = $toolContainerTypeTabs.siblings("[ref=show-containers]");
+				$.each(arr_container_types, function(index, type) {
+					var $li = $("<li>")
+								.addClass('container-dragger new-container clearfix')
+								.addClass(type.type)
+								.attr("data-type", type.type);
+					for(i = 0; i < type.numslots; i++){
+						$li.append("<div class='slot'>");
+					}
+					 $ul_list.append($li);
+				});
+				$ul_list.children('[data-type*=S]').hide();
+				reloadContainerDraggables($ul_list.children());
+			},null,false);
+	}
+
 	$toolContainerTypeTabs.on("click","li:not(.active)",function(e){
 		$toolContainerTypeTabs.children().removeClass("active");
 		$this = $(this).addClass("active");
 		$toolContainerTypeTabs.siblings().hide();
-		$toolContainerTypeTabs.siblings("[ref="+$this.attr("role")+"]").show();
-		if($this.attr("role").indexOf("reus") > -1){
-			loadReusableElements();
+		var $target = $toolContainerTypeTabs.siblings("[ref="+$this.attr("role")+"]").show();
+		$target.children().hide();
+		switch($this.attr("scope")){
+			case "containers":
+				$target.children('[data-type*=C]').show();
+				break;
+			case "sidebars":
+				$target.children('[data-type*=S]').show();
+				break;
+			case "reuse":
+				loadReusableElements();
+				$target.children().show();
+				break;
+			default:
+				console.log("no such container type");
+				break;
 		}
 	});
 	function loadReusableElements(){
@@ -529,6 +569,7 @@ $(function() {
 		$newContainer.find(".box").hide();
 		if(arr_container_styles.length < 1){ $newContainer.find(".fieldset-c-style").hide();}
 		$container.remove();
+
 		CKEDITOR.replace(
 			"f-c-prolog",{
 				customConfig : document.PathToConfig
@@ -917,7 +958,13 @@ $(function() {
 				var $dynamic_fields = $box_editor_content.find(".dynamic-fields .field-wrapper");					
 				var $fields = makeDynamicFields(result.contentstructure, result.content, 0, "");
 				$dynamic_fields.append($fields);
-				CKEDITOR.replaceAll("form-html");
+				$.each($box_editor_content.find(".form-html"), function(index, element) {
+					 CKEDITOR.replace(
+							element,{
+								customConfig : document.PathToConfig
+							}
+						);
+				});
 			});
 	});
 	function makeDynamicFields(contentstructure, content, lvl, cs_path){
@@ -1435,11 +1482,19 @@ $(function() {
 		return {"c_height": c_height, "target_container": $container.prev()};
 	}
 
+	//--------------------------
+	// CKEditor
+	// ------------------------
+
 	function destroyCKEDITORs(){
 		for(name in CKEDITOR.instances){
 		    CKEDITOR.instances[name].destroy();
 		}
 	}
+
+	// ---------------------
+	// Window change
+	// --------------------
 	
 	$(window).resize(function(e){
 		resizeGridTools();
