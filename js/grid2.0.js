@@ -65,6 +65,9 @@ $(function() {
 		},600);
 	}
 	$(document).ready(init);
+	$(window).load(function(){
+		$body.trigger('structureChange');
+	});
 	/** --------------------------------
 	*	load available box types
 	*
@@ -1428,10 +1431,18 @@ $(function() {
 	*	called when sidebars could need a collision recalculation
 	*/
 	$body.on('structureChange', function(e, eventInfo) { 
-		// sidebars calculation
-		$grid.children(".container").css("margin-bottom", "0px");
-		$grid.find(".container[data-type*=S] .slot")
-							.css("padding-bottom", parseInt($grid.find(".container[data-type*=C]:first-child .slot").css("padding-bottom")));
+		// reset offsets
+		$grid.children(".container").css("margin-top", "0px");
+		$grid
+		.find(".container[data-type*=S] .slot")
+		.css("padding-bottom", 
+			parseInt(
+				$grid
+				.find(".container[data-type*=C]:first-child .slot")
+				.css("padding-bottom")
+			)
+		);
+		// add new offsets
 		$.each($grid.children('[class*=S]'), function(index, sidebar) {
 			makeSidebarPuffer($(sidebar));
 		});
@@ -1442,28 +1453,21 @@ $(function() {
 	*	the sidebar container
 	*/
 	function makeSidebarPuffer($sidebar){
-		// if there is no prev container
-		if( $sidebar.prev().length < 1) return;
-		// if next container is a sidebar too
 		var permissionsList = getFloatablePermissions($sidebar);
 		var c_height = calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
 		var $sidebar_slot = $sidebar.children(".slots-wrapper").children('.slot');
-		var container_padding = $sidebar.css("padding-bottom");
+		var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
 		if(c_height < $sidebar_slot.outerHeight()){
-			// if container are not as high as sidebar than add margin to prev container
-			var bottom_offset = parseInt($sidebar_slot.css("bottom"));
-			$sidebar.prev().css("margin-bottom", $sidebar_slot.outerHeight() - (c_height-bottom_offset));
+			// if sidebar is taller than containers make puffer margin top
+			var needed_margin_top = $sidebar_slot.outerHeight()+sidebar_margin_bottom;
+			needed_margin_top -= c_height;
+			$sidebar.css("margin-top", needed_margin_top);
 		} else {
-			// if container are higher than sidebar that change sidebar slot position
+			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
-			console.log("sidebar margin bottom: "+need_bottom_offset);
+			need_bottom_offset += sidebar_margin_bottom;
 			$sidebar_slot.css("padding-bottom",need_bottom_offset);
 		}
-		/*
-		var needed_margin = ($sidebar.find(".slot").outerHeight() - result["c_height"]) - parseInt($sidebar.css("padding-top"));
-		if(needed_margin > 0 && needed_margin > parseInt(result["target_container"].css("margin-bottom")) ){
-			result["target_container"].css("margin-bottom", needed_margin+"px");
-		}*/
 	}
 	
 	/**
@@ -1477,7 +1481,7 @@ $(function() {
 	function calculateSidebarableContainerHeight($container, floatablePermissionList){
 		var c_height = 0;
 		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
-			c_height += $container.outerHeight();
+			c_height += $container.outerHeight(true);
 			$container = $container.prev();
 		}
 		return c_height;

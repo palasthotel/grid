@@ -310,7 +310,7 @@ html{
 /** Allgemeine Container styles **/
 .container{
 	width: 1000px !important;
-	margin-top:10px;
+	margin-bottom:10px;
 	border:1px solid #e6e6e6;
 	background-color:#efefef;
 	padding-top:28px;
@@ -626,9 +626,11 @@ html{
 .box .grid .slot:before{
 	content: '';
 }
+/*
 .box .grid .slot > div{
 	border-top: 1px solid #e6e6e6;
 }
+*/
 
 /** Allgemeine Box styles **/
 .container.editor .box{
@@ -926,6 +928,17 @@ html{
 	float:right;
 }
 
+/** Container C-3-3-3-3 **/
+[data-type=C-3-3-3-3] .slot{
+	width:24%;
+	margin-right: 1%;
+	float:left;
+}
+[data-type=C-3-3-3-3] .slot:last-child{
+	width:25%;
+	margin-right: 0;
+}
+
 /** Container C-2-2-2-2-2-2 **/
 .C-2-2-2-2-2-2{
 	
@@ -1043,13 +1056,15 @@ html{
 	margin: 0px;
 	background-color: transparent;
 	border:none;
-	border-bottom: 1px solid #e6e6e6;
 }
 [data-type*=S-] .grid .container:before{
 	content: "";
 }
 [data-type*=S-] .grid .container .slot{
 	padding: 5px 0 0 0;
+}
+[data-type*=S-] .box{
+	border:none;
 }
 
 /** content rules **/
@@ -1078,81 +1093,7 @@ html{
 #grid-wrapper[data-mode=container] .container .c-revert{
 	right: 60px;
 }
-
-/** loading animations 
-.loading{
-	width:16px;
-	height:16px;
-	background-image:url(images/reload.png);
-	background-repeat:no-repeat;
-	background-position:center;
-}
-.rotate{
-	-webkit-animation-name:             rotate; 
-    -webkit-animation-duration:         1s; 
-    -webkit-animation-iteration-count:  infinite;
-    -webkit-animation-timing-function: linear;
-}
-
-
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to { 
-    -webkit-transform: rotate(360deg);
-  }
-}
-**/
-/*
-.loading{
-	position: absolute;
-	height: 16px;
-	width: 16px;
-	border: 1px solid #ccc;
-	-webkit-animation: flash 0.3s infinite alternate;
-	-o-animation: flash 0.3s infinite alternate;
-	animation: flash 0.3s infinite alternate;
-}
-.loading:before{
-	content: '';
-	display: block;
-	position: absolute;
-	top: 35%;
-	height: 25%;
-	width: 100%;
-	background-color: rgba(0,0,0,0.6);
-	-webkit-animation: flash 0.3s infinite 0.2s alternate;
-	-o-animation: flash 0.3s infinite 0.2s alternate;
-	animation: flash 0.3s infinite 0.2s alternate;
-}
-.loading:after{
-	content: '';
-	display: block;
-	position: absolute;
-	height: 100%;
-	width: 30%;
-	left: 35%;
-	background-color: rgba(0,0,0,0.6);
-	-webkit-animation: flash 0.3s infinite 0.2s alternate;
-	-o-animation: flash 0.3s infinite 0.2s alternate;
-	animation: flash 0.3s infinite 0.2s alternate;
-}
-
-
-@-webkit-keyframes flash{
-	from{ background: rgb(0,0,0); }
-	to{ background: rgb(200,200,200); }
-}
-@-moz-keyframes flash{
-	from{ background: rgb(0,0,0); }
-	to{ background: rgb(200,200,200); }
-}
-@keyframes flash	{
-	from{ background: rgb(0,0,0);}
-	to{ background: rgb(200,200,200); }
-}
-*/
+/** loading animation **/
 .loading{
   position:absolute;
   width:16px;
