@@ -127,18 +127,19 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 									'<input name="f-b-readmore" type="text" value="${box.readmore}" class="form-text" /> '+
 									'<label>URL</label>'+
 									'<input name="f-b-readmoreurl" type="text" value="${box.readmoreurl}" class="form-text" />'+
-									'<div class="box-styles-wrapper">'+
-									'<label for="f-b-style">Style</label>'+ 
-									'<select name="f-b-style" class="form-select"  id="f-b-style">'+
-										'<option value="">ohne style</option>'+
-										'{{if styles}}{{each styles}}'+
-											'<option {{if $value.slug == box.style }}selected="selected"{{/if}} value="${$value.slug}">'+
-											'${$value.title}</option>'+
-										'{{/each}}{{/if}}'+
-									'</select>'+
-									'</div>'+
+									
 								'</div>'+
 							'</fieldset>'+
+							'<div class="box-styles-wrapper">'+
+							'<label for="f-b-style">Style</label>'+ 
+							'<select name="f-b-style" class="form-select"  id="f-b-style">'+
+								'<option value="">ohne style</option>'+
+								'{{if styles}}{{each styles}}'+
+									'<option {{if $value.slug == box.style }}selected="selected"{{/if}} value="${$value.slug}">'+
+									'${$value.title}</option>'+
+								'{{/each}}{{/if}}'+
+							'</select>'+
+							'</div>'+
 						'</div>';
 jQuery.template("boxEditorTemplate", box_editor_markup);
 

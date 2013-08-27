@@ -778,6 +778,9 @@ html{
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 }
+#box-editor .box-styles-wrapper{
+	margin-bottom: 15px;
+}
 /*
 * Autocomplete Boxtype
 */

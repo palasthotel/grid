@@ -389,7 +389,7 @@ $(function() {
 			//$(".box").slideUp(100);
 			//ui.placeholder.outerHeight(ui.outerHeight);
 			$(this).sortable('refreshPositions');
-			//$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
+			$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
 		},
 		stop: function(event, ui){
 			//$(".box").slideDown(100);
@@ -1344,14 +1344,27 @@ $(function() {
 		$(this).siblings(".field-wrapper").slideToggle(300);
 	});
 	function scrollToContainer(container_id){
+		var $the_container = $(".container[data-id="+container_id+"]");
+		if(isOnScreen($the_container))return;
 		$('html, body').animate({
 			 scrollTop: ($(".container[data-id="+container_id+"]").offset().top-160)
 		 }, 200);
 	}
 	function scrollToBox(box_id){
+		var $the_box = $(".box[data-id="+box_id+"]");
+		if(isOnScreen($the_box)) return;
 		$('html, body').animate({
-			 scrollTop: ($(".box[data-id="+box_id+"]").offset().top-160)
+			 scrollTop: ($the_box.offset().top-160)
 		 }, 200);
+	}
+	function isOnScreen($elem){
+	    var docViewTop = $(window).scrollTop();
+	    var docViewBottom = docViewTop + $(window).height();
+
+	    var elemTop = $elem.offset().top;
+	    var elemBottom = elemTop + $elem.height();
+
+	    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
 	}
 	function showBoxTrash(){
 		$(".c-box-trash").show();
