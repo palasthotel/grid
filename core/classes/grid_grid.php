@@ -12,6 +12,10 @@ class grid_grid extends grid_base {
 	{
 		$containermap=array();
 		$containerlist=array();
+		
+		$this->preprocessContainer();
+		
+		
 		foreach($this->container as $container)
 		{
 			$html=$container->render($editmode);
@@ -142,4 +146,44 @@ class grid_grid extends grid_base {
 		$container=$this->container[$idx];
 		return $container->update($containerdata);
 	}
+	
+	public function preprocessContainer(){
+		// Start Container Preprocessing by ben_
+		$precontainer = false;
+		$nextcontainer = false;
+		
+		$i = 0;
+		foreach($this->container as $container){
+			$mycontainer = $container;
+			$this->container[$i]->position = $i;
+			
+			if($i == 0){
+				$prevcontainer = new grid_container();
+			}else{
+				$prevcontainer = $this->container[$i-1];
+			}
+			
+			if($i == count($this->container) -1){
+				$nextcontainer = new grid_container();
+			}else{
+				$nextcontainer = $this->container[$i+1];
+			}
+			
+					
+			if($mycontainer->is_content_container() and !$prevcontainer->is_content_container()){
+				$this->container[$i]->firstcontentcontainer = true;
+			}else{
+				$this->container[$i]->firstcontentcontainer = false;
+			}
+			
+			if($mycontainer->is_content_container() and $nextcontainer->is_content_container()){
+				$this->container[$i]->lastcontentcontainer = false;
+			}else{
+				$this->container[$i]->lastcontentcontainer = true;
+			}
+			$i++;
+		}
+		// End Container Preprocessing by ben_
+	}
+	
 }

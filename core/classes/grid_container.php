@@ -12,8 +12,12 @@ class grid_container extends grid_base {
 	public $prolog;
 	public $epilog;
 	public $reused;
-	
+	public $position;
+	public $iscontentcontainer;
+	public $firstcontentcontainer;
+	public $lastcontentcontainer;
 	public $slots;
+
 
 		
 	public function render($editmode)
@@ -68,4 +72,15 @@ class grid_container extends grid_base {
 		$this->epilog=$data->epilog;
 		return $this->storage->persistContainer($this);
 	}
+	
+	public function is_content_container(){
+		if($this->type == "C-8-0" or $this->type == "C-4-4-0"){
+			$this->iscontentcontainer = true;
+			return true;
+		}else{
+			$this->iscontentcontainer = false;
+			return false;
+		}
+	}
+	
 }
