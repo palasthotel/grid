@@ -136,7 +136,7 @@ class grid_ajaxendpoint {
 		{
 			$grid=$grid->draftify();
 		}
-		$container=$grid->insertContainer("C-0",$idx);
+		$container=$grid->insertContainer("I-0",$idx);
 		$this->storage->convertToReferenceContainer($container,$containerid);
 		$reusecontainer=$this->storage->loadReuseContainer($containerid);		
 		$reusecontainer->containerid=$container->containerid;
@@ -567,5 +567,10 @@ class grid_ajaxendpoint {
 			}
 		}
 		return "WRONG CONTAINER";
+	}
+	
+	public function getContainerTypes()
+	{
+		return $this->storage->fetchContainerTypes();
 	}
 }

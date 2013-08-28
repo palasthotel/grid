@@ -389,7 +389,7 @@ $(function() {
 			//$(".box").slideUp(100);
 			//ui.placeholder.outerHeight(ui.outerHeight);
 			$(this).sortable('refreshPositions');
-			$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
+			//$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
 		},
 		stop: function(event, ui){
 			//$(".box").slideDown(100);

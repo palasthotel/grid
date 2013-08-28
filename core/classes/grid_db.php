@@ -580,7 +580,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$idx=array_search($container, $grid->container);
 		if($idx===FALSE)die("index not found");
 		$grid->removeContainer($container->containerid);
-		$replacement=$grid->insertContainer("C-0",$idx);
+		$replacement=$grid->insertContainer("I-0",$idx);
 		if($replacement===FALSE)die("replacement not created");
 		$query="update grid_container set reuse_containerid=".$copy->containerid." where id=".$replacement->containerid." and grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query) or die($this->connection->error);
@@ -883,6 +883,18 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$this->connection->query($query) or die($this->connection->error);
 		}
 		return TRUE;
+	}
+	
+	public function fetchContainerTypes()
+	{
+		$query="select type,numslots from grid_container_type";
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$return=array();
+		while($row=$result->fetch_assoc())
+		{
+			$return[]=array('type'=>$row['type'],'numslots'=>$row['numslots']);
+		}
+		return $return;
 	}
 	
 	public function fetchContainerStyles()
