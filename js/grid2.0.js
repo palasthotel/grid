@@ -30,7 +30,6 @@ $(function() {
 	var $search_box = $toolBox.find("input");
 	
 	var $toolBoxList = $gridTools.find(".g-box .box-list");
-	var top = 0;
 	
 	/** --------------------------
 	*	Grid gets initiated
@@ -49,20 +48,10 @@ $(function() {
 		loadGrid();
 		$grid_wrapper.attr("data-mode",GRIDMODE);
 		// scrollable toolbar
-		top = $toolbar.offset().top;
-		$(window).scroll(function() {
-			if( $(this).scrollTop() > (top) ) {
-				$grid.css("margin-top",$toolbar.outerHeight());
-			  	$body.addClass('fixed');
-			} else {
-				$grid.css("margin-top",0);
-			  	$body.removeClass('fixed');
-			}
-			resizeGridTools();
-		});
+		$(window).scroll(needFixedToolbar);
 		setTimeout(function(){
 			$body.trigger('structureChange');
-		},600);
+		},1000);
 	}
 	$(document).ready(init);
 	$(window).load(function(){
@@ -1544,6 +1533,21 @@ $(function() {
 		$toolContainerElementLists.css( "height", $gridTools.outerHeight()-120);
 	}
 	resizeGridTools();
+
+	/**
+	*	Calculates and sets the fixed toolbar on top.
+	*/
+	var top = $toolbar.offset().top;;
+	function needFixedToolbar(){
+		if( $(this).scrollTop() > (top) ) {
+			$grid.css("margin-top",$toolbar.outerHeight(true));
+		  	$body.addClass('fixed');
+		} else {
+			$grid.css("margin-top",0);
+		  	$body.removeClass('fixed');
+		}
+		resizeGridTools();
+	}
 
 	// --------------------
 	// Serverkommunikation
