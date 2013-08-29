@@ -847,19 +847,20 @@ $(function() {
 	});
 	function makeBoxReusable(){
 		var params = getBoxEditorIDs();
-		console.log(params);
-		sendAjax(
-			"reuseBox",
-			[params["ID"], params["c_id"], params["s_id"], params["b_idx"]],
-			function(data){
-				console.log(data);
-				$grid.find(".box[data-id="+params["b_id"]+"]").replaceWith(buildBox(data.result));
-				showGrid(params["b_id"]);
-				destroyCKEDITORs();
-			}
-		);
+		updateBox(function(){
+			sendAjax(
+				"reuseBox",
+				[params["ID"], params["c_id"], params["s_id"], params["b_idx"]],
+				function(data){
+					console.log(data);
+					$grid.find(".box[data-id="+params["b_id"]+"]").replaceWith(buildBox(data.result));
+					showGrid(data.result.id);
+					destroyCKEDITORs();
+				}
+			);
+		});
 	}
-	function updateBox(){
+	function updateBox(afterSuccess){
 		$data = $box_editor_content.find(".box-editor");
 		style = $data.find("[name=f-b-style]").val();
 		if(style == "") style = null;
@@ -883,12 +884,17 @@ $(function() {
 			[ID, $data.data("c-id"), $data.data("s-id"), $data.data("b-index"), box_content],
 			function(data){
 				console.log(data);
+				if(afterSuccess != null){
+					afterSuccess();
+					return;
+				}
 				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
 				showGrid($data.data("id"));
 				destroyCKEDITORs();
 				isDraft();
 			});
 	}
+
 	function collectBoxEditorData($data, lvl){
 		var content = {};
 		$.each($data.find("[lvl="+lvl+"] > .dynamic-field"), function(index, element){
