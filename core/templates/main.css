@@ -528,6 +528,9 @@ html{
 	margin-right:0px;
 }
 /** Allgemeine Slot styles **/
+.slots-wrapper{
+	position:relative;
+}
 .slot{
 	position:relative;
 	background-color:#e0e0e0;
@@ -604,7 +607,7 @@ html{
 #grid [data-type*=S-]:not(.editor) > * > .slot{
 	position: absolute;
 	z-index: 100;
-	bottom: 65px;
+	bottom: 42px;
 }
 #grid [data-type*=S-]:not(.editor):hover{
 	z-index: 101;

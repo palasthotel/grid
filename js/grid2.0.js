@@ -49,14 +49,8 @@ $(function() {
 		$grid_wrapper.attr("data-mode",GRIDMODE);
 		// scrollable toolbar
 		$(window).scroll(needFixedToolbar);
-		setTimeout(function(){
-			$body.trigger('structureChange');
-		},1000);
 	}
 	$(document).ready(init);
-	$(window).load(function(){
-		$body.trigger('structureChange');
-	});
 	/** --------------------------------
 	*	load available box types
 	*
@@ -141,6 +135,9 @@ $(function() {
 				}
 				$.each($(".container[data-reused=false] .slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
+				});
+				doAfterImageLoad(function(){
+					$body.trigger('structureChange');
 				});
 			}
 		);
@@ -378,6 +375,7 @@ $(function() {
 			//$(".box").slideUp(100);
 			//ui.placeholder.outerHeight(ui.outerHeight);
 			$(this).sortable('refreshPositions');
+			$grid_wrapper.find('.c-sort-placeholder').attr("data-type","c-sort-placeholder");
 			//$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
 		},
 		stop: function(event, ui){
@@ -406,7 +404,7 @@ $(function() {
 			appendTo: $("#grid-wrapper"),
 			scroll: true,
 			start: function(event, ui){
-				$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper"));
+				$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper").attr("data-type","container-drop-area-wrapper"));
 				$grid.append($(document.createElement("div")).addClass("container-drop-area-wrapper"));
 				$grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
 
@@ -1465,12 +1463,23 @@ $(function() {
 		var c_height = calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
 		var $sidebar_slot = $sidebar.children(".slots-wrapper").children('.slot');
 		var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
-		if(c_height < $sidebar_slot.outerHeight()){
+		console.log("c_height: "+c_height);
+		console.log("s_height: "+$sidebar_slot.outerHeight(true));
+		if(c_height < $sidebar_slot.outerHeight(true)){
+			// first delete any padding bottom
+			/*
+			$sidebar_slot.css("padding-bottom",parseInt(
+				$grid
+				.find(".container[data-type*=C]:first-child .slot")
+				.css("padding-bottom")
+			));*/
 			// if sidebar is taller than containers make puffer margin top
 			var needed_margin_top = $sidebar_slot.outerHeight()+sidebar_margin_bottom;
 			needed_margin_top -= c_height;
 			$sidebar.css("margin-top", needed_margin_top);
-		} else {
+		} else if(c_height > $sidebar_slot.outerHeight(true)){
+			// first delete any margin top from before
+			//$sidebar.css("margin-top", "0px");
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
 			need_bottom_offset += sidebar_margin_bottom;
@@ -1503,13 +1512,18 @@ $(function() {
 	function getFloatablePermissions($sidebar){
 		switch($sidebar.data("type")){
 			case "S-0-4":
-				return {"C-8-0":true,"C-4-4-0":true, "S-4-0":true, "C-0-4-0":true};
+				return {"C-8-0":true,"C-4-4-0":true, "S-4-0":true, "C-0-4-0":true, "c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 			case "S-4-0":
-				return {"C-0-8":true,"C-0-4-4":true, "S-0-4":true, "C-0-4-0":true};
+				return {"C-0-8":true,"C-0-4-4":true, "S-0-4":true, "C-0-4-0":true, "c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 		}
 		return {};
+	}
+	function doAfterImageLoad(fn){
+		$("img").one('load', fn).each(function() {
+		  if(this.complete) $(this).load();
+		});
 	}
 
 	//--------------------------
