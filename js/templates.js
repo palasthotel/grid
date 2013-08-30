@@ -11,12 +11,15 @@ var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${s
 				
 				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
+            '{{if !is_sidebar}}'+
 			'<p class="c-title">${title}</p>'+
         	'<div class="c-before">'+
 				'<p class="c-titleurl">${titleurl}</p>'+
             	'<div class="c-prolog">{{html prolog}}</div>'+
             '</div>'+
+            '{{/if}}'+
         	'<div class="slots-wrapper clearfix">{{if slots}}{{tmpl(slots) "slotTemplate"}}{{/if}}</div>'+
+        	'{{if !is_sidebar}}'+
             '<div class="c-after">'+
             	'<div class="c-epilog">{{html epilog}}</div>'+
 				'<p><span class="c-readmore">${readmore}</span>'+
@@ -24,6 +27,7 @@ var container_markup = '<div data-id="${id}" data-type="${type}" data-style="${s
 					' {{else}} <span class="c-readmoreurl">${readmoreurl}</span>{{/if}}</p>'+
 				'<p class="c-style">${styleTitle}</p>'+
             '</div>'+
+            '{{/if}}'+
         '</div>';
 jQuery.template( "containerTemplate", container_markup );
 

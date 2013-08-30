@@ -156,14 +156,7 @@ $(function() {
 		console.log("fillGrid()-----------");
 		console.log(container_arr);
 		refreshBoxSortable();
-		refreshContainerStyles();
 		$body.trigger("structureChange");
-	}
-	function refreshContainerStyles(){
-		$.each($grid.find(".container"), function(index, c){
-			$c = $(c);			
-			$c.find(".c-style").text(arr_container_style_titles[$c.data("style")]);
-		});
 	}
 	/**
 	*	Changes status from draft to published.
@@ -608,6 +601,7 @@ $(function() {
 				$newContainer.find(".box").show();
 				$editContainer.remove();
 				isDraft();
+				$body.trigger("structureChange");
 			} else {
 				alert("Konnte die Änderungen nicht speichern.");
 				$c_ok.removeClass('loading rotate');
@@ -620,10 +614,31 @@ $(function() {
 		$oldContainer.find(".box").show();
 		$container.after($oldContainer);
 		$container.remove();
+		$body.trigger("structureChange");
 	}
 	function buildContainer(templateParams){
-		templateParams["styleTitle"] = arr_container_style_titles[templateParams["style"]];
+		console.log("Container params:");
+		console.log(templateParams);
+		if(templateParams["id"] == undefined || templateParams["id"] == null){
+			// if container array
+			console.log("is container array");
+			$.each(templateParams, function(index, container) {
+				addContainerParams(container);
+			});
+		} else {
+			// if single container
+			console.log("is single container");
+			addContainerParams(templateParams);			
+		}
+		console.log(templateParams);
 		return $.tmpl( "containerTemplate", templateParams );
+	}
+	function addContainerParams(container){
+		container["styleTitle"] = arr_container_style_titles[container["style"]];
+		container["is_sidebar"] = false;
+		if(container["type"].indexOf("S") > -1){
+			container["is_sidebar"] = true;
+		} 
 	}
 	function buildContainerEditor(templateParams){
 		return $.tmpl( "containerEditorTemplate", templateParams );
@@ -1387,10 +1402,13 @@ $(function() {
 		$gridTools.children().hide();
 		$toolBox.show();
 	}
+	/**
+	*	Toggles boxes in slots for better container sorting.
+	*/
 	var box_toggling = false;
 	function toggleBoxes(){
 		if($grid.find(".container.editor").length > 0){
-			alert("Bitte zuerst den Container fertig bearbeiten.");
+			alert("Please finish the container editing first!");
 			return;
 		}
 		if(box_toggling) return;
@@ -1404,12 +1422,14 @@ $(function() {
 				$toggle_btn.attr("data-hidden", false);
 				$body.trigger("structureChange");	
 			});
+
 		} else{
 			$(".c-edit, .c-ok, .c-revert").hide();
 			$(".box, .c-before, .c-after").slideUp(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", true);
 				$body.trigger("structureChange");	
+				window.scrollTo(0, 0);
 			});
 		}
 
@@ -1439,8 +1459,7 @@ $(function() {
 	$body.on('structureChange', function(e, eventInfo) { 
 		// reset offsets
 		$grid.children(".container").css("margin-top", "0px");
-		$grid
-		.find(".container[data-type*=S] .slot")
+		$grid.find(".container[data-type*=S] .slot")
 		.css("padding-bottom", 
 			parseInt(
 				$grid
@@ -1520,6 +1539,12 @@ $(function() {
 		}
 		return {};
 	}
+
+	/*
+	*	When Images are loaded this funciton can execute a function afterwards.
+	*	@param fn
+	*	Function to be executed
+	*/
 	function doAfterImageLoad(fn){
 		$("img").one('load', fn).each(function() {
 		  if(this.complete) $(this).load();
@@ -1529,7 +1554,6 @@ $(function() {
 	//--------------------------
 	// CKEditor
 	// ------------------------
-
 	function destroyCKEDITORs(){
 		for(name in CKEDITOR.instances){
 		    CKEDITOR.instances[name].destroy();
@@ -1539,7 +1563,6 @@ $(function() {
 	// ---------------------
 	// Window change
 	// --------------------
-	
 	$(window).resize(function(e){
 		resizeGridTools();
 	});

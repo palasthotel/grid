@@ -314,6 +314,7 @@ html{
 	border:1px solid #e6e6e6;
 	background-color:#efefef;
 	padding-top:28px;
+	min-height: 50px;
 }
 .container.editor{
 	z-index: 101;	
@@ -607,7 +608,7 @@ html{
 #grid [data-type*=S-]:not(.editor) > * > .slot{
 	position: absolute;
 	z-index: 100;
-	bottom: 42px;
+	bottom: 29px;
 }
 #grid [data-type*=S-]:not(.editor):hover{
 	z-index: 101;
