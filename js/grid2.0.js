@@ -360,15 +360,20 @@ $(function() {
 		items:".container:not(.C-4)",
 		placeholder: "c-sort-placeholder",
 		pullPlaceholder: true,
+		appendTo: $grid_wrapper ,
 		helper: function(event, element){
 				return $("<div class='c-sort-helper'></div>");
 		},
-		cursorAt: { left: 30, top:30 },
+		cursorAt: { left: 30, bottom: 30 },
 		start: function( event, ui ){
 			//$(".box").slideUp(100);
 			//ui.placeholder.outerHeight(ui.outerHeight);
 			$(this).sortable('refreshPositions');
 			$grid_wrapper.find('.c-sort-placeholder').attr("data-type","c-sort-placeholder");
+			offset_top = parseInt(ui.item.css("margin-top"));
+			console.log(offset_top);
+			console.log(ui.helper);
+			//$(ui.helper).css("top", 30+offset_top);
 			//$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
 		},
 		stop: function(event, ui){
@@ -394,7 +399,7 @@ $(function() {
 			},
 			cursorAt: { left: 30, top:30 },
 			zIndex: 99,
-			appendTo: $("#grid-wrapper"),
+			appendTo: $grid_wrapper,
 			scroll: true,
 			start: function(event, ui){
 				$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper").attr("data-type","container-drop-area-wrapper"));
