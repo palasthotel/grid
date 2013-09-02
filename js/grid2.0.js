@@ -38,6 +38,8 @@ $(function() {
 	var GRIDMODE = document.gridmode;
 	function init() {
 		// ID = 42;
+		console.log("Set interface language");
+		setInterfaceLanguage();
 		console.log("load container types");
 		loadContainerTypes();
 		console.log("load box types");
@@ -103,7 +105,7 @@ $(function() {
 				console.log("slot styles loaded");
 				console.log(arr_slot_styles);
 				$slot_styles = $("<ul class='choose-style'></div>");
-				$slot_styles.append("<li class='slot-style' data-style=''>ohne Style</li>");
+				$slot_styles.append("<li class='slot-style' data-style=''>"+lang_values["default-style"]+"</li>");
 				$.each(arr_slot_styles, function(index,value){
 					$slot_styles.append("<li class='slot-style' data-style='"+value.slug+"'>"+value.title+"</li>");
 				});
@@ -116,7 +118,7 @@ $(function() {
 				console.log("Box styles loaded");
 				console.log(arr_box_styles);
 			},null,false);
-	}	
+	}
 	/** --------------------------------
 	*	load the grid from database
 	*
@@ -142,6 +144,33 @@ $(function() {
 			}
 		);
 	}
+	/** -------------------------------
+	*	Language support
+	*
+	*	elements need lang-id for identifier
+	*	if element has lang-dynamic=true the text will be set in another function by dynamic values
+	*/
+	var lang_values = null;
+	function setInterfaceLanguage(){
+		// TODO: ajax for values
+		lang_values = document.lang_values;
+		// texts
+		$.each($("[lang-type=text]"), function(index, val) {
+			var $element = $(val);
+			$element.text(lang_values[$element.attr("lang-id")]);
+		});
+		// placeholder
+		$.each($("[lang-type=placeholder]"), function(index, val) {
+			var $element = $(val);
+			$element.attr("placeholder", lang_values[$element.attr("lang-id")] );
+		});
+		// titles
+		$.each($("[lang-type=title]"), function(index, val) {
+			var $element = $(val);
+			$element.attr("title", lang_values[$element.attr("lang-id")] );
+		});
+	}
+
 	/** --------------------------------
 	*	fills the grid with database information
 	*
@@ -664,7 +693,7 @@ $(function() {
 		$ul_styles.children().show();
 		$active_child = $ul_styles.children("[data-style="+style+"]").hide();
 		if(style == ""){
-			$style_changer.children("span").text("ohne Style");
+			$style_changer.children("span").text(lang_values["default-style"]);
 		} else {
 			$style_changer.children("span").text($active_child.text());
 		}
@@ -1439,24 +1468,7 @@ $(function() {
 		}
 
 	}
-	/**
-	*	Displays the status of the grid
-	*	@param isDraft
-	*	boolean if published (false) or draft (true)
-	*/
-	$btn_publish = $toolbar.find("button[role=publish]");
-	$btn_revert = $toolbar.find("button[role=revert]");
-	function changeIsDraftDisplay(isDraft){
-		if(isDraft == true){
-			$stateDisplay.text("Draft...").addClass("draft");
-			$btn_publish.removeAttr("disabled");
-			$btn_revert.removeAttr("disabled");
-		} else {			
-			$stateDisplay.text("Published!").removeClass("draft");
-			$btn_publish.attr("disabled","disabled");
-			$btn_revert.attr("disabled","disabled");
-		}
-	}
+	
 	/**
 	*	Eventhandler for an structureChange event
 	*	called when sidebars could need a collision recalculation
@@ -1595,6 +1607,25 @@ $(function() {
 		  	$body.removeClass('fixed');
 		}
 		resizeGridTools();
+	}
+
+	/**
+	*	Displays the status of the grid
+	*	@param isDraft
+	*	boolean if published (false) or draft (true)
+	*/
+	$btn_publish = $toolbar.find("button[role=publish]");
+	$btn_revert = $toolbar.find("button[role=revert]");
+	function changeIsDraftDisplay(isDraft){
+		if(isDraft == true){
+			$stateDisplay.text(lang_values[$stateDisplay.attr("lang-id")]["draft"]).addClass("draft");
+			$btn_publish.removeAttr("disabled");
+			$btn_revert.removeAttr("disabled");
+		} else {			
+			$stateDisplay.text( lang_values[$stateDisplay.attr("lang-id")]["published"]).removeClass("draft");
+			$btn_publish.attr("disabled","disabled");
+			$btn_revert.attr("disabled","disabled");
+		}
 	}
 
 	// --------------------

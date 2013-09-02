@@ -1116,9 +1116,25 @@ html{
   height:40%;
   width: 40%;
   background: #333;
+
   -webkit-animation: move 0.5s linear 0 infinite;
-  -o-animation: move 0.5s linear 0 infinite;
+  -moz-animation: move 0.5s linear 0 infinite;
   animation: move 0.5s linear 0 infinite;
+
+  -moz-animation-duration: 0.5s;
+  -moz-animation-name: move;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-name: move;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+
+  animation-duration: 0.5s;
+  animation-name: move;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 @keyframes move{

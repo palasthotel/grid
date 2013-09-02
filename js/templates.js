@@ -40,32 +40,32 @@ var container_editor_markup = '<div data-id="${id}" data-type="${type}" class="c
 				'<span role="box-trash" class="c-box-trash"></span>'+
             '</div>'+
         	'<div class="c-before">'+
-            	'<label for="f-c-title">Title:</label>'+
+            	'<label for="f-c-title">'+document.lang_values["label-title"]+'</label>'+
                 '<input type="text" name="f-c-title" id="f-c-title" value="${title}" class="form-text" />'+
-                '<label for="f-c-titleurl">Titel URL:</label>'+
+                '<label for="f-c-titleurl">'+document.lang_values["label-title-url"]+'</label>'+
                 '<input type="text" name="f-c-titleurl" id="f-c-titleurl" value="${titleurl}" class="form-text" />'+
-                '<label for="f-c-prolog">Prolog:</label>'+
+                '<label for="f-c-prolog">'+document.lang_values["label-prolog"]+'</label>'+
                 '<textarea name="f-c-prolog" id="f-c-prolog" class="form-html">${prolog}</textarea>'+
             '</div>'+
         	'<div class="slots-wrapper clearfix">'+
 				// slots hier anheften
             '</div>'+
             '<div class="c-after">'+
-                '<label for="f-c-epilog">Epilog:</label>'+
+                '<label for="f-c-epilog">'+document.lang_values["label-epilog"]+'</label>'+
         		'<textarea name="f-c-epilog" id="f-c-epilog" class="form-html">${epilog}</textarea> ' +              
 				'<div class="clearfix">'+
 					'<fieldset>'+
-						'<label for="f-c-readmore">Readmore Text:</label>'+
+						'<label for="f-c-readmore">'+document.lang_values["label-readmore"]+'</label>'+
 						'<input type="text" name="f-c-readmore" id="f-c-readmore" value="${readmore}" class="form-text" />'+
 					'</fieldset>'+
 					'<fieldset>'+
-						'<label for="f-c-readmoreurl">Readmore URL:</label>'+
+						'<label for="f-c-readmoreurl">'+document.lang_values["label-readmore-url"]+'</label>'+
 						'<input type="text" name="f-c-readmoreurl" id="f-c-readmoreurl" value="${readmoreurl}" class="form-text" />'+
 					'</fieldset>'+
 					'<fieldset class="fieldset-c-style">'+
-						'<label for="f-c-style">Style</label>'+ 
+						'<label for="f-c-style">'+document.lang_values["label-style"]+'</label>'+ 
 						'<select name="f-c-style" id="f-c-style" class="form-select">'+
-							'<option value="">ohne style</option>'+
+							'<option value="">'+document.lang_values["default-style"]+'</option>'+
 							'{{if styles}}{{each styles}}'+
 								'<option {{if $value.slug == style }}selected="selected"{{/if}} value="${$value.slug}">${$value.title}</option>'+
 							'{{/each}}{{/if}}'
@@ -78,8 +78,7 @@ jQuery.template( "containerEditorTemplate", container_editor_markup );
 
 var slot_markup = '<div class="slot" data-id="${id}" data-style="${style}">'+
 						'<div class="style-changer">'+
-							'<span>{{if style}}${style}{{else}}ohne Style{{/if}}</span>'+
-							//'<ul class="choose-style"></ul>'+
+							'<span>{{if style}}${style}{{else}}'+document.lang_values["default-style"]+'{{/if}}</span>'+
 						'</div>'+
 						'<div class="boxes-wrapper">{{if boxes}}{{tmpl(boxes) "boxTemplate"}}{{/if}}</div>'+
 				'</div>';
@@ -104,32 +103,30 @@ var box_draggable_markup = '<li class="box-dragger" data-id="${id}" data-type="$
 							'</li>';
 jQuery.template( "boxDraggableTemplate", box_draggable_markup );
 
-var box_drop_place = "<div class=''><div></div></div>";
-jQuery.template( 'boxDropPlace', box_drop_place );
-
 var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-id="${box.id}" '+
 							'data-c-id="${c_id}" data-s-id="${s_id}" data-type="${box.type}">'+
 							'<fieldset class="collapsable dynamic-fields">'+
-								'<legend>Konfiguration</legend>'+
+								'<legend>'+document.lang_values["label-b-dynamic"]+'</legend>'+
 								'<div class="field-wrapper"></div>'+
 								// inputs for types added by script
 							'</fieldset>'+
 							'<fieldset class="collapsable collapsable-hidden text-fields">'+
-								'<legend>Texte</legend>'+
+								'<legend>'+document.lang_values["label-b-standard"]+'</legend>'+
 								'<div class="field-wrapper">'+
-									'<label>Titel</label>'+
+
+									'<label>'+document.lang_values["label-title"]+'</label>'+
 									'<input name="f-b-title" type="text" value="${box.title}" class="form-text" /> '+
-									'<label>URL</label>'+
+									'<label>'+document.lang_values["label-title-url"]+'</label>'+
 									'<input name="f-b-titleurl" type="text" value="${box.titleurl}" class="form-text" />'+
 
-									'<label>Prolog</label>'+
+									'<label>'+document.lang_values["label-prolog"]+'</label>'+
 									'<textarea name="f-b-prolog" class="form-html">${box.prolog}</textarea>'+
-									'<label>Epilog</label>'+
+									'<label>'+document.lang_values["label-epilog"]+'</label>'+
 									'<textarea name="f-b-epilog"  class="form-html">${box.epilog}</textarea>'+
 
-									'<label>Readmore</label>'+
+									'<label>'+document.lang_values["label-readmore"]+'</label>'+
 									'<input name="f-b-readmore" type="text" value="${box.readmore}" class="form-text" /> '+
-									'<label>URL</label>'+
+									'<label>'+document.lang_values["label-readmore-url"]+'</label>'+
 									'<input name="f-b-readmoreurl" type="text" value="${box.readmoreurl}" class="form-text" />'+
 									
 								'</div>'+
@@ -137,7 +134,7 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 							'<div class="box-styles-wrapper">'+
 							'<label for="f-b-style">Style</label>'+ 
 							'<select name="f-b-style" class="form-select"  id="f-b-style">'+
-								'<option value="">ohne style</option>'+
+								'<option value="">'+document.lang_values["label-style"]+'</option>'+
 								'{{if styles}}{{each styles}}'+
 									'<option {{if $value.slug == box.style }}selected="selected"{{/if}} value="${$value.slug}">'+
 									'${$value.title}</option>'+
