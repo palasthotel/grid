@@ -197,7 +197,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				if( data.result != true){
-					alert("could not publish...");
+					alert(lang_values["err_publish"]);
 				}
 			}
 		);
@@ -215,7 +215,7 @@ $(function() {
 					$grid.empty();
 					fillGrid(data.result);
 				} else {
-					alert("Could not revert grid...");
+					alert(lang_values["err_revert"]);
 				}
 			}
 		);
@@ -493,7 +493,7 @@ $(function() {
 		switch($this.attr("role")){
 			case "edit":
 				if($grid.children(".editor").length > 0){
-					alert("Ein anderer Container wird momentan bearbeitet!");
+					alert(lang_values["warn_container_edited"]);
 					return;
 				}
 				showContainerEditor($container);
@@ -519,11 +519,9 @@ $(function() {
 		if($container.data("reused") == true) return;
 		if($c_reuse.hasClass('loading')) return;
 		$c_reuse.addClass('loading rotate');
-		var adminTitle = prompt(
-			"Once a container is reusable you cannot modify it within this grid anymore. "+
-			"If you want to proceed choose a REUSE-TITLE and confirm:");
+		var adminTitle = prompt(lang_values["prom_container_reuse_title"]);
 		if(adminTitle == null || adminTitle == ""){
-			alert("The container needs a title to be reusable. Please try again.");
+			alert(lang_values["warn_container_reuse_need_title"]);
 			$c_reuse.removeClass('loading rotate');
 			return;
 		}
@@ -531,7 +529,7 @@ $(function() {
 		sendAjax("reuseContainer",params,function(data){
 			if(data.result != true){
 				$c_reuse.removeClass('loading rotate');
-				alert("Error while trying to make container reusable!");
+				alert(lang_values["err_container_reuse"]);
 				return;
 			}
 			window.location.reload();
@@ -544,7 +542,7 @@ $(function() {
 		var params = [ID, $container.data("id")];		
 		sendAjax("deleteContainer",params,function(data){
 			if(data.result != true){
-				alert("Error while trying to delete container!");
+				alert(lang_values["err_container_delete"]);
 				$c_trash.removeClass('loading rotate');
 				return;
 			}
@@ -637,7 +635,7 @@ $(function() {
 				isDraft();
 				$body.trigger("structureChange");
 			} else {
-				alert("Konnte die Änderungen nicht speichern.");
+				alert(lang_values["err_container_save"]);
 				$c_ok.removeClass('loading rotate');
 			}
 		});
@@ -716,7 +714,7 @@ $(function() {
 				refreshSlotStyles($style_changer);
 				
 			} else {
-				alert("Konnte Slotstyle nicht änderns.");
+				alert(lang_values["err_slot_style"]);
 			}
 		});
 	});
@@ -787,7 +785,7 @@ $(function() {
 				sendAjax("removeBox",[ID,old_container_id,old_slot_id,old_box_index],
 				function(data){
 					if(data.result == false){
-						alert("Konnte die Box nicht entfernen");
+						alert(lang_values["err_box_trash"]);
 						return;
 					}
 					ui.draggable.remove();
@@ -1442,7 +1440,7 @@ $(function() {
 	var box_toggling = false;
 	function toggleBoxes(){
 		if($grid.find(".container.editor").length > 0){
-			alert("Please finish the container editing first!");
+			alert(lang_values["warn_toggle_boxes_container_edited"]);
 			return;
 		}
 		if(box_toggling) return;

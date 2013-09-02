@@ -1,3 +1,5 @@
+// english
+
 document.lang_values = {
 	// texts
 	"btn-publish": "Publish",

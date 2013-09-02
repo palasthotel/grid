@@ -293,7 +293,11 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 
 			// TODO: the language files for grid interface
-			drupal_add_js($base.'/js/grid-lang.js','file');
+			$lang_file_js = $base.'/js/language/grid-en.js';
+			if( is_file($base.'/js/language/grid-'.$node->language.'.js') ){
+				$lang_file_js = $base.'/js/language/grid-'.$node->language.'.js';
+			}
+			drupal_add_js($lang_file_js,'file');
 			
 			drupal_add_js($base.'/js/templates.js','file');
 			drupal_add_js($base.'/js/jquery.iframe-transport.js');

@@ -618,7 +618,10 @@ html{
 }
 #grid [data-type=S-0-4] > * > .slot,
 #grid [data-type*=S-] > * > .slot:nth-child(2){
-	right:10px;
+	right:-10px;
+}
+#grid [data-type=S-4-0] > * > .slot{
+	left:-10px;
 }
 .box .grid .slot{
 	width: 100%;
@@ -1043,12 +1046,13 @@ html{
 
 /** Container Sidebars */
 .S-0-4 .slot{
-	width: 31.5%;
+	width: 33%;
 	float: right;
 }
 .S-4-0 .slot{
-	width: 31.5%;
+	width: 33%;
 }
+/*
 .S-4-4 .slot:nth-child(1){
 	width: 31.5%;
 	float: left;
@@ -1056,7 +1060,7 @@ html{
 .S-4-4 .slot:nth-child(2){
 	width: 31.5%;
 	float: right;
-}
+}*/
 [data-type*=S-] .grid .container{
 	width: 100% !important;
 	padding:0px;

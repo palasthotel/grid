@@ -134,7 +134,7 @@ var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-
 							'<div class="box-styles-wrapper">'+
 							'<label for="f-b-style">Style</label>'+ 
 							'<select name="f-b-style" class="form-select"  id="f-b-style">'+
-								'<option value="">'+document.lang_values["label-style"]+'</option>'+
+								'<option value="">'+document.lang_values["default-style"]+'</option>'+
 								'{{if styles}}{{each styles}}'+
 									'<option {{if $value.slug == box.style }}selected="selected"{{/if}} value="${$value.slug}">'+
 									'${$value.title}</option>'+
