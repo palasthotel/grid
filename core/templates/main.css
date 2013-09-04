@@ -65,14 +65,25 @@ html{
 	cursor: default !important;
 	color: #666 !important;
 	width: 80px !important;
-	background-position: center 10px !important;
-	background-image: url(images/rev-published.png);
+	padding-top: 0px !important;
 }
-.state-display.draft{
-	background-image: url(images/rev-draft.png);
+.state-display [role=indicator],
+.state-display [role=indicator].loading{
+	position:relative;
+	margin: 0px auto;
+	width:16px;
+	height: 16px;
+	background-color: #0f0;
+	display:block;
+	margin-bottom: 7px;
+	margin-top: 7px;
+	border: 1px solid #ccc;
 }
-.state-display.old{
-	background-image: url(images/rev-old.png);
+.state-display [role=indicator].loading{
+	background-color: #efefef;
+}
+.state-display.draft [role=indicator]{
+	background-color: #fC0;
 }
 #grid-toolbar button:hover:not(.state-display){
 	background-color: #efefef;

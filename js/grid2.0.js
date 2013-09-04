@@ -206,14 +206,17 @@ $(function() {
 	*	deletes the draft and goes back to last published revision
 	*/
 	function revertGrid(){
+		$grid.fadeOut('fast');
 		sendAjax(
 			"revertDraft", 
 			[ID],
 			function(data){
 				console.log(data);
+				$grid.show();
 				if(data.result != false && data.result != null){
 					$grid.empty();
 					fillGrid(data.result);
+					$body.trigger("structureChange");
 				} else {
 					alert(lang_values["err_revert"]);
 				}
@@ -1615,12 +1618,15 @@ $(function() {
 	$btn_publish = $toolbar.find("button[role=publish]");
 	$btn_revert = $toolbar.find("button[role=revert]");
 	function changeIsDraftDisplay(isDraft){
+		$stateDisplay.children('[role=indicator]').removeClass('loading');
 		if(isDraft == true){
-			$stateDisplay.text(lang_values[$stateDisplay.attr("lang-id")]["draft"]).addClass("draft");
+			$stateDisplay.addClass("draft");
+			$stateDisplay.children('[role=text]').text(lang_values[$stateDisplay.attr("lang-id")]["draft"]);
 			$btn_publish.removeAttr("disabled");
 			$btn_revert.removeAttr("disabled");
 		} else {			
-			$stateDisplay.text( lang_values[$stateDisplay.attr("lang-id")]["published"]).removeClass("draft");
+			$stateDisplay.removeClass("draft");
+			$stateDisplay.children('[role=text]').text( lang_values[$stateDisplay.attr("lang-id")]["published"]);
 			$btn_publish.attr("disabled","disabled");
 			$btn_revert.attr("disabled","disabled");
 		}
@@ -1661,6 +1667,8 @@ $(function() {
 		json = {};
 		json["method"] = "checkDraftStatus";
 		json["params"] = [ID];
+		$stateDisplay.removeClass('draft');
+		$stateDisplay.children('[role=indicator]').addClass('loading');
 		$.ajax({
 		   url: SERVER,
 		   dataType:"json",
