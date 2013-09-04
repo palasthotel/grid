@@ -71,13 +71,13 @@ html{
 .state-display [role=indicator].loading{
 	position:relative;
 	margin: 0px auto;
-	width:16px;
-	height: 16px;
+	width:12px;
+	height: 12px;
 	background-color: #0f0;
 	display:block;
-	margin-bottom: 7px;
-	margin-top: 7px;
-	border: 1px solid #ccc;
+	margin-bottom: 9px;
+	margin-top: 9px;
+	border: 1px solid #999;
 }
 .state-display [role=indicator].loading{
 	background-color: #efefef;
@@ -538,6 +538,12 @@ html{
 	float:right;
 	width:32%;
 	margin-right:0px;
+}
+.c-before{
+	margin-bottom: 15px;
+}
+.c-after{
+	margin-top: 15px;	
 }
 /** Allgemeine Slot styles **/
 .slots-wrapper{

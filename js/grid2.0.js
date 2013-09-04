@@ -1667,8 +1667,8 @@ $(function() {
 		json = {};
 		json["method"] = "checkDraftStatus";
 		json["params"] = [ID];
-		$stateDisplay.removeClass('draft');
-		$stateDisplay.children('[role=indicator]').addClass('loading');
+		//$stateDisplay.removeClass('draft');
+		//$stateDisplay.children('[role=indicator]').addClass('loading');
 		$.ajax({
 		   url: SERVER,
 		   dataType:"json",
