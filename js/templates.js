@@ -105,22 +105,31 @@ jQuery.template( "boxDraggableTemplate", box_draggable_markup );
 
 var box_editor_markup = '<div class="box-editor" data-b-index="${b_index}" data-id="${box.id}" '+
 							'data-c-id="${c_id}" data-s-id="${s_id}" data-type="${box.type}">'+
-							'<fieldset class="collapsable dynamic-fields">'+
-								'<legend>'+document.lang_values["label-b-dynamic"]+'</legend>'+
-								'<div class="field-wrapper"></div>'+
-								// inputs for types added by script
-							'</fieldset>'+
+
 							'<fieldset class="collapsable collapsable-hidden text-fields">'+
-								'<legend>'+document.lang_values["label-b-standard"]+'</legend>'+
+								'<legend>'+document.lang_values["label-b-before"]+'</legend>'+
 								'<div class="field-wrapper">'+
 
 									'<label>'+document.lang_values["label-title"]+'</label>'+
 									'<input name="f-b-title" type="text" value="${box.title}" class="form-text" /> '+
 									'<label>'+document.lang_values["label-title-url"]+'</label>'+
 									'<input name="f-b-titleurl" type="text" value="${box.titleurl}" class="form-text" />'+
-
 									'<label>'+document.lang_values["label-prolog"]+'</label>'+
 									'<textarea name="f-b-prolog" class="form-html">${box.prolog}</textarea>'+
+									
+								'</div>'+
+							'</fieldset>'+
+
+							'<fieldset class="collapsable dynamic-fields">'+
+								'<legend>'+document.lang_values["label-b-dynamic"]+'</legend>'+
+								'<div class="field-wrapper"></div>'+
+								// inputs for types added by script
+							'</fieldset>'+
+
+							'<fieldset class="collapsable collapsable-hidden text-fields">'+
+								'<legend>'+document.lang_values["label-b-after"]+'</legend>'+
+								'<div class="field-wrapper">'+
+
 									'<label>'+document.lang_values["label-epilog"]+'</label>'+
 									'<textarea name="f-b-epilog"  class="form-html">${box.epilog}</textarea>'+
 

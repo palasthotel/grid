@@ -31,8 +31,9 @@ document.lang_values = {
 	"label-readmore": "Readmore text:",
 	"label-readmore-url": "Readmore URL:",
 	"label-style": "Style:",
-	"label-b-dynamic": "Configuration",
-	"label-b-standard": "Texts",
+	"label-b-before": "Before",
+	"label-b-dynamic": "Spezific",
+	"label-b-after": "After",
 	// errors: something went wrong
 	"err_publish": "Could not publish...",
 	"err_revert": "Could not revert Grid...",
