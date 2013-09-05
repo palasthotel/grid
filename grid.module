@@ -40,6 +40,10 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 	}
 }
 
+function grid_preprocess_html(&$vars) {
+ 	$vars['classes_array'][] ="node-with-grid";
+}
+
 function grid_permission() {
 	$storage=grid_get_storage();
 	$rights=$storage->ajaxEndpoint->Rights();
