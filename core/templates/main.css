@@ -112,6 +112,9 @@ html{
 #grid-toolbar button[role=revert]{
 	background-image: url(images/btn-revert.png);
 }
+#grid-toolbar button[role=revisions]{
+	background-image: url(images/btn-revisions.png);
+}
 #grid-toolbar button[role=revert][disabled=disabled]{
 	background-image: url(images/btn-revert-disabled.png);
 }

@@ -3,7 +3,8 @@
 document.lang_values = {
 	// texts
 	"btn-publish": "Publish",
-	"btn-revert": "Revt",
+	"btn-revert": "Revert",
+	"btn-revisions": "Revisions",
 	"btn-preview": "Preview",
 	"btn-toggle-boxes": "Toggle",
 	"btn-add-container": "Add container",

@@ -4,6 +4,7 @@ document.lang_values = {
 	// texts
 	"btn-publish": "Veröffentlichen",
 	"btn-revert": "Änderungen verwerfen",
+	"btn-revisions": "Revisionen",
 	"btn-preview": "Vorschau",
 	"btn-toggle-boxes": "Boxen ein/ausblenden",
 	"btn-add-container": "Container hinzufügen",
