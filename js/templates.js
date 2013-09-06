@@ -182,4 +182,17 @@ var reuse_container_markup = '<li class="container-dragger new-container ${type}
 							'</li>';
 jQuery.template("containerReusableTemplate", reuse_container_markup);
 
+var revision_markup = '<li  role="revision" data-number="${number}">'+
+							'<div class="rev-number">${number}</div>'+
+							'<div class="rev-info">'+
+								'<span class="rev-date">${date}</span><br/>'+
+								'von <span class="rev-editor">${editor}</span>'+
+							'</div>'+
+							'<div class="rev-controls">'+
+								'<button>Preview</button>'+
+								'<button>Revert</button>'+
+							'</div>'
+						'</li>';
+jQuery.template("revisionTemplate", revision_markup);
+
 

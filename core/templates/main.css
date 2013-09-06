@@ -288,6 +288,39 @@ html{
 .ui-draggable{
 	cursor: move;
 }
+/** revisions tools */
+#grid-toolbar button[role="revisions"]{
+	position:relative;
+}
+#grid-revisions{
+	position:absolute;
+	z-index: 1;
+	display:none;
+	background-color: #efefef;
+	border: 1px solid #c6c6c6;
+}
+li[role=revision]{
+	margin: 5px;
+	background-color: #fff;
+	padding:5px;
+}
+li[role=revision] > div{
+	display:inline-block;
+}
+li[role=revision] .rev-number{
+	font-size: 32px;
+	padding: 5px;
+}
+li[role=revision] .rev-info{
+	font-size: 11px;
+	line-height: 13px;
+}
+li[role=revision] button{
+	width: auto;
+	height: auto;
+	padding:0px !important;
+	margin: 0px;
+}
 
 /** Toolbar rules ENDE **/
 #grid{

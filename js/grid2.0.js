@@ -243,6 +243,9 @@ $(function() {
 			case "revert":
 				revertGrid();
 				break;
+			case "revisions":
+				toggleRevisions();
+				break;
 			case "add_container":
 				toggleContainerTools();
 				break;
@@ -261,6 +264,71 @@ $(function() {
 				break;
 		}
 	});
+	/* ------------------------------
+	* Revision Tools
+	* ------------------------------ */
+	var $revisions = $("#grid-revisions");
+	var revisions = {
+		"result": [
+			{
+				"number":4, 
+				"state":"draft", 
+				"editor": "Edward", 
+				"date":"16.08.2013",
+				"url": "http://preview.de"
+			},
+			{
+				"number":3, 
+				"state":"published", 
+				"editor": "Edward", 
+				"date":"12.08.2013",
+				"url": "http://edwardbock.de"
+			},
+			{
+				"number":2, 
+				"state":"depreciated", 
+				"editor": "Enno", 
+				"date":"11.08.2013",
+				"url": "http://enno.de"
+			},
+			{
+				"number":1, 
+				"state":"depreciated", 
+				"editor": "Edward", 
+				"date":"01.08.2013",
+				"url": "http://google.de"
+			}
+		]
+	};
+	function toggleRevisions(){
+		if($revisions.css("display") == "none"){
+			showRevisions();
+		} else {
+			hideRevisions();
+		}
+	}
+	function showRevisions(){
+		/*
+		$.each(revisions.result, function(index, revision) {
+			 console.log(revision);
+			 var $revision = $("<li>").attr('role', 'revision').attr('data-number',revision.number);
+			 $revision.append("<p>"+revision.number+" "+revision.editor+"</p>");
+			 $revisions.append($revision);
+		});*/
+		$revisions.append($.tmpl( "revisionTemplate", revisions.result ));
+		$revisions.show();
+		$(document).on("mousedown",function(e){
+			console.log("click");
+		   if($(e.target).closest($revisions.parent()).length != 0) return;
+		   hideRevisions();
+		});
+	}
+	function hideRevisions(){
+		$(document).off("mousedown");
+		$revisions.empty();
+		$revisions.hide();
+	}
+
 	/* ------------------------------
 	* Container Tools
 	* ----------------------------- */

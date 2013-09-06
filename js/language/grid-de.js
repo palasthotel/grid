@@ -31,9 +31,9 @@ document.lang_values = {
 	"label-readmore": "Mehr-Link text:",
 	"label-readmore-url": "Mehr-Link URL:",
 	"label-style": "Style:",
-	"label-b-before": "Vorher",
+	"label-b-before": "Prolog",
 	"label-b-dynamic": "Spezifisches",
-	"label-b-after": "Nachher",
+	"label-b-after": "Epilog",
 	// errors: something went wrong
 	"err_publish": "Konnte nicht veröffentlicht werden...",
 	"err_revert": "Konnte alten Zustand nicht wiederherstellen...",

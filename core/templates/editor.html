@@ -10,7 +10,13 @@
             <li><button role="publish" lang-id="btn-publish" lang-type="text">Publish</button></li>
             <li><button role="preview" lang-id="btn-preview" lang-type="text">Preview</button></li>  
             <li><button role="revert" lang-id="btn-revert" lang-type="text">Revert</button></li>
-            <li><button role="revisions" lang-id="btn-revisions" lang-type="text">Revisions</button></li>         
+            <li>
+                <button role="revisions" lang-id="btn-revisions" lang-type="text">Revisions</button>
+                <!-- revisions -->
+                 <ul id="grid-revisions">
+                 </ul>
+                 <!-- revisions END -->
+            </li>         
         </ul>
         <ul role="gui">
             <li class="hide-from-sidebar">
@@ -21,6 +27,7 @@
             </li>
             <li><button role="add_box" lang-id="btn-add-box" lang-type="text">Add box</button></li>
         </ul>
+        
         <div class="grid-tools">
         	<!-- Tools für Container hinzufügen -->
         	<div class="g-tool g-container clearfix">
@@ -39,7 +46,6 @@
                 </ul>
                 <ul class="reusable-elements element-list" ref="show-reusable">
                 </ul>
-
             </div>
             <!-- Tools für Box hinzufügen -->
             <div class="g-tool g-box">
@@ -70,10 +76,4 @@
         </div>
      </section>
      <!-- box editor END -->
-
-     <!-- revisions -->
-     <section id="grid-revisions">
-         
-     </section>
-     <!-- revisions END -->
 </div>
