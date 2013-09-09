@@ -63,6 +63,8 @@ $(function() {
 	var GRIDMODE = document.gridmode;
 	function init() {
 		// ID = 42;
+		console.log("detect browser");
+		browsercheck();
 		console.log("Set interface language");
 		setInterfaceLanguage();
 		console.log("load container types");
@@ -80,6 +82,13 @@ $(function() {
 		$(window).scroll(needFixedToolbar);
 	}
 	$(document).ready(init);
+	/** ------------------------------
+	** Checks whitelist of browsers
+	* -------------------------------- */
+	var browser_whitelist ;
+	function browsercheck(){
+		console.log($.browser);
+	}
 	/** --------------------------------
 	*	load available box types
 	*
@@ -851,6 +860,7 @@ $(function() {
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
+			refreshPositions: true,
 			helper: function(event, element){
 				return $("<div class='dragger-helper'></div>");
 			},
