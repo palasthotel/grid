@@ -545,7 +545,9 @@ $(function() {
 			appendTo: $grid_wrapper,
 			scroll: true,
 			start: function(event, ui){
-				$grid.children().before($(document.createElement("div")).addClass("container-drop-area-wrapper").attr("data-type","container-drop-area-wrapper"));
+				$grid.children().before( $(document.createElement("div"))
+								.addClass("container-drop-area-wrapper")
+								.attr("data-type","container-drop-area-wrapper"));
 				$grid.append($(document.createElement("div")).addClass("container-drop-area-wrapper"));
 				$grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
 
@@ -1660,10 +1662,14 @@ $(function() {
 	function getFloatablePermissions($sidebar){
 		switch($sidebar.data("type")){
 			case "S-0-4":
-				return {"C-8-0":true,"C-4-4-0":true, "S-4-0":true, "C-0-4-0":true, "c-sort-placeholder": true, "container-drop-area-wrapper": true};
+				return {"C-8-0":true,"C-4-4-0":true, 
+						"S-4-0":true, "C-0-4-0":true, 
+						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 			case "S-4-0":
-				return {"C-0-8":true,"C-0-4-4":true, "S-0-4":true, "C-0-4-0":true, "c-sort-placeholder": true, "container-drop-area-wrapper": true};
+				return {"C-0-8":true,"C-0-4-4":true, 
+						"S-0-4":true, "C-0-4-0":true, 
+						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 		}
 		return {};
