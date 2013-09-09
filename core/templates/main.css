@@ -298,28 +298,45 @@ html{
 	display:none;
 	background-color: #efefef;
 	border: 1px solid #c6c6c6;
+	z-index: 101;
+	padding:5px;
 }
-li[role=revision]{
-	margin: 5px;
+#grid-revisions table{
+	border:none;
+	width:auto;
+	margin: 0;
+}
+tr[role=revision]{
+	border-bottom: 5px solid #efefef;
+}
+tr[role=revision]:last-child{
+	border:none;
+}
+tr[role=revision] td{
 	background-color: #fff;
 	padding:5px;
 }
-li[role=revision] > div{
-	display:inline-block;
-}
-li[role=revision] .rev-number{
+tr[role=revision] .rev-number{
 	font-size: 32px;
-	padding: 5px;
+	margin-right: 5px;
+	width: 50px;
+	text-align: center;
 }
-li[role=revision] .rev-info{
+tr[role=revision] .rev-info{
 	font-size: 11px;
 	line-height: 13px;
+	margin-right: 10px;
 }
-li[role=revision] button{
+tr[role=revision] button{
 	width: auto;
-	height: auto;
+	height: 30px;
 	padding:0px !important;
 	margin: 0px;
+	background-color: #e6e6e6 !important;
+	margin-left: 10px;
+}
+tr[role=revision] td{
+	border:none;
 }
 
 /** Toolbar rules ENDE **/

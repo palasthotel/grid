@@ -195,4 +195,17 @@ var revision_markup = '<li  role="revision" data-number="${number}">'+
 						'</li>';
 jQuery.template("revisionTemplate", revision_markup);
 
+var revision_table_markup = '<tr role="revision" data-number="${number}">'+
+								'<td class="rev-number">${number}</td>'+
+								'<td class="rev-info">'+
+									'<span class="rev-date">${date}</span><br/>'+
+									'von <span class="rev-editor">${editor}</span>'+
+								'</td>'+
+								'<td class="rev-controls">'+
+									'<button>Preview</button>'+
+									'<button>Revert</button>'+
+								'</td>'
+							'</li>';
+jQuery.template("revisionTableTemplate", revision_table_markup);
+
 

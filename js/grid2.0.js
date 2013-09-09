@@ -1,4 +1,29 @@
 /**
+*	IE JS console fix
+*/
+(function() {
+    var method;
+    var noop = function () {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+/**
 *	Grid controller.
 *	@autor Edward Bock
 */
@@ -48,6 +73,8 @@ $(function() {
 		loadStyles();
 		console.log("load grid");
 		loadGrid();
+		console.log("load revisions");
+		loadRevisions();
 		$grid_wrapper.attr("data-mode",GRIDMODE);
 		// scrollable toolbar
 		$(window).scroll(needFixedToolbar);
@@ -131,7 +158,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				fillGrid(data.result);
-				if(data.result.isSidebar){
+				if(data.result.isSidebar == true){
 					console.log("is Sidebar");
 					$(".hide-from-sidebar").remove();
 				}
@@ -141,6 +168,11 @@ $(function() {
 				doAfterImageLoad(function(){
 					$body.trigger('structureChange');
 				});
+				// to fix source map issue
+				setTimeout(function(){
+					$body.trigger('structureChange');
+					console.log("GO!");
+				}, 1500);
 			}
 		);
 	}
@@ -268,38 +300,53 @@ $(function() {
 	* Revision Tools
 	* ------------------------------ */
 	var $revisions = $("#grid-revisions");
-	var revisions = {
-		"result": [
-			{
-				"number":4, 
-				"state":"draft", 
-				"editor": "Edward", 
-				"date":"16.08.2013",
-				"url": "http://preview.de"
-			},
-			{
-				"number":3, 
-				"state":"published", 
-				"editor": "Edward", 
-				"date":"12.08.2013",
-				"url": "http://edwardbock.de"
-			},
-			{
-				"number":2, 
-				"state":"depreciated", 
-				"editor": "Enno", 
-				"date":"11.08.2013",
-				"url": "http://enno.de"
-			},
-			{
-				"number":1, 
-				"state":"depreciated", 
-				"editor": "Edward", 
-				"date":"01.08.2013",
-				"url": "http://google.de"
-			}
-		]
-	};
+	var revisions = Array();
+	function loadRevisions(){
+		var data = {
+			"result": [
+				{
+					"number":12, 
+					"state":"draft", 
+					"editor": "Edward", 
+					"date":"16.08.2013",
+					"url": "http://preview.de"
+				},
+				{
+					"number":3, 
+					"state":"published", 
+					"editor": "Edward", 
+					"date":"12.08.2013",
+					"url": "http://edwardbock.de"
+				},
+				{
+					"number":2, 
+					"state":"depreciated", 
+					"editor": "Enno", 
+					"date":"11.08.2013",
+					"url": "http://enno.de"
+				},
+				{
+					"number":1, 
+					"state":"depreciated", 
+					"editor": "Edward", 
+					"date":"01.08.2013",
+					"url": "http://google.de"
+				}
+			]
+		};
+		revisions = data.result;
+		revisions = Array();
+		console.log("revisions???"+revisions.length);
+		$revisions.find("table").empty();
+		if(revisions.length <= 0){
+			console.log("hide Revision button");
+			$toolbar.find('button[role=revisions]').hide();
+
+		} else {
+			$toolbar.find('button[role=revisions]').show();
+			$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
+		}
+	}
 	function toggleRevisions(){
 		if($revisions.css("display") == "none"){
 			showRevisions();
@@ -308,14 +355,6 @@ $(function() {
 		}
 	}
 	function showRevisions(){
-		/*
-		$.each(revisions.result, function(index, revision) {
-			 console.log(revision);
-			 var $revision = $("<li>").attr('role', 'revision').attr('data-number',revision.number);
-			 $revision.append("<p>"+revision.number+" "+revision.editor+"</p>");
-			 $revisions.append($revision);
-		});*/
-		$revisions.append($.tmpl( "revisionTemplate", revisions.result ));
 		$revisions.show();
 		$(document).on("mousedown",function(e){
 			console.log("click");
@@ -325,7 +364,6 @@ $(function() {
 	}
 	function hideRevisions(){
 		$(document).off("mousedown");
-		$revisions.empty();
 		$revisions.hide();
 	}
 
@@ -353,7 +391,12 @@ $(function() {
 					}
 					 $ul_list.append($li);
 				});
-				$ul_list.children('[data-type*=S]').hide();
+				$sidebars = $ul_list.children('[data-type*=S]');
+				if($sidebars.length > 0){
+					$sidebars.hide();
+				} else {
+					$toolContainerTypeTabs.children('[role=show-containers][scope=sidebars]').hide();
+				}
 				reloadContainerDraggables($ul_list.children());
 			},null,false);
 	}

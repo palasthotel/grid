@@ -625,6 +625,11 @@ function grid_reuse_box_edit($boxid)
 	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 	drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+
+	// TODO: the language files for grid interface
+	$lang_file_js = $base.'/js/language/grid-en.js';
+	drupal_add_js($lang_file_js,'file');
+
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
 	drupal_add_js($base.'/js/jquery.fileupload.js');
@@ -747,6 +752,11 @@ function grid_reuse_container_edit($containerid)
 	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 	drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+
+	// TODO: the language files for grid interface
+	$lang_file_js = $base.'/js/language/grid-en.js';
+	drupal_add_js($lang_file_js,'file');
+
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
 	drupal_add_js($base.'/js/jquery.fileupload.js');
