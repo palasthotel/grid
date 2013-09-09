@@ -873,6 +873,9 @@ $(function() {
 				old_container_id = ui.item.parents(".container").data("id");
 				refreshBoxTrashs();
 			},
+			change: function(e,ui){
+				$body.trigger("structureChange");
+			},
 			stop: function(e, ui){
 				hideBoxTrash();
 				if(boxDeleted){
