@@ -102,13 +102,8 @@ html{
 #grid-toolbar button[role=preview]{
 	background-image: url(images/btn-eye.png);
 }
-#grid-toolbar button[role*=add]:before{
-	content:"+";
-	position: absolute;
-	font-size: 40px;
-	top: -14px;
-	margin: 0px auto;
-	width: 90%;
+#grid-toolbar button[role*=add]{
+	background-image: url(images/btn-add.png);
 }
 #grid-toolbar button[role=revert]{
 	background-image: url(images/btn-revert.png);
