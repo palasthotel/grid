@@ -678,8 +678,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$newrevision=$grid->gridrevision+1;
 		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) select id,$newrevision,0,next_containerid,next_slotid,next_boxid from grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url)
-		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url from grid_container
+		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid)
+		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url, reuse_containerid from grid_container
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
 		$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight)
