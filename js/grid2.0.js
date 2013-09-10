@@ -513,6 +513,7 @@ $(function() {
 		placeholder: "c-sort-placeholder",
 		pullPlaceholder: true,
 		appendTo: $grid_wrapper ,
+		refreshPositions: true,
 		helper: function(event, element){
 				return $("<div class='c-sort-helper'></div>");
 		},
@@ -545,7 +546,7 @@ $(function() {
 		}
 	});
 	function reloadContainerDraggables($draggables){
-			$draggables.draggable({ 
+		$draggables.draggable({ 
 			helper: function(event, element){
 				return $("<div class='dragger-helper'></div>");
 			},
@@ -876,7 +877,7 @@ $(function() {
 			change: function(e,ui){
 				$body.trigger("structureChange");
 			},
-			stop: function(e, ui){
+			update: function(e, ui){
 				hideBoxTrash();
 				if(boxDeleted){
 					boxDeleted = false;
