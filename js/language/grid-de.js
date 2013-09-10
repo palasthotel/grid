@@ -48,5 +48,6 @@ document.lang_values = {
 	"warn_toggle_boxes_container_edited": "Bitte schließe zunächst den Container-Editor.",
 	//prompt
 	"prom_container_reuse_title": "Wenn der Container Wiederverwendbar gemacht wurde, kann ich in diesem Grid nicht mehr bearbeitet werden. "+
-								"Bitte Verwaltungstitel eingeben und bestätigen:"
+								"Bitte Verwaltungstitel eingeben und bestätigen:",
+	"prom-leave-page": "Grid wirklich verlassen?"
 };

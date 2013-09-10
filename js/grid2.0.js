@@ -1763,6 +1763,14 @@ $(function() {
 		}
 	}
 
+	$body.keydown(function(event) {
+		if (event.keyCode == 8){
+			if(!confirm(lang_values["prom-leave-page"])){
+				return false;
+			}
+		}
+	});
+
 	// --------------------
 	// Serverkommunikation
 	// -------------------

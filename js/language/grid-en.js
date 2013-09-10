@@ -48,5 +48,6 @@ document.lang_values = {
 	"warn_toggle_boxes_container_edited": "Please finish the container editing first.",
 	//prompt
 	"prom_container_reuse_title": "Once a container is reusable you cannot modify it within this grid anymore. "+
-								"If you want to proceed choose a REUSE-TITLE and confirm:"
+								"If you want to proceed choose a REUSE-TITLE and confirm:",
+	"prom-leave-page": "Do you really want to leave Grid?"
 };
