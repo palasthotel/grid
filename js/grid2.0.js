@@ -175,11 +175,11 @@ $(function() {
 					refreshSlotStyles($(style_changer));
 				});
 				doAfterImageLoad(function(){
-					$body.trigger('structureChange');
+					$grid.trigger('structureChange');
 				});
 				// to fix source map issue
 				setTimeout(function(){
-					$body.trigger('structureChange');
+					$grid.trigger('structureChange');
 					console.log("GO!");
 				}, 1500);
 			}
@@ -226,7 +226,7 @@ $(function() {
 		console.log("fillGrid()-----------");
 		console.log(container_arr);
 		refreshBoxSortable();
-		$body.trigger("structureChange");
+		$grid.trigger("structureChange");
 	}
 	/**
 	*	Changes status from draft to published.
@@ -257,7 +257,7 @@ $(function() {
 				if(data.result != false && data.result != null){
 					$grid.empty();
 					fillGrid(data.result);
-					$body.trigger("structureChange");
+					$grid.trigger("structureChange");
 				} else {
 					throwError(lang_values["err_revert"]);
 				}
@@ -542,7 +542,7 @@ $(function() {
 						window.location.reload();
 					},1000);
 				}
-				$body.trigger("structureChange");
+				$grid.trigger("structureChange");
 				scrollToContainer(params[1]);
 			});
 		}
@@ -580,7 +580,7 @@ $(function() {
 								[ID, $working_placeholder.index(), $draggable.data("id")],
 								function(data){
 									$working_placeholder.replaceWith(buildContainer(data.result));
-									$body.trigger("structureChange");
+									$grid.trigger("structureChange");
 									scrollToContainer(data.result.id);
 							});
 						} else {
@@ -601,7 +601,7 @@ $(function() {
 									buildSlot([value]).appendTo( $slots_wrapper );
 								});
 								refreshBoxSortable();
-								$body.trigger("structureChange");
+								$grid.trigger("structureChange");
 								scrollToContainer(data.result.id);
 							});
 						}
@@ -684,7 +684,7 @@ $(function() {
 					target_c_id = $prev.data("id");
 				}
 				$container.remove();
-				$body.trigger("structureChange");
+				$grid.trigger("structureChange");
 				if(target_c_id != null){
 					scrollToContainer(target_c_id);	
 				}
@@ -761,7 +761,7 @@ $(function() {
 				$newContainer.find(".box").show();
 				$editContainer.remove();
 				isDraft();
-				$body.trigger("structureChange");
+				$grid.trigger("structureChange");
 			} else {
 				throwError(lang_values["err_container_save"]);
 				$c_ok.removeClass('loading rotate');
@@ -774,7 +774,7 @@ $(function() {
 		$oldContainer.find(".box").show();
 		$container.after($oldContainer);
 		$container.remove();
-		$body.trigger("structureChange");
+		$grid.trigger("structureChange");
 	}
 	function buildContainer(templateParams){
 		console.log("Container params:");
@@ -877,7 +877,7 @@ $(function() {
 				refreshBoxTrashs();
 			},
 			change: function(e,ui){
-				$body.trigger("structureChange");
+				$grid.trigger("structureChange");
 			},
 			update: function(e, ui){
 				hideBoxTrash();
@@ -886,6 +886,12 @@ $(function() {
 					console.log("trash!!!!");
 					return;
 				}
+				console.log("move box");
+				console.log([
+						ID,
+						old_container_id,old_slot_id,old_box_index,
+						ui.item.parents(".container").data("id"),ui.item.parents(".slot").data("id"),ui.item.index()
+					]);
 				sendAjax(
 					"moveBox",
 					[
@@ -894,12 +900,12 @@ $(function() {
 						ui.item.parents(".container").data("id"),ui.item.parents(".slot").data("id"),ui.item.index()
 					],
 					function(data){
+						$grid.trigger("structureChange");
 						if(data.result != true){
 							// TODO: Rückmeldung geben und Box zurück sortieren!!!
 							console.log(data);
-							console.log("Rückmeldung geben und Box zurück sortieren!!!");
+							throwError(lang_values["err-move-box"]);
 						}
-						$body.trigger("structureChange");
 						scrollToBox(ui.item.data("id"));
 				});
 			}
@@ -922,7 +928,7 @@ $(function() {
 					}
 					ui.draggable.remove();
 					hideBoxTrash();
-					$body.trigger('structureChange');
+					$grid.trigger('structureChange');
 				});
 			}
 		});
@@ -979,7 +985,7 @@ $(function() {
 						function(data){
 							$temp.attr("data-id",data.result.id);
 							console.log(data);
-							$body.trigger("structureChange");
+							$grid.trigger("structureChange");
 							scrollToBox(data.result.id);
 						});
 					}
@@ -1487,7 +1493,7 @@ $(function() {
 			if(GRIDMODE != "box"){
 				$toolbar.slideDown(200,function(){
 					if(box_id == null) return;
-					$body.trigger('structureChange');
+					$grid.trigger('structureChange');
 					scrollToBox(box_id);
 				});
 				
@@ -1584,7 +1590,7 @@ $(function() {
 			$(".box, .c-before, .c-after").slideDown(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", false);
-				$body.trigger("structureChange");	
+				$grid.trigger("structureChange");	
 			});
 
 		} else{
@@ -1592,7 +1598,7 @@ $(function() {
 			$(".box, .c-before, .c-after").slideUp(200,function(){
 				box_toggling = false;
 				$toggle_btn.attr("data-hidden", true);
-				$body.trigger("structureChange");	
+				$grid.trigger("structureChange");	
 				window.scrollTo(0, 0);
 			});
 		}
@@ -1602,8 +1608,9 @@ $(function() {
 	/**
 	*	Eventhandler for an structureChange event
 	*	called when sidebars could need a collision recalculation
+		$body.on('structureChange'
 	*/
-	$body.on('structureChange', function(e, eventInfo) { 
+	$grid.on("DOMSubtreeModified, structureChange", function(e, eventInfo) { 
 		// reset offsets
 		$grid.children(".container").css("margin-top", "0px");
 		$grid.find(".container[data-type*=S] .slot")
@@ -1764,7 +1771,7 @@ $(function() {
 			$btn_revert.attr("disabled","disabled");
 		}
 	}
-
+	/** TODO: buggy because every backspace is tracked
 	$body.keydown(function(event) {
 		if (event.keyCode == 8){
 			if(!confirm(lang_values["prom-leave-page"])){
@@ -1772,7 +1779,7 @@ $(function() {
 			}
 		}
 	});
-
+	*/
 	/**
 	* 	Errors stack
 	*	@param $error_text
