@@ -42,6 +42,7 @@ document.lang_values = {
 	"err_container_delete": "Could not delete container.",
 	"err_slot_style": "Could not save slot style.",
 	"err_box_trash": "Could not delete box.",
+	"err_move_container": "Could not move containers. Site will reload!",
 	// warnings: nothing went wrong, but please do it another way
 	"warn_container_edited": "Please finish container editing first.",
 	"warn_container_reuse_need_title": "The container needs a title to be reusable. Please try again.",

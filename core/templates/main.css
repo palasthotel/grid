@@ -36,17 +36,17 @@ html{
 	-moz-box-shadow: #ccc 0px 2px 5px; 
 	box-shadow: #ccc 0px 2px 5px;
 }
-#grid-toolbar > ul{
+#grid-toolbar > [role=g-controls] > ul{
 	margin:0px !important;
 	margin-bottom:10px;
 }
-#grid-toolbar > ul[role=gui]{
+#grid-toolbar > [role=g-controls] > ul[role=gui]{
 	float: right;
 }
-#grid-toolbar > ul[role=data]{
+#grid-toolbar > [role=g-controls] > ul[role=data]{
 	float: left;
 }
-#grid-toolbar > ul > li{
+#grid-toolbar > [role=g-controls] > ul > li{
 	float:left;
 	margin-right:10px;
 }
@@ -119,6 +119,20 @@ html{
 }
 #grid-toolbar button[data-hidden=true][role=hide_boxes]{
 	background-image: url(images/btn-toggle-closed.png);
+}
+
+/* Error display ***************/
+#grid-toolbar [role=g-errors]{
+	padding: 0 10px 0 10px;
+}
+#grid-toolbar [role=g-errors]:empty{
+	padding:0px;
+}
+#grid-toolbar [role=g-errors] p{
+	display:none;
+	background-color: #f00;
+	color: #fff;
+	padding:2px 5px;
 }
 
 /*********************/

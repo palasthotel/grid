@@ -238,7 +238,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				if( data.result != true){
-					alert(lang_values["err_publish"]);
+					throwError(lang_values["err_publish"]);
 				}
 			}
 		);
@@ -259,7 +259,7 @@ $(function() {
 					fillGrid(data.result);
 					$body.trigger("structureChange");
 				} else {
-					alert(lang_values["err_revert"]);
+					throwError(lang_values["err_revert"]);
 				}
 			}
 		);
@@ -537,8 +537,10 @@ $(function() {
 			sendAjax("moveContainer",params,
 			function(data){
 				if(data.result != true){
-					console.log("Error while re-sorting containers. Site will reload.");
-					window.location.reload();
+					throwError(lang_values["err_move_container"]);
+					setTimeout(function(){
+						window.location.reload();
+					},1000);
 				}
 				$body.trigger("structureChange");
 				scrollToContainer(params[1]);
@@ -619,7 +621,7 @@ $(function() {
 		switch($this.attr("role")){
 			case "edit":
 				if($grid.children(".editor").length > 0){
-					alert(lang_values["warn_container_edited"]);
+					throwError(lang_values["warn_container_edited"]);
 					return;
 				}
 				showContainerEditor($container);
@@ -647,7 +649,7 @@ $(function() {
 		$c_reuse.addClass('loading rotate');
 		var adminTitle = prompt(lang_values["prom_container_reuse_title"]);
 		if(adminTitle == null || adminTitle == ""){
-			alert(lang_values["warn_container_reuse_need_title"]);
+			throwError(lang_values["warn_container_reuse_need_title"]);
 			$c_reuse.removeClass('loading rotate');
 			return;
 		}
@@ -655,7 +657,7 @@ $(function() {
 		sendAjax("reuseContainer",params,function(data){
 			if(data.result != true){
 				$c_reuse.removeClass('loading rotate');
-				alert(lang_values["err_container_reuse"]);
+				throwError(lang_values["err_container_reuse"]);
 				return;
 			}
 			window.location.reload();
@@ -668,7 +670,7 @@ $(function() {
 		var params = [ID, $container.data("id")];		
 		sendAjax("deleteContainer",params,function(data){
 			if(data.result != true){
-				alert(lang_values["err_container_delete"]);
+				throwError(lang_values["err_container_delete"]);
 				$c_trash.removeClass('loading rotate');
 				return;
 			}
@@ -761,7 +763,7 @@ $(function() {
 				isDraft();
 				$body.trigger("structureChange");
 			} else {
-				alert(lang_values["err_container_save"]);
+				throwError(lang_values["err_container_save"]);
 				$c_ok.removeClass('loading rotate');
 			}
 		});
@@ -840,7 +842,7 @@ $(function() {
 				refreshSlotStyles($style_changer);
 				
 			} else {
-				alert(lang_values["err_slot_style"]);
+				throwError(lang_values["err_slot_style"]);
 			}
 		});
 	});
@@ -915,7 +917,7 @@ $(function() {
 				sendAjax("removeBox",[ID,old_container_id,old_slot_id,old_box_index],
 				function(data){
 					if(data.result == false){
-						alert(lang_values["err_box_trash"]);
+						throwError(lang_values["err_box_trash"]);
 						return;
 					}
 					ui.draggable.remove();
@@ -1570,7 +1572,7 @@ $(function() {
 	var box_toggling = false;
 	function toggleBoxes(){
 		if($grid.find(".container.editor").length > 0){
-			alert(lang_values["warn_toggle_boxes_container_edited"]);
+			throwError(lang_values["warn_toggle_boxes_container_edited"]);
 			return;
 		}
 		if(box_toggling) return;
@@ -1771,6 +1773,22 @@ $(function() {
 		}
 	});
 
+	/**
+	* 	Errors stack
+	*	@param $error_text
+	*	the text to discribe the error
+	*/
+	var $g_errors = $toolbar.find("[role=g-errors]");
+	var error_stack = Array();
+	function throwError($error_text){
+		error_stack.push($("<p>"+$error_text+"</p>").appendTo($g_errors).slideDown('slow'));
+		setTimeout(function(){
+			error_stack.shift().slideUp("slow",function(){
+				$(this).remove();
+			});
+		},5000);
+	}
+	
 	// --------------------
 	// Serverkommunikation
 	// -------------------

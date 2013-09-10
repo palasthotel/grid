@@ -42,6 +42,7 @@ document.lang_values = {
 	"err_container_delete": "Konnte Container nicht löschen.",
 	"err_slot_style": "Konnte Slotstyle nicht ändern.",
 	"err_box_trash": "Konnte Box nicht entfernen.",
+	"err_move_container": "Der Container konnte nicht verschoben werden. Seite lädt neu!",
 	// warnings: nothing went wrong, but please do it another way
 	"warn_container_edited": "Bitte zuerst den Container zu Ende bearbeiten.",
 	"warn_container_reuse_need_title": "Der Container braucht einen Titel um Wiederverwendbar zu werden.",
