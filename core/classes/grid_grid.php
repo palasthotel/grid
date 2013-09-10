@@ -152,6 +152,9 @@ class grid_grid extends grid_base {
 		$precontainer = false;
 		$nextcontainer = false;
 		
+		$withincontentcontainers = false;
+		$contentcontaineropencounter = 0;
+		$contentcontainerclosecounter = 0;
 		$i = 0;
 		foreach($this->container as $container){
 			$mycontainer = $container;
@@ -172,14 +175,20 @@ class grid_grid extends grid_base {
 					
 			if($mycontainer->is_content_container() and !$prevcontainer->is_content_container()){
 				$this->container[$i]->firstcontentcontainer = true;
+				$withincontentcontainers = true;
+				$contentcontaineropencounter ++;
 			}else{
 				$this->container[$i]->firstcontentcontainer = false;
 			}
 			
-			if($mycontainer->is_content_container() and $nextcontainer->is_content_container()){
+			if($withincontentcontainers and $mycontainer->is_content_container() and $nextcontainer->is_content_container()){
 				$this->container[$i]->lastcontentcontainer = false;
-			}else{
+			}elseif($withincontentcontainers and $mycontainer->is_content_container() and !$nextcontainer->is_content_container()){
 				$this->container[$i]->lastcontentcontainer = true;
+				$withincontentcontainers = false;
+				$contentcontainerclosecounter ++;
+			}else{
+				$this->container[$i]->lastcontentcontainer = false;
 			}
 			$i++;
 		}
