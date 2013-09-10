@@ -879,25 +879,27 @@ $(function() {
 			change: function(e,ui){
 				$grid.trigger("structureChange");
 			},
-			update: function(e, ui){
+			stop: function(e, ui){
 				hideBoxTrash();
 				if(boxDeleted){
 					boxDeleted = false;
 					console.log("trash!!!!");
 					return;
 				}
-				console.log("move box");
-				console.log([
-						ID,
-						old_container_id,old_slot_id,old_box_index,
-						ui.item.parents(".container").data("id"),ui.item.parents(".slot").data("id"),ui.item.index()
-					]);
+				var new_container_id = ui.item.parents(".container").data("id");
+				var new_slot_id = ui.item.parents(".slot").data("id");
+				var new_box_index = ui.item.index();
+				if(old_container_id == new_container_id &&
+					old_slot_id == new_slot_id &&
+					old_box_index == new_box_index){
+					return;
+				}
 				sendAjax(
 					"moveBox",
 					[
 						ID,
 						old_container_id,old_slot_id,old_box_index,
-						ui.item.parents(".container").data("id"),ui.item.parents(".slot").data("id"),ui.item.index()
+						new_container_id,new_slot_id,new_box_index
 					],
 					function(data){
 						$grid.trigger("structureChange");
