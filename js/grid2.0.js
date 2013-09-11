@@ -390,7 +390,7 @@ $(function() {
 				console.log(arr_container_types);
 				var $ul_list = $toolContainerTypeTabs.siblings("[ref=show-containers]");
 				$.each(arr_container_types, function(index, type) {
-					if(type.type.indexOf("I")> -1) return true;
+					if(type.type.indexOf("I")> -1 || type.type.indexOf("C-4")) return true;
 					var $li = $("<li>")
 								.addClass('container-dragger new-container clearfix')
 								.addClass(type.type)

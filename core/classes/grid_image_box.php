@@ -6,6 +6,7 @@ class grid_image_box extends grid_static_base_box
 	{
 		$this->content=new StdClass();
 		$this->content->fileid="";
+		$this->content->url = "";
 	}
 	
 	public function type() {
@@ -16,7 +17,13 @@ class grid_image_box extends grid_static_base_box
 		//boxes render their content in here
 		if($this->content->fileid!="")
 		{
-			return "<img src='".file_create_url(file_load($this->content->fileid)->uri)."'/>";
+			$a_pre = "";
+			$a_post = "";
+			if(isset($this->content->url) && $this->content->url != ""){
+				$a_pre = '<a href="'.$this->content->url.'">';
+				$a_post = '</a>';
+			}
+			return $a_pre."<img src='".file_create_url(file_load($this->content->fileid)->uri)."'/>".$a_post;
 		}
 		return 'Bildbox';
 	}
@@ -30,6 +37,11 @@ class grid_image_box extends grid_static_base_box
 				'label'=>'Bild',
 				'uploadpath'=>'/grid_file_endpoint',
 			),
+			array(
+				'key' => 'url',
+				'type' => 'text',
+				'label' => 'URL (optional)',
+			)
 		);
 	}
 	
