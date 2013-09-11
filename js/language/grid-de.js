@@ -16,7 +16,7 @@ document.lang_values = {
 		"published": "Veröffentlicht!",
 		"draft": "Entwurf..."
 	},
-	"default-style": "Standart Style",
+	"default-style": "Standard Style",
 	// placeholder
 	"placeholder-search-box": "Boxen suchen",
 	// titles
