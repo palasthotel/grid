@@ -1638,23 +1638,12 @@ $(function() {
 		var c_height = calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
 		var $sidebar_slot = $sidebar.children(".slots-wrapper").children('.slot');
 		var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
-		console.log("c_height: "+c_height);
-		console.log("s_height: "+$sidebar_slot.outerHeight(true));
 		if(c_height < $sidebar_slot.outerHeight(true)){
-			// first delete any padding bottom
-			/*
-			$sidebar_slot.css("padding-bottom",parseInt(
-				$grid
-				.find(".container[data-type*=C]:first-child .slot")
-				.css("padding-bottom")
-			));*/
 			// if sidebar is taller than containers make puffer margin top
 			var needed_margin_top = $sidebar_slot.outerHeight()+sidebar_margin_bottom;
 			needed_margin_top -= c_height;
 			$sidebar.css("margin-top", needed_margin_top);
 		} else if(c_height > $sidebar_slot.outerHeight(true)){
-			// first delete any margin top from before
-			//$sidebar.css("margin-top", "0px");
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
 			need_bottom_offset += sidebar_margin_bottom;

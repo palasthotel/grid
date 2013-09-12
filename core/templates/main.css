@@ -608,6 +608,9 @@ tr[role=revision] td{
 .c-after{
 	margin-top: 15px;	
 }
+.fieldset-c-style select{
+	width:100%;
+}
 /** Allgemeine Slot styles **/
 .slots-wrapper{
 	position:relative;

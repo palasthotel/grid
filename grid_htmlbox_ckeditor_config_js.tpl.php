@@ -54,7 +54,7 @@ CKEDITOR.editorConfig = function( config ) {
 		
 		{ name: 'blockstyles', items: [  'NumberedList','BulletedList', 'Blockquote' ] },
 	    { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-	    { name: 'document', items: [ 'Source', 'Image' ] }
+	    { name: 'document', items: [ 'Source' ] }
 	];
 
 	config.allowedContent = true;
