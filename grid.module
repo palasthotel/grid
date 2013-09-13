@@ -28,7 +28,7 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 		$nid=grid_get_nid_by_gridid($gridid);
 		$node=node_load($nid);
 		$type=$node->type;
-		if($type==variable_get('grid_sidebar',''))
+		if($type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
 		{
 			$return['isSidebar']=TRUE;
 		}
@@ -416,32 +416,93 @@ function grid_field_extra_fields()
 
 function grid_build_grid($form_id,&$form_state,$nid)
 {
-	$form=array();
-	$form['question']=array(
-		'#type'=>'markup',
-		'#markup'=>'<div>'.t('There is no Grid. Boot one?').'</div>',
-	);
-	$form['submit']=array(
-		'#type'=>'submit',
-		'#value'=>'Create Grid',
-		'#executes_submit_callback'=>TRUE,
-	);
 	$form_state['nid']=$nid;
-	return $form;
+	
+	$node=node_load($nid);
+	if(!empty($node->tnid))
+	{
+		$nodes=translation_node_get_translations($node->tnid);
+		
+		$form=array();
+		$form['question']=array(
+			'#type'=>'markup',
+			'#markup'=>'<div>'.t('There is no Grid.').'</div>',
+		);
+		$options=array();
+		$options[-1]='Boot new Grid';
+		foreach($nodes as $language=>$lnode)
+		{
+			$localized=node_load($lnode->nid);
+			if(isset($localized->grid))
+			{
+				$options[$lnode->nid]=t('Clone Grid from ').$localized->title.'['.$language.']';
+			}
+		}
+		$form['options']=array(
+			'#type'=>'radios',
+			'#default_value'=>-1,
+			'#options'=>$options
+		);
+		$form['submit']=array(
+			'#type'=>'submit',
+			'#value'=>'Create Grid',
+			'#executes_submit_callback'=>TRUE,
+		);
+		return $form;
+	}
+	else
+	{
+		$form=array();
+		$form['question']=array(
+			'#type'=>'markup',
+			'#markup'=>'<div>'.t('There is no Grid. Boot one?').'</div>',
+		);
+		$form['submit']=array(
+			'#type'=>'submit',
+			'#value'=>'Create Grid',
+			'#executes_submit_callback'=>TRUE,
+		);
+		return $form;
+	}
 }
 
 function grid_build_grid_submit($form_id,&$form_state)
 {
-	$storage=grid_get_storage();
-	$id=$storage->createGrid();
 	$node=node_load($form_state['nid']);
-	if($node->type==variable_get('grid_sidebar',''))
+	$storage=grid_get_storage();
+	if(!empty($node->tnid))
 	{
-		$grid=$storage->loadGrid($id);
-		$grid->insertContainer("C-4",0);		
+		$clone=$form_state['values']['options'];
+		if($clone==-1)
+		{
+			$id=$storage->createGrid();
+			if($node->type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
+			{
+				$grid=$storage->loadGrid($id);
+				$grid->insertContainer("C-4",0);		
+			}
+			
+			db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
+		}
+		else
+		{
+			$clonenode=node_load($clone);
+			$grid=$clonenode->grid;
+			$cloned=$grid->cloneGrid();
+			db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$node->nid,'grid_id'=>$cloned->gridid))->execute();
+		}
 	}
-	
-	db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
+	else
+	{
+		$id=$storage->createGrid();
+		if($node->type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
+		{
+			$grid=$storage->loadGrid($id);
+			$grid->insertContainer("C-4",0);		
+		}
+		
+		db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
+	}
 }
 
 function grid_ajax()
@@ -481,7 +542,7 @@ function grid_admin_settings()
 		'#title'=>t('Content to be used as a sidebar'),
 	);
 	$options=array();
-	
+	$options['sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy']='None';
 	foreach($keys as $key)
 	{
 		if(variable_get('grid_'.$key.'_enabled',0))
@@ -495,7 +556,7 @@ function grid_admin_settings()
 		'#type'=>'select',
 		'#title'=>'Node Type',
 		'#options'=>$options,
-		'#default_value'=>variable_get('grid_sidebar','')
+		'#default_value'=>variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy')
 	);
 	
 	

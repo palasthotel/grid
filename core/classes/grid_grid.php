@@ -37,6 +37,11 @@ class grid_grid extends grid_base {
 	{
 		return $this->storage->publishGrid($this);
 	}
+	
+	public function cloneGrid()
+	{
+		return $this->storage->cloneGrid($this);
+	}
 
 	public function revoke()
 	{

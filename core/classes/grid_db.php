@@ -44,6 +44,33 @@ class grid_db {
 		$query="delete from grid_slot2box where grid_id=$grid_id";
 		$this->connection->query($query);
 	}
+	
+	public function cloneGrid($grid)
+	{
+		$gridid=$grid->gridid;
+
+		$query="select max(id) as id from grid_grid";
+		$result=$this->connection->query($query);
+		$row=$result->fetch_assoc();
+		$cloneid=$row['id'];
+		$cloneid++;
+		
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid from grid_grid where id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid from grid_container where grid_id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight) select $cloneid,grid_revision,container_id,weight from grid_grid2container where grid_id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="insert into grid_slot (id,grid_id,grid_revision,style) select id,$cloneid,grid_revision,style from grid_slot where grid_id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) select container_id,$cloneid,grid_revision,slot_id,weight from grid_container2slot where grid_id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="insert into grid_box (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content from grid_box where grid_id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) select slot_id,$cloneid,grid_revision,box_id,weight from grid_slot2box where grid_id=$gridid";
+		$this->connection->query($query) or die($this->connection->error);
+		return $this->loadGrid($cloneid);
+	}
 
 	//loads a complete grid with all regions and boxes belonging to it.
 	public function loadGrid($gridId,$preferDrafts=TRUE)
