@@ -75,7 +75,7 @@ function grid_menu() {
 			'title'=>t('Grid CKEditor Config JS File'),
 			'page callback'=>'grid_ckeditor_config',
 			'access callback'=>'user_access',
-			'acces arguments'=>array('administer grid'),
+			'access arguments'=>array('administer grid'),
 			'type'=>MENU_CALLBACK,
 		),
 		'node/%node/grid/preview' =>array(
