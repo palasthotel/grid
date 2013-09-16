@@ -15,7 +15,7 @@ class grid_image_box extends grid_static_base_box
 
 	public function build($editmode) {
 		//boxes render their content in here
-		if($this->content->fileid!="")
+		if(isset($this->content->fileid) && $this->content->fileid!="")
 		{
 			$a_pre = "";
 			$a_post = "";
@@ -23,7 +23,12 @@ class grid_image_box extends grid_static_base_box
 				$a_pre = '<a href="'.$this->content->url.'">';
 				$a_post = '</a>';
 			}
-			return $a_pre."<img src='".file_create_url(file_load($this->content->fileid)->uri)."'/>".$a_post;
+			$src = "no_file";
+			$file = file_load($this->content->fileid);
+			if(is_object($file)){
+				$src = file_create_url($file->uri);
+			}
+			return $a_pre."<img src='".$src."' alt='grid-image' />".$a_post;
 		}
 		return 'Bildbox';
 	}
