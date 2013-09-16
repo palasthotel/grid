@@ -28,7 +28,7 @@ class grid_image_box extends grid_static_base_box
 			if(is_object($file)){
 				$src = file_create_url($file->uri);
 			}
-			return $a_pre."<img src='".$src."' alt='grid-image' />".$a_post;
+			return $a_pre."<img src='".$src."' alt='Grid Image' />".$a_post;
 		}
 		return 'Bildbox';
 	}
