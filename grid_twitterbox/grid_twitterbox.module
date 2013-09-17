@@ -143,10 +143,12 @@ class grid_twitter_box extends grid_static_base_box {
 			array(
 				'key'=>'limit',
 				'type'=>'number',
+				'label' => 'Anzahl der Einträge'
 			),
 			array(
 				'key'=>'user',
 				'type'=>'text',
+				'label' => 'Username'
 			),
 		);
 	}
