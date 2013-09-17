@@ -148,7 +148,7 @@ class grid_twitter_box extends grid_static_base_box {
 			array(
 				'key'=>'user',
 				'type'=>'text',
-				'label' => 'Username'
+				'label' => 'User'
 			),
 		);
 	}
