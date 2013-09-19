@@ -9,7 +9,7 @@ document.lang_values = {
 	"btn-toggle-boxes": "Toggle",
 	"btn-add-container": "Add container",
 	"btn-add-box": "Add Box",
-	"btn-cancle": "Canel",
+	"btn-cancle": "Cancel",
 	"btn-save": "Save",
 	"btn-make-reusable": "Make reusable",
 	"state-display": {
