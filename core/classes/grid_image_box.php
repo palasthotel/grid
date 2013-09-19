@@ -7,6 +7,7 @@ class grid_image_box extends grid_static_base_box
 		$this->content=new StdClass();
 		$this->content->fileid="";
 		$this->content->url = "";
+		$this->content->imagestyle = "";
 	}
 	
 	public function type() {
@@ -26,7 +27,11 @@ class grid_image_box extends grid_static_base_box
 			$src = "no_file";
 			$file = file_load($this->content->fileid);
 			if(is_object($file)){
-				$src = file_create_url($file->uri);
+				if(isset($this->content->imagestyle) && $this->content->imagestyle != ""){
+					$src = image_style_url($this->content->imagestyle , $file->uri );
+				} else {
+					$src = file_create_url($file->uri);
+				}				
 			}
 			return $a_pre."<img src='".$src."' alt='Grid Image' />".$a_post;
 		}
@@ -35,18 +40,30 @@ class grid_image_box extends grid_static_base_box
 	
 	
 	public function contentStructure () {
+		$styles = array(
+				array("text" => "- ".t("Original")." -", "key" => ""),
+			);
+		foreach (image_styles() as $key => $style) {
+			$styles[] = array("text" => $key, "key" => $key );
+		}
 		return array(
 			array(
 				'key'=>'fileid',
 				'type'=>'file',
-				'label'=>'Bild',
+				'label'=>t('Image'),
 				'uploadpath'=>'/grid_file_endpoint',
 			),
 			array(
 				'key' => 'url',
 				'type' => 'text',
-				'label' => 'URL (optional)',
-			)
+				'label' => t('URL (optional)'),
+			),
+			array(
+				'key' => 'imagestyle',
+				'type' => 'select',
+				'label' => t('Image style'), 
+				'selections'=>$styles,
+			),
 		);
 	}
 	
