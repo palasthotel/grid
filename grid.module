@@ -701,7 +701,7 @@ function grid_reuse_box_edit($boxid)
 	drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
-	drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+	//drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 
 	// TODO: the language files for grid interface
 	$lang_file_js = $base.'/js/language/grid-en.js';
@@ -712,7 +712,7 @@ function grid_reuse_box_edit($boxid)
 	drupal_add_js($base.'/js/jquery.fileupload.js');
 	drupal_add_js($base.'/js/grid2.0.js','file');
 	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
-	$input=file_get_contents($base.'/core/templates/editor.html');
+	$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
 	return $input;
 }
 
@@ -828,7 +828,7 @@ function grid_reuse_container_edit($containerid)
 	drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
-	drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+	//drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 
 	// TODO: the language files for grid interface
 	$lang_file_js = $base.'/js/language/grid-en.js';
@@ -839,7 +839,8 @@ function grid_reuse_container_edit($containerid)
 	drupal_add_js($base.'/js/jquery.fileupload.js');
 	drupal_add_js($base.'/js/grid2.0.js','file');
 	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
-	$input=file_get_contents($base.'/core/templates/editor.html');
+	$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
+
 	return $input;
 }
 
