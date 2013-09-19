@@ -202,6 +202,10 @@ function grid_theme()
 			'variables'=>array('styles'=>array(),'formats'=>array()),
 			'template'=>'grid_htmlbox_ckeditor_config_js',
 		),
+		'grid_editor' => array(
+			'variables' => array('ckeditor_path'=>array()),
+			'template' => 'core/templates/editor.html',
+		)
 	);
 
 }
@@ -294,7 +298,18 @@ function grid_grid($node) {
 			drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
-			drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+
+			//drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
+			/*
+			$element = array(
+			  '#tag' => 'script', // The #tag is the html tag - <link />
+			  '#attributes' => array( // Set up an array of attributes inside the tag
+			    'src' => '/grid/ckeditor.js',
+			    'type' => 'text/javascript',
+			  ),
+			);
+			drupal_add_html_head($element, 'grid_ckeditor');
+			*/
 
 			// TODO: the language files for grid interface
 			$lang_file_js = $base.'/js/language/grid-en.js';
@@ -309,7 +324,8 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/grid2.0.js','file');
 //			drupal_add_css($base.'/core/templates/reset.css',array('type'=>'file'));
 			drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
-			$input=file_get_contents($base.'/core/templates/editor.html');
+			//$input=file_get_contents($base.'/core/templates/editor.html');
+			$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
 			return $input;
 		}
 	}

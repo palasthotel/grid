@@ -61,8 +61,13 @@ $(function() {
 	------------------------------ */
 	var ID = document.ID;
 	var GRIDMODE = document.gridmode;
+	var CKEDITOR_config_path = document.PathToConfig;
 	function init() {
-		// ID = 42;
+		console.log("Grid ID: "+ID);
+		console.log("Grid MODE: "+GRIDMODE);
+		console.log("CKEDITOR");
+		console.log(CKEDITOR);
+		console.log("CKEDITOR_config_path: "+CKEDITOR_config_path);
 		console.log("detect browser");
 		browsercheck();
 		console.log("Set interface language");
@@ -1785,6 +1790,13 @@ $(function() {
 				$(this).remove();
 			});
 		},5000);
+	}
+
+	/**
+	*	Loading animation to block grid
+	*/
+	function setGridLoading(){
+		console.log("Grid loading animation");
 	}
 	
 	// --------------------
