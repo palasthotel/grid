@@ -1043,7 +1043,7 @@ $(function() {
 				[params["ID"], params["c_id"], params["s_id"], params["b_idx"]],
 				function(data){
 					console.log(data);
-					$grid.find(".box[data-id="+params["b_id"]+"]").replaceWith(buildBox(data.result));
+					$grid.find(".container[data-reused=false] .box[data-id="+params["b_id"]+"]").replaceWith(buildBox(data.result));
 					showGrid(data.result.id);
 					destroyCKEDITORs();
 				}
@@ -1078,7 +1078,7 @@ $(function() {
 					afterSuccess();
 					return;
 				}
-				$grid.find(".box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
+				$grid.find(".container[data-reused=false] .box[data-id="+$data.data("id")+"]").replaceWith(buildBox(data.result));
 				showGrid($data.data("id"));
 				destroyCKEDITORs();
 				isDraft();
@@ -1536,7 +1536,7 @@ $(function() {
 		 }, 200);
 	}
 	function scrollToBox(box_id){
-		var $the_box = $(".box[data-id="+box_id+"]");
+		var $the_box = $(".container[data-reused=false] .box[data-id="+box_id+"]");
 		if(isOnScreen($the_box)) return;
 		$('html, body').animate({
 			 scrollTop: ($the_box.offset().top-160)
