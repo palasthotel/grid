@@ -4,10 +4,10 @@
         <div class="clearfix" role="g-controls">
         	<ul role="data">
                 <li>
-                    <button class="state-display" lang-id="state-display">
+                    <div class="state-display" lang-id="state-display">
                         <span role="indicator"></span>
                         <span lang-id="state-display" role="text"></span>
-                    </button>
+                    </div>
                 </li>
                 <li><button role="publish" lang-id="btn-publish" lang-type="text">Publish</button></li>
                 <li><button role="preview" lang-id="btn-preview" lang-type="text">Preview</button></li>  

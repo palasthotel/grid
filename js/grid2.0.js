@@ -305,6 +305,14 @@ $(function() {
 			case "hide_boxes":
 				toggleBoxes();
 				break;
+			case "revision-preview":
+				console.log("Preview an explecite Revision");
+				revisionPreview($this);
+				break;
+			case "revision-use":
+				console.log("Uses an old Revision as new draft.");
+				revisionUse($this);
+				break;
 			default:
 				console.log("Role unbekannt: "+$this.attr("role"));
 				break;
@@ -319,7 +327,7 @@ $(function() {
 		var data = {
 			"result": [
 				{
-					"number":12, 
+					"number":4, 
 					"state":"draft", 
 					"editor": "Edward", 
 					"date":"16.08.2013",
@@ -335,30 +343,30 @@ $(function() {
 				{
 					"number":2, 
 					"state":"depreciated", 
-					"editor": "Enno", 
+					"editor": "Enno",
 					"date":"11.08.2013",
 					"url": "http://enno.de"
 				},
 				{
 					"number":1, 
-					"state":"depreciated", 
-					"editor": "Edward", 
+					"state":"depreciated",
+					"editor": "Edward",
 					"date":"01.08.2013",
 					"url": "http://google.de"
 				}
 			]
 		};
 		revisions = data.result;
-		revisions = Array();
+		//revisions = Array();
 		console.log("revisions???"+revisions.length);
 		$revisions.find("table").empty();
 		if(revisions.length <= 0){
 			console.log("hide Revision button");
 			$toolbar.find('button[role=revisions]').hide();
-
 		} else {
 			$toolbar.find('button[role=revisions]').show();
 			$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
+			// clickhander from $toolbar !
 		}
 	}
 	function toggleRevisions(){
@@ -379,6 +387,13 @@ $(function() {
 	function hideRevisions(){
 		$(document).off("mousedown");
 		$revisions.hide();
+	}
+
+	function revisionPreview($revision){
+		console.log("Revision number: "+$revision.parents("tr").data("number"));
+	}
+	function revisionUse($revision){
+		console.log("Revision number: "+$revision.parents("tr").data("number"));
 	}
 
 	/* ------------------------------
@@ -907,6 +922,7 @@ $(function() {
 						new_container_id,new_slot_id,new_box_index
 					],
 					function(data){
+						console.log("Box moved");
 						$grid.trigger("structureChange");
 						if(data.result != true){
 							// TODO: Rückmeldung geben und Box zurück sortieren!!!

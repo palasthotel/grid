@@ -189,8 +189,12 @@ var revision_markup = '<li  role="revision" data-number="${number}">'+
 								'von <span class="rev-editor">${editor}</span>'+
 							'</div>'+
 							'<div class="rev-controls">'+
+							'{{if state == "draft"}}'+
 								'<button>Preview</button>'+
 								'<button>Revert</button>'+
+							'{{/if}}{{if state == "draft" }}'+
+								'<button>Delete</button>'+
+							'{{/if}}'+
 							'</div>'
 						'</li>';
 jQuery.template("revisionTemplate", revision_markup);
@@ -202,10 +206,14 @@ var revision_table_markup = '<tr role="revision" data-number="${number}">'+
 									'von <span class="rev-editor">${editor}</span>'+
 								'</td>'+
 								'<td class="rev-controls">'+
-									'<button>Preview</button>'+
-									'<button>Revert</button>'+
+								'{{if state == "draft"}}'+
+									'<button role="revision-delete">Delete</button>'+
+								'{{/if}}{{if state == "depreciated"}}'+
+									'<button role="revision-preview">Preview</button>'+
+									'<button role="revision-use">Revert</button>'+
+								'{{/if}}'+
 								'</td>'
-							'</li>';
+							'</tr>';
 jQuery.template("revisionTableTemplate", revision_table_markup);
 
 
