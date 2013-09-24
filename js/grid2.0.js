@@ -1170,7 +1170,6 @@ $(function() {
 							}
 						);
 				});
-				window.location.hash = "boxeditor";
 			});
 	});
 	function makeDynamicFields(contentstructure, content, lvl, cs_path){
@@ -1818,11 +1817,18 @@ $(function() {
 	// --------------------
 	// Hash navigation
 	// -------------------
-
-	$(window).on("hashchange",function(e){
-		console.log(window.location.hash);
-		window.history.back();
-	});
+	/*
+	function setLocationHash(hash){
+		window.history.pushState({data:"test"},'Title', hash+".html");
+		//window.location.hash = hash;
+	}
+	$(window).on('popstate', function () {
+       console.log( "popstate "+location.pathname);
+       console.log("length "+window.history.length);
+       console.log(location.state);
+            
+    });
+*/
 
 	// --------------------
 	// Serverkommunikation
