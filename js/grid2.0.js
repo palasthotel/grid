@@ -1170,6 +1170,7 @@ $(function() {
 							}
 						);
 				});
+				window.location.hash = "boxeditor";
 			});
 	});
 	function makeDynamicFields(contentstructure, content, lvl, cs_path){
@@ -1814,7 +1815,15 @@ $(function() {
 	function setGridLoading(){
 		console.log("Grid loading animation");
 	}
-	
+	// --------------------
+	// Hash navigation
+	// -------------------
+
+	$(window).on("hashchange",function(e){
+		console.log(window.location.hash);
+		window.history.back();
+	});
+
 	// --------------------
 	// Serverkommunikation
 	// -------------------

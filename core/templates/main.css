@@ -60,31 +60,12 @@ html{
 	padding-top: 32px;
 	margin-bottom: 0px;
 	padding-bottom: 3px;
-	position: relative;;
-}
-.state-display{
-	cursor: default !important;
-	color: #666 !important;
-	width: 80px !important;
-	padding-top: 0px !important;
-}
-.state-display [role=indicator],
-.state-display [role=indicator].loading{
-	position:relative;
-	margin: 0px auto;
-	width:12px;
-	height: 12px;
-	background-color: #0f0;
-	display:block;
-	margin-bottom: 9px;
-	margin-top: 9px;
-	border: 1px solid #999;
-}
-.state-display [role=indicator].loading{
-	background-color: #efefef;
-}
-.state-display.draft [role=indicator]{
-	background-color: #fC0;
+	position: relative;
+	-webkit-transition: all .25s ease;
+	   -moz-transition: all .25s ease;
+	    -ms-transition: all .25s ease;
+	     -o-transition: all .25s ease;
+	        transition: all .25s ease;
 }
 #grid-toolbar button:hover:not(.state-display){
 	background-color: #efefef;
@@ -119,6 +100,33 @@ html{
 }
 #grid-toolbar button[data-hidden=true][role=hide_boxes]{
 	background-image: url(images/btn-toggle-closed.png);
+}
+/* State display */
+.state-display{
+	cursor: default !important;
+	color: #666 !important;
+	width: 80px !important;
+	padding-top: 0px !important;
+	text-align: center;
+	font-size: 11px;
+}
+.state-display [role=indicator],
+.state-display [role=indicator].loading{
+	position:relative;
+	margin: 0px auto;
+	width:12px;
+	height: 12px;
+	background-color: #0f0;
+	display:block;
+	margin-bottom: 9px;
+	margin-top: 9px;
+	border: 1px solid #999;
+}
+.state-display [role=indicator].loading{
+	background-color: #efefef;
+}
+.state-display.draft [role=indicator]{
+	background-color: #fC0;
 }
 
 /* Error display ***************/
@@ -324,7 +332,7 @@ tr[role=revision]:last-child{
 }
 tr[role=revision] td{
 	background-color: #fff;
-	padding:5px;
+	padding:8px;
 }
 tr[role=revision] .rev-number{
 	font-size: 32px;
@@ -338,12 +346,21 @@ tr[role=revision] .rev-info{
 	margin-right: 10px;
 }
 tr[role=revision] button{
-	width: auto;
 	height: 30px;
 	padding:0px !important;
 	margin: 0px;
-	background-color: #e6e6e6 !important;
+	text-indent: -2000em;
 	margin-left: 10px;
+	width: 50px;
+}
+tr[role=revision] button[role="revision-use"]{
+	background-image: url(images/btn-revert.png);
+}
+tr[role=revision] button[role="revision-preview"]{
+	background-image: url(images/btn-eye.png);
+}
+tr[role=revision] button[role="revision-delete"]{
+	background-image: url(images/trash.png);
 }
 tr[role=revision] td{
 	border:none;
