@@ -199,7 +199,7 @@ var revision_markup = '<li  role="revision" data-number="${number}">'+
 						'</li>';
 jQuery.template("revisionTemplate", revision_markup);
 
-var revision_table_markup = '<tr role="revision" data-number="${number}">'+
+var revision_table_markup = '<tr role="revision" data-number="${number}" state="${state}">'+
 								'<td class="rev-number">${number}</td>'+
 								'<td class="rev-info">'+
 									'<span class="rev-date">${date}</span><br/>'+

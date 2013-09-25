@@ -67,7 +67,7 @@ html{
 	     -o-transition: all .25s ease;
 	        transition: all .25s ease;
 }
-#grid-toolbar button:hover:not(.state-display){
+#grid-toolbar button:hover{
 	background-color: #efefef;
 }
 #grid-toolbar button[disabled=disabled]:hover{
@@ -87,13 +87,13 @@ html{
 	background-image: url(images/btn-add.png);
 }
 #grid-toolbar button[role=revert]{
-	background-image: url(images/btn-revert.png);
+	background-image: url(images/btn-revert-draft.png);
 }
 #grid-toolbar button[role=revisions]{
 	background-image: url(images/btn-revisions.png);
 }
 #grid-toolbar button[role=revert][disabled=disabled]{
-	background-image: url(images/btn-revert-disabled.png);
+	background-image: url(images/btn-revert-draft-disabled.png);
 }
 #grid-toolbar button[role=hide_boxes]{
 	background-image: url(images/btn-toggle-opend.png);
@@ -314,18 +314,35 @@ html{
 	position:absolute;
 	z-index: 1;
 	display:none;
-	background-color: #efefef;
-	border: 1px solid #c6c6c6;
+	background-color: #333;
 	z-index: 101;
 	padding:5px;
+	margin-top: 6px;
+}
+#grid-revisions:after{
+	content:"";
+	border: 8px solid #333;
+	font-size:0;line-height:0;height:0;padding:0;margin:0;
+	border-top-color:    transparent;
+	border-right-color:  transparent;
+	border-left-color:   transparent;
+	position:absolute;
+	top:-16px;
+	left:22px;
 }
 #grid-revisions table{
 	border:none;
 	width:auto;
 	margin: 0;
 }
+tr[role=revision][state=draft] .rev-number{
+	color: #fc0;
+}
+tr[role=revision][state=published] .rev-number{
+	color: #0f0;
+}
 tr[role=revision]{
-	border-bottom: 5px solid #efefef;
+	border-bottom: 5px solid #333;
 }
 tr[role=revision]:last-child{
 	border:none;
@@ -354,13 +371,13 @@ tr[role=revision] button{
 	width: 50px;
 }
 tr[role=revision] button[role="revision-use"]{
-	background-image: url(images/btn-revert.png);
+	background-image: url(images/tb-btn-revert-copy-3.png);
 }
 tr[role=revision] button[role="revision-preview"]{
 	background-image: url(images/btn-eye.png);
 }
 tr[role=revision] button[role="revision-delete"]{
-	background-image: url(images/trash.png);
+	background-image: url(images/btn-revert-draft.png);
 }
 tr[role=revision] td{
 	border:none;
