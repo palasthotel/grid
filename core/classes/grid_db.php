@@ -558,6 +558,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$slotid=$_POST['slot'];
 		$idx=$_POST['box'];
 		$file=$_FILES['file']['tmp_name'];
+		$original_filename=$_FILES['file']['name'];
 		$key=$_POST['key'];
 		$grid=$this->loadGrid($gridid);
 		foreach($grid->container as $container)
@@ -569,7 +570,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 					if($slot->slotid==$slotid)
 					{
 						$box=$slot->boxes[$idx];
-						return $box->performFileUpload($key,$file);
+						return $box->performFileUpload($key,$file,$original_filename);
 					}
 				}
 			}

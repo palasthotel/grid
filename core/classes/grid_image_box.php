@@ -77,13 +77,15 @@ class grid_image_box extends grid_static_base_box
 	}
 
 	
-	public function performFileUpload($key,$path)
+	public function performFileUpload($key,$path,$original_file)
 	{
 		if($key!='fileid')
 			return FALSE;//array('result'=>FALSE,'error'=>'wrong key');
 		$content=file_get_contents($path);
 		$filename=basename($path);
-		$file=file_save_data($content,"public://".$filename);
+		$path="public://grid/".date("Y/m/d")."/";
+		file_prepare_directory($path,FILE_CREATE_DIRECTORY);
+		$file=file_save_data($content,$path.$original_file);
 		return $file->fid;
 	}
 	

@@ -102,7 +102,7 @@ class grid_box extends grid_base {
 		return "BOX DOESNT SUPPORT THIS";
 	}
 	
-	public function performFileUpload($key,$path)
+	public function performFileUpload($key,$path,$original_file)
 	{
 		return FALSE;//array('result'=>FALSE,'error'=>'wrong box');
 	}
