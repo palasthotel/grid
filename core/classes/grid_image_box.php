@@ -18,14 +18,20 @@ class grid_image_box extends grid_static_base_box
 		//boxes render their content in here
 		if(isset($this->content->fileid) && $this->content->fileid!="")
 		{
+			$file=file_load($this->content->fileid);
+
 			$a_pre = "";
 			$a_post = "";
 			if(isset($this->content->url) && $this->content->url != ""){
 				$a_pre = '<a href="'.$this->content->url.'">';
 				$a_post = '</a>';
 			}
+			if($editmode)
+			{
+				$a_post.=" (".$file->filename.")";
+			}
+
 			$src = "no_file";
-			$file = file_load($this->content->fileid);
 			if(is_object($file)){
 				if(isset($this->content->imagestyle) && $this->content->imagestyle != ""){
 					$src = image_style_url($this->content->imagestyle , $file->uri );
