@@ -157,6 +157,8 @@ body.page-node-grid-preview:after{
 	background-color: #efefef;
 	opacity: 0.5;
 }
+
+/* hide admin menu */
 body.page-node-grid-preview #admin-menu-wrapper{
 	display:none;
 }
