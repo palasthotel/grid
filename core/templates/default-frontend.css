@@ -125,4 +125,41 @@
     display:table;
     clear:both;
 }*/
+/* v1
+body.page-node-grid-preview:after{
+	content:'';
+	background-image: url(images/btn-eye.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	position: fixed;
+	display: block;
+	right:10px;
+	top: 30px;
+	padding: 30px;
+	background-color: #efefef;
+	border-radius: 50px;
+	border: 10px solid #e6e6e6;
+	opacity: 0.8;
+}
+*/
+
+/* v2 */
+body.page-node-grid-preview:after{
+	content:'';
+	background-image: url(images/btn-eye.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 40px;
+	position: fixed;
+	display: block;
+	top: 0px;
+	background-color: #efefef;
+	opacity: 0.5;
+}
+body.page-node-grid-preview #admin-menu-wrapper{
+	display:none;
+}
+
+
 
