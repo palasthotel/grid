@@ -25,10 +25,22 @@ class grid_container extends grid_base {
 		$slots = array();
 		$slotstyle = explode("-", $this->type);
 		// print_r($slotstyle);
+		switch (count($this->slots)) 
+		{
+			case 0:
+				$this->style.= " has-no-slot ";
+				break;
+			case 1:
+				$this->style.= " has-one-slot ";
+				break;
+			default:
+				$this->style.= " has-multiple-slots ";
+				break;
+		}
 		if($this->type[0]=='S' && $editmode==FALSE)
 		{
 			$slot=$this->slots[0];
-			$style="sidebar ".$this->type." slot_first slot_final";
+			$style="sidebar ".$this->type." slot-first slot-last";
 			$output=$slot->render($editmode,$style,$this);
 			return $output;
 		}
@@ -37,17 +49,28 @@ class grid_container extends grid_base {
 			$counter = 0;
 			foreach($this->slots as $slot)
 			{
-			  $counter++;
-			  $pos ="";
+				$counter++;
+				$style = " slot-".$slotstyle[$counter];
+			  
+			  	switch (count($slot->boxes)) {
+			  		case 0:
+			  			$style.= " has-no-box";
+			  			break;
+			  		case 1:
+			  			$style.= " has-one-box";
+			  			break;
+			  		default:
+			  			$style.= " has-multiple-boxes";
+			  			break;
+			  	}
 				if ($slot == end($this->slots)){
 				   // style: set flag for last slot element
-					$pos=" slot_final";
+					$style.=" slot-last";
 				}
 				if ($slot == reset($this->slots)){
 				   // style: set flag for last slot element
-					$pos=" slot_first";
+					$style.=" slot-first";
 				}
-				$style = " slot_".$slotstyle[$counter].$pos;
 				$slots[]=$slot->render($editmode, $style, $this);
 			}
 			ob_start();
