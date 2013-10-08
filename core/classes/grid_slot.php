@@ -16,6 +16,12 @@ class grid_slot extends grid_base {
 		$boxes=array();
 		foreach($this->boxes as $box)
 		{
+			if ($box == end($this->boxes)){
+				$box->style =" box-last";			
+			}
+			if ($box == reset($this->boxes)){
+				$box->style =" box-first";
+			}
 			$boxes[]=$box->render($editmode);
 		}
 		ob_start();
