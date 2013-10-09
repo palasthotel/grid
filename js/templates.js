@@ -182,8 +182,8 @@ var reuse_container_markup = '<li class="container-dragger new-container ${type}
 							'</li>';
 jQuery.template("containerReusableTemplate", reuse_container_markup);
 
-var revision_markup = '<li  role="revision" data-number="${number}">'+
-							'<div class="rev-number">${number}</div>'+
+var revision_markup = '<li  role="revision" data-revision="${revision}">'+
+							'<div class="rev-revision">${revision}</div>'+
 							'<div class="rev-info">'+
 								'<span class="rev-date">${date}</span><br/>'+
 								'von <span class="rev-editor">${editor}</span>'+
@@ -199,8 +199,8 @@ var revision_markup = '<li  role="revision" data-number="${number}">'+
 						'</li>';
 jQuery.template("revisionTemplate", revision_markup);
 
-var revision_table_markup = '<tr role="revision" data-number="${number}" state="${state}">'+
-								'<td class="rev-number">${number}</td>'+
+var revision_table_markup = '<tr role="revision" data-revision="${revision}" state="${state}">'+
+								'<td class="rev-revision">${revision}</td>'+
 								'<td class="rev-info">'+
 									'<span class="rev-date">${date}</span><br/>'+
 									'von <span class="rev-editor">${editor}</span>'+

@@ -65,9 +65,6 @@ $(function() {
 	function init() {
 		console.log("Grid ID: "+ID);
 		console.log("Grid MODE: "+GRIDMODE);
-		console.log("CKEDITOR");
-		console.log(CKEDITOR);
-		console.log("CKEDITOR_config_path: "+CKEDITOR_config_path);
 		console.log("detect browser");
 		browsercheck();
 		console.log("Set interface language");
@@ -324,50 +321,24 @@ $(function() {
 	var $revisions = $("#grid-revisions");
 	var revisions = Array();
 	function loadRevisions(){
-		var data = {
-			"result": [
-				{
-					"number":4, 
-					"state":"draft", 
-					"editor": "Edward", 
-					"date":"16.08.2013",
-					"url": "http://preview.de"
-				},
-				{
-					"number":3, 
-					"state":"published", 
-					"editor": "Edward", 
-					"date":"12.08.2013",
-					"url": "http://edwardbock.de"
-				},
-				{
-					"number":2, 
-					"state":"depreciated", 
-					"editor": "Enno",
-					"date":"11.08.2013",
-					"url": "http://enno.de"
-				},
-				{
-					"number":1, 
-					"state":"depreciated",
-					"editor": "Edward",
-					"date":"01.08.2013",
-					"url": "http://google.de"
+		sendAjax(
+			"getGridRevisions", 
+			[ID],
+			function(data){
+				console.log("Revisions");
+				console.log(data);
+				revisions = data.result;
+				$revisions.find("table").empty();
+				if(revisions.length <= 0){
+					console.log("hide Revision button");
+					$toolbar.find('button[role=revisions]').hide();
+				} else {
+					$toolbar.find('button[role=revisions]').show();
+					$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
+					// clickhander from $toolbar !
 				}
-			]
-		};
-		revisions = data.result;
-		//revisions = Array();
-		console.log("revisions???"+revisions.length);
-		$revisions.find("table").empty();
-		if(revisions.length <= 0){
-			console.log("hide Revision button");
-			$toolbar.find('button[role=revisions]').hide();
-		} else {
-			$toolbar.find('button[role=revisions]').show();
-			$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
-			// clickhander from $toolbar !
-		}
+			}
+		);		
 	}
 	function toggleRevisions(){
 		if($revisions.css("display") == "none"){

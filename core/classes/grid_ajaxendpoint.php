@@ -573,4 +573,8 @@ class grid_ajaxendpoint {
 	{
 		return $this->storage->fetchContainerTypes();
 	}
+
+	public function getGridRevisions($gridid){
+		return $this->storage->fetchGridRevisions($gridid);
+	}
 }

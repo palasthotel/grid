@@ -309,6 +309,7 @@ html{
 /** revisions tools */
 #grid-toolbar button[role="revisions"]{
 	position:relative;
+	display:none;
 }
 #grid-revisions{
 	position:absolute;
@@ -318,6 +319,8 @@ html{
 	z-index: 101;
 	padding:5px;
 	margin-top: 6px;
+	overflow-y:scroll;
+	height:500px;
 }
 #grid-revisions:after{
 	content:"";
@@ -335,10 +338,10 @@ html{
 	width:auto;
 	margin: 0;
 }
-tr[role=revision][state=draft] .rev-number{
+tr[role=revision][state=draft] .rev-revision{
 	color: #fc0;
 }
-tr[role=revision][state=published] .rev-number{
+tr[role=revision][state=published] .rev-revision{
 	color: #0f0;
 }
 tr[role=revision]{
