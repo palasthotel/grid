@@ -4,6 +4,7 @@ class grid_slot extends grid_base {
 	public $grid;
 	public $slotid;
 	public $style;
+	public $classes = array();
 	public $boxes;
 
 	public function __construct()
@@ -11,7 +12,7 @@ class grid_slot extends grid_base {
 		$this->boxes=array();
 	}	
 
-	public function render($editmode, $slotstyle,$container)
+	public function render($editmode, $container)
 	{
 		$boxes=array();
 		$this->boxes[0]->classes[]="box-first";

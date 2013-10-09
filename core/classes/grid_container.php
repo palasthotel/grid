@@ -5,6 +5,7 @@ class grid_container extends grid_base {
 	public $containerid;
 	public $type; // The Type defines how many Slots a Container has, an how they are proportioned.
 	public $style; // Allows to separete diffente Styles of Containers.
+	public $classes = array();
 	public $title;
 	public $titleurl;
 	public $readmore;
@@ -22,26 +23,27 @@ class grid_container extends grid_base {
 		
 	public function render($editmode)
 	{
-		$slots = array();
-		$slotstyle = explode("-", $this->type);
-		// print_r($slotstyle);
 		switch (count($this->slots)) 
 		{
 			case 0:
-				$this->style.= " has-no-slot ";
+				$this->classes[] = "has-no-slot";
 				break;
 			case 1:
-				$this->style.= " has-one-slot ";
+				$this->classes[] = "has-one-slot";
 				break;
 			default:
-				$this->style.= " has-multiple-slots ";
+				$this->classes[] = "has-multiple-slots";
 				break;
 		}
+		$slots = array();
+		$slotstyle = explode("-", $this->type);
+		
 		if($this->type[0]=='S' && $editmode==FALSE)
 		{
 			$slot=$this->slots[0];
-			$style="sidebar ".$this->type." slot-first slot-last has-one-box";
-			$output=$slot->render($editmode,$style,$this);
+			//$style="sidebar ".$this->type." slot-first slot-last has-one-box";
+			array_push( $slot->classes, "sidebar", $this->type, "slot-first", "slot-last", "has-one-box");
+			$output=$slot->render($editmode, $this);
 			return $output;
 		}
 		else
@@ -50,28 +52,27 @@ class grid_container extends grid_base {
 			foreach($this->slots as $slot)
 			{
 				$counter++;
-				$style = " slot-".$slotstyle[$counter];
-			  
+				$slot->classes[] = "slot-".$slotstyle[$counter];			  
 			  	switch (count($slot->boxes)) {
 			  		case 0:
-			  			$style.= " has-no-box";
+			  			$slot->classes[] = "has-no-box";
 			  			break;
 			  		case 1:
-			  			$style.= " has-one-box";
+			  			$slot->classes[] = "has-one-box";
 			  			break;
 			  		default:
-			  			$style.= " has-multiple-boxes";
+			  			$slot->classes[] = "has-multiple-boxes";
 			  			break;
 			  	}
 				if ($slot == end($this->slots)){
 				   // style: set flag for last slot element
-					$style.=" slot-last";
+					$slot->classes[] = "slot-last";
 				}
 				if ($slot == reset($this->slots)){
 				   // style: set flag for last slot element
-					$style.=" slot-first";
+					$slot->classes[] = "slot-first";
 				}
-				$slots[]=$slot->render($editmode, $style, $this);
+				$slots[]=$slot->render($editmode, $this);
 			}
 			ob_start();
 			if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath."/grid_container.tpl.php"))
