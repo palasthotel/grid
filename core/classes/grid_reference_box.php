@@ -19,6 +19,7 @@ class grid_reference_box extends grid_box {
 	
 	public function render($editmode) {
 		$box=$this->storage->loadReuseBox($this->content->boxid);
+		$box->classes=$this->classes;
 		return $box->render($editmode);
 	}
 	

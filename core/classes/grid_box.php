@@ -4,6 +4,7 @@ class grid_box extends grid_base {
 	public $boxid;
 	public $grid;
 	public $style; // Define the Style of Boxes
+	public $classes=array();
 	public $title;
 	public $titleurl;
 	public $readmore;

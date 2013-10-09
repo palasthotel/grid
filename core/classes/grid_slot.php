@@ -14,14 +14,10 @@ class grid_slot extends grid_base {
 	public function render($editmode, $slotstyle,$container)
 	{
 		$boxes=array();
+		$this->boxes[0]->classes[]="box-first";
+		$this->boxes[count($this->boxes)-1]->classes[]="box-last";
 		foreach($this->boxes as $box)
 		{
-			if ($box == end($this->boxes)){
-				$box->style =" box-last";			
-			}
-			if ($box == reset($this->boxes)){
-				$box->style =" box-first";
-			}
 			$boxes[]=$box->render($editmode);
 		}
 		ob_start();

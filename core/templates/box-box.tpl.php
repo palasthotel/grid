@@ -1,4 +1,4 @@
-<div class="box <?=$this->style?>">
+<div class="box <?=$this->style?> <?=implode($this->classes," ")?>">
 	<?
 	if ($this->title!=""){
 
