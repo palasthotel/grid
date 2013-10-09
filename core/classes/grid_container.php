@@ -40,7 +40,7 @@ class grid_container extends grid_base {
 		if($this->type[0]=='S' && $editmode==FALSE)
 		{
 			$slot=$this->slots[0];
-			$style="sidebar ".$this->type." slot-first slot-last";
+			$style="sidebar ".$this->type." slot-first slot-last has-one-box";
 			$output=$slot->render($editmode,$style,$this);
 			return $output;
 		}
