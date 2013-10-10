@@ -320,7 +320,7 @@ html{
 	padding:5px;
 	margin-top: 6px;
 	overflow-y:scroll;
-	height:500px;
+	max-height:500px;
 }
 #grid-revisions:after{
 	content:"";

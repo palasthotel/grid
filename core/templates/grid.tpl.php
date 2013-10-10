@@ -1,3 +1,3 @@
-<div class="grid">
+<div class="grid clearfix">
 	<?=implode("", $containerlist)?>
 </div>

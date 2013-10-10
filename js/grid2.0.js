@@ -245,27 +245,6 @@ $(function() {
 			}
 		);
 	}
-	/**
-	*	deletes the draft and goes back to last published revision
-	*/
-	function revertGrid(){
-		$grid.fadeOut('fast');
-		sendAjax(
-			"revertDraft", 
-			[ID],
-			function(data){
-				console.log(data);
-				$grid.show();
-				if(data.result != false && data.result != null){
-					$grid.empty();
-					fillGrid(data.result);
-					$grid.trigger("structureChange");
-				} else {
-					throwError(lang_values["err_revert"]);
-				}
-			}
-		);
-	}
 	
 	/** ---------------------------------
 	* Click handler for main toolbar
@@ -318,6 +297,25 @@ $(function() {
 	/* ------------------------------
 	* Revision Tools
 	* ------------------------------ */
+	function revertGrid(){
+		$grid.fadeOut('fast');
+		sendAjax(
+			"revertDraft", 
+			[ID],
+			function(data){
+				console.log(data);
+				$grid.show();
+				if(data.result != false && data.result != null){
+					$grid.empty();
+					fillGrid(data.result);
+					$grid.trigger("structureChange");
+					loadRevisions();
+				} else {
+					throwError(lang_values["err_revert"]);
+				}
+			}
+		);
+	}
 	var $revisions = $("#grid-revisions");
 	var revisions = Array();
 	function loadRevisions(){
@@ -361,10 +359,25 @@ $(function() {
 	}
 
 	function revisionPreview($revision){
-		console.log("Revision number: "+$revision.parents("tr").data("number"));
+		var revision = $revision.parents("tr").data("revision");
+		console.log("Revision number: "+revision);
+		var location = window.location.pathname+'/'+revision+'/preview';
+		window.open(location.replace("//","/"),"_blank");
+		//http://grid-dev.palasthotel.de/node/17/grid/3/preview
 	}
 	function revisionUse($revision){
-		console.log("Revision number: "+$revision.parents("tr").data("number"));
+		var revision = $revision.parents("tr").data("revision");
+		console.log("Revision number: "+revision);
+		sendAjax(
+			"setToRevision",
+			[ID, revision],
+			function(data){
+				console.log(data);
+				fillGrid(data.result);
+				hideRevisions();
+				loadRevisions();
+				$body.trigger('structureChange');
+			});
 	}
 
 	/* ------------------------------

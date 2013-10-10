@@ -207,8 +207,8 @@ var revision_table_markup = '<tr role="revision" data-revision="${revision}" sta
 								'</td>'+
 								'<td class="rev-controls">'+
 								'{{if state == "draft"}}'+
-									'<button role="revision-delete">Delete</button>'+
-								'{{/if}}{{if state == "depreciated"}}'+
+									'<button role="revert">Delete</button>'+
+								'{{/if}}{{if state == "deprecated"}}'+
 									'<button role="revision-preview">Preview</button>'+
 									'<button role="revision-use">Revert</button>'+
 								'{{/if}}'+
