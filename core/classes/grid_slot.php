@@ -15,12 +15,17 @@ class grid_slot extends grid_base {
 	public function render($editmode, $container)
 	{
 		$boxes=array();
-		$this->boxes[0]->classes[]="box-first";
-		$this->boxes[count($this->boxes)-1]->classes[]="box-last";
+		if(count($this->boxes)>0)
+		{
+			$this->boxes[0]->classes[]="box-first";
+			$this->boxes[count($this->boxes)-1]->classes[]="box-last";
+		}
+
 		foreach($this->boxes as $box)
 		{
 			$boxes[]=$box->render($editmode);
 		}
+
 		ob_start();
 		if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath.'/grid_slot.tpl.php'))
 			include $this->storage->templatesPath.'/grid_slot.tpl.php';

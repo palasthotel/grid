@@ -86,6 +86,14 @@ function grid_menu() {
 			'type'=>MENU_CALLBACK,
 			'page arguments'=>array(1),
 		),
+		'node/%node/grid/%/preview' =>array(
+			'title'=>t('Preview revision'),
+			'page callback'=>'grid_preview_revision',
+			'access arguments'=>array(1,'administer grid'),
+			'access callback'=>'grid_access',
+			'type'=>MENU_CALLBACK,
+			'page arguments'=>array(1,3),
+		),
 		'admin/config/grid'=>array(
 			'title'=>'Grid settings',
 			'description'=>'Configure Grid',
@@ -312,11 +320,7 @@ function grid_grid($node) {
 			*/
 
 			// TODO: the language files for grid interface
-			$lang_file_js = $base.'/js/language/grid-en.js';
-			if( is_file($base.'/js/language/grid-'.$node->language.'.js') ){
-				$lang_file_js = $base.'/js/language/grid-'.$node->language.'.js';
-			}
-			drupal_add_js($lang_file_js,'file');
+			drupal_add_js(get_grid_language_js(),'file');
 			
 			drupal_add_js($base.'/js/templates.js','file');
 			drupal_add_js($base.'/js/jquery.iframe-transport.js');
@@ -354,6 +358,30 @@ function grid_preview($node) {
 
 			$storage=grid_get_storage();
 			$grid=$storage->loadGrid($grid_id);
+			return $grid->render(FALSE);
+		}
+	}
+}
+
+function grid_preview_revision($node,$revision)
+{
+	$type=$node->type;
+	$enabled=variable_get("grid_".$type."_enabled",0);
+	if($enabled==1)
+	{
+		$grid_id=grid_get_grid_by_nid($node->nid);
+		if($grid_id===FALSE)
+		{
+			drupal_not_found();
+		}
+		else
+		{
+			// default grid css
+			$base=drupal_get_path('module','grid');
+			drupal_add_css($base.'/core/templates/default-frontend.css',array('type'=>'file','group'=>CSS_DEFAULT));
+
+			$storage=grid_get_storage();
+			$grid=$storage->loadGridByRevision($grid_id,$revision);
 			return $grid->render(FALSE);
 		}
 	}
@@ -704,8 +732,7 @@ function grid_reuse_box_edit($boxid)
 	//drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 
 	// TODO: the language files for grid interface
-	$lang_file_js = $base.'/js/language/grid-en.js';
-	drupal_add_js($lang_file_js,'file');
+	drupal_add_js(get_grid_language_js(),'file');
 
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
@@ -831,8 +858,7 @@ function grid_reuse_container_edit($containerid)
 	//drupal_add_js($base.'/js/ckeditor/ckeditor.js','file');
 
 	// TODO: the language files for grid interface
-	$lang_file_js = $base.'/js/language/grid-en.js';
-	drupal_add_js($lang_file_js,'file');
+	drupal_add_js(get_grid_language_js(),'file');
 
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
@@ -850,3 +876,14 @@ function grid_reuse_container_preview($containerid)
 	$grid=$storage->loadGrid("container:".$containerid);
 	return $grid->render(FALSE);
 }
+
+function get_grid_language_js(){
+	$base=drupal_get_path('module','grid');
+	global $language;
+	$lang_file_js = $base.'/js/language/grid-en.js';
+	if( is_file($base.'/js/language/grid-'.$language->language.'.js') ){
+		$lang_file_js = $base.'/js/language/grid-'.$language->language.'.js';
+	}
+	return $lang_file_js;
+}
+

@@ -54,9 +54,8 @@ class grid_ajaxendpoint {
 		return $cnt;
 	}
 
-	public function loadGrid($gridid) {
-		$grid=$this->storage->loadGrid($gridid);
-
+	public function encodeGrid($grid)
+	{
 		$converted=array();
 		$converted['id']=$grid->gridid;
 		$converted['isDraft']=$grid->isDraft;
@@ -67,6 +66,11 @@ class grid_ajaxendpoint {
 			$converted['container'][]=$cnt;
 		}
 		return $converted;
+	}
+	public function loadGrid($gridid) {
+		$grid=$this->storage->loadGrid($gridid);
+		return $this->encodeGrid($grid);
+
 	}
 	
 	public function fetchBox($gridid,$containerid,$slotid,$boxidx)
@@ -373,6 +377,17 @@ class grid_ajaxendpoint {
 		$grid->revoke();
 		return $this->loadGrid($gridid);
 	}
+
+	public function getGridRevisions($gridid){
+		return $this->storage->fetchGridRevisions($gridid);
+	}
+	// TODO: copy old revision to new draft
+	public function setToRevision($gridid, $revision){
+		$this->revertDraft($gridid);
+		$grid=$this->storage->loadGridByRevision($gridid,$revision);
+		$grid=$grid->draftify();
+		return $this->encodeGrid($grid);
+	}
 	
 	public function getContainerStyles()
 	{
@@ -574,7 +589,4 @@ class grid_ajaxendpoint {
 		return $this->storage->fetchContainerTypes();
 	}
 
-	public function getGridRevisions($gridid){
-		return $this->storage->fetchGridRevisions($gridid);
-	}
 }

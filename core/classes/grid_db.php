@@ -48,7 +48,7 @@ class grid_db {
 	public function cloneGrid($grid)
 	{
 		$gridid=$grid->gridid;
-
+		
 		$query="select max(id) as id from grid_grid";
 		$result=$this->connection->query($query);
 		$row=$result->fetch_assoc();
@@ -703,7 +703,11 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function createRevision($grid)
 	{
-		$newrevision=$grid->gridrevision+1;
+		$query="select max(revision) as revision from grid_grid where id=".$grid->gridid;
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$row=$result->fetch_assoc();
+		$newrevision=$row['revision'];
+		$newrevision=$newrevision+1;
 		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) select id,$newrevision,0,next_containerid,next_slotid,next_boxid from grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
 		$this->connection->query($query);
 		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid)
@@ -992,7 +996,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		// state=1 => published
 		// state=2 => draft
 		while($row=$result->fetch_assoc()) {
-			$state = "depreciated";
+			$state = "deprecated";
 			if(!$was_draft){
 				$state="draft";
 				$was_draft = true;
