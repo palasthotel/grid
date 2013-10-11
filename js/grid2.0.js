@@ -60,7 +60,10 @@ $(function() {
 	*	Grid gets initiated
 	------------------------------ */
 	var ID = document.ID;
+	// grid, container, box
 	var GRIDMODE = document.gridmode;
+	// gets changed in loadGrid if is sidebar
+	var IS_SIDEBAR = false;
 	var CKEDITOR_config_path = document.PathToConfig;
 	function init() {
 		console.log("Grid ID: "+ID);
@@ -169,6 +172,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				fillGrid(data.result);
+				IS_SIDEBAR = data.result.isSidebar;
 				if(data.result.isSidebar == true){
 					console.log("is Sidebar");
 					$(".hide-from-sidebar").remove();
@@ -239,6 +243,7 @@ $(function() {
 			[ID],
 			function(data){
 				console.log(data);
+				loadRevisions();
 				if( data.result != true){
 					throwError(lang_values["err_publish"]);
 				}
@@ -332,6 +337,10 @@ $(function() {
 					$toolbar.find('button[role=revisions]').hide();
 				} else {
 					$toolbar.find('button[role=revisions]').show();
+					$.each(revisions, function(index, revision) {
+						var date = new Date(parseInt(revision["date"])*1000);
+						revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+					});
 					$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
 					// clickhander from $toolbar !
 				}
@@ -366,6 +375,7 @@ $(function() {
 		//http://grid-dev.palasthotel.de/node/17/grid/3/preview
 	}
 	function revisionUse($revision){
+		$grid.fadeOut('fast');
 		var revision = $revision.parents("tr").data("revision");
 		console.log("Revision number: "+revision);
 		sendAjax(
@@ -374,7 +384,7 @@ $(function() {
 			function(data){
 				console.log(data);
 				fillGrid(data.result);
-				hideRevisions();
+				$grid.show();
 				loadRevisions();
 				$body.trigger('structureChange');
 			});
@@ -394,7 +404,14 @@ $(function() {
 				console.log(arr_container_types);
 				var $ul_list = $toolContainerTypeTabs.siblings("[ref=show-containers]");
 				$.each(arr_container_types, function(index, type) {
-					if(type.type.indexOf("I")> -1 || type.type == "C-4") return true;
+					// hide all internal in general
+					if( type.type.indexOf("I" )>-1) return true;
+					// hide C and S from Sidebar-Grid
+					if( ( type.type.indexOf("C-") == 0 || type.type.indexOf("S-") == 0 ) 
+						&& IS_SIDEBAR) return true;
+					// hide SidebarContainer from normal Grid
+					if(type.type.indexOf("SC-") == 0 && !IS_SIDEBAR) return true;
+
 					var $li = $("<li>")
 								.addClass('container-dragger new-container clearfix')
 								.addClass(type.type)
@@ -1857,6 +1874,9 @@ $(function() {
 		   type:'POST',
 		   data: JSON.stringify(json),
 		   success: function(data){
+		   		if(data.result == true && !$stateDisplay.hasClass('draft')){
+		   			loadRevisions();
+		   		}
 		   		changeIsDraftDisplay(data.result);
 			},
 		   error: function(jqXHR, textStatus, error){

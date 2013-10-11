@@ -319,8 +319,10 @@ html{
 	z-index: 101;
 	padding:5px;
 	margin-top: 6px;
+}
+#grid-revisions > .scroll_wrapper{
 	overflow-y:scroll;
-	max-height:500px;
+	max-height:470px;
 }
 #grid-revisions:after{
 	content:"";
@@ -329,7 +331,7 @@ html{
 	border-top-color:    transparent;
 	border-right-color:  transparent;
 	border-left-color:   transparent;
-	position:absolute;
+	position: absolute;
 	top:-16px;
 	left:22px;
 }
@@ -337,6 +339,10 @@ html{
 	border:none;
 	width:auto;
 	margin: 0;
+}
+tr[role=revision] .rev-revision{
+	width:25px;
+	text-align: center;
 }
 tr[role=revision][state=draft] .rev-revision{
 	color: #fc0;

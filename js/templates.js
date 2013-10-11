@@ -202,15 +202,18 @@ jQuery.template("revisionTemplate", revision_markup);
 var revision_table_markup = '<tr role="revision" data-revision="${revision}" state="${state}">'+
 								'<td class="rev-revision">${revision}</td>'+
 								'<td class="rev-info">'+
-									'<span class="rev-date">${date}</span><br/>'+
+									'<span class="rev-date">${readable_date}</span><br/>'+
 									'von <span class="rev-editor">${editor}</span>'+
 								'</td>'+
 								'<td class="rev-controls">'+
 								'{{if state == "draft"}}'+
+									'<button role="revision-preview">Preview</button>'+
 									'<button role="revert">Delete</button>'+
 								'{{/if}}{{if state == "deprecated"}}'+
 									'<button role="revision-preview">Preview</button>'+
 									'<button role="revision-use">Revert</button>'+
+								'{{/if}}{{if state == "published"}}'+
+									'<button role="revision-preview">Preview</button>'+
 								'{{/if}}'+
 								'</td>'
 							'</tr>';

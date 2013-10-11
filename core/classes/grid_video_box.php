@@ -49,7 +49,7 @@ class grid_video_box extends grid_static_base_box
 			$result=parse_url($this->content->url);
 			if(preg_match("/\w*?\.youtube\./um", $result['host']))
 			{
-				$url="http://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
+				$url="http://www.youtube.com/oembed?url=".urlencode($this->content->url)."&amp;format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -58,13 +58,13 @@ class grid_video_box extends grid_static_base_box
 				$result=json_decode($result);
 				$html=$result->html;
 				// prevents flash bug in Firefox (no playback on click)
-				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1', $html);
+				$html=str_replace('feature=oembed', 'feature=oembed&amp;wmode=transparent&amp;html5=1', $html);
 				$this->content->html=$html;
 			}
 			else if(preg_match("/youtu\.be/um", $result['host']) )
 			{
 				$parts = explode("/", $this->content->url);
-				$url="http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
+				$url="http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&amp:format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -73,7 +73,7 @@ class grid_video_box extends grid_static_base_box
 				$result=json_decode($result);
 				$html=$result->html;
 				// prevents flash bug in Firefox (no playback on click)
-				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1', $html);
+				$html=str_replace('feature=oembed', 'feature=oembed&amp;wmode=transparent&amp;html5=1', $html);
 				$this->content->html=$html;
 			}
 			else if(preg_match("/(\w*?\.)?vimeo\./um", $result['host']))

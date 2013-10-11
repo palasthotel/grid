@@ -16,8 +16,10 @@
                     <button role="revisions" lang-id="btn-revisions" lang-type="text">Revisions</button>
                     <!-- revisions -->
                     <div id="grid-revisions" class="rev-wrapper">
-                         <table>
-                         </table>   
+                        <div class="scroll_wrapper">
+                            <table>
+                            </table>   
+                        </div>
                     </div>
                      <!-- revisions END -->
                 </li>         
