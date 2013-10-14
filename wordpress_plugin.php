@@ -89,6 +89,8 @@ function grid_wp_activate()
 		}
 		$grid_connection->close();
 		$options['installed']=TRUE;
+		$options['grid_enabled']=array('landing_page','sidebar');
+		$options['grid_sidebar']='sidebar';
 		update_option("grid",$options);
 	}
 	else
@@ -97,3 +99,25 @@ function grid_wp_activate()
 	}
 }
 add_action("activate_grid/wordpress_plugin.php","grid_wp_activate");
+
+function grid_wp_init()
+{
+	$args=array(
+		'public'=>true,
+		'label'=>'Landing Pages',
+		'labels'=>array(
+			'singular_name'=>'Landing Page',
+		),
+	);
+	register_post_type('landing_page',$args);
+	
+	$args=array(
+		'public'=>true,
+		'label'=>'Sidebars',
+		'labels'=>array(
+			'singular_name'=>'Sidebar',
+		),
+	);
+	register_post_type('sidebar',$args);
+}
+add_action("init","grid_wp_init");
