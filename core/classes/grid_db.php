@@ -4,11 +4,12 @@ class grid_db {
 	public $templatesPath=NULL;
 	public $ajaxEndpoint;
 	private $connection;
+	private $author;
 
-	public function __construct($host,$user,$password,$database) {
+	public function __construct($host,$user,$password,$database,$author="UNKNOWN") {
 		$this->connection=new mysqli($host,$user,$password,$database);
 		$this->connection->set_charset("utf8");
-
+		$this->author=$author;
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 	}
 	
@@ -18,11 +19,11 @@ class grid_db {
 	public function createGrid()
 	{
 		$query="select max(id) as id from grid_grid";
-		$result=$this->connection->query($query);
+		$result=$this->connection->query($query) or die($this->connection->error());
 		$row=$result->fetch_assoc();
 		$id=$row['id'];
 		$id++;
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) values ($id,0,0,0,0,0)";
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
 		$this->connection->query($query);
 		return $id;
 	}
@@ -55,7 +56,7 @@ class grid_db {
 		$cloneid=$row['id'];
 		$cloneid++;
 		
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid from grid_grid where id=$gridid";
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->author.",UNIX_TIMESTAMP() from grid_grid where id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
 		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid from grid_container where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
@@ -177,7 +178,7 @@ class grid_db {
 			return $grid;
 		}
 		//if we end up here there is no reuse grid yet.
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) values (-1,0,0,0,0,0)";
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values (-1,0,0,0,0,0,'',0)";
 		$this->connection->query($query) or die($this->connection->error);
 		$grid=new grid_grid();
 		$grid->gridid=-1;
@@ -708,7 +709,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$row=$result->fetch_assoc();
 		$newrevision=$row['revision'];
 		$newrevision=$newrevision+1;
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid) select id,$newrevision,0,next_containerid,next_slotid,next_boxid from grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select id,$newrevision,0,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
 		$this->connection->query($query);
 		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid)
 		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url, reuse_containerid from grid_container
@@ -751,7 +752,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function gridRevisions($grid)
 	{
 		$id=$grid->gridid;
-		$query="select revision from grid_grid where id=$id";
+		$query="select revision,author,revision_date from grid_grid where id=$id";
 		$result=$this->connection->query($query);
 		$return=array();
 		while($row=$result->fetch_assoc())
@@ -988,7 +989,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	}
 
 	public function fetchGridRevisions($gridid) {
-		$query = "SELECT * FROM grid_grid WHERE id = $gridid ORDER BY revision DESC";
+		$query = "SELECT revision,author,revision_date,published FROM grid_grid WHERE id = $gridid ORDER BY revision DESC";
 		$result=$this->connection->query($query) or die($this->connection->error);
 		$revisions = array();
 		$was_draft = false;
@@ -1009,8 +1010,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 							"revision" => $row["revision"], 
 							"published"=> $row["published"],
 							"state"=> $state,
-							"editor"=> "Edward",
-							"date"=> "2013-10-09",
+							"editor"=> $row['author'],
+							"date"=> $row['revision_date'],
 							);
 		}
 		return $revisions;
