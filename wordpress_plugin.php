@@ -91,11 +91,9 @@ function grid_wp_activate()
 		$options['installed']=TRUE;
 		update_option("grid",$options);
 	}
+	else
+	{
+		//TODO: implement update support
+	}
 }
 add_action("activate_grid/wordpress_plugin.php","grid_wp_activate");
-
-function grid_wp_deactivate()
-{
-
-}
-add_action("deactivate_grid/wordpress_plugin.php","grid_wp_deactivate");
