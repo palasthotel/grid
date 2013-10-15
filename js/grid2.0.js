@@ -1270,6 +1270,9 @@ $(function() {
 						getReadableAutocompleteValue($dynamic_field.find(".i-autocomplete"));
 					}
 					break;
+				case "multiple-autocomplete":
+					// TODO: Boell #715
+					break;
 				case "hidden":
 					$dynamic_field.append(
 						"<input type='hidden' class='dynamic-value' "+
