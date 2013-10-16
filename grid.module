@@ -2,9 +2,10 @@
 require_once("core/classes/bootstrap.php");
 
 //drupal-specific boxes
-require_once("core/classes/grid_block_box.php");
-require_once("core/classes/grid_node_box.php");
-require_once("core/classes/grid_image_box.php");
+require_once("core/classes/drupal/grid_sidebar_box.php");
+require_once("core/classes/drupal/grid_block_box.php");
+require_once("core/classes/drupal/grid_node_box.php");
+require_once("core/classes/drupal/grid_image_box.php");
 
 class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 {

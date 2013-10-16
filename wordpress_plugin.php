@@ -8,6 +8,7 @@
  */
  
 require('core/classes/bootstrap.php');
+require('core/classes/wordpress/grid_sidebar_box.php');
 require('grid.install');
 
 function t($str){return $str;}
@@ -306,6 +307,17 @@ function grid_wp_ajax()
 	$storage=grid_wp_get_storage();
 	$storage->handleAjaxCall();
 	die();
+}
+
+function grid_wp_get_grid_by_postid($postid)
+{
+	global $wpdb;
+	$rows=$wpdb->get_results("select grid_id from grid_nodes where nid=$postid");
+	if(count($rows)>0)
+	{
+		return $rows[0]->grid_id;
+	}
+	return FALSE;
 }
 
 function grid_wp_load($post)
