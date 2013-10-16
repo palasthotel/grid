@@ -127,6 +127,7 @@ function grid_wp_admin_menu()
 {
 	add_submenu_page('options-general.php','Grid','Grid','manage_options','grid_settings','grid_wp_settings');
 	add_submenu_page(null,'The Grid','The Grid','edit_posts','grid','grid_wp_thegrid');
+	add_submenu_page(null,'Grid AJAX','The Grid AJAX','edit_posts','grid_ajax','grid_wp_ajax');
 }
 add_action("admin_menu","grid_wp_admin_menu");
 
@@ -264,12 +265,32 @@ function grid_wp_thegrid()
 	{
 		$grid_id=$rows[0]->grid_id;
 		$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+		$jslang="js/language/grid-en.js";
+		if(file_exists("js/language/grid-".WPLANG.".js"))
+			$jslang="js/language/grid-".WPLANG.".js";
 ?>
 <script>
 document.ID=<?php echo $grid_id?>;
 document.gridmode="grid";
+document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
+document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
+document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($potsid));?>";
 //TODO: path to config is missing
 </script>
+
+<script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.tmpl.min.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/<?php echo $jslang;?>">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/templates.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.iframe-transport.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.fileupload.js">
+</script>
+
 <script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
 </script>
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
@@ -277,3 +298,54 @@ document.gridmode="grid";
 require "core/templates/editor.html.tpl.php";
 	}
 }
+
+function grid_wp_ajax()
+{
+	$storage=grid_wp_get_storage();
+	$storage->handleAjaxCall();
+	die();
+}
+
+function grid_wp_load($post)
+{
+	global $wpdb;
+	$postid=$post->ID;
+	if(get_option('grid_'.$post->post_type.'_enabled',FALSE))
+	{
+		$rows=$wpdb->get_results("select grid_id from grid_nodes where nid=$postid");
+		if(count($rows)>0)
+		{
+			$grid_id=$rows[0]->grid_id;
+			$storage=grid_wp_get_storage();
+			$grid=NULL;
+			if(isset($_GET['grid_preview']) && $_GET['grid_preview'])
+			{
+				if(isset($_GET['grid_revision']))
+				{
+					$revision=$_GET['grid_revision'];
+					$grid=$storage->loadGridByRevision($grid_id,$revision);
+				}
+				else
+				{
+					$grid=$storage->loadGrid($grid_id);
+				}
+			}
+			else
+			{
+				$grid=$storage->loadGrid($grid_id,FALSE);
+			}
+			$post->grid=$grid;
+		}	
+	}
+}
+add_action('the_post','grid_wp_load');
+
+function grid_wp_render($content)
+{
+	$post=get_post();
+	if(isset($post->grid))
+	{
+		return $content.$post->grid->render(FALSE);
+	}
+}
+add_filter('the_content','grid_wp_render');
