@@ -126,6 +126,7 @@ add_action("init","grid_wp_init");
 function grid_wp_admin_menu()
 {
 	add_submenu_page('options-general.php','Grid','Grid','manage_options','grid_settings','grid_wp_settings');
+	add_submenu_page(null,'The Grid','The Grid','edit_posts','grid','grid_wp_thegrid');
 }
 add_action("admin_menu","grid_wp_admin_menu");
 
@@ -192,4 +193,87 @@ function grid_wp_sidebar_html()
 ?>
 </select>
 <?
+}
+
+function grid_wp_add_meta_boxes()
+{
+	$post_types=get_post_types(array(),'objects');
+	foreach($post_types as $key=>$post_type)
+	{
+		if(get_option("grid_".$key."_enabled",FALSE))
+		{
+			add_meta_box("grid",__("Grid"),"grid_wp_meta_box");
+		}
+	}
+}
+
+add_action("add_meta_boxes","grid_wp_add_meta_boxes");
+
+function grid_wp_meta_box($post)
+{
+	$url=add_query_arg(array('page'=>'grid','postid'=>$post->ID),admin_url('admin.php'));
+?>
+<a href="<?php echo $url?>">Switch to the Grid</a>
+<?php
+}
+
+$grid_loaded=FALSE;
+
+function grid_wp_get_storage()
+{
+	global $grid_loaded;
+	if(!$grid_loaded)
+	{
+		do_action('grid_load_classes');
+	}
+	$user=wp_get_current_user();
+	$storage=new grid_db(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,$user->user_login);
+	$storage->templatesPath=get_template_directory().'/grid/';
+/*
+	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
+	$storage->ajaxEndpoint->storage=$storage;
+*/
+	return $storage;
+
+	
+}
+
+function grid_wp_thegrid()
+{
+	global $wpdb;
+//	$storage=grid_wp_get_storage();
+	$postid=$_GET['postid'];
+	$rows=$wpdb->get_results("select grid_id from grid_nodes where nid=$postid");
+	if(!empty($_POST))
+	{
+		$storage=grid_wp_get_storage();
+		$id=$storage->createGrid();
+		$wpdb->query("insert into grid_nodes (nid,grid_id) values ($postid,$id)");
+		wp_redirect(add_query_arg(array('page'=>'grid','postid'=>$postid),admin_url('admin.php')));
+	}
+	if(count($rows)==0)
+	{
+?>
+<form method="post" action="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid','postid'=>$postid),admin_url('admin.php'));?>">
+<p>There is no grid. Boot one?</p>
+<?php echo submit_button();?>
+</form>
+<?php		
+	}
+	else
+	{
+		$grid_id=$rows[0]->grid_id;
+		$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+?>
+<script>
+document.ID=<?php echo $grid_id?>;
+document.gridmode="grid";
+//TODO: path to config is missing
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
+</script>
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<?php
+require "core/templates/editor.html.tpl.php";
+	}
 }
