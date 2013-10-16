@@ -59,6 +59,25 @@ $(function() {
 	/** --------------------------
 	*	Grid gets initiated
 	------------------------------ */
+	// Fallback for drupal
+	var SERVER = "/grid_ajax_endpoint"; 
+	if( typeof document.gridajax != "undefined" && 
+		document.gridajax != null && 
+		document.gridajax != ""){
+		SERVER = document.gridajax;
+	}
+	console.log("AJAX SERVER: ".SERVER);
+
+	// fallback for drupal
+	var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
+	if( typeof document.previewpattern != "undefined" && 
+		document.previewpattern != null && 
+		document.previewpattern != ""){
+		PREVIEW_PATTERN = document.previewpattern;
+	}
+	console.log("Previewpattern: "+PREVIEW_PATTERN);
+
+	// grid ID
 	var ID = document.ID;
 	// grid, container, box
 	var GRIDMODE = document.gridmode;
@@ -369,11 +388,18 @@ $(function() {
 
 	function revisionPreview($revision){
 		var revision = $revision.parents("tr").data("revision");
+		console.log(revision);
+		var location =  PREVIEW_PATTERN.replace("{REV}", revision);
+		window.open(location.replace("//","/"),"_blank");
+	}
+	/*
+	function revisionPreview($revision){
+		var revision = $revision.parents("tr").data("revision");
 		console.log("Revision number: "+revision);
 		var location = window.location.pathname+'/'+revision+'/preview';
 		window.open(location.replace("//","/"),"_blank");
 		//http://grid-dev.palasthotel.de/node/17/grid/3/preview
-	}
+	}*/
 	function revisionUse($revision){
 		$grid.fadeOut('fast');
 		var revision = $revision.parents("tr").data("revision");
@@ -1837,7 +1863,7 @@ $(function() {
 	// --------------------
 	// Serverkommunikation
 	// -------------------
-	var SERVER = "/grid_ajax_endpoint"; 
+	
 	function sendAjax(method, params_array, success, error, async){
 		json = {};
 		json["method"] = method;
