@@ -128,6 +128,7 @@ function grid_wp_admin_menu()
 	add_submenu_page('options-general.php','Grid','Grid','manage_options','grid_settings','grid_wp_settings');
 	add_submenu_page(null,'The Grid','The Grid','edit_posts','grid','grid_wp_thegrid');
 	add_submenu_page(null,'Grid AJAX','The Grid AJAX','edit_posts','grid_ajax','grid_wp_ajax');
+	add_submenu_page(null,'Grid CKEditor Config','Grid CKEditor Config','edit_posts','grid_ckeditor_config','grid_wp_ckeditor_config');
 }
 add_action("admin_menu","grid_wp_admin_menu");
 
@@ -272,6 +273,7 @@ function grid_wp_thegrid()
 <script>
 document.ID=<?php echo $grid_id?>;
 document.gridmode="grid";
+document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
 document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
 document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
 document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($potsid));?>";
@@ -343,9 +345,22 @@ add_action('the_post','grid_wp_load');
 function grid_wp_render($content)
 {
 	$post=get_post();
+	
 	if(isset($post->grid))
 	{
+		wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
 		return $content.$post->grid->render(FALSE);
 	}
 }
 add_filter('the_content','grid_wp_render');
+
+function grid_wp_ckeditor_config()
+{
+	$styles=array();
+	$formats=array();
+	
+	$styles=apply_filters("grid_styles",$styles);
+	$styles=apply_filters("grid_formats",$formats);
+	require("grid_htmlbox_ckeditor_config_js.tpl.php");
+	die();
+}
