@@ -182,6 +182,7 @@ html{
 	text-align: center;
 	background-color: #666;
 	color:#fff;
+	margin-bottom: 0px;
 }
 .element-type-tabs li[data-type=static]{
 	background-image: url(images/box-type-static.png);
@@ -1230,6 +1231,16 @@ tr[role=revision] td{
 #grid-wrapper[data-mode=container] .container .c-revert{
 	right: 60px;
 }
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+
 /** loading animation **/
 .loading{
   position:absolute;

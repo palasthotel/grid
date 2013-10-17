@@ -60,13 +60,23 @@ $(function() {
 	*	Grid gets initiated
 	------------------------------ */
 	// Fallback for drupal
-	var SERVER = "/grid_ajax_endpoint"; 
+	var SERVER = "/grid_ajax_endpoint";
 	if( typeof document.gridajax != "undefined" && 
 		document.gridajax != null && 
 		document.gridajax != ""){
 		SERVER = document.gridajax;
 	}
-	console.log("AJAX SERVER: ".SERVER);
+	console.log("SERVER:"+SERVER);
+
+	// fallback for drupal
+	var PREVIEW_URL = window.location.pathname+'/preview';
+	PREVIEW_URL = PREVIEW_URL.replace("//","/");
+	if( typeof document.previewurl != "undefined" && 
+		document.previewurl != null && 
+		document.previewurl != ""){
+		PREVIEW_URL = document.previewurl;
+	}
+	console.log("PREVIEW_URL:"+PREVIEW_URL);
 
 	// fallback for drupal
 	var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
@@ -75,7 +85,7 @@ $(function() {
 		document.previewpattern != ""){
 		PREVIEW_PATTERN = document.previewpattern;
 	}
-	console.log("Previewpattern: "+PREVIEW_PATTERN);
+	console.log("PREVIEW_PATTERN: "+PREVIEW_PATTERN);
 
 	// grid ID
 	var ID = document.ID;
@@ -283,8 +293,7 @@ $(function() {
 				publishGrid();
 				break;
 			case "preview":
-				var location = window.location.pathname+'/preview';
-				window.open(location.replace("//","/"),"_blank");
+				window.open(PREVIEW_URL, "_blank");
 				break;
 			case "revert":
 				revertGrid();
@@ -390,7 +399,7 @@ $(function() {
 		var revision = $revision.parents("tr").data("revision");
 		console.log(revision);
 		var location =  PREVIEW_PATTERN.replace("{REV}", revision);
-		window.open(location.replace("//","/"),"_blank");
+		window.open(location,"_blank");
 	}
 	/*
 	function revisionPreview($revision){
