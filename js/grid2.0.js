@@ -1197,7 +1197,6 @@ $(function() {
 		});
 		return content;
 	}
-	
 	$grid.on("click", ".box > .edit",function(data){
 		$this = $(this);
 		c_id = $this.parents(".container").data("id");
@@ -1331,6 +1330,24 @@ $(function() {
 					break;
 				case "multiple-autocomplete":
 					// TODO: Boell #715
+					break;
+				case "wp-mediaselect":
+						var _orig_send_attachment = wp.media.editor.send.attachment;
+						var $upload_btn = $("<input type='button' class='upload_image_button' value='"+element.label+"' />");
+						$dynamic_field.append($upload_btn);
+						$dynamic_field.append(
+							"<input type='hidden' class='dynamic-value form-text' "+
+							" data-key='"+element.key+"' data-path='"+cs_path+element.key+"' value='"+c_val+"' />");
+						$upload_btn.click(function(e) {
+						    var send_attachment_bkp = wp.media.editor.send.attachment;
+						    var $button = $(this);
+						    wp.media.editor.send.attachment = function(props, attachment) {
+						    	console.log(attachment);
+						    	$button.siblings('.dynamic-value').val(attachment["id"]);
+						    }
+						    wp.media.editor.open($button);
+						    return false;
+					  	});
 					break;
 				case "hidden":
 					$dynamic_field.append(
