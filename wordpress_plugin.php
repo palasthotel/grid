@@ -9,6 +9,7 @@
  
 require('core/classes/bootstrap.php');
 require('core/classes/wordpress/grid_sidebar_box.php');
+require('core/classes/wordpress/grid_post_box.php');
 require('grid.install');
 
 function t($str){return $str;}
@@ -121,6 +122,7 @@ function grid_wp_init()
 		),
 	);
 	register_post_type('sidebar',$args);
+	wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
 }
 add_action("init","grid_wp_init");
 
@@ -277,7 +279,7 @@ document.gridmode="grid";
 document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
 document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
 document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
-document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($potsid));?>";
+document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
 //TODO: path to config is missing
 </script>
 
@@ -360,8 +362,11 @@ function grid_wp_render($content)
 	
 	if(isset($post->grid))
 	{
-		wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
 		return $content.$post->grid->render(FALSE);
+	}
+	else
+	{
+		return $content;
 	}
 }
 add_filter('the_content','grid_wp_render');
