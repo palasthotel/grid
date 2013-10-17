@@ -18,6 +18,7 @@
 .C-4-8,
 .C-8-4,
 .C-4-4-4,
+.C-3-3-3-3,
 .C-2-2-2-2-2-2{
 	width: 100%;
 }
@@ -52,6 +53,12 @@
 .C-4-8 .slot:nth-child(2){
 	width:66.666%;
 	float: right;
+}
+
+/** Container C-3-3-3-3 **/
+.C-3-3-3-3 .slot{
+	width: 25%;
+	float:left;
 }
 
 /** Container C-2-2-2-2-2-2 **/

@@ -114,8 +114,19 @@ $(function() {
 		$grid_wrapper.attr("data-mode",GRIDMODE);
 		// scrollable toolbar
 		$(window).scroll(needFixedToolbar);
+		// hide WP admin sidebar
+		initWP();
+		
 	}
 	$(document).ready(init);
+	/** WP specific init **/
+	function initWP(){
+		var $admin_wrap = $("#adminmenuwrap");
+		if($admin_wrap.width() < 40) return;
+		var $btn = $("#collapse-button").trigger("click");
+		console.log($btn.position());
+	}
+
 	/** ------------------------------
 	** Checks whitelist of browsers
 	* -------------------------------- */

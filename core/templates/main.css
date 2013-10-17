@@ -196,7 +196,8 @@ html{
 	background-image: url(images/box-type-block.png);
 
 }
-.element-type-tabs li[data-type=node]{
+.element-type-tabs li[data-type=node],
+.element-type-tabs li[data-type=post]{
 	background-image: url(images/box-type-node.png);
 
 }
