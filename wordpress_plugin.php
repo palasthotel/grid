@@ -133,6 +133,12 @@ function grid_wp_admin_menu()
 	add_submenu_page(null,'The Grid','The Grid','edit_posts','grid','grid_wp_thegrid');
 	add_submenu_page(null,'Grid AJAX','The Grid AJAX','edit_posts','grid_ajax','grid_wp_ajax');
 	add_submenu_page(null,'Grid CKEditor Config','Grid CKEditor Config','edit_posts','grid_ckeditor_config','grid_wp_ckeditor_config');
+	add_submenu_page('tools.php','Reusable grid boxes','Reusable grid boxes','edit_posts','grid_reuse_boxes','grid_wp_reuse_boxes');
+	add_submenu_page(null,'edit reuse box','edit reuse box','edit_posts','grid_edit_reuse_box','grid_wp_edit_reuse_box');
+	add_submenu_page(null,'delete reuse box','delete reuse box','edit_posts','grid_delete_reuse_box','grid_wp_delete_reuse_box');
+	add_submenu_page('tools.php','reusable grid container','Reusable grid container','edit_posts','grid_reuse_containers','grid_wp_reuse_containers');
+	add_submenu_page(null,'edit reuse container','edit reuse container','edit_posts','grid_edit_reuse_container','grid_wp_edit_reuse_container');
+	add_submenu_page(null,'delete reuse container','delete reuse container','edit_posts','grid_delete_reuse_container','grid_wp_delete_reuse_container');
 }
 add_action("admin_menu","grid_wp_admin_menu");
 
@@ -268,6 +274,8 @@ function grid_wp_thegrid()
 	}
 	else
 	{
+		wp_enqueue_media();
+//		wp_enqueue_script('media-upload');
 		$grid_id=$rows[0]->grid_id;
 		$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
 		$jslang="js/language/grid-en.js";
@@ -281,7 +289,6 @@ document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"
 document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
 document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
 document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
-//TODO: path to config is missing
 </script>
 
 <script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
@@ -302,6 +309,199 @@ document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_pe
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
 <?php
 require "core/templates/editor.html.tpl.php";
+	}
+}
+
+function grid_wp_reuse_boxes()
+{
+	$storage=grid_wp_get_storage();
+
+	$usedIds=$storage->getReusedBoxIds();
+	$boxids=$storage->getReuseableBoxIds();
+	$boxes=array();
+	foreach($boxids as $boxid)
+	{
+		$boxes[]=$storage->loadReuseBox($boxid);
+	}
+	$grid=new grid_grid();
+	$grid->storage=$storage;
+	$grid->container=array();
+	foreach($boxes as $box)
+	{
+		$container=new grid_container();
+		$container->storage=$storage;
+		$container->type="C-12";
+		$container->stype="container";
+		$container->readmore=t("edit");
+		$container->readmoreurl=add_query_arg(array('page'=>'grid_edit_reuse_box','boxid'=>$box->boxid),admin_url('admin.php'));
+		if(!in_array($box->boxid, $usedIds))
+		{
+			$container->epilog="<a href='".add_query_arg(array('page'=>'grid_delete_reuse_box','boxid'=>$box->boxid),admin_url('admin.php'))."'>delete</a>";
+		}
+		
+		$container->slots=array();
+		$container->slots[]=new grid_slot();
+		$container->slots[0]->storage=$storage;
+		$container->slots[0]->boxes=array();
+		$container->slots[0]->boxes[]=$box;
+		$grid->container[]=$container;
+	}
+?>
+<link rel=stylesheet href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<?php
+	echo $grid->render(TRUE);
+}
+
+function grid_wp_edit_reuse_box()
+{
+	$boxid=$_GET['boxid'];
+
+	wp_enqueue_media();
+	$grid_id=$rows[0]->grid_id;
+	$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+	$jslang="js/language/grid-en.js";
+	if(file_exists("js/language/grid-".WPLANG.".js"))
+		$jslang="js/language/grid-".WPLANG.".js";
+?>
+<script>
+document.ID="box:<?php echo $boxid?>";
+document.gridmode="box";
+document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
+document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
+document.previewurl="";
+</script>
+
+<script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.tmpl.min.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/<?php echo $jslang;?>">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/templates.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.iframe-transport.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.fileupload.js">
+</script>
+
+<script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
+</script>
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<?php
+require "core/templates/editor.html.tpl.php";
+}
+
+function grid_wp_delete_reuse_box()
+{
+	$boxid=$_GET['boxid'];
+	if(isset($_POST) && !empty($_POST))
+	{
+		$storage=grid_wp_get_storage();
+		$storage->deleteReusableBox($boxid);
+		wp_redirect(add_query_arg(array("page"=>"grid_reuse_boxes"),admin_url("tools.php")));
+	}
+	else
+	{
+?>
+<form method="post" action="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_delete_reuse_box","boxid"=>$boxid),admin_url('admin.php'))?>">
+<p>Delete this box?</p>
+<?php echo submit_button();?>
+</form>
+<?php
+	}
+}
+
+function grid_wp_reuse_containers()
+{
+	$storage=grid_wp_get_storage();
+	$containerIds=$storage->getReuseContainerIds();
+	$usedIds=$storage->getReusedContainerIds();
+	
+	$grid=new grid_grid();
+	$grid->storage=$storage;
+	$grid->container=array();
+	foreach($containerIds as $id)
+	{
+		$container=$storage->loadReuseContainer($id);
+		$container->grid=$grid;
+		$grid->container[]=$container;
+		
+		$edit=new grid_container();
+		$edit->grid=$grid;
+		$edit->storage=$storage;
+		$edit->type="C-12";
+		$edit->readmore="edit";
+		$edit->slots=array();
+		$edit->prolog=$container->reusetitle;
+		$edit->readmoreurl=add_query_arg(array('page'=>'grid_edit_reuse_container','containerid'=>$id),admin_url('admin.php'));
+		if(!in_array($id, $usedIds))
+		{
+			$edit->epilog='<a href="'.add_query_arg(array('page'=>'grid_delete_reuse_container','containerid'=>$id),admin_url('admin.php')).'">delete</a>';
+		}
+		$grid->container[]=$edit;
+	}
+	
+?>
+<link rel=stylesheet href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<?php
+	echo $grid->render(TRUE);
+}
+
+function grid_wp_edit_reuse_container()
+{
+	$containerid=$_GET['containerid'];
+
+	wp_enqueue_media();
+	$grid_id=$rows[0]->grid_id;
+	$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+	$jslang="js/language/grid-en.js";
+	if(file_exists("js/language/grid-".WPLANG.".js"))
+		$jslang="js/language/grid-".WPLANG.".js";
+?>
+<script>
+document.ID="container:<?php echo $containerid?>";
+document.gridmode="container";
+document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
+document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
+document.previewurl="";
+</script>
+
+<script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.tmpl.min.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/<?php echo $jslang;?>">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/templates.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.iframe-transport.js">
+</script>
+<script src="<?php echo plugins_url();?>/grid/js/jquery.fileupload.js">
+</script>
+
+<script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
+</script>
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<?php
+require "core/templates/editor.html.tpl.php";
+}
+
+function grid_wp_delete_reuse_container()
+{
+	$containerid=$_GET['containerid'];
+	if(isset($_POST) && !empty($_POST))
+	{
+		$storage=grid_wp_get_storage();
+		$storage->deleteReusableContainer($containerid);
+		wp_redirect(add_query_arg(array('page'=>'grid_reuse_containers'),admin_url('tools.php')));
+	}
+	else
+	{
+?>
+<form method="post" action="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_delete_reuse_container','containerid'=>$containerid),admin_url('admin.php'));?>">
+<p>Delete this container?</p>
+<?php echo submit_button();?>
+<?php
 	}
 }
 
