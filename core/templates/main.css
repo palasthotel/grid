@@ -1211,6 +1211,32 @@ tr[role=revision] td{
 	max-width:100%;
 }
 
+.fixed-hint{
+	position:absolute;
+	z-index: 999;
+	top:0px;
+	left: 0px;
+	background-color: #000;
+	color:#fff;
+	padding:15px;
+	max-width: 210px;
+	opacity: 0.8;
+	line-height: 1.6em;
+}
+.fixed-hint:after{
+	content:'';
+	position:absolute;
+	top: -16px;
+	left: 0px;
+	content:"";
+	border: 8px solid #000;
+	font-size:0;line-height:0;height:0;padding:0;margin:0;
+	border-top-color:    transparent;
+	border-right-color:  transparent;
+	border-left-color:   transparent;
+	position: absolute;
+}
+
 /** Box editor rules **/
 #grid-wrapper[data-mode=box] #grid-toolbar,
 #grid-wrapper[data-mode=box] .container .c-tools,

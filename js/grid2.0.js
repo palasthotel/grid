@@ -121,10 +121,23 @@ $(function() {
 	$(document).ready(init);
 	/** WP specific init **/
 	function initWP(){
+		console.log("WP INIT--------");
 		var $admin_wrap = $("#adminmenuwrap");
 		if($admin_wrap.width() < 40) return;
 		var $btn = $("#collapse-button").trigger("click");
-		console.log($btn.position());
+		var $hint =  $("<div class='fixed-hint'>"+lang_values["info-wp-hide-adminbar"]+"</div>");
+		$hint.css("top", ($btn.offset().top+25) );
+		$hint.css("left", $btn.offset().left);
+		$body.append($hint);
+		var removeHint = setTimeout(function(){
+			$hint.fadeOut(1000,function(){
+				$hint.remove();
+			});
+		},6000);
+		$hint.click(function(event) {
+			$hint.remove();
+			clearTimeout(removeHint);
+		});
 	}
 
 	/** ------------------------------

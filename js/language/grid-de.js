@@ -51,5 +51,7 @@ document.lang_values = {
 	//prompt
 	"prom_container_reuse_title": "Wenn der Container Wiederverwendbar gemacht wurde, kann ich in diesem Grid nicht mehr bearbeitet werden. "+
 								"Bitte Verwaltungstitel eingeben und bestätigen:",
-	"prom-leave-page": "Grid wirklich verlassen?"
+	"prom-leave-page": "Grid wirklich verlassen?",
+
+	"info-wp-hide-adminbar": "Hier kannst du das Menü ein und ausklappen. Grid brauht viel Platz und fährt es deshalb automatisch ein."
 };
