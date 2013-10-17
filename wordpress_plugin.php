@@ -10,6 +10,8 @@
 require('core/classes/bootstrap.php');
 require('core/classes/wordpress/grid_sidebar_box.php');
 require('core/classes/wordpress/grid_post_box.php');
+require('core/classes/wordpress/grid_media_box.php');
+require('core/classes/wordpress/grid_posts_box.php');
 require('grid.install');
 
 function t($str){return $str;}
@@ -122,7 +124,6 @@ function grid_wp_init()
 		),
 	);
 	register_post_type('sidebar',$args);
-	wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
 }
 add_action("init","grid_wp_init");
 
@@ -371,6 +372,11 @@ function grid_wp_render($content)
 }
 add_filter('the_content','grid_wp_render');
 
+function grid_wp_head()
+{
+	wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
+}
+add_action("wp_head","grid_wp_head");
 function grid_wp_ckeditor_config()
 {
 	$styles=array();
