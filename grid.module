@@ -511,7 +511,12 @@ function grid_build_grid_submit($form_id,&$form_state)
 			if($node->type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
 			{
 				$grid=$storage->loadGrid($id);
-				$grid->insertContainer("C-4",0);		
+				$grid->insertContainer("SC-4",0);		
+			}
+			else if(variable_get('grid_default_container','__NONE__')!='__NONE__')
+			{
+				$grid=$storage->loadGrid($id);
+				$grid->insertContainer(variable_get('grid_default_container'),0);
 			}
 			
 			db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
@@ -530,7 +535,12 @@ function grid_build_grid_submit($form_id,&$form_state)
 		if($node->type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
 		{
 			$grid=$storage->loadGrid($id);
-			$grid->insertContainer("C-4",0);		
+			$grid->insertContainer("SC-4",0);		
+		}
+		else if(variable_get('grid_default_container','__NONE__')!='__NONE__')
+		{
+			$grid=$storage->loadGrid($id);
+			$grid->insertContainer(variable_get('grid_default_container'),0);
 		}
 		
 		db_insert('grid_nodes')->fields(array('nid','grid_id'))->values(array('nid'=>$form_state['nid'],'grid_id'=>$id))->execute();
@@ -555,6 +565,31 @@ function grid_admin_settings()
 	$form=array();
 	$types=node_type_get_types();
 	$keys=array_keys($types);
+	
+	$form['defaultcontainer']=array(
+		'#type'=>'fieldset',
+		'#title'=>t('Which Container should be placed on empty grids?'),
+	);
+	
+	$options=array();
+	$options['__NONE__']=t('None - leave empty');
+	$storage=grid_get_storage();
+	$containers=$storage->fetchContainerTypes();
+	foreach($containers as $container)
+	{
+		if(strpos($container['type'],"C-")===0)
+		{
+			$options[$container['type']]=$container['type'];
+		}
+	}
+	
+	$form['defaultcontainer']['grid_default_container']=array(
+		'#title'=>t('Default Container'),
+		'#type'=>'select',
+		'#options'=>$options,
+		'#default_value'=>variable_get('grid_default_container','__NONE__'),
+	);
+	
 	$form['nodetypes']=array(
 		'#type'=>'fieldset',
 		'#title'=>t('Grid support for the following node types'),
