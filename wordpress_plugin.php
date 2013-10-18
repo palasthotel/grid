@@ -14,6 +14,27 @@ require('core/classes/wordpress/grid_media_box.php');
 require('core/classes/wordpress/grid_posts_box.php');
 require('grid.install');
 
+class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint
+{
+	public function loadGrid($gridid)
+	{
+		global $wpdb;
+		$return=parent::loadGrid($gridid);
+		$rows=$wpdb->get_results("select nid from grid_nodes where grid_id=$gridid");
+		$post=get_post($rows[0]->nid);
+		$type=$post->post_type;
+		if($type==get_option('grid_sidebar_post_type'))
+		{
+			$return['isSidebar']=TRUE;
+		}
+		else
+		{
+			$return['isSidebar']=FALSE;
+		}
+		return $return;
+	}
+}
+
 function t($str){return $str;}
 
 function db_query($querystring)
@@ -273,6 +294,8 @@ function grid_wp_get_storage()
 	}
 	$user=wp_get_current_user();
 	$storage=new grid_db(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,$user->user_login);
+	$storage->ajaxEndpoint=new grid_wordpress_ajaxendpoint();
+	$storage->ajaxEndpoint->storage=$storage;
 	$storage->templatesPath=get_template_directory().'/grid/';
 /*
 	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
@@ -294,7 +317,12 @@ function grid_wp_thegrid()
 		$storage=grid_wp_get_storage();
 		$id=$storage->createGrid();
 		$grid=$storage->loadGrid($id);
-		if(get_option('grid_default_container','__NONE__')!='__NONE__')
+		$post=get_post($postid);
+		if($post->post_type==get_option('grid_sidebar_post_type'))
+		{
+			$grid->insertContainer("SC-4",0);		
+		}
+		else if(get_option('grid_default_container','__NONE__')!='__NONE__')
 		{
 			$grid->insertContainer(get_option('grid_default_container'),0);
 		}
