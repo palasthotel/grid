@@ -14,7 +14,7 @@ class grid_block_box extends grid_box {
 			global $theme_key;
 			drupal_alter('block_info',$blocks,$theme_key,$blocks);
 			$block=$blocks[$this->content->delta];
-			return "Block: ".$block['info'];
+			return t("Block").": ".$block['info'];
 		}
 		else
 		{		
@@ -31,7 +31,7 @@ class grid_block_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return "Blöcke";
+		return t("Blocks");
 	}
 	
 	public function metaSearchCriteria() {

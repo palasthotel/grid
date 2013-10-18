@@ -49,7 +49,7 @@ class grid_post_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return "Inhalte";
+		return t("Contents");
 	}
 	
 	public function metaSearchCriteria() {

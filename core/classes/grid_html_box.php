@@ -16,7 +16,7 @@ class grid_html_box extends grid_static_base_box {
 	public function build($editmode) {
 		if($editmode && empty($this->content->html))
 		{
-			return "Statischer HTML-Inhalt";
+			return t("Static HTML-Content");
 		}
 		else
 		{
@@ -29,7 +29,7 @@ class grid_html_box extends grid_static_base_box {
 		return array(
 			array(
 				'key'=>'html',
-				'label'=>'Text',
+				'label'=>t('Text'),
 				'type'=>'html'
 			),
 		);

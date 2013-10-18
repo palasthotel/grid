@@ -41,7 +41,7 @@ class grid_image_box extends grid_static_base_box
 			}
 			return $a_pre."<img src='".$src."' alt='Grid Image' />".$a_post;
 		}
-		return 'Bildbox';
+		return t('Imagebox');
 	}
 	
 	

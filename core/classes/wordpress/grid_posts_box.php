@@ -67,7 +67,7 @@ class grid_posts_box extends grid_list_box {
 			array(
 				'key'=>'viewmode',
 				'type'=>'select',
-				'label'=>'Ansicht',
+				'label'=> t('Viewmode'),
 				'selections'=>array(array('key'=>'excerpt','text'=>'Anriss'),array('key'=>'full','text'=>'Voll')),
 			),
 			array(

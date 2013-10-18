@@ -15,7 +15,7 @@ class grid_abstract_list_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return "Listen";
+		return t("Lists");
 	}
 	
 	public function metaSearchCriteria() {

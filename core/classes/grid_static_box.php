@@ -12,7 +12,7 @@ class grid_static_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return "Statischer Inhalt";
+		return t("Static content");
 	}
 	
 	public function metaSearchCriteria() {

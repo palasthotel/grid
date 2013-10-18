@@ -18,7 +18,7 @@ class grid_video_box extends grid_static_base_box
 	{
 		if($editmode)
 		{
-			return "Video Box";
+			return t("Video-box");
 		}
 		else
 		{
@@ -31,7 +31,7 @@ class grid_video_box extends grid_static_base_box
 		return array(
 			array(
 				'key'=>'url',
-				'label'=>'Video-URL',
+				'label'=>t('Video-URL'),
 				'type'=>'text',
 			),
 			array(

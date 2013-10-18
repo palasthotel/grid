@@ -38,7 +38,7 @@ class grid_node_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return "Inhalte";
+		return "Contents";
 	}
 	
 	public function metaSearchCriteria() {
@@ -106,7 +106,7 @@ class grid_node_box extends grid_box {
 			array(
 				'key'=>'viewmode',
 				'type'=>'select',
-				'label'=>'Ansicht',
+				'label'=> t('Viewmode'),
 				'selections'=>$modes,
 			),
 			array(
