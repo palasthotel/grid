@@ -1545,6 +1545,10 @@ $(function() {
 						$input.siblings(".loading").hide();
 						$autocompleteList = $input.siblings(".suggestion-list");
 						$autocompleteList.empty();
+						if(data.result.length < 1){
+							console.log("no match found");
+							return;
+						}
 						$.each(data.result,function(index, value){
 							$autocompleteList.append($("<li>"+value.value+"</li>").attr("data-key",value.key));
 						});
