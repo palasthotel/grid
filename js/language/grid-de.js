@@ -12,6 +12,7 @@ document.lang_values = {
 	"btn-cancle": "Abbrechen",
 	"btn-save": "Speichern",
 	"btn-make-reusable": "Wiederverwendbar machen",
+	"btn-wp-media": "Insert media",
 	"state-display": {
 		"published": "Veröffentlicht!",
 		"draft": "Entwurf..."

@@ -1338,7 +1338,8 @@ $(function() {
 					break;
 				case "wp-mediaselect":
 						var _orig_send_attachment = wp.media.editor.send.attachment;
-						var $upload_btn = $("<input type='button' class='upload_image_button' value='"+element.label+"' />");
+						var $upload_btn = $("<button class='upload_image_button'>"+lang_values["btn-wp-media"]+"</button>");
+						$dynamic_field.append("<label>"+element.label+"</label>");
 						$dynamic_field.append($upload_btn);
 						console.log(c_val);
 						var $input = $("<input />")

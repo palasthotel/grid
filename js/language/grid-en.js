@@ -12,6 +12,7 @@ document.lang_values = {
 	"btn-cancle": "Cancel",
 	"btn-save": "Save",
 	"btn-make-reusable": "Make reusable",
+	"btn-wp-media": "Insert media",
 	"state-display": {
 		"published": "Published!",
 		"draft": "Is draft..."
