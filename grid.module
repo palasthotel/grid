@@ -272,11 +272,19 @@ function grid_get_nid_by_gridid($gridid)
 
 function grid_get_storage()
 {
-	$loaded=&drupal_static(__FUNCTION__);
-	if(!isset($loaded))
+	$cache=&drupal_static(__FUNCTION__);
+	if(!isset($cache))
+	{
+		$cache=array();
+	}
+	if(!isset($cache['loaded']))
 	{
 		module_invoke_all('grid_load_classes');
-		$loaded=TRUE;
+		$cache['loaded']=TRUE;
+	}
+	if(isset($cache['storage']))
+	{
+		return $cache['storage'];
 	}
 	$conn=Database::getConnection();
 	$opts=$conn->getConnectionOptions();
@@ -286,6 +294,7 @@ function grid_get_storage()
 	$storage->templatesPath=$theme_path.'/grid/';
 	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
 	$storage->ajaxEndpoint->storage=$storage;
+	$cache['storage']=$storage;
 	return $storage;
 }
 
