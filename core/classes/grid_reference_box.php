@@ -37,7 +37,7 @@ class grid_reference_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return "Wiederverwendete Boxen";
+		return t("Reusable boxes");
 	}
 	
 	public function metaSearchCriteria() {
