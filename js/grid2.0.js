@@ -1190,6 +1190,11 @@ $(function() {
 				case "autocomplete-with-links":
 					content[$element.data("key")] = $element.find("input").data("value-key");
 					break;
+				case "wp-mediaselect":
+				console.log($element.find(".dynamic-value").data("key"));
+				console.log($element.find(".dynamic-value").val());
+					content[$element.find(".dynamic-value").data("key")] = JSON.parse($element.find(".dynamic-value").val());
+					break;
 				default:
 					content[$element.find(".dynamic-value").data("key")] = $element.find(".dynamic-value").val();
 					break;
@@ -1335,15 +1340,25 @@ $(function() {
 						var _orig_send_attachment = wp.media.editor.send.attachment;
 						var $upload_btn = $("<input type='button' class='upload_image_button' value='"+element.label+"' />");
 						$dynamic_field.append($upload_btn);
-						$dynamic_field.append(
-							"<input type='hidden' class='dynamic-value form-text' "+
-							" data-key='"+element.key+"' data-path='"+cs_path+element.key+"' value='"+c_val+"' />");
+						console.log(c_val);
+						var $input = $("<input />")
+									.attr('value', JSON.stringify(c_val))
+									.attr('type', 'hidden')
+									.addClass('dynamic-value form-json')
+									.attr("data-path",cs_path+element.key)
+									.attr('data-key', element.key);
+						$dynamic_field.append($input);
 						$upload_btn.click(function(e) {
 						    var send_attachment_bkp = wp.media.editor.send.attachment;
 						    var $button = $(this);
 						    wp.media.editor.send.attachment = function(props, attachment) {
+						    	console.log(props);
 						    	console.log(attachment);
-						    	$button.siblings('.dynamic-value').val(attachment["id"]);
+						    	var r_json = {
+						    		"id": attachment["id"],
+						    		"size": props["size"]
+						    	};
+						    	$button.siblings('.dynamic-value').val(JSON.stringify(r_json));
 						    }
 						    wp.media.editor.open($button);
 						    return false;

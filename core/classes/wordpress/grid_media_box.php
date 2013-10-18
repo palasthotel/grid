@@ -5,7 +5,9 @@ class grid_media_box extends grid_static_base_box
 	public function __construct() 
 	{
 		$this->content=new StdClass();
-		$this->content->fileid="";
+		$this->content->fileid=new StdClass();
+		$this->content->fileid->id="";
+		$this->content->fileid->size="";
 		$this->content->url = "";
 	}
 	
@@ -15,7 +17,7 @@ class grid_media_box extends grid_static_base_box
 
 	public function build($editmode) {
 		//boxes render their content in here
-		if(isset($this->content->fileid) && $this->content->fileid!="")
+		if(isset($this->content->fileid->id) && $this->content->fileid->id!="")
 		{
 			
 			$a_pre = "";
@@ -26,12 +28,12 @@ class grid_media_box extends grid_static_base_box
 			}
 			if($editmode)
 			{
-				$metadata=wp_get_attachment_metadata($this->content->fileid);
+				$metadata=wp_get_attachment_metadata($this->content->fileid->id);
 				$a_post.=" (".$metadata['file'].")";
 			}
 
 			$src = $url;
-			return $a_pre.wp_get_attachment_image($this->content->fileid).$a_post;
+			return $a_pre.wp_get_attachment_image($this->content->fileid->id,$this->content->fileid->size).$a_post;
 		}
 		return 'Media-Box';
 	}

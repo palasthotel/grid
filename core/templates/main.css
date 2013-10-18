@@ -1209,6 +1209,7 @@ tr[role=revision] td{
 /** content rules **/
 .box img{
 	max-width:100%;
+	height:auto;
 }
 
 .fixed-hint{
