@@ -291,17 +291,20 @@ function grid_wp_get_storage()
 	if(!$grid_loaded)
 	{
 		do_action('grid_load_classes');
+		$grid_loaded=TRUE;
 	}
-	$user=wp_get_current_user();
-	$storage=new grid_db(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,$user->user_login);
-	$storage->ajaxEndpoint=new grid_wordpress_ajaxendpoint();
-	$storage->ajaxEndpoint->storage=$storage;
-	$storage->templatesPath=get_template_directory().'/grid/';
-/*
-	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
-	$storage->ajaxEndpoint->storage=$storage;
-*/
-	return $storage;
+	global $grid_storage;
+	if(!isset($grid_storage))
+	{
+		$user=wp_get_current_user();
+		$storage=new grid_db(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,$user->user_login);
+		$storage->ajaxEndpoint=new grid_wordpress_ajaxendpoint();
+		$storage->ajaxEndpoint->storage=$storage;
+		$storage->templatesPath=get_template_directory().'/grid/';
+		$grid_storage=$storage;	
+		
+	}
+	return $grid_storage;
 
 	
 }
