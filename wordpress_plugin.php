@@ -97,6 +97,7 @@ function grid_wp_activate()
 		update_option("grid_landing_page_enabled",true);
 		update_option("grid_sidebar_enabled",true);
 		update_option("grid_sidebar_post_type","sidebar");
+		update_option("grid_default_container","C-3-3-3-3");
 	}
 	else
 	{
@@ -171,6 +172,10 @@ function grid_wp_admin_init()
 	
 	add_settings_field("grid_sidebar_post_type","Which post type to use as sidebar content","grid_wp_sidebar_html","grid_settings","grid_post_types");
 	register_setting("grid_settings","grid_sidebar_post_type");
+	
+	add_settings_section("grid_default_container","New Grids","grid_wp_default_container_section","grid_settings");
+	add_settings_field("grid_default_container","Which container should be placed automatically","grid_wp_default_container_html","grid_settings","grid_default_container");
+	register_setting("grid_settings","grid_default_container");
 }
 add_action("admin_init","grid_wp_admin_init");
 
@@ -205,6 +210,34 @@ function grid_wp_sidebar_html()
 ?>
 </select>
 <?
+}
+
+function grid_wp_default_container_section()
+{
+	echo "";
+}
+
+function grid_wp_default_container_html()
+{
+	$storage=grid_wp_get_storage();
+	$containers=$storage->fetchContainerTypes();
+?>
+<select id="grid_default_container" name="grid_default_container">
+<option value="__NONE__">Empty</option>
+<?php
+	foreach($containers as $container)
+	{
+		$type=$container['type'];
+		if(strpos($type, "C-")===0)
+		{
+?>
+<option value="<?php echo $type?>" <?php echo (get_option('grid_default_container')==$type ? 'selected' : '')?> ><?php echo $type?></option>
+<?php
+		}
+	}
+?>
+</select>
+<?php
 }
 
 function grid_wp_add_meta_boxes()
@@ -260,6 +293,11 @@ function grid_wp_thegrid()
 	{
 		$storage=grid_wp_get_storage();
 		$id=$storage->createGrid();
+		$grid=$storage->loadGrid($id);
+		if(get_option('grid_default_container','__NONE__')!='__NONE__')
+		{
+			$grid->insertContainer(get_option('grid_default_container'),0);
+		}
 		$wpdb->query("insert into grid_nodes (nid,grid_id) values ($postid,$id)");
 		wp_redirect(add_query_arg(array('page'=>'grid','postid'=>$postid),admin_url('admin.php')));
 	}
