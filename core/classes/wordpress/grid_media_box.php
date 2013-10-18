@@ -27,7 +27,7 @@ class grid_media_box extends grid_static_base_box
 			if($editmode)
 			{
 				$metadata=wp_get_attachment_metadata($this->content->fileid);
-				$a_post.=" (".$file['file'].")";
+				$a_post.=" (".$metadata['file'].")";
 			}
 
 			$src = $url;
