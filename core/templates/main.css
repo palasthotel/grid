@@ -49,6 +49,7 @@ html{
 #grid-toolbar > [role=g-controls] > ul > li{
 	float:left;
 	margin-right:10px;
+	margin-bottom: 0px;
 }
 /** Toolbar Buttons **/
 #grid-toolbar button{

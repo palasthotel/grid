@@ -170,5 +170,16 @@ body.page-node-grid-preview #admin-menu-wrapper{
 	display:none;
 }
 
-
+/* CLEARFIX */
+.clearfix:before,
+.clearfix:after {
+    content:"";
+    display:table;
+}
+.clearfix:after {
+    clear:both;
+}
+.clearfix {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
 
