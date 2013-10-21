@@ -11,7 +11,7 @@ class grid_node_box extends grid_box {
 		$node=node_load($this->content->nid);
 		if($node==FALSE)
 		{
-			return "Node is lost";
+			return t("Node is lost");
 		}
 		if($editmode)
 		{

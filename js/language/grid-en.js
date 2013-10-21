@@ -18,6 +18,7 @@ document.lang_values = {
 		"draft": "Is draft..."
 	},
 	"default-style": "Default style",
+	"rev-by-author": "by",
 	// placeholder
 	"placeholder-search-box": "Search boxes",
 	// titles

@@ -18,6 +18,7 @@ document.lang_values = {
 		"draft": "Entwurf..."
 	},
 	"default-style": "Standard Style",
+	"rev-by-author": "von",
 	// placeholder
 	"placeholder-search-box": "Boxen suchen",
 	// titles

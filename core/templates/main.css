@@ -49,7 +49,6 @@ html{
 #grid-toolbar > [role=g-controls] > ul > li{
 	float:left;
 	margin-right:10px;
-	margin-bottom: 0px;
 }
 /** Toolbar Buttons **/
 #grid-toolbar button{
@@ -627,6 +626,12 @@ tr[role=revision] td{
 .container[class*=S] .c-reuse{
 	display: none !important;
 }
+.sidebar-grid .c-editor,
+.sidebar-grid .c-reuse,
+.sidebar-grid .c-sort-handle,
+.sidebar-grid .c-trash{
+	display:none !important;
+}
 /** Container inplace **/
 .container textarea, 
 .container input[type=number],
@@ -913,6 +918,9 @@ tr[role=revision] td{
 	display:block;
 	padding: 10px 0 0 0;
 }
+#box-editor .content fieldset input[type=checkbox]+label{
+	display: inline;
+}
 #box-editor .content fieldset input[text],
 #box-editor .content fieldset input[number],
 #box-editor .content fieldset textarea{
@@ -1025,12 +1033,15 @@ tr[role=revision] td{
 }
 .form-item.file-upload .progress{
 	position:absolute;
-	left: 240px;
-	top: 18px
+	left: 248px;
+	top: 28px
+}
+.form-item.file-upload input{
+	width:234px;
 }
 .progress-bar-wrapper{
 	height: 5px;
-	width: 210px;
+	width: 240px;
 }
 .progress-bar-wrapper .bar{
 	height: 100%;

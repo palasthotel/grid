@@ -224,8 +224,9 @@ $(function() {
 			[ID],
 			function(data){
 				console.log(data);
-				fillGrid(data.result);
 				IS_SIDEBAR = data.result.isSidebar;
+				if(IS_SIDEBAR) $grid.addClass('sidebar-grid');
+				fillGrid(data.result);
 				if(data.result.isSidebar == true){
 					console.log("is Sidebar");
 					$(".hide-from-sidebar").remove();
@@ -390,8 +391,15 @@ $(function() {
 				} else {
 					$toolbar.find('button[role=revisions]').show();
 					$.each(revisions, function(index, revision) {
-						var date = new Date(parseInt(revision["date"])*1000);
-						revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+						revision["readable_date"] = "--.--.----";
+						console.log("date:"+revision["date"]);
+						if(typeof revision["date"] != "undefined" && revision["date"] != "" && revision["date"] != null){
+							var date = new Date(parseInt(revision["date"])*1000);
+							revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+						}
+						if(typeof revision["editor"] == "undefined" || revision["editor"] == "" || revision["editor"] == null){
+							revision["editor"] = "unknown";
+						}
 					});
 					$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
 					// clickhander from $toolbar !
@@ -589,7 +597,7 @@ $(function() {
 		handle: ".c-sort-handle",
 		//axis: "y",
 		//cursor: "row-resize",
-		items:".container:not(.C-4)",
+		items:".container:not(.SC-4)",
 		placeholder: "c-sort-placeholder",
 		pullPlaceholder: true,
 		appendTo: $grid_wrapper ,
@@ -1734,6 +1742,8 @@ $(function() {
 		$body.on('structureChange'
 	*/
 	$grid.on("DOMSubtreeModified, structureChange", function(e, eventInfo) { 
+		if(IS_SIDEBAR) return;
+		console.log("sidebar calculation: "+IS_SIDEBAR);
 		// reset offsets
 		$grid.children(".container").css("margin-top", "0px");
 		$grid.find(".container[data-type*=S] .slot")
@@ -1781,6 +1791,7 @@ $(function() {
 	*	an array with the element types that can float next to the sidebar element
 	*/
 	function calculateSidebarableContainerHeight($container, floatablePermissionList){
+
 		var c_height = 0;
 		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
 			c_height += $container.outerHeight(true);
@@ -1798,7 +1809,7 @@ $(function() {
 		switch($sidebar.data("type")){
 			case "S-0-4":
 				return {"C-8-0":true,"C-4-4-0":true, 
-						"S-4-0":true, "C-0-4-0":true, 
+						"S-4-0":true, "C-0-4-0":true,
 						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 			case "S-4-0":

@@ -1,3 +1,9 @@
+<?php // Open Content Container Wrapper
+if ($this->firstcontentcontainer): ?>
+<div class="content-container-wrapper C-8-0 first-content-container">
+<?php endif; ?>
+
+
 <div class="container <?=$this->style?> <?=$this->type?> <?=implode($this->classes," ")?> clearfix btcf">
 
 	<div class="c-before">
@@ -29,3 +35,8 @@
 	</div>
 
 </div>
+
+<?php // Close Content Container Wrapper
+if ($this->lastcontentcontainer): ?>
+</div><!-- /.content-container-wrapper -->
+<?php endif; ?>

@@ -203,7 +203,7 @@ var revision_table_markup = '<tr role="revision" data-revision="${revision}" sta
 								'<td class="rev-revision">${revision}</td>'+
 								'<td class="rev-info">'+
 									'<span class="rev-date">${readable_date}</span><br/>'+
-									'von <span class="rev-editor">${editor}</span>'+
+									document.lang_values["rev-by-author"]+' <span class="rev-editor">${editor}</span>'+
 								'</td>'+
 								'<td class="rev-controls">'+
 								'{{if state == "draft"}}'+
