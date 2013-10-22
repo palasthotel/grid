@@ -25,12 +25,12 @@ class grid_sidebar_box extends grid_box
 			}
 			else
 			{
-				return "sidebar is lost.";
+				return t("Sidebar is lost.");
 			}
 		}
 		else
 		{
-			return "Sidebar not found or none set";
+			return t("Sidebar not found or none set");
 		}
 	}
 	
@@ -39,12 +39,12 @@ class grid_sidebar_box extends grid_box
 		$content = array(
 			array(
 				'key'=>'nodeid',
-				'label'=>'Sidebar',
+				'label'=>t('Sidebar'),
 				'type'=>'autocomplete-with-links',
 				'url'=>'/node/%/grid',
-				'linktext'=>'Edit Sidebar',
+				'linktext'=>t('Edit Sidebar'),
 				'emptyurl'=>'/node/add/'.variable_get('grid_sidebar',''),
-				'emptylinktext'=>'Create Sidebar',
+				'emptylinktext'=>t('Create Sidebar'),
 			),
 			array(
 				'key'=>'html',
