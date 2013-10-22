@@ -354,6 +354,7 @@ function grid_preview($node) {
 			drupal_add_css($base.'/core/templates/default-frontend.css',array('type'=>'file','group'=>CSS_DEFAULT));
 
 			$storage=grid_get_storage();
+			global $theme_path;
 			$storage->templatesPath=$theme_path.'/grid/';
 			$grid=$storage->loadGrid($grid_id);
 			return $grid->render(FALSE);
