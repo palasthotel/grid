@@ -390,8 +390,15 @@ $(function() {
 				} else {
 					$toolbar.find('button[role=revisions]').show();
 					$.each(revisions, function(index, revision) {
-						var date = new Date(parseInt(revision["date"])*1000);
-						revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+						revision["readable_date"] = "--.--.----";
+						console.log("date:"+revision["date"]);
+						if(typeof revision["date"] != "undefined" && revision["date"] != "" && revision["date"] != null){
+							var date = new Date(parseInt(revision["date"])*1000);
+							revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+						}
+						if(typeof revision["editor"] == "undefined" || revision["editor"] == "" || revision["editor"] == null){
+							revision["editor"] = "unknown";
+						}
 					});
 					$revisions.find("table").append($.tmpl( "revisionTableTemplate", revisions ));
 					// clickhander from $toolbar !
