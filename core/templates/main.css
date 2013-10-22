@@ -626,6 +626,12 @@ tr[role=revision] td{
 .container[class*=S] .c-reuse{
 	display: none !important;
 }
+.sidebar-grid .c-editor,
+.sidebar-grid .c-reuse,
+.sidebar-grid .c-sort-handle,
+.sidebar-grid .c-trash{
+	display:none !important;
+}
 /** Container inplace **/
 .container textarea, 
 .container input[type=number],

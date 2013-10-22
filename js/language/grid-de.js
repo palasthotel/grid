@@ -19,7 +19,6 @@ document.lang_values = {
 	},
 	"default-style": "Standard Style",
 	"rev-by-author": "von",
-	"rev-by-author": "by",
 	// placeholder
 	"placeholder-search-box": "Boxen suchen",
 	// titles
