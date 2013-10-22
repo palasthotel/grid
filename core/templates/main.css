@@ -1057,6 +1057,9 @@ tr[role=revision] td{
 	margin-left: 5px;
 	margin-right: 5px;
 }
+.dynamic-list .list-fields + button{
+	margin: 10px 0 20px 0;
+}
 .dynamic-list li{
 	border-top: 1px solid #e0e0e0;
 	padding: 5px 0px  10px 10px;

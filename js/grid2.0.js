@@ -392,7 +392,6 @@ $(function() {
 					$toolbar.find('button[role=revisions]').show();
 					$.each(revisions, function(index, revision) {
 						revision["readable_date"] = "--.--.----";
-						console.log("date:"+revision["date"]);
 						if(typeof revision["date"] != "undefined" && revision["date"] != "" && revision["date"] != null){
 							var date = new Date(parseInt(revision["date"])*1000);
 							revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
@@ -1743,7 +1742,6 @@ $(function() {
 	*/
 	$grid.on("DOMSubtreeModified, structureChange", function(e, eventInfo) { 
 		if(IS_SIDEBAR) return;
-		console.log("sidebar calculation: "+IS_SIDEBAR);
 		// reset offsets
 		$grid.children(".container").css("margin-top", "0px");
 		$grid.find(".container[data-type*=S] .slot")
