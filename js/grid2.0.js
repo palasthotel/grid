@@ -356,6 +356,7 @@ $(function() {
 	* Revision Tools
 	* ------------------------------ */
 	function revertGrid(){
+		if(!confirm(lang_values["confirm-grid-revert"])) return;
 		$grid.fadeOut('fast');
 		sendAjax(
 			"revertDraft", 
@@ -1118,7 +1119,7 @@ $(function() {
 					alert(lang_values["err-box-reuse-sidebar"]);
 					return;
 				}
-				if(!confirm(lang_values["prom-box-reuse"])) return;
+				if(!confirm(lang_values["confirm-box-reuse"])) return;
 				makeBoxReusable();
 				break;
 		}
@@ -1906,7 +1907,7 @@ $(function() {
 	/** TODO: buggy because every backspace is tracked
 	$body.keydown(function(event) {
 		if (event.keyCode == 8){
-			if(!confirm(lang_values["prom-leave-page"])){
+			if(!confirm(lang_values["confirm-leave-page"])){
 				return false;
 			}
 		}

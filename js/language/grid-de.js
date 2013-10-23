@@ -54,8 +54,10 @@ document.lang_values = {
 	//prompt
 	"prom_container_reuse_title": "Wenn der Container Wiederverwendbar gemacht wurde, kann ich in diesem Grid nicht mehr bearbeitet werden. "+
 								"Bitte Verwaltungstitel eingeben und bestätigen:",
-	"prom-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren?",
-	"prom-leave-page": "Grid wirklich verlassen?",
+	// confirm
+	"confirm-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren?",
+	"confirm-leave-page": "Grid wirklich verlassen?",
+	"confirm-grid-revert": "Alle Änderungen verwerfen?",
 
 	"info-wp-hide-adminbar": "Hier kannst du das Menü ein und ausklappen. Grid brauht viel Platz und fährt es deshalb automatisch ein."
 };

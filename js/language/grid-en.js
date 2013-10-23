@@ -54,8 +54,10 @@ document.lang_values = {
 	//prompt
 	"prom_container_reuse_title": "Once a container is reusable you cannot modify it within this grid anymore. "+
 								"If you want to proceed choose a REUSE-TITLE and confirm:",
-	"prom-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed?",
-	"prom-leave-page": "Do you really want to leave Grid?",
+	// confirm
+	"confirm-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed?",
+	"confirm-leave-page": "Do you really want to leave Grid?",
+	"confirm-grid-revert": "Delete all changes?",
 
 	"info-wp-hide-adminbar": "You can expand the admin menu again here. Grid needs space so admin menu is automatically collapsed."
 };
