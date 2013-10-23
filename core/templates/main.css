@@ -962,6 +962,9 @@ tr[role=revision] td{
 	color: #333;
 	text-shadow: 0 1px 0 #fff;
 }
+#box-editor.sidebar button[role=reusable]{
+	display:none;
+}
 /*
 * Autocomplete Boxtype
 */

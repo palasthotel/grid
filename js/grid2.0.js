@@ -1113,7 +1113,12 @@ $(function() {
 				updateBox();
 				break;
 			case "reusable":
-				if(!confirm("Once a box is reusable you cannot modify it within this grid anymore.\nProceed?")) return;
+				console.log($box_editor_content.children().data("type"));
+				if($box_editor_content.children().data("type") == "sidebar"){
+					alert(lang_values["err-box-reuse-sidebar"]);
+					return;
+				}
+				if(!confirm(lang_values["prom-box-reuse"])) return;
 				makeBoxReusable();
 				break;
 		}
