@@ -38,7 +38,7 @@ class grid_container extends grid_base {
 		$slots = array();
 		$slotstyle = explode("-", $this->type);
 		
-		if($this->type[0]=='S' && $editmode==FALSE)
+		if(strpos($this->type, "S-")===0 && $editmode==FALSE)
 		{
 			$slot=$this->slots[0];
 			//$style="sidebar ".$this->type." slot-first slot-last has-one-box";

@@ -69,7 +69,7 @@ class grid_sidebar_box extends grid_box
 			return array(array('key'=>-1,'value'=>'invalid key'));
 		}
 		$results=array();
-		$query=new WP_Query(array('post_type'=>grid_get_option('grid_sidebar_post_type','sidebar')));
+		$query=new WP_Query(array('post_type'=>get_option('grid_sidebar_post_type','sidebar')));
 		while($query->have_posts())
 		{
 			$query->the_post();

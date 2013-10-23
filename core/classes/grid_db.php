@@ -663,7 +663,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$slot->slotid=$slotid;
 			$slot->storage=$this;
 			$container->slots[]=$slot;
-			if($containertype[0]=='S')
+			if(strpos($containertype, "S-")===0)
 			{
 				$box=new grid_sidebar_box();
 				$box->storage=$this;

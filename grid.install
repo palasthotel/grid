@@ -615,3 +615,8 @@ function grid_update_7104($sandbox)
 	db_query("alter table {grid_grid} add column author varchar(255)");
 	db_query("alter table {grid_grid} add column revision_date INT(10)");
 }
+
+function grid_update_7105($sandbox)
+{
+	db_query("update {grid_container_type} set type='SC-4' where type='C-4'");
+}
