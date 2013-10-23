@@ -289,7 +289,10 @@ function grid_get_storage()
 	$conn=Database::getConnection();
 	$opts=$conn->getConnectionOptions();
 	global $user;
-	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database'],$user->name);
+	$username="UNDEFINED";
+	if(isset($user->name))
+		$username=$user->name;
+	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database'],$username);
 	global $theme_path;
 	$storage->templatesPath=$theme_path.'/grid/';
 	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
