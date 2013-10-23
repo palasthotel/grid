@@ -356,6 +356,7 @@ $(function() {
 	* Revision Tools
 	* ------------------------------ */
 	function revertGrid(){
+		if(!confirm(lang_values["confirm-grid-revert"])) return;
 		$grid.fadeOut('fast');
 		sendAjax(
 			"revertDraft", 
@@ -392,7 +393,6 @@ $(function() {
 					$toolbar.find('button[role=revisions]').show();
 					$.each(revisions, function(index, revision) {
 						revision["readable_date"] = "--.--.----";
-						console.log("date:"+revision["date"]);
 						if(typeof revision["date"] != "undefined" && revision["date"] != "" && revision["date"] != null){
 							var date = new Date(parseInt(revision["date"])*1000);
 							revision["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
@@ -1114,7 +1114,12 @@ $(function() {
 				updateBox();
 				break;
 			case "reusable":
-				if(!confirm("Once a box is reusable you cannot modify it within this grid anymore.\nProceed?")) return;
+				console.log($box_editor_content.children().data("type"));
+				if($box_editor_content.children().data("type") == "sidebar"){
+					alert(lang_values["err-box-reuse-sidebar"]);
+					return;
+				}
+				if(!confirm(lang_values["confirm-box-reuse"])) return;
 				makeBoxReusable();
 				break;
 		}
@@ -1543,6 +1548,12 @@ $(function() {
 	var boxAutocompleteTimeout;	
 	function boxAutocompleteSearch($input){
 		clearTimeout(boxAutocompleteTimeout);
+		if($input.val() == ""){
+			old_search_string = $input.val();
+			$input.siblings('.loading').hide();
+			$input.siblings(".suggestion-list").empty();
+			return;
+		}
 		boxAutocompleteTimeout = setTimeout(function(){
 			$data = $box_editor_content.find(".box-editor");
 			sendAjax(
@@ -1743,7 +1754,6 @@ $(function() {
 	*/
 	$grid.on("DOMSubtreeModified, structureChange", function(e, eventInfo) { 
 		if(IS_SIDEBAR) return;
-		console.log("sidebar calculation: "+IS_SIDEBAR);
 		// reset offsets
 		$grid.children(".container").css("margin-top", "0px");
 		$grid.find(".container[data-type*=S] .slot")
@@ -1897,7 +1907,7 @@ $(function() {
 	/** TODO: buggy because every backspace is tracked
 	$body.keydown(function(event) {
 		if (event.keyCode == 8){
-			if(!confirm(lang_values["prom-leave-page"])){
+			if(!confirm(lang_values["confirm-leave-page"])){
 				return false;
 			}
 		}

@@ -46,6 +46,7 @@ document.lang_values = {
 	"err_box_trash": "Konnte Box nicht entfernen.",
 	"err_move_container": "Der Container konnte nicht verschoben werden. Seite lädt neu!",
 	"err-move-box": "Fehler beim umsortieren der Box! ",
+	"err-box-reuse-sidebar": "Sidebarboxen können nicht wiederverwendbar gemacht werden.",
 	// warnings: nothing went wrong, but please do it another way
 	"warn_container_edited": "Bitte zuerst den Container zu Ende bearbeiten.",
 	"warn_container_reuse_need_title": "Der Container braucht einen Titel um Wiederverwendbar zu werden.",
@@ -53,7 +54,10 @@ document.lang_values = {
 	//prompt
 	"prom_container_reuse_title": "Wenn der Container Wiederverwendbar gemacht wurde, kann ich in diesem Grid nicht mehr bearbeitet werden. "+
 								"Bitte Verwaltungstitel eingeben und bestätigen:",
-	"prom-leave-page": "Grid wirklich verlassen?",
+	// confirm
+	"confirm-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren?",
+	"confirm-leave-page": "Grid wirklich verlassen?",
+	"confirm-grid-revert": "Alle Änderungen verwerfen?",
 
 	"info-wp-hide-adminbar": "Hier kannst du das Menü ein und ausklappen. Grid brauht viel Platz und fährt es deshalb automatisch ein."
 };

@@ -962,6 +962,9 @@ tr[role=revision] td{
 	color: #333;
 	text-shadow: 0 1px 0 #fff;
 }
+#box-editor.sidebar button[role=reusable]{
+	display:none;
+}
 /*
 * Autocomplete Boxtype
 */
@@ -1056,6 +1059,9 @@ tr[role=revision] td{
 	border-right: 1px solid #ccc;
 	margin-left: 5px;
 	margin-right: 5px;
+}
+.dynamic-list .list-fields + button{
+	margin: 10px 0 20px 0;
 }
 .dynamic-list li{
 	border-top: 1px solid #e0e0e0;
