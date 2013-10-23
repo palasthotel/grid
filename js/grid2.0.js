@@ -1542,6 +1542,12 @@ $(function() {
 	var boxAutocompleteTimeout;	
 	function boxAutocompleteSearch($input){
 		clearTimeout(boxAutocompleteTimeout);
+		if($input.val() == ""){
+			old_search_string = $input.val();
+			$input.siblings('.loading').hide();
+			$input.siblings(".suggestion-list").empty();
+			return;
+		}
 		boxAutocompleteTimeout = setTimeout(function(){
 			$data = $box_editor_content.find(".box-editor");
 			sendAjax(
