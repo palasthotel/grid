@@ -49,7 +49,7 @@ class grid_media_box extends grid_static_base_box
 			array(
 				'key' => 'url',
 				'type' => 'text',
-				'label' => t('URL (optional)'),
+				'label' => t('Hyperlink-URL (optional)'),
 			),
 		);
 	}
