@@ -47,6 +47,8 @@ document.lang_values = {
 	"err_move_container": "Could not move containers. Site will reload!",
 	"err-move-box": "Error while moving box!",
 	"err-box-reuse-sidebar": "Sidebar boxes are not allowed for reuse.",
+	"err-box-reuse": "Could not make box reusable. Please reload the page and try again.",
+	"err-box-save": "Could not save the box. Please reload the page and try again.",
 	// warnings: nothing went wrong, but please do it another way
 	"warn_container_edited": "Please finish container editing first.",
 	"warn_container_reuse_need_title": "The container needs a title to be reusable. Please try again.",
