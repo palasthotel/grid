@@ -56,7 +56,7 @@ class grid_db {
 		$cloneid=$row['id'];
 		$cloneid++;
 		
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->author.",UNIX_TIMESTAMP() from grid_grid where id=$gridid";
+		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from grid_grid where id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
 		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid from grid_container where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);

@@ -47,6 +47,8 @@ document.lang_values = {
 	"err_move_container": "Der Container konnte nicht verschoben werden. Seite lädt neu!",
 	"err-move-box": "Fehler beim umsortieren der Box! ",
 	"err-box-reuse-sidebar": "Sidebarboxen können nicht wiederverwendbar gemacht werden.",
+	"err-box-reuse": "Die Box konnte nicht wiederverwendbar gemacht werden. Seite bitte neu laden.",
+	"err-box-save": "Die Box konnte nicht gespeichert werden. Seite bitte neu laden.",
 	// warnings: nothing went wrong, but please do it another way
 	"warn_container_edited": "Bitte zuerst den Container zu Ende bearbeiten.",
 	"warn_container_reuse_need_title": "Der Container braucht einen Titel um Wiederverwendbar zu werden.",

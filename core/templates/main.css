@@ -906,6 +906,10 @@ tr[role=revision] td{
 #box-editor .content{
 	padding: 10px 10px 10px 0;
 }
+#box-editor .content .loading{
+	margin-top: 6px;
+	position:relative;
+}
 #box-editor .content fieldset{
 	position: relative;
 	margin-bottom:10px;

@@ -1135,11 +1135,15 @@ $(function() {
 					$grid.find(".container[data-reused=false] .box[data-id="+params["b_id"]+"]").replaceWith(buildBox(data.result));
 					showGrid(data.result.id);
 					destroyCKEDITORs();
+				},
+				function(){
+					throwError(lang_values["err-box-reusable"]);
 				}
 			);
 		});
 	}
 	function updateBox(afterSuccess){
+		setBoxEditorLoading(true);
 		$data = $box_editor_content.find(".box-editor");
 		style = $data.find("[name=f-b-style]").val();
 		if(style == "") style = null;
@@ -1171,6 +1175,10 @@ $(function() {
 				showGrid($data.data("id"));
 				destroyCKEDITORs();
 				isDraft();
+				setBoxEditorLoading(true);
+			},
+			function(){
+				throwError(lang_values["err-box-save"]);
 			});
 	}
 
@@ -1222,6 +1230,7 @@ $(function() {
 		b_index = $this.parents(".box").index();
 		console.log("edit!-------------------");
 		showBoxEditor();
+		setBoxEditorLoading(true);
 		sendAjax(
 			"fetchBox",
 			[ID,c_id,s_id,b_index],
@@ -1247,6 +1256,7 @@ $(function() {
 							}
 						);
 				});
+				setBoxEditorLoading(false);
 			});
 	});
 	function makeDynamicFields(contentstructure, content, lvl, cs_path){
@@ -1659,6 +1669,13 @@ $(function() {
 			$box_editor.animate({width:"100%"},250);
 			window.scrollTo(0, 0);
 		},50);
+	}
+	function setBoxEditorLoading(is_loading){
+		if(is_loading){
+			$box_editor_content.prepend('<div class="loading">');
+		} else {
+			$box_editor_content.children('.loading').remove();
+		}
 	}
 	$box_editor_content.on("click","legend",function(ev){
 		$(this).siblings(".field-wrapper").slideToggle(300);
