@@ -643,9 +643,11 @@ add_filter('the_content','grid_wp_render');
 
 function grid_wp_head()
 {
+	//echo '<link rel="stylesheet" href="'.plugins_url()."/grid/core/templates/default-frontend.css".'" media="all">';
 	wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
 }
 add_action("wp_head","grid_wp_head");
+//add_filter("wp_head", "grid_wp_head");
 function grid_wp_ckeditor_config()
 {
 	$styles=array();
