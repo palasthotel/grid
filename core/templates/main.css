@@ -1083,6 +1083,20 @@ tr[role=revision] td{
 	width:100%;
 }
 
+/** Container C-6-6 **/
+.C-6-6{
+	
+}
+.C-6-6 .slot{
+	width:49.5%;
+	float:right;
+}
+.C-6-6 .slot:first-child{
+	margin-right: 1%;
+	float:left;
+}
+
+
 /** Container C-4-4-4 **/
 .C-4-4-4{
 }
