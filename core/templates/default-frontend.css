@@ -28,6 +28,12 @@
 	width:100%;
 }
 
+/** Container C-6-6 **/
+.C-6-6 .slot{
+	width:50%;
+	float:left;
+}
+
 /** Container C-4-4-4 **/
 .C-4-4-4 .slot{
 	width:33.333%;
