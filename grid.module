@@ -27,15 +27,18 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 	{
 		$return=parent::loadGrid($gridid);
 		$nid=grid_get_nid_by_gridid($gridid);
-		$node=node_load($nid);
-		$type=$node->type;
-		if($type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
+		if(is_numeric($nid))
 		{
-			$return['isSidebar']=TRUE;
-		}
-		else
-		{
-			$return['isSidebar']=FALSE;
+			$node=node_load($nid);
+			$type=$node->type;
+			if($type==variable_get('grid_sidebar','sidebars_disabled_i_just_have_to_ensure_no_nodetype_is_called_like_this_lets_hope_no_one_is_ever_that_crazy'))
+			{
+				$return['isSidebar']=TRUE;
+			}
+			else
+			{
+				$return['isSidebar']=FALSE;
+			}
 		}
 		return $return;
 	}
