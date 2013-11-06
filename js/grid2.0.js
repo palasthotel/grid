@@ -1372,6 +1372,43 @@ $(function() {
 									.attr("data-path",cs_path+element.key)
 									.attr('data-key', element.key);
 						$dynamic_field.append($input);
+						/*
+						var frame = wp.media({
+	                        title : 'Pic image',
+	                        multiple : false,
+	                        library : { type : 'image'},
+	                        button : { text : 'Use' },
+	                    });
+	                    frame.on('close',function() {
+	                        // get selections and save to hidden input plus other AJAX stuff etc.
+	                        var selection = frame.state().get('selection');
+	                        console.log(frame);
+	                        console.log(selection._byId);
+	                    });
+	                    frame.on('open',function() {
+	                        var selection = frame.state().get('selection');
+	                        console.log("open");
+	                        console.log(selection);
+	                        //Get ids array from
+	                        
+	                    });
+	                    frame.on('select', function(a,b,c){
+	                    	console.log("select");
+	                    	console.log(frame.state());
+	                    	console.log(frame.state().get('selection')._byId);
+	                    	pop
+	                    	$.each(frame.state().get('selection')._byId, function(id, val) {
+	                    		console.log("entry");
+	                    		console.log(id);
+	                    		console.log(val.id);	
+	                    	});
+	                    });
+	                    $upload_btn.click(function(){
+	                    	frame.open();
+	                    	return false;
+	                    });
+						*/
+						
 						$upload_btn.click(function(e) {
 						    var send_attachment_bkp = wp.media.editor.send.attachment;
 						    var $button = $(this);
@@ -1384,9 +1421,15 @@ $(function() {
 						    	};
 						    	$button.siblings('.dynamic-value').val(JSON.stringify(r_json));
 						    }
+						    
 						    wp.media.editor.open($button);
 						    return false;
 					  	});
+						window.send_to_editor = function(html){
+					    	console.log("Link SENT");
+					    	console.log(html);
+					    }
+					    
 					break;
 				case "hidden":
 					$dynamic_field.append(
