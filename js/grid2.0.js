@@ -1360,7 +1360,7 @@ $(function() {
 					// TODO: Boell #715
 					break;
 				case "wp-mediaselect":
-						var _orig_send_attachment = wp.media.editor.send.attachment;
+						
 						var $upload_btn = $("<button class='upload_image_button'>"+lang_values["btn-wp-media"]+"</button>");
 						$dynamic_field.append("<label>"+element.label+"</label>");
 						$dynamic_field.append($upload_btn);
@@ -1372,43 +1372,65 @@ $(function() {
 									.attr("data-path",cs_path+element.key)
 									.attr('data-key', element.key);
 						$dynamic_field.append($input);
-						/*
-						var frame = wp.media({
-	                        title : 'Pic image',
-	                        multiple : false,
-	                        library : { type : 'image'},
-	                        button : { text : 'Use' },
-	                    });
-	                    frame.on('close',function() {
-	                        // get selections and save to hidden input plus other AJAX stuff etc.
-	                        var selection = frame.state().get('selection');
-	                        console.log(frame);
-	                        console.log(selection._byId);
-	                    });
-	                    frame.on('open',function() {
-	                        var selection = frame.state().get('selection');
-	                        console.log("open");
-	                        console.log(selection);
-	                        //Get ids array from
-	                        
-	                    });
-	                    frame.on('select', function(a,b,c){
-	                    	console.log("select");
-	                    	console.log(frame.state());
-	                    	console.log(frame.state().get('selection')._byId);
-	                    	pop
-	                    	$.each(frame.state().get('selection')._byId, function(id, val) {
-	                    		console.log("entry");
-	                    		console.log(id);
-	                    		console.log(val.id);	
-	                    	});
-	                    });
-	                    $upload_btn.click(function(){
-	                    	frame.open();
-	                    	return false;
-	                    });
-						*/
 						
+						$upload_btn.click(function(){
+							$button = $(this);
+							var frame = wp.media({
+		                        title : 'Pic image',
+		                        multiple : false,
+		                        library : { type : 'image'},
+		                        button : { text : 'Use' },
+		                    });
+		                    frame.on('open',function() {
+		                        var selection = frame.state().get('selection');
+		                        console.log("open");
+		                        val = JSON.parse($button.siblings(".dynamic-value").val())
+		                        console.log(this);
+		                        console.log(selection);
+		                        //Get ids array from
+		                        attachment = wp.media.attachment(val.id);
+		                        selection.add( attachment ? [ attachment ] : [] );	                        
+		                    });
+		                    frame.on('close',function() {
+		                    	console.log("close");
+		                        // get selections and save to hidden input plus other AJAX stuff etc.
+		                        var selection = frame.state().get('selection');
+		                        console.log(frame);
+		                        console.log(selection._byId);
+
+		                        $.each(frame.state().get('selection')._byId, function(id, val) {
+		                    		console.log("entry");
+		                    		console.log(id);
+		                    		console.log(val.id);
+		                    		var r_json = {
+							    		"id": val.id,
+							    		"size": ""
+							    	};
+							    	$button.siblings('.dynamic-value').val(JSON.stringify(r_json));
+		                    		return false;
+		                    	});
+		                    });
+		                    frame.open();
+	                    	return false;
+		                    /*
+		                    frame.on('select', function(){
+		                    	console.log("select");
+		                    	console.log(frame.state());
+		                    	console.log(frame.state().get('selection')._byId);
+		                    	
+		                    	$.each(frame.state().get('selection')._byId, function(id, val) {
+		                    		console.log("entry");
+		                    		console.log(id);
+		                    		console.log(val.id);
+		                    		return false;
+		                    	});
+		                    });
+	                    	*/
+	                    	
+	                    });
+						
+						/*
+						var _orig_send_attachment = wp.media.editor.send.attachment;
 						$upload_btn.click(function(e) {
 						    var send_attachment_bkp = wp.media.editor.send.attachment;
 						    var $button = $(this);
@@ -1429,6 +1451,7 @@ $(function() {
 					    	console.log("Link SENT");
 					    	console.log(html);
 					    }
+					    */
 					    
 					break;
 				case "hidden":
