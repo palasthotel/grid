@@ -25,6 +25,7 @@ document.lang_values = {
 	"title-tab-containers": "New containers",
 	"title-tab-sidebars": "Sidebars",
 	"title-tab-reuse-container": "Reusable containers",
+	"title-wp-media": "Choose an image",
 	// editor labels
 	"label-title": "Title:",
 	"label-title-url": "Title URL:",
