@@ -207,8 +207,8 @@ class grid_db {
 		grid_box_type.type box_type
 		
 		from ".$this->prefix."grid_box
-		left join ".$this->prefix."grid_box_style on grid_box_style.id=grid_box.style
-		left join ".$this->prefix."grid_box_type on grid_box_type.id=grid_box.type
+		left join ".$this->prefix."grid_box_style grid_box_style on grid_box_style.id=grid_box.style
+		left join ".$this->prefix."grid_box_type grid_box_type on grid_box_type.id=grid_box.type
 		where grid_id=-1 and grid_revision=0 and grid_box.id=$boxid";
 		$result=$this->connection->query($query) or die($query."\n".$this->connection->error);
 		$row=$result->fetch_assoc();
@@ -235,7 +235,7 @@ class grid_db {
 	
 	public function getReusedBoxIds()
 	{
-		$query="select content from ".$this->prefix."grid_box left join ".$this->prefix."grid_box_type on grid_box.type=grid_box_type.id where grid_box_type.type='reference'";
+		$query="select content from ".$this->prefix."grid_box left join ".$this->prefix."grid_box_type grid_box_type on grid_box.type=grid_box_type.id where grid_box_type.type='reference'";
 		$result=$this->connection->query($query);
 		$usedIds=array();
 		while($row=$result->fetch_assoc())
@@ -316,31 +316,31 @@ grid_box.readmore_url as box_readmoreurl,
 grid_box_type.type as box_type,
 grid_box_style.slug as box_style
 from ".$this->prefix."grid_container 
-left join ".$this->prefix."grid_container_style 
+left join ".$this->prefix."grid_container_style grid_container_style
      on grid_container.style=grid_container_style.id
-left join ".$this->prefix."grid_container2slot 
+left join ".$this->prefix."grid_container2slot grid_container2slot
      on grid_container.id=grid_container2slot.container_id
      and grid_container.grid_id=grid_container2slot.grid_id
      and grid_container.grid_revision=grid_container2slot.grid_revision
-left join ".$this->prefix."grid_slot
+left join ".$this->prefix."grid_slot grid_slot
      on grid_container2slot.slot_id=grid_slot.id
      and grid_slot.grid_id=grid_container.grid_id
      and grid_slot.grid_revision=grid_container.grid_revision
-left join ".$this->prefix."grid_slot_style
+left join ".$this->prefix."grid_slot_style grid_slot_style
      on grid_slot.style=grid_slot_style.id
-left join ".$this->prefix."grid_slot2box 
+left join ".$this->prefix."grid_slot2box grid_slot2box
      on grid_container2slot.slot_id=grid_slot2box.slot_id
      and grid_container2slot.grid_id=grid_slot2box.grid_id
      and grid_container2slot.grid_revision=grid_slot2box.grid_revision
-left join ".$this->prefix."grid_box 
+left join ".$this->prefix."grid_box grid_box
      on grid_slot2box.box_id=grid_box.id
      and grid_slot2box.grid_id=grid_box.grid_id
      and grid_slot2box.grid_revision=grid_box.grid_revision
-left join ".$this->prefix."grid_container_type 
+left join ".$this->prefix."grid_container_type grid_container_type
 	 on grid_container.type=grid_container_type.id
-left join ".$this->prefix."grid_box_type 
+left join ".$this->prefix."grid_box_type grid_box_type
 	 on grid_box.type=grid_box_type.id
-left join ".$this->prefix."grid_box_style
+left join ".$this->prefix."grid_box_style grid_box_style
 	 on grid_box.style=grid_box_style.id
 where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_container.id=$container
 ";
@@ -428,35 +428,35 @@ grid_box.readmore_url as box_readmoreurl,
 grid_box_type.type as box_type,
 grid_box_style.slug as box_style
 from ".$this->prefix."grid_grid2container 
-left join ".$this->prefix."grid_container 
+left join ".$this->prefix."grid_container grid_container
      on container_id=grid_container.id 
      and grid_container.grid_id=grid_grid2container.grid_id 
      and grid_container.grid_revision=grid_grid2container.grid_revision
-left join ".$this->prefix."grid_container_style 
+left join ".$this->prefix."grid_container_style grid_container_style
      on grid_container.style=grid_container_style.id
-left join ".$this->prefix."grid_container2slot 
+left join ".$this->prefix."grid_container2slot grid_container2slot
      on grid_container.id=grid_container2slot.container_id
      and grid_container.grid_id=grid_container2slot.grid_id
      and grid_container.grid_revision=grid_container2slot.grid_revision
-left join ".$this->prefix."grid_slot
+left join ".$this->prefix."grid_slot grid_slot
      on grid_container2slot.slot_id=grid_slot.id
      and grid_slot.grid_id=grid_grid2container.grid_id
      and grid_slot.grid_revision=grid_grid2container.grid_revision
-left join ".$this->prefix."grid_slot_style
+left join ".$this->prefix."grid_slot_style grid_slot_style
      on grid_slot.style=grid_slot_style.id
-left join ".$this->prefix."grid_slot2box 
+left join ".$this->prefix."grid_slot2box grid_slot2box
      on grid_container2slot.slot_id=grid_slot2box.slot_id
      and grid_container2slot.grid_id=grid_slot2box.grid_id
      and grid_container2slot.grid_revision=grid_slot2box.grid_revision
-left join ".$this->prefix."grid_box 
+left join ".$this->prefix."grid_box grid_box
      on grid_slot2box.box_id=grid_box.id
      and grid_slot2box.grid_id=grid_box.grid_id
      and grid_slot2box.grid_revision=grid_box.grid_revision
-left join ".$this->prefix."grid_container_type 
+left join ".$this->prefix."grid_container_type  grid_container_type
 	 on grid_container.type=grid_container_type.id
-left join ".$this->prefix."grid_box_type 
+left join ".$this->prefix."grid_box_type grid_box_type
 	 on grid_box.type=grid_box_type.id
-left join ".$this->prefix."grid_box_style
+left join ".$this->prefix."grid_box_style grid_box_style
 	 on grid_box.style=grid_box_style.id
 where grid_grid2container.grid_id=$gridId and grid_grid2container.grid_revision=$revision
 order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.weight;";
@@ -982,8 +982,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		readmore_url as box_readmoreurl,
 		content as box_content
 		from ".$this->prefix."grid_box
-		left join ".$this->prefix."grid_box_type on grid_box.type=grid_box_type.id
-		left join ".$this->prefix."grid_box_style on grid_box.style=grid_box_style.id ";
+		left join ".$this->prefix."grid_box_type grid_box_type on grid_box.type=grid_box_type.id
+		left join ".$this->prefix."grid_box_style grid_box_style on grid_box.style=grid_box_style.id ";
 		$query.="where grid_box.id=$boxId";
 		$result=$this->connection->query($query) or die($this->connection->error);
 		$row=$result->fetch_assoc();
