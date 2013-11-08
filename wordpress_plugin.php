@@ -20,7 +20,7 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint
 	{
 		global $wpdb;
 		$return=parent::loadGrid($gridid);
-		$rows=$wpdb->get_results("select nid from grid_nodes where grid_id=$gridid");
+		$rows=$wpdb->get_results("select nid from ".$wpdb->prefix."grid_nodes where grid_id=$gridid");
 		$post=get_post($rows[0]->nid);
 		$type=$post->post_type;
 		if($type==get_option('grid_sidebar_post_type'))
@@ -316,7 +316,7 @@ function grid_wp_thegrid()
 	global $wpdb;
 //	$storage=grid_wp_get_storage();
 	$postid=$_GET['postid'];
-	$rows=$wpdb->get_results("select grid_id from grid_nodes where nid=$postid");
+	$rows=$wpdb->get_results("select grid_id from ".$wpdb->prefix."grid_nodes where nid=$postid");
 	if(!empty($_POST))
 	{
 		$storage=grid_wp_get_storage();
@@ -331,7 +331,7 @@ function grid_wp_thegrid()
 		{
 			$grid->insertContainer(get_option('grid_default_container'),0);
 		}
-		$wpdb->query("insert into grid_nodes (nid,grid_id) values ($postid,$id)");
+		$wpdb->query("insert into ".$wpdb->prefix."grid_nodes (nid,grid_id) values ($postid,$id)");
 		wp_redirect(add_query_arg(array('page'=>'grid','postid'=>$postid),admin_url('admin.php')));
 	}
 	if(count($rows)==0)
@@ -586,7 +586,7 @@ function grid_wp_ajax()
 function grid_wp_get_grid_by_postid($postid)
 {
 	global $wpdb;
-	$rows=$wpdb->get_results("select grid_id from grid_nodes where nid=$postid");
+	$rows=$wpdb->get_results("select grid_id from ".$wpdb->prefix."grid_nodes where nid=$postid");
 	if(count($rows)>0)
 	{
 		return $rows[0]->grid_id;
@@ -600,7 +600,7 @@ function grid_wp_load($post)
 	$postid=$post->ID;
 	if(get_option('grid_'.$post->post_type.'_enabled',FALSE))
 	{
-		$rows=$wpdb->get_results("select grid_id from grid_nodes where nid=$postid");
+		$rows=$wpdb->get_results("select grid_id from ".$wpdb->prefix."grid_nodes where nid=$postid");
 		if(count($rows)>0)
 		{
 			$grid_id=$rows[0]->grid_id;

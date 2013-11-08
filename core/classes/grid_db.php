@@ -25,7 +25,7 @@ class grid_db {
 		$row=$result->fetch_assoc();
 		$id=$row['id'];
 		$id++;
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
+		$query="insert into ".$this->prefix."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
 		$this->connection->query($query);
 		return $id;
 	}
@@ -58,19 +58,19 @@ class grid_db {
 		$cloneid=$row['id'];
 		$cloneid++;
 		
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from ".$this->prefix."grid_grid where id=$gridid";
+		$query="insert into ".$this->prefix."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from ".$this->prefix."grid_grid where id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
-		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid from ".$this->prefix."grid_container where grid_id=$gridid";
+		$query="insert into ".$this->prefix."grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid from ".$this->prefix."grid_container where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
-		$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight) select $cloneid,grid_revision,container_id,weight from ".$this->prefix."grid_grid2container where grid_id=$gridid";
+		$query="insert into ".$this->prefix."grid_grid2container (grid_id,grid_revision,container_id,weight) select $cloneid,grid_revision,container_id,weight from ".$this->prefix."grid_grid2container where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
-		$query="insert into grid_slot (id,grid_id,grid_revision,style) select id,$cloneid,grid_revision,style from ".$this->prefix."grid_slot where grid_id=$gridid";
+		$query="insert into ".$this->prefix."grid_slot (id,grid_id,grid_revision,style) select id,$cloneid,grid_revision,style from ".$this->prefix."grid_slot where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
-		$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) select container_id,$cloneid,grid_revision,slot_id,weight from ".$this->prefix."grid_container2slot where grid_id=$gridid";
+		$query="insert into ".$this->prefix."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) select container_id,$cloneid,grid_revision,slot_id,weight from ".$this->prefix."grid_container2slot where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
-		$query="insert into grid_box (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content from ".$this->prefix."grid_box where grid_id=$gridid";
+		$query="insert into ".$this->prefix."grid_box (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content) select id,$cloneid,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content from ".$this->prefix."grid_box where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
-		$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) select slot_id,$cloneid,grid_revision,box_id,weight from ".$this->prefix."grid_slot2box where grid_id=$gridid";
+		$query="insert into ".$this->prefix."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) select slot_id,$cloneid,grid_revision,box_id,weight from ".$this->prefix."grid_slot2box where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
 		return $this->loadGrid($cloneid);
 	}
@@ -180,7 +180,7 @@ class grid_db {
 			return $grid;
 		}
 		//if we end up here there is no reuse grid yet.
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values (-1,0,0,0,0,0,'',0)";
+		$query="insert into ".$this->prefix."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values (-1,0,0,0,0,0,'',0)";
 		$this->connection->query($query) or die($this->connection->error);
 		$grid=new grid_grid();
 		$grid->gridid=-1;
@@ -206,7 +206,7 @@ class grid_db {
 		grid_box_style.slug box_style,
 		grid_box_type.type box_type
 		
-		from ".$this->prefix."grid_box
+		from ".$this->prefix."grid_box grid_box
 		left join ".$this->prefix."grid_box_style grid_box_style on grid_box_style.id=grid_box.style
 		left join ".$this->prefix."grid_box_type grid_box_type on grid_box_type.id=grid_box.type
 		where grid_id=-1 and grid_revision=0 and grid_box.id=$boxid";
@@ -315,7 +315,7 @@ grid_box.readmore as box_readmore,
 grid_box.readmore_url as box_readmoreurl,
 grid_box_type.type as box_type,
 grid_box_style.slug as box_style
-from ".$this->prefix."grid_container 
+from ".$this->prefix."grid_container grid_container
 left join ".$this->prefix."grid_container_style grid_container_style
      on grid_container.style=grid_container_style.id
 left join ".$this->prefix."grid_container2slot grid_container2slot
@@ -427,7 +427,7 @@ grid_box.readmore as box_readmore,
 grid_box.readmore_url as box_readmoreurl,
 grid_box_type.type as box_type,
 grid_box_style.slug as box_style
-from ".$this->prefix."grid_grid2container 
+from ".$this->prefix."grid_grid2container grid_grid2container
 left join ".$this->prefix."grid_container grid_container
      on container_id=grid_container.id 
      and grid_container.grid_id=grid_grid2container.grid_id 
@@ -460,7 +460,7 @@ left join ".$this->prefix."grid_box_style grid_box_style
 	 on grid_box.style=grid_box_style.id
 where grid_grid2container.grid_id=$gridId and grid_grid2container.grid_revision=$revision
 order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.weight;";
-		$result=$this->connection->query($query);
+		$result=$this->connection->query($query) or die($query);
 		$currentcontainer=NULL;
 		$currentslot=NULL;
 
@@ -639,7 +639,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$id=$nextid['next_containerid'];
 		$query="update grid_grid set next_containerid=next_containerid+1 where id=$gridid and revision=$gridrevision";
 		$this->connection->query($query);
-		$query="insert into grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
+		$query="insert into ".$this->prefix."grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
 		$this->connection->query($query) or die($this->connection->error);
 		$container=new grid_container();
 		$container->grid=$grid;
@@ -655,9 +655,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$row=$result->fetch_assoc();
 			$slotid=$row['next_slotid'];
 			$this->connection->query("update grid_grid set next_slotid=next_slotid+1 where id=$gridid and revision=$gridrevision");
-			$query="insert into grid_slot (id,grid_id,grid_revision) values ($slotid,$gridid,$gridrevision)";
+			$query="insert into ".$this->prefix."grid_slot (id,grid_id,grid_revision) values ($slotid,$gridid,$gridrevision)";
 			$this->connection->query($query) or die($query."\n".$this->connection->error);
-			$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
+			$query="insert into ".$this->prefix."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
 			$this->connection->query($query) or die($query."\n".$this->connection->error);
 
 			$slot=new grid_slot();
@@ -684,7 +684,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$i=1;
 		foreach($grid->container as $cnt)
 		{
-			$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight) values (".$grid->gridid.",".$grid->gridrevision.",".$cnt->containerid.",".$i.")";
+			$query="insert into ".$this->prefix."grid_grid2container (grid_id,grid_revision,container_id,weight) values (".$grid->gridid.",".$grid->gridrevision.",".$cnt->containerid.",".$i.")";
 			$this->connection->query($query) or die($this->connection->error);
 			$i++;
 		}
@@ -698,7 +698,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$i=1;
 		foreach($slot->boxes as $box)
 		{
-			$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$slot->slotid.",".$grid->gridid.",".$grid->gridrevision.",".$box->boxid.",$i)";
+			$query="insert into ".$this->prefix."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$slot->slotid.",".$grid->gridid.",".$grid->gridrevision.",".$box->boxid.",$i)";
 			$this->connection->query($query) or die($this->connection->error);
 			$i++;
 		}
@@ -711,29 +711,29 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$row=$result->fetch_assoc();
 		$newrevision=$row['revision'];
 		$newrevision=$newrevision+1;
-		$query="insert into grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select id,$newrevision,0,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from ".$this->prefix."grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
+		$query="insert into ".$this->prefix."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select id,$newrevision,0,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from ".$this->prefix."grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid)
+		$query="insert into ".$this->prefix."grid_container (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,reuse_containerid)
 		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url, reuse_containerid from ".$this->prefix."grid_container
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_grid2container (grid_id,grid_revision,container_id,weight)
+		$query="insert into ".$this->prefix."grid_grid2container (grid_id,grid_revision,container_id,weight)
 		select grid_id,$newrevision,container_id,weight from ".$this->prefix."grid_grid2container
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_slot (id,grid_id,grid_revision,style) 
+		$query="insert into ".$this->prefix."grid_slot (id,grid_id,grid_revision,style) 
 		select id,grid_id,$newrevision,style from ".$this->prefix."grid_slot
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight)
+		$query="insert into ".$this->prefix."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight)
 		select container_id,grid_id,$newrevision,slot_id,weight from ".$this->prefix."grid_container2slot
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_box (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content)
+		$query="insert into ".$this->prefix."grid_box (id,grid_id,grid_revision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content)
 		select id,grid_id,$newrevision,type,style,title,title_url,prolog,epilog,readmore,readmore_url,content from ".$this->prefix."grid_box
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
-		$query="insert into grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) 
+		$query="insert into ".$this->prefix."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) 
 		select slot_id,grid_id,$newrevision,box_id,weight from ".$this->prefix."grid_slot2box
 		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
 		$this->connection->query($query);
@@ -883,7 +883,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$row=$result->fetch_assoc();
 		if(!isset($row['id']))
 		{
-			$insertquery="insert into grid_box_type (type) values ('".$box->type()."')";
+			$insertquery="insert into ".$this->prefix."grid_box_type (type) values ('".$box->type()."')";
 			$this->connection->query($insertquery);
 			$result=$this->connection->query($query);
 			$row=$result->fetch_assoc();
@@ -898,7 +898,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$query="update grid_grid set next_boxid=next_boxid+1 where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
 			$this->connection->query($query) or die($this->connection->error);
 			
-			$query="insert into grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content,style) values 
+			$query="insert into ".$this->prefix."grid_box (id,grid_id,grid_revision,type,title,title_url,prolog,epilog,readmore,readmore_url,content,style) values 
 			(".$row['next_boxid'].",".$box->grid->gridid.",".$box->grid->gridrevision.",".$type."
 			,'".$this->saveStr($box->title)."','".$this->saveStr($box->titleurl)."','".$this->saveStr($box->prolog)."','".$this->saveStr($box->epilog)."'
 			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".$this->saveStr(json_encode($box->content))."',".$styleid.")";
