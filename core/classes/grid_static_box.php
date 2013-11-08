@@ -53,7 +53,7 @@ class grid_static_base_box extends grid_static_box {
 		return 'static_base';
 	}
 	
-	public function build()
+	public function build($editmode)
 	{
 		
 	}
