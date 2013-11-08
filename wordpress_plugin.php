@@ -48,6 +48,7 @@ function db_query($querystring)
 
 function grid_wp_activate()
 {
+	global $wpdb;
 	global $grid_connection;
 	$options=get_option("grid",array());
 	if(!isset($options['installed']))
@@ -56,7 +57,7 @@ function grid_wp_activate()
 		$grid_connection=new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 		foreach($schema as $tablename=>$data)
 		{
-			$query="create table $tablename (";
+			$query="create table ".$wpdb->prefix."$tablename (";
 			$first=TRUE;
 			foreach($data['fields'] as $fieldname=>$fielddata)
 			{
@@ -287,6 +288,7 @@ $grid_loaded=FALSE;
 
 function grid_wp_get_storage()
 {
+	global $wpdb;
 	global $grid_loaded;
 	if(!$grid_loaded)
 	{
@@ -297,7 +299,7 @@ function grid_wp_get_storage()
 	if(!isset($grid_storage))
 	{
 		$user=wp_get_current_user();
-		$storage=new grid_db(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,$user->user_login);
+		$storage=new grid_db(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,$user->user_login,$wpdb->prefix);
 		$storage->ajaxEndpoint=new grid_wordpress_ajaxendpoint();
 		$storage->ajaxEndpoint->storage=$storage;
 		$storage->templatesPath=get_template_directory().'/grid/';
