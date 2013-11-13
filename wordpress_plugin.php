@@ -269,19 +269,27 @@ function grid_wp_add_meta_boxes()
 	{
 		if(get_option("grid_".$key."_enabled",FALSE))
 		{
-			add_meta_box("grid",__("Grid"),"grid_wp_meta_box");
-		}
-	}
+			add_meta_box("grid",__("Grid"),"grid_wp_meta_box",$key);
+		} 
+ 	}
 }
 
 add_action("add_meta_boxes","grid_wp_add_meta_boxes");
 
 function grid_wp_meta_box($post)
 {
+	if(get_option("grid_".$post->post_type."_enabled",FALSE))
+	{
+	
 	$url=add_query_arg(array('page'=>'grid','postid'=>$post->ID),admin_url('admin.php'));
 ?>
 <a href="<?php echo $url?>">Switch to the Grid</a>
 <?php
+	}
+	else
+	{
+		return FALSE;
+	}
 }
 
 $grid_loaded=FALSE;
