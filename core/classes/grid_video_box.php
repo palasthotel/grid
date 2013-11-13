@@ -11,6 +11,8 @@ class grid_video_box extends grid_static_base_box
 	{
 		$this->content=new Stdclass();
 		$this->content->url='';
+		$this->content->title = 0;
+		$this->content->related=0;
 		$this->content->html='';
 	}
 
@@ -35,6 +37,16 @@ class grid_video_box extends grid_static_base_box
 				'type'=>'text',
 			),
 			array(
+				'key'=>'title',
+				'label' => t('Display title'),
+				'type'=>'checkbox',
+			),
+			array(
+				'key'=>'related',
+				'label'=>t('Display related videos at the end (YouTube)'),
+				'type'=>'checkbox',
+			),
+			array(
 				'key'=>'html',
 				'type'=>'hidden',
 			),
@@ -49,7 +61,19 @@ class grid_video_box extends grid_static_base_box
 			$result=parse_url($this->content->url);
 			if(preg_match("/\w*?\.youtube\./um", $result['host']))
 			{
-				$url="http://www.youtube.com/oembed?url=".urlencode($this->content->url)."&amp;format=json";
+				$url_show_info = "&showinfo=";
+				if($this->content->title){
+					$url_show_info.="1";
+				} else {
+					$url_show_info.="0";
+				}
+				$url_related = "&rel=";
+				if($this->content->related){
+					$url_related.="1";
+				} else {
+					$url_related.="0";
+				}
+				$url="http://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -58,13 +82,25 @@ class grid_video_box extends grid_static_base_box
 				$result=json_decode($result);
 				$html=$result->html;
 				// prevents flash bug in Firefox (no playback on click)
-				$html=str_replace('feature=oembed', 'feature=oembed&amp;wmode=transparent&amp;html5=1', $html);
+				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1'.$url_related.$url_show_info, $html);
 				$this->content->html=$html;
 			}
 			else if(preg_match("/youtu\.be/um", $result['host']) )
 			{
+				$url_show_info = "&showinfo=";
+				if($this->content->title){
+					$url_show_info.="1";
+				} else {
+					$url_show_info.="0";
+				}
+				$url_related = "&rel=";
+				if($this->content->related){
+					$url_related.="1";
+				} else {
+					$url_related.="0";
+				}
 				$parts = explode("/", $this->content->url);
-				$url="http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&amp:format=json";
+				$url="http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -73,12 +109,25 @@ class grid_video_box extends grid_static_base_box
 				$result=json_decode($result);
 				$html=$result->html;
 				// prevents flash bug in Firefox (no playback on click)
-				$html=str_replace('feature=oembed', 'feature=oembed&amp;wmode=transparent&amp;html5=1', $html);
+				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1'.$url_related.$url_show_info, $html);
 				$this->content->html=$html;
 			}
 			else if(preg_match("/(\w*?\.)?vimeo\./um", $result['host']))
 			{
-				$url="http://vimeo.com/api/oembed.json?url=".urlencode($this->content->url);
+				$url_need_title = "&title=";
+				$url_need_byline = "&byline=";
+				$url_need_portrait = "&portrait=";
+				if($this->content->title){
+					$url_need_title.="true";
+					$url_need_byline.="true";
+					$url_need_portrait.="true";
+				} else {
+					$url_need_title.="false";
+					$url_need_byline.="false";
+					$url_need_portrait.="false";
+				}
+
+				$url="http://vimeo.com/api/oembed.json?url=".urlencode($this->content->url).$url_need_title.$url_need_byline.$url_need_portrait;
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request, CURLOPT_HEADER, FALSE);
