@@ -925,7 +925,7 @@ function grid_add_css(){
 	$base=drupal_get_path('module','grid');
 	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
 	global $language;
-	if($language->direction == 0){
+	if($language->direction == 1){
 		drupal_add_css($base.'/core/templates/rtl.css',array('type'=>'file','group'=>CSS_THEME));
 	}
 }
