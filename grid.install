@@ -536,6 +536,7 @@ function grid_install()
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-8',2)"); 
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-2-2-2-2',6)"); 
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-3-3-3-3',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6',2)");
 	db_query("insert into {grid_container_type} (type,numslots) values ('SC-4',1)"); 
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-4',2)"); 
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-0',2)"); 
