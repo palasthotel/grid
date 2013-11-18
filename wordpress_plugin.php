@@ -39,7 +39,8 @@ function t($str){return $str;}
 
 function db_query($querystring)
 {
-	$querystring=str_replace("{", "", $querystring);
+	global $wpdb;
+	$querystring=str_replace("{", $wpdb->prefix, $querystring);
 	$querystring=str_replace("}", "", $querystring);
 	global $grid_connection;
 	$grid_connection->query($querystring) or die($grid_connection->error);
@@ -48,6 +49,7 @@ function db_query($querystring)
 
 function grid_wp_activate()
 {
+	static $secondCall=FALSE;
 	global $wpdb;
 	global $grid_connection;
 	$options=get_option("grid",array());
@@ -126,7 +128,7 @@ function grid_wp_activate()
 		//TODO: implement update support
 	}
 }
-add_action("activate_grid/wordpress_plugin.php","grid_wp_activate");
+register_activation_hook(__FILE__,"grid_wp_activate");
 
 function grid_wp_init()
 {
@@ -370,22 +372,22 @@ document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'gr
 document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
 </script>
 
-<script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
+<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.tmpl.min.js">
+<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/<?php echo $jslang;?>">
+<script src="<?php echo plugins_url($jslang,__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/templates.js">
+<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.iframe-transport.js">
+<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.fileupload.js">
+<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
 </script>
 
-<script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
+<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
 </script>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 require "core/templates/editor.html.tpl.php";
 	}
@@ -426,7 +428,7 @@ function grid_wp_reuse_boxes()
 		$grid->container[]=$container;
 	}
 ?>
-<link rel=stylesheet href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<link rel=stylesheet href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 	echo $grid->render(TRUE);
 }
@@ -450,22 +452,22 @@ document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid
 document.previewurl="";
 </script>
 
-<script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
+<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.tmpl.min.js">
+<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/<?php echo $jslang;?>">
+<script src="<?php echo plugins_url($jslang,__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/templates.js">
+<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.iframe-transport.js">
+<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.fileupload.js">
+<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
 </script>
 
-<script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
+<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
 </script>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 require "core/templates/editor.html.tpl.php";
 }
@@ -521,7 +523,7 @@ function grid_wp_reuse_containers()
 	}
 	
 ?>
-<link rel=stylesheet href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<link rel=stylesheet href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 	echo $grid->render(TRUE);
 }
@@ -545,22 +547,22 @@ document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid
 document.previewurl="";
 </script>
 
-<script src="<?php echo plugins_url();?>/grid/js/jquery-ui-1.10.2.custom.js">
+<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.tmpl.min.js">
+<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/<?php echo $jslang;?>">
+<script src="<?php echo plugins_url($jslang,__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/templates.js">
+<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.iframe-transport.js">
+<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url();?>/grid/js/jquery.fileupload.js">
+<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
 </script>
 
-<script src="<?php echo plugins_url();?>/grid/js/grid2.0.js">
+<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
 </script>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url();?>/grid/core/templates/main.css">
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 require "core/templates/editor.html.tpl.php";
 }
@@ -660,7 +662,7 @@ function grid_wp_head()
 	}
 	else
 	{
-		wp_enqueue_style("grid_frontend",plugins_url()."/grid/core/templates/default-frontend.css");
+		wp_enqueue_style("grid_frontend",plugins_url('core/templates/default-frontend.css',__FILE__));
 	}
 }
 add_action("wp_enqueue_scripts","grid_wp_head");
