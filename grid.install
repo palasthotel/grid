@@ -621,3 +621,7 @@ function grid_update_7105($sandbox)
 {
 	db_query("update {grid_container_type} set type='SC-4' where type='C-4'");
 }
+function grid_update_7106($sandbox)
+{
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6',2)");
+}
