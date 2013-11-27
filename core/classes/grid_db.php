@@ -588,6 +588,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$reuse=$this->getReuseGrid();
 		$copy=$this->createContainer($reuse,$container->type);
 		if($copy===FALSE)die("copy failed");
+		$copy->update($container);
 		for($i=0;$i<count($container->slots);$i++)
 		{
 			$newslot=$copy->slots[$i];
