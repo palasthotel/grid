@@ -49,7 +49,7 @@ class grid_image_box extends grid_static_base_box
 		$styles = array(
 				array("text" => "- ".t("Original")." -", "key" => ""),
 			);
-		foreach (image_styles() as $key => $style) {
+		foreach (grid_image_styles() as $key => $style) {
 			$styles[] = array("text" => $key, "key" => $key );
 		}
 		return array(

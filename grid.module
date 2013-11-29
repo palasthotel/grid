@@ -698,7 +698,33 @@ function grid_admin_settings()
 		}
 	}
 	
+	$form['imagestyles']=array(
+		'#type'=>'fieldset',
+		'#title'=>'Image styles to be used on grids'
+	);
+	foreach(image_styles() as $key=>$style)
+	{
+		$form['imagestyles']['grid_imagestyle_'.$key.'_enabled']=array(
+			'#type'=>'checkbox',
+			'#default_value'=>variable_get('grid_imagestyle_'.$key.'_enabled',1),
+			'#title'=>$key
+		);
+	}
+	
 	return system_settings_form($form);
+}
+
+function grid_image_styles()
+{
+	$results=array();
+	foreach(image_styles() as $key=>$style)
+	{
+		if(variable_get('grid_imagestyle_'.$key.'_enabled',1))
+		{
+			$results[$key]=$style;
+		}
+	}
+	return $results;
 }
 
 function grid_viewmodes()
