@@ -969,6 +969,16 @@ tr[role=revision] td{
 #box-editor.sidebar button[role=reusable]{
 	display:none;
 }
+#box-editor .dynamic-field p.info{
+	margin-top: 4px;
+	background-color: #efefef;
+	padding: 8px;
+}
+#box-editor .dynamic-field[data-type=info] p.info{
+	margin-top: 0px;
+	background-color: #fff;
+	padding: 0px;
+}
 /*
 * Autocomplete Boxtype
 */

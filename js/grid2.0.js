@@ -1519,8 +1519,16 @@ $(function() {
 						});
 					}).appendTo($dynamic_field);
 					break;
+				case "info":
+					$dynamic_field.append('<label>'+element.label+'</label>');
+					$dynamic_field.append('<p class="info">'+element.text+'</p>');
+					console.log("INFO ADDED");
+					break;
 				default:
 					console.log("unbekannter typ: "+element.type);
+			}
+			if(element.info != null && element.info != ""){
+				$dynamic_field.append('<p class="info">'+element.info+'</p>');
 			}
 			$dynamic_fields.append($dynamic_field);
 		});

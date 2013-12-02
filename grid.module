@@ -697,7 +697,7 @@ function grid_admin_settings()
 			);
 		}
 	}
-	
+
 	$form['imagestyles']=array(
 		'#type'=>'fieldset',
 		'#title'=>'Image styles to be used on grids'
@@ -710,6 +710,12 @@ function grid_admin_settings()
 			'#title'=>$key
 		);
 	}
+
+	$form['grid_imagestyles_info']=array(
+		'#type'=>'textarea',
+		'#title'=>'Info to the imagestyles',
+		'#default_value' => variable_get("grid_imagestyles_info"),
+	);
 	
 	return system_settings_form($form);
 }
