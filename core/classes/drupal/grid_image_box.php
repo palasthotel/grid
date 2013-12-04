@@ -69,7 +69,7 @@ class grid_image_box extends grid_static_base_box
 				'type' => 'select',
 				'label' => t('Image style'), 
 				'selections'=>$styles,
-				'info' => nl2br(variable_get("grid_imagestyles_info")),
+				'info' => nl2br(t(variable_get("grid_imagestyles_info"))),
 			),
 		);
 	}
