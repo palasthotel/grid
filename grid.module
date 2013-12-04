@@ -321,6 +321,7 @@ function grid_grid($node) {
 			drupal_add_js("document.ID=".$grid_id,'inline');
 			drupal_add_js("document.gridmode=\"grid\";",'inline');
 			drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
+			drupal_add_js("document.gridajax='".url('grid_ajax_endpoint')."';",'inline');
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 
@@ -799,6 +800,7 @@ function grid_reuse_box_edit($boxid)
 	$base=drupal_get_path('module','grid');
 	drupal_add_js("document.ID=\"box:".$boxid."\";",'inline');
 	drupal_add_js("document.gridmode=\"box\";",'inline');
+	drupal_add_js("document.gridajax='".url('grid_ajax_endpoint')."';",'inline');
 	drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
@@ -921,6 +923,7 @@ function grid_reuse_container_edit($containerid)
 	$base=drupal_get_path('module','grid');
 	drupal_add_js("document.ID=\"container:".$containerid."\";",'inline');
 	drupal_add_js("document.gridmode=\"container\";",'inline');
+	drupal_add_js("document.gridajax='".url('grid_ajax_endpoint')."';",'inline');
 	drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 	drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
