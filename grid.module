@@ -896,9 +896,12 @@ function grid_form_styles_submit($form,&$form_state)
 {
 	foreach($form_state['values']['container_styles'] as $idx=>$data)
 	{
-		if(!isset($data['delete']) && !empty($data['slug']) && !empty($data['style']))
+		if(!isset($data['delete']))
 		{
-			db_insert("grid_container_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+			if(!empty($data['slug']) && !empty($data['style']))
+			{
+				db_insert("grid_container_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+			}
 		}
 		else if($data['delete'])
 		{
@@ -913,9 +916,12 @@ function grid_form_styles_submit($form,&$form_state)
 	}
 	foreach($form_state['values']['slot_styles'] as $idx=>$data)
 	{
-		if(!isset($data['delete']) && !empty($data['slug']) && !empty($data['style']))
+		if(!isset($data['delete']))
 		{
-			db_insert("grid_slot_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+			if(!empty($data['slug']) && !empty($data['style']))
+			{
+				db_insert("grid_slot_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+			}
 		}
 		else if($data['delete'])
 		{
@@ -930,9 +936,12 @@ function grid_form_styles_submit($form,&$form_state)
 	}
 	foreach($form_state['values']['box_styles'] as $idx=>$data)
 	{
-		if(!isset($data['delete']) && !empty($data['slug']) && !empty($data['style']))
+		if(!isset($data['delete']))
 		{
-			db_insert("grid_box_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+			if(!empty($data['slug']) && !empty($data['style']))
+			{
+				db_insert("grid_box_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+			}
 		}
 		else if($data['delete'])
 		{
