@@ -168,6 +168,13 @@ function grid_menu() {
 			'access arguments'=>array('administer grid'),
 			'type'=>MENU_CALLBACK,
 		),
+		'admin/config/grid/styles'=>array(
+			'title'=>t('Styles'),
+			'description'=>t('Manages container, slot and box styles'),
+			'page callback'=>'grid_manage_styles',
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_NORMAL_ITEM,
+		),
 		'grid_ajax_endpoint'=>array(
 			'title'=>'Grid AJAX Endpoint',
 			'page callback'=>'grid_ajax',
@@ -217,7 +224,10 @@ function grid_theme()
 		'grid_editor' => array(
 			'variables' => array('ckeditor_path'=>array()),
 			'template' => 'core/templates/editor.html',
-		)
+		),
+		'grid_form_table_theme'=>array(
+			'render element' =>'element'
+		),
 	);
 
 }
@@ -752,6 +762,189 @@ function grid_viewmodes()
 function grid_default_viewmode()
 {
 	return variable_get('grid_default_viewmode','teaser');
+}
+
+function grid_manage_styles()
+{
+	return drupal_get_form('grid_form_styles');
+}
+
+function grid_form_styles($form,&$form_state) {
+
+	$form['container']=array(
+		'#type'=>'fieldset',
+		'#title'=>t('Container'),
+	);
+	$form['container']['container_styles']=array(
+		'#tree'=>TRUE,
+		'#theme'=>'grid_form_table_theme'
+	);
+	
+	$styles=db_select("grid_container_style","style")->fields("style",array("id","style","slug"))->orderBy('id')->execute();
+	while($style=$styles->fetchObject())
+	{
+		$form['container']['container_styles'][$style->id]['slug']=array(
+			'#type'=>'textfield',
+			'#default_value'=>$style->slug
+		);
+		$form['container']['container_styles'][$style->id]['style']=array(
+			'#type'=>'textfield',
+			'#default_value'=>$style->style,
+		);
+		$form['container']['container_styles'][$style->id]['delete']=array(
+			'#type'=>'checkbox',
+			'#default_value'=>FALSE,
+		);
+	}
+	$form['container']['container_styles'][]=array(
+		'style'=>array('#type'=>'textfield'),
+		'slug'=>array('#type'=>'textfield'),
+	);
+	
+	$form['slots']=array(
+		'#type'=>'fieldset',
+		'#title'=>t('Slots'),
+	);
+	$form['slots']['slot_styles']=array(
+		'#tree'=>TRUE,
+		'#theme'=>'grid_form_table_theme'
+	);
+	
+	$styles=db_select("grid_slot_style","style")->fields("style",array("id","style","slug"))->orderBy("id")->execute();
+	while($style=$styles->fetchObject())
+	{
+		$form['slots']['slot_styles'][$style->id]['slug']=array(
+			'#type'=>'textfield',
+			'#default_value'=>$style->slug
+		);
+		$form['slots']['slot_styles'][$style->id]['style']=array(
+			'#type'=>'textfield',
+			'#default_value'=>$style->style,
+		);
+		$form['slots']['slot_styles'][$style->id]['delete']=array(
+			'#type'=>'checkbox',
+			'#default_value'=>FALSE,
+		);
+	}
+	$form['slots']['slot_styles'][]=array(
+		'style'=>array('#type'=>'textfield'),
+		'slug'=>array('#type'=>'textfield'),
+	);
+
+	$form['boxes']=array(
+		'#type'=>'fieldset',
+		'#title'=>t('Boxes'),
+	);
+	$form['boxes']['box_styles']=array(
+		'#tree'=>TRUE,
+		'#theme'=>'grid_form_table_theme',
+	);
+	$styles=db_select("grid_box_style","style")->fields("style",array("id","style","slug"))->orderBy("id")->execute();
+	while($style=$styles->fetchObject())
+	{
+		$form['boxes']['box_styles'][$style->id]['slug']=array(
+			'#type'=>'textfield',
+			'#default_value'=>$style->slug
+		);
+		$form['boxes']['box_styles'][$style->id]['style']=array(
+			'#type'=>'textfield',
+			'#default_value'=>$style->style,
+		);
+		$form['boxes']['box_styles'][$style->id]['delete']=array(
+			'#type'=>'checkbox',
+			'#default_value'=>FALSE,
+		);
+	}
+	$form['boxes']['box_styles'][]=array(
+		'style'=>array('#type'=>'textfield'),
+		'slug'=>array('#type'=>'textfield'),
+	);
+
+	
+	$form['submit']=array(
+		'#type'=>'submit',
+		'#value'=>t('Save'),
+	);
+	return $form;
+}
+
+function theme_grid_form_table_theme($vars)
+{
+	$element = $vars['element'];
+	$header=array(
+		'slug'=>t('slug'),
+		'style'=>t('style'),
+		'delete'=>t('Delete'),
+	);
+	$rows=array();
+	foreach(element_children($element) as $key)
+	{
+		$row=array();
+		$row['data']=array();
+		foreach($header as $fieldname =>$title)
+		{
+			$row['data'][]=drupal_render($element[$key][$fieldname]);
+		}
+		$rows[]=$row;
+	}
+	return theme('table',array(
+		'header'=>$header,
+		'rows'=>$rows));
+}
+
+function grid_form_styles_submit($form,&$form_state)
+{
+	foreach($form_state['values']['container_styles'] as $idx=>$data)
+	{
+		if(!isset($data['delete']) && !empty($data['slug']) && !empty($data['style']))
+		{
+			db_insert("grid_container_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+		}
+		else if($data['delete'])
+		{
+			db_delete("grid_container_style")->where('id=:id',array('id'=>$idx))->execute();
+		}
+		else
+		{
+			db_update("grid_container_style")
+			->fields(array('slug'=>$data['slug'],'style'=>$data['style']))
+			->where('id=:id',array('id'=>$idx))->execute();
+		}
+	}
+	foreach($form_state['values']['slot_styles'] as $idx=>$data)
+	{
+		if(!isset($data['delete']) && !empty($data['slug']) && !empty($data['style']))
+		{
+			db_insert("grid_slot_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+		}
+		else if($data['delete'])
+		{
+			db_delete("grid_slot_style")->where('id=:id',array('id'=>$idx))->execute();
+		}
+		else
+		{
+			db_update("grid_slot_style")
+			->fields(array('slug'=>$data['slug'],'style'=>$data['style']))
+			->where('id=:id',array('id'=>$idx))->execute();
+		}
+	}
+	foreach($form_state['values']['box_styles'] as $idx=>$data)
+	{
+		if(!isset($data['delete']) && !empty($data['slug']) && !empty($data['style']))
+		{
+			db_insert("grid_box_style")->fields(array('slug'=>$data['slug'],'style'=>$data['style']))->execute();
+		}
+		else if($data['delete'])
+		{
+			db_delete("grid_box_style")->where('id=:id',array('id'=>$idx))->execute();
+		}
+		else
+		{
+			db_update("grid_box_style")
+			->fields(array('slug'=>$data['slug'],'style'=>$data['style']))
+			->where('id=:id',array('id'=>$idx))->execute();
+		}
+	}
 }
 
 function grid_reuse_boxes()
