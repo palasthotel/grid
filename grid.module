@@ -905,6 +905,7 @@ function grid_form_styles_submit($form,&$form_state)
 		}
 		else if($data['delete'])
 		{
+			db_query("update {grid_container} set style=null where style=?",array($idx));
 			db_delete("grid_container_style")->where('id=:id',array('id'=>$idx))->execute();
 		}
 		else
@@ -925,6 +926,7 @@ function grid_form_styles_submit($form,&$form_state)
 		}
 		else if($data['delete'])
 		{
+			db_query("update {grid_slot} set style=null where style=?",array($idx));
 			db_delete("grid_slot_style")->where('id=:id',array('id'=>$idx))->execute();
 		}
 		else
@@ -945,6 +947,7 @@ function grid_form_styles_submit($form,&$form_state)
 		}
 		else if($data['delete'])
 		{
+			db_query("update {grid_box} set style=null where style=?",array($idx));
 			db_delete("grid_box_style")->where('id=:id',array('id'=>$idx))->execute();
 		}
 		else
