@@ -1902,6 +1902,10 @@ $(function() {
 						"S-0-4":true, "C-0-4-0":true, 
 						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
+			case "S-0-6":
+				return {"C-12-0":true, "C-4-4-4-0":true, "C-6-6-0":true, "C-3-3-3-3-0":true,
+						"c-sort-placeholder": true, "container-drop-area-wrapper": true };
+				break;
 		}
 		return {};
 	}

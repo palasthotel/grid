@@ -625,3 +625,21 @@ function grid_update_7106($sandbox)
 {
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6',2)");
 }
+function grid_update_7107($sandbox)
+{
+	// 18 grid
+	//full width
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-18',1)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6-6',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-12-6',2)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6-6',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4-6',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-3-3-3-3-3-3',6)");
+	// with sidebar
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-12-0',1)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4-0',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6-0',2)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('C-3-3-3-3-0',4)");
+	// sidebar
+	db_query("insert into {grid_container_type} (type,numslots) values ('S-0-6',1)");
+}
