@@ -42,6 +42,16 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 		}
 		return $return;
 	}
+	
+	public function publishDraft($gridid)
+	{
+		$result=parent::publishDraft($gridid);
+		if($result)
+		{
+			module_invoke_all('grid_published',grid_get_nid_by_gridid($gridid));
+		}
+		return $result;
+	}
 }
 
 function grid_preprocess_html(&$vars) {

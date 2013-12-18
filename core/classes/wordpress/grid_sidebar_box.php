@@ -62,7 +62,7 @@ class grid_sidebar_box extends grid_box
 		return $content;
 	}
 	
-	public function performElementSearch($key,$query)
+	public function performElementSearch($key,$querystr)
 	{
 		if($key!='postid')
 		{
@@ -74,7 +74,7 @@ class grid_sidebar_box extends grid_box
 		{
 			$query->the_post();
 			$post=get_post();
-			if(strstr($post->post_title,$query)!==FALSE)
+			if(is_numeric(strpos($post->post_title,$querystr)))
 			{
 				$results[]=array('key'=>$post->ID,'value'=>$post->post_title);
 			}
