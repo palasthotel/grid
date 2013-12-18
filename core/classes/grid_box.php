@@ -28,6 +28,7 @@ class grid_box extends grid_base {
 		$content=$this->build($editmode);
 		ob_start();
 		$found=FALSE;
+		$this->classes[] = "grid-box-".$this->type();
 		if($this->storage->templatesPath!=NULL)
 		{
 			if(file_exists($this->storage->templatesPath.'/box-'.$this->type().'.tpl.php'))
