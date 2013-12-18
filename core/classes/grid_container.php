@@ -98,7 +98,8 @@ class grid_container extends grid_base {
 	}
 	
 	public function is_content_container(){
-		if($this->type == "C-8-0" or $this->type == "C-4-4-0"){
+		if($this->type == "C-8-0" || $this->type == "C-4-4-0" 
+			|| $this->type == "C-12-0" || $this->type == "C-6-6-0" || $this->type == "C-4-4-4-0" || $this->type == "C-3-3-3-3-0"){
 			$this->iscontentcontainer = true;
 			return true;
 		}else{
