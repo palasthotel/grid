@@ -643,3 +643,9 @@ function grid_update_7107($sandbox)
 	// sidebar
 	db_query("insert into {grid_container_type} (type,numslots) values ('S-0-6',1)");
 }
+function grid_update_7108($sandbox)
+{
+	// 18 grid
+	// sidebar platzhalter
+	db_query("insert into {grid_container_type} (type,numslots) values ('SC-6',1)");
+}

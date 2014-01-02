@@ -167,6 +167,21 @@ function grid_wp_admin_menu()
 }
 add_action("admin_menu","grid_wp_admin_menu");
 
+function grid_wp_admin_bar()
+{
+	global $wp_admin_bar;
+	global $post;
+	if(isset($post->grid))
+	{
+		$wp_admin_bar->add_node(array(
+			'id'=>'grid_wp_thegrid',
+			'title'=>'Edit Grid',
+			'href'=>add_query_arg(array('page'=>'grid','postid'=>$post->ID),admin_url('admin.php')),
+		));
+	}
+}
+add_action("admin_bar_menu","grid_wp_admin_bar",999);
+
 function grid_wp_settings()
 {
 ?>
