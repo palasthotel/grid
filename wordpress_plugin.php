@@ -43,7 +43,8 @@ function db_query($querystring)
 	$querystring=str_replace("{", $wpdb->prefix, $querystring);
 	$querystring=str_replace("}", "", $querystring);
 	global $grid_connection;
-	$grid_connection->query($querystring) or die($grid_connection->error);
+	$result=$grid_connection->query($querystring) or die($querystring." failed: ".$grid_connection->error);
+	return $result;
 }
 
 
@@ -158,14 +159,176 @@ function grid_wp_admin_menu()
 	add_submenu_page(null,'The Grid','The Grid','edit_posts','grid','grid_wp_thegrid');
 	add_submenu_page(null,'Grid AJAX','The Grid AJAX','edit_posts','grid_ajax','grid_wp_ajax');
 	add_submenu_page(null,'Grid CKEditor Config','Grid CKEditor Config','edit_posts','grid_ckeditor_config','grid_wp_ckeditor_config');
+	
 	add_submenu_page('tools.php','Reusable grid boxes','Reusable grid boxes','edit_posts','grid_reuse_boxes','grid_wp_reuse_boxes');
 	add_submenu_page(null,'edit reuse box','edit reuse box','edit_posts','grid_edit_reuse_box','grid_wp_edit_reuse_box');
 	add_submenu_page(null,'delete reuse box','delete reuse box','edit_posts','grid_delete_reuse_box','grid_wp_delete_reuse_box');
+	
 	add_submenu_page('tools.php','reusable grid container','Reusable grid container','edit_posts','grid_reuse_containers','grid_wp_reuse_containers');
 	add_submenu_page(null,'edit reuse container','edit reuse container','edit_posts','grid_edit_reuse_container','grid_wp_edit_reuse_container');
 	add_submenu_page(null,'delete reuse container','delete reuse container','edit_posts','grid_delete_reuse_container','grid_wp_delete_reuse_container');
+	
+	add_submenu_page('tools.php','grid styles','Grid Styles','edit_posts','grid_styles','grid_wp_styles');
 }
 add_action("admin_menu","grid_wp_admin_menu");
+
+function grid_wp_styles()
+{
+	global $grid_connection;
+	$grid_connection=new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+	if(isset($_POST) && !empty($_POST))
+	{
+		foreach($_POST['container_styles'] as $idx=>$data)
+		{
+			if(!isset($data['id']))
+			{
+				if(!empty($data['slug']) && !empty($data['style']))
+				{
+					db_query("insert into {grid_container_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
+				}
+			}
+			else
+			{
+				if(isset($data['delete']))
+				{
+					db_query("delete from {grid_container_style} where id=".$data['id']);
+				}
+				else
+				{
+					db_query("update {grid_container_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
+				}
+			}
+		}
+		foreach($_POST['slot_styles'] as $idx=>$data)
+		{
+			if(!isset($data['id']))
+			{
+				if(!empty($data['slug']) && !empty($data['style']))
+				{
+					db_query("insert into {grid_slot_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
+				}
+			}
+			else
+			{
+				if(isset($data['delete']))
+				{
+					db_query("delete from {grid_slot_style} where id=".$data['id']);
+				}
+				else
+				{
+					db_query("update {grid_slot_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
+				}
+			}
+		}
+		foreach($_POST['box_styles'] as $idx=>$data)
+		{
+			if(!isset($data['id']))
+			{
+				if(!empty($data['slug']) && !empty($data['style']))
+				{
+					db_query("insert into {grid_box_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
+				}
+			}
+			else
+			{
+				if(isset($data['delete']))
+				{
+					db_query("delete from {grid_box_style} where id=".$data['id']);
+				}
+				else
+				{
+					db_query("update {grid_box_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
+				}
+			}
+		}
+	}
+	$styles=db_query("select id,style,slug from {grid_container_style} order by id asc");
+?>
+<form method="post">
+<p>Container Styles</p>
+<table>
+<tr>
+	<th>Slug</th>
+	<th>Style</th>
+	<th>Delete</th>
+</tr>
+<?php
+	while($style=$styles->fetch_object())
+	{
+?>
+<tr>
+	<td><input type="hidden" name="container_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="container_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
+	<td><input name="container_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
+	<td><input type="checkbox" name="container_styles[<?php echo $style->id;?>][delete]" value="1"></td>
+</tr>
+<?php
+	}
+?>
+<tr>
+	<td><input name="container_styles[-1][slug]" type="text"></td>
+	<td><input name="container_styles[-1][style]" type="text"></td>
+</tr>
+</table>
+<?php
+	$styles=db_query("select id,style,slug from {grid_slot_style} order by id asc");
+?>
+<p>Slot Styles</p>
+<table>
+<tr>
+	<th>Slug</th>
+	<th>Style</th>
+	<th>Delete</th>
+</tr>
+<?php
+	while($style=$styles->fetch_object())
+	{
+?>
+<tr>
+	<td><input type="hidden" name="slot_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="slot_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
+	<td><input name="slot_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
+	<td><input type="checkbox" name="slot_styles[<?php echo $style->id;?>][delete]" value="1"></td>
+</tr>
+<?php
+	}
+?>
+<tr>
+	<td><input name="slot_styles[-1][slug]" type="text"></td>
+	<td><input name="slot_styles[-1][style]" type="text"></td>
+</tr>
+</table>
+<?php
+	$styles=db_query("select id,style,slug from {grid_box_style} order by id asc");
+?>
+<p>Box Styles</p>
+<table>
+<tr>
+	<th>Slug</th>
+	<th>Style</th>
+	<th>Delete</th>
+</tr>
+<?php
+	while($style=$styles->fetch_object())
+	{
+?>
+<tr>
+	<td><input type="hidden" name="box_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="box_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
+	<td><input name="box_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
+	<td><input type="checkbox" name="box_styles[<?php echo $style->id;?>][delete]" value="1"></td>
+</tr>
+<?php
+	}
+?>
+<tr>
+	<td><input name="box_styles[-1][slug]" type="text"></td>
+	<td><input name="box_styles[-1][style]" type="text"></td>
+</tr>
+</table>
+<input type="submit">
+</form>
+<?php
+	$grid_connection->close();
+}
+
 
 function grid_wp_admin_bar()
 {

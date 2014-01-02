@@ -235,7 +235,7 @@ class grid_db {
 	
 	public function getReusedBoxIds()
 	{
-		$query="select content from ".$this->prefix."grid_box left join ".$this->prefix."grid_box_type grid_box_type on grid_box.type=grid_box_type.id where grid_box_type.type='reference'";
+		$query="select content from ".$this->prefix."grid_box left join ".$this->prefix."grid_box_type grid_box_type on ".$this->prefix."grid_box.type=grid_box_type.id where grid_box_type.type='reference'";
 		$result=$this->connection->query($query);
 		$usedIds=array();
 		while($row=$result->fetch_assoc())
