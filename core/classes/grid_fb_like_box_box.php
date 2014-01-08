@@ -16,6 +16,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 		$this->content->datastream = "false";
 		$this->content->colorscheme = "light";
 		$this->content->show_border = "true";
+		$this->content->force_wall = "false";
 	}
 
 	public function build($editmode) {
@@ -31,6 +32,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			$datastream = $this->content->datastream;
 			$colorscheme = $this->content->colorscheme;
 			$show_border = $this->content->show_border;
+			$force_wall = $this->content->force_wall;
 
 			ob_start();
 			?>
@@ -73,6 +75,16 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key'=>'fb_page',
 				'label'=>t('Facebook page'),
 				'type'=>'text'
+			),
+			array(
+				'key' => 'width',
+				'label' => t('Width in pixel (optional, default 300)'),
+				'type' => 'number',
+			),
+			array(
+				'key' => 'height',
+				'label' => t('Height in pixel(optional, default 556 or 63 without stram and faces)'),
+				'type' => 'number',
 			),
 			array(
 				'key' => 'colorscheme',
@@ -155,15 +167,21 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				),
 			),
 			array(
-				'key' => 'width',
-				'label' => t('Width in pixel (optional, default 300)'),
-				'type' => 'number',
+				'key' => 'force_wall',
+				'label' => t('Force "place" Pages'),
+				'type' => 'select',
+				'selections'=>
+				array(
+					array(
+						"key" => "true",
+						"text" => t("On"),
+					),
+					array(
+						"key" => "false",
+						"text" => t("Off"),
+					),
+				),
 			),
-			array(
-				'key' => 'height',
-				'label' => t('Height in pixel(optional, default 556 or 63 without stram and faces)'),
-				'type' => 'number',
-			)
 		);
 	}
 
