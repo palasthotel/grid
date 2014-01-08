@@ -10,7 +10,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	public function __construct()
 	{
 		$this->content=new Stdclass();
-		$this->content->html='';
+		$this->content->fb_user='';
 		$this->content->show_faces = "TRUE";
 	}
 
@@ -21,7 +21,9 @@ class grid_fb_like_box_box extends grid_static_base_box {
 		}
 		else
 		{
+			$fb_user = $this->content->fb_user;
 			$show_faces = $this->content->show_faces;
+
 			ob_start();
 			?>
 			<script>
@@ -42,9 +44,9 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			
 			<div 
 			class="fb-like-box" 
-			data-href="http://www.facebook.com/FacebookDevelopers" 
+			data-href="http://www.facebook.com/<?= $fb_user; ?>" 
 			data-colorscheme="light" 
-			data-show-faces="true" 
+			data-show-faces="<?= $show_faces; ?>" 
 			data-header="true" 
 			data-stream="true" 
 			data-show-border="true"></div>
@@ -60,9 +62,25 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	public function contentStructure () {
 		return array(
 			array(
-				'key'=>'html',
-				'label'=>t('Text'),
-				'type'=>'html'
+				'key'=>'fb_user',
+				'label'=>t('Facebook Account'),
+				'type'=>'text'
+			),
+			array(
+				'key' => 'category',
+				'label' => t('Category'),
+				'type' => 'select',
+				'selections'=>
+				array(
+					array(
+						"key" => "TRUE",
+						"text" => t("show"),
+					),
+					array(
+						"key" => "FALSE",
+						"text" => t("hide"),
+					),
+				),
 			),
 		);
 	}
