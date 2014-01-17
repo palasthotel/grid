@@ -318,6 +318,15 @@ function grid_get_storage()
 	$storage=new grid_db($opts['host'],$opts['username'],$opts['password'],$opts['database'],$username,$conn->tablePrefix());
 	global $theme_path;
 	$storage->templatesPath=$theme_path.'/grid/';
+	$storage->containerstyle=variable_get('grid_container_style','__NONE__');
+	if($storage->containerstyle=='__NONE__')
+		$storage->containerstyle=NULL;
+	$storage->slotstyle=variable_get('grid_slot_style','__NONE__');
+	if($storage->slotstyle=='__NONE__')
+		$storage->slotstyle=NULL;
+	$storage->boxstyle=variable_get('grid_box_style','__NONE__');
+	if($storage->boxstyle=='__NONE__')
+		$storage->boxstyle=NULL;
 	$storage->ajaxEndpoint=new grid_drupal_ajaxendpoint();
 	$storage->ajaxEndpoint->storage=$storage;
 	$cache['storage']=$storage;
@@ -629,6 +638,55 @@ function grid_admin_settings()
 		'#options'=>$options,
 		'#default_value'=>variable_get('grid_default_container','__NONE__'),
 	);
+	
+	$form['defaultstyles']=array(
+		'#title'=>t('Set Styles which should be applied to everything by default.'),
+		'#type'=>'fieldset',
+	);
+	
+	$storage=grid_get_storage();
+	$styles=$storage->fetchContainerStyles();
+	$array=array();
+	$array['__NONE__']='None';
+	foreach($styles as $idx=>$elem)
+	{
+		$array[$elem['slug']]=$elem['title'];
+	}
+	$form['defaultstyles']['grid_container_style']=array(
+		'#type'=>'select',
+		'#title'=>'Container Style',
+		'#options'=>$array,
+		'#default_value'=>variable_get('grid_container_style','__NONE__'),
+	);
+	
+	$styles=$storage->fetchSlotStyles();
+	$array=array();
+	$array['__NONE__']='None';
+	foreach($styles as $idx=>$elem)
+	{
+		$array[$elem['slug']]=$elem['title'];
+	}
+	$form['defaultstyles']['grid_slot_style']=array(
+		'#type'=>'select',
+		'#title'=>'Slot Style',
+		'#options'=>$array,
+		'#default_value'=>variable_get('grid_slot_style','__NONE__'),
+	);
+	
+	$styles=$storage->fetchBoxStyles();
+	$array=array();
+	$array['__NONE__']='None';
+	foreach($styles as $idx=>$elem)
+	{
+		$array[$elem['slug']]=$elem['title'];
+	}
+	$form['defaultstyles']['grid_box_style']=array(
+		'#type'=>'select',
+		'#title'=>'Box Style',
+		'#options'=>$array,
+		'#default_value'=>variable_get('grid_box_style','__NONE__'),
+	);
+	
 	
 	$form['nodetypes']=array(
 		'#type'=>'fieldset',

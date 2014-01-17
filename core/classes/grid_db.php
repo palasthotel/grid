@@ -3,6 +3,10 @@
 class grid_db {
 	public $templatesPath=NULL;
 	public $ajaxEndpoint;
+	public $containerstyle=NULL;
+	public $slotstyle=NULL;
+	public $boxstyle=NULL;
+	
 	private $connection;
 	private $author;
 	private $prefix;
@@ -647,6 +651,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$container->storage=$this;
 		$container->containerid=$id;
 		$container->type=$containertype;
+		$container->style=$this->containerstyle;
 		$container->slots=array();
 		$numslots=$row['numslots'];
 		for($i=1;$i<=$numslots;$i++)
@@ -665,7 +670,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$slot->grid=$grid;
 			$slot->slotid=$slotid;
 			$slot->storage=$this;
+			$slot->style=$this->slotstyle;
 			$container->slots[]=$slot;
+			$this->persistSlot($slot);
 			if(strpos($containertype, "S-")===0)
 			{
 				$box=new grid_sidebar_box();
@@ -675,6 +682,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				$slot->addBox(0,$box);
 			}
 		}
+		$this->persistContainer($container);
 		return $container;
 	}
 

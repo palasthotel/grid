@@ -116,6 +116,7 @@ class grid_ajaxendpoint {
 		$container=$grid->insertContainer($containertype,$idx);
 		$result=array(
 			'id'=>$container->containerid,
+			'style'=>$container->style,
 			'slots'=>array()
 		);
 		foreach($container->slots as $slot)
@@ -483,6 +484,7 @@ class grid_ajaxendpoint {
 		$box=new $class();
 		$box->content=$content;
 		$box->grid=$grid;
+		$box->style=$this->storage->boxstyle;
 		$box->storage=$this->storage;
 		//now we can save the box. which is important.
 		$ret=$box->persist();
