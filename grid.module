@@ -109,6 +109,15 @@ function grid_menu() {
 			'page arguments'=>array(1,3),
 		),
 		'admin/config/grid'=>array(
+			'title'=>'Grid',
+			'description'=>'Configure Grid',
+			'page callback' => 'system_admin_menu_block_page',
+		   'file' => 'system.admin.inc',
+		   'file path' => drupal_get_path('module', 'system'),
+			'access arguments'=>array('administer grid'),
+			'type'=>MENU_NORMAL_ITEM,
+		),
+		'admin/config/grid/settings'=>array(
 			'title'=>'Grid settings',
 			'description'=>'Configure Grid',
 			'page callback'=>'drupal_get_form',
