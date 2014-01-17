@@ -3,7 +3,7 @@
 	{
 ?>
 <div>
-	<?=$tweet->text?>
+	<?= "--<br />".$tweet->text?>
 </div>
 <?
 	}

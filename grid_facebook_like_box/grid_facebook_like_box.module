@@ -1,0 +1,7 @@
+<?php
+
+function boell_grid_facebook_like_grid_load_classes() {
+	require "grid_facebook_like_box_box.php";
+}
+
+?>

@@ -7,6 +7,7 @@ class grid_twitter_box extends grid_static_base_box {
 		$this->content=new Stdclass();
 		$this->content->limit=5;
 		$this->content->user="";
+		$this->content->retweet = "timeline";
 	}
 	
 	public function type()
@@ -23,7 +24,13 @@ class grid_twitter_box extends grid_static_base_box {
 	
 	protected function fetch($connection)
 	{
-		$result=$connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json",array("screen_name"=>$this->content->user));
+		if($this->content->retweet == "retweets"){
+			$result=$connection->get("https://api.twitter.com/1.1/search/tweets.json?src=typd&q=".$this->content->user);
+			$result = $result->statuses;
+		} else {
+			$result=$connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json",array("screen_name"=>$this->content->user));
+		}
+		
 		return $result;		
 	}
 
@@ -73,6 +80,21 @@ class grid_twitter_box extends grid_static_base_box {
 				'key'=>'user',
 				'type'=>'text',
 				'label' => 'User'
+			),
+			array(
+				'key'=>'retweet',
+				'type'=>'select',
+				'label' => t('Type'),
+				'selections' => array(
+					array(
+						'key' => 'timeline',
+						'text' => 'Timeline',
+					),
+					array(
+						'key' => 'retweets',
+						'text' => 'Retweets',
+					),
+				)
 			),
 		);
 	}

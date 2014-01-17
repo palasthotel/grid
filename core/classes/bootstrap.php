@@ -4,7 +4,6 @@ include 'grid_base.php';
 include 'grid_box.php';
 include 'grid_static_box.php';
 include 'grid_html_box.php';
-include 'grid_fb_like_box_box.php';
 include 'grid_video_box.php';
 include 'grid_list_box.php';
 include 'grid_reference_box.php';
