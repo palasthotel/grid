@@ -376,6 +376,13 @@ do_settings_sections("grid_settings");
 
 function grid_wp_admin_init()
 {
+	add_settings_section("grid_default_styles","Default Styles","grid_wp_default_styles_settings_section","grid_settings");
+	add_settings_field("grid_default_container_style","Container Style","grid_wp_default_container_style_html","grid_settings","grid_default_styles");
+	register_setting("grid_settings","grid_default_container_style");
+	add_settings_field("grid_default_slot_style","Slot Style","grid_wp_default_slot_style_html","grid_settings","grid_default_styles");
+	register_setting("grid_settings","grid_default_slot_style");
+	add_settings_field("grid_default_box_style","Box Style","grid_wp_default_box_style_html","grid_settings","grid_default_styles");
+	register_setting("grid_settings","grid_default_box_style");
 	add_settings_section("grid_post_types","Post Types","grid_wp_post_type_settings_section","grid_settings");
 	$post_types=get_post_types(array(),'objects');
 	foreach($post_types as $key=>$post_type)
@@ -392,6 +399,71 @@ function grid_wp_admin_init()
 	register_setting("grid_settings","grid_default_container");
 }
 add_action("admin_init","grid_wp_admin_init");
+
+function grid_wp_default_styles_settings_section()
+{
+	echo "Set which default styles should be applied.";
+}
+
+function grid_wp_default_container_style_html()
+{
+	$storage=grid_wp_get_storage();
+	$types=$storage->fetchContainerStyles();
+	$setting=get_option("grid_default_container_style","__NONE__");
+?>
+<select id="grid_default_container_style" name="grid_default_container_style">
+<option value="__NONE__" <?php echo ($setting=="__NONE__"?"selected":"")?>>None</option>
+<?php
+	foreach($types as $idx=>$elem)
+	{
+?>
+<option value="<?php echo $elem['slug'];?>" <?php echo ($elem['slug']==$setting?"selected":"");?>><?php echo $elem['title'];?></option>
+<?php
+	}
+?>
+</select>
+<?
+}
+
+function grid_wp_default_slot_style_html()
+{
+	$storage=grid_wp_get_storage();
+	$types=$storage->fetchSlotStyles();
+	$setting=get_option("grid_default_slot_style","__NONE__");
+?>
+<select id="grid_default_slot_style" name="grid_default_slot_style">
+<option value="__NONE__" <?php echo ($setting=="__NONE__"?"selected":"")?>>None</option>
+<?php
+	foreach($types as $idx=>$elem)
+	{
+?>
+<option value="<?php echo $elem['slug'];?>" <?php echo ($elem['slug']==$setting?"selected":"");?>><?php echo $elem['title'];?></option>
+<?php
+	}
+?>
+</select>
+<?
+}
+
+function grid_wp_default_box_style_html()
+{
+	$storage=grid_wp_get_storage();
+	$types=$storage->fetchBoxStyles();
+	$setting=get_option("grid_default_box_style","__NONE__");
+?>
+<select id="grid_default_box_style" name="grid_default_box_style">
+<option value="__NONE__" <?php echo ($setting=="__NONE__"?"selected":"")?>>None</option>
+<?php
+	foreach($types as $idx=>$elem)
+	{
+?>
+<option value="<?php echo $elem['slug'];?>" <?php echo ($elem['slug']==$setting?"selected":"");?>><?php echo $elem['title'];?></option>
+<?php
+	}
+?>
+</select>
+<?
+}
 
 function grid_wp_post_type_html($args)
 {
@@ -503,6 +575,15 @@ function grid_wp_get_storage()
 		$storage->ajaxEndpoint=new grid_wordpress_ajaxendpoint();
 		$storage->ajaxEndpoint->storage=$storage;
 		$storage->templatesPath=get_template_directory().'/grid/';
+		$storage->containerstyle=get_option("grid_default_container_style","__NONE__");
+		if($storage->containerstyle=="__NONE__")
+			$storage->containerstyle=NULL;
+		$storage->slotstyle=get_option("grid_default_slot_style","__NONE__");
+		if($storage->slotstyle=="__NONE__")
+			$storage->slotstyle=NULL;
+		$storage->boxstyle=get_option("grid_default_box_style","__NONE__");
+		if($storage->boxstyle=="__NONE__")
+			$storage->boxstyle=NULL;
 		$grid_storage=$storage;	
 		
 	}
