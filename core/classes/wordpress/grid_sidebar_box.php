@@ -69,9 +69,13 @@ class grid_sidebar_box extends grid_box
 			return array(array('key'=>-1,'value'=>'invalid key'));
 		}
 		$results=array();
-		$query=new WP_Query(array('post_type'=>get_option('grid_sidebar_post_type','sidebar')));
-		while($query->have_posts())
+		$sidebar_type = get_option('grid_sidebar_post_type','sidebar');
+		$count = wp_count_posts( $sidebar_type );
+		$query=new WP_Query(array('post_type'=>$sidebar_type, 'posts_per_page' => $count));
+		$i = 0;
+		while($query->have_posts() && $i < 15)
 		{
+			$i++;
 			$query->the_post();
 			$post=get_post();
 			if(is_numeric(strpos($post->post_title,$querystr)))
