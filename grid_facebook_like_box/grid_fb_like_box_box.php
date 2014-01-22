@@ -22,7 +22,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	public function build($editmode) {
 		if($editmode)
 		{
-			return t("Facebook Like Box");
+			return t("Facebook Like Box").": <br/>".$this->content->fb_page;
 		}
 		else
 		{
@@ -35,7 +35,8 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			$force_wall = $this->content->force_wall;
 
 			$fb_url = "http://www.facebook.com/";
-			if(strpos($fb_page, $fb_url) === false){
+			$fbs_url = "https://www.facebook.com/";
+			if(strpos($fb_page, $fb_url) === false && strpos($fb_page, $fbs_url) === false){
 				$fb_page = $fb_url.$fb_page;
 			}
 
