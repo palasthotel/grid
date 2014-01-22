@@ -34,6 +34,11 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			$show_border = $this->content->show_border;
 			$force_wall = $this->content->force_wall;
 
+			$fb_url = "http://www.facebook.com/";
+			if(strpos($fb_page, $fb_url) === false){
+				$fb_page = $fb_url.$fb_page;
+			}
+
 			ob_start();
 			?>
 			<script>
@@ -44,17 +49,17 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			  d.body.insertBefore(div, document.body.childNodes[0]);
 			}(document, 'div', 'fb-root'));
 			(function(d, s, id) {
-			  var js, fjs = d.getElementsByTagName(s)[0];
+			  var js = d.getElementsByTagName(s)[0];
 			  if (d.getElementById(id)) return;
 			  js = d.createElement(s); js.id = id;
 			  js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
-			  fjs.parentNode.insertBefore(js, fjs);
+			  d.head.insertBefore(js, document.head.childNodes[0])
 			}(document, 'script', 'facebook-jssdk'));
 			</script>
 			
 			<div 
 			class="fb-like-box" 
-			data-href="http://www.facebook.com/<?= $fb_page; ?>" 
+			data-href="<?= $fb_page; ?>" 
 			data-colorscheme="<?= $colorscheme; ?>" 
 			data-show-faces="<?= $show_faces; ?>" 
 			data-header="<?= $show_header; ?>" 
