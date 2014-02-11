@@ -65,8 +65,12 @@
                 </div>
             </div>
         </div>
+        
         <div role="g-errors">
-        </div>
+            <!--[if lte IE 8]>
+                <p><?= t("Your browser is too old. Please use an up-to-date browser version."); ?>.</p>
+            <![endif]-->
+        </div> 
     </div>
     
     <!-- grid display -->
