@@ -47,6 +47,10 @@ class grid_twitter_box extends grid_static_base_box {
 			else
 			{
 				$token=get_option('grid_twitterbox_accesstoken');
+				if(!isset($token['oauth_token']) ||!isset($token['oauth_token_secret']))
+				{
+					return "";
+				}
 				$connection=new TwitterOAuth(get_option('grid_twitterbox_consumer_key',''),get_option('grid_twitterbox_consumer_secret',''),$token['oauth_token'],$token['oauth_token_secret']);
 				$result=$this->fetch($connection);
 				if(count($result)>$this->content->limit)
