@@ -23,7 +23,7 @@ class grid_soundcloud_box extends grid_static_base_box {
 		{
 
 			$url = "http://soundcloud.com/oembed?";
-			$url.= "url=".$this->content->url."&format=json";
+			$url.= "url=".$this->content->url."&format=json&maxheight=300";
 			if($this->content->color != "" && strlen($this->content->color) == 6) $url.= "&color=".$this->content->color;
 
 

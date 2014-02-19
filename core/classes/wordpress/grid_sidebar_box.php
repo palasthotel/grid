@@ -51,9 +51,9 @@ class grid_sidebar_box extends grid_box
 				'type'=>'hidden',
 			),
 		);
-		if($this->content->nodeid!='')
+		if($this->content->postid!='')
 		{
-			$node=node_load($this->content->nodeid);
+			$node=get_post($this->content->postid);
 			if($node!=NULL)
 			{
 				$content[0]['valuekey']=$node->title;

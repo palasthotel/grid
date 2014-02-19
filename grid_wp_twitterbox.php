@@ -32,8 +32,8 @@ function grid_wp_twitterbox_settings()
 		update_option("grid_twitterbox_consumer_secret",$_POST["grid_twitterbox_consumer_secret"]);
 
 		$connection = new TwitterOAuth(get_option('grid_twitterbox_consumer_key',''), get_option('grid_twitterbox_consumer_secret',''));
-		$request_token=$connection->getRequestToken(add_query_arg(array('page'=>'grid_wp_twitterbox_callback'),admin_url('admin.php')));
-		
+		$request_token=$connection->getRequestToken(add_query_arg(array('page'=>'grid_wp_twitterbox_callback','noheader'=>true),admin_url('admin.php')));
+		session_start();
 		$_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
 		$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
 	    $url = $connection->getAuthorizeURL($token);
@@ -50,12 +50,19 @@ function grid_wp_twitterbox_settings()
 <input type="text" name="grid_twitterbox_consumer_secret" value="<?php echo get_option("grid_twitterbox_consumer_secret","");?>">
 <input type="submit" value="Save and authenticate">
 </form>
+Access Token:
+<pre>
+<?php
+	var_dump(get_option("grid_twitterbox_accesstoken"));
+?>
+</pre>
 <?php
 	}
 }
 
 function grid_wp_twitterbox_callback()
 {
+	session_start();
 	$connection = new TwitterOAuth(get_option('grid_twitterbox_consumer_key',''), get_option('grid_twitterbox_consumer_secret',''), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 	
 	/* Request access tokens from twitter */
