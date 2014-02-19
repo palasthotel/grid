@@ -25,10 +25,10 @@ class grid_twitter_box extends grid_static_base_box {
 	protected function fetch($connection)
 	{
 		if($this->content->retweet == "retweets"){
-			$result=$connection->get("https://api.twitter.com/1.1/search/tweets.json?src=typd&q=".$this->content->user);
+			$result=$connection->get("https://api.twitter.com:443/1.1/search/tweets.json?src=typd&q=".$this->content->user);
 			$result = $result->statuses;
 		} else {
-			$result=$connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json",array("screen_name"=>$this->content->user));
+			$result=$connection->get("https://api.twitter.com:443/1.1/statuses/user_timeline.json",array("screen_name"=>$this->content->user));
 		}
 		
 		return $result;		
@@ -127,7 +127,7 @@ class grid_twitter_hashtag_box extends grid_twitter_box {
 	
 	public function fetch($connection)
 	{
-		$output=$connection->get("https://api.twitter.com/1.1/search/tweets.json",array("q"=>$this->content->hashtag));
+		$output=$connection->get("https://api.twitter.com:443/1.1/search/tweets.json",array("q"=>$this->content->hashtag));
 		if(isset($output->statuses))
 			$result=$output->statuses;
 		else
