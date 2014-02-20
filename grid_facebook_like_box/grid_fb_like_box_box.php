@@ -11,6 +11,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	{
 		$this->content=new Stdclass();
 		$this->content->fb_page='';
+		$this->content->appid = "";
 		$this->content->show_faces = "true";
 		$this->content->show_header = "true";
 		$this->content->datastream = "false";
@@ -27,6 +28,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 		else
 		{
 			$fb_page = $this->content->fb_page;
+			$appid = $this->content->appid;
 			$show_faces = $this->content->show_faces;
 			$show_header = $this->content->show_header;
 			$datastream = $this->content->datastream;
@@ -53,7 +55,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			  var js = d.getElementsByTagName(s)[0];
 			  if (d.getElementById(id)) return;
 			  js = d.createElement(s); js.id = id;
-			  js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1";
+			  js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=<?= $appid; ?>";
 			  d.head.insertBefore(js, document.head.childNodes[0])
 			}(document, 'script', 'facebook-jssdk'));
 			</script>
@@ -67,7 +69,6 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			data-stream="<?= $datastream; ?>" 
 			data-show-border="<?= $show_border; ?>"></div>
 
-
 			<?php
 			$output = ob_get_contents();
 			ob_end_clean();
@@ -80,6 +81,11 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			array(
 				'key'=>'fb_page',
 				'label'=>t('Facebook page'),
+				'type'=>'text'
+			),
+			array(
+				'key'=>'appid',
+				'label'=>t('Facebook APP Id'),
 				'type'=>'text'
 			),
 			array(
