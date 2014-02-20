@@ -31,6 +31,11 @@
 $(function() {
 
 	/** --------------------------------
+	DEBUGGING enable = true or disable = false
+	** -------------------------------**/
+	DEBUGGING = false;
+
+	/** --------------------------------
 	* generel elements and variables
 	---------------------------------- */
 	
@@ -1999,13 +2004,21 @@ $(function() {
 	*/
 	var $g_errors = $toolbar.find("[role=g-errors]");
 	var error_stack = Array();
-	function throwError($error_text){
-		error_stack.push($("<p>"+$error_text+"</p>").appendTo($g_errors).slideDown('slow'));
+	function throwError($error_text, render_html){
+		var $tag = null;
+		if(render_html == true){
+			$tag = $("<div></div>");
+			$tag.text($error_text);
+		} else {
+			$tag = $("<p></p>");
+			$tag.html($error_text);
+		}
+		error_stack.push( $tag.appendTo($g_errors).slideDown('slow') );
 		setTimeout(function(){
 			error_stack.shift().slideUp("slow",function(){
 				$(this).remove();
 			});
-		},5000);
+		},15000);
 	}
 
 	/**
@@ -2038,12 +2051,18 @@ $(function() {
 		json = {};
 		json["method"] = method;
 		json["params"] = params_array;
+		/*
 		if(error == null){
 			error = function(jqXHR, textStatus, error){
 				console.log(jqXHR);
 				console.log(textStatus);
 				console.log(error);
 			};
+		}
+		*/
+		var error_fn = null;
+		if(error != null){
+			error_fn = error;
 		}
 		if(async != false){
 			async = true;
@@ -2054,10 +2073,36 @@ $(function() {
 		   type:'POST',
 		   data: JSON.stringify(json),
 		   success: function(data){
+		   		if(DEBUGGING){
+		   			console.log("Method: "+method);
+		   			console.log("Params");
+		   			console.log(params_array);
+		   			console.log(data);
+		   		}
 			   success(data);
 			   isDraft();
 			},
-		   error: error,
+		   error: function(jqXHR, textStatus, error){
+		   		if(DEBUGGING){
+		   			console.log("Method: "+method);
+					console.log(textStatus);
+					console.log(jqXHR);
+					console.log(error);
+					throwError(
+						"Method: "+method+"<br>"+
+						"Status: ("+jqXHR.status+") -> "+textStatus+
+						"ResponseText: [Next Box]"
+					);
+					throwError(
+						jqXHR.responseText,
+						true
+					);
+		   			
+		   		}
+				if(error_fn != null){
+					error(jqXHR, textStatus, error);
+				}
+		   },
 		   async:async
 		 });
 	}
