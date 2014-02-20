@@ -396,11 +396,12 @@ function grid_wp_admin_init()
 	
 	add_settings_section("grid_default_container","New Grids","grid_wp_default_container_section","grid_settings");
 	add_settings_field("grid_default_container","Which container should be placed automatically","grid_wp_default_container_html","grid_settings","grid_default_container");
-	
-	add_settings_section("grid_debug_mode","Debug Mode","grid_wp_default_container_section","grid_settings");
-	add_settings_field("grid_debug_mode","Turn debug mode on/off","grid_wp_debug_mode_html","grid_settings","grid_debug_mode");
-
 	register_setting("grid_settings","grid_default_container");
+
+	add_settings_section("grid_debug_mode","Debug Mode","grid_wp_debug_mode_section","grid_settings");
+	add_settings_field("grid_debug_mode","Turn debug mode on/off","grid_wp_debug_mode_html","grid_settings","grid_debug_mode");
+	register_setting("grid_settings","grid_debug_mode");
+
 }
 add_action("admin_init","grid_wp_admin_init");
 
@@ -530,9 +531,13 @@ function grid_wp_default_container_html()
 <?php
 }
 
-function grid_wp_debug_mode_html($args)
+function grid_wp_debug_mode_section()
 {
-	$debug_mode=$args['debug_mode'];
+	echo "";
+}
+
+function grid_wp_debug_mode_html(){
+
 	$value=get_option("grid_debug_mode",FALSE);
 ?>
 <input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ($value?"checked":"")?>> <?php echo ($value?"Enabled":"Disabled")?>
@@ -654,6 +659,7 @@ document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"
 document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
 document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
 document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
+document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
 </script>
 
 <script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
