@@ -396,6 +396,10 @@ function grid_wp_admin_init()
 	
 	add_settings_section("grid_default_container","New Grids","grid_wp_default_container_section","grid_settings");
 	add_settings_field("grid_default_container","Which container should be placed automatically","grid_wp_default_container_html","grid_settings","grid_default_container");
+	
+	add_settings_section("grid_debug_mode","Debug Mode","grid_wp_default_container_section","grid_settings");
+	add_settings_field("grid_debug_mode","Turn debug mode on/off","grid_wp_debug_mode_html","grid_settings","grid_debug_mode");
+
 	register_setting("grid_settings","grid_default_container");
 }
 add_action("admin_init","grid_wp_admin_init");
@@ -523,6 +527,15 @@ function grid_wp_default_container_html()
 	}
 ?>
 </select>
+<?php
+}
+
+function grid_wp_debug_mode_html($args)
+{
+	$debug_mode=$args['debug_mode'];
+	$value=get_option("grid_debug_mode",FALSE);
+?>
+<input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ($value?"checked":"")?>> Enabled
 <?php
 }
 

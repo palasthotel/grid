@@ -360,10 +360,15 @@ function grid_grid($node) {
 			drupal_add_js("document.gridmode=\"grid\";",'inline');
 			drupal_add_js("document.PathToConfig='/grid/ckeditor_config.js';",'inline');
 			drupal_add_js("document.gridajax='".url('grid_ajax_endpoint')."';",'inline');
+			
 			drupal_add_js($base.'/js/jquery-ui-1.10.2.custom.js','file');
 			drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 
 			drupal_add_js(grid_get_language_js(),'file');
+
+			$debug_mode = "false";
+			if(variable_get("grid_debug_mode",0)) $debug_mode = "true";
+			drupal_add_js("document.grid_debug_mode=".$debug_mode.";", "inline");
 			
 			drupal_add_js($base.'/js/templates.js','file');
 			drupal_add_js($base.'/js/jquery.iframe-transport.js');
@@ -804,6 +809,12 @@ function grid_admin_settings()
 		'#title'=>'Info to the imagestyles',
 		'#default_value' => variable_get("grid_imagestyles_info"),
 	);
+
+	$form['debug_mode']=array(
+		'#type'=>'checkbox',
+		'#default_value'=>variable_get("grid_debug_mode",0),
+		'#title'=>"Debug mode",
+	);
 	
 	return system_settings_form($form);
 }
@@ -1089,6 +1100,10 @@ function grid_reuse_box_edit($boxid)
 	
 	drupal_add_js(grid_get_language_js(),'file');
 
+	$debug_mode = "false";
+	if(variable_get("grid_debug_mode",0)) $debug_mode = "true";
+	drupal_add_js("document.grid_debug_mode=".$debug_mode.";", "inline");
+
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
 	drupal_add_js($base.'/js/jquery.fileupload.js');
@@ -1211,6 +1226,10 @@ function grid_reuse_container_edit($containerid)
 	drupal_add_js($base.'/js/jquery.tmpl.min.js','file');
 
 	drupal_add_js(grid_get_language_js(),'file');
+
+	$debug_mode = "false";
+	if(variable_get("grid_debug_mode",0)) $debug_mode = "true";
+	drupal_add_js("document.grid_debug_mode=".$debug_mode.";", "inline");
 
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');

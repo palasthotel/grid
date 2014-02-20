@@ -34,6 +34,7 @@ $(function() {
 	DEBUGGING enable = true or disable = false
 	** -------------------------------**/
 	DEBUGGING = false;
+	DEBUGGING = document.grid_debug_mode;
 
 	/** --------------------------------
 	* generel elements and variables
