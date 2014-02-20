@@ -535,7 +535,7 @@ function grid_wp_debug_mode_html($args)
 	$debug_mode=$args['debug_mode'];
 	$value=get_option("grid_debug_mode",FALSE);
 ?>
-<input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ($value?"checked":"")?>> Enabled
+<input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ($value?"checked":"")?>> <?php echo ($value?"Enabled":"Disabled")?>
 <?php
 }
 
