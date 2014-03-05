@@ -23,6 +23,77 @@
     }
 }());
 
+/** public object */
+window.GRID = {},
+window.GRID.AJAX = {};
+var GRID = window.GRID;
+
+/** Ajax Object */
+GRID = {
+	ID: -1,
+	// enable or disable debugging output
+	DEBUGGING: false,
+	// the server URL
+	SERVER: "/grid_ajax_endpoint",
+	// Pattern for preview URL
+	PREVIEW_URL: window.location.pathname+'/preview',
+	// 0 draft, 1 published
+	_state: 0,
+	init: function(){
+		var self = this;
+		this._getConstants();
+		var load = new GridAjax(
+				"loadGrid",
+				[GRID.ID],
+				{
+					success_fn:function(data){
+						var result = data.result;
+						self._containers= [];
+						for (var i = 0; i < result.container.length; i++) {
+							self.addContainer( new GridContainer(result.container[i]) );
+						};
+					}
+				}
+			);
+		load.send();
+	},
+	// list of all contaiers in the right order
+	_containers: [],
+	// adds a container object
+	addContainer: function(cob){
+		this._containers.push(cob);
+	},
+	_getConstants: function(){
+		this.DEBUGGING = document.grid_debug_mode;
+		GRID.ID = document.ID;
+		GRID.SERVER = "/grid_ajax_endpoint";
+		if( typeof document.gridajax != "undefined" && 
+			document.gridajax != null && 
+			document.gridajax != ""){
+			GRID.SERVER = document.gridajax;
+		}
+		GRID.PREVIEW_URL = GRID.PREVIEW_URL.replace("//","/");
+		if( typeof document.previewurl != "undefined" && 
+			document.previewurl != null && 
+			document.previewurl != ""){
+			GRID.PREVIEW_URL = document.previewurl;
+		}
+	},
+	ajax: function(method, params_array, success, error, async){
+		
+	},
+	log: function(string){
+		if(this.DEBUGGING){
+			console.log(string);
+		}
+	}
+}
+
+
+var slot = new GridSlot();
+slot.addBox(new GridBox("test"));
+slot.addBox(new GridBox("asdf"));
+
 /**
 *	Grid controller.
 *	@autor Edward Bock
@@ -35,6 +106,8 @@ $(function() {
 	** -------------------------------**/
 	DEBUGGING = false;
 	DEBUGGING = document.grid_debug_mode;
+
+
 
 	/** --------------------------------
 	* generel elements and variables

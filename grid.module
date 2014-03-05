@@ -373,7 +373,9 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/templates.js','file');
 			drupal_add_js($base.'/js/jquery.iframe-transport.js');
 			drupal_add_js($base.'/js/jquery.fileupload.js');
-			drupal_add_js($base.'/js/grid2.0.js','file');
+			drupal_add_js($base.'/js/grid_model.js','file');
+			drupal_add_js($base.'/js/grid_ajax.js','file');
+			drupal_add_js($base.'/js/grid_controller.js','file');
 			grid_add_css();
 
 			$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
@@ -810,7 +812,7 @@ function grid_admin_settings()
 		'#default_value' => variable_get("grid_imagestyles_info"),
 	);
 
-	$form['debug_mode']=array(
+	$form['grid_debug_mode']=array(
 		'#type'=>'checkbox',
 		'#default_value'=>variable_get("grid_debug_mode",0),
 		'#title'=>"Debug mode",
@@ -1107,7 +1109,9 @@ function grid_reuse_box_edit($boxid)
 	drupal_add_js($base.'/js/templates.js','file');
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
 	drupal_add_js($base.'/js/jquery.fileupload.js');
-	drupal_add_js($base.'/js/grid2.0.js','file');
+	drupal_add_js($base.'/js/grid_model.js','file');
+	drupal_add_js($base.'/js/grid_ajax.js','file');
+	drupal_add_js($base.'/js/grid_controller.js','file');
 	grid_add_css();
 	$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
 	return $input;
@@ -1259,7 +1263,10 @@ function grid_get_language_js(){
 }
 function grid_add_css(){
 	$base=drupal_get_path('module','grid');
+	drupal_add_css($base."/core/templates/icon-font/css/grid.css",array('type'=>'file','group'=>CSS_THEME));
+	drupal_add_css($base."/core/templates/icon-font/css/animation.css",array('type'=>'file','group'=>CSS_THEME));
 	drupal_add_css($base.'/core/templates/main.css',array('type'=>'file','group'=>CSS_THEME));
+
 	global $language;
 	if($language->direction == 1){
 		drupal_add_css($base.'/core/templates/rtl.css',array('type'=>'file','group'=>CSS_THEME));

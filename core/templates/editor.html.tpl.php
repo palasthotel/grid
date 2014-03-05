@@ -9,7 +9,7 @@
                         <span lang-id="state-display" role="text"></span>
                     </div>
                 </li>
-                <li><button role="publish" lang-id="btn-publish" lang-type="text">Publish</button></li>
+                <li><button role="publish" lang-id="btn-publish" lang-type="text"><i class="icon-back"></i>Publish</button></li>
                 <li><button role="preview" lang-id="btn-preview" lang-type="text">Preview</button></li>  
                 <li><button role="revert" lang-id="btn-revert" lang-type="text">Revert</button></li>
                 <li>
