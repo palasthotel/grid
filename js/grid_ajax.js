@@ -7,14 +7,18 @@
 *	settings: an Object to overwrite the jquery Ajax settings
 *			use success_fn, error_fn to prevent default debugging
 *			output of success and error functions
+*
+*
+*	Available Methods:
+		- loadGrid [ID] :: loads a whole grid by its ID
+		- 
 */
 
 var GridAjax = function(method, params_array, settings){
-
 	// two required variables
 	json["method"] = method;
 	json["params"] = params_array;
-
+	if(typeof settings != "object"){ settings = {}; }
 	// default settings
 	this.settings = {
 		url: GRID.SERVER,
@@ -26,6 +30,7 @@ var GridAjax = function(method, params_array, settings){
 			GRID.log(jqXHR);
 			GRID.log(textStatus);
 			GRID.log(error);
+			GRID.log(json);
 			GRID.log("--------!");
 			if(typeof settings.error_fn == 'function' ){
 				settings.error_fn(jqXHR, textStatus, error);
@@ -36,20 +41,22 @@ var GridAjax = function(method, params_array, settings){
 			GRID.log(data);
 			GRID.log(textStatus);
 			GRID.log(jqXHR);
+			GRID.log(json);
 			GRID.log("---------!");
 			if(typeof settings.success_fn == 'function' ){
 				settings.success_fn(data, textStatus, jqXHR);
 			}
    		},
-   		data: JSON.stringify(json)
+   		data: JSON.stringify(json),
+   		wait: false
 	};
-
 	// overwrite settings
 	jQuery.extend(true,this.settings, settings);
 	
 	// sends the request to the server
 	this.send = function(){
-		var save_this = this;
-		jQuery.ajax(save_this.settings);
+		jQuery.ajax(this.settings);
 	}
+	if(!this.settings.wait){ this.send(); }
+	
 }

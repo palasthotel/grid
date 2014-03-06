@@ -1,4 +1,10 @@
 /**
+*	@author Edward
+*	Grid Controller
+*/
+
+
+/**
 *	IE JS console fix
 */
 (function() {
@@ -23,6 +29,8 @@
     }
 }());
 
+
+
 /** public object */
 window.GRID = {},
 window.GRID.AJAX = {};
@@ -39,31 +47,70 @@ GRID = {
 	PREVIEW_URL: window.location.pathname+'/preview',
 	// 0 draft, 1 published
 	_state: 0,
-	init: function(){
-		var self = this;
-		this._getConstants();
-		var load = new GridAjax(
-				"loadGrid",
-				[GRID.ID],
-				{
-					success_fn:function(data){
-						var result = data.result;
-						self._containers= [];
-						for (var i = 0; i < result.container.length; i++) {
-							self.addContainer( new GridContainer(result.container[i]) );
-						};
-					}
-				}
-			);
-		load.send();
-	},
 	// list of all contaiers in the right order
 	_containers: [],
-	// adds a container object
-	addContainer: function(cob){
-		this._containers.push(cob);
+	// initializes the grid
+	init: function(){
+		var self = this;
+		this._initConstants();
+		new GridAjax(
+			"loadGrid",
+			[GRID.ID],
+			{ 
+				success_fn: function(data){ 
+					self._buildModel(data); 
+					self._loadBoxTypes();
+					self._loadStyles();
+				}	
+			}
+		);
 	},
-	_getConstants: function(){
+	_buildModel: function(data){
+		var result = data.result;
+		this._containers= [];
+		for (var i = 0; i < result.container.length; i++) {
+			this._containers.push( new GridContainer(result.container[i]) );
+		};
+	},
+	_loadBoxTypes: function(){
+		var self = this;
+		new GridAjax(
+			"getMetaTypesAndSearchCriteria",
+			[],
+			{ success_fn: function(data){ GRID.log("Types"); self._box_types = data.result; } }
+		);
+	},
+	_loadContainerTypes: function(){
+		var self = this;
+		new GridAjax(
+			"getMetaTypesAndSearchCriteria",
+			[],
+			{ success_fn: function(data){ self._box_types = data.result; } }
+		);
+	},
+	_loadStyles: function(){
+		var self = this;
+		new GridAjax(
+			"getContainerStyles",
+			[],
+			{ success_fn: function(data){ self._styles_container = data.result; } }
+		);
+		new GridAjax(
+			"getSlotStyles",
+			[],
+			{ success_fn: function(data){ self._styles_slot = data.result; } }
+		);
+		new GridAjax(
+			"getBoxStyles",
+			[],
+			{ success_fn: function(data){ self._styles_box = data.result; } }
+		);
+	},
+	removeContainer: function(container){
+		this._containers.splice(this._containers.indexOf(container),1);
+	},
+	// initializes the constatns
+	_initConstants: function(){
 		this.DEBUGGING = document.grid_debug_mode;
 		GRID.ID = document.ID;
 		GRID.SERVER = "/grid_ajax_endpoint";
@@ -79,20 +126,13 @@ GRID = {
 			GRID.PREVIEW_URL = document.previewurl;
 		}
 	},
-	ajax: function(method, params_array, success, error, async){
-		
-	},
-	log: function(string){
-		if(this.DEBUGGING){
-			console.log(string);
-		}
-	}
-}
-
-
-var slot = new GridSlot();
-slot.addBox(new GridBox("test"));
-slot.addBox(new GridBox("asdf"));
+	// publishes the grid
+	publish: function(){ new GridAjax("publishDraft",[GRID.ID]); },
+	// revert to old revision
+	revert: function(){	new GridAjax("revertDraft", [GRID.ID]); },
+	// console logging just with DEBUGGING enabled
+	log: function(string){ if(this.DEBUGGING){ console.log(string); } }
+};
 
 /**
 *	Grid controller.
