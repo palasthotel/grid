@@ -48,6 +48,9 @@ class grid_drupal_ajaxendpoint extends grid_ajaxendpoint
 		$result=parent::publishDraft($gridid);
 		if($result)
 		{
+			$nid=grid_get_nid_by_gridid($gridid);
+			entity_get_controller('node')->resetCache(array($nid));
+			cache_clear_all();
 			module_invoke_all('grid_published',grid_get_nid_by_gridid($gridid));
 		}
 		return $result;
@@ -810,7 +813,7 @@ function grid_admin_settings()
 		'#default_value' => variable_get("grid_imagestyles_info"),
 	);
 
-	$form['debug_mode']=array(
+	$form['grid_debug_mode']=array(
 		'#type'=>'checkbox',
 		'#default_value'=>variable_get("grid_debug_mode",0),
 		'#title'=>"Debug mode",

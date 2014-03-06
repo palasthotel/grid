@@ -2015,11 +2015,11 @@ $(function() {
 			$tag.html($error_text);
 		}
 		error_stack.push( $tag.appendTo($g_errors).slideDown('slow') );
-		setTimeout(function(){
-			error_stack.shift().slideUp("slow",function(){
-				$(this).remove();
-			});
-		},15000);
+		// setTimeout(function(){
+		// 	error_stack.shift().slideUp("slow",function(){
+		// 		$(this).remove();
+		// 	});
+		// },15000);
 	}
 
 	/**
@@ -2092,7 +2092,7 @@ $(function() {
 					throwError(
 						"Method: "+method+"<br>"+
 						"Status: ("+jqXHR.status+") -> "+textStatus+
-						"ResponseText: [Next Box]"
+						"ResponseText: "+jqXHR.responseText
 					);
 					throwError(
 						jqXHR.responseText,
