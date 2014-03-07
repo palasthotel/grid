@@ -6,7 +6,7 @@
 
 /**
 *	IE JS console fix
-*/
+*
 (function() {
     var method;
     var noop = function () {};
@@ -31,12 +31,13 @@
 
 
 
-/** public object */
+/** public object *
 window.GRID = {},
 window.GRID.AJAX = {};
 var GRID = window.GRID;
 
 /** Ajax Object */
+/*
 GRID = {
 	ID: -1,
 	// enable or disable debugging output
@@ -48,11 +49,12 @@ GRID = {
 	// 0 draft, 1 published
 	_state: 0,
 	// list of all contaiers in the right order
-	_containers: [],
+	grid: null,
 	// initializes the grid
 	init: function(){
 		var self = this;
 		this._initConstants();
+		this.grid = new Grid({this.ID});
 		new GridAjax(
 			"loadGrid",
 			[GRID.ID],
@@ -132,7 +134,7 @@ GRID = {
 	revert: function(){	new GridAjax("revertDraft", [GRID.ID]); },
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } }
-};
+};*/
 
 /**
 *	Grid controller.
