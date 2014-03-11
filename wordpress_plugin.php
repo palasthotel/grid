@@ -668,19 +668,56 @@ document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false")
 </script>
 <script src="<?php echo plugins_url($jslang,__FILE__);?>">
 </script>
+
+<?php
+grid_wp_load_js();
+?>
+
 <script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
 </script>
 <script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
 </script>
 <script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
 </script>
-
-<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
+<script src="<?php echo plugins_url('js/grid_model.js',__FILE__);?>">
+</script>
+<script src="<?php echo plugins_url('js/grid_ajax.js',__FILE__);?>">
+</script>
+<script src="<?php echo plugins_url('js/grid_controller.js',__FILE__);?>">
 </script>
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 require "core/templates/editor.html.tpl.php";
 	}
+}
+
+function grid_wp_load_js(){
+	$framework_dir = "js/frameworks/";
+	?>
+	<script src="<?php echo plugins_url( $framework_dir.'underscore.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $framework_dir.'backbone.js',__FILE__);?>">
+	</script>
+
+	<script src="<?php echo plugins_url( $framework_dir.'mustache.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $framework_dir.'ICanHaz.js',__FILE__);?>">
+	</script>
+	
+	<!-- Grid App -->
+	<?php $app_dir = "js/app/"; ?>
+	<script src="<?php echo plugins_url( $app_dir.'GridCollections.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'GridViews.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'GridModels.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'GridController.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'Grid.js',__FILE__);?>">
+	</script>
+
+	<?php
 }
 
 function grid_wp_reuse_boxes()
