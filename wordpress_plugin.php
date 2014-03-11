@@ -57,7 +57,7 @@ function grid_wp_activate()
 	if(!isset($options['installed']))
 	{
 		$schema=grid_schema();
-		$grid_connection=new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+		$grid_connection= grid_wp_get_mysqli()
 		foreach($schema as $tablename=>$data)
 		{
 			$query="create table ".$wpdb->prefix."$tablename (";
@@ -175,7 +175,7 @@ add_action("admin_menu","grid_wp_admin_menu");
 function grid_wp_styles()
 {
 	global $grid_connection;
-	$grid_connection=new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+	$grid_connection=grid_wp_get_mysqli();
 	if(isset($_POST) && !empty($_POST))
 	{
 		foreach($_POST['container_styles'] as $idx=>$data)
@@ -1003,4 +1003,15 @@ function grid_wp_ckeditor_config()
 	$styles=apply_filters("grid_formats",$formats);
 	require("grid_htmlbox_ckeditor_config_js.tpl.php");
 	die();
+}
+
+function grid_wp_get_mysqli(){
+	$host = DB_HOST;
+	$port = 3306;
+	if(strpos(DB_HOST, ":") >= 0){
+		$db_host = explode(":", DB_HOST);
+		$host = $db_host[0];
+		$port = $db_host[1];
+	}
+	return new mysqli($host,DB_USER,DB_PASSWORD,DB_NAME, $port);
 }
