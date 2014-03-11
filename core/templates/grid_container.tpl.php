@@ -1,6 +1,8 @@
 <?php // Open Content Container Wrapper
-if ($this->firstcontentcontainer): ?>
-<div class="content-container-wrapper C-8-0 first-content-container">
+if ($this->firstcontentcontainer): 
+	$class = ($this->sidebarleft)? "C-0-8": "C-8-0";
+?>
+<div class="content-container-wrapper <?= $class ?> first-content-container">
 <?php endif; ?>
 
 
@@ -17,6 +19,7 @@ if ($this->firstcontentcontainer): ?>
 			<?}?>
 		<?}?>
 		<div class="c-prolog">
+			<?= ($this->sidebarleft)? "left": "right"; ?>
 		  	<?=$this->prolog?>
 		</div>
 	</div>

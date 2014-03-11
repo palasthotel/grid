@@ -28,7 +28,8 @@ class grid_fb_like_box_box extends grid_static_base_box {
 		else
 		{
 			$fb_page = $this->content->fb_page;
-			$appid = $this->content->appid;
+			$appid = "";
+			if(isset($this->content->appid)) $appid = $this->content->appid;
 			$show_faces = $this->content->show_faces;
 			$show_header = $this->content->show_header;
 			$datastream = $this->content->datastream;

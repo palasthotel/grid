@@ -17,6 +17,7 @@ class grid_container extends grid_base {
 	public $iscontentcontainer;
 	public $firstcontentcontainer;
 	public $lastcontentcontainer;
+	public $sidebarleft = false;
 	public $slots;
 
 
@@ -49,6 +50,12 @@ class grid_container extends grid_base {
 		else
 		{
 			$counter = 0;
+			if($slotstyle[1] == 0){
+				// leftside 0 for sidebar
+				$counter = 1;
+				$this->sidebarleft = true;
+			} 
+			
 			foreach($this->slots as $slot)
 			{
 				$counter++;
@@ -99,7 +106,8 @@ class grid_container extends grid_base {
 	
 	public function is_content_container(){
 		if($this->type == "C-8-0" || $this->type == "C-4-4-0" 
-			|| $this->type == "C-12-0" || $this->type == "C-6-6-0" || $this->type == "C-4-4-4-0" || $this->type == "C-3-3-3-3-0"){
+			|| $this->type == "C-12" || $this->type == "C-6-6-0" || $this->type == "C-4-4-4-0" || $this->type == "C-3-3-3-3-0"
+			|| $this->type == "C-0-8" || $this->type == "C-0-4-4" || $this->type == "C-0-6-6" || $this->type == "C-0-4-4-4" || $this->type == "C-0-3-3-3-3"){
 			$this->iscontentcontainer = true;
 			return true;
 		}else{
