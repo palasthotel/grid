@@ -57,7 +57,7 @@ function grid_wp_activate()
 	if(!isset($options['installed']))
 	{
 		$schema=grid_schema();
-		$grid_connection= grid_wp_get_mysqli()
+		$grid_connection= grid_wp_get_mysqli();
 		foreach($schema as $tablename=>$data)
 		{
 			$query="create table ".$wpdb->prefix."$tablename (";
