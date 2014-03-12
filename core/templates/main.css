@@ -1246,9 +1246,35 @@ tr[role=revision] td{
 	margin-left: 0px;
 }
 
+/** Container C-4-2-2-0 and C-2-2-4-0 **/
+.C-4-2-2-0 .slot,
+.C-2-2-4-0 .slot{
+	width: 16%;
+	margin-right: 1%;
+	float: left;
+}
+.C-4-2-2-0 .slot:first-child,
+.C-2-2-4-0 .slot:last-child{
+	width: 33%;
+}
+#grid .C-4-2-2-0,
+#grid .C-2-2-4-0{
+	width: 66.6% !important;
+}
+#grid .C-4-2-2-0 .slot,
+#grid .C-2-2-4-0 .slot{
+	width: 24%;
+	margin-right: 1%;
+}
+#grid .C-4-2-2-0 .slot:first-child,
+#grid .C-2-2-4-0 .slot:last-child{
+	width:49%;
+}
+
+
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
 .C-2-2-2-2-0 .slot{
-	width:24%;
+	width:16%;
 	float:left;
 	margin-right:1%;
 }

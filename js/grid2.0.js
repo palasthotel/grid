@@ -1901,6 +1901,8 @@ $(function() {
 			case "S-0-4":
 				return {"C-8-0":true,"C-4-4-0":true, 
 						"S-4-0":true, "C-0-4-0":true,
+						"C-2-2-4-0": true, "C-4-2-2-0":true,
+						"C-2-2-2-2-0": true,
 						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 			case "S-4-0":
