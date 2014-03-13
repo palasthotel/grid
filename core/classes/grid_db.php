@@ -16,7 +16,9 @@ class grid_db {
 		if(strpos($host, ":")>=0){
 			$parts = explode(":", $host);
 			$host = $parts[0];
-			$port = $parts[1];
+			if(isset($parts[1])){
+				$port = $parts[1];
+			}
 		}
 
 		$this->connection=new mysqli($host,$user,$password,$database, $port);
