@@ -106,7 +106,8 @@ class grid_container extends grid_base {
 	
 	public function is_content_container(){
 		if($this->type == "C-8-0" || $this->type == "C-4-4-0" 
-			|| $this->type == "C-12" || $this->type == "C-6-6-0" || $this->type == "C-4-4-4-0" || $this->type == "C-3-3-3-3-0"
+			|| $this->type == "C-12" || $this->type == "C-6-6-0" || $this->type == "C-4-4-4-0" || $this->type == "C-3-3-3-3-0" || $this->type == "C-2-2-4-0"
+			|| $this->type == "C-4-2-2-0" || $this->type == "C-2-2-2-2-0"
 			|| $this->type == "C-0-8" || $this->type == "C-0-4-4" || $this->type == "C-0-6-6" || $this->type == "C-0-4-4-4" || $this->type == "C-0-3-3-3-3"){
 			$this->iscontentcontainer = true;
 			return true;
