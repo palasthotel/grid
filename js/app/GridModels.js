@@ -1,102 +1,124 @@
 
 var Grid = Backbone.Model.extend({
 	defaults :{
-		ID: -1,
 		// enable or disable debugging output
 		DEBUGGING: false,
 		// the server URL
 		SERVER: "/grid_ajax_endpoint",
 		// Pattern for preview URL
 		PREVIEW_URL: window.location.pathname+'/preview',
-		// 0 draft, 1 published
-		state: 0,
-		containers: []
+		// 0 == false == unknown, 1 published, 2 draft
+		state: 1
+	},
+	getGridID: function(){
+		return this.get("id");
 	},
 	// invokes when the model is created
     initialize: function (spec) {
-        if (!spec || !spec.ID ) {
+    	// Grid object needs an ID
+        if (!spec || !spec.id ) {
             throw "InvalidConstructArgs";
         }
-
         var self = this;
-       	new GridAjax(
-			"loadGrid",
-			[this.get("ID")],
-			{ 
-				success_fn: function(data){
-					_.each(data.result.container, function(container) {
-						console.log(container);
-						 var c = new Container(container);
-						 self.addContainer(c);
-					});
-					new GridAjax(
-						"getMetaTypesAndSearchCriteria",
-						[],
-						{ success_fn: function(data){ self.set("types_box", data.result); } }
-					);
-					new GridAjax(
-						"getContainerTypes",
-						[],
-						{ success_fn: function(data){ self.set("types_container", data.result); } }
-					);
-					new GridAjax(
-						"getContainerStyles",
-						[],
-						{ success_fn: function(data){ self.set("styles_container", data.result); } }
-					);
-					new GridAjax(
-						"getSlotStyles",
-						[],
-						{ success_fn: function(data){ self.set("styles_slot", data.result); } }
-					);
-					new GridAjax(
-						"getBoxStyles",
-						[],
-						{ success_fn: function(data){ self.set("styles_box", data.result); } }
-					);
-					
-				}	
-			}
-		);
+       	this.fetch();
     },
-    addContainer: function(container, index){
-    	if(typeof index === "undefined" ){
-    		this.get("containers").push(container);
-    		return true;
-    	} else if( typeof index === "number" && index >= 0 ){
-    		this.get("containers").splice(index, 0, container);
-    		return true;
+    addContainer: function(element, index){
+    	if(!(element instanceof Container)) throw "Try to add an not Container Object: Grid.addContainer";
+    	var args = {};
+    	if( typeof index === "number" ) args.at = index;
+    	element.set("parent", this);
+    	this.getContainers().add(element, args);
+    },
+    getContainers: function(){
+    	if(!this.get("collection_containers") ){
+    		this.set("collection_containers", new Containers());
     	}
-    	throw "InvalidArguments Add Container "+container+" "+index;
+    	return this.get("collection_containers");
     },
     sendUpdate: function(val){
-    	GRID.log("GridEvent");
+    	GRID.log("GridEvent sendUpdate");
     	GRID.log(val);
+    },
+    sync: function(method, model, options){
+    	GridRequest.grid[method](model, options);
     }
 });
 
 // element models
 var Container = Backbone.Model.extend({
-	// invokes when the model is created
+	getGridID: function(){
+		return this.get("parent").getGridID();
+	},
 	initialize: function(spec){
-
-	}
+		var self = this;
+		GRID.log("init container");
+		GRID.log(spec.slots);
+		_.each(spec.slots, function(slot) {
+			GRID.log("add Slot");
+			GRID.log(slot);
+			 self.addSlot(new Slot(slot));
+		});
+	},
+	addSlot: function(element, index){
+    	if(!(element instanceof Slot)) throw "Try to add an not Slot Object: Container.addSlot";
+    	var args = {};
+    	if( typeof index === "number" ) args.at = index;
+    	element.set("parent", this);
+    	this.getSlots().add(element, args);
+    },
+    getSlots: function(){
+    	if(!this.get("collection_slots") ){
+    		this.set("collection_slots", new Slots());
+    	}
+    	return this.get("collection_slots");
+    },
+    sync: function(method, model, options){
+    	GridRequest.container[method](model, options);
+    }
 });
 var Slot = Backbone.Model.extend({
-	// invokes when the model is created
+	getGridID: function(){
+		return this.get("parent").getGridID();
+	},
 	initialize: function(spec){
-
-	}
+		var self = this;
+		GRID.log("init Slot");
+		GRID.log(spec);
+		_.each(spec.boxes, function(box){
+			GRID.log("add Box");
+			self.addBox(new Box(box));
+		});
+	},
+	addBox: function(element, index){
+		if(!(element instanceof Box)) throw "Try to add an not Box Object: Slot.addBox";
+    	var args = {};
+    	if( typeof index === "number" ) args.at = index;
+    	element.set("parent", this);
+    	this.getBoxes().add(element, args);
+    },
+    getBoxes: function(){
+    	if(!this.get("collection_boxes") ){
+    		this.set("collection_boxes", new Boxes());
+    	}
+    	return this.get("collection_boxes");
+    },
+    sync: function(method, model, options){
+    	GridRequest.slot[method](model, options);
+    }
 });
 var Box = Backbone.Model.extend({
-	// invokes when the model is created
+	getGridID: function(){
+		return this.get("parent").getGridID();
+	},
 	initialize: function(spec){
 
-	}
+	},
+    sync: function(method, model, options){
+    	GridRequest.box[method](model, options);
+    }
 });
 // subclasses of Box
 var ImageBox = Box.extend({
-	// invokes when the model is created
 	initialize: function(spec){
 
 	}

@@ -26,23 +26,23 @@ var GridAjax = function(method, params_array, settings){
 		type: 'POST',
 		dataType: 'json',
 		error: function(jqXHR, textStatus, error){
-   			GRID.log("!--- error Method: "+method);
-			GRID.log(jqXHR);
-			GRID.log(textStatus);
-			GRID.log(error);
-			GRID.log(json);
-			GRID.log("--------!");
+   // 			GRID.log("!--- error Method: "+method);
+			// GRID.log(jqXHR);
+			// GRID.log(textStatus);
+			// GRID.log(error);
+			// GRID.log(json);
+			// GRID.log("--------!");
 			if(typeof settings.error_fn == 'function' ){
 				settings.error_fn(jqXHR, textStatus, error);
 			}
    		},
    		success: function(data, textStatus, jqXHR){
-   			GRID.log("!--- success Method: "+method);
-			GRID.log(data);
-			GRID.log(textStatus);
-			GRID.log(jqXHR);
-			GRID.log(json);
-			GRID.log("---------!");
+   // 			GRID.log("!--- success Method: "+method);
+			// GRID.log(data);
+			// GRID.log(textStatus);
+			// GRID.log(jqXHR);
+			// GRID.log(json);
+			// GRID.log("---------!");
 			if(typeof settings.success_fn == 'function' ){
 				settings.success_fn(data, textStatus, jqXHR);
 			}

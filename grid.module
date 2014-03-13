@@ -382,7 +382,7 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/jquery.iframe-transport.js');
 			drupal_add_js($base.'/js/jquery.fileupload.js');
 			drupal_add_js($base.'/js/grid_model.js','file');
-			drupal_add_js($base.'/js/grid_ajax.js','file');
+			//drupal_add_js($base.'/js/grid_ajax.js','file');
 			drupal_add_js($base.'/js/grid_controller.js','file');
 			grid_add_css();
 
@@ -1118,7 +1118,7 @@ function grid_reuse_box_edit($boxid)
 	drupal_add_js($base.'/js/jquery.iframe-transport.js');
 	drupal_add_js($base.'/js/jquery.fileupload.js');
 	drupal_add_js($base.'/js/grid_model.js','file');
-	drupal_add_js($base.'/js/grid_ajax.js','file');
+	//drupal_add_js($base.'/js/grid_ajax.js','file');
 	drupal_add_js($base.'/js/grid_controller.js','file');
 	grid_add_css();
 	$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
@@ -1294,9 +1294,11 @@ function grid_add_app_JS(){
 	// Grid app
 
 	$app_dir = $base."/js/app/";
-	drupal_add_js($app_dir.'GridCollections.js','file');
+	
 	drupal_add_js($app_dir.'GridViews.js','file');
 	drupal_add_js($app_dir.'GridModels.js','file');
+	drupal_add_js($app_dir.'GridCollections.js','file');
+	drupal_add_js($app_dir.'GridSync.js','file');
 	drupal_add_js($app_dir.'GridController.js','file');
 
 	drupal_add_js($app_dir.'Grid.js','file');

@@ -46,9 +46,9 @@ GRID = {
 		var self = this;
 		this._initConstants();
 		this.grid = new Grid({
-			ID:this.ID
+			id:this.ID
 		});
-		new GridView({model: this.grid});
+		//new GridView({model: this.grid});
 	},
 	_buildModel: function(data){
 		var result = data.result;

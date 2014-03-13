@@ -5,6 +5,7 @@ var GridView = Backbone.View.extend({
   render: function() {
     //render template with Mustache or something
     GRID.log('i am rendering');
+    GRID.log(this.model);
   }
 });
 
