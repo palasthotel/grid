@@ -40,8 +40,8 @@ function t($str){return $str;}
 function db_query($querystring)
 {
 	global $wpdb;
-	$querystring=str_replace("{", $wpdb->prefix, $querystring);
-	$querystring=str_replace("}", "", $querystring);
+	$querystring = str_replace("{", $wpdb->prefix, $querystring);
+	$querystring = str_replace("}", "", $querystring);
 	global $grid_connection;
 	$result=$grid_connection->query($querystring) or die($querystring." failed: ".$grid_connection->error);
 	return $result;
