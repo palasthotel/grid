@@ -13,7 +13,7 @@
 		- loadGrid [ID] :: loads a whole grid by its ID
 		- 
 */
-
+console.log("cool mit codekit !!!");
 var GridAjax = function(method, params_array, settings){
 	// two required variables
 	json["method"] = method;
