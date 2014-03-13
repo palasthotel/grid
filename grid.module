@@ -386,7 +386,7 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/grid_controller.js','file');
 			grid_add_css();
 
-			$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
+			$input = theme('grid_editor',array('ckeditor_path'=> $base.'/js/ckeditor/ckeditor.js'));
 			return $input;
 		}
 	}
