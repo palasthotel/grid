@@ -51,32 +51,6 @@ GRID = {
 		return this.grid;
 		//new GridView({model: this.grid});
 	},
-	_buildModel: function(data){
-		var result = data.result;
-		this._containers= [];
-		for (var i = 0; i < result.container.length; i++) {
-			this._containers.push( new GridContainer(result.container[i]) );
-		};
-	},
-	_loadBoxTypes: function(){
-		var self = this;
-		new GridAjax(
-			"getMetaTypesAndSearchCriteria",
-			[],
-			{ success_fn: function(data){ GRID.log("Types"); self._box_types = data.result; } }
-		);
-	},
-	_loadContainerTypes: function(){
-		var self = this;
-		new GridAjax(
-			"getMetaTypesAndSearchCriteria",
-			[],
-			{ success_fn: function(data){ self._box_types = data.result; } }
-		);
-	},
-	removeContainer: function(container){
-		this._containers.splice(this._containers.indexOf(container),1);
-	},
 	// initializes the constatns
 	_initConstants: function(){
 		this.DEBUGGING = document.grid_debug_mode;

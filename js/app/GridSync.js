@@ -55,51 +55,195 @@ var GridRequest = {
 			GRID.log("Request grid create");
 		},
 		read: function(grid, options){
-			new GridAjax(
-				"loadGrid",
-				[grid.getGridID()],
-				{ 
-					success_fn: function(data){
-						_.each(data.result.container, function(container) {
-							GRID.log("Add new Container");
-							 grid.addContainer(new Container(container));
-						});
-						new GridAjax(
-							"getMetaTypesAndSearchCriteria",
-							[],
-							{ success_fn: function(data){ grid.set("types_box", data.result); } }
-						);
-						new GridAjax(
-							"getContainerTypes",
-							[],
-							{ success_fn: function(data){ grid.set("types_container", data.result); } }
-						);
-						new GridAjax(
-							"getContainerStyles",
-							[],
-							{ success_fn: function(data){ grid.set("styles_container", data.result); } }
-						);
-						new GridAjax(
-							"getSlotStyles",
-							[],
-							{ success_fn: function(data){ grid.set("styles_slot", data.result); } }
-						);
-						new GridAjax(
-							"getBoxStyles",
-							[],
-							{ success_fn: function(data){ grid.set("styles_box", data.result); } }
-						);
-					}	
-				}
-			);
+			GRID.log("Grid->update "+options.action);
+			switch(options.action){
+				case "checkdraft":
+					// get status draft oder published
+			   		new GridAjax("checkDraftStatus",[grid.getGridID()],{
+			   			success_fn: function(data){
+			   				GRID.log("checkDraftStatus success");
+			   				GRID.log(data);
+			   				grid.set("isDraft",data.result);
+			   			}
+			   		});
+					break;
+				default:
+					// load whole grid
+					new GridAjax(
+						"loadGrid",
+						[grid.getGridID()],
+						{ 
+							success_fn: function(data){
+								grid.attributes = _.extend(grid.attributes, data.result);
+								GRID.log();
+								_.each(data.result.container, function(container) {
+									GRID.log("Add new Container");
+									 grid.addContainer(new Container(container));
+								});
+
+								var boxtypes = new BoxTypes();
+								boxtypes.fetch();
+								grid.set("types_box", boxtypes);
+
+								var containertypes = new ContainerTypes();
+								containertypes.fetch();
+								grid.set("types_container", containertypes);
+
+								var containerstyles = new Styles({type: "Container"});
+								containerstyles.fetch();
+								grid.set("styles_container", containerstyles);
+
+								var slotstyles = new Styles({type: "Slot"});
+								slotstyles.fetch();
+								grid.set("styles_slot", slotstyles);
+
+								var boxstyles = new Styles({type: "Box"});
+								boxstyles.fetch();
+								grid.set("styles_box", boxstyles);
+
+								var revisions = new Revisions({grid: grid});
+								revisions.fetch();
+								grid.set("revisions", revisions);
+
+							}	
+						}
+					);
+			}
+			
 		},
 		update: function(grid, options){
 			GRID.log("Grid->update");
+			switch(options.action){
+				
+				default:
+					// publish
+					new GridAjax("publishDraft",[ grid.getGridID()], {
+						success_fn: function(data){
+							GRID.log("publishDraft success");
+							GRID.log(data);
+							grid.set("isDraft", false);
+						}
+					});
+			}
 		},
 		destroy: function(grid, options){
-			GRID.log("Grid->create");
+			GRID.log("Grid->destroy");
+			// no need to. CMS creates and deletes rids
 		}
 	},
+	revisions:{
+		create: function(revisions, options){
+			GRID.log("revisions->create");
+		},
+		read: function(revisions, options){
+			GRID.log("revisions->read");
+			new GridAjax(
+				"getGridRevisions",
+				[revisions.getGridID()],
+				{ 
+					success_fn: function(data){ 
+						GRID.log("getGridRevisions succes");
+						GRID.log(data);
+						revisions.reset();
+						_.each(data.result, function(revision){
+							revisions.add( new Revision(revision) );						
+						});
+					} 
+				}
+			);
+		},
+		update: function(revisions, options){
+			GRID.log("revisions->update");
+		},
+		destroy: function(revisions, options){
+			GRID.log("revisions->create");
+		}
+	},
+	// type model calls
+	containertypes: {
+		create: function(containertypes, options){
+			GRID.log("ContainerTypes->create");
+		},
+		read: function(containertypes, options){
+			GRID.log("Containertypes->read");
+			new GridAjax(
+				"getContainerTypes",
+				[],
+				{ 
+					success_fn: function(data){ 
+						GRID.log("getContainerTypes succes");
+						GRID.log(data);
+						containertypes.reset();
+						_.each(data.result, function(containertype){
+							containertypes.add( new ContainerType(containertype) );						
+						});
+					} 
+				}
+			);
+		},
+		update: function(containertypes, options){
+			GRID.log("Containertypes->update");
+		},
+		destroy: function(containertypes, options){
+			GRID.log("Containertypes->create");
+		}
+	},
+	boxtypes: {
+		create: function(boxtypes, options){
+			GRID.log("BoxTypes->create");
+		},
+		read: function(boxtypes, options){
+			GRID.log("Boxtypes->read");
+			new GridAjax(
+				"getMetaTypesAndSearchCriteria",
+				[],
+				{ 
+					success_fn: function(data){ 
+						GRID.log("getMetaTypesAndSearchCriteria succes");
+						GRID.log(data);
+						_.each(data.result, function(boxtype){
+							boxtypes.add( new BoxType(boxtype) );						
+						});
+					} 
+				}
+			);
+		},
+		update: function(boxtypes, options){
+			GRID.log("Boxtypes->update");
+		},
+		destroy: function(boxtypes, options){
+			GRID.log("Boxtypes->create");
+		}
+	},
+	styles: {
+		create: function(styles, options){
+			GRID.log("Styles->create");
+		},
+		read: function(styles, options){
+			GRID.log(styles.type+"Styles->read");
+			new GridAjax(
+				"get"+styles.type+"Styles",
+				[],
+				{ 
+					success_fn: function(data){ 
+						GRID.log("get"+styles.type+"Styles succes");
+						GRID.log(data);
+						styles.reset();
+						_.each(data.result, function(style){
+							styles.add( new StyleType(style) );						
+						});
+					} 
+				}
+			);
+		},
+		update: function(styles, options){
+			GRID.log("styles->update");
+		},
+		destroy: function(styles, options){
+			GRID.log("styles->create");
+		}
+	},
+	// element model calls
 	container: {
 		create: function(container, options){
 			GRID.log("Container->create");
@@ -116,42 +260,152 @@ var GridRequest = {
 				}
 			);
 		},
-		read: function(container, option){
+		read: function(container, options){
 			GRID.log("Container->read");
+			// no need to at the moment
 		},
 		update: function(container, options){
 			GRID.log("Container->update");
+			var attributes = _.clone(container.attributes);
+			delete(attributes.slots); 
+			delete(attributes.collection_slots);	
+			delete(attributes.classes);
+			delete(attributes.parent);		
+			var params =[container.getGridID(), container.get("id"),attributes];
+			GRID.log(params);			
+			new GridAjax("updateContainer", params,
+				{
+					success_fn: function(data){
+						GRID.log("updateContainer success");
+						GRID.log(data);
+						options.success();
+					},
+					error_fn: options.error
+				}
+			);
 		},
 		delete: function(container, options){
 			GRID.log("container->destroy");
+			var params = [container.getGridID(), container.get("id")];
+			GRID.log(params);
+			new GridAjax("deleteContainer", params,
+				{
+				success_fn: function(data){
+					GRID.log("deleteContainer success");
+					GRID.log(data);
+					options.success();
+				}
+			});
 		}
 	},
 	slot: {
 		create: function(slot, options){
 			GRID.log("slot->create");
+			// no need to, because they are hard connected to their container
 		},
 		read: function(slot, option){
 			GRID.log("slot->read");
+			// no need to at the moment
 		},
 		update: function(slot, options){
 			GRID.log("slot->update");
+			var params = [slot.getGridID(), slot.get("parent").get("id"),slot.get("id"),slot.get("style")];
+			GRID.log(params);
+			new GridAjax("updateSlotStyle",params,
+				{
+					success_fn: function(data){
+						GRID.log("updateSlotStyle success");
+						options.success();
+					}	
+				}
+			);
 		},
 		delete: function(slot, options){
 			GRID.log("slot->destroy");
+			// not possible
 		}
 	},
 	box: {
 		create: function(box, options){
 			GRID.log("box->create");
+			// create a new box
+			params = [
+						box.getGridID(), 
+						box.getContainer().get("id"), 
+						box.getSlot().get("id"),
+						// index position in slot 
+						options.index, 
+						// box type
+						options.type,
+						// the content of the box
+						// -> like content structure in box-php-file 
+						options.content];
+			new GridAjax("createBox",params,
+				{
+					success_fn: function(data){
+						GRID.log("createBox success");
+						GRID.log(data);
+					}
+				}
+			);
 		},
 		read: function(box, option){
 			GRID.log("box->read");
+			var params = [box.getGridID(), box.getContainer().get("id"), box.getSlot().get("id"), box.getIndex()];
+			GRID.log(params);
+			new GridAjax("fetchBox",params,{
+				success_fn: function(data){
+					GRID.log("fetchBox success");
+					GRID.log(data);
+					box.attributes = _.extend(box.attributes, data.result);
+				}
+			});
+			
 		},
 		update: function(box, options){
-			GRID.log("box->update");
+			GRID.log("box->update "+options.action);
+			// needs a switch for different actions
+			switch(options.action){
+				case "move":
+					// for moving the box from one to another position
+					break;
+				default:
+					//update attributes
+					GRID.log("attributes");
+					var attributes = _.clone(box.attributes);
+					delete(attributes.classes);
+					delete(attributes.contentstructure);
+					delete(attributes.parent);
+					var params = [
+						box.getGridID(), 
+						box.getSlot().getContainer().get("id"), 
+						box.getSlot().get("id"), 
+						box.getIndex(), 
+						attributes
+					];
+					GRID.log(params);
+					new GridAjax("UpdateBox",params,{
+						success_fn: function(data){
+							GRID.log("UpdateBox success");
+							GRID.log(data);
+							options.success();
+						}
+					});
+			}
 		},
 		delete: function(box, options){
 			GRID.log("box->destroy");
+			var params = [ box.getGridID(), box.getContainer().get("id"), box.getSlot().get("id"), box.getIndex() ];
+			GRID.log(params);
+			new GridAjax("removeBox", params,
+				{
+					success_fn: function(data){
+						GRID.log("removeBox success");
+						GRID.log(data);
+						options.success();
+					}
+				}
+			);
 		}
 	}
 };

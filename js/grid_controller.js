@@ -1193,6 +1193,7 @@ $(function() {
 								}] ).insertBefore( $this_drop.parent() );
 						$grid.find(".box-drop-area-wrapper").remove();
 						params = [ID, $this_container.data("id"), $this_slot.data("id"), $temp.index(), box_obj.type, box_obj.content];
+						console.log(params);
 						sendAjax("createBox",params,
 						function(data){
 							$temp.attr("data-id",data.result.id);

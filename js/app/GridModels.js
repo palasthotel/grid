@@ -1,6 +1,11 @@
-
+// ----------------------------------------
+// Main model.
+// this is the wrapper of the grid elements
+//
+// -----------------------------------------
 var Grid = Backbone.Model.extend({
 	defaults :{
+        id: -1,
 		// enable or disable debugging output
 		DEBUGGING: false,
 		// the server URL
@@ -8,7 +13,8 @@ var Grid = Backbone.Model.extend({
 		// Pattern for preview URL
 		PREVIEW_URL: window.location.pathname+'/preview',
 		// 0 == false == unknown, 1 published, 2 draft
-		state: 1
+		isDraft: true,
+        isSidebar: false,
 	},
 	getGridID: function(){
 		return this.get("id");
@@ -52,9 +58,16 @@ var Grid = Backbone.Model.extend({
     	}
     	return this.get("collection_containers");
     },
+    getContainer: function(index){
+        return this.getContainers().at(index);
+    },
     sendUpdate: function(val){
     	GRID.log("GridEvent sendUpdate");
     	GRID.log(val);
+    },
+    getIsDraft: function(){
+        GridRequest.grid.read( this, { action: "checkdraft" } );
+        return this.get("isDraft");
     },
     // handles all Server communication
     sync: function(method, model, options){
@@ -62,7 +75,18 @@ var Grid = Backbone.Model.extend({
     }
 });
 
+var Revision = Backbone.Model.extend({})
+
+// ----------------------
+// type models
+// ---------------------
+var ContainerType = Backbone.Model.extend({});
+var BoxType = Backbone.Model.extend({});
+var StyleType = Backbone.Model.extend({});
+
+//---------------------
 // element models
+// -------------------
 var Container = Backbone.Model.extend({
 	getGridID: function(){
 		return this.get("parent").getGridID();
@@ -93,8 +117,15 @@ var Container = Backbone.Model.extend({
     	}
     	return this.get("collection_slots");
     },
+    getCollection: function(){
+        return this.getSlots();
+    },
+    getSlot: function(index){
+        return this.getSlots().at(index);
+    },
     // handles all Server communication
     sync: function(method, model, options){
+        this.get("parent").getCollection();
     	GridRequest.container[method](model, options);
     }
 });
@@ -102,6 +133,9 @@ var Slot = Backbone.Model.extend({
 	getGridID: function(){
 		return this.get("parent").getGridID();
 	},
+    getContainer: function(){
+        return this.get("parent");
+    },
 	initialize: function(spec){
 		var self = this;
 		GRID.log("init Slot");
@@ -111,6 +145,9 @@ var Slot = Backbone.Model.extend({
 			self.addBox(new Box(box));
 		});
 	},
+    createBox: function(index, box_type){
+
+    },
 	addBox: function(element, index){
 		if(!(element instanceof Box)) throw "Try to add an not Box Object: Slot.addBox";
     	var args = {};
@@ -124,6 +161,9 @@ var Slot = Backbone.Model.extend({
     	}
     	return this.get("collection_boxes");
     },
+    getBox: function(index){
+        return this.getBoxes().at(index);
+    },
     sync: function(method, model, options){
     	GridRequest.slot[method](model, options);
     }
@@ -132,9 +172,18 @@ var Box = Backbone.Model.extend({
 	getGridID: function(){
 		return this.get("parent").getGridID();
 	},
+    getSlot: function(){
+        return this.get("parent");
+    },
+    getContainer: function(){
+        return this.getSlot().getContainer();
+    },
 	initialize: function(spec){
 
 	},
+    getIndex: function(){
+        return this.get("parent").getBoxes().indexOf(this);
+    },
     // handles all Server communication
     sync: function(method, model, options){
     	GridRequest.box[method](model, options);
