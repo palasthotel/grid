@@ -12,7 +12,7 @@ var Revisions = Backbone.Collection.extend({
 		return this.grid.getGridID();
 	},
 	sync: function(method, collection, options){
-		GridRequest.revisions[method](collection, options);
+		GridRequest.revisions(collection, options);
 	}
 });
 
@@ -20,13 +20,13 @@ var Revisions = Backbone.Collection.extend({
 var ContainerTypes = Backbone.Collection.extend({
 	model: ContainerType,
 	sync: function(method, collection, options){
-		GridRequest.containertypes[method](collection, options);
+		GridRequest.containertypes(collection, options);
 	}
 });
 var BoxTypes = Backbone.Collection.extend({
 	model: BoxType,
 	sync: function(method, collection, options){
-		GridRequest.boxtypes[method](collection, options);
+		GridRequest.boxtypes(collection, options);
 	}
 });
 var Styles = Backbone.Collection.extend({
@@ -38,7 +38,7 @@ var Styles = Backbone.Collection.extend({
         this.type = spec.type;
 	},
 	sync: function(method, collection, options){
-		GridRequest.styles[method](collection, options);
+		GridRequest.styles(collection, options);
 	}
 });
 

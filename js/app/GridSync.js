@@ -114,7 +114,23 @@ var GridRequest = {
 		update: function(grid, options){
 			GRID.log("Grid->update");
 			switch(options.action){
-				
+				case "revertDraft":
+					new GridAjax("revertDraft", [grid.getGridID()],{
+						success_fn: function(data){
+							GRID.log("revertDraft success");
+							GRID.log(data);
+						}
+					});
+					break;
+				case "setToRevision":
+					var params = [grid.getGridID(), options.revision.get("revision")];
+					new GridAjax("setToRevision",params,{
+						success_fn: function(data){
+							GRID.log("setToRevision success");
+							GRID.log(data);
+						}
+					});
+					break;
 				default:
 					// publish
 					new GridAjax("publishDraft",[ grid.getGridID()], {
@@ -131,117 +147,73 @@ var GridRequest = {
 			// no need to. CMS creates and deletes rids
 		}
 	},
-	revisions:{
-		create: function(revisions, options){
-			GRID.log("revisions->create");
-		},
-		read: function(revisions, options){
-			GRID.log("revisions->read");
-			new GridAjax(
-				"getGridRevisions",
-				[revisions.getGridID()],
-				{ 
-					success_fn: function(data){ 
-						GRID.log("getGridRevisions succes");
-						GRID.log(data);
-						revisions.reset();
-						_.each(data.result, function(revision){
-							revisions.add( new Revision(revision) );						
-						});
-					} 
-				}
-			);
-		},
-		update: function(revisions, options){
-			GRID.log("revisions->update");
-		},
-		destroy: function(revisions, options){
-			GRID.log("revisions->create");
-		}
+	revisions: function(revisions, options){
+		GRID.log("revisions->read");
+		new GridAjax(
+			"getGridRevisions",
+			[revisions.getGridID()],
+			{ 
+				success_fn: function(data){ 
+					GRID.log("getGridRevisions succes");
+					GRID.log(data);
+					revisions.reset();
+					_.each(data.result, function(revision){
+						revisions.add( new Revision(revision) );						
+					});
+				} 
+			}
+		);
 	},
 	// type model calls
-	containertypes: {
-		create: function(containertypes, options){
-			GRID.log("ContainerTypes->create");
-		},
-		read: function(containertypes, options){
-			GRID.log("Containertypes->read");
-			new GridAjax(
-				"getContainerTypes",
-				[],
-				{ 
-					success_fn: function(data){ 
-						GRID.log("getContainerTypes succes");
-						GRID.log(data);
-						containertypes.reset();
-						_.each(data.result, function(containertype){
-							containertypes.add( new ContainerType(containertype) );						
-						});
-					} 
-				}
-			);
-		},
-		update: function(containertypes, options){
-			GRID.log("Containertypes->update");
-		},
-		destroy: function(containertypes, options){
-			GRID.log("Containertypes->create");
-		}
+	containertypes: function(containertypes, options){
+		GRID.log("Containertypes->read");
+		new GridAjax(
+			"getContainerTypes",
+			[],
+			{ 
+				success_fn: function(data){ 
+					GRID.log("getContainerTypes succes");
+					GRID.log(data);
+					containertypes.reset();
+					_.each(data.result, function(containertype){
+						containertypes.add( new ContainerType(containertype) );						
+					});
+				} 
+			}
+		);
 	},
-	boxtypes: {
-		create: function(boxtypes, options){
-			GRID.log("BoxTypes->create");
-		},
-		read: function(boxtypes, options){
-			GRID.log("Boxtypes->read");
-			new GridAjax(
-				"getMetaTypesAndSearchCriteria",
-				[],
-				{ 
-					success_fn: function(data){ 
-						GRID.log("getMetaTypesAndSearchCriteria succes");
-						GRID.log(data);
-						_.each(data.result, function(boxtype){
-							boxtypes.add( new BoxType(boxtype) );						
-						});
-					} 
-				}
-			);
-		},
-		update: function(boxtypes, options){
-			GRID.log("Boxtypes->update");
-		},
-		destroy: function(boxtypes, options){
-			GRID.log("Boxtypes->create");
-		}
+	boxtypes: function(boxtypes, options){
+		GRID.log("Boxtypes->read");
+		new GridAjax(
+			"getMetaTypesAndSearchCriteria",
+			[],
+			{ 
+				success_fn: function(data){ 
+					GRID.log("getMetaTypesAndSearchCriteria succes");
+					GRID.log(data);
+					_.each(data.result, function(boxtype){
+						boxtypes.add( new BoxType(boxtype) );						
+					});
+				} 
+			}
+		);
 	},
-	styles: {
-		create: function(styles, options){
-			GRID.log("Styles->create");
-		},
-		read: function(styles, options){
-			GRID.log(styles.type+"Styles->read");
-			new GridAjax(
-				"get"+styles.type+"Styles",
-				[],
-				{ 
-					success_fn: function(data){ 
-						GRID.log("get"+styles.type+"Styles succes");
-						GRID.log(data);
-						styles.reset();
-						_.each(data.result, function(style){
-							styles.add( new StyleType(style) );						
-						});
-					} 
-				}
-			);
-		},
-		update: function(styles, options){
-			GRID.log("styles->update");
-		},
-		destroy: function(styles, options){
-			GRID.log("styles->create");
-		}
+	styles: function(styles, options){
+		GRID.log(styles.type+"Styles->read");
+		new GridAjax(
+			"get"+styles.type+"Styles",
+			[],
+			{ 
+				success_fn: function(data){ 
+					GRID.log("get"+styles.type+"Styles succes");
+					GRID.log(data);
+					styles.reset();
+					_.each(data.result, function(style){
+						styles.add( new StyleType(style) );						
+					});
+				} 
+			}
+		);
 	},
 	// element model calls
 	container: {

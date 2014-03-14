@@ -61,13 +61,12 @@ var Grid = Backbone.Model.extend({
     getContainer: function(index){
         return this.getContainers().at(index);
     },
-    sendUpdate: function(val){
-    	GRID.log("GridEvent sendUpdate");
-    	GRID.log(val);
-    },
     getIsDraft: function(){
         GridRequest.grid.read( this, { action: "checkdraft" } );
-        return this.get("isDraft");
+        return this.get("isDraft"); 
+    },
+    setToRevision: function(revision){
+        GridRequest.grid.update(this, {action: "setToRevision", revision: revision});
     },
     // handles all Server communication
     sync: function(method, model, options){
@@ -75,7 +74,11 @@ var Grid = Backbone.Model.extend({
     }
 });
 
-var Revision = Backbone.Model.extend({})
+var Revision = Backbone.Model.extend({
+    initialize: function(spec){
+        this.set("id",spec.revision);
+    }
+})
 
 // ----------------------
 // type models
@@ -117,15 +120,11 @@ var Container = Backbone.Model.extend({
     	}
     	return this.get("collection_slots");
     },
-    getCollection: function(){
-        return this.getSlots();
-    },
     getSlot: function(index){
         return this.getSlots().at(index);
     },
     // handles all Server communication
     sync: function(method, model, options){
-        this.get("parent").getCollection();
     	GridRequest.container[method](model, options);
     }
 });
