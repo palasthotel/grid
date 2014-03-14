@@ -48,6 +48,7 @@ GRID = {
 		this.grid = new Grid({
 			id:this.ID
 		});
+		return this.grid;
 		//new GridView({model: this.grid});
 	},
 	_buildModel: function(data){

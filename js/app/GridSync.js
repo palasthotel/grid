@@ -53,17 +53,6 @@ var GridRequest = {
 	grid: {
 		create: function(grid, options){
 			GRID.log("Request grid create");
-			[grid.getGridID(), containerType, $temp.index()]
-			new GridAjax(
-				"addContainer",
-				[],
-				{
-					success_fn: function(data){
-						GRID.log("addContainer success")
-						GRID.log(data);
-					}
-				}
-			);
 		},
 		read: function(grid, options){
 			new GridAjax(
@@ -114,6 +103,18 @@ var GridRequest = {
 	container: {
 		create: function(container, options){
 			GRID.log("Container->create");
+			GRID.log(options);
+			var params = [container.getGridID(), container.get("type"), options.index];
+			GRID.log(params);
+			new GridAjax( "addContainer", params,
+				{
+					success_fn: function(data){
+						GRID.log("addContainer success")
+						GRID.log(data);
+						options.success();
+					}
+				}
+			);
 		},
 		read: function(container, option){
 			GRID.log("Container->read");

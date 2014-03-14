@@ -22,6 +22,23 @@ var Grid = Backbone.Model.extend({
         var self = this;
        	this.fetch();
     },
+    createContainer: function(type, index){
+        var self = this;
+        var container = new Container({type:type, parent:this});
+        container.save(null,{
+            index:index,
+            // resoinse is always undefined, because we are not using backbones ajax call
+            success: function(container, response, options){
+                GRID.log("CreateContainerSuccess::");
+                GRID.log([container, response, options]);
+                self.addContainer(container, index);
+            },
+            error: function(container, response, options){
+                GRID.log("CreateContainerrror::");
+                GRID.log([container, response, options]);
+            }
+        });
+    },
     addContainer: function(element, index){
     	if(!(element instanceof Container)) throw "Try to add an not Container Object: Grid.addContainer";
     	var args = {};
@@ -39,6 +56,7 @@ var Grid = Backbone.Model.extend({
     	GRID.log("GridEvent sendUpdate");
     	GRID.log(val);
     },
+    // handles all Server communication
     sync: function(method, model, options){
     	GridRequest.grid[method](model, options);
     }
@@ -59,6 +77,9 @@ var Container = Backbone.Model.extend({
 			 self.addSlot(new Slot(slot));
 		});
 	},
+    getIndex: function(){
+        return this.get("parent").getContainers().indexOf(this);
+    },
 	addSlot: function(element, index){
     	if(!(element instanceof Slot)) throw "Try to add an not Slot Object: Container.addSlot";
     	var args = {};
@@ -72,6 +93,7 @@ var Container = Backbone.Model.extend({
     	}
     	return this.get("collection_slots");
     },
+    // handles all Server communication
     sync: function(method, model, options){
     	GridRequest.container[method](model, options);
     }
@@ -113,6 +135,7 @@ var Box = Backbone.Model.extend({
 	initialize: function(spec){
 
 	},
+    // handles all Server communication
     sync: function(method, model, options){
     	GridRequest.box[method](model, options);
     }
