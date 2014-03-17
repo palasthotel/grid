@@ -1,11 +1,14 @@
 var GridView = Backbone.View.extend({
   initialize: function() {
+  	this.el = "#new-grid";
     this.listenTo(this.model, 'change', this.render);
+    this.template = _.template
   },
   render: function() {
     //render template with Mustache or something
     GRID.log('i am rendering');
     GRID.log(this.model);
+
   }
 });
 

@@ -41,6 +41,8 @@ GRID = {
 	_state: 0,
 	// list of all contaiers in the right order
 	grid: null,
+	// wrapper of the icanhaz template strings
+	templates: {},
 	// initializes the grid
 	init: function(){
 		var self = this;
@@ -48,8 +50,13 @@ GRID = {
 		this.grid = new Grid({
 			id:this.ID
 		});
-		return this.grid;
-		//new GridView({model: this.grid});
+		return new GridView({model: this.grid});
+		//return this.grid;
+	},
+	_initTemplates: function(){
+		new GridAjax(
+			
+		);
 	},
 	// initializes the constatns
 	_initConstants: function(){
