@@ -647,7 +647,7 @@ function grid_wp_thegrid()
 		wp_enqueue_media();
 //		wp_enqueue_script('media-upload');
 		$grid_id=$rows[0]->grid_id;
-		$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+		$ckeditor_path=site_url().'/wp-content/plugins/grid/js/ckeditor/ckeditor.js';
 		$jslang="js/language/grid-en.js";
 		if(file_exists("js/language/grid-".WPLANG.".js"))
 			$jslang="js/language/grid-".WPLANG.".js";
@@ -729,7 +729,7 @@ function grid_wp_edit_reuse_box()
 
 	wp_enqueue_media();
 	$grid_id=$rows[0]->grid_id;
-	$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+	$ckeditor_path=site_url().'/wp-content/plugins/grid/js/ckeditor/ckeditor.js';
 	$jslang="js/language/grid-en.js";
 	if(file_exists("js/language/grid-".WPLANG.".js"))
 		$jslang="js/language/grid-".WPLANG.".js";
@@ -824,7 +824,7 @@ function grid_wp_edit_reuse_container()
 
 	wp_enqueue_media();
 	$grid_id=$rows[0]->grid_id;
-	$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
+	$ckeditor_path=site_url().'/wp-content/plugins/grid/js/ckeditor/ckeditor.js';
 	$jslang="js/language/grid-en.js";
 	if(file_exists("js/language/grid-".WPLANG.".js"))
 		$jslang="js/language/grid-".WPLANG.".js";
