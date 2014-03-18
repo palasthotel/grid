@@ -1,5 +1,5 @@
 <script type="text/javascript" src="/<?php echo $ckeditor_path; ?>"></script>
-<div id="new-grid"></div>
+<div id="new-grid-wrapper"></div>
 
 <div id="grid-wrapper" class="clearfix">
 	<div id="grid-toolbar" class="clearfix">

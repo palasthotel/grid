@@ -1288,7 +1288,7 @@ function grid_add_app_JS(){
 	drupal_add_js($framework_dir.'underscore.js','file');
 	drupal_add_js($framework_dir.'backbone.js','file');
 	// for templating
-	drupal_add_js($framework_dir.'mustache.js','file');
+	//drupal_add_js($framework_dir.'mustache.js','file');
 	drupal_add_js($framework_dir.'ICanHaz.js','file');
 
 	// Grid app ----------------------
@@ -1296,8 +1296,10 @@ function grid_add_app_JS(){
 	
 	// icanhaz tempaltes
 	$templates_dir = $base."/core/templates/backend/";
-	$inline_scripts = "<script id='ich-grid-tpl' type='text/html'>".file_get_contents($templates_dir."grid.tpl.html")."</script>";
-	$inline_scripts.= "<script id='ich-container-tpl' type='text/html'>".file_get_contents($templates_dir."grid.tpl.html")."</script>";
+	$inline_scripts = "<script id='tpl_grid' type='text/html'>".file_get_contents($templates_dir."ich.grid.html")."</script>";
+	$inline_scripts.= "<script id='tpl_container' type='text/html'>".file_get_contents($templates_dir."ich.container.html")."</script>";
+	$inline_scripts.= "<script id='tpl_slot' type='text/html'>".file_get_contents($templates_dir."ich.slot.html")."</script>";
+	$inline_scripts.= "<script id='tpl_box' type='text/html'>".file_get_contents($templates_dir."ich.box.html")."</script>";
 	$element = array(
       '#type' => 'markup',
       '#markup' => $inline_scripts,

@@ -37,26 +37,22 @@ GRID = {
 	SERVER: "/grid_ajax_endpoint",
 	// Pattern for preview URL
 	PREVIEW_URL: window.location.pathname+'/preview',
-	// 0 draft, 1 published
-	_state: 0,
-	// list of all contaiers in the right order
-	grid: null,
-	// wrapper of the icanhaz template strings
-	templates: {},
 	// initializes the grid
 	init: function(){
 		var self = this;
 		this._initConstants();
 		this.grid = new Grid({
-			id:this.ID
+			id:this.ID,
+			SERVER: this.SERVER,
+			PREVIEW_URL: this.PREVIEW_URL,
+			DEBUGGING: this.DEBUGGING
 		});
-		return new GridView({model: this.grid});
-		//return this.grid;
-	},
-	_initTemplates: function(){
-		new GridAjax(
-			
-		);
+		GRID.log(["the grid object", this.grid]);
+		this.gridview = new GridView({
+			model: this.grid
+		});
+		jQuery("#new-grid-wrapper").html(this.gridview.render().el);
+		return this.gridview;
 	},
 	// initializes the constatns
 	_initConstants: function(){
