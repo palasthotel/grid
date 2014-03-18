@@ -379,7 +379,7 @@ function grid_grid($node) {
 			drupal_add_js($base.'/js/grid2.0.js','file');
 			grid_add_css();
 
-			$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
+			$input = theme('grid_editor',array('ckeditor_path'=>"/".$base.'/js/ckeditor/ckeditor.js'));
 			return $input;
 		}
 	}
@@ -1112,7 +1112,7 @@ function grid_reuse_box_edit($boxid)
 	drupal_add_js($base.'/js/jquery.fileupload.js');
 	drupal_add_js($base.'/js/grid2.0.js','file');
 	grid_add_css();
-	$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
+	$input = theme('grid_editor',array('ckeditor_path'=>"/".$base.'/js/ckeditor/ckeditor.js'));
 	return $input;
 }
 
@@ -1239,7 +1239,7 @@ function grid_reuse_container_edit($containerid)
 	drupal_add_js($base.'/js/jquery.fileupload.js');
 	drupal_add_js($base.'/js/grid2.0.js','file');
 	grid_add_css();
-	$input = theme('grid_editor',array('ckeditor_path'=>$base.'/js/ckeditor/ckeditor.js'));
+	$input = theme('grid_editor',array('ckeditor_path'=>"/".$base.'/js/ckeditor/ckeditor.js'));
 
 	return $input;
 }
