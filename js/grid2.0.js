@@ -1288,7 +1288,7 @@ $(function() {
 				case "textarea":
 					$dynamic_field.append("<label>"+element.label+"</label>");
 					$dynamic_field.append(
-						"<textarea class='dynamic-value form-textarea' "+
+						"<textarea class='dynamic-value form-textarea' rows='8' "+
 						"data-path='"+cs_path+element.key+"' "+
 						"data-key='"+element.key+"' name='key-"+index+"'>"+
 						c_val+
