@@ -71,7 +71,7 @@ class grid_sidebar_box extends grid_box
 		$results=array();
 		$sidebar_type = get_option('grid_sidebar_post_type','sidebar');
 		$count = wp_count_posts( $sidebar_type );
-		$query=new WP_Query(array('post_type'=>$sidebar_type, 'posts_per_page' => $count));
+		$query=new WP_Query(array('post_type'=>$sidebar_type, 'posts_per_page' => $count->publish));
 		$i = 0;
 		while($query->have_posts() && $i < 15)
 		{
