@@ -331,6 +331,7 @@ var GridRequest = {
 					GRID.log("fetchBox success");
 					GRID.log(data);
 					box.attributes = _.extend(box.attributes, data.result);
+					box.trigger('change');
 				}
 			});
 			
@@ -362,6 +363,7 @@ var GridRequest = {
 							GRID.log("UpdateBox success");
 							GRID.log(data);
 							options.success();
+							box.fetch();
 						}
 					});
 			}
