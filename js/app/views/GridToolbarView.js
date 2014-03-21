@@ -1,4 +1,5 @@
 var GridToolbarView = Backbone.View.extend({
+    id:"grid-new-toolbar",
     events:{
         "click [role=publish]": "publish",
         "click [role=preview]": "preview",
