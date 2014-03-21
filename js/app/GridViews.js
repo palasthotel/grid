@@ -140,6 +140,9 @@ var BoxesView = Backbone.View.extend({
 });
 
 var BoxView = Backbone.View.extend({
+    events: {
+        'click .edit' : 'edit'
+    },
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
 	},
@@ -152,10 +155,17 @@ var BoxView = Backbone.View.extend({
         }
         this.$el.html(ich.tpl_box( json ));
         return this;
-	}
+	},
+    edit:function(){
+        var editor=new BoxEditor({model:this.model});
+        jQuery("div#new-grid-boxeditor").html(editor.render().el);
+    }
 });
 
 var BoxEditor = Backbone.View.extend({
+    events: {
+        'click .btn-cancel' : 'onCancel'
+    },
     initialize: function(){
     },
     render: function(){
@@ -168,5 +178,8 @@ var BoxEditor = Backbone.View.extend({
             'styles':this.model.getGrid().get("styles_box")
         }));
         return this;
+    },
+    onCancel: function(){
+        jQuery("div#new-grid-boxeditor").html("");
     }
 })

@@ -78,3 +78,5 @@ GRID = {
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } }
 };
+
+jQuery(function(){GRID.init();});

@@ -3,6 +3,7 @@
 // -----------------------------------
 var GridAjax = function(method, params_array, settings){
 	// two required variables
+	var json={};
 	json["method"] = method;
 	json["params"] = params_array;
 	if(typeof settings != "object"){ settings = {}; }
