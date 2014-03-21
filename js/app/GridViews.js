@@ -22,7 +22,7 @@ var ContainersView = Backbone.View.extend({
 	className: 'containers-wrapper',
 	initialize: function(){
         GRID.log('INIT ContainersView');
-		this.listenTo(this.collection, 'change', this.render);
+		//this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
         GRID.log(this.$el);
@@ -33,40 +33,110 @@ var ContainersView = Backbone.View.extend({
     	GRID.log('i am rendering the container collection');
     	var self = this;
     	this.$el.empty();
-
+        GRID.log(this.collection);
     	this.collection.each(function(container){
             var containerview = new ContainerView({model: container});
             containerview._parentView = self;
     		self.$el.append(containerview.render().el);
     	});
+        GRID.log(this._parentView);
         this._parentView.$el.find(".containers-wrapper").replaceWith(this.$el);
     	return this;
 	}
 });
 
 var ContainerView = Backbone.View.extend({
-	className: 'container',
+	className: 'container-drag',
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
+        this._slotsView = new SlotsView({collection: this.model.getSlots() });
+        this._slotsView._parentView = this;
 	},
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering a single container');
     	GRID.log(this.model.toJSON());
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
+        this._slotsView.render();
         return this;
 	}
 });
 
+var SlotsView = Backbone.View.extend({
+    tagName: 'div',
+    className: 'slots-wrapper clearfix',
+    initialize: function(){
+        GRID.log('INIT SlotsView');
+        //this.listenTo(this.collection, 'change', this.render);
+        this.collection.bind('add',this.render, this);
+        this.collection.bind('remove', this.render, this);
+        GRID.log(this.$el);
+    },
+    render: function(){
+        // renders the containers
+        //render template with Mustache or something
+        GRID.log('i am rendering the slots collection');
+        var self = this;
+        this.$el.empty();
+        GRID.log(this.collection);
+        this.collection.each(function(slot){
+            var slotview = new SlotView({model: slot});
+            slotview._parentView = self;
+            self.$el.append(slotview.render().el);
+        });
+        GRID.log(this._parentView);
+        this._parentView.$el.find(".slots-wrapper").replaceWith(this.$el);
+        return this;
+    }
+});
+
 var SlotView = Backbone.View.extend({
+    tagName: 'div',
+    className: 'slot',
 	initialize: function(){
-		this.listenTo(this.model, 'change', this.render);
+        GRID.log("INIT SlotView")
+        this._boxesView = new BoxesView({collection: this.model.getBoxes() });
+        this._boxesView._parentView = this;
+        this.listenTo(this.model, 'change', this.render);
 	},
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering slot');
+        var json = this.model.toJSON();
+        GRID.log(json);
+        this.$el.attr("data-style", json.style).attr("data-id",json.id);
+        this.$el.html(ich.tpl_slot( this.model.toJSON() ));
+        this._boxesView.render();
         return this;
 	}
+});
+
+var BoxesView = Backbone.View.extend({
+    tagName: 'div',
+    className: 'boxes-wrapper',
+    initialize: function(){
+        GRID.log('INIT BoxesView');
+        //this.listenTo(this.collection, 'change', this.render);
+        this.collection.bind('add',this.render, this);
+        this.collection.bind('remove', this.render, this);
+        GRID.log(this.$el);
+    },
+    render: function(){
+        // renders the containers
+        //render template with Mustache or something
+        GRID.log('i am rendering the Boxes collection');
+        var self = this;
+        this.$el.empty();
+        GRID.log(this.collection);
+        this.collection.each(function(box){
+            var boxview = new BoxView({model: box});
+            boxview._parentView = self;
+            self.$el.append(boxview.render().el);
+        });
+        GRID.log(this._parentView);
+        this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
+        return this;
+    }
 });
 
 var BoxView = Backbone.View.extend({
@@ -76,6 +146,11 @@ var BoxView = Backbone.View.extend({
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering box');
+        var json = this.model.toJSON();
+        if(json.type == "reference"){
+            json.reference = true;
+        }
+        this.$el.html(ich.tpl_box( json ));
         return this;
 	}
 });
