@@ -1,15 +1,58 @@
 
-<div data-type="{{type}}" class="container {{type}}">
+<div data-id="{{id}}" data-type="{{type}}" class="container display {{type}} clearfix" data-type="{{style}}"
+data-reused="{{reused}}">
+	<div class="c-tools">
+        <span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>
+        <span role="trash" class="c-trash c-tool hide-c-editor"></span>
+		<span role="edit" class="c-edit c-tool"></span>
+		
+		{{#reused}}<span role="reuse" class="c-reuse" title="${reusetitle}"></span>{{/reused}}
+		{{^reused}}<span role="reuse" class="c-reuse c-tool hide-c-editor"></span>{{/reused}}
+		
+		<span role="box-trash" class="c-box-trash"></span>
+    </div>
 	<p class="c-title">{{title}}</p>
 	<div class="c-before">
 		<p class="c-titleurl">{{titleurl}}</p>
-		<div class="c-prolog">{{prolog}}</div>
+		<div class="c-prolog">{{&prolog}}</div>
 	</div>
 	
 	<div class="slots-wrapper clearfix"></div>
 
 	<div class="c-after">
-		<div class="c-epilog">{{epilog}}</div>
+		<div class="c-epilog">{{&epilog}}</div>
 		<p class="c-style">{{style}}</p>
 	</div>
 </div>
+
+
+<!-- <div data-id="${id}" data-type="${type}" data-style="${style}"'+
+							' data-reused="{{if reused}}true{{else}}false{{/if}}" class="container display ${type} clearfix">'+
+        	'<div class="c-tools">'+
+                '<span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>'+
+                '<span role="trash" class="c-trash c-tool hide-c-editor"></span>'+
+				'<span role="edit" class="c-edit c-tool"></span>'+
+				
+				'{{if reused}}<span role="reuse" class="c-reuse" title="${reusetitle}"></span>{{else}}'+
+				'<span role="reuse" class="c-reuse c-tool hide-c-editor"></span>{{/if}}'+
+				
+				'<span role="box-trash" class="c-box-trash"></span>'+
+            '</div>'+
+            '{{if !is_sidebar}}'+
+			'<p class="c-title">${title}</p>'+
+        	'<div class="c-before">'+
+				'<p class="c-titleurl">${titleurl}</p>'+
+            	'<div class="c-prolog">{{html prolog}}</div>'+
+            '</div>'+
+            '{{/if}}'+
+        	'<div class="slots-wrapper clearfix">{{if slots}}{{tmpl(slots) "slotTemplate"}}{{/if}}</div>'+
+        	'{{if !is_sidebar}}'+
+            '<div class="c-after">'+
+            	'<div class="c-epilog">{{html epilog}}</div>'+
+				'<p><span class="c-readmore">${readmore}</span>'+
+					'{{if readmoreurl}} [ <span class="c-readmoreurl">${readmoreurl}</span> ]'+
+					' {{else}} <span class="c-readmoreurl">${readmoreurl}</span>{{/if}}</p>'+
+				'<p class="c-style">${styleTitle}</p>'+
+            '</div>'+
+            '{{/if}}'+
+        '</div> -->
