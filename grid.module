@@ -1296,7 +1296,9 @@ function grid_add_app_JS(){
 	
 	// icanhaz tempaltes
 	$templates_dir = $base."/core/templates/backend/";
-	$inline_scripts = "<script id='tpl_grid' type='text/html'>".file_get_contents($templates_dir."ich.grid.html")."</script>";
+	$inline_scripts = "";
+	$inline_scripts.= "<script id='tpl_toolbar' type='text/html'>".file_get_contents($templates_dir."ich.toolbar.html")."</script>";
+	$inline_scripts.= "<script id='tpl_grid' type='text/html'>".file_get_contents($templates_dir."ich.grid.html")."</script>";
 	$inline_scripts.= "<script id='tpl_container' type='text/html'>".file_get_contents($templates_dir."ich.container.html")."</script>";
 	$inline_scripts.= "<script id='tpl_slot' type='text/html'>".file_get_contents($templates_dir."ich.slot.html")."</script>";
 	$inline_scripts.= "<script id='tpl_box' type='text/html'>".file_get_contents($templates_dir."ich.box.html")."</script>";
@@ -1309,6 +1311,7 @@ function grid_add_app_JS(){
 
 	// grid MVC JS files
 	drupal_add_js($app_dir.'GridViews.js','file');
+	drupal_add_js($app_dir.'views/GridToolbarView.js','file');
 	drupal_add_js($app_dir.'GridModels.js','file');
 	drupal_add_js($app_dir.'GridCollections.js','file');
 	drupal_add_js($app_dir.'GridSync.js','file');

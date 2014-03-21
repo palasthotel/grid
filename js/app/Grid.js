@@ -41,17 +41,22 @@ GRID = {
 	init: function(){
 		var self = this;
 		this._initConstants();
+		// the grid
 		this.grid = new Grid({
 			id:this.ID,
 			SERVER: this.SERVER,
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING
 		});
-		GRID.log(["the grid object", this.grid]);
 		this.gridview = new GridView({
 			model: this.grid
 		});
 		jQuery("#new-grid-wrapper").html(this.gridview.render().el);
+		// toolbar
+		var toolbar  = new GridToolbarView({
+			model: this.grid
+		});
+		jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
 		return this.gridview;
 	},
 	// initializes the constatns

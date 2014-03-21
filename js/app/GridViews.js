@@ -25,7 +25,6 @@ var ContainersView = Backbone.View.extend({
 		//this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
-        GRID.log(this.$el);
 	},
 	render: function(){
         // renders the containers
@@ -33,13 +32,11 @@ var ContainersView = Backbone.View.extend({
     	GRID.log('i am rendering the container collection');
     	var self = this;
     	this.$el.empty();
-        GRID.log(this.collection);
     	this.collection.each(function(container){
             var containerview = new ContainerView({model: container});
             containerview._parentView = self;
     		self.$el.append(containerview.render().el);
     	});
-        GRID.log(this._parentView);
         this._parentView.$el.find(".containers-wrapper").replaceWith(this.$el);
     	return this;
 	}
@@ -55,11 +52,14 @@ var ContainerView = Backbone.View.extend({
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering a single container');
-    	GRID.log(this.model.toJSON());
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
         this._slotsView.render();
         return this;
-	}
+	},
+    renderEditor: function(){
+
+        return this;
+    }
 });
 
 var SlotsView = Backbone.View.extend({
@@ -70,7 +70,6 @@ var SlotsView = Backbone.View.extend({
         //this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
-        GRID.log(this.$el);
     },
     render: function(){
         // renders the containers
@@ -78,13 +77,11 @@ var SlotsView = Backbone.View.extend({
         GRID.log('i am rendering the slots collection');
         var self = this;
         this.$el.empty();
-        GRID.log(this.collection);
         this.collection.each(function(slot){
             var slotview = new SlotView({model: slot});
             slotview._parentView = self;
             self.$el.append(slotview.render().el);
         });
-        GRID.log(this._parentView);
         this._parentView.$el.find(".slots-wrapper").replaceWith(this.$el);
         return this;
     }
@@ -103,7 +100,6 @@ var SlotView = Backbone.View.extend({
 		//render template with Mustache or something
     	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
-        GRID.log(json);
         this.$el.attr("data-style", json.style).attr("data-id",json.id);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
         this._boxesView.render();
@@ -127,13 +123,11 @@ var BoxesView = Backbone.View.extend({
         GRID.log('i am rendering the Boxes collection');
         var self = this;
         this.$el.empty();
-        GRID.log(this.collection);
         this.collection.each(function(box){
             var boxview = new BoxView({model: box});
             boxview._parentView = self;
             self.$el.append(boxview.render().el);
         });
-        GRID.log(this._parentView);
         this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
         return this;
     }
