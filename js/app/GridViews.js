@@ -79,3 +79,19 @@ var BoxView = Backbone.View.extend({
         return this;
 	}
 });
+
+var BoxEditor = Backbone.View.extend({
+    initialize: function(){
+    },
+    render: function(){
+        this.$el.html(ich.tpl_boxeditor({
+            'lang_values':document.lang_values,
+            'box':this.model.toJSON(),
+            'b_index':this.model.getIndex(),
+            'c_id':this.model.getContainer().get("id"),
+            's_id':this.model.getSlot().get("id"),
+            'styles':this.model.getGrid().get("styles_box")
+        }));
+        return this;
+    }
+})

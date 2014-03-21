@@ -123,6 +123,9 @@ var Container = Backbone.Model.extend({
     getSlot: function(index){
         return this.getSlots().at(index);
     },
+    getGrid: function(){
+        return this.get("parent");
+    },
     // handles all Server communication
     sync: function(method, model, options){
     	GridRequest.container[method](model, options);
@@ -176,6 +179,9 @@ var Box = Backbone.Model.extend({
     },
     getContainer: function(){
         return this.getSlot().getContainer();
+    },
+    getGrid:function(){
+        return this.getContainer().getGrid();
     },
 	initialize: function(spec){
 

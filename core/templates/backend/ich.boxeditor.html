@@ -1,0 +1,37 @@
+<div class="box-editor" data-b-index="{{b_index}}" data-id="{{box.id}}" data-c-id="{{c_id}}" data-s-id="{{s_id}}" data-type="{{box.type}}">
+	<fieldset class="collapsable collapsable-hidden text-fields">
+		<legend>{{lang_values.label-b-before}}</legend>
+		<div class="field-wrapper">
+			<label>{{lang_values.label-title}}</label>
+			<input name="f-b-title" type="text" value="{{box.title}}" class="form-text" />
+			<label>{{lang_values.label-title-url}}</label>
+			<input name="f-b-titleurl" type="text" value="{{box.titleurl}}" class="form-text" />
+			<label>{{lang_values.label-prolog}}</label>
+			<textarea name="f-b-prolog" class="form-html">{{box.prolog}}</textarea>
+		</div>
+	</fieldset>
+	<fieldset class="collapsable dynamic-fields">
+		<legend>{{lang_values.label-b-dynamic}}</legend>
+		<div class="field-wrapper"></div>
+	</fieldset>
+	<fieldset class="collapsable collapsable-hidden text-fields">
+		<legend>{{lang_values.label-b-after}}</legend>
+		<div class="field-wrapper">
+			<label>{{lang_values.label-epilog}}</label>
+			<textarea name="f-b-epilog"  class="form-html">{{box.epilog}}</textarea>
+			<label>{{lang_values.label-readmore}}</label>
+			<input name="f-b-readmore" type="text" value="{{box.readmore}}" class="form-text" />
+			<label>{{lang_values.label-readmore-url}}</label>
+			<input name="f-b-readmoreurl" type="text" value="{{box.readmoreurl}}" class="form-text" />
+		</div>
+	</fieldset>
+	<div class="box-styles-wrapper">
+		<label for="f-b-style">Style</label>
+		<select name="f-b-style" class="form-select"  id="f-b-style">
+			<option value="">{{lang_values.default-style}}</option>
+			{{#styles}}
+				<option value="{{slug}}">{{title}}</option>
+			{{/styles}}
+		</select>
+	</div>
+</div>
