@@ -76,6 +76,22 @@ GRID = {
 			GRID.PREVIEW_URL = document.previewurl;
 		}
 	},
+	// CKEDITOR functions
+	useCKEDITOR: function(selector){
+		CKEDITOR.replace(
+			selector,{
+				customConfig : document.PathToConfig
+			}
+		);
+	},
+	getCKEDITORVal: function(selector){
+		return CKEDITOR.instances[selector].getData();
+	},
+	destroyCKEDITORs: function(){
+		for(name in CKEDITOR.instances){
+		    CKEDITOR.instances[name].destroy();
+		}
+	},
 	// publishes the grid
 	publish: function(){ new GridAjax("publishDraft",[GRID.ID]); },
 	// revert to old revision
