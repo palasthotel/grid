@@ -12,7 +12,7 @@ var GridView = Backbone.View.extend({
     render: function() {
         GRID.log('i am rendering the grid interface');
         this.$el.html(ich.tpl_grid(this.model.toJSON() ));
-        this._containersView.render();
+        this.$el.find(".containers-wrapper").replaceWith(this._containersView.render().el);
         return this;
     }
 });
@@ -24,8 +24,7 @@ var ContainersView = Backbone.View.extend({
         GRID.log('INIT ContainersView');
 		//this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
-        this.collection.bind('remove', this.render, this);
-        GRID.log(this.$el);
+        this.collection.bind('remove', this.remove, this);
 	},
 	render: function(){
         // renders the containers
@@ -33,18 +32,15 @@ var ContainersView = Backbone.View.extend({
     	GRID.log('i am rendering the container collection');
     	var self = this;
     	this.$el.empty();
-        GRID.log(this.collection);
     	this.collection.each(function(container){
             var containerview = new ContainerView({model: container});
             containerview._parentView = self;
     		self.$el.append(containerview.render().el);
     	});
-        GRID.log(this._parentView);
-        this._parentView.$el.find(".containers-wrapper").replaceWith(this.$el);
     	return this;
 	},
     remove: function(container,containers,options){
-        this._parentView.$el.find(".container[data-id="+container.get("id")+"]").remove();
+        this.$el.find(".container[data-id="+container.get("id")+"]").remove();
     }
 });
 
@@ -55,18 +51,16 @@ var ContainerView = Backbone.View.extend({
         "click [role=edit]": "renderEditor",
         "click [role=reuse]": "reuse",
         "click [role=revert]": "render",
-        "click [role=ok]": "saveEditor",
-        "change .form-val": "changedVal"
+        "click [role=ok]": "saveEditor"
     },
 	initialize: function(){
-		this.listenTo(this.model, 'change', this.render);
+		//this.listenTo(this.model, 'change', this.render);
         this._slotsView = new SlotsView({collection: this.model.getSlots() });
         this._slotsView._parentView = this;
 	},
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering a single container');
-    	GRID.log(this.model.toJSON());
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
         this._slotsView.render();
         return this;
@@ -77,43 +71,33 @@ var ContainerView = Backbone.View.extend({
         GRID.useCKEDITOR("f-c-epilog");
         return this;
     },
-    changedVal: function(event){
-        GRID.log(["changedval",event]);
-        var $target = jQuery(event.currentTarget);
-        GRID.log(["target",$target.attr("scope")]);
-
-    },
     saveEditor: function(){
-        // save values with model.set and model.save
-        // templateParams = {
-        //             id:$editContainer.data("id"), 
-        //             title: $editContainer.find("#f-c-title").val(),
-        //             titleurl: $editContainer.find("#f-c-titleurl").val(),
-        //             type: $editContainer.data("type"),
-        //             prolog: CKEDITOR.instances["f-c-prolog"].getData(),
-        //             epilog: CKEDITOR.instances["f-c-epilog"].getData(),
-        //             readmore: $editContainer.find("#f-c-readmore").val(),
-        //             readmoreurl: $editContainer.find("#f-c-readmoreurl").val(),
-        //             style: style
-        //         };
-        // params =[ID, templateParams.id,{
-        //     style: templateParams.style,
-        //     title: templateParams.title,
-        //     titleurl: templateParams.titleurl,
-        //     readmore: templateParams.readmore,
-        //     readmoreurl: templateParams.readmoreurl,
-        //     prolog: templateParams.prolog,
-        //     epilog: templateParams.epilog,
-        //     style: style
-        //     }];
-        var json = this.model.toJSON();
-        this.model.set("prolog", GRID.getCKEDITORVal("f-c-prolog"));
-        this.model.set("epilog",GRID.getCKEDITORVal("f-c-epilog"));
+        var self = this;
+        jQuery.each(this.$el.find(".form-val"), function(index, element) {
+            var $this = jQuery(element);
+            var scope = $this.attr("scope");
+            if($this.hasClass('form-html')){
+                self.model.set(scope, GRID.getCKEDITORVal($this.attr("name") ) );
+            } else {
+                self.model.set(scope, $this.val() );
+            }
+        });
         this.model.save();
         return this.render();
     },
     reuse: function(){
-        // send reuse container and rerender
+        var reusetitle = prompt("Bitte gib einen Titel für den Container ein");
+        if(reusetitle == ""){
+            return false;
+        }
+        var self = this;
+        this.model.save(null,{
+            reusetitle: reusetitle,
+            action: "reuse",
+            success:function(data){
+                self.render();
+            }
+        });
         return this;
     },
     selfdestruct: function(){
@@ -156,7 +140,9 @@ var SlotView = Backbone.View.extend({
 	initialize: function(){
         GRID.log("INIT SlotView")
         this._boxesView = new BoxesView({collection: this.model.getBoxes() });
+        this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
         this._boxesView._parentView = this;
+        this._slotStyleChangerView._parentView = this;
         this.listenTo(this.model, 'change', this.render);
 	},
 	render: function(){
@@ -164,11 +150,16 @@ var SlotView = Backbone.View.extend({
     	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
         GRID.log(json);
-        this.$el.attr("data-style", json.style).attr("data-id",json.id);
+        this.refreshAttr();
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
+        this.$el.find(".choose-style").replaceWith(this._slotStyleChangerView.el);
         this._boxesView.render();
         return this;
-	}
+	},
+    refreshAttr: function(){
+        var json = this.model.toJSON();
+        this.$el.attr("data-style", json.style).attr("data-id",json.id);
+    }
 });
 
 var BoxesView = Backbone.View.extend({
@@ -236,7 +227,6 @@ var BoxEditor = Backbone.View.extend({
     },
     initialize: function(){
     },
-
     render: function(){
         GRID.log(this.model.toJSON());
         this.$el.html(ich.tpl_boxeditor({

@@ -1302,6 +1302,8 @@ function grid_add_app_JS(){
 	$inline_scripts.= "<script id='tpl_container' type='text/html'>".file_get_contents($templates_dir."ich.container.html")."</script>";
 	$inline_scripts.= "<script id='tpl_containerEditor' type='text/html'>".file_get_contents($templates_dir."ich.containerEditor.html")."</script>";
 	$inline_scripts.= "<script id='tpl_slot' type='text/html'>".file_get_contents($templates_dir."ich.slot.html")."</script>";
+	$inline_scripts.= "<script id='tpl_slotstylechanger' type='text/html'>".file_get_contents($templates_dir."ich.slotstylechanger.html")."</script>";
+	
 	$inline_scripts.= "<script id='tpl_box' type='text/html'>".file_get_contents($templates_dir."ich.box.html")."</script>";
 	$inline_scripts.= "<script id='tpl_boxeditor' type='text/html'>".file_get_contents($templates_dir."ich.boxeditor.html")."</script>";
 	$element = array(
@@ -1313,6 +1315,8 @@ function grid_add_app_JS(){
 	// grid MVC JS files
 	drupal_add_js($app_dir.'GridViews.js','file');
 	drupal_add_js($app_dir.'views/GridToolbarView.js','file');
+	drupal_add_js($app_dir.'views/GridSlotStyleChangerView.js','file');
+
 	drupal_add_js($app_dir.'GridModels.js','file');
 	drupal_add_js($app_dir.'GridCollections.js','file');
 	drupal_add_js($app_dir.'GridSync.js','file');

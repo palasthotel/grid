@@ -15,6 +15,12 @@ var Grid = Backbone.Model.extend({
 		// 0 == false == unknown, 1 published, 2 draft
 		isDraft: true,
         isSidebar: false,
+        types_box: null,
+        types_container: null,
+        styles_container: null,
+        styles_slot: null,
+        styles_box: null,
+        revisions: null,
 	},
 	getGridID: function(){
 		return this.get("id");
@@ -26,7 +32,15 @@ var Grid = Backbone.Model.extend({
             throw "InvalidConstructArgs";
         }
         var self = this;
+
+        this.set("types_box", new BoxTypes() );
+        this.set("types_container", new ContainerTypes() );
+        this.set("styles_container", new Styles({type:"container"}) );
+        this.set("styles_box", new Styles({type:"box"}) );
+
        	this.fetch();
+        this.set("revisions", new Revisions({grid: this}) );
+        this.get("revisions").fetch();
     },
     createContainer: function(type, index){
         var self = this;
@@ -61,6 +75,12 @@ var Grid = Backbone.Model.extend({
     getContainer: function(index){
         return this.getContainers().at(index);
     },
+    getSlotStyles: function(){
+        if(!(this.get("styles_slot") instanceof Styles) ){
+            this.set("styles_slot", new Styles({type:"slot"}));
+        }
+        return this.get("styles_slot");
+    },
     getIsDraft: function(){
         GridRequest.grid.read( this, { action: "checkdraft" } );
         return this.get("isDraft"); 
@@ -91,6 +111,9 @@ var StyleType = Backbone.Model.extend({});
 // element models
 // -------------------
 var Container = Backbone.Model.extend({
+    getGrid: function(){
+        return this.get("parent");
+    },
 	getGridID: function(){
 		return this.get("parent").getGridID();
 	},
@@ -132,6 +155,9 @@ var Container = Backbone.Model.extend({
     }
 });
 var Slot = Backbone.Model.extend({
+    getGrid: function(){
+        return this.get("parent").getGrid();
+    },
 	getGridID: function(){
 		return this.get("parent").getGridID();
 	},
@@ -171,6 +197,9 @@ var Slot = Backbone.Model.extend({
     }
 });
 var Box = Backbone.Model.extend({
+    getGrid: function(){
+        return this.get("parent").getGrid();
+    },
 	getGridID: function(){
 		return this.get("parent").getGridID();
 	},

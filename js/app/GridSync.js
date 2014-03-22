@@ -82,29 +82,11 @@ var GridRequest = {
 									 grid.addContainer(new Container(container));
 								});
 
-								var boxtypes = new BoxTypes();
-								boxtypes.fetch();
-								grid.set("types_box", boxtypes);
-
-								var containertypes = new ContainerTypes();
-								containertypes.fetch();
-								grid.set("types_container", containertypes);
-
-								var containerstyles = new Styles({type: "Container"});
-								containerstyles.fetch();
-								grid.set("styles_container", containerstyles);
-
-								var slotstyles = new Styles({type: "Slot"});
-								slotstyles.fetch();
-								grid.set("styles_slot", slotstyles);
-
-								var boxstyles = new Styles({type: "Box"});
-								boxstyles.fetch();
-								grid.set("styles_box", boxstyles);
-
-								var revisions = new Revisions({grid: grid});
-								revisions.fetch();
-								grid.set("revisions", revisions);
+								grid.get("types_box").fetch();
+								grid.get("types_container").fetch();
+								grid.get("styles_container").fetch();
+								grid.getSlotStyles().fetch();
+								grid.get("styles_box").fetch();
 
 							}	
 						}
@@ -239,6 +221,37 @@ var GridRequest = {
 		},
 		update: function(container, options){
 			GRID.log("Container->update");
+			switch(options.action){
+				case "reuse":
+					var params =[container.getGridID(),container.get("id"),options.reusetitle];
+					new GridAjax("reuseContainer", params,{
+						success_fn: function(data){
+							container.set("reused", true);
+							options.success(data);
+						}
+					});
+					break;
+				default:
+					var attributes = _.clone(container.attributes);
+					delete(attributes.slots); 
+					delete(attributes.collection_slots);	
+					delete(attributes.classes);
+					delete(attributes.parent);		
+					var params =[container.getGridID(), container.get("id"),attributes];
+					GRID.log(params);			
+					new GridAjax("updateContainer", params,
+						{
+							success_fn: function(data){
+								GRID.log("updateContainer success");
+								GRID.log(data);
+								options.success();
+							},
+							error_fn: options.error
+						}
+					);
+					break;
+
+			}
 			var attributes = _.clone(container.attributes);
 			delete(attributes.slots); 
 			delete(attributes.collection_slots);	
