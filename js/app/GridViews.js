@@ -70,9 +70,6 @@ var ContainerView = Backbone.View.extend({
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
         this._slotsView.render();
         return this;
-<<<<<<< HEAD
-	}
-=======
 	},
     renderEditor: function(){
         this.$el.html(ich.tpl_containerEditor(this.model.toJSON()));
@@ -123,7 +120,6 @@ var ContainerView = Backbone.View.extend({
         console.log("delete container");
         this.model.destroy({wait:true});
     }
->>>>>>> 60682411965e829cce445d0021a5b205029757c1
 });
 
 var SlotsView = Backbone.View.extend({
