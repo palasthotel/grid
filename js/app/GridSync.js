@@ -353,6 +353,20 @@ var GridRequest = {
 			GRID.log("box->update "+options.action);
 			// needs a switch for different actions
 			switch(options.action){
+				case "reuse":
+					var params = [
+						box.getGridID(),
+						box.getSlot().getContainer().get("id"),
+						box.getSlot().get("id"),
+						box.getIndex()];
+						GRID.log(params);
+						new GridAjax("reuseBox",params,{
+							success_fn: function(data){
+								box.attributes=data.result;
+								box.trigger('change');
+							}
+						});
+					break;
 				case "move":
 					// for moving the box from one to another position
 					break;

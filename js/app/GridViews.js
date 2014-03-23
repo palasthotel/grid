@@ -276,7 +276,9 @@ var BoxEditor = Backbone.View.extend({
 
     onMakeReusable:function(e)
     {
-        alert("TODO");
+        if(!confirm(document.lang_values["confirm-box-reuse"])) return;
+        this.model.save(null,{action:"reuse"});
+        jQuery("div#new-grid-boxeditor").html("");
     },
 
     onSave:function(e)
