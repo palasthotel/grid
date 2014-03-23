@@ -14,13 +14,7 @@ var Grid = Backbone.Model.extend({
 		PREVIEW_URL: window.location.pathname+'/preview',
 		// 0 == false == unknown, 1 published, 2 draft
 		isDraft: true,
-        isSidebar: false,
-        types_box: null,
-        types_container: null,
-        styles_container: null,
-        styles_slot: null,
-        styles_box: null,
-        revisions: null,
+        isSidebar: false
 	},
 	getGridID: function(){
 		return this.get("id");
@@ -33,14 +27,7 @@ var Grid = Backbone.Model.extend({
         }
         var self = this;
 
-        this.set("types_box", new BoxTypes() );
-        this.set("types_container", new ContainerTypes() );
-        this.set("styles_container", new Styles({type:"container"}) );
-        this.set("styles_box", new Styles({type:"box"}) );
-
        	this.fetch();
-        this.set("revisions", new Revisions({grid: this}) );
-        this.get("revisions").fetch();
     },
     createContainer: function(type, index){
         var self = this;
@@ -75,30 +62,9 @@ var Grid = Backbone.Model.extend({
     getContainer: function(index){
         return this.getContainers().at(index);
     },
-    getContainerTypes: function(){
-        if(!(this.get("types_container") instanceof ContainerTypes) ){
-            this.set("types_container", new ContainerTypes());
-        }
-        return this.get("types_container");
-    },
-    getBoxTypes: function(){
-        if(!(this.get("types_box") instanceof BoxTypes) ){
-            this.set("types_box", new BoxTypes());
-        }
-        return this.get("types_box");
-    },
-    getSlotStyles: function(){
-        if(!(this.get("styles_slot") instanceof Styles) ){
-            this.set("styles_slot", new Styles({type:"slot"}));
-        }
-        return this.get("styles_slot");
-    },
     getIsDraft: function(){
         GridRequest.grid.read( this, { action: "checkdraft" } );
         return this.get("isDraft"); 
-    },
-    setToRevision: function(revision){
-        GridRequest.grid.update(this, {action: "setToRevision", revision: revision});
     },
     // handles all Server communication
     sync: function(method, model, options){

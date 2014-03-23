@@ -6,14 +6,14 @@ var GridSlotStyleChangerView = Backbone.View.extend({
     },
     initialize: function() {
     	GRID.log("INIT GridToolbarView");
-        this.listenTo(this.model.getGrid().getSlotStyles(),"add",this.render);
+        this.listenTo(GRID.getSlotStyles(),"add",this.render);
     },
     render: function() {
         GRID.log('i am rendering slot styles changer');
         var styles = [];
         var activestyle = "Default Style";
         var self = this;
-        this.model.getGrid().getSlotStyles().each( function(style){
+        GRID.getSlotStyles().each( function(style){
             if(style.get("slug") == self.model.get("style")) activestyle = style.get("title");
             styles.push(style.toJSON());
         });

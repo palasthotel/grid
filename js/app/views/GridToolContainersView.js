@@ -17,6 +17,24 @@ var GridToolContainersView = Backbone.View.extend({
         });
         this.$el.html(ich.tpl_toolContainers(containers));
         this.$el.show();
+        this.initializesDraggable();
         return this;
+    },
+    initializesDraggable: function(){
+        this.$el.find(".container-dragger").draggable({ 
+            helper: function(event, element){
+                return $("<div class='dragger-helper'></div>");
+            },
+            cursorAt: { left: 30, top:30 },
+            zIndex: 99,
+            appendTo: this._gridView.$el,
+            scroll: true,
+            start: function(event, ui){
+                
+            },
+            stop: function( event, ui ){
+                
+            }
+        });
     }
 });
