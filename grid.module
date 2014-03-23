@@ -1318,6 +1318,11 @@ function grid_add_app_JS(){
 
 	// grid MVC JS files
 	drupal_add_js($app_dir.'GridViews.js','file');
+	$files=glob($app_dir."views/EditorWidgets/*.js");
+	foreach($files as $idx=>$file)
+	{
+		drupal_add_js($file,'file');
+	}
 	drupal_add_js($app_dir.'views/GridToolbarView.js','file');
 	drupal_add_js($app_dir.'views/GridToolContainersView.js','file');
 	drupal_add_js($app_dir.'views/GridToolBoxesView.js','file');
