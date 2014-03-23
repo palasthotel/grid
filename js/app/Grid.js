@@ -25,8 +25,7 @@
 }());
 
 /** public object */
-window.GRID = {},
-window.GRID.AJAX = {};
+window.GRID = {};
 var GRID = window.GRID;
 
 GRID = {
@@ -39,6 +38,7 @@ GRID = {
 	PREVIEW_URL: window.location.pathname+'/preview',
 	// initializes the grid
 	grid: null,
+	gridView: null,
 	types_box: null,
     types_container: null,
     styles_container: null,
@@ -46,37 +46,47 @@ GRID = {
     styles_box: null,
     revisions: null,
 	init: function(){
-		var self = this;
+		// initialize constants
 		this._initConstants();
+
+		// load all model classes for grid works
 		this.getBoxTypes().fetch();
 		this.getContainerTypes().fetch();
 		this.getContainerStyles().fetch();
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
-		
-		// the grid
-		this.grid = new Grid({
-			id:this.ID,
-			SERVER: this.SERVER,
-			PREVIEW_URL: this.PREVIEW_URL,
-			DEBUGGING: this.DEBUGGING
-		});
-		
-		this.revisions = new Revisions({grid: this.grid});
+
+		// load the grid + view
+		jQuery("#new-grid-wrapper").html( this.getView().render().el );
+
+		// load the revisions
+		this.revisions = new Revisions({grid: this.getModel() });
         this.revisions.fetch();
 
-		this.gridview = new GridView({
-			model: this.grid
-		});
-		jQuery("#new-grid-wrapper").html(this.gridview.render().el);
-
-		// toolbar
+		// init toolbar
 		var toolbar  = new GridToolbarView({
-			model: this.grid
+			model: this.getModel()
 		});
-		toolbar._gridView = this.gridview;
+
 		jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
 		
+		return this;
+	},
+	getModel: function(){
+		if(!(this.grid instanceof Grid) ){
+            this.grid = new Grid({
+            	id:this.ID,
+				SERVER: this.SERVER,
+				PREVIEW_URL: this.PREVIEW_URL,
+				DEBUGGING: this.DEBUGGING
+            });
+        }
+		return this.grid;
+	},
+	getView: function(){
+		if(!(this.gridview instanceof GridView) ){
+            this.gridview = new GridView({model: this.getModel() });
+        }
 		return this.gridview;
 	},
 	// type collections

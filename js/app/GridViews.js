@@ -45,7 +45,7 @@ var ContainersView = Backbone.View.extend({
 });
 
 var ContainerView = Backbone.View.extend({
-	className: 'container-drag',
+	className: 'container display clearfix',
     events:{
         "click [role=trash]": "selfdestruct",
         "click [role=edit]": "renderEditor",
@@ -61,15 +61,27 @@ var ContainerView = Backbone.View.extend({
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering a single container');
+        this.refreshAttr();
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
         this._slotsView.render();
         return this;
 	},
     renderEditor: function(){
+        this.refreshAttr();
+        this.$el.removeClass('display').addClass('editor');
         this.$el.html(ich.tpl_containerEditor(this.model.toJSON()));
         GRID.useCKEDITOR("f-c-prolog");
         GRID.useCKEDITOR("f-c-epilog");
         return this;
+    },
+    refreshAttr: function(){
+        var json = this.model.toJSON();
+        this.$el
+            .attr("data-id", json.id)
+            .attr("data-type", json.type)
+            .attr("data-style", json.style)
+            .attr("data-reused", json.reused)
+            .addClass(json.type+" display");
     },
     saveEditor: function(){
         var self = this;
