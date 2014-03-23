@@ -82,8 +82,8 @@ var GridRequest = {
 									 grid.addContainer(new Container(container));
 								});
 
-								grid.get("types_box").fetch();
-								grid.get("types_container").fetch();
+								grid.getBoxTypes().fetch();
+								grid.getContainerTypes().fetch();
 								grid.get("styles_container").fetch();
 								grid.getSlotStyles().fetch();
 								grid.get("styles_box").fetch();

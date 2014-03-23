@@ -7,7 +7,8 @@
 	background-color:#fff;
 	padding-right: 300px;
 }
-#grid-wrapper ul{
+#grid-wrapper ul,
+#new-grid-wrapper ul{
 	list-style:none;
 	margin:0px;
 }

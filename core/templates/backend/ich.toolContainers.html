@@ -1,0 +1,24 @@
+
+<!-- <div class="g-tool g-container clearfix" style="display: block;"> -->
+
+    <div class="loading rotate"></div>
+    <ul class="clearfix element-type-tabs container-type-tabs">
+        <li role="show-containers" scope="containers" class="active" lang-id="title-tab-containers" lang-type="title" title="New containers">C
+        </li>
+        <li role="show-containers" scope="sidebars" lang-id="title-tab-sidebars" lang-type="title" title="Sidebars">S
+        </li>
+        <li role="show-reusable" scope="reuse" lang-id="title-tab-reuse-container" lang-type="title" title="Reusable containers">R
+        </li>
+    </ul>
+    <ul class="container-type-chooser element-list" ref="show-containers" style="height: 634px;">
+        {{#containers}}
+        <li class="container-dragger new-container clearfix {{type}} ui-draggable" data-type="{{type}}">
+            {{#slots}}
+            <div class="slot"></div>
+            {{/slots}}
+        </li>
+        {{/containers}}
+    </ul>
+    <ul class="reusable-elements element-list" ref="show-reusable"></ul>
+
+<!-- </div> -->
