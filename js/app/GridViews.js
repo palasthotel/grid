@@ -66,7 +66,20 @@ var ContainerView = Backbone.View.extend({
         return this;
 	},
     renderEditor: function(){
-        this.$el.html(ich.tpl_containerEditor(this.model.toJSON()));
+        var styles=GRID.getContainerStyles();
+        styles=styles.toJSON();
+        var self=this;
+        _.each(styles,function(style){
+            if(self.model.get("style")==style.slug)
+            {
+                style.selected="selected";
+            }
+            else
+            {
+                style.selected="";
+            }
+        });
+        this.$el.html(ich.tpl_containerEditor({model:this.model.toJSON(),styles:styles}));
         GRID.useCKEDITOR("f-c-prolog");
         GRID.useCKEDITOR("f-c-epilog");
         return this;
