@@ -211,7 +211,9 @@ var BoxView = Backbone.View.extend({
 	},
     edit:function(){
         var editor=new BoxEditor({model:this.model});
-        jQuery("div#new-grid-boxeditor").html(editor.render().el);
+        GRID.showBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html(editor.render().el);
+        });
     }
 });
 
@@ -266,7 +268,9 @@ var BoxEditor = Backbone.View.extend({
         return this;
     },
     onCancel: function(){
-        jQuery("div#new-grid-boxeditor").html("");
+        GRID.hideBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html("");
+        });
     },
 
     onToggle:function(e)
@@ -278,7 +282,9 @@ var BoxEditor = Backbone.View.extend({
     {
         if(!confirm(document.lang_values["confirm-box-reuse"])) return;
         this.model.save(null,{action:"reuse"});
-        jQuery("div#new-grid-boxeditor").html("");
+        GRID.hideBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html("");
+        });
     },
 
     onSave:function(e)
@@ -295,7 +301,9 @@ var BoxEditor = Backbone.View.extend({
         this.model.set('readmore',jQuery(this.$el).find('.f-b-readmore').val());
         this.model.set('readmoreurl',jQuery(this.$el).find('.f-b-readmoreurl').val());
         this.model.save();
-        jQuery("div#new-grid-boxeditor").html("");
+        GRID.hideBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html("");
+        });
     }
 });
 

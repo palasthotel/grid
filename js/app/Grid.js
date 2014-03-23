@@ -97,7 +97,37 @@ GRID = {
 	// revert to old revision
 	revert: function(){	new GridAjax("revertDraft", [GRID.ID]); },
 	// console logging just with DEBUGGING enabled
-	log: function(string){ if(this.DEBUGGING){ console.log(string); } }
+	log: function(string){ if(this.DEBUGGING){ console.log(string); } },
+
+	showBoxEditor: function(callback) {
+		jQuery("#new-grid-wrapper").animate(
+			{
+				width:0
+			},
+			220,
+			function(){
+				jQuery("#new-grid-wrapper").hide();
+			}
+		);
+		setTimeout(function(){
+			jQuery(".grid-boxeditor").show();
+			jQuery(".grid-boxeditor").animate({width:"100%"},250,function(){
+				callback();
+			});
+			window.scrollTo(0,0);
+		},50);
+	},
+
+	hideBoxEditor: function(callback) {
+		jQuery(".grid-boxeditor").animate({width:"0%"},220, function(){jQuery(".grid-boxeditor").hide();});
+		setTimeout(function(){
+			jQuery("#new-grid-wrapper").show();
+			jQuery("#new-grid-wrapper").animate({width:"100%"},220,function(){
+				callback();
+			})
+			window.scrollTo(0,0);
+		},50);
+	}
 };
 
 jQuery(function(){GRID.init();});
