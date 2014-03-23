@@ -149,7 +149,6 @@ var SlotView = Backbone.View.extend({
 		//render template with Mustache or something
     	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
-        GRID.log(["style--->", this.model.getGrid().getSlotStyles()]);
         this.$el.attr("data-style", json.style).attr("data-id",json.id);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
         this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
@@ -232,7 +231,7 @@ var BoxEditor = Backbone.View.extend({
             'b_index':this.model.getIndex(),
             'c_id':this.model.getContainer().get("id"),
             's_id':this.model.getSlot().get("id"),
-            'styles':this.model.getGrid().get("styles_box")
+            'styles':GRID.getBoxStyles()
         }));
         var contentstructure=this.model.get("contentstructure");
         var fieldcontainer=jQuery(this.$el).find(".dynamic-fields .field-wrapper");
@@ -259,7 +258,7 @@ var BoxEditor = Backbone.View.extend({
             });
         });
 
-        if(this.model.getGrid().get("styles_box").length<1)
+        if(GRID.getBoxStyles().length<1)
         {
                 jQuery(this.$el).find(".box-styles-wrapper").hide();
         }

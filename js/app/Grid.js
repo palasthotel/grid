@@ -38,9 +38,22 @@ GRID = {
 	// Pattern for preview URL
 	PREVIEW_URL: window.location.pathname+'/preview',
 	// initializes the grid
+	grid: null,
+	types_box: null,
+    types_container: null,
+    styles_container: null,
+    styles_slot: null,
+    styles_box: null,
+    revisions: null,
 	init: function(){
 		var self = this;
 		this._initConstants();
+		this.getBoxTypes().fetch();
+		this.getContainerTypes().fetch();
+		this.getContainerStyles().fetch();
+		this.getSlotStyles().fetch();
+		this.getBoxStyles().fetch();
+		
 		// the grid
 		this.grid = new Grid({
 			id:this.ID,
@@ -48,17 +61,60 @@ GRID = {
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING
 		});
+		
+		this.revisions = new Revisions({grid: this.grid});
+        this.revisions.fetch();
+
 		this.gridview = new GridView({
 			model: this.grid
 		});
 		jQuery("#new-grid-wrapper").html(this.gridview.render().el);
+
 		// toolbar
 		var toolbar  = new GridToolbarView({
 			model: this.grid
 		});
+		toolbar._gridView = this.gridview;
 		jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
+		
 		return this.gridview;
 	},
+	// type collections
+	getContainerTypes: function(){
+        if(!(this.types_container instanceof ContainerTypes) ){
+            this.types_container = new ContainerTypes();
+        }
+        return this.types_container;
+    },
+    getBoxTypes: function(){
+        if(!(this.types_box instanceof BoxTypes) ){
+            this.types_box = new BoxTypes();
+        }
+        return this.types_box;
+    },
+    // style collections
+    getContainerStyles: function(){
+        if(!(this.styles_container instanceof Styles) ){
+            this.styles_container = new Styles({type:"container"});
+        }
+        return this.styles_container;
+    },
+    getSlotStyles: function(){
+        if(!(this.styles_slot instanceof Styles) ){
+            this.styles_slot = new Styles({type:"slot"});
+        }
+        return this.styles_slot;
+    },
+    getBoxStyles: function(){
+        if(!(this.styles_box instanceof Styles) ){
+            this.styles_box = new Styles({type:"box"});
+        }
+        return this.styles_box;
+    },
+    // revisions
+    setToRevision: function(revision){
+        GridRequest.grid.update(grid, {action: "setToRevision", revision: revision});
+    },
 	// initializes the constatns
 	_initConstants: function(){
 		this.DEBUGGING = document.grid_debug_mode;
