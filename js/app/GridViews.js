@@ -70,6 +70,20 @@ var ContainerView = Backbone.View.extend({
         this.refreshAttr();
         this.$el.removeClass('display').addClass('editor');
         this.$el.html(ich.tpl_containerEditor(this.model.toJSON()));
+        var styles=GRID.getContainerStyles();
+        styles=styles.toJSON();
+        var self=this;
+        _.each(styles,function(style){
+            if(self.model.get("style")==style.slug)
+            {
+                style.selected="selected";
+            }
+            else
+            {
+                style.selected="";
+            }
+        });
+        this.$el.html(ich.tpl_containerEditor({model:this.model.toJSON(),styles:styles}));
         GRID.useCKEDITOR("f-c-prolog");
         GRID.useCKEDITOR("f-c-epilog");
         return this;
@@ -222,7 +236,9 @@ var BoxView = Backbone.View.extend({
 	},
     edit:function(){
         var editor=new BoxEditor({model:this.model});
-        jQuery("div#new-grid-boxeditor").html(editor.render().el);
+        GRID.showBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html(editor.render().el);
+        });
     }
 });
 
@@ -277,7 +293,9 @@ var BoxEditor = Backbone.View.extend({
         return this;
     },
     onCancel: function(){
-        jQuery("div#new-grid-boxeditor").html("");
+        GRID.hideBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html("");
+        });
     },
 
     onToggle:function(e)
@@ -289,7 +307,9 @@ var BoxEditor = Backbone.View.extend({
     {
         if(!confirm(document.lang_values["confirm-box-reuse"])) return;
         this.model.save(null,{action:"reuse"});
-        jQuery("div#new-grid-boxeditor").html("");
+        GRID.hideBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html("");
+        });
     },
 
     onSave:function(e)
@@ -306,7 +326,9 @@ var BoxEditor = Backbone.View.extend({
         this.model.set('readmore',jQuery(this.$el).find('.f-b-readmore').val());
         this.model.set('readmoreurl',jQuery(this.$el).find('.f-b-readmoreurl').val());
         this.model.save();
-        jQuery("div#new-grid-boxeditor").html("");
+        GRID.hideBoxEditor(function(){
+            jQuery("div#new-grid-boxeditor").html("");
+        });
     }
 });
 
