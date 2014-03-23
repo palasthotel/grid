@@ -1,6 +1,6 @@
 var GridSlotStyleChangerView = Backbone.View.extend({
-    className:"choose-style",
-    tagName: "ul",
+    className:"style-changer",
+    tagName: "div",
     events:{
         "click li": "changeStyle",
     },
@@ -11,10 +11,14 @@ var GridSlotStyleChangerView = Backbone.View.extend({
     render: function() {
         GRID.log('i am rendering slot styles changer');
         var styles = [];
+        var activestyle = "Default Style";
+        var self = this;
         this.model.getGrid().getSlotStyles().each( function(style){
+            if(style.get("slug") == self.model.get("style")) activestyle = style.get("title");
             styles.push(style.toJSON());
         });
-        this.$el.html(ich.tpl_slotstylechanger({styles: styles, style: this.model.toJSON().style}));
+        GRID.log(["styles for changer", styles]);
+        this.$el.html(ich.tpl_slotstylechanger({styles: styles, activestyle: activestyle}));
         return this;
     },
     changeStyle: function(event){

@@ -215,7 +215,7 @@ $(function() {
 					console.log("is Sidebar");
 					$(".hide-from-sidebar").remove();
 				}
-				$.each($(".container[data-reused=false] .slot .style-changer"), function(index, style_changer){
+				$.each($("#grid .container[data-reused=false] .slot .style-changer"), function(index, style_changer){
 					refreshSlotStyles($(style_changer));
 				});
 				doAfterImageLoad(function(){

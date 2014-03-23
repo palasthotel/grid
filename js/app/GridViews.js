@@ -149,17 +149,14 @@ var SlotView = Backbone.View.extend({
 		//render template with Mustache or something
     	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
-        GRID.log(json);
-        this.refreshAttr();
+        GRID.log(["style--->", this.model.getGrid().getSlotStyles()]);
+        this.$el.attr("data-style", json.style).attr("data-id",json.id);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
-        this.$el.find(".choose-style").replaceWith(this._slotStyleChangerView.el);
+        this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
+        this._slotStyleChangerView.delegateEvents();
         this._boxesView.render();
         return this;
-	},
-    refreshAttr: function(){
-        var json = this.model.toJSON();
-        this.$el.attr("data-style", json.style).attr("data-id",json.id);
-    }
+	}
 });
 
 var BoxesView = Backbone.View.extend({
