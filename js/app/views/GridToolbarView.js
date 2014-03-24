@@ -50,6 +50,7 @@ var GridToolbarView = Backbone.View.extend({
     },
     toggleContainerTools: function(){
         GRID.log(["toggleContainerTools", this.containerToolsVisible()]);
+        if(this.boxToolsVisible()) this.toggleBoxTools();
         if(!this.containerToolsVisible()){
             this.$el.find('.grid-tools').append(this.getToolContainersView().render().el);
         } else {

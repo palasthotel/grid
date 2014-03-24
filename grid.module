@@ -1330,7 +1330,12 @@ function grid_add_app_JS(){
 
 
 	drupal_add_js($app_dir.'GridModels.js','file');
+	drupal_add_js($app_dir.'models/GridBoxBlueprint.js','file');
+	
+
 	drupal_add_js($app_dir.'GridCollections.js','file');
+	drupal_add_js($app_dir.'collections/GridBoxBlueprints.js','file');
+
 	drupal_add_js($app_dir.'GridSync.js','file');
 	drupal_add_js($app_dir.'GridController.js','file');
 	drupal_add_js($app_dir.'Grid.js','file');

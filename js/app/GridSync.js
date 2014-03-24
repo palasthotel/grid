@@ -74,7 +74,6 @@ var GridRequest = {
 						{ 
 							success_fn: function(data){
 								grid.attributes = _.extend(grid.attributes, data.result);
-								GRID.log();
 								_.each(data.result.container, function(container) {
 									GRID.log("Add new Container");
 									 grid.addContainer(new Container(container));
@@ -173,6 +172,21 @@ var GridRequest = {
 			}
 		);
 	},
+	boxblueprints: function(boxblueprints,options){
+		var params = [options.type, options.searchString, options.criteria];
+		GRID.log(["blueprints", boxblueprints, options, params]);
+		new GridAjax("Search",params,{
+				success_fn: function(data){
+					GRID.log(["blueprints search",data]);
+					_.each(data.result, function(value, key, list){
+						GRID.log(value);
+						boxblueprints.add(new GridBoxBlueprint(value));
+						
+					});
+					options.success();
+				}
+		});
+	},
 	styles: function(styles, options){
 		GRID.log(styles.type+"Styles->read");
 		new GridAjax(
@@ -194,7 +208,6 @@ var GridRequest = {
 	container: {
 		create: function(container, options){
 			GRID.log("Container->create");
-			GRID.log(options);
 			var params = [container.getGridID(), container.get("type"), options.index];
 			GRID.log(params);
 			new GridAjax( "addContainer", params,

@@ -78,13 +78,30 @@ var Revision = Backbone.Model.extend({
     initialize: function(spec){
         this.set("id",spec.revision);
     }
-})
+});
 
 // ----------------------
 // type models
 // ---------------------
 var ContainerType = Backbone.Model.extend({});
-var BoxType = Backbone.Model.extend({});
+var BoxType = Backbone.Model.extend({
+    defaults:{
+        type: null,
+        criteria: null,
+        blueprints: null
+    },
+    searchBoxes: function(success){
+        GRID.log(["BoxType->searchBoxes", this]);
+        this.set("blueprints", new GridBoxBlueprints());
+        this.get("blueprints").fetch({
+            type:this.get("type"),
+            criteria: this.get("criteria"),
+            searchString: "",
+            parent: this,
+            success:success
+        });
+    }
+});
 var StyleType = Backbone.Model.extend({});
 
 //---------------------
