@@ -62,8 +62,6 @@ var GridRequest = {
 					// get status draft oder published
 			   		new GridAjax("checkDraftStatus",[grid.getGridID()],{
 			   			success_fn: function(data){
-			   				GRID.log("checkDraftStatus success");
-			   				GRID.log(data);
 			   				grid.set("isDraft",data.result);
 			   			}
 			   		});
@@ -81,6 +79,7 @@ var GridRequest = {
 									GRID.log("Add new Container");
 									 grid.addContainer(new Container(container));
 								});
+								options.success();
 							}	
 						}
 					);
@@ -227,6 +226,12 @@ var GridRequest = {
 						}
 					});
 					break;
+				case "move":
+					var params = [container.getGridID(), container.get("id"), options.index];
+					new GridAjax("moveContainer", params,{
+						success_fn: options.success
+					})
+					break;
 				default:
 					var attributes = _.clone(container.attributes);
 					delete(attributes.slots); 
@@ -238,8 +243,6 @@ var GridRequest = {
 					new GridAjax("updateContainer", params,
 						{
 							success_fn: function(data){
-								GRID.log("updateContainer success");
-								GRID.log(data);
 								options.success();
 							},
 							error_fn: options.error
@@ -248,33 +251,13 @@ var GridRequest = {
 					break;
 
 			}
-			var attributes = _.clone(container.attributes);
-			delete(attributes.slots); 
-			delete(attributes.collection_slots);	
-			delete(attributes.classes);
-			delete(attributes.parent);		
-			var params =[container.getGridID(), container.get("id"),attributes];
-			GRID.log(params);			
-			new GridAjax("updateContainer", params,
-				{
-					success_fn: function(data){
-						GRID.log("updateContainer success");
-						GRID.log(data);
-						options.success();
-					},
-					error_fn: options.error
-				}
-			);
 		},
 		delete: function(container, options){
-			GRID.log("container->destroy");
 			var params = [container.getGridID(), container.get("id")];
 			GRID.log(params);
 			new GridAjax("deleteContainer", params,
 				{
 				success_fn: function(data){
-					GRID.log("deleteContainer success");
-					GRID.log(data);
 					options.success();
 				}
 			});

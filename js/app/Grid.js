@@ -57,36 +57,32 @@ GRID = {
 		this.getBoxStyles().fetch();
 
 		// load the grid + view
-		jQuery("#new-grid-wrapper").html( this.getView().render().el );
+		this.grid = new Grid({
+        	id:this.ID,
+			SERVER: this.SERVER,
+			PREVIEW_URL: this.PREVIEW_URL,
+			DEBUGGING: this.DEBUGGING,
+			fn_success: function(data){
+				GRID.gridview = new GridView({model: GRID.getModel() });
+				jQuery("#new-grid-wrapper").html( GRID.getView().render().el );
+				GRID._initializeContainerSortable();
+				// load the revisions
+				GRID.revisions = new Revisions({grid: GRID.getModel() });
+		        GRID.revisions.fetch();
+		        // init toolbar
+				var toolbar  = new GridToolbarView({
+					model: GRID.getModel()
+				});
+				jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
+			}
+        });
 
-		// load the revisions
-		this.revisions = new Revisions({grid: this.getModel() });
-        this.revisions.fetch();
-
-		// init toolbar
-		var toolbar  = new GridToolbarView({
-			model: this.getModel()
-		});
-
-		jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
-		
 		return this;
 	},
 	getModel: function(){
-		if(!(this.grid instanceof Grid) ){
-            this.grid = new Grid({
-            	id:this.ID,
-				SERVER: this.SERVER,
-				PREVIEW_URL: this.PREVIEW_URL,
-				DEBUGGING: this.DEBUGGING
-            });
-        }
 		return this.grid;
 	},
 	getView: function(){
-		if(!(this.gridview instanceof GridView) ){
-            this.gridview = new GridView({model: this.getModel() });
-        }
 		return this.gridview;
 	},
 	// type collections
@@ -193,6 +189,56 @@ GRID = {
 			})
 			window.scrollTo(0,0);
 		},50);
+	},
+	// initializes function to sort the containers
+	_initializeContainerSortable: function(){
+		this.getView().$el.sortable({
+            handle: ".c-sort-handle",
+            items:".container:not(.SC-4)",
+            placeholder: "c-sort-placeholder",
+            pullPlaceholder: true,
+            appendTo: this.getView().$el ,
+            refreshPositions: true,
+            helper: function(event, element){
+                return jQuery("<div class='c-sort-helper'></div>");
+            },
+            cursorAt: { left: 30, bottom: 30 },
+            start: function( event, ui ){
+                GRID.log(["container sort START"], event, ui);
+                // jQuery(this).sortable('refreshPositions');
+                // GRID.getView().$el.find('.c-sort-placeholder').attr("data-type","c-sort-placeholder");
+                // offset_top = parseInt(ui.item.css("margin-top"));
+                // console.log(offset_top);
+                // console.log(ui.helper);
+                //$(ui.helper).css("top", 30+offset_top);
+                //$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
+            },
+            stop: function(event, ui){
+                //$(".box").slideDown(100);
+            },
+            update: function( event, ui ){
+            	var containerview = ui.item.attr("data-cid");
+               
+                var newIndex = ui.item.index();
+                var containermodel = GRID.getModel().getContainers().get(containerview);
+                var oldIndex = GRID.getModel().getContainers().indexOf(containermodel);
+
+ 				GRID.getModel().getContainers().move(containermodel, newIndex);
+
+                // params = [ID, ui.item.data("id"), ui.item.index()];
+                // sendAjax("moveContainer",params,
+                // function(data){
+                //     if(data.result != true){
+                //         throwError(lang_values["err_move_container"]);
+                //         setTimeout(function(){
+                //             window.location.reload();
+                //         },1000);
+                //     }
+                //     $grid.trigger("structureChange");
+                //     scrollToContainer(params[1]);
+                // });
+            }
+        });
 	}
 };
 

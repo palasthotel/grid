@@ -44,7 +44,20 @@ var Styles = Backbone.Collection.extend({
 
 // element collections
 var Containers = Backbone.Collection.extend({
-	model: Container
+	model: Container,
+	move: function(container, to_index){
+		var self = this;
+		GridRequest.container.update(container,{
+			action: "move",
+			index: to_index,
+			success: function(data){
+				var clone = container.clone();
+				self.remove(container);
+				self.add(clone, {at:to_index});
+			}
+		});
+		return this;
+	}
 });
 var Slots = Backbone.Collection.extend({
 	model: Slot

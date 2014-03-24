@@ -97,7 +97,7 @@ var ContainerView = Backbone.View.extend({
             .attr("data-type", json.type)
             .attr("data-style", json.style)
             .attr("data-reused", json.reused)
-            .attr("data-view", this)
+            .attr("data-cid", this.model.cid)
             .addClass(json.type+" display");
     },
     saveEditor: function(){

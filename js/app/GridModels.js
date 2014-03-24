@@ -26,8 +26,9 @@ var Grid = Backbone.Model.extend({
             throw "InvalidConstructArgs";
         }
         var self = this;
-
-       	this.fetch();
+       	this.fetch({
+            success: spec.fn_success
+        });
     },
     createContainer: function(type, index){
         var self = this;
