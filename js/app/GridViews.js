@@ -36,11 +36,13 @@ var ContainersView = Backbone.View.extend({
             var containerview = new ContainerView({model: container});
             containerview._parentView = self;
     		self.$el.append(containerview.render().el);
+            GRID.log(["add container view"],container, containerview);
     	});
     	return this;
 	},
     remove: function(container,containers,options){
         this.$el.find(".container[data-id="+container.get("id")+"]").remove();
+        return this;
     }
 });
 
@@ -95,6 +97,7 @@ var ContainerView = Backbone.View.extend({
             .attr("data-type", json.type)
             .attr("data-style", json.style)
             .attr("data-reused", json.reused)
+            .attr("data-view", this)
             .addClass(json.type+" display");
     },
     saveEditor: function(){

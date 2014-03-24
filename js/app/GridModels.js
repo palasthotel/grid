@@ -34,6 +34,7 @@ var Grid = Backbone.Model.extend({
         var container = new Container({type:type, parent:this});
         container.save(null,{
             index:index,
+            action: "create",
             // resoinse is always undefined, because we are not using backbones ajax call
             success: function(container, response, options){
                 GRID.log("CreateContainerSuccess::");
@@ -99,14 +100,19 @@ var Container = Backbone.Model.extend({
 		var self = this;
 		GRID.log("init container");
 		GRID.log(spec.slots);
-		_.each(spec.slots, function(slot) {
-			GRID.log("add Slot");
-			GRID.log(slot);
-			 self.addSlot(new Slot(slot));
-		});
+        this.setSlots(spec.slots);
 	},
     getIndex: function(){
         return this.get("parent").getContainers().indexOf(this);
+    },
+    setSlots: function(slots_array){
+        this.getSlots().reset();
+        var self = this;
+        _.each(slots_array, function(slot) {
+            GRID.log("add Slot");
+            GRID.log(slot);
+            self.addSlot(new Slot(slot));
+        });
     },
 	addSlot: function(element, index){
     	if(!(element instanceof Slot)) throw "Try to add an not Slot Object: Container.addSlot";
