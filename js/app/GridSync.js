@@ -310,17 +310,16 @@ var GridRequest = {
 						box.getContainer().get("id"), 
 						box.getSlot().get("id"),
 						// index position in slot 
-						options.index, 
-						// box type
-						options.type,
-						// the content of the box
-						// -> like content structure in box-php-file 
-						options.content];
+						options.index,
+						box.get("type"),
+						box.get("content")];
 			new GridAjax("createBox",params,
 				{
 					success_fn: function(data){
 						GRID.log("createBox success");
 						GRID.log(data);
+						box.set("id", data.result.id);
+						options.success();
 					}
 				}
 			);

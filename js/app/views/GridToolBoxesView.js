@@ -28,11 +28,14 @@ var GridToolBoxesView = Backbone.View.extend({
         
     },
     buildBoxlist: function(blueprint,collection,event){
-        GRID.log(["buildBoxlist", this.blueprints]);
-        this.$el.find(".box-list").append(ich.tpl_toolBoxBlueprint(blueprint.toJSON()));
+        GRID.log(["buildBoxlist", this.blueprints, blueprint]);
+        var json = blueprint.toJSON();
+        json.cid = blueprint.cid;
+        this.$el.find(".box-list").append(ich.tpl_toolBoxBlueprint(json));
         this.initializesDraggable();
     },
     initializesDraggable: function(){
+        var self = this;
         this.$el.find(".box-dragger").draggable({ 
             helper: function(event, element){
                 return jQuery("<div class='dragger-helper'></div>");
@@ -43,8 +46,10 @@ var GridToolBoxesView = Backbone.View.extend({
             addClass: true,
             //connectToSortable: GRID_SORTABLE,
             start: function(event, ui){
+                
                 var $ = jQuery;
-                $slots = GRID.getView().$el.find(".container[data-reused=false][data-type*=C-] .slot .boxes-wrapper");
+                $slots = jQuery(GRID.getView().el).find(".container[data-reused=false][data-type*=C-] .slot .boxes-wrapper");
+                GRID.log($slots);
                 // drop place template
                 // TODO: if boxes toggled hidden 
                 // var $toggle_btn = $toolbar.find("[role=hide_boxes]");
@@ -60,11 +65,18 @@ var GridToolBoxesView = Backbone.View.extend({
                     accept: ".box-dragger",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
-                        console.log("Box dropped on area.");
-                        // $this_box = $(ui.draggable);
-                        // $this_drop = $(this);
-                        // $this_slot = $this_drop.parents(".slot");
-                        // $this_container = $this_slot.parents(".container");
+                        var $this_box = $(ui.draggable);
+                        var $this_drop = $(this);
+                        var $this_slot = $this_drop.parents(".slot");
+                        var $this_container = $this_slot.parents(".container");
+                        var slot = GRID.getModel().getContainers().get($this_container.data("id")).getSlots().get($this_slot.data("id"));
+                        var blueprint = self.blueprints.get($this_box.data("cid"));
+
+                        $new_box = $this_drop.parent().addClass('new-box-place').removeClass('box-drop-area-wrapper');
+                        GRID.getView().remove(".box-drop-area-wrapper");
+
+                        GRID.log(["DROPPED Box", $this_box.data("cid"), $this_drop, $this_slot, $this_container, slot, blueprint]);
+                        var box = slot.createBox(blueprint, $new_box.index() );
                         // box_obj = arr_box_search_results[$this_box.data("index")];
                         
                         // $temp = buildBox( 

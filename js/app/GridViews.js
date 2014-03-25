@@ -4,17 +4,22 @@ var GridView = Backbone.View.extend({
     initialize: function() {
     	GRID.log("INIT GridView");
         this._containersView = new ContainersView({collection: this.model.getContainers() });
-        this._containersView._parentView = this;
         // listener comes at last position
-        this.listenTo(this.model, 'change', this.render);
+        //this.listenTo(this.model, 'change', this.render);
+        // listener for each attribute but collection
         this.render();
     },
     render: function() {
         GRID.log('i am rendering the grid interface');
         this.$el.html(ich.tpl_grid(this.model.toJSON() ));
+        this.renderContainers();
+        return this;
+    },
+    renderContainers: function(){
         this.$el.find(".containers-wrapper").replaceWith(this._containersView.render().el);
         return this;
     }
+
 });
 
 var ContainersView = Backbone.View.extend({
@@ -23,8 +28,9 @@ var ContainersView = Backbone.View.extend({
 	initialize: function(){
         GRID.log('INIT ContainersView');
 		//this.listenTo(this.collection, 'change', this.render);
-        this.collection.bind('add',this.render, this);
-        this.collection.bind('remove', this.remove, this);
+        
+        this.listenTo(this.collection, 'add',this.render);
+        //this.listenTo(this.collection, 'remove', this.remove);
 	},
 	render: function(){
         // renders the containers
@@ -34,15 +40,10 @@ var ContainersView = Backbone.View.extend({
     	this.$el.empty();
     	this.collection.each(function(container){
             var containerview = new ContainerView({model: container});
-            containerview._parentView = self;
     		self.$el.append(containerview.render().el);
     	});
     	return this;
-	},
-    remove: function(container,containers,options){
-        this.$el.find(".container[data-id="+container.get("id")+"]").remove();
-        return this;
-    }
+	}
 });
 
 var ContainerView = Backbone.View.extend({
@@ -62,6 +63,7 @@ var ContainerView = Backbone.View.extend({
 	render: function(){
 		//render template with Mustache or something
     	GRID.log('i am rendering a single container');
+        this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
         this._slotsView.render();
@@ -131,6 +133,7 @@ var ContainerView = Backbone.View.extend({
     selfdestruct: function(){
         console.log("delete container");
         this.model.destroy({wait:true});
+        this.remove();
     }
 });
 
@@ -193,7 +196,7 @@ var BoxesView = Backbone.View.extend({
         GRID.log('INIT BoxesView');
         //this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
-        this.collection.bind('remove', this.remove, this);
+        //this.collection.bind('remove', this.remove, this);
         GRID.log(this.$el);
     },
     render: function(){
@@ -201,7 +204,7 @@ var BoxesView = Backbone.View.extend({
         //render template with Mustache or something
         GRID.log('i am rendering the Boxes collection');
         var self = this;
-        this.$el.empty();
+        //this.$el.empty();
         GRID.log(this.collection);
         this.collection.each(function(box){
             var boxview = new BoxView({model: box});
@@ -211,9 +214,6 @@ var BoxesView = Backbone.View.extend({
         GRID.log(this._parentView);
         this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
         return this;
-    },
-    remove: function(box,boxes,options){
-        this._parentView.$el.find("box[]")
     }
 });
 
@@ -224,6 +224,7 @@ var BoxView = Backbone.View.extend({
     },
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
+        this.listenTo(this.model, 'destroy', this.selfdestruct);
 	},
 	render: function(){
 		//render template with Mustache or something
@@ -241,6 +242,9 @@ var BoxView = Backbone.View.extend({
         GRID.showBoxEditor(function(){
             jQuery("div#new-grid-boxeditor").html(editor.render().el);
         });
+    },
+    selfdestruct: function(){
+        this.remove();
     }
 });
 

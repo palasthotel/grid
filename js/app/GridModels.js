@@ -1,3 +1,37 @@
+// ----------------------
+// type models
+// ---------------------
+var ContainerType = Backbone.Model.extend({});
+var BoxType = Backbone.Model.extend({
+    defaults:{
+        type: null,
+        criteria: null,
+        blueprints: null
+    },
+    searchBoxes: function(){
+        GRID.log(["BoxType->searchBoxes", this]);
+        var blueprints = new GridBoxBlueprints();
+        blueprints.fetch({
+            type:this.get("type"),
+            criteria: this.get("criteria"),
+            searchString: ""
+        });
+        this.set("blueprints", blueprints);
+        return blueprints;
+    }
+});
+var StyleType = Backbone.Model.extend({});
+
+// --------------------------
+// Revisions model
+//  -----------------------
+
+var Revision = Backbone.Model.extend({
+    initialize: function(spec){
+        this.set("id",spec.revision);
+    }
+});
+
 // ----------------------------------------
 // Main model.
 // this is the wrapper of the grid elements
@@ -30,9 +64,14 @@ var Grid = Backbone.Model.extend({
             success: spec.fn_success
         });
     },
-    createContainer: function(type, index){
+    createContainer: function(type, index, reused){
         var self = this;
         var container = new Container({type:type, parent:this});
+        if(typeof reused === "undefined"){
+            container.set("reused", false);
+        } else {
+            container.set("reused", reused);
+        }
         container.save(null,{
             index:index,
             action: "create",
@@ -74,36 +113,6 @@ var Grid = Backbone.Model.extend({
     }
 });
 
-var Revision = Backbone.Model.extend({
-    initialize: function(spec){
-        this.set("id",spec.revision);
-    }
-});
-
-// ----------------------
-// type models
-// ---------------------
-var ContainerType = Backbone.Model.extend({});
-var BoxType = Backbone.Model.extend({
-    defaults:{
-        type: null,
-        criteria: null,
-        blueprints: null
-    },
-    searchBoxes: function(){
-        GRID.log(["BoxType->searchBoxes", this]);
-        var blueprints = new GridBoxBlueprints();
-        blueprints.fetch({
-            type:this.get("type"),
-            criteria: this.get("criteria"),
-            searchString: ""
-        });
-        this.set("blueprints", blueprints);
-        return blueprints;
-    }
-});
-var StyleType = Backbone.Model.extend({});
-
 //---------------------
 // element models
 // -------------------
@@ -127,7 +136,6 @@ var Container = Backbone.Model.extend({
         this.getSlots().reset();
         var self = this;
         _.each(slots_array, function(slot) {
-            GRID.log("add Slot");
             GRID.log(slot);
             self.addSlot(new Slot(slot));
         });
@@ -175,8 +183,24 @@ var Slot = Backbone.Model.extend({
 			self.addBox(new Box(box));
 		});
 	},
-    createBox: function(index, box_type){
-
+    createBox: function(blueprint, index){
+        var self = this;
+        var json = blueprint.toJSON();
+        json.parent = this;
+        var box = new Box(json);
+        box.save(null,{
+            index:index,
+            // response is always undefined, because we are not using backbones ajax call
+            success: function(box, response, options){
+                GRID.log("CreateboxSuccess::");
+                GRID.log([box, response, options]);
+                self.addBox(box, index);
+            },
+            error: function(box, response, options){
+                GRID.log("Createboxrror::");
+                GRID.log([box, response, options]);
+            }
+        });
     },
 	addBox: function(element, index){
 		if(!(element instanceof Box)) throw "Try to add an not Box Object: Slot.addBox";

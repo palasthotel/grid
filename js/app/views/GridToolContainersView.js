@@ -56,6 +56,8 @@ var GridToolContainersView = Backbone.View.extend({
                         GRID.getView().$el.find('.container-drop-area-wrapper').remove();
                         GRID.log($dropwrapper.index());
                         GRID.getModel().createContainer(containerType, $dropwrapper.index());
+
+                        // what if reusable??? addReusableContainer
                     }
                 });
             },
