@@ -90,16 +90,16 @@ var BoxType = Backbone.Model.extend({
         criteria: null,
         blueprints: null
     },
-    searchBoxes: function(success){
+    searchBoxes: function(){
         GRID.log(["BoxType->searchBoxes", this]);
-        this.set("blueprints", new GridBoxBlueprints());
-        this.get("blueprints").fetch({
+        var blueprints = new GridBoxBlueprints();
+        blueprints.fetch({
             type:this.get("type"),
             criteria: this.get("criteria"),
-            searchString: "",
-            parent: this,
-            success:success
+            searchString: ""
         });
+        this.set("blueprints", blueprints);
+        return blueprints;
     }
 });
 var StyleType = Backbone.Model.extend({});

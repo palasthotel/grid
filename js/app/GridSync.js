@@ -179,11 +179,9 @@ var GridRequest = {
 				success_fn: function(data){
 					GRID.log(["blueprints search",data]);
 					_.each(data.result, function(value, key, list){
-						GRID.log(value);
-						boxblueprints.add(new GridBoxBlueprint(value));
-						
+						var blueprint = new GridBoxBlueprint(value);
+						boxblueprints.add(blueprint);
 					});
-					options.success();
 				}
 		});
 	},

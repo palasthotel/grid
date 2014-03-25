@@ -5,6 +5,6 @@ var GridBoxBlueprints = Backbone.Collection.extend({
 	},
 	sync: function(method, collection, options){
 		GRID.log(["Sync GridBoxBlueprints", method, collection, options]);
-		GridRequest.boxblueprints(this, options);
+		GridRequest.boxblueprints(collection, options);
 	}
 });

@@ -1300,6 +1300,7 @@ function grid_add_app_JS(){
 	$inline_scripts.= "<script id='tpl_toolbar' type='text/html'>".file_get_contents($templates_dir."ich.toolbar.html")."</script>";
 	$inline_scripts.= "<script id='tpl_toolContainers' type='text/html'>".file_get_contents($templates_dir."ich.toolContainers.html")."</script>";
 	$inline_scripts.= "<script id='tpl_toolBoxes' type='text/html'>".file_get_contents($templates_dir."ich.toolBoxes.html")."</script>";
+	$inline_scripts.= "<script id='tpl_toolBoxBlueprint' type='text/html'>".file_get_contents($templates_dir."ich.toolBoxBlueprint.html")."</script>";
 
 
 	$inline_scripts.= "<script id='tpl_grid' type='text/html'>".file_get_contents($templates_dir."ich.grid.html")."</script>";
