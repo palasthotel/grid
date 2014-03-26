@@ -116,6 +116,16 @@ var GridRequest = {
 					});
 			}
 		},
+		moveBox: function(box, new_slot, new_box_index, success){
+			var params = [
+						box.getGridID(),
+						box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),
+						new_slot.getContainer().get("id"),new_slot.get("id"),new_box_index
+					];
+			new GridAjax("moveBox", params,{
+				success_fn: success
+			})
+		},
 		destroy: function(grid, options){
 			GRID.log("Grid->destroy");
 			// no need to. CMS creates and deletes rids

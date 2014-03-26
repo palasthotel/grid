@@ -245,7 +245,10 @@ GRID = {
 	_initializeBoxSortable: function(){
 		var old_box_index,
 		old_slot_id,
-		old_container_id;
+		old_container_id,
+		new_box_index,
+		new_slot_id,
+		new_container_id;
 		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
 			items: ".box",
 			cancel: "span.edit",
@@ -268,7 +271,6 @@ GRID = {
 				// refreshBoxTrashs();
 			},
 			stop: function(e, ui){
-				GRID.log(["STOP BOX SORT", old_box_index, old_slot_id, old_container_id]);
 				// hideBoxTrash();
 				// if(boxDeleted){
 				// 	boxDeleted = false;
@@ -276,17 +278,30 @@ GRID = {
 				// 	return;
 				// }
 				
-				var new_container_id = ui.item.parents(".container").data("id");
-				var new_slot_id = ui.item.parents(".slot").data("id");
-				var new_box_index = ui.item.index();
+				new_container_id = ui.item.parents(".container").data("id");
+				new_slot_id = ui.item.parents(".slot").data("id");
+				new_box_index = ui.item.index();
 
 				GRID.log(["STOP BOX SORT", old_box_index, old_slot_id, old_container_id, new_box_index, new_slot_id, new_container_id]);
 
-				// if(old_container_id == new_container_id &&
-				// 	old_slot_id == new_slot_id &&
-				// 	old_box_index == new_box_index){
-				// 	return;
-				// }
+
+				if(old_container_id == new_container_id &&
+					old_slot_id == new_slot_id &&
+					old_box_index == new_box_index){
+					return;
+				}
+
+				var box = GRID.getModel()
+								.getContainers().get(old_container_id)
+								.getSlots().get(old_slot_id)
+								.getBox(old_box_index);
+				var new_slot = GRID.getModel()
+								.getContainers().get(new_container_id)
+								.getSlots().get(new_slot_id);
+
+				GRID.getModel().moveBox(box, new_slot, new_box_index);
+
+
 				// sendAjax(
 				// 	"moveBox",
 				// 	[

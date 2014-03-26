@@ -103,6 +103,13 @@ var Grid = Backbone.Model.extend({
     getContainer: function(index){
         return this.getContainers().at(index);
     },
+    moveBox: function(box, new_slot, new_box_index){
+        GridRequest.grid.moveBox(box, new_slot, new_box_index, function(data){
+            var clone = box.clone();
+            box.getSlot().getBoxes().remove(box);
+            new_slot.addBox(clone, new_box_index);
+        });
+    },
     getIsDraft: function(){
         GridRequest.grid.read( this, { action: "checkdraft" } );
         return this.get("isDraft"); 
@@ -234,9 +241,6 @@ var Box = Backbone.Model.extend({
     },
     getContainer: function(){
         return this.getSlot().getContainer();
-    },
-    getGrid:function(){
-        return this.getContainer().getGrid();
     },
 	initialize: function(spec){
 
