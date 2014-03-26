@@ -18,7 +18,6 @@ boxEditorControls['autocomplete']=Backbone.View.extend({
             classes+=" locked";            
             disabled="disabled=disabled";
             fetch=true;
-            //TODO: fetch current autocomplete value
         }
         html+="<div class='"+classes+"'><input type=text class='form-text autocomplete i-autocomplete' "+disabled+"/>";
         html+="<div class=loading rotate'></div>";
