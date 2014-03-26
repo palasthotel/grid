@@ -8,11 +8,16 @@ var GridToolBoxesView = Backbone.View.extend({
     },
     render: function(){
     	var self = this;
-        this.$el.html(ich.tpl_toolBoxes());
+        this.$el.empty();
+        this.$el.append(ich.tpl_toolBoxes());
         this.collection.each(function(boxtype, index){
         	GRID.log(["type tab", boxtype, index]);
-        	jQuery("<li></li>").attr("data-index",index).attr("title", boxtype.get("title") ).attr("data-type", boxtype.get("type") ).appendTo(self.$el.find(".box-type-tabs"));
+        	jQuery("<li></li>")
+                .attr("data-index",index)
+                .attr("title", boxtype.get("title") ).attr("data-type", boxtype.get("type") )
+                .appendTo(self.$el.find(".box-type-tabs"));
         });
+        this.delegateEvents();
         this.$el.find(".box-type-tabs li").first().trigger("click");
         return this;
     },
@@ -25,7 +30,7 @@ var GridToolBoxesView = Backbone.View.extend({
     	var boxtype = this.collection.at($li.data("index"));
     	this.blueprints = boxtype.searchBoxes();
         this.listenTo(this.blueprints ,"add", this.buildBoxlist);
-        
+        return this;
     },
     buildBoxlist: function(blueprint,collection,event){
         GRID.log(["buildBoxlist", this.blueprints, blueprint]);
@@ -33,6 +38,7 @@ var GridToolBoxesView = Backbone.View.extend({
         json.cid = blueprint.cid;
         this.$el.find(".box-list").append(ich.tpl_toolBoxBlueprint(json));
         this.initializesDraggable();
+        return this;
     },
     initializesDraggable: function(){
         var self = this;
@@ -77,30 +83,6 @@ var GridToolBoxesView = Backbone.View.extend({
 
                         GRID.log(["DROPPED Box", $this_box.data("cid"), $this_drop, $this_slot, $this_container, slot, blueprint]);
                         var box = slot.createBox(blueprint, $new_box.index() );
-                        // box_obj = arr_box_search_results[$this_box.data("index")];
-                        
-                        // $temp = buildBox( 
-                        //         [{  
-                        //             id : box_obj.id,
-                        //             title: box_obj.title, 
-                        //             titleurl: box_obj.titleurl,
-                        //             prolog: box_obj.prolog,
-                        //             html: box_obj.html,
-                        //             epilog: box_obj.epilog,
-                        //             readmore: box_obj.readmore,
-                        //             readmoreurl: box_obj.readmoreurl,
-                        //             type: box_obj.type
-                        //         }] ).insertBefore( $this_drop.parent() );
-                        // $grid.find(".box-drop-area-wrapper").remove();
-                        // params = [ID, $this_container.data("id"), $this_slot.data("id"), $temp.index(), box_obj.type, box_obj.content];
-                        // console.log(params);
-                        // sendAjax("createBox",params,
-                        // function(data){
-                        //     $temp.attr("data-id",data.result.id);
-                        //     console.log(data);
-                        //     $grid.trigger("structureChange");
-                        //     scrollToBox(data.result.id);
-                        // });
                     }
                 });
                 
@@ -109,6 +91,7 @@ var GridToolBoxesView = Backbone.View.extend({
                 GRID.getView().$el.find(".box-drop-area-wrapper").remove();
             }
         });
+        return this;
     }
 });
 

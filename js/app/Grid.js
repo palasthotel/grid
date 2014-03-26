@@ -66,6 +66,7 @@ GRID = {
 				GRID.gridview = new GridView({model: GRID.getModel() });
 				jQuery("#new-grid-wrapper").html( GRID.getView().render().el );
 				GRID._initializeContainerSortable();
+				GRID._initializeBoxSortable();
 				// load the revisions
 				GRID.revisions = new Revisions({grid: GRID.getModel() });
 		        GRID.revisions.fetch();
@@ -239,6 +240,67 @@ GRID = {
                 // });
             }
         });
+	},
+	// initializes function to sort the containers
+	_initializeBoxSortable: function(){
+		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
+			items: ".box",
+			cancel: "span.edit",
+			//connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
+			placeholder: "b-sort-placeholder",
+			forcePlaceholderSize: true,
+			distance: 10,
+			refreshPositions: true,
+			helper: function(event, element){
+				return jQuery("<div class='dragger-helper'></div>");
+			},
+			cursorAt: { left: 30, top:30 },
+			start: function(e, ui){
+				//$(".boxes-wrapper").addClass("min-height");
+				//ui.placeholder.height(ui.item.height());
+				
+				// old_box_index = ui.item.index();
+				// old_slot_id = ui.item.parents(".slot").data("id");
+				// old_container_id = ui.item.parents(".container").data("id");
+				// refreshBoxTrashs();
+			},
+			change: function(e,ui){
+				//$grid.trigger("structureChange");
+			},
+			stop: function(e, ui){
+				// hideBoxTrash();
+				// if(boxDeleted){
+				// 	boxDeleted = false;
+				// 	console.log("trash!!!!");
+				// 	return;
+				// }
+				// var new_container_id = ui.item.parents(".container").data("id");
+				// var new_slot_id = ui.item.parents(".slot").data("id");
+				// var new_box_index = ui.item.index();
+				// if(old_container_id == new_container_id &&
+				// 	old_slot_id == new_slot_id &&
+				// 	old_box_index == new_box_index){
+				// 	return;
+				// }
+				// sendAjax(
+				// 	"moveBox",
+				// 	[
+				// 		ID,
+				// 		old_container_id,old_slot_id,old_box_index,
+				// 		new_container_id,new_slot_id,new_box_index
+				// 	],
+				// 	function(data){
+				// 		console.log("Box moved");
+				// 		$grid.trigger("structureChange");
+				// 		if(data.result != true){
+				// 			// TODO: Rückmeldung geben und Box zurück sortieren!!!
+				// 			console.log(data);
+				// 			throwError(lang_values["err-move-box"]);
+				// 		}
+				// 		scrollToBox(ui.item.data("id"));
+				// });
+			}
+		});
 	}
 };
 
