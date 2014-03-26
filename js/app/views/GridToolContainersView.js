@@ -39,9 +39,7 @@ var GridToolContainersView = Backbone.View.extend({
                                 .attr("data-type","container-drop-area-wrapper");
                 $grid.find(".containers-wrapper").prepend($dropArea.clone());
                 $containers.after( $dropArea.clone() );
-                $containers.first().before($dropArea.clone() );
                 $grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
-
                 $grid.find(".container-drop-area").droppable({ 
                     accept: ".new-container",
                     hoverClass: "hover",

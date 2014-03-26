@@ -239,7 +239,7 @@ GRID = {
                 // });
             }
         });
-	}
+	},
 };
 
 jQuery(function(){GRID.init();});
