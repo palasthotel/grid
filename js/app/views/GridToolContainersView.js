@@ -7,7 +7,7 @@ var GridToolContainersView = Backbone.View.extend({
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
             value.slots = [];
-            if(value.type.indexOf("C-") != 0 && value.type.indexOf("SC-") != 0){
+            if(value.type.indexOf("C-") != 0 && value.type.indexOf("S-") != 0){
                 delete containers.containers[key];
             } else {
                 for( var i = 0 ;i < value.numslots; i++){

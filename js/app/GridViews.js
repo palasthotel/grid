@@ -5,19 +5,23 @@ var GridView = Backbone.View.extend({
     	GRID.log("INIT GridView");
         this._containersView = new ContainersView({collection: this.model.getContainers() });
         // listener comes at last position
-        //this.listenTo(this.model, 'change', this.render);
+        this.listenTo(this.model, 'change', this.sortableBoxes);
         // listener for each attribute but collection
-        this.render();
     },
     render: function() {
         GRID.log('i am rendering the grid interface');
-        this.$el.html(ich.tpl_grid(this.model.toJSON() ));
+        this.$el.empty();
+        this.$el.append(ich.tpl_grid(this.model.toJSON() ));
         this.renderContainers();
         return this;
     },
     renderContainers: function(){
         this.$el.find(".containers-wrapper").replaceWith(this._containersView.render().el);
         return this;
+    },
+    sortableBoxes: function(){
+        GRID.log("sortableBoxes");
+        
     }
 
 });
@@ -42,6 +46,7 @@ var ContainersView = Backbone.View.extend({
             var containerview = new ContainerView({model: container});
     		self.$el.append(containerview.render().el);
     	});
+        GRID._initializeBoxSortable();
     	return this;
 	}
 });

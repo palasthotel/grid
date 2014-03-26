@@ -13,7 +13,6 @@ var GridToolbarView = Backbone.View.extend({
     },
     initialize: function() {
     	GRID.log("INIT GridToolbarView");
-        this.render();
     },
     render: function() {
         GRID.log('i am rendering the toolbar');
@@ -40,8 +39,6 @@ var GridToolbarView = Backbone.View.extend({
     getToolContainersView: function(){
         if(!(this._toolContainersView instanceof GridToolContainersView) ){
             this._toolContainersView = new GridToolContainersView({collection:GRID.getContainerTypes()});
-            this._toolContainersView._parentView = this;
-            this._toolContainersView._gridView = this._gridView;
         }
         return this._toolContainersView;
     },
@@ -60,8 +57,6 @@ var GridToolbarView = Backbone.View.extend({
     getToolBoxesView: function(){
         if(!(this._toolBoxesView instanceof GridToolBoxesView) ){
             this._toolBoxesView = new GridToolBoxesView({collection:GRID.getBoxTypes()});
-            this._toolBoxesView._parentView = this;
-            this._toolBoxesView._gridView = this._gridView;
         }
         return this._toolBoxesView;
     },

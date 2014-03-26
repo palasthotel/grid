@@ -243,10 +243,13 @@ GRID = {
 	},
 	// initializes function to sort the containers
 	_initializeBoxSortable: function(){
+		var old_box_index,
+		old_slot_id,
+		old_container_id;
 		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
 			items: ".box",
 			cancel: "span.edit",
-			//connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
+			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
 			placeholder: "b-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
@@ -256,27 +259,29 @@ GRID = {
 			},
 			cursorAt: { left: 30, top:30 },
 			start: function(e, ui){
-				//$(".boxes-wrapper").addClass("min-height");
-				//ui.placeholder.height(ui.item.height());
 				
-				// old_box_index = ui.item.index();
-				// old_slot_id = ui.item.parents(".slot").data("id");
-				// old_container_id = ui.item.parents(".container").data("id");
+				old_box_index = ui.item.index();
+				old_slot_id = ui.item.parents(".slot").data("id");
+				old_container_id = ui.item.parents(".container").data("id");
+
+				GRID.log(["START BOX SORT", old_box_index, old_slot_id, old_container_id]);
 				// refreshBoxTrashs();
 			},
-			change: function(e,ui){
-				//$grid.trigger("structureChange");
-			},
 			stop: function(e, ui){
+				GRID.log(["STOP BOX SORT", old_box_index, old_slot_id, old_container_id]);
 				// hideBoxTrash();
 				// if(boxDeleted){
 				// 	boxDeleted = false;
 				// 	console.log("trash!!!!");
 				// 	return;
 				// }
-				// var new_container_id = ui.item.parents(".container").data("id");
-				// var new_slot_id = ui.item.parents(".slot").data("id");
-				// var new_box_index = ui.item.index();
+				
+				var new_container_id = ui.item.parents(".container").data("id");
+				var new_slot_id = ui.item.parents(".slot").data("id");
+				var new_box_index = ui.item.index();
+
+				GRID.log(["STOP BOX SORT", old_box_index, old_slot_id, old_container_id, new_box_index, new_slot_id, new_container_id]);
+
 				// if(old_container_id == new_container_id &&
 				// 	old_slot_id == new_slot_id &&
 				// 	old_box_index == new_box_index){
