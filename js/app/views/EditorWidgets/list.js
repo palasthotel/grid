@@ -13,7 +13,9 @@ boxEditorControls['list']=Backbone.View.extend({
             var view=new boxEditorControls['listitem']({
                 model:{
                     structure:self.structure.contentstructure,
-                    container:elem
+                    container:elem,
+                    box:self.model.box,
+                    parentpath:self.model.parentpath+self.structure.key+"."
                 }
             });
             views.push(view);
@@ -48,6 +50,8 @@ boxEditorControls['listitem']=Backbone.View.extend({
                 {
                     structure:elem,
                     container:this.model.get("content"),
+                    box:self.model.box,
+                    parentpath:self.model.parentpath
                 }
             });
             views.push(view);

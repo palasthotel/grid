@@ -996,7 +996,7 @@ tr[role=revision] td{
 	left: 160px;
 	display: none;
 }
-.autocomplete-wrapper .cancle{
+.autocomplete-wrapper .cancel{
 	position: absolute;
 	top: 4px;
 	left: 138px;
@@ -1006,7 +1006,7 @@ tr[role=revision] td{
 	background-image: url(images/input-cancle-grey.png);
 	display: none;
 }
-.autocomplete-wrapper.locked .cancle{
+.autocomplete-wrapper.locked .cancel{
 	display: block;
 }
 .autocomplete-wrapper.locked input{

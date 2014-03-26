@@ -294,6 +294,8 @@ var BoxEditor = Backbone.View.extend({
                 {
                     structure:elem,
                     container:self.model.get("content"),
+                    box:self.model,
+                    parentpath:"",
                 }
             });
             views.push(view);
