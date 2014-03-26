@@ -6,6 +6,6 @@ boxEditorControls['hidden']=Backbone.View.extend({
         return this;
     },
     fetchValue:function(){
-        return this.model.container[this.structure.key];
+        return this.model.container[this.model.structure.key];
     }
 });
