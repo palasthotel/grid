@@ -73,7 +73,7 @@ var GridToolBoxesView = Backbone.View.extend({
                         var blueprint = self.blueprints.get($this_box.data("cid"));
 
                         $new_box = $this_drop.parent().addClass('new-box-place').removeClass('box-drop-area-wrapper');
-                        GRID.getView().remove(".box-drop-area-wrapper");
+                        GRID.getView().$el.find(".box-drop-area-wrapper").remove();
 
                         GRID.log(["DROPPED Box", $this_box.data("cid"), $this_drop, $this_slot, $this_container, slot, blueprint]);
                         var box = slot.createBox(blueprint, $new_box.index() );

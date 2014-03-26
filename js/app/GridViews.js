@@ -67,6 +67,7 @@ var ContainerView = Backbone.View.extend({
         this.refreshAttr();
     	this.$el.html(ich.tpl_container( this.model.toJSON() ));
         this._slotsView.render();
+        this.$el.find(".slots-wrapper").replaceWith(this._slotsView.$el);
         return this;
 	},
     renderEditor: function(){
@@ -160,7 +161,7 @@ var SlotsView = Backbone.View.extend({
             self.$el.append(slotview.render().el);
         });
         GRID.log(this._parentView);
-        this._parentView.$el.find(".slots-wrapper").replaceWith(this.$el);
+        //this._parentView.$el.find(".slots-wrapper").replaceWith(this.$el);
         return this;
     }
 });
@@ -185,6 +186,7 @@ var SlotView = Backbone.View.extend({
         this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
         this._slotStyleChangerView.delegateEvents();
         this._boxesView.render();
+        this.$el.find(".boxes-wrapper").replaceWith(this._boxesView.$el);
         return this;
 	}
 });
@@ -204,7 +206,7 @@ var BoxesView = Backbone.View.extend({
         //render template with Mustache or something
         GRID.log('i am rendering the Boxes collection');
         var self = this;
-        //this.$el.empty();
+        this.$el.empty();
         GRID.log(this.collection);
         this.collection.each(function(box){
             var boxview = new BoxView({model: box});
@@ -212,7 +214,7 @@ var BoxesView = Backbone.View.extend({
             self.$el.append(boxview.render().el);
         });
         GRID.log(this._parentView);
-        this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
+        //this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
         return this;
     }
 });
@@ -259,13 +261,21 @@ var BoxEditor = Backbone.View.extend({
     },
     render: function(){
         GRID.log(this.model.toJSON());
+        var styles=GRID.getBoxStyles().toJSON();
+        var self=this;
+        _.each(styles,function(elem){
+            if(elem.slug==self.model.get("style"))
+                elem.selected="selected";
+            else
+                elem.selected="";
+        });
         this.$el.html(ich.tpl_boxeditor({
             'lang_values':document.lang_values,
             'box':this.model.toJSON(),
             'b_index':this.model.getIndex(),
             'c_id':this.model.getContainer().get("id"),
             's_id':this.model.getSlot().get("id"),
-            'styles':GRID.getBoxStyles()
+            'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
         var fieldcontainer=jQuery(this.$el).find(".dynamic-fields .field-wrapper");
@@ -327,10 +337,11 @@ var BoxEditor = Backbone.View.extend({
         this.model.set('content',obj);
         this.model.set('title',jQuery(this.$el).find(".f-b-title").val());
         this.model.set('titleurl',jQuery(this.$el).find(".f-b-titleurl").val());
-        this.model.set('prolog',CKEDITOR.instances[".f-b-prolog"].getData());
-        this.model.set('epilog',CKEDITOR.instances['.f-b-epilog'].getData());
+        this.model.set('prolog',CKEDITOR.instances["f-b-prolog"].getData());
+        this.model.set('epilog',CKEDITOR.instances['f-b-epilog'].getData());
         this.model.set('readmore',jQuery(this.$el).find('.f-b-readmore').val());
         this.model.set('readmoreurl',jQuery(this.$el).find('.f-b-readmoreurl').val());
+        this.model.set('style',jQuery(this.$el).find(".box-styles-wrapper select").val());
         this.model.save();
         GRID.hideBoxEditor(function(){
             jQuery("div#new-grid-boxeditor").html("");

@@ -32,7 +32,7 @@
 				<select name="f-b-style" class="form-select f-b-style"  id="f-b-style">
 					<option value="">{{lang_values.default-style}}</option>
 					{{#styles}}
-						<option value="{{slug}}">{{title}}</option>
+						<option {{selected}} value="{{slug}}">{{title}}</option>
 					{{/styles}}
 				</select>
 			</div>
