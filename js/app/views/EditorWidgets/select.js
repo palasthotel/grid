@@ -4,9 +4,10 @@ boxEditorControls['select']=Backbone.View.extend({
     },
     render:function(){
         var html="<label>"+this.model.structure.label+"</label><select>";
+        var self=this;
         _.each(this.model.structure.selections,function(elem){
             var selected="";
-            if(this.model.container[this.model.structure.key]==elem.key)selected="selected";
+            if(self.model.container[self.model.structure.key]==elem.key)selected="selected";
             html+="<option "+selected+" value='"+elem.key+"'>"+elem.text+"</option>";
         });
         html=html+"</select>";
