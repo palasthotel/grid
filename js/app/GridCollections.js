@@ -51,7 +51,6 @@ var Containers = Backbone.Collection.extend({
 			action: "move",
 			index: to_index,
 			success: function(data){
-//				var clone = container.clone();
 				self.remove(container);
 				self.add(clone, {at:to_index});
 			}
