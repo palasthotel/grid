@@ -94,6 +94,13 @@ var Grid = Backbone.Model.extend({
     	element.set("parent", this);
     	this.getContainers().add(element, args);
     },
+    addReuseContainer: function(containertype, index){
+        var self = this;
+        GridRequest.grid.addReuseContainer(containertype, index, function(data){
+            self.addContainer(new Container(containertype.toJSON()), index);
+        });
+        return this;
+    },
     getContainers: function(){
     	if(!this.get("collection_containers") ){
     		this.set("collection_containers", new Containers());
