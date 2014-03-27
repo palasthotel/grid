@@ -166,6 +166,19 @@ var GridRequest = {
 			}
 		);
 	},
+	reusablecontainers: function(collection, options){
+		new GridAjax(
+			"getReusableContainers", [],
+			{
+				success_fn: function(data){
+					GRID.log(["reusablecontainers data", data]);
+					_.each(data.result, function(container) {
+						collection.add(new ContainerType(container) );
+					});
+				}
+			}
+		);
+	},
 	boxtypes: function(boxtypes, options){
 		GRID.log("Boxtypes->read");
 		new GridAjax(
