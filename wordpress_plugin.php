@@ -14,6 +14,7 @@ require('core/classes/wordpress/grid_media_box.php');
 require('core/classes/wordpress/grid_posts_box.php');
 require('grid.install');
 
+
 class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint
 {
 	public function loadGrid($gridid)
@@ -651,31 +652,30 @@ function grid_wp_thegrid()
 		$jslang="js/language/grid-en.js";
 		if(file_exists("js/language/grid-".WPLANG.".js"))
 			$jslang="js/language/grid-".WPLANG.".js";
-?>
-<script>
-document.ID=<?php echo $grid_id?>;
-document.gridmode="grid";
-document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
-document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
-document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
-document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
-document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
-</script>
+		?>
+		<script>
+		document.ID=<?php echo $grid_id?>;
+		document.gridmode="grid";
+		document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
+		document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
+		document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
+		document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
+		document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
+		</script>
+		<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
+		</script>
+		<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
+		</script>
+		<script src="<?php echo plugins_url($jslang,__FILE__);?>">
+		</script>
 
-<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url($jslang,__FILE__);?>">
-</script>
+		<?php
+		grid_wp_load_js();
+		?>
 
-<?php
-//grid_wp_load_js();
-?>
-
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-<?php
-require "core/templates/editor.html.tpl.php";
+		<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
+		<?php
+		require "core/templates/editor.html.tpl.php";
 	}
 }
 
@@ -688,12 +688,11 @@ function grid_wp_load_js(){
 	</script>
 	<script src="<?php echo plugins_url( $framework_dir.'ICanHaz.js',__FILE__);?>">
 	</script>
-	<!-- Grid App -->
+	
+	
+	<!-- Grid templates -->
 	<?php 
-	return;
-	$base = plugin_dir_path( __FILE__ )
-	// icanhaz tempaltes
-	$templates_dir = $base."core/templates/backend/";
+	$templates_dir = dirname(__FILE__)."/core/templates/backend/";
 	?>
 	<script id='tpl_toolbar' type='text/html'><?= file_get_contents($templates_dir."ich.toolbar.html") ?></script>
 	<script id='tpl_toolContainers' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainers.html") ?></script>
@@ -712,54 +711,39 @@ function grid_wp_load_js(){
 	<script id='tpl_boxeditor' type='text/html'><?= file_get_contents($templates_dir."ich.boxeditor.html") ?></script>
 	<script id='tpl_revisions' type='text/html'><?= file_get_contents($templates_dir."ich.revisions.html") ?></script>
 	
-	<?php
-
-    $app_dir = "js/app/";
-	$base_app_url = plugins_url($app_dir, __FILE__);
-
-	// grid MVC JS files
-	drupal_add_js($app_dir.'GridViews.js','file');
-	$files=glob($app_dir."views/EditorWidgets/*.js");
-	// $editor_widgets = "views/EditorWidgets/"
-	foreach($files as $idx=>$file)
-	{
-		?>
-		<script src="<?php echo plugins_url($file, __FILE__);?>"></script>
-		<?php
-	}
-	// drupal_add_js($app_dir.'views/GridRevisionsView.js','file');
-	// drupal_add_js($app_dir.'views/GridToolbarView.js','file');
-	// drupal_add_js($app_dir.'views/GridToolContainersView.js','file');
-	// drupal_add_js($app_dir.'views/GridToolBoxesView.js','file');
-	// drupal_add_js($app_dir.'views/GridSlotStyleChangerView.js','file');
-
-
-	// drupal_add_js($app_dir.'GridModels.js','file');
-	// drupal_add_js($app_dir.'models/GridBoxBlueprint.js','file');
-	
-
-	// drupal_add_js($app_dir.'GridCollections.js','file');
-	// drupal_add_js($app_dir.'collections/GridBoxBlueprints.js','file');
-
-	// drupal_add_js($app_dir.'GridSync.js','file');
-	// drupal_add_js($app_dir.'GridController.js','file');
-	// drupal_add_js($app_dir.'Grid.js','file');
-
-	/*
-	<script src="Grid.js"></script>
-    <script src="GridCollection.js"></script>
-    <script src="GridView.js"></script>
-    <script src="GridAppModel.js"></script>
-    <script src="GridAppView.js"></script>
-    <script src="GridAppController.js"></script>
-	*/
+	<!-- Grid App -->
+	<?php 
 	$app_dir = "js/app/"; 
 	?>
-	<script src="<?php echo plugins_url( $app_dir.'GridCollections.js',__FILE__);?>">
-	</script>
+
 	<script src="<?php echo plugins_url( $app_dir.'GridViews.js',__FILE__);?>">
 	</script>
+
+	<script src="<?php echo plugins_url( $app_dir.'views/GridRevisionsView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridToolbarView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridToolContainersView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridToolBoxesView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridSlotStyleChangerView.js',__FILE__);?>">
+	</script>
+	<?php
+	grid_wp_add_app_js_dir(__DIR__."/".$app_dir."views/EditorWidgets/*.js");
+	?>
+
 	<script src="<?php echo plugins_url( $app_dir.'GridModels.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'models/GridBoxBlueprint.js',__FILE__);?>">
+	</script>
+
+	<script src="<?php echo plugins_url( $app_dir.'GridCollections.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'collections/GridBoxBlueprints.js',__FILE__);?>">
+	</script>
+	
+	<script src="<?php echo plugins_url( $app_dir.'GridSync.js',__FILE__);?>">
 	</script>
 	<script src="<?php echo plugins_url( $app_dir.'GridController.js',__FILE__);?>">
 	</script>
@@ -767,6 +751,16 @@ function grid_wp_load_js(){
 	</script>
 
 	<?php
+}
+function grid_wp_add_app_js_dir($dir){
+	$files=glob( $dir );
+	foreach($files as $idx=>$file)
+	{
+		$filename = basename($file);
+		?>
+		<script src="<?php echo plugins_url( "js/app/views/EditorWidgets/".$filename,__FILE__);?>"></script>
+		<?php
+	}
 }
 
 function grid_wp_reuse_boxes()
