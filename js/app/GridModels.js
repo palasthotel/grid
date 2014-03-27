@@ -18,6 +18,15 @@ var BoxType = Backbone.Model.extend({
         });
         this.set("blueprints", blueprints);
         return blueprints;
+    },
+    search:function(query,criteria){
+        var blueprints = new GridBoxBlueprints();
+        blueprints.fetch({
+            type:this.get("type"),
+            criteria: criteria,
+            searchString:query
+        });
+        return blueprints;
     }
 });
 var StyleType = Backbone.Model.extend({});
