@@ -36,6 +36,7 @@ GRID = {
 	SERVER: "/grid_ajax_endpoint",
 	// Pattern for preview URL
 	PREVIEW_URL: window.location.pathname+'/preview',
+	PREVIEW_PATTERN: window.location.pathname+'/{REV}/preview',
 	// initializes the grid
 	grid: null,
 	gridView: null,
@@ -120,7 +121,7 @@ GRID = {
     },
     // revisions
     setToRevision: function(revision){
-        GridRequest.grid.update(grid, {action: "setToRevision", revision: revision});
+        GridRequest.grid.update(GRID.grid, {action: "setToRevision", revision: revision});
     },
 	// initializes the constatns
 	_initConstants: function(){
@@ -138,6 +139,14 @@ GRID = {
 			document.previewurl != ""){
 			GRID.PREVIEW_URL = document.previewurl;
 		}
+		var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
+		if( typeof document.previewpattern != "undefined" && 
+			document.previewpattern != null && 
+			document.previewpattern != ""){
+			PREVIEW_PATTERN = document.previewpattern;
+		}
+		GRID.PREVIEW_PATTERN=PREVIEW_PATTERN
+		console.log("PREVIEW_PATTERN: "+PREVIEW_PATTERN);
 	},
 	// CKEDITOR functions
 	useCKEDITOR: function(selector){
@@ -158,7 +167,9 @@ GRID = {
 	// publishes the grid
 	publish: function(){ new GridAjax("publishDraft",[GRID.ID]); },
 	// revert to old revision
-	revert: function(){	new GridAjax("revertDraft", [GRID.ID]); },
+	revert: function(){	
+        GridRequest.grid.update(GRID.grid, {action: "revertDraft"});
+	},
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } },
 

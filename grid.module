@@ -1311,6 +1311,7 @@ function grid_add_app_JS(){
 	
 	$inline_scripts.= "<script id='tpl_box' type='text/html'>".file_get_contents($templates_dir."ich.box.html")."</script>";
 	$inline_scripts.= "<script id='tpl_boxeditor' type='text/html'>".file_get_contents($templates_dir."ich.boxeditor.html")."</script>";
+	$inline_scripts.= "<script id='tpl_revisions' type='text/html'>".file_get_contents($templates_dir."ich.revisions.html")."</script>";
 	$element = array(
       '#type' => 'markup',
       '#markup' => $inline_scripts,
@@ -1324,6 +1325,7 @@ function grid_add_app_JS(){
 	{
 		drupal_add_js($file,'file');
 	}
+	drupal_add_js($app_dir.'views/GridRevisionsView.js','file');
 	drupal_add_js($app_dir.'views/GridToolbarView.js','file');
 	drupal_add_js($app_dir.'views/GridToolContainersView.js','file');
 	drupal_add_js($app_dir.'views/GridToolBoxesView.js','file');

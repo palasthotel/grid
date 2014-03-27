@@ -74,6 +74,7 @@ var GridRequest = {
 						{ 
 							success_fn: function(data){
 								grid.attributes = _.extend(grid.attributes, data.result);
+								grid.getContainers().reset();
 								_.each(data.result.container, function(container) {
 									GRID.log("Add new Container");
 									 grid.addContainer(new Container(container));
@@ -93,15 +94,19 @@ var GridRequest = {
 						success_fn: function(data){
 							GRID.log("revertDraft success");
 							GRID.log(data);
+							grid.fetch();
+							GRID.revisions.fetch();
 						}
 					});
 					break;
 				case "setToRevision":
-					var params = [grid.getGridID(), options.revision.get("revision")];
+					var params = [grid.getGridID(), options.revision];
 					new GridAjax("setToRevision",params,{
 						success_fn: function(data){
 							GRID.log("setToRevision success");
 							GRID.log(data);
+							grid.fetch();
+							GRID.revisions.fetch();
 						}
 					});
 					break;
