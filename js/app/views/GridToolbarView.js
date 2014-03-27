@@ -32,6 +32,7 @@ var GridToolbarView = Backbone.View.extend({
     },
     revert: function(){
         console.log("BTN revert");
+        GRID.revert();
     },
     revisions: function(){
         this.$el.find(".rev-wrapper").toggle();
