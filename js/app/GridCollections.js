@@ -23,6 +23,12 @@ var ContainerTypes = Backbone.Collection.extend({
 		GridRequest.containertypes(collection, options);
 	}
 });
+var ReusableContainers = Backbone.Collection.extend({
+	model: ContainerType,
+	sync: function(method, collection, options){
+		GridRequest.reusablecontainers(collection, options);
+	}
+});
 var BoxTypes = Backbone.Collection.extend({
 	model: BoxType,
 	sync: function(method, collection, options){

@@ -42,6 +42,7 @@ GRID = {
 	gridView: null,
 	types_box: null,
     types_container: null,
+    reusable_containers: null,
     styles_container: null,
     styles_slot: null,
     styles_box: null,
@@ -53,6 +54,7 @@ GRID = {
 		// load all model classes for grid works
 		this.getBoxTypes().fetch();
 		this.getContainerTypes().fetch();
+		this.getReusableContainers().fetch();
 		this.getContainerStyles().fetch();
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
@@ -93,6 +95,12 @@ GRID = {
             this.types_container = new ContainerTypes();
         }
         return this.types_container;
+    },
+    getReusableContainers: function(){
+    	if(!(this.reusable_containers instanceof ReusableContainers)){
+    		this.reusable_containers = new ReusableContainers();
+    	}
+    	return this.reusable_containers;
     },
     getBoxTypes: function(){
         if(!(this.types_box instanceof BoxTypes) ){

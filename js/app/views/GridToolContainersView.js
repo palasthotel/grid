@@ -1,13 +1,44 @@
 var GridToolContainersView = Backbone.View.extend({
     className: "g-tool g-container clearfix",
-    initializes: function(){
-
+    events:{
+        "click .element-type-tabs li": "renderContainerTypes"
     },
     render: function(){
+        this.$el.empty();
+        this.$el.append(ich.tpl_toolContainers({}));
+        // because of old css
+        this.$el.show();
+        this.delegateEvents();
+        this.$el.find(".element-type-tabs li:first-child()").trigger("click");
+        return this;
+    },
+    renderContainerTypes: function(event){
+        var $target = jQuery(event.target);
+        this.$el.find(".element-type-tabs li").removeClass('active');
+        $target.addClass('active');
+        var containers = {};
+        switch($target.attr("role")){
+            case "show-reusable":
+            containers = this.getReusable();
+            break;
+            case "show-containers":
+            containers = this.getContainers($target.attr("scope"));
+            break;
+        }
+        var $ul = this.$el.find(".element-list");
+        $ul.empty();
+        GRID.log(["containers", containers]);
+        $ul.replaceWith(ich.tpl_toolContainersContainer(containers));
+        this.initializesDraggable();
+        return this;
+    },
+    getContainers: function(scope){
+        var scope_val = "C-";
+        if(scope == "sidebars"){ scope_val = "S-"; }
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
             value.slots = [];
-            if(value.type.indexOf("C-") != 0 && value.type.indexOf("S-") != 0){
+            if( value.type.indexOf(scope_val) != 0 ){
                 delete containers.containers[key];
             } else {
                 for( var i = 0 ;i < value.numslots; i++){
@@ -15,10 +46,11 @@ var GridToolContainersView = Backbone.View.extend({
                 }
             }           
         });
-        this.$el.html(ich.tpl_toolContainers(containers));
-        this.$el.show();
-        this.initializesDraggable();
-        return this;
+        GRID.log(["getContainers",scope, containers]);
+        return containers;
+    },
+    getReusable: function(){
+        return { containers: GRID.getReusableContainers().toJSON() };
     },
     initializesDraggable: function(){
         this.$el.find(".container-dragger").draggable({ 
@@ -55,6 +87,8 @@ var GridToolContainersView = Backbone.View.extend({
                         GRID.log($dropwrapper.index());
                         GRID.getModel().createContainer(containerType, $dropwrapper.index());
 
+                        // GRID.addReusableContainer(container, $dropwrapper.index());
+
                         // what if reusable??? addReusableContainer
                     }
                 });
@@ -64,5 +98,6 @@ var GridToolContainersView = Backbone.View.extend({
                 GRID.getView().$el.find('.container-drop-area-wrapper').remove();
             }
         });
+        return this;
     }
 });
