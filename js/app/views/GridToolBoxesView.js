@@ -1,7 +1,10 @@
 var GridToolBoxesView = Backbone.View.extend({
     className: "g-tool g-box clearfix",
+    currentBox:null,
+    timer:null,
     events:{
-    	"click .box-type-tabs li": "searchBoxes"
+    	"click .box-type-tabs li": "searchBoxes",
+        "keyup .search-bar input": "searchString"
     },
     initializes: function(){
     	this.render();
@@ -28,9 +31,33 @@ var GridToolBoxesView = Backbone.View.extend({
     	var $li = jQuery(event.target);
         $li.addClass('active');
     	var boxtype = this.collection.at($li.data("index"));
+        this.currentBox=boxtype;
+        if(boxtype.get("criteria").length==0)
+        {
+            this.$el.find(".search-bar").hide();
+        }
+        else
+        {
+            this.$el.find(".search-bar").show();
+        }
+        this.stopListening(this.blueprints);
     	this.blueprints = boxtype.searchBoxes();
+        this.$el.find(".box-list").empty();
         this.listenTo(this.blueprints ,"add", this.buildBoxlist);
         return this;
+    },
+    searchString:function(event){
+        var input=this.$el.find(".search-bar input").val();
+        if(input.length>0 && input.length<2)return;
+        var self=this;
+        if(this.timer)
+            clearTimeout(this.timer);
+        this.timer=setTimeout(function(){
+            self.stopListening(self.blueprints);
+            self.blueprints=self.currentBox.search(input,self.currentBox.criteria);
+            self.$el.find(".box-list").empty();
+            self.listenTo(self.blueprints, "add", self.buildBoxlist);
+        },300);
     },
     buildBoxlist: function(blueprint,collection,event){
         GRID.log(["buildBoxlist", this.blueprints, blueprint]);
