@@ -2,6 +2,7 @@ var GridToolbarView = Backbone.View.extend({
     id:"grid-toolbar",
     _toolContainersView: null,
     _toolBoxesView: null,
+    _revisionsView: null,
     events:{
         "click [role=publish]": "publish",
         "click [role=preview]": "preview",
@@ -16,7 +17,9 @@ var GridToolbarView = Backbone.View.extend({
     },
     render: function() {
         GRID.log('i am rendering the toolbar');
+        _revisionsView=new GridRevisionsView({collection:GRID.revisions});
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
+        this.$el.find(".rev-wrapper table").replaceWith(_revisionsView.$el);
         return this;
     },
     publish: function(){
@@ -29,9 +32,10 @@ var GridToolbarView = Backbone.View.extend({
     },
     revert: function(){
         console.log("BTN revert");
+        GRID.revert();
     },
     revisions: function(){
-        console.log("BTN revisions");
+        this.$el.find(".rev-wrapper").toggle();
     },
     toggleBoxes: function(){
         console.log("BTN toggleBoxes");

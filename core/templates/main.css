@@ -310,7 +310,7 @@
 /** revisions tools */
 #grid-toolbar button[role="revisions"]{
 	position:relative;
-	display:none;
+/*	display:none;*/
 }
 #grid-revisions{
 	position:absolute;
