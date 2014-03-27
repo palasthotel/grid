@@ -17,7 +17,8 @@ var GridSlotStyleChangerView = Backbone.View.extend({
             if(style.get("slug") == self.model.get("style")) activestyle = style.get("title");
             styles.push(style.toJSON());
         });
-        this.$el.html(ich.tpl_slotstylechanger({styles: styles, activestyle: activestyle}));
+        var container=this.model.getContainer();
+        this.$el.html(ich.tpl_slotstylechanger({styles: styles, activestyle: activestyle,reused:container.get("reused")}));
         return this;
     },
     changeStyle: function(event){
