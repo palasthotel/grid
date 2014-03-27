@@ -58,7 +58,7 @@ var Containers = Backbone.Collection.extend({
 			index: to_index,
 			success: function(data){
 				self.remove(container);
-				self.add(clone, {at:to_index});
+				self.add(container, {at:to_index});
 			}
 		});
 		return this;
@@ -70,3 +70,4 @@ var Slots = Backbone.Collection.extend({
 var Boxes = Backbone.Collection.extend({
 	model: Box
 });
+

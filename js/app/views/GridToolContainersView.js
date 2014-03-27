@@ -76,7 +76,7 @@ var GridToolContainersView = Backbone.View.extend({
                     accept: ".new-container",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
-                        GRID.log("DROPPiNG");
+                        
                         var $draggable = $(ui.draggable);
                         var containerReusable = $draggable.data("reusable"); 
                         var containerType =  $draggable.data("type");
@@ -84,12 +84,17 @@ var GridToolContainersView = Backbone.View.extend({
                         
                         $dropwrapper.removeClass('container-drop-area-wrapper').addClass('new-container-target');
                         GRID.getView().$el.find('.container-drop-area-wrapper').remove();
-                        GRID.log($dropwrapper.index());
-                        GRID.getModel().createContainer(containerType, $dropwrapper.index());
+                        var new_index = $dropwrapper.index();
 
-                        // GRID.addReusableContainer(container, $dropwrapper.index());
+                        GRID.log(["DROPPiNG", $draggable, containerReusable]);
+                        if(containerReusable == true || containerReusable == "true"){
+                            var container = GRID.getReusableContainers().at($draggable.index());
+                            GRID.getModel().addReuseContainer(container, new_index);
+                            GRID.log(["REUSED", container]);
+                            return;
+                        }
 
-                        // what if reusable??? addReusableContainer
+                        GRID.getModel().createContainer(containerType, new_index);
                     }
                 });
             },

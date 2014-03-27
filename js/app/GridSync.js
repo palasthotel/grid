@@ -126,6 +126,12 @@ var GridRequest = {
 				success_fn: success
 			})
 		},
+		addReuseContainer: function(containertype, index, success){
+			var params = [GRID.ID, index, containertype.get("id")];
+			new GridAjax( "addReuseContainer", params,{
+				success_fn: success
+			});
+		},
 		destroy: function(grid, options){
 			GRID.log("Grid->destroy");
 			// no need to. CMS creates and deletes rids
