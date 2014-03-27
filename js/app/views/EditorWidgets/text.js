@@ -5,7 +5,7 @@ boxEditorControls['text']=Backbone.View.extend({
     render:function(){
         var text=this.model.container[this.model.structure.key];
         if(!text)text="";
-        this.$el.html("<label>"+this.model.structure.label+"</label><input type=text class='dynamic-value form-html' value='"+text+"'/>");
+        this.$el.html("<label>"+this.model.structure.label+"</label><input type=text class='dynamic-value' value='"+text+"'/>");
         return this;
     },
     fetchValue:function(){
