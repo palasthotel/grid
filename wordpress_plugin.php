@@ -664,27 +664,15 @@ document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false")
 
 <script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
 </script>
-<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
+<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
 </script>
 <script src="<?php echo plugins_url($jslang,__FILE__);?>">
 </script>
 
 <?php
-grid_wp_load_js();
+//grid_wp_load_js();
 ?>
 
-<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/grid_model.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/grid_ajax.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/grid_controller.js',__FILE__);?>">
-</script>
 <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
 <?php
 require "core/templates/editor.html.tpl.php";
@@ -698,14 +686,75 @@ function grid_wp_load_js(){
 	</script>
 	<script src="<?php echo plugins_url( $framework_dir.'backbone.js',__FILE__);?>">
 	</script>
-
-	<script src="<?php echo plugins_url( $framework_dir.'mustache.js',__FILE__);?>">
-	</script>
 	<script src="<?php echo plugins_url( $framework_dir.'ICanHaz.js',__FILE__);?>">
 	</script>
-	
 	<!-- Grid App -->
-	<?php $app_dir = "js/app/"; ?>
+	<?php 
+	return;
+	$base = plugin_dir_path( __FILE__ )
+	// icanhaz tempaltes
+	$templates_dir = $base."core/templates/backend/";
+	?>
+	<script id='tpl_toolbar' type='text/html'><?= file_get_contents($templates_dir."ich.toolbar.html") ?></script>
+	<script id='tpl_toolContainers' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainers.html") ?></script>
+	<script id='tpl_toolContainersContainer' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainersContainer.html") ?></script>
+	<script id='tpl_toolBoxes' type='text/html'><?= file_get_contents($templates_dir."ich.toolBoxes.html") ?></script>
+	<script id='tpl_toolBoxBlueprint' type='text/html'><?= file_get_contents($templates_dir."ich.toolBoxBlueprint.html") ?></script>
+
+
+	<script id='tpl_grid' type='text/html'><?= file_get_contents($templates_dir."ich.grid.html") ?></script>
+	<script id='tpl_container' type='text/html'><?= file_get_contents($templates_dir."ich.container.html") ?></script>
+	<script id='tpl_containerEditor' type='text/html'><?= file_get_contents($templates_dir."ich.containerEditor.html") ?></script>
+	<script id='tpl_slot' type='text/html'><?= file_get_contents($templates_dir."ich.slot.html") ?></script>
+	<script id='tpl_slotstylechanger' type='text/html'><?= file_get_contents($templates_dir."ich.slotstylechanger.html") ?></script>
+	
+	<script id='tpl_box' type='text/html'><?= file_get_contents($templates_dir."ich.box.html") ?></script>
+	<script id='tpl_boxeditor' type='text/html'><?= file_get_contents($templates_dir."ich.boxeditor.html") ?></script>
+	<script id='tpl_revisions' type='text/html'><?= file_get_contents($templates_dir."ich.revisions.html") ?></script>
+	
+	<?php
+
+    $app_dir = "js/app/";
+	$base_app_url = plugins_url($app_dir, __FILE__);
+
+	// grid MVC JS files
+	drupal_add_js($app_dir.'GridViews.js','file');
+	$files=glob($app_dir."views/EditorWidgets/*.js");
+	// $editor_widgets = "views/EditorWidgets/"
+	foreach($files as $idx=>$file)
+	{
+		?>
+		<script src="<?php echo plugins_url($file, __FILE__);?>"></script>
+		<?php
+	}
+	// drupal_add_js($app_dir.'views/GridRevisionsView.js','file');
+	// drupal_add_js($app_dir.'views/GridToolbarView.js','file');
+	// drupal_add_js($app_dir.'views/GridToolContainersView.js','file');
+	// drupal_add_js($app_dir.'views/GridToolBoxesView.js','file');
+	// drupal_add_js($app_dir.'views/GridSlotStyleChangerView.js','file');
+
+
+	// drupal_add_js($app_dir.'GridModels.js','file');
+	// drupal_add_js($app_dir.'models/GridBoxBlueprint.js','file');
+	
+
+	// drupal_add_js($app_dir.'GridCollections.js','file');
+	// drupal_add_js($app_dir.'collections/GridBoxBlueprints.js','file');
+
+	// drupal_add_js($app_dir.'GridSync.js','file');
+	// drupal_add_js($app_dir.'GridController.js','file');
+	// drupal_add_js($app_dir.'Grid.js','file');
+
+	/*
+	<script src="Grid.js"></script>
+    <script src="GridCollection.js"></script>
+    <script src="GridView.js"></script>
+    <script src="GridAppModel.js"></script>
+    <script src="GridAppView.js"></script>
+    <script src="GridAppController.js"></script>
+	*/
+	$app_dir = "js/app/"; 
+	?>
 	<script src="<?php echo plugins_url( $app_dir.'GridCollections.js',__FILE__);?>">
 	</script>
 	<script src="<?php echo plugins_url( $app_dir.'GridViews.js',__FILE__);?>">
