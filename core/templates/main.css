@@ -1,6 +1,4 @@
-html{
-	overflow-y:scroll;
-}
+
 #grid-wrapper{
 	width:1000px;
 	margin:0px auto;
@@ -9,7 +7,8 @@ html{
 	background-color:#fff;
 	padding-right: 300px;
 }
-#grid-wrapper ul{
+#grid-wrapper ul,
+#new-grid-wrapper ul{
 	list-style:none;
 	margin:0px;
 }
@@ -130,13 +129,14 @@ html{
 }
 
 /* Error display ***************/
-#grid-toolbar [role=g-errors]{
+div.error-messages[role=g-errors] {
 	padding: 0 10px 0 10px;
 }
-#grid-toolbar [role=g-errors]:empty{
+div.error-messages[role=g-errors]:empty {
 	padding:0px;
 }
-#grid-toolbar [role=g-errors] p{
+
+div.error-messages[role=g-errors] {
 	display:none;
 	background-color: #f00;
 	color: #fff;
@@ -154,7 +154,6 @@ html{
 	position:absolute;
 }
 .grid-tools .g-tool{
-	display:none;
 }
 .grid-tools select{
 	width:140px;
@@ -312,7 +311,7 @@ html{
 /** revisions tools */
 #grid-toolbar button[role="revisions"]{
 	position:relative;
-	display:none;
+/*	display:none;*/
 }
 #grid-revisions{
 	position:absolute;
@@ -998,7 +997,7 @@ tr[role=revision] td{
 	left: 160px;
 	display: none;
 }
-.autocomplete-wrapper .cancle{
+.autocomplete-wrapper .cancel{
 	position: absolute;
 	top: 4px;
 	left: 138px;
@@ -1008,7 +1007,7 @@ tr[role=revision] td{
 	background-image: url(images/input-cancle-grey.png);
 	display: none;
 }
-.autocomplete-wrapper.locked .cancle{
+.autocomplete-wrapper.locked .cancel{
 	display: block;
 }
 .autocomplete-wrapper.locked input{

@@ -649,6 +649,7 @@ function grid_update_7108($sandbox)
 	// sidebar platzhalter
 	db_query("insert into {grid_container_type} (type,numslots) values ('SC-6',1)");
 }
+
 function grid_update_7109($sandbox)
 {
 	// 12 grid 
@@ -657,3 +658,69 @@ function grid_update_7109($sandbox)
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-2-2-0',3)");
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-2-2-0',4)");
 }
+/*
+function grid_update_7110($sandbox){
+	// containers by fractions
+	// Every block of types only wraps the base one in bigger ones
+	// base 1
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d1',1)");
+	// base 2
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d2-1d2',2)");
+	// base 3
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d3',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d3',2)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-2d3',2)");
+	// base 4
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d4-1d4-1d4-1d4',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d2-1d4-1d4',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d4-1d4-1d2',3)");
+	// base 5
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d5-1d5-1d5-1d5-1d5',5)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d5-1d5-1d5-1d5',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d5-2d5-1d5-1d5',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d5-1d5-2d5-1d5',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d5-1d5-1d5-2d5',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d5-1d5-3d5',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d5-3d5-1d5',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-3d5-1d5-1d5',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d5-3d5',2)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-3d5-2d5',2)");
+	// base 6
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d6-1d6',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d3',5)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d3-1d6',5)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d3-1d6-1d6',5)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d3-1d6-1d6-1d6',5)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d6-1d6-1d6-1d6',5)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d6-1d6',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d3-1d3',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d6-1d6-1d3',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d6-1d3-1d6',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d3-1d6-1d3',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d3-1d3-1d6',4)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d6-1d6',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-2d3-1d6',3)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-2d3',3)");
+	// base 7
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d7-1d7-1d7-1d7-1d7-1d7-1d7',7)");
+	// base 8
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-1d8-1d8-1d8-1d8-1d8-1d8',8)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-1d8-1d8-1d8-1d8-2d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-1d8-1d8-1d8-2d8-1d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-1d8-1d8-2d8-1d8-1d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-1d8-2d8-1d8-1d8-1d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-2d8-1d8-1d8-1d8-1d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-2d8-1d8-1d8-1d8-1d8-1d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d8-1d8-1d8-1d8-1d8-1d8-1d8',7)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-1d8-1d8-2d8-2d8',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-2d8-2d8-1d8-1d8',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d8-2d8-1d8-1d8-1d8-1d8',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d8-1d8-1d8-1d8-1d8-2d8',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d8-1d8-2d8-1d8-1d8-2d8',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d8-1d8-1d8-2d8-1d8-1d8',6)");
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-2d8-2d8-1d8-1d8-2d8',5)");
+
+	// base 9
+	db_query("insert into {grid_container_type} (type,numslots) values ('c-1d9-1d9-1d9-1d9-1d9-1d9-1d9-1d9-1d9',9)");
+}
+*/

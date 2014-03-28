@@ -12,12 +12,22 @@ class grid_db {
 	private $prefix;
 
 	public function __construct($host,$user,$password,$database,$author="UNKNOWN",$prefix="") {
-		$this->connection=new mysqli($host,$user,$password,$database);
+		$port = 3306;
+		if(strpos($host, ":")>=0){
+			$parts = explode(":", $host);
+			$host = $parts[0];
+			if(isset($parts[1])){
+				$port = $parts[1];
+			}
+		}
+
+		$this->connection=new mysqli($host,$user,$password,$database, $port);
 		$this->connection->set_charset("utf8");
 		$this->author=$author;
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 		$this->prefix=$prefix;
 	}
+
 	
 	public function __destruct() {
 		$this->connection->close();

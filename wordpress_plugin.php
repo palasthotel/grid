@@ -14,6 +14,7 @@ require('core/classes/wordpress/grid_media_box.php');
 require('core/classes/wordpress/grid_posts_box.php');
 require('grid.install');
 
+
 class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint
 {
 	public function loadGrid($gridid)
@@ -40,8 +41,8 @@ function t($str){return $str;}
 function db_query($querystring)
 {
 	global $wpdb;
-	$querystring=str_replace("{", $wpdb->prefix, $querystring);
-	$querystring=str_replace("}", "", $querystring);
+	$querystring = str_replace("{", $wpdb->prefix, $querystring);
+	$querystring = str_replace("}", "", $querystring);
 	global $grid_connection;
 	$result=$grid_connection->query($querystring) or die($querystring." failed: ".$grid_connection->error);
 	return $result;
@@ -57,7 +58,7 @@ function grid_wp_activate()
 	if(!isset($options['installed']))
 	{
 		$schema=grid_schema();
-		$grid_connection=new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+		$grid_connection= grid_wp_get_mysqli();
 		foreach($schema as $tablename=>$data)
 		{
 			$query="create table ".$wpdb->prefix."$tablename (";
@@ -175,7 +176,7 @@ add_action("admin_menu","grid_wp_admin_menu");
 function grid_wp_styles()
 {
 	global $grid_connection;
-	$grid_connection=new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+	$grid_connection=grid_wp_get_mysqli();
 	if(isset($_POST) && !empty($_POST))
 	{
 		foreach($_POST['container_styles'] as $idx=>$data)
@@ -651,35 +652,114 @@ function grid_wp_thegrid()
 		$jslang="js/language/grid-en.js";
 		if(file_exists("js/language/grid-".WPLANG.".js"))
 			$jslang="js/language/grid-".WPLANG.".js";
-?>
-<script>
-document.ID=<?php echo $grid_id?>;
-document.gridmode="grid";
-document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
-document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
-document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
-document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
-document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
-</script>
+		?>
+		<script>
+		document.ID=<?php echo $grid_id?>;
+		document.gridmode="grid";
+		document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
+		document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
+		document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
+		document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
+		document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
+		</script>
+		<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
+		</script>
+		<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
+		</script>
+		<script src="<?php echo plugins_url($jslang,__FILE__);?>">
+		</script>
 
-<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url($jslang,__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
-</script>
+		<?php
+		grid_wp_load_js();
+		?>
 
-<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
-</script>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-<?php
-require "core/templates/editor.html.tpl.php";
+		<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
+		<?php
+		require "core/templates/editor.html.tpl.php";
+	}
+}
+
+function grid_wp_load_js(){
+	$framework_dir = "js/frameworks/";
+	?>
+	<script src="<?php echo plugins_url( $framework_dir.'underscore.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $framework_dir.'backbone.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $framework_dir.'ICanHaz.js',__FILE__);?>">
+	</script>
+	
+	
+	<!-- Grid templates -->
+	<?php 
+	$templates_dir = dirname(__FILE__)."/core/templates/backend/";
+	?>
+	<script id='tpl_toolbar' type='text/html'><?= file_get_contents($templates_dir."ich.toolbar.html") ?></script>
+	<script id='tpl_toolContainers' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainers.html") ?></script>
+	<script id='tpl_toolContainersContainer' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainersContainer.html") ?></script>
+	<script id='tpl_toolBoxes' type='text/html'><?= file_get_contents($templates_dir."ich.toolBoxes.html") ?></script>
+	<script id='tpl_toolBoxBlueprint' type='text/html'><?= file_get_contents($templates_dir."ich.toolBoxBlueprint.html") ?></script>
+
+
+	<script id='tpl_grid' type='text/html'><?= file_get_contents($templates_dir."ich.grid.html") ?></script>
+	<script id='tpl_container' type='text/html'><?= file_get_contents($templates_dir."ich.container.html") ?></script>
+	<script id='tpl_containerEditor' type='text/html'><?= file_get_contents($templates_dir."ich.containerEditor.html") ?></script>
+	<script id='tpl_slot' type='text/html'><?= file_get_contents($templates_dir."ich.slot.html") ?></script>
+	<script id='tpl_slotstylechanger' type='text/html'><?= file_get_contents($templates_dir."ich.slotstylechanger.html") ?></script>
+	
+	<script id='tpl_box' type='text/html'><?= file_get_contents($templates_dir."ich.box.html") ?></script>
+	<script id='tpl_boxeditor' type='text/html'><?= file_get_contents($templates_dir."ich.boxeditor.html") ?></script>
+	<script id='tpl_revisions' type='text/html'><?= file_get_contents($templates_dir."ich.revisions.html") ?></script>
+	
+	<!-- Grid App -->
+	<?php 
+	$app_dir = "js/app/"; 
+	?>
+
+	<script src="<?php echo plugins_url( $app_dir.'GridViews.js',__FILE__);?>">
+	</script>
+
+	<script src="<?php echo plugins_url( $app_dir.'views/GridRevisionsView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridToolbarView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridToolContainersView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridToolBoxesView.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'views/GridSlotStyleChangerView.js',__FILE__);?>">
+	</script>
+	<?php
+	grid_wp_add_app_js_dir(__DIR__."/".$app_dir."views/EditorWidgets/*.js");
+	?>
+
+	<script src="<?php echo plugins_url( $app_dir.'GridModels.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'models/GridBoxBlueprint.js',__FILE__);?>">
+	</script>
+
+	<script src="<?php echo plugins_url( $app_dir.'GridCollections.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'collections/GridBoxBlueprints.js',__FILE__);?>">
+	</script>
+	
+	<script src="<?php echo plugins_url( $app_dir.'GridSync.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'GridController.js',__FILE__);?>">
+	</script>
+	<script src="<?php echo plugins_url( $app_dir.'Grid.js',__FILE__);?>">
+	</script>
+
+	<?php
+}
+function grid_wp_add_app_js_dir($dir){
+	$files=glob( $dir );
+	foreach($files as $idx=>$file)
+	{
+		$filename = basename($file);
+		?>
+		<script src="<?php echo plugins_url( "js/app/views/EditorWidgets/".$filename,__FILE__);?>"></script>
+		<?php
 	}
 }
 
@@ -966,4 +1046,15 @@ function grid_wp_ckeditor_config()
 	$styles=apply_filters("grid_formats",$formats);
 	require("grid_htmlbox_ckeditor_config_js.tpl.php");
 	die();
+}
+
+function grid_wp_get_mysqli(){
+	$host = DB_HOST;
+	$port = 3306;
+	if(strpos(DB_HOST, ":") >= 0){
+		$db_host = explode(":", DB_HOST);
+		$host = $db_host[0];
+		$port = $db_host[1];
+	}
+	return new mysqli($host,DB_USER,DB_PASSWORD,DB_NAME, $port);
 }
