@@ -44,10 +44,10 @@ class grid_box extends grid_base {
 		}
 		if(!$found)
 		{
-			if(file_exists(dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php'))
-				include dirname(__FILE__).'/../templates/box-'.$this->type().'.tpl.php';
+			if(file_exists(dirname(__FILE__).'/../templates/frontend/box-'.$this->type().'.tpl.php'))
+				include dirname(__FILE__).'/../templates/frontend/box-'.$this->type().'.tpl.php';
 			else
-				include dirname(__FILE__).'/../templates/box-box.tpl.php';
+				include dirname(__FILE__).'/../templates/frontend/box-box.tpl.php';
 		}
 		$output=ob_get_clean();
 		return $output;

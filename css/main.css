@@ -73,31 +73,31 @@
 	cursor: default;
 }
 #grid-toolbar button[role=publish]{
-	background-image: url(images/btn-world.png);
+	background-image: url(../images/btn-world.png);
 }
 #grid-toolbar button[role=publish][disabled=disabled]{
-	background-image: url(images/btn-world-disabled.png);
+	background-image: url(../images/btn-world-disabled.png);
 }
 #grid-toolbar button[role=preview]{
-	background-image: url(images/btn-eye.png);
+	background-image: url(../images/btn-eye.png);
 }
 #grid-toolbar button[role*=add]{
-	background-image: url(images/btn-add.png);
+	background-image: url(../images/btn-add.png);
 }
 #grid-toolbar button[role=revert]{
-	background-image: url(images/btn-revert-draft.png);
+	background-image: url(../images/btn-revert-draft.png);
 }
 #grid-toolbar button[role=revisions]{
-	background-image: url(images/btn-revisions.png);
+	background-image: url(../images/btn-revisions.png);
 }
 #grid-toolbar button[role=revert][disabled=disabled]{
-	background-image: url(images/btn-revert-draft-disabled.png);
+	background-image: url(../images/btn-revert-draft-disabled.png);
 }
 #grid-toolbar button[role=hide_boxes]{
-	background-image: url(images/btn-toggle-opend.png);
+	background-image: url(../images/btn-toggle-opend.png);
 }
 #grid-toolbar button[data-hidden=true][role=hide_boxes]{
-	background-image: url(images/btn-toggle-closed.png);
+	background-image: url(../images/btn-toggle-closed.png);
 }
 /* State display */
 .state-display{
@@ -183,24 +183,24 @@ div.error-messages[role=g-errors] {
 	margin-bottom: 0px;
 }
 .element-type-tabs li[data-type=static]{
-	background-image: url(images/box-type-static.png);
+	background-image: url(../images/box-type-static.png);
 
 }
 .element-type-tabs li[data-type=abstract_list]{
-	background-image: url(images/box-type-abstract_list.png);
+	background-image: url(../images/box-type-abstract_list.png);
 
 }
 .element-type-tabs li[data-type=block]{
-	background-image: url(images/box-type-block.png);
+	background-image: url(../images/box-type-block.png);
 
 }
 .element-type-tabs li[data-type=node],
 .element-type-tabs li[data-type=post]{
-	background-image: url(images/box-type-node.png);
+	background-image: url(../images/box-type-node.png);
 
 }
 .element-type-tabs li[data-type=reference]{
-	background-image: url(images/box-type-reference.png);
+	background-image: url(../images/box-type-reference.png);
 
 }
 .g-tool .element-type-tabs li:not(.active):hover{
@@ -381,13 +381,13 @@ tr[role=revision] button{
 	width: 50px;
 }
 tr[role=revision] button[role="revision-use"]{
-	background-image: url(images/tb-btn-revert-copy-3.png);
+	background-image: url(../images/tb-btn-revert-copy-3.png);
 }
 tr[role=revision] button[role="revision-preview"]{
-	background-image: url(images/btn-eye.png);
+	background-image: url(../images/btn-eye.png);
 }
 tr[role=revision] button[role="revision-delete"]{
-	background-image: url(images/btn-revert-draft.png);
+	background-image: url(../images/btn-revert-draft.png);
 }
 tr[role=revision] td{
 	border:none;
@@ -473,7 +473,7 @@ tr[role=revision] td{
 	height:21px;
 	width:15px;
 	cursor:move;
-	background-image:url(images/sort-handler.png);
+	background-image:url(../images/sort-handler.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	border-bottom:1px solid #666;
@@ -501,7 +501,7 @@ tr[role=revision] td{
 	display:block;
 	height:21px;
 	width:15px;
-	background-image:url(images/trash.png);
+	background-image:url(../images/trash.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	position:absolute;
@@ -521,7 +521,7 @@ tr[role=revision] td{
 	display:block;
 	height:21px;
 	width:21px;
-	background-image:url(images/edit.png);
+	background-image:url(../images/edit.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	position:absolute;
@@ -541,7 +541,7 @@ tr[role=revision] td{
 	display:block;
 	height:21px;
 	width:21px;
-	background-image:url(images/ok.png);
+	background-image:url(../images/ok.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	position:absolute;
@@ -561,7 +561,7 @@ tr[role=revision] td{
 	display:block;
 	height:21px;
 	width:23px;
-	background-image:url(images/revert.png);
+	background-image:url(../images/revert.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	position:absolute;
@@ -587,7 +587,7 @@ tr[role=revision] td{
 	-moz-border-radius: 30px; 
 	-webkit-border-radius: 30px; 
 	border: 1px solid #cecece;
-	background-image:url(images/trash_big.png);
+	background-image:url(../images/trash_big.png);
 	background-position:center;
 	background-repeat:no-repeat;
 	-webkit-box-shadow: #ccc 0px 0px 5px;
@@ -601,7 +601,7 @@ tr[role=revision] td{
 	display:block;
 	height:21px;
 	width:21px;
-	background-image:url(images/reuse.png);
+	background-image:url(../images/reuse.png);
 	background-position:center 4px;
 	background-repeat:no-repeat;
 	position:absolute;
@@ -615,7 +615,7 @@ tr[role=revision] td{
 	border-bottom:1px solid #999;
 }
 .container[data-reused=true] .c-reuse{
-	background-image: url(images/reuse_40p.png);
+	background-image: url(../images/reuse_40p.png);
 	border:none;
 	background-position: center 0px;
 	top: 5px;
@@ -806,7 +806,7 @@ tr[role=revision] td{
 	top:5px;
 	width:16px;
 	height:16px;
-	background-image:url(images/edit_small.png);
+	background-image:url(../images/edit_small.png);
 	border-bottom:1px solid #666;
 	background-position: 0px 2px;
 	background-repeat:no-repeat;
@@ -829,7 +829,7 @@ tr[role=revision] td{
 	display: block;
 	width: 18px;
 	height: 18px;
-	background-image: url(images/reuse_small_40p.png);
+	background-image: url(../images/reuse_small_40p.png);
 	background-repeat: no-repeat;
 	top: 5px;
 	right: 5px;
@@ -1003,7 +1003,7 @@ tr[role=revision] td{
 	height: 14px;
 	width: 14px;
 	cursor: pointer;
-	background-image: url(images/input-cancle-grey.png);
+	background-image: url(../images/input-cancle-grey.png);
 	display: none;
 }
 .autocomplete-wrapper.locked .cancel{

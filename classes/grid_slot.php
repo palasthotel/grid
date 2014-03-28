@@ -30,7 +30,7 @@ class grid_slot extends grid_base {
 		if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath.'/grid_slot.tpl.php'))
 			include $this->storage->templatesPath.'/grid_slot.tpl.php';
 		else
-			include dirname(__FILE__).'/../templates/grid_slot.tpl.php';
+			include dirname(__FILE__).'/../templates/frontend/grid_slot.tpl.php';
 		$output=ob_get_clean();
 		return $output;
 	}

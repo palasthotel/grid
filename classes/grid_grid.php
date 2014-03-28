@@ -23,7 +23,7 @@ class grid_grid extends grid_base {
 			$containerlist[]=$html;
 		}
 		ob_start();
-		include dirname(__FILE__).'/../templates/grid.tpl.php';
+		include dirname(__FILE__).'/../templates/frontend/grid.tpl.php';
 		$output=ob_get_clean();
 		return $output;
 	}
