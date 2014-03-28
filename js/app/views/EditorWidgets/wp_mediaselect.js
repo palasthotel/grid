@@ -3,21 +3,18 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         "click .upload_image_button": "open_wp_media"
     },
     initialize:function(){
-        GRID.log(this);	
     },
     render:function(){
-        this.custom_file_frame;
 
         var element = this.model.structure;
-        var c_val = this.model.container[element.key];
-        
+        var c_val = this.model.container[element.key];;
         this.$el.append("<label>"+element.label+"</label>");
         this.$upload_btn = jQuery("<button class='upload_image_button'>Upload</button>");
 
         this.$el.append(this.$upload_btn);
 
         this.$input = jQuery("<input />")
-                    .attr('value', c_val)
+                    .attr('value', JSON.stringify(c_val) )
                     .attr('type', 'hidden')
                     .addClass('dynamic-value form-json')
                     .attr("data-path",this.model.parentpath+element.key)
@@ -57,12 +54,12 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
             var selection = frame.state().get('selection');
             jQuery.each(frame.state().get('selection')._byId, function(id, val) {
                 var r_json = {
-                    "id": val.id,
-                    "size": "full",
-                    "sizes": val.attributes.sizes
+                    id: val.id,
+                    size: "full",
+                    sizes: val.attributes.sizes
                 };
                 self.$input.val(JSON.stringify(r_json));
-                self.buildImageSizeSelect(r_json, self.$input.val());
+                self.buildImageSizeSelect();
                 return false;
             });
         });
@@ -72,7 +69,17 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
     buildImageSizeSelect: function(){
         var self = this;
         var $dynamic_input = this.$input;
-        var json = JSON.parse(this.$input.val());
+        if(this.$input.val() == ""){
+            return;
+        } 
+        GRID.log(this.$input.val());
+        var json = null;
+        if(this.$input.val() != "object"){
+            json = JSON.parse(this.$input.val());
+        } else {
+            json =this.$input.val();
+        }
+        
         if(typeof json.sizes != "object"){
             this.$select_image_size.hide();
             return;
@@ -92,6 +99,6 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         }
     },
     fetchValue:function(){
-        return this.$input.val();
+        return JSON.parse(this.$input.val());
     }
 });
