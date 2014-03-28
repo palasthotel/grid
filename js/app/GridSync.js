@@ -20,6 +20,12 @@ var GridAjax = function(method, params_array, settings){
 			// GRID.log(error);
 			// GRID.log(json);
 			// GRID.log("--------!");
+			if(GRID.DEBUGGING)
+			{
+				jQuery(".error-messages").html("Method: "+method+"<br>"+
+						"Status: ("+jqXHR.status+") -> "+textStatus+"<br>"+
+						"ResponseText: <br><pre>"+jqXHR.responseText+"</pre>").show();
+			}
 			if(typeof settings.error_fn == 'function' ){
 				settings.error_fn(jqXHR, textStatus, error);
 			}

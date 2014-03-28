@@ -128,13 +128,14 @@
 }
 
 /* Error display ***************/
-#grid-toolbar [role=g-errors]{
+div.error-messages[role=g-errors] {
 	padding: 0 10px 0 10px;
 }
-#grid-toolbar [role=g-errors]:empty{
+div.error-messages[role=g-errors]:empty {
 	padding:0px;
 }
-#grid-toolbar [role=g-errors] p{
+
+div.error-messages[role=g-errors] {
 	display:none;
 	background-color: #f00;
 	color: #fff;
