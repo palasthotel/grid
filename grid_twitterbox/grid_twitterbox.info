@@ -1,7 +1,0 @@
-; $Id$
-name = Grid Twitterbox
-description = Adds a twitter box to grid
-package = Grid
-core = 7.x
-
-dependencies[] = grid

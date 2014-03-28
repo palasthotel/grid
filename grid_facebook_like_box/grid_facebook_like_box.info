@@ -1,7 +1,0 @@
-; $Id$
-name = Grid Facebook like Box
-description = Adds a Facebook like box box to grid
-package = Grid
-core = 7.x
-
-dependencies[] = grid

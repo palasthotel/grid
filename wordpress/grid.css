@@ -1,6 +1,0 @@
-#grid_sectionid {min-width:660px;}
-#grid {min-width:650px;}
-.region { border:1px solid gray; padding:5px; margin:5px; border-radius: 3px 3px 3px 3px; }
-.region-no-1 {width:300px; float:left;}
-.region-no-2 {width:300px; float:right;}
-.region-no-3 {clear:both}
