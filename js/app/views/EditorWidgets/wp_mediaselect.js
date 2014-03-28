@@ -8,61 +8,69 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
     render:function(){
         this.custom_file_frame;
 
-         this.$el.append('<input type="button" class="upload_image_button"  value="upload" />')
+        var element = this.model.structure;
+        var c_val = this.model.container[element.key];
+        
+        this.$el.append("<label>"+element.label+"</label>");
+        this.$upload_btn = jQuery("<button class='upload_image_button'>Upload</button>");
+
+        this.$el.append(this.$upload_btn);
+
+        this.$input = $("<input />")
+                    .attr('value', JSON.stringify(c_val))
+                    .attr('type', 'hidden')
+                    .addClass('dynamic-value form-json')
+                    .attr("data-path",this.model.parentpath+element.key)
+                    .attr('data-key', element.key);
+        this.$el.append(this.$input);
+
+        return this;
+                        $select_image_size = $("<select class='image-sizes'></select>");
+                        $dynamic_field.append($select_image_size);
+                        wp_buildImageSizeSelect(c_val, $input);
+                        $select_image_size.on("change",function(){
+                            $this = $(this);
+                            json = JSON.parse($this.siblings('.dynamic-value').val());
+                            json.size = $this.val();
+                            $this.siblings('.dynamic-value').val(JSON.stringify(json));
+                        });
+
+
 
         return this;
     },
     open_wp_media: function(){
-        event.preventDefault();
-        //If the frame already exists, reopen it
-        if (typeof(this.custom_file_frame)!=="undefined") {
-         this.custom_file_frame.close();
-        }
-
-        //Create WP media frame.
-        this.custom_file_frame = wp.media.frames.customHeader = wp.media({
-         //Title of media manager frame
-         title: "Sample title of WP Media Uploader Frame",
-         library: {
-            type: 'image'
-         },
-         button: {
-            //Button text
-            text: "insert text"
-         },
-         //Do not allow multiple files, if you want multiple, set true
-         multiple: false
+        var self = this;
+        var frame = wp.media({
+            //title : lang_values['title-wp-media'],
+            multiple : false,
+            library : { type : 'image'},
+            button : { text : "upload image" },
         });
-        //callback for selected image
-      this.custom_file_frame.on('select', function() {
-         var attachment = custom_file_frame.state().get('selection').first().toJSON();
-         //do something with attachment variable, for example attachment.filename
-         //Object:
-         //attachment.alt - image alt
-         //attachment.author - author id
-         //attachment.caption
-         //attachment.dateFormatted - date of image uploaded
-         //attachment.description
-         //attachment.editLink - edit link of media
-         //attachment.filename
-         //attachment.height
-         //attachment.icon - don't know WTF?))
-         //attachment.id - id of attachment
-         //attachment.link - public link of attachment, for example ""http://site.com/?attachment_id=115""
-         //attachment.menuOrder
-         //attachment.mime - mime type, for example image/jpeg"
-         //attachment.name - name of attachment file, for example "my-image"
-         //attachment.status - usual is "inherit"
-         //attachment.subtype - "jpeg" if is "jpg"
-         //attachment.title
-         //attachment.type - "image"
-         //attachment.uploadedTo
-         //attachment.url - http url of image, for example "http://site.com/wp-content/uploads/2012/12/my-image.jpg"
-         //attachment.width
-      });
- 
-      //Open modal
-      this.custom_file_frame.open();
+        frame.on('open',function() {
+            var selection = frame.state().get('selection');
+            val = JSON.parse(self.$input.val());
+            attachment = wp.media.attachment(val.id);
+            selection.add( attachment ? [ attachment ] : [] );                          
+        });
+        frame.on('close',function() {
+            console.log("close");
+            // get selections and save to hidden input plus other AJAX stuff etc.
+            var selection = frame.state().get('selection');
+            jQuery.each(frame.state().get('selection')._byId, function(id, val) {
+                var r_json = {
+                    "id": val.id,
+                    "size": "full",
+                    "sizes": val.attributes.sizes
+                };
+                console.log(r_json);
+                self.$input.val(JSON.stringify(r_json));
+                //wp_buildImageSizeSelect(r_json, $button.siblings('.dynamic-value'));
+                return false;
+            });
+        });
+        frame.open();
+        return false;
     },
     // buildImageSizeSelect: function(){
     //     var $dynamic_input = this.$input;
