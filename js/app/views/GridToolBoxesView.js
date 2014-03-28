@@ -1,4 +1,4 @@
-var GridToolBoxesView = Backbone.View.extend({
+var GridToolBoxesView = GridBackbone.View.extend({
     className: "g-tool g-box clearfix",
     currentBox:null,
     timer:null,

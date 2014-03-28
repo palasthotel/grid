@@ -1,4 +1,4 @@
-boxEditorControls['autocomplete']=Backbone.View.extend({
+boxEditorControls['autocomplete']=GridBackbone.View.extend({
     events:{
         "keyup .i-autocomplete":"keyup",
         "click .suggestion-list li":"listItemSelected",

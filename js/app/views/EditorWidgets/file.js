@@ -1,4 +1,4 @@
-boxEditorControls['file']=Backbone.View.extend({
+boxEditorControls['file']=GridBackbone.View.extend({
     initialize:function(){
 
     },

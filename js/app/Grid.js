@@ -225,13 +225,6 @@ GRID = {
             cursorAt: { left: 30, bottom: 30 },
             start: function( event, ui ){
                 GRID.log(["container sort START"], event, ui);
-                // jQuery(this).sortable('refreshPositions');
-                // GRID.getView().$el.find('.c-sort-placeholder').attr("data-type","c-sort-placeholder");
-                // offset_top = parseInt(ui.item.css("margin-top"));
-                // console.log(offset_top);
-                // console.log(ui.helper);
-                //$(ui.helper).css("top", 30+offset_top);
-                //$(ui.helper).css("margin-left", event.clientX - $(event.target).offset().left);
             },
             stop: function(event, ui){
                 //$(".box").slideDown(100);
@@ -244,19 +237,6 @@ GRID = {
                 var oldIndex = GRID.getModel().getContainers().indexOf(containermodel);
 
  				GRID.getModel().getContainers().move(containermodel, newIndex);
-
-                // params = [ID, ui.item.data("id"), ui.item.index()];
-                // sendAjax("moveContainer",params,
-                // function(data){
-                //     if(data.result != true){
-                //         throwError(lang_values["err_move_container"]);
-                //         setTimeout(function(){
-                //             window.location.reload();
-                //         },1000);
-                //     }
-                //     $grid.trigger("structureChange");
-                //     scrollToContainer(params[1]);
-                // });
             }
         });
 	},
@@ -301,18 +281,11 @@ GRID = {
 						box_deleted=true;
 					}
 				});
-				// refreshBoxTrashs();
 			},
 			stop: function(e, ui){
 				jQuery(".c-box-trash").hide();
 				if(box_deleted)
 					return;
-				// hideBoxTrash();
-				// if(boxDeleted){
-				// 	boxDeleted = false;
-				// 	console.log("trash!!!!");
-				// 	return;
-				// }
 				
 				new_container_id = ui.item.parents(".container").data("id");
 				new_slot_id = ui.item.parents(".slot").data("id");
@@ -337,27 +310,11 @@ GRID = {
 
 				GRID.getModel().moveBox(box, new_slot, new_box_index);
 
-
-				// sendAjax(
-				// 	"moveBox",
-				// 	[
-				// 		ID,
-				// 		old_container_id,old_slot_id,old_box_index,
-				// 		new_container_id,new_slot_id,new_box_index
-				// 	],
-				// 	function(data){
-				// 		console.log("Box moved");
-				// 		$grid.trigger("structureChange");
-				// 		if(data.result != true){
-				// 			// TODO: Rückmeldung geben und Box zurück sortieren!!!
-				// 			console.log(data);
-				// 			throwError(lang_values["err-move-box"]);
-				// 		}
-				// 		scrollToBox(ui.item.data("id"));
-				// });
 			}
 		});
 	}
 };
 
 jQuery(function(){GRID.init();});
+
+

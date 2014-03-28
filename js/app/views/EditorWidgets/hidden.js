@@ -1,4 +1,4 @@
-boxEditorControls['hidden']=Backbone.View.extend({
+boxEditorControls['hidden']=GridBackbone.View.extend({
     initialize:function(){
 
     },

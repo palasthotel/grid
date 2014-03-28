@@ -1289,10 +1289,10 @@ function grid_add_app_JS(){
 	// The JS Frameworks
 	$framework_dir = $base."/js/frameworks/";
 	drupal_add_js($framework_dir.'underscore.js','file');
-	drupal_add_js($framework_dir.'backbone.js','file');
+	drupal_add_js($framework_dir.'GridBackbone.js','file');
 	// for templating
 	//drupal_add_js($framework_dir.'mustache.js','file');
-	drupal_add_js($framework_dir.'ICanHaz.js','file');
+	drupal_add_js($framework_dir.'GridICanHaz.js','file');
 
 	// Grid app ----------------------
 	$app_dir = $base."/js/app/";
@@ -1300,22 +1300,48 @@ function grid_add_app_JS(){
 	// icanhaz tempaltes
 	$templates_dir = $base."/core/templates/backend/";
 	$inline_scripts = "";
-	$inline_scripts.= "<script id='tpl_toolbar' type='text/html'>".file_get_contents($templates_dir."ich.toolbar.html")."</script>";
-	$inline_scripts.= "<script id='tpl_toolContainers' type='text/html'>".file_get_contents($templates_dir."ich.toolContainers.html")."</script>";
-	$inline_scripts.= "<script id='tpl_toolContainersContainer' type='text/html'>".file_get_contents($templates_dir."ich.toolContainersContainer.html")."</script>";
-	$inline_scripts.= "<script id='tpl_toolBoxes' type='text/html'>".file_get_contents($templates_dir."ich.toolBoxes.html")."</script>";
-	$inline_scripts.= "<script id='tpl_toolBoxBlueprint' type='text/html'>".file_get_contents($templates_dir."ich.toolBoxBlueprint.html")."</script>";
-
-
-	$inline_scripts.= "<script id='tpl_grid' type='text/html'>".file_get_contents($templates_dir."ich.grid.html")."</script>";
-	$inline_scripts.= "<script id='tpl_container' type='text/html'>".file_get_contents($templates_dir."ich.container.html")."</script>";
-	$inline_scripts.= "<script id='tpl_containerEditor' type='text/html'>".file_get_contents($templates_dir."ich.containerEditor.html")."</script>";
-	$inline_scripts.= "<script id='tpl_slot' type='text/html'>".file_get_contents($templates_dir."ich.slot.html")."</script>";
-	$inline_scripts.= "<script id='tpl_slotstylechanger' type='text/html'>".file_get_contents($templates_dir."ich.slotstylechanger.html")."</script>";
+	$inline_scripts.= "<script id='tpl_toolbar' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.toolbar.html")."</script>";
 	
-	$inline_scripts.= "<script id='tpl_box' type='text/html'>".file_get_contents($templates_dir."ich.box.html")."</script>";
-	$inline_scripts.= "<script id='tpl_boxeditor' type='text/html'>".file_get_contents($templates_dir."ich.boxeditor.html")."</script>";
-	$inline_scripts.= "<script id='tpl_revisions' type='text/html'>".file_get_contents($templates_dir."ich.revisions.html")."</script>";
+	$inline_scripts.= "<script id='tpl_toolContainers' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.toolContainers.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_toolContainersContainer' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.toolContainersContainer.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_toolBoxes' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.toolBoxes.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_toolBoxBlueprint' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.toolBoxBlueprint.html")."</script>";
+
+
+
+	$inline_scripts.= "<script id='tpl_grid' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.grid.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_container' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.container.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_containerEditor' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.containerEditor.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_slot' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.slot.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_slotstylechanger' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.slotstylechanger.html")."</script>";
+	
+
+	$inline_scripts.= "<script id='tpl_box' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.box.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_boxeditor' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.boxeditor.html")."</script>";
+	
+	$inline_scripts.= "<script id='tpl_revisions' type='text/grid-icanhaz'>"
+	.file_get_contents($templates_dir."ich.revisions.html")."</script>";
+	
 	$element = array(
       '#type' => 'markup',
       '#markup' => $inline_scripts,
