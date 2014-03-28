@@ -1,3 +1,9 @@
+// Changed line 521
+//  if (script && script.innerHTML && script.id && (script.type === "text/html" || script.type === "text/x-icanhaz")) 
+//  To
+//  if (script && script.innerHTML && script.id && ( script.type === "text/grid-icanhaz")) {
+//  Because of Wordpress issues
+
 /*!
 ICanHaz.js version 0.10.2 -- by @HenrikJoreteg
 More info at: http://icanhazjs.com
@@ -512,7 +518,7 @@ var Mustache = function () {
                 trash = [];
             for (i = 0, l = scripts.length; i < l; i++) {
                 script = scripts[i];
-                if (script && script.innerHTML && script.id && (script.type === "text/html" || script.type === "text/x-icanhaz")) {
+                if (script && script.innerHTML && script.id && (script.type === "text/grid-icanhaz")) {
                     ich.addTemplate(script.id, trim(script.innerHTML));
                     trash.unshift(script);
                 }

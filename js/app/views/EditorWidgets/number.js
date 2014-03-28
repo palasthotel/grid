@@ -1,4 +1,4 @@
-boxEditorControls['number']=Backbone.View.extend({
+boxEditorControls['number']=GridBackbone.View.extend({
     initialize:function(){
 
     },

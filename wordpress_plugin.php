@@ -645,8 +645,7 @@ function grid_wp_thegrid()
 	}
 	else
 	{
-		wp_enqueue_media();
-//		wp_enqueue_script('media-upload');
+
 		$grid_id=$rows[0]->grid_id;
 		$ckeditor_path='wp-content/plugins/grid/js/ckeditor/ckeditor.js';
 		$jslang="js/language/grid-en.js";
@@ -660,7 +659,7 @@ function grid_wp_thegrid()
 		document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
 		document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
 		document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
-		document.debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
+		document.grid_debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
 		</script>
 		<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
 		</script>
@@ -681,85 +680,83 @@ function grid_wp_thegrid()
 
 function grid_wp_load_js(){
 	$framework_dir = "js/frameworks/";
+	wp_enqueue_script("gridunderscore", plugins_url( $framework_dir."underscore.js" ,__FILE__), array(),"1.0",true);
+	wp_enqueue_script("gridbackbone", plugins_url( $framework_dir."GridBackbone.js" ,__FILE__), array(),"1.0",true);
+	//wp_enqueue_script("gridmustache", plugins_url( $framework_dir."mustache.js" ,__FILE__), array(),"1.0",true);
+	wp_enqueue_script("gridicanhaz", plugins_url( $framework_dir."GridiCanHaz.js" ,__FILE__), array(),"1.0",true);
+
+	// for wp.media and Backbone
+	if(function_exists( 'wp_enqueue_media' )){
+	    wp_enqueue_media();
+	}else{
+	    wp_enqueue_style('thickbox');
+	    wp_enqueue_script('media-upload');
+	    wp_enqueue_script('thickbox');
+	}
+
 	?>
-	<script src="<?php echo plugins_url( $framework_dir.'underscore.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $framework_dir.'backbone.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $framework_dir.'ICanHaz.js',__FILE__);?>">
-	</script>
+	
 	
 	
 	<!-- Grid templates -->
 	<?php 
 	$templates_dir = dirname(__FILE__)."/core/templates/backend/";
 	?>
-	<script id='tpl_toolbar' type='text/html'><?= file_get_contents($templates_dir."ich.toolbar.html") ?></script>
-	<script id='tpl_toolContainers' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainers.html") ?></script>
-	<script id='tpl_toolContainersContainer' type='text/html'><?= file_get_contents($templates_dir."ich.toolContainersContainer.html") ?></script>
-	<script id='tpl_toolBoxes' type='text/html'><?= file_get_contents($templates_dir."ich.toolBoxes.html") ?></script>
-	<script id='tpl_toolBoxBlueprint' type='text/html'><?= file_get_contents($templates_dir."ich.toolBoxBlueprint.html") ?></script>
+	<script id='tpl_toolbar' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolbar.html") ?></script>
+	<script id='tpl_toolContainers' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolContainers.html") ?></script>
+	<script id='tpl_toolContainersContainer' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolContainersContainer.html") ?></script>
+	<script id='tpl_toolBoxes' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolBoxes.html") ?></script>
+	<script id='tpl_toolBoxBlueprint' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolBoxBlueprint.html") ?></script>
 
 
-	<script id='tpl_grid' type='text/html'><?= file_get_contents($templates_dir."ich.grid.html") ?></script>
-	<script id='tpl_container' type='text/html'><?= file_get_contents($templates_dir."ich.container.html") ?></script>
-	<script id='tpl_containerEditor' type='text/html'><?= file_get_contents($templates_dir."ich.containerEditor.html") ?></script>
-	<script id='tpl_slot' type='text/html'><?= file_get_contents($templates_dir."ich.slot.html") ?></script>
-	<script id='tpl_slotstylechanger' type='text/html'><?= file_get_contents($templates_dir."ich.slotstylechanger.html") ?></script>
+	<script id='tpl_grid' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.grid.html") ?></script>
+	<script id='tpl_container' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.container.html") ?></script>
+	<script id='tpl_containerEditor' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.containerEditor.html") ?></script>
+	<script id='tpl_slot' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.slot.html") ?></script>
+	<script id='tpl_slotstylechanger' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.slotstylechanger.html") ?></script>
 	
-	<script id='tpl_box' type='text/html'><?= file_get_contents($templates_dir."ich.box.html") ?></script>
-	<script id='tpl_boxeditor' type='text/html'><?= file_get_contents($templates_dir."ich.boxeditor.html") ?></script>
-	<script id='tpl_revisions' type='text/html'><?= file_get_contents($templates_dir."ich.revisions.html") ?></script>
+	<script id='tpl_box' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.box.html") ?></script>
+	<script id='tpl_boxeditor' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.boxeditor.html") ?></script>
+	<script id='tpl_revisions' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.revisions.html") ?></script>
 	
 	<!-- Grid App -->
 	<?php 
 	$app_dir = "js/app/"; 
-	?>
-
-	<script src="<?php echo plugins_url( $app_dir.'GridViews.js',__FILE__);?>">
-	</script>
-
-	<script src="<?php echo plugins_url( $app_dir.'views/GridRevisionsView.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'views/GridToolbarView.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'views/GridToolContainersView.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'views/GridToolBoxesView.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'views/GridSlotStyleChangerView.js',__FILE__);?>">
-	</script>
-	<?php
+	$scripts = array(
+		"GridViews",
+		"views/GridRevisionsView",
+		"views/GridToolbarView",
+		"views/GridToolContainersView",
+		"views/GridToolBoxesView",
+		"views/GridSlotStyleChangerView",
+	);
+	grid_wp_add_app_js_array($app_dir, $scripts);
 	grid_wp_add_app_js_dir(__DIR__."/".$app_dir."views/EditorWidgets/*.js");
-	?>
+	$scripts = array(
+		"GridModels",
+		"models/GridBoxBlueprint",
+		"GridCollections",
+		"collections/GridBoxBlueprints",
+		"GridSync",
+		"Grid",
+	);
+	grid_wp_add_app_js_array($app_dir, $scripts);
+	grid_wp_add_app_js_array($app_dir, array("Grid"));
 
-	<script src="<?php echo plugins_url( $app_dir.'GridModels.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'models/GridBoxBlueprint.js',__FILE__);?>">
-	</script>
-
-	<script src="<?php echo plugins_url( $app_dir.'GridCollections.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'collections/GridBoxBlueprints.js',__FILE__);?>">
-	</script>
-	
-	<script src="<?php echo plugins_url( $app_dir.'GridSync.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'GridController.js',__FILE__);?>">
-	</script>
-	<script src="<?php echo plugins_url( $app_dir.'Grid.js',__FILE__);?>">
-	</script>
-
-	<?php
 }
+
 function grid_wp_add_app_js_dir($dir){
 	$files=glob( $dir );
 	foreach($files as $idx=>$file)
 	{
-		$filename = basename($file);
-		?>
-		<script src="<?php echo plugins_url( "js/app/views/EditorWidgets/".$filename,__FILE__);?>"></script>
-		<?php
+		$filename = basename($file, ".js");
+		$file_js = basename($file);
+		wp_enqueue_script($filename, plugins_url( "js/app/views/EditorWidgets/".$file_js ,__FILE__), array(),"1.0",true);
+	}
+}
+function grid_wp_add_app_js_array($dir, $arr){
+	foreach ($arr as $key => $script) {
+		wp_enqueue_script($script, plugins_url( $dir.$script.'.js',__FILE__), array(),"1.0",true);
 	}
 }
 
