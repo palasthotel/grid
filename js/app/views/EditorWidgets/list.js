@@ -1,6 +1,6 @@
 
 
-boxEditorControls['list']=Backbone.View.extend({
+boxEditorControls['list']=GridBackbone.View.extend({
     initialize:function(){
 
     },
@@ -35,7 +35,7 @@ boxEditorControls['list']=Backbone.View.extend({
     }
 });
 
-boxEditorControls['listitem']=Backbone.View.extend({
+boxEditorControls['listitem']=GridBackbone.View.extend({
     initialize:function(){
 
     },

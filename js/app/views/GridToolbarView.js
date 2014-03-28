@@ -1,4 +1,4 @@
-var GridToolbarView = Backbone.View.extend({
+var GridToolbarView = GridBackbone.View.extend({
     id:"grid-toolbar",
     _toolContainersView: null,
     _toolBoxesView: null,

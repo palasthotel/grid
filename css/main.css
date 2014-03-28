@@ -1,5 +1,5 @@
 
-#grid-wrapper{
+#new-grid-wrapper{
 	width:1000px;
 	margin:0px auto;
 	margin-top:10px;
@@ -7,7 +7,6 @@
 	background-color:#fff;
 	padding-right: 300px;
 }
-#grid-wrapper ul,
 #new-grid-wrapper ul{
 	list-style:none;
 	margin:0px;
@@ -219,7 +218,7 @@ div.error-messages[role=g-errors] {
 .g-container .container-dragger-wrapper{
 	float:left;
 }
-#grid-wrapper .draggable.new-container{
+#new-grid-wrapper .draggable.new-container{
 	height:50px;
 	width:50px;
 	background-color:#e0e0e0;
@@ -885,7 +884,7 @@ tr[role=revision] td{
 	background-color:#58ff3c;
 }
 /** Box Editor **/
-#box-editor{
+#new-box-editor{
 	display:none;
 	width:0px;
 	position:relative;
@@ -898,7 +897,7 @@ tr[role=revision] td{
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 }
-#box-editor:after{
+#new-box-editor:after{
 	content:'';
 	position:absolute;
 	top:10px;
@@ -909,31 +908,31 @@ tr[role=revision] td{
 	border-bottom-color:  transparent;
 	border-right-color:   transparent;
 } 
-#box-editor .content{
+#new-box-editor .content{
 	padding: 10px 10px 10px 0;
 }
-#box-editor .content .loading{
+#new-box-editor .content .loading{
 	margin-top: 6px;
 	position:relative;
 }
-#box-editor .content fieldset{
+#new-box-editor .content fieldset{
 	position: relative;
 	margin-bottom:10px;
 	padding: 0 5px 5px 5px;
 	border: 1px solid #ccc;
 	border-bottom:1px solid #e0e0e0;
 }
-#box-editor .content fieldset label{
+#new-box-editor .content fieldset label{
 	font-weight: bold;
 	display:block;
 	padding: 10px 0 0 0;
 }
-#box-editor .content fieldset input[type=checkbox]+label{
+#new-box-editor .content fieldset input[type=checkbox]+label{
 	display: inline;
 }
-#box-editor .content fieldset input[text],
-#box-editor .content fieldset input[number],
-#box-editor .content fieldset textarea{
+#new-box-editor .content fieldset input[text],
+#new-box-editor .content fieldset input[number],
+#new-box-editor .content fieldset textarea{
 	width:100%;
 	box-sizing:border-box;
 	-webkit-box-sizing:border-box;
@@ -941,10 +940,10 @@ tr[role=revision] td{
 	margin: 1px;
 	padding: 3px;
 }
-#box-editor .box-styles-wrapper{
+#new-box-editor .box-styles-wrapper{
 	margin-bottom: 15px;
 }
-#box-editor button{
+#new-box-editor button{
 	display: inline-block;
 	text-decoration: none;
 	font-size: 12px;
@@ -972,15 +971,15 @@ tr[role=revision] td{
 	color: #333;
 	text-shadow: 0 1px 0 #fff;
 }
-#box-editor.sidebar button[role=reusable]{
+#new-box-editor.sidebar button[role=reusable]{
 	display:none;
 }
-#box-editor .dynamic-field p.info{
+#new-box-editor .dynamic-field p.info{
 	margin-top: 4px;
 	background-color: #efefef;
 	padding: 8px;
 }
-#box-editor .dynamic-field[data-type=info] p.info{
+#new-box-editor .dynamic-field[data-type=info] p.info{
 	margin-top: 0px;
 	background-color: #fff;
 	padding: 0px;
@@ -1041,7 +1040,7 @@ tr[role=revision] td{
 	color: #fff;
 }
 
-#box-editor .controls{
+#new-box-editor .controls{
 	margin-bottom:10px;
 }
 .collapsable legend{
@@ -1473,25 +1472,25 @@ tr[role=revision] td{
 }
 
 /** Box editor rules **/
-#grid-wrapper[data-mode=box] #grid-toolbar,
-#grid-wrapper[data-mode=box] .container .c-tools,
-#grid-wrapper[data-mode=box] #box-editor button[role=reusable]{
+#new-grid-wrapper[data-mode=box] #grid-toolbar,
+#new-grid-wrapper[data-mode=box] .container .c-tools,
+#new-grid-wrapper[data-mode=box] #new-box-editor button[role=reusable]{
 	display: none;
 }
 
 /** Container editor rules **/
-#grid-wrapper[data-mode=container] #grid-toolbar ul[role=data],
-#grid-wrapper[data-mode=container] #grid-toolbar button[role=add_container],
-#grid-wrapper[data-mode=container] .container .hide-c-editor{
+#new-grid-wrapper[data-mode=container] #grid-toolbar ul[role=data],
+#new-grid-wrapper[data-mode=container] #grid-toolbar button[role=add_container],
+#new-grid-wrapper[data-mode=container] .container .hide-c-editor{
 	display: none;
 }
-#grid-wrapper[data-mode=container] .container .c-edit{
+#new-grid-wrapper[data-mode=container] .container .c-edit{
 	right: 14px;
 }
-#grid-wrapper[data-mode=container] .container .c-ok{
+#new-grid-wrapper[data-mode=container] .container .c-ok{
 	right: 14px;
 }
-#grid-wrapper[data-mode=container] .container .c-revert{
+#new-grid-wrapper[data-mode=container] .container .c-revert{
 	right: 60px;
 }
 

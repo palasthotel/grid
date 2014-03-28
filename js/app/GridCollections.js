@@ -1,5 +1,5 @@
 
-var Revisions = Backbone.Collection.extend({
+var Revisions = GridBackbone.Collection.extend({
 	model: Revision,
 	initialize: function(spec){
 		if(!spec || !spec.grid ||!(spec.grid instanceof Grid )){
@@ -17,25 +17,25 @@ var Revisions = Backbone.Collection.extend({
 });
 
 // type collections
-var ContainerTypes = Backbone.Collection.extend({
+var ContainerTypes = GridBackbone.Collection.extend({
 	model: ContainerType,
 	sync: function(method, collection, options){
 		GridRequest.containertypes(collection, options);
 	}
 });
-var ReusableContainers = Backbone.Collection.extend({
+var ReusableContainers = GridBackbone.Collection.extend({
 	model: ContainerType,
 	sync: function(method, collection, options){
 		GridRequest.reusablecontainers(collection, options);
 	}
 });
-var BoxTypes = Backbone.Collection.extend({
+var BoxTypes = GridBackbone.Collection.extend({
 	model: BoxType,
 	sync: function(method, collection, options){
 		GridRequest.boxtypes(collection, options);
 	}
 });
-var Styles = Backbone.Collection.extend({
+var Styles = GridBackbone.Collection.extend({
 	model: StyleType,
 	initialize: function(spec){
 		if (!spec || !spec.type ) {
@@ -49,7 +49,7 @@ var Styles = Backbone.Collection.extend({
 });
 
 // element collections
-var Containers = Backbone.Collection.extend({
+var Containers = GridBackbone.Collection.extend({
 	model: Container,
 	move: function(container, to_index){
 		var self = this;
@@ -64,10 +64,10 @@ var Containers = Backbone.Collection.extend({
 		return this;
 	}
 });
-var Slots = Backbone.Collection.extend({
+var Slots = GridBackbone.Collection.extend({
 	model: Slot
 });
-var Boxes = Backbone.Collection.extend({
+var Boxes = GridBackbone.Collection.extend({
 	model: Box
 });
 

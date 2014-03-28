@@ -1,4 +1,4 @@
-var GridView = Backbone.View.extend({
+var GridView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-wrapper',
     initialize: function() {
@@ -26,7 +26,7 @@ var GridView = Backbone.View.extend({
 
 });
 
-var ContainersView = Backbone.View.extend({
+var ContainersView = GridBackbone.View.extend({
 	tagName: 'div',
 	className: 'containers-wrapper',
 	initialize: function(){
@@ -51,7 +51,7 @@ var ContainersView = Backbone.View.extend({
 	}
 });
 
-var ContainerView = Backbone.View.extend({
+var ContainerView = GridBackbone.View.extend({
 	className: 'container display clearfix',
     events:{
         "click [role=trash]": "selfdestruct",
@@ -143,7 +143,7 @@ var ContainerView = Backbone.View.extend({
     }
 });
 
-var SlotsView = Backbone.View.extend({
+var SlotsView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'slots-wrapper clearfix',
     initialize: function(){
@@ -171,7 +171,7 @@ var SlotsView = Backbone.View.extend({
     }
 });
 
-var SlotView = Backbone.View.extend({
+var SlotView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'slot',
 	initialize: function(){
@@ -196,7 +196,7 @@ var SlotView = Backbone.View.extend({
 	}
 });
 
-var BoxesView = Backbone.View.extend({
+var BoxesView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'boxes-wrapper',
     initialize: function(){
@@ -224,7 +224,7 @@ var BoxesView = Backbone.View.extend({
     }
 });
 
-var BoxView = Backbone.View.extend({
+var BoxView = GridBackbone.View.extend({
     className: "box",
     events: {
         'click .edit' : 'edit'
@@ -255,7 +255,7 @@ var BoxView = Backbone.View.extend({
     }
 });
 
-var BoxEditor = Backbone.View.extend({
+var BoxEditor = GridBackbone.View.extend({
     events: {
         'click .btn-cancel' : 'onCancel',
         'click legend' : 'onToggle',

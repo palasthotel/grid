@@ -1,8 +1,8 @@
 // ----------------------
 // type models
 // ---------------------
-var ContainerType = Backbone.Model.extend({});
-var BoxType = Backbone.Model.extend({
+var ContainerType = GridBackbone.Model.extend({});
+var BoxType = GridBackbone.Model.extend({
     defaults:{
         type: null,
         criteria: null,
@@ -29,13 +29,13 @@ var BoxType = Backbone.Model.extend({
         return blueprints;
     }
 });
-var StyleType = Backbone.Model.extend({});
+var StyleType = GridBackbone.Model.extend({});
 
 // --------------------------
 // Revisions model
 //  -----------------------
 
-var Revision = Backbone.Model.extend({
+var Revision = GridBackbone.Model.extend({
     initialize: function(spec){
         this.set("id",spec.revision);
     }
@@ -46,7 +46,7 @@ var Revision = Backbone.Model.extend({
 // this is the wrapper of the grid elements
 //
 // -----------------------------------------
-var Grid = Backbone.Model.extend({
+var Grid = GridBackbone.Model.extend({
 	defaults :{
         id: -1,
 		// enable or disable debugging output
@@ -139,7 +139,7 @@ var Grid = Backbone.Model.extend({
 //---------------------
 // element models
 // -------------------
-var Container = Backbone.Model.extend({
+var Container = GridBackbone.Model.extend({
     getGrid: function(){
         return this.get("parent");
     },
@@ -187,7 +187,7 @@ var Container = Backbone.Model.extend({
     	GridRequest.container[method](model, options);
     }
 });
-var Slot = Backbone.Model.extend({
+var Slot = GridBackbone.Model.extend({
     getGrid: function(){
         return this.get("parent").getGrid();
     },
@@ -245,7 +245,7 @@ var Slot = Backbone.Model.extend({
     	GridRequest.slot[method](model, options);
     }
 });
-var Box = Backbone.Model.extend({
+var Box = GridBackbone.Model.extend({
     getGrid: function(){
         return this.get("parent").getGrid();
     },

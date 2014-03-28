@@ -1,4 +1,4 @@
-var GridToolContainersView = Backbone.View.extend({
+var GridToolContainersView = GridBackbone.View.extend({
     className: "g-tool g-container clearfix",
     events:{
         "click .element-type-tabs li": "renderContainerTypes"

@@ -1,4 +1,4 @@
-var GridBoxBlueprints = Backbone.Collection.extend({
+var GridBoxBlueprints = GridBackbone.Collection.extend({
 	model: GridBoxBlueprint,
 	initialize: function(spec){
 		GRID.log(["INIT GridBoxBlueprints", spec]);
