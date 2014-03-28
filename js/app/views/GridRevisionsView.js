@@ -1,4 +1,4 @@
-var GridRevisionsView = Backbone.View.extend({
+var GridRevisionsView = GridBackbone.View.extend({
 	tagName: 'table',
 	events:{
 		'click .btn-preview':'onPreview',
