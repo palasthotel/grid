@@ -1,0 +1,26 @@
+
+.grid-all-wrapper{
+	font-family: "OpenSans", sans-serif;
+	button{
+		font-family: inherit;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+		color: $color-link;
+		font-size: 12px;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		-webkit-transition: $transition-link;
+		   -moz-transition: $transition-link;
+		    -ms-transition: $transition-link;
+		     -o-transition: $transition-link;
+		        transition: $transition-link;
+		&:hover{
+			color: $color-edit;
+		}
+	}
+	img{
+		max-width: 100%;
+	}
+}

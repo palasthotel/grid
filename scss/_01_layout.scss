@@ -1,0 +1,51 @@
+// width and height of layout elements
+// Grid, container, slot, box, toolbar
+
+body,
+#page{
+	background-color: $color-grid-bg !important;
+}
+
+.grid-wrapper{
+	max-width: 960px;
+	width: 960px;
+}
+
+// container dimensions
+.grid-container{
+	padding: 10px 5px 10px 5px;
+	background-color: $color-container-bg;
+	position: relative;
+}
+
+// slot dimensions
+.grid-slot{
+	position: relative;
+	.grid-slot-style-changer{
+		width: 100%;
+		max-width: 400px;
+		position: relative;
+		top: -5px;
+		left: 0px;
+		display:none;
+		background-color: $color-slot-style-changer-bg;
+	}
+	&:hover{
+		margin-top: -20px;
+		.grid-slot-style-changer{
+			display:block;
+		}
+	}
+}
+.grid-slot-style-changer{
+	.grid-choose-style{
+		position: absolute;
+		display:none;
+	}
+	&:hover .grid-choose-style{
+		display:block;
+	}
+}
+
+
+// box dimension

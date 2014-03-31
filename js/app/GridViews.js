@@ -28,7 +28,7 @@ var GridView = GridBackbone.View.extend({
 
 var ContainersView = GridBackbone.View.extend({
 	tagName: 'div',
-	className: 'containers-wrapper',
+	className: 'grid-containers-wrapper containers-wrapper',
 	initialize: function(){
         GRID.log('INIT ContainersView');
 		//this.listenTo(this.collection, 'change', this.render);
@@ -52,7 +52,7 @@ var ContainersView = GridBackbone.View.extend({
 });
 
 var ContainerView = GridBackbone.View.extend({
-	className: 'container display clearfix',
+	className: 'grid-container container display clearfix',
     events:{
         "click [role=trash]": "selfdestruct",
         "click [role=edit]": "renderEditor",
@@ -145,7 +145,7 @@ var ContainerView = GridBackbone.View.extend({
 
 var SlotsView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'slots-wrapper clearfix',
+    className: 'grid-slots-wrapper slots-wrapper clearfix',
     initialize: function(){
         GRID.log('INIT SlotsView');
         //this.listenTo(this.collection, 'change', this.render);
@@ -173,7 +173,7 @@ var SlotsView = GridBackbone.View.extend({
 
 var SlotView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'slot',
+    className: 'grid-slot slot',
 	initialize: function(){
         GRID.log("INIT SlotView")
         this._boxesView = new BoxesView({collection: this.model.getBoxes() });
@@ -198,7 +198,7 @@ var SlotView = GridBackbone.View.extend({
 
 var BoxesView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'boxes-wrapper',
+    className: 'grid-boxes-wrapper boxes-wrapper',
     initialize: function(){
         GRID.log('INIT BoxesView');
         //this.listenTo(this.collection, 'change', this.render);
@@ -225,7 +225,7 @@ var BoxesView = GridBackbone.View.extend({
 });
 
 var BoxView = GridBackbone.View.extend({
-    className: "box",
+    className: "grid-box box",
     events: {
         'click .edit' : 'edit'
     },
