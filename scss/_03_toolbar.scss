@@ -1,4 +1,10 @@
 .grid-toolbar{
+	position:relative;
+	background-color: $color-toolbar-bg;
+	box-sizing: border-box;
+	width: $dim-toolbar-width;
+	height: $dim-toolbar-height;
+	padding-top: 5px;
 	.grid-tool-list li{
 		display:inline;
 	}
@@ -6,4 +12,72 @@
 
 .grid-tool-list .grid-revisions{
 	display:none;
+}
+
+/* ***************************
+* Container and Box Toolbar
+* ***************************/
+.grid-tool-elements{
+	position: absolute;
+	top: 0px;
+	box-sizing: border-box;
+	right: $dim-tool-elements-offset;
+	width: $dim-tool-elements-width;
+	padding-bottom: $dim-tool-element-trash-height;
+}
+.grid-element-type-select{
+	
+	.grid-element-type{
+		text-align: center;
+		box-sizing: border-box;
+		display: inline-block;
+		width: 50%;
+		font-weight: bold;
+		min-height: $dim-tool-element-tab-height;
+		padding-top: 20px;
+		transition: $transition-link;
+		position:relative;
+		&:hover,
+		&.active{
+			cursor:pointer;
+			color: white;
+			background-color: $color-tool-elementtype-active;
+			&.active:after{
+				z-index: $idx-toolbar;
+				content:"";
+				border: 9px solid $color-tool-elementtype-active;
+				font-size:0;line-height:0;height:0;padding:0;margin:0;
+				border-bottom-color:    transparent;
+				border-right-color:  transparent;
+				border-left-color:   transparent;
+				position:absolute;
+				bottom:-18px;
+				left:47%;
+			}
+		}
+	}
+
+}
+.grid-element-type-content{
+	min-height: 100px;
+	background-color: $color-tool-element-content-bg;
+}
+.grid-element-trash{
+	position: absolute;
+	bottom:0px;
+	left: 0px;
+	right: 0px;
+	min-height: $dim-tool-element-trash-height;
+	background-color: $color-tool-element-trash-bg;
+	color: white;
+	box-sizing: border-box;
+	padding: 10px 10px 0 10px;
+	vertical-align: baseline; 
+	& > div{
+		padding-top: 25px;
+		padding-bottom: 25px;
+		border: 2px dashed white;
+		border-bottom: none;
+		text-align: center;
+	}
 }

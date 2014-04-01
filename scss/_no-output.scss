@@ -1,13 +1,61 @@
 
-$color-grid-bg: rgba(243,245,247,1);
-$color-container-bg: white;
-$color-slot-style-changer-bg: rgba(236,239,243,1);
-
 $color-ok: rgba(70,189,123,1);
+$color-draft: rgba(237,123,61,1);
 $color-warning: rgba(237,80,50,1);
 $color-edit: rgba(58,197,217,1);
 
 $color-link: rgba(63,72,83,1);
 $color-link-hover: black;
-
 $transition-link: all .1337s ease;
+
+
+// grid
+$color-grid-bg: rgba(243,245,247,1);
+
+// container
+$color-container-bg: white;
+
+// slot style changer
+$color-slot-style-changer-bg: rgba(236,239,243,1);
+$color-slot-style-changer-styles-bg: rgba(176,186,194,1);
+$color-slot-style-changer-styles-bg-hover: $color-link;
+$color-slot-style-changer-border: rgba(208,216,221,1);
+
+// box
+$color-box-border: rgba(176,186,194,1);
+
+// toolbar
+$color-toolbar-bg: white;
+
+
+// container and box elements toolbar
+$color-tool-elementtype: $color-grid-bg;
+$color-tool-elementtype-hover: $color-tool-elementtype;
+$color-tool-elementtype-active: $color-edit;
+
+$color-tool-element-content-bg: white;
+$color-tool-element-trash-bg: rgba(176,186,194,1);
+
+
+/* **************
+Dimensions
+****************/
+$dim-grid-width: 960px;
+$dim-toolbar-width: 965px;
+$dim-toolbar-height: 50px;
+$dim-tool-elements-width: 300px;
+$dim-tool-elements-offset:-300px;
+$dim-tool-element-tab-height: $dim-toolbar-height;
+
+$dim-tool-element-trash-height: 80px;
+
+
+/**************
+* index stack
+***************/
+
+$idx-max: 999;
+$idx-toolbar: 99;
+$idx-container: 95;
+$idx-slot: 80;
+$idx-box: 60;

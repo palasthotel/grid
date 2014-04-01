@@ -1,7 +1,9 @@
 
 .grid-all-wrapper{
 	font-family: "OpenSans", sans-serif;
-	button{
+	button,
+	button:focus{
+		outline: none;
 		font-family: inherit;
 		border: none;
 		background-color: transparent;
@@ -16,6 +18,7 @@
 		    -ms-transition: $transition-link;
 		     -o-transition: $transition-link;
 		        transition: $transition-link;
+		box-shadow: none;
 		&:hover{
 			color: $color-edit;
 		}

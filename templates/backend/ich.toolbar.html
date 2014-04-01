@@ -1,20 +1,24 @@
-<div class="grid-toolbar clearfix" role="g-controls">
+<div class="grid-toolbar" role="g-controls">
+    
+    <div class="grid-tool-elements">
+        <div class="grid-element-type-select">
+            <div class="grid-element-type" data-type="container">Container</div><div class="grid-element-type" data-type="box">Box</div>
+        </div>
+        <div class="grid-element-type-content"></div>
+        <div class="grid-element-trash">
+            <div>Delete<i class="icon-trash"></i></div>
+        </div>
+    </div>
+
     <ul class="grid-tool-list grid-toolbar-state" role="data">
-        
-        <!--   <li>
-            <div class="state-display {{#isDraft}}draft{{/isDraft}}" lang-id="state-display">
-                <span role="indicator"></span>
-                <span lang-id="state-display" role="text"></span>
-            </div>
-        </li> -->
 
-        <li><button role="state">Published</button></li>
-        <li><button role="publish">Publish</button></li>
-        <li><button role="preview">Preview</button></li>
-        <li><button role="revert">Revert</button></li>
+        <li class="grid-tool grid-tool-state"><button role="state" data-draft="{{isDraft}}">Draft</button></li>
+        <li class="grid-tool grid-tool-publish"><button role="publish"><i class="icon-publish"></i>Publish</button></li>
+        <li class="grid-tool grid-tool-preview"><button role="preview"><i class="icon-preview"></i>Preview</button></li>
+        <li class="grid-tool grid-tool-revert"><button role="revert"><i class="icon-revert"></i>Revert</button></li>
 
-        <li>
-            <button role="revisions">Revisions</button>
+        <li class="grid-tool grid-tool-revisions">
+            <button role="revisions"><i class="icon-revisions"></i>Revisions</button>
             <div class="grid-revisions rev-wrapper">
                 <div class="scroll_wrapper">
                     <table>
@@ -23,16 +27,10 @@
             </div>
         </li> 
         
-        <li class="hide-from-sidebar"><button role="toggle_boxes">Toggle boxes</button></li>   
+       <!--  <li class="grid-tool grid-tool-toggle-boxes hide-from-sidebar">
+            <button role="toggle_boxes"><i class="icon-reuse"></i>Toggle boxes</button>
+        </li>    -->
                 
     </ul>
-
-   <!--  <ul class="grid-tool-list grid-toolbar-content" role="gui">
-        
-        <li class="hide-from-sidebar">
-            <button role="show_containers" lang-id="btn-add-container" lang-type="text">show containers</button>
-        </li>
-        <li><button role="show_boxes" lang-id="btn-add-box" lang-type="text">show boxes</button></li>
-    </ul> -->
-    <div class="grid-tools"></div>
+    
 </div>

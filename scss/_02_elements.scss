@@ -1,0 +1,12 @@
+
+
+
+// Grid state display
+.grid-tool-state button,
+.grid-tool-state button:hover{
+	cursor: default;
+	color: $color-draft;
+	&[data-draft=false]{
+		color: $color-ok;
+	}
+}
