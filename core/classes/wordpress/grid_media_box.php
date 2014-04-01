@@ -32,7 +32,6 @@ class grid_media_box extends grid_static_base_box
 				$a_post.=" (".$metadata['file'].")";
 			}
 
-			$src = $url;
 			return $a_pre.wp_get_attachment_image($this->content->fileid->id,$this->content->fileid->size).$a_post;
 		}
 		return 'Media-Box';
