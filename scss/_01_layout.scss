@@ -377,9 +377,9 @@ body,
 .grid-slot{
 	position: relative;
 	min-height: 30px;
-	text-transform: uppercase;
 	padding-top: 20px;
 	.grid-slot-style-changer{
+		text-transform: uppercase;
 		width: 100%;
 		max-width: 400px;
 		position: absolute;
@@ -445,6 +445,7 @@ body,
 	border-top: 2px solid $color-box-border;
 }
 .grid-box{
+	padding: 12px 0;
 	min-height: 80px;
 	border-bottom: 2px solid $color-box-border;
 }

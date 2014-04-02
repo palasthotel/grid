@@ -1,7 +1,7 @@
 var GridToolContainersView = GridBackbone.View.extend({
-    className: "g-tool g-container clearfix",
+    className: "grid-tool grid-element-container",
     events:{
-        "click .element-type-tabs li": "renderContainerTypes"
+        "click .grid-container-type": "renderContainerType"
     },
     render: function(){
         this.$el.empty();
@@ -10,6 +10,16 @@ var GridToolContainersView = GridBackbone.View.extend({
         this.$el.show();
         this.delegateEvents();
         this.$el.find(".element-type-tabs li:first-child()").trigger("click");
+        return this;
+    },
+    renderContainerType: function(event){
+        var $type = jQuery(event.target);
+        $type.toggleClass('active');
+        if($type.hasClass('active')){
+            // add elements
+        } else {
+            // remove elements
+        }
         return this;
     },
     renderContainerTypes: function(event){

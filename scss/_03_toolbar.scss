@@ -26,7 +26,6 @@
 	padding-bottom: $dim-tool-element-trash-height;
 }
 .grid-element-type-select{
-	
 	.grid-element-type{
 		text-align: center;
 		box-sizing: border-box;
@@ -56,12 +55,48 @@
 			}
 		}
 	}
-
 }
+
 .grid-element-type-content{
 	min-height: 100px;
+	padding: 15px 10px;
 	background-color: $color-tool-element-content-bg;
+	.grid-element-container-list{
+		margin: 0px;
+	}
+	.grid-container-type{
+		position: relative;
+		font-weight: bold;
+		text-transform: uppercase;
+		cursor: pointer;
+		padding: 20px;
+		&:before{
+			z-index: $idx-toolbar;
+			content:"";
+			border: 6px solid black;
+			font-size:0;line-height:0;height:0;padding:0;margin:0;
+			border-bottom-color:    transparent;
+			border-right-color:  transparent;
+			border-top-color:   transparent;
+			position:absolute;
+			top:24px;
+			left:6px;
+			transition: $transitions;
+		}
+		&.active{
+			&:before{
+				transform: rotate(90deg);
+				top: 26px;
+				left:4px;
+			}
+		}
+	}
+	.grid-container-type-content{
+		margin:0px;
+		border-bottom: 2px solid $color-container-type-content-border;
+	}
 }
+
 .grid-element-trash{
 	position: absolute;
 	bottom:0px;
