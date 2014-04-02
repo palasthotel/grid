@@ -17,8 +17,10 @@ var GridToolContainersView = GridBackbone.View.extend({
         $type.toggleClass('active');
         if($type.hasClass('active')){
             // add elements
+            $type.next("dl").append("<p>container liste!</p>");
         } else {
             // remove elements
+            $type.next("dl").empty();
         }
         return this;
     },
