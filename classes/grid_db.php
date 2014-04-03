@@ -27,7 +27,6 @@ class grid_db {
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 		$this->prefix=$prefix;
 	}
-
 	
 	public function __destruct() {
 		$this->connection->close();
@@ -962,6 +961,36 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		return $return;
 	}
+	
+	public function containerStyles()
+	{
+		$query="select id,style,slug from ".$this->prefix."grid_container_style order by id asc";
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$return=array();
+		while($row=$result->fetch_object())
+		{
+			$return[]=$row;
+		}
+		return $return;
+	}
+	
+	public function createContainerStyle($slug,$style)
+	{
+		$query="insert into ".$this->prefix."grid_container_style (slug,style) values ('".$slug."','".$style."')";
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function deleteContainerStyle($id)
+	{
+		$query="delete from ".$this->prefix."grid_container_style where id=".$id;
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function updateContainerStyle($id,$slug,$style)
+	{
+		$query="update ".$this->prefix."grid_container_style set slug='".$slug."', style='".$style."' where id=".$id;
+		$this->connection->query($query) or die($this->connection->error);
+	}
 
 	public function fetchSlotStyles()
 	{
@@ -975,6 +1004,36 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		return $return;
 	}
 	
+	public function slotStyles()
+	{
+		$query="select id,style,slug from ".$this->prefix."grid_slot_style order by id asc";
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$return=array();
+		while($row=$result->fetch_object())
+		{
+			$return[]=$row;
+		}
+		return $return;
+	}
+	
+	public function createSlotStyle($slug,$style)
+	{
+		$query="insert into ".$this->prefix."grid_slot_style (slug,style) values ('".$slug."','".$style."')";
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function deleteSlotStyle($id)
+	{
+		$query="delete from ".$this->prefix."grid_slot_style where id=".$id;
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function updateSlotStyle($id,$slug,$style)
+	{
+		$query="update ".$this->prefix."grid_slot_style set slug='".$slug."', style='".$style."' where id=".$id;
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
 	public function fetchBoxStyles()
 	{
 		$query="select style,slug from ".$this->prefix."grid_box_style order by style asc";
@@ -986,6 +1045,37 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		return $return;
 	}
+	
+	public function boxStyles()
+	{
+		$query="select id,style,slug from ".$this->prefix."grid_box_style order by id asc";
+		$result=$this->connection->query($query) or die($this->connection->error);
+		$return=array();
+		while($row=$result->fetch_object())
+		{
+			$return[]=$row;
+		}
+		return $return;
+	}
+	
+	public function createBoxStyle($slug,$style)
+	{
+		$query="insert into ".$this->prefix."grid_box_style (slug,style) values ('".$slug."','".$style."')";
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function deleteBoxStyle($id)
+	{
+		$query="delete from ".$this->prefix."grid_box_style where id=".$id;
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
+	public function updateBoxStyle($id,$slug,$style)
+	{
+		$query="update ".$this->prefix."grid_box_style set slug='".$slug."', style='".$style."' where id=".$id;
+		$this->connection->query($query) or die($this->connection->error);
+	}
+	
 	
 	public function loadBox($boxId)
 	{

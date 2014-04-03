@@ -82,11 +82,9 @@ class grid_library
 	{
 		$css=array();
 		$home=$this->getHome();
-		$css[]=$home."css/font-opensans/font.css";
-		//$css[]=$home."css/font-icons/css/grid.css";
-		$css[]=$home."css/font-icons/entypo.css";
-		$css[]=$home."css/font-icons/css/animation.css";
-		$css[]=$home."css/grid-backend.css";
+		$css[]=$home."css/icon-font/css/grid.css";
+		$css[]=$home."css/icon-font/css/animation.css";
+		$css[]=$home."css/main.css";
 		if($rtl)
 		{
 			$css[]=$home."css/rtl.css";
@@ -675,5 +673,11 @@ class grid_library
 		db_query("alter table {grid_slot} drop foreign key {fk_slot_style}");
 		db_query("alter table {grid_slot2box} drop foreign key {fk_slot_slot}");
 		db_query("alter table {grid_slot2box} drop foreign key {fk_slot_box}");
+	}
+	
+	public function getStyleEditor()
+	{
+		require_once("classes/grid_style_editor.php");
+		return new grid_style_editor();
 	}
 }
