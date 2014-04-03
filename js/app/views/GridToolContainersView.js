@@ -6,10 +6,9 @@ var GridToolContainersView = GridBackbone.View.extend({
     render: function(){
         this.$el.empty();
         this.$el.append(ich.tpl_toolContainers({}));
-        // because of old css
-        this.$el.show();
         this.delegateEvents();
-        this.$el.find(".element-type-tabs li:first-child()").trigger("click");
+        // if you want to show containers on default uncomment next line
+        //this.$el.find(".grid-container-type").first().trigger("click");
         return this;
     },
     renderContainerType: function(event){

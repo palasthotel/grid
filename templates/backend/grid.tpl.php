@@ -20,7 +20,7 @@ document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
 <?php require('ich.toolBoxes.html');?>
 </script>
 <script id="tpl_toolBoxBlueprint" type="text/grid-icanhaz">
-<?php require('ich.toolBoxBlueprint.html');?>
+<?php require('ich.toolBoxesBlueprint.html');?>
 </script>
 <script id="tpl_grid" type="text/grid-icanhaz">
 <?php require('ich.grid.html');?>

@@ -62,10 +62,12 @@
 	padding: 15px 10px;
 	overflow-y: scroll;
 	background-color: $color-tool-element-content-bg;
-	.grid-element-container-list{
+	.grid-element-container-list,
+	.grid-element-box-list{
 		margin: 0px;
 	}
-	.grid-container-type{
+	.grid-container-type,
+	.grid-box-type{
 		position: relative;
 		font-weight: bold;
 		text-transform: uppercase;
@@ -92,44 +94,64 @@
 			}
 		}
 	}
-	.grid-container-type-content{
-		margin:0px;
-		border-bottom: 2px solid $color-container-type-content-border;
-		.new-container{
-			cursor: move;
-			position: relative;
-			height: 40px;
-			border: 1px solid $color-draggable-border;
-			margin-bottom: 8px;
-			color: $color-draggable-border;
-			.grid-element-drag-icon{
-				content:'\23f6';
-				transform: rotate(90deg);
-				position: absolute;
-				top: 12px;
-				left: 5px;
-				font-size: 250%;
-			}
-			&:hover{
-				color: $color-draggable-border-hover;
-				border-color: $color-draggable-border-hover;
-			}
-			.grid-reusabe-container-title{
-				color: $color-text;
-				padding-left: 20px;
-			}
+}
+// new containers
+.grid-container-type-content{
+	margin:0px;
+	border-bottom: 2px solid $color-container-type-content-border;
+	.new-container{
+		cursor: move;
+		position: relative;
+		height: 40px;
+		border: 1px solid $color-draggable-border;
+		margin-bottom: 8px;
+		color: $color-draggable-border;
+		.grid-element-drag-icon{
+			content:'\23f6';
+			transform: rotate(90deg);
+			position: absolute;
+			top: 12px;
+			left: 5px;
+			font-size: 250%;
+		}
+		&:hover{
+			color: $color-draggable-border-hover;
+			border-color: $color-draggable-border-hover;
+		}
+		.grid-reusabe-container-title{
+			color: $color-text;
+			padding-left: 20px;
 		}
 	}
 }
 .container-drop-area-wrapper{
 	position:relative;
 	.container-drop-area{
+		box-sizing:border-box;
 		position: absolute;
 		height: 20px;
 		top: -22px;
 		border: 2px dashed $color-drop-area;
 		width: 100%;
 		z-index: $idx-container;
+		transition: $transitions-slow;
+		&.hover{
+			height: 24px;
+			top: -24px;
+		}
+	}
+}
+// new boxes
+.grid-box-type-content{
+	margin:0px;
+	border-bottom: 2px solid $color-container-type-content-border;
+}
+.grid-box-type{
+	& + dl .grid-box-type-search{
+		display:none;
+	}
+	&.active + dl .grid-box-type-search{
+		display:block;
 	}
 }
 

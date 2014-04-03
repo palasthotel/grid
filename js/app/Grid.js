@@ -214,9 +214,9 @@ GRID = {
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
 		this.getView().$el.sortable({
-            handle: ".c-sort-handle",
+            handle: ".grid-container-sorthandle, .grid-container-reused-layer",
             items:".container:not(.SC-4)",
-            placeholder: "c-sort-placeholder",
+            placeholder: "grid-container-sort-placeholder",
             pullPlaceholder: true,
             appendTo: this.getView().$el ,
             refreshPositions: true,

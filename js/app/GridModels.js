@@ -8,9 +8,15 @@ var BoxType = GridBackbone.Model.extend({
         criteria: null,
         blueprints: null
     },
+    getBlueprints: function(){
+        if(!(this.blueprints instanceof GridBoxBlueprints)){
+            this.blueprints = new GridBoxBlueprints();
+        }
+        return this.blueprints;
+    },
     searchBoxes: function(){
         GRID.log(["BoxType->searchBoxes", this]);
-        var blueprints = new GridBoxBlueprints();
+        var blueprints = this.getBlueprints();
         blueprints.fetch({
             type:this.get("type"),
             criteria: this.get("criteria"),

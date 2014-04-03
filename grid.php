@@ -55,7 +55,8 @@ class grid_library
 		$scripts[]=$app_dir."views/GridRevisionsView.js";
 		$scripts[]=$app_dir."views/GridToolbarView.js";
 		$scripts[]=$app_dir."views/GridToolContainersView.js";
-		$scripts[]=$app_dir."views/GridToolBoxesView.js";
+		$scripts[]=$app_dir."views/GridToolBoxTypesView.js";
+		$scripts[]=$app_dir."views/GridToolBoxBlueprintsView.js";
 		$scripts[]=$app_dir."views/GridSlotStyleChangerView.js";
 		$scripts[]=$app_dir."GridModels.js";
 		$scripts[]=$app_dir."models/GridBoxBlueprint.js";

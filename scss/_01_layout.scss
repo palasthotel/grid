@@ -13,12 +13,14 @@ body,
 	h1,h2,h3,h4,h5,h6,p{
 		margin:0px;
 	}
+	padding-top: 20px;
+	padding-bottom: 80px;
 }
 
 // container dimensions
 .grid-container{
 	padding: 5px 5px 0px 5px;
-	margin: 0px;
+	margin: 10px 0 0 0;
 	position: relative;
 
 	.grid-container-controls{
@@ -380,6 +382,7 @@ body,
 .grid-slot{
 	position: relative;
 	min-height: 30px;
+	height: 100%;
 	padding-top: 20px;
 	.grid-slot-style-changer{
 		text-transform: uppercase;

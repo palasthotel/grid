@@ -14,7 +14,26 @@
 // elements in grid-container
 .grid-container-content{
 	background-color: $color-container-bg;
-
+	position: relative;
+}
+.grid-container-reused-layer{
+	position: absolute;
+	z-index: $idx-container;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: $color-container-reused-bg;
+	z-index: $idx-container-reused;
+	.grid-container-reused-label{
+		position: absolute;
+		top: -3px;
+		left: 50%;
+		color: white;
+		text-transform: uppercase;
+	}
 }
 .grid-container .grid-container-controls{
 	height: 40px;
@@ -40,10 +59,16 @@
 		color: $color-container-options-hover;
 	}
 }
+.grid-container-sort-placeholder{
+	height: 20px;
+	border: 2px dashed $color-container-sort-placeholder-border;
+}
 .grid-container-options{
 	position: absolute;
 	top: 5px;
 	right: 0px;
+	display:block;
+	height: 40px;
 	z-index: $idx-container;
 	
 	.grid-container-options-icon{
@@ -58,20 +83,30 @@
 	.grid-container-options-list{
 		position: absolute;
 		display:none;
-		z-index: $idx-container;
 		background-color: $color-container-options-list-bg;
 		color: $color-container-options-list;
 		width:110px;
 		right: 0px;
+		top: 26px;
 		.grid-container-options-list-item{
 			cursor:pointer;
 			padding: 5px;
 			text-transform: uppercase;
 			font-weight: bold;
-			transition: $transitions;
 			&:hover{
 				background-color: $color-container-options-list-bg-hover;
 			}
+		}
+		&:before{
+			content:"";
+			border: 8px solid $color-slot-style-changer-styles-bg;
+			font-size:0;line-height:0;height:0;padding:0;margin:0;
+			border-top-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			top:-16px;
+			left:47%;
 		}
 	}
 	&:hover .grid-container-options-list{
