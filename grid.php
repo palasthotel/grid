@@ -681,4 +681,10 @@ class grid_library
 		require_once("classes/grid_style_editor.php");
 		return new grid_style_editor();
 	}
+	
+	public function getReuseContainerEditor()
+	{
+		require_once("classes/grid_reuse_container_editor.php");
+		return new grid_reuse_container_editor();
+	}
 }
