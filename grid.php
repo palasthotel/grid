@@ -85,7 +85,7 @@ class grid_library
 		$home=$this->getHome();
 		$css[]=$home."css/icon-font/css/grid.css";
 		$css[]=$home."css/icon-font/css/animation.css";
-		$css[]=$home."css/main.css";
+		$css[]=$home."css/grid-backend.css";
 		if($rtl)
 		{
 			$css[]=$home."css/rtl.css";
