@@ -518,17 +518,17 @@ function grid_schema()
 
 function grid_install() 
 {
-	db_query("alter table {grid_box} add constraint fk_box_type foreign key (type) references {grid_box_type} (id) on update cascade on delete cascade");
-	db_query("alter table {grid_box} add constraint fk_box_style foreign key (style) references {grid_box_style} (id) on update cascade on delete cascade");
-	db_query("alter table {grid_container} add constraint fk_container_type foreign key (type) references {grid_container_type} (id) on update cascade on delete cascade");
-	db_query("alter table {grid_container} add constraint fk_container_style foreign key (style) references {grid_container_style} (id) on update cascade on delete cascade");
-	db_query("alter table {grid_container2slot} add constraint fk_container_container foreign key (container_id,grid_id,grid_revision) references {grid_container} (id,grid_id,grid_revision) on update cascade on delete cascade");
-	db_query("alter table {grid_container2slot} add constraint fk_container_slot foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
-	db_query("alter table {grid_grid2container} add constraint fk_grid_grid foreign key (grid_id,grid_revision) references {grid_grid} (id,revision) on update cascade on delete cascade");
-	db_query("alter table {grid_grid2container} add constraint fk_grid_container foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
-	db_query("alter table {grid_slot} add constraint fk_slot_style foreign key (style) references {grid_slot_style} (id) on update cascade on delete cascade");
-	db_query("alter table {grid_slot2box} add constraint fk_slot_slot foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
-	db_query("alter table {grid_slot2box} add constraint fk_slot_box foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_box} add constraint {fk_box_type} foreign key (type) references {grid_box_type} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_box} add constraint {fk_box_style} foreign key (style) references {grid_box_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container} add constraint {fk_container_type} foreign key (type) references {grid_container_type} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container} add constraint {fk_container_style} foreign key (style) references {grid_container_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container2slot} add constraint {fk_container_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_container2slot} add constraint {fk_container_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_grid2container} add constraint {fk_grid_grid} foreign key (grid_id,grid_revision) references {grid_grid} (id,revision) on update cascade on delete cascade");
+	db_query("alter table {grid_grid2container} add constraint fk_grid_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_slot} add constraint {fk_slot_style} foreign key (style) references {grid_slot_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
 	
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-12',1)"); 
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4',3)"); 
@@ -552,17 +552,17 @@ function grid_install()
 
 function grid_uninstall()
 {
-	db_query("alter table {grid_box} drop foreign key fk_box_type");
-	db_query("alter table {grid_box} drop foreign key fk_box_style");
-	db_query("alter table {grid_container} drop foreign key fk_container_type");
-	db_query("alter table {grid_container} drop foreign key fk_container_style");
-	db_query("alter table {grid_container2slot} drop foreign key fk_container_container");
-	db_query("alter table {grid_container2slot} drop foreign key fk_container_slot");
-	db_query("alter table {grid_grid2container} drop foreign key fk_grid_grid");
-	db_query("alter table {grid_grid2container} drop foreign key fk_grid_container");
-	db_query("alter table {grid_slot} drop foreign key fk_slot_style");
-	db_query("alter table {grid_slot2box} drop foreign key fk_slot_slot");
-	db_query("alter table {grid_slot2box} drop foreign key fk_slot_box");
+	db_query("alter table {grid_box} drop foreign key {fk_box_type}");
+	db_query("alter table {grid_box} drop foreign key {fk_box_style}");
+	db_query("alter table {grid_container} drop foreign key {fk_container_type}");
+	db_query("alter table {grid_container} drop foreign key {fk_container_style}");
+	db_query("alter table {grid_container2slot} drop foreign key {fk_container_container}");
+	db_query("alter table {grid_container2slot} drop foreign key {fk_container_slot}");
+	db_query("alter table {grid_grid2container} drop foreign key {fk_grid_grid}");
+	db_query("alter table {grid_grid2container} drop foreign key {fk_grid_container}");
+	db_query("alter table {grid_slot} drop foreign key {fk_slot_style}");
+	db_query("alter table {grid_slot2box} drop foreign key {fk_slot_slot}");
+	db_query("alter table {grid_slot2box} drop foreign key {fk_slot_box}");
 }
 
 function grid_update_7101($sandbox)
@@ -657,6 +657,33 @@ function grid_update_7109($sandbox)
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-4-0',3)");
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-4-2-2-0',3)");
 	db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-2-2-0',4)");
+}
+
+function grid_update_7110($sandbox)
+{
+	db_query("alter table {grid_box} drop foreign key fk_box_type");
+	db_query("alter table {grid_box} drop foreign key fk_box_style");
+	db_query("alter table {grid_container} drop foreign key fk_container_type");
+	db_query("alter table {grid_container} drop foreign key fk_container_style");
+	db_query("alter table {grid_container2slot} drop foreign key fk_container_container");
+	db_query("alter table {grid_container2slot} drop foreign key fk_container_slot");
+	db_query("alter table {grid_grid2container} drop foreign key fk_grid_grid");
+	db_query("alter table {grid_grid2container} drop foreign key fk_grid_container");
+	db_query("alter table {grid_slot} drop foreign key fk_slot_style");
+	db_query("alter table {grid_slot2box} drop foreign key fk_slot_slot");
+	db_query("alter table {grid_slot2box} drop foreign key fk_slot_box");
+
+	db_query("alter table {grid_box} add constraint {fk_box_type} foreign key (type) references {grid_box_type} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_box} add constraint {fk_box_style} foreign key (style) references {grid_box_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container} add constraint {fk_container_type} foreign key (type) references {grid_container_type} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container} add constraint {fk_container_style} foreign key (style) references {grid_container_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_container2slot} add constraint {fk_container_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_container2slot} add constraint {fk_container_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_grid2container} add constraint {fk_grid_grid} foreign key (grid_id,grid_revision) references {grid_grid} (id,revision) on update cascade on delete cascade");
+	db_query("alter table {grid_grid2container} add constraint fk_grid_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_slot} add constraint {fk_slot_style} foreign key (style) references {grid_slot_style} (id) on update cascade on delete cascade");
+	db_query("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+	db_query("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
 }
 /*
 function grid_update_7110($sandbox){
