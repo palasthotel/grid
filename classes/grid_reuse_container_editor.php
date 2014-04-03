@@ -69,7 +69,7 @@ class grid_reuse_container_editor
 ?>
 <form method="post">
 <input type="hidden" name="grid_delete_id" value="<?php echo $id;?>">
-<input type="submit" value="Delete Container">
+<input type="submit" class="form-submit" value="Delete Container">
 </form>
 <?php
 		$result=ob_get_contents();
