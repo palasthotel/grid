@@ -82,6 +82,12 @@ class grid_style_editor
 		$styles=$grid_db->containerStyles();//db_query("select id,style,slug from {grid_container_style} order by id asc");
 		ob_start();
 ?>
+<style type="text/css">
+	.grid-style-editor input[type=text]{
+		width: 100%;
+	}
+</style>
+<div class="grid-style-editor">
 <form method="post">
 <p>Container Styles</p>
 <table>
@@ -95,16 +101,20 @@ class grid_style_editor
 	{
 ?>
 <tr>
-	<td><input type="hidden" name="container_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="container_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
-	<td><input name="container_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
+	<td>
+		<input type="hidden" name="container_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>">
+		<input class="form-text" name="container_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>">
+	</td>
+	<td><input class="form-text" name="container_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
 	<td><input type="checkbox" name="container_styles[<?php echo $style->id;?>][delete]" value="1"></td>
 </tr>
 <?php
 	}
 ?>
 <tr>
-	<td><input name="container_styles[-1][slug]" type="text"></td>
-	<td><input name="container_styles[-1][style]" type="text"></td>
+	<td><input class="form-text" name="container_styles[-1][slug]" type="text"></td>
+	<td><input class="form-text" name="container_styles[-1][style]" type="text"></td>
+	<td></td>
 </tr>
 </table>
 <?php
@@ -122,16 +132,20 @@ class grid_style_editor
 	{
 ?>
 <tr>
-	<td><input type="hidden" name="slot_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="slot_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
-	<td><input name="slot_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
+	<td>
+		<input type="hidden" name="slot_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>">
+		<input class="form-text" name="slot_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>">
+	</td>
+	<td><input class="form-text" name="slot_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
 	<td><input type="checkbox" name="slot_styles[<?php echo $style->id;?>][delete]" value="1"></td>
 </tr>
 <?php
 	}
 ?>
 <tr>
-	<td><input name="slot_styles[-1][slug]" type="text"></td>
-	<td><input name="slot_styles[-1][style]" type="text"></td>
+	<td><input class="form-text" name="slot_styles[-1][slug]" type="text"></td>
+	<td><input class="form-text" name="slot_styles[-1][style]" type="text"></td>
+	<td></td>
 </tr>
 </table>
 <?php
@@ -149,20 +163,25 @@ class grid_style_editor
 	{
 ?>
 <tr>
-	<td><input type="hidden" name="box_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="box_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
-	<td><input name="box_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
+	<td>
+		<input type="hidden" name="box_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>">
+		<input class="form-text" name="box_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>">
+	</td>
+	<td><input class="form-text" name="box_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
 	<td><input type="checkbox" name="box_styles[<?php echo $style->id;?>][delete]" value="1"></td>
 </tr>
 <?php
 	}
 ?>
 <tr>
-	<td><input name="box_styles[-1][slug]" type="text"></td>
-	<td><input name="box_styles[-1][style]" type="text"></td>
+	<td><input class="form-text" name="box_styles[-1][slug]" type="text"></td>
+	<td><input class="form-text" name="box_styles[-1][style]" type="text"></td>
+	<td></td>
 </tr>
 </table>
-<input type="submit">
+<input class="form-submit" type="submit">
 </form>
+</div>
 <?php
 		$result=ob_get_contents();
 		ob_end_clean();
