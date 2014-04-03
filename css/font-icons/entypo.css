@@ -54,6 +54,17 @@
 .icon-style:before { content: '\e79a'; }
 .icon-revisions:before { content: '\e771'; }
 .icon-revert:before { content: '\27f3'; }
+.icon-edit:before{ content:'\270e'; }
 .icon-trash:before { content: '\e729';}
 .icon-preview:before { content: '\e70a';}
 .icon-publish:before { content: '\1f4e3';}
+.icon-elipse:before{ content:'\23f6'; }
+.icon-drag:before{ 
+  content:'\23f6';
+  -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+       -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+           transform: rotate(90deg); 
+}
+.icon-options:before{ content:'\2699'; }

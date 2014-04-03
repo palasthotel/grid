@@ -1,4 +1,4 @@
-
+$color-text: black;
 $color-ok: rgba(70,189,123,1);
 $color-draft: rgba(237,123,61,1);
 $color-warning: rgba(237,80,50,1);
@@ -9,12 +9,18 @@ $color-link-hover: black;
 
 $transition-link: all .1337s ease;
 $transitions: all .1337s ease;
+$transitions-slow: 0.3s ease;
 
 // grid
 $color-grid-bg: rgba(243,245,247,1);
 
 // container
 $color-container-bg: white;
+$color-container-options: rgba(176,186,194,1);
+$color-container-options-hover: $color-link;
+$color-container-options-list: white;
+$color-container-options-list-bg: $color-container-options;
+$color-container-options-list-bg-hover: $color-link;
 
 // slot style changer
 $color-slot-style-changer-bg: rgba(236,239,243,1);
@@ -36,6 +42,12 @@ $color-tool-elementtype-active: $color-edit;
 
 $color-tool-element-content-bg: white;
 $color-container-type-content-border: rgba(176,186,194,1);
+
+$color-draggable-border: rgba(236,239,243,1);
+$color-draggable-border-hover: rgba(176,186,194,1);
+
+$color-drop-area: $color-edit;
+$color-drop-area-hover: black;
 
 $color-tool-element-trash-bg: rgba(176,186,194,1);
 

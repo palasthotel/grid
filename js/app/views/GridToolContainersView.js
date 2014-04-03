@@ -15,14 +15,30 @@ var GridToolContainersView = GridBackbone.View.extend({
     renderContainerType: function(event){
         var $type = jQuery(event.target);
         $type.toggleClass('active');
+        var role = $type.attr("role");
+        var list = "";
+        if(role == "reusable"){
+            // reusables
+            var reusables = this.getReusable();
+            list = this.getRenderedContainerList(reusables);
+        } else {
+            // containers and sidebars
+            var containers = this.getContainers(role);
+            list = this.getRenderedContainerList(containers);
+        }
+        // DOM manipulation
         if($type.hasClass('active')){
             // add elements
-            $type.next("dl").append("<p>container liste!</p>");
+            $type.next("dl").append(list);
         } else {
             // remove elements
             $type.next("dl").empty();
         }
+        this.initializesDraggable();
         return this;
+    },
+    getRenderedContainerList: function(json){
+        return ich.tpl_toolContainersContainer(json);
     },
     renderContainerTypes: function(event){
         var $target = jQuery(event.target);
@@ -46,7 +62,7 @@ var GridToolContainersView = GridBackbone.View.extend({
     },
     getContainers: function(scope){
         var scope_val = "C-";
-        if(scope == "sidebars"){ scope_val = "S-"; }
+        if(scope == "sidebar"){ scope_val = "S-"; }
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
             value.slots = [];
@@ -77,7 +93,7 @@ var GridToolContainersView = GridBackbone.View.extend({
                 GRID.log("Start dragging")
                 var $ = jQuery;
                 var $grid = GRID.getView().$el;
-                var $containers = $grid.find(".container");
+                var $containers = $grid.find(".grid-container");
                 var $dropArea = $(document.createElement("div"))
                                 .addClass("container-drop-area-wrapper")
                                 .attr("data-type","container-drop-area-wrapper");

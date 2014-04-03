@@ -60,6 +60,7 @@
 .grid-element-type-content{
 	min-height: 100px;
 	padding: 15px 10px;
+	overflow-y: scroll;
 	background-color: $color-tool-element-content-bg;
 	.grid-element-container-list{
 		margin: 0px;
@@ -94,8 +95,63 @@
 	.grid-container-type-content{
 		margin:0px;
 		border-bottom: 2px solid $color-container-type-content-border;
+		.new-container{
+			cursor: move;
+			position: relative;
+			height: 40px;
+			border: 1px solid $color-draggable-border;
+			margin-bottom: 8px;
+			color: $color-draggable-border;
+			.grid-element-drag-icon{
+				content:'\23f6';
+				transform: rotate(90deg);
+				position: absolute;
+				top: 12px;
+				left: 5px;
+				font-size: 250%;
+			}
+			&:hover{
+				color: $color-draggable-border-hover;
+				border-color: $color-draggable-border-hover;
+			}
+			.grid-reusabe-container-title{
+				color: $color-text;
+				padding-left: 20px;
+			}
+		}
 	}
 }
+.container-drop-area-wrapper{
+	position:relative;
+	.container-drop-area{
+		position: absolute;
+		height: 20px;
+		top: -22px;
+		border: 2px dashed $color-drop-area;
+		width: 100%;
+		z-index: $idx-container;
+	}
+}
+
+
+.dragger-helper{
+	display:block;
+	height:50px;
+	width:38px;
+	max-width: 38px;
+	max-height: 50px;
+	min-width: 38px;
+	min-height: 50px;
+	border:1px solid #ccc;
+	background-color:#fff;
+	z-index: 1000;
+	box-shadow: 4px 4px 0 #fff,
+				5px 5px 0 #ccc,
+				9px 9px 0 #fff,
+				10px 10px 0 #ccc,
+				14px 14px 0 #fff;
+}
+
 
 .grid-element-trash{
 	position: absolute;

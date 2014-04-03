@@ -20,8 +20,11 @@ var GridToolbarView = GridBackbone.View.extend({
         _revisionsView=new GridRevisionsView({collection:GRID.revisions});
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
         this.$el.find(".rev-wrapper table").replaceWith(_revisionsView.$el);
+        this.$tool_elements = this.$el.find(".grid-tool-elements");
+        this.$tool_element_content = this.$el.find(".grid-element-type-content");
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
         this.$tab_box = this.$el.find(".grid-element-type[data-type=box]");
+        this.$element_trash = this.$el.find(".grid-element-trash");
         this.toggleContainerTools();
         return this;
     },
@@ -88,5 +91,13 @@ var GridToolbarView = GridBackbone.View.extend({
             this.$tab_box.removeClass('active');
             this.$el.find(this.getToolBoxesView().el).remove();
         }
+    },
+    // resize Container and Box toolbar
+    onResize: function(){
+        var window_height = jQuery(window).height();
+        var elements_top_offset = this.$tool_element_content.offset().top;
+        var tab_height = this.$tab_container.outerHeight(true);
+        var trash_height = this.$element_trash.outerHeight(true);
+        this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height-trash_height));
     }
 });

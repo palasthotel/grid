@@ -17,10 +17,13 @@ body,
 
 // container dimensions
 .grid-container{
-	padding: 5px 5px 25px 5px;
-	margin: 25px 0;
-	background-color: $color-container-bg;
+	padding: 5px 5px 0px 5px;
+	margin: 0px;
 	position: relative;
+
+	.grid-container-controls{
+		position: relative;
+	}
 }
 
 /*************************
@@ -431,6 +434,7 @@ body,
 	padding-top: 2px;
 	li{
 		padding: 10px 0px 8px 0px;
+		transition: $transitions;
 		&:hover{
 			cursor: pointer;
 			background-color: $color-slot-style-changer-styles-bg-hover;

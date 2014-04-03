@@ -10,3 +10,72 @@
 		color: $color-ok;
 	}
 }
+
+// elements in grid-container
+.grid-container-content{
+	background-color: $color-container-bg;
+
+}
+.grid-container .grid-container-controls{
+	height: 40px;
+	background-color: transparent;
+	opacity: 0.3;
+	transition: $transitions-slow;
+}
+.grid-container:hover .grid-container-controls{
+	background-color: $color-container-bg;
+	opacity: 1;
+}
+.grid-container-sorthandle{
+	position: absolute;
+	top: 5px;
+	left: 0px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	cursor: move;
+	color: $color-container-options;
+	transition: $transitions;
+	&:hover{
+		color: $color-container-options-hover;
+	}
+}
+.grid-container-options{
+	position: absolute;
+	top: 5px;
+	right: 0px;
+	z-index: $idx-container;
+	
+	.grid-container-options-icon{
+		color: $color-container-options;
+		text-transform: uppercase;
+		font-weight: bold;
+		transition: $transitions;
+	}
+	&:hover .grid-container-options-icon{
+		color: $color-container-options-hover;
+	}
+	.grid-container-options-list{
+		position: absolute;
+		display:none;
+		z-index: $idx-container;
+		background-color: $color-container-options-list-bg;
+		color: $color-container-options-list;
+		width:110px;
+		right: 0px;
+		.grid-container-options-list-item{
+			cursor:pointer;
+			padding: 5px;
+			text-transform: uppercase;
+			font-weight: bold;
+			transition: $transitions;
+			&:hover{
+				background-color: $color-container-options-list-bg-hover;
+			}
+		}
+	}
+	&:hover .grid-container-options-list{
+		display:block;
+		
+	}
+}

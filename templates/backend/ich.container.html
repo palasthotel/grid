@@ -1,26 +1,38 @@
 
 <!-- <div data-id="{{id}}" data-type="{{type}}" class="container display {{type}} clearfix" data-type="{{style}}"
 data-reused="{{reused}}"> -->
-	<div class="c-tools">
-        <span role="sort-handle" class="c-sort-handle c-tool hide-c-editor"></span>
-        <span role="trash" class="c-trash c-tool hide-c-editor"></span>
-		<span role="edit" class="c-edit c-tool"></span>
+
+	<div class="grid-container-content">
+		<p class="grid-container-title">{{title}}</p>
+		<div class="grid-container-before">
+			<p class="grid-container-titleurl">{{titleurl}}</p>
+			<div class="grid-container-prolog">{{&prolog}}</div>
+		</div>
 		
-		{{#reused}}<span role="reuse" class="c-reuse" title="${reusetitle}"></span>{{/reused}}
-		{{^reused}}<span role="reuse" class="c-reuse c-tool hide-c-editor"></span>{{/reused}}
-		
-		<span role="box-trash" class="c-box-trash"></span>
-    </div>
-	<p class="c-title">{{title}}</p>
-	<div class="c-before">
-		<p class="c-titleurl">{{titleurl}}</p>
-		<div class="c-prolog">{{&prolog}}</div>
+		<div class="grid-slots-wrapper slots-wrapper clearfix"></div>
+
+		<div class="grid-container-after">
+			<div class="grid-container-epilog">{{&epilog}}</div>
+			<p class="grid-container-style">{{style}}</p>
+		</div>
 	</div>
 	
-	<div class="slots-wrapper clearfix"></div>
 
-	<div class="c-after">
-		<div class="c-epilog">{{&epilog}}</div>
-		<p class="c-style">{{style}}</p>
-	</div>
+	<div class="grid-container-controls">
+		<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
+
+		{{#reused}}<span class="grid-container-reused" title="${reusetitle}"><i class="icon-reused"></i></span>{{/reused}}
+		<div class="grid-container-options">
+			<span class="grid-container-options-icon">Options <i class="icon-options"></i></span>
+	        <ul class="grid-container-options-list">
+				<li class="grid-container-options-list-item" role="edit"><i class="icon-edit"></i> Edit</li>
+				{{^reused}}
+				<li class="grid-container-options-list-item" role="reuse"><i class="icon-reuse"></i> Reuse</li>
+				{{/reused}}
+				<li class="grid-container-options-list-item" role="trash"><i class="icon-trash"></i> Delete</li>
+	        </ul>
+	    </div>
+    </div>
+
+
 <!-- </div> -->
