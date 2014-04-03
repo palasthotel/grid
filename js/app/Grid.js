@@ -78,6 +78,7 @@ GRID = {
 					model: GRID.getModel()
 				});
 				jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
+				jQuery(window).resize(function(){ toolbar.onResize() }).trigger("resize");
 			}
         });
 

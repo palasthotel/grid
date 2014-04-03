@@ -1,10 +1,10 @@
 <!-- <div class="style-changer"> -->
-	<span>{{activestyle}}</span>
+	<div class="grid-style-changer-active"><i class="icon-style"></i> {{activestyle}}</div>
 	{{^reused}}
-	<ul class="choose-style">
-		<li class="slot-style" data-style="">Default style</li>
+	<ul class="grid-choose-style choose-style">
+		<li class="grid-slot-style slot-style" data-style="">Default style</li>
 		{{#styles}}
-		<li class="slot-style" data-style="{{slug}}">{{title}}</li>
+		<li class="grid-slot-style slot-style" data-style="{{slug}}">{{title}}</li>
 		{{/styles}}
 	</ul>
 	{{/reused}}
