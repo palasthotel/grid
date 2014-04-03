@@ -73,8 +73,8 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     // boxes tools
     getToolBoxesView: function(){
-        if(!(this._toolBoxesView instanceof GridToolBoxesView) ){
-            this._toolBoxesView = new GridToolBoxesView({collection:GRID.getBoxTypes()});
+        if(!(this._toolBoxesView instanceof GridToolBoxTypesView) ){
+            this._toolBoxesView = new GridToolBoxTypesView({collection:GRID.getBoxTypes()});
         }
         return this._toolBoxesView;
     },

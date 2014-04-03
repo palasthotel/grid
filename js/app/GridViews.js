@@ -123,7 +123,7 @@ var ContainerView = GridBackbone.View.extend({
     },
     reuse: function(){
         var reusetitle = prompt("Bitte gib einen Titel für den Container ein");
-        if(reusetitle == ""){
+        if(reusetitle == "" || reusetitle == false){
             return false;
         }
         var self = this;

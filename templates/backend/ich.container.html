@@ -15,8 +15,13 @@ data-reused="{{reused}}"> -->
 			<div class="grid-container-epilog">{{&epilog}}</div>
 			<p class="grid-container-style">{{style}}</p>
 		</div>
+		{{#reused}}
+		<div class="grid-container-reused-layer">
+			<span class="grid-container-reused-label">Reused <i class="icon-reuse"></i></span>
+		</div>
+		{{/reused}}
 	</div>
-	
+
 
 	<div class="grid-container-controls">
 		<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
@@ -25,8 +30,9 @@ data-reused="{{reused}}"> -->
 		<div class="grid-container-options">
 			<span class="grid-container-options-icon">Options <i class="icon-options"></i></span>
 	        <ul class="grid-container-options-list">
-				<li class="grid-container-options-list-item" role="edit"><i class="icon-edit"></i> Edit</li>
+				
 				{{^reused}}
+				<li class="grid-container-options-list-item" role="edit"><i class="icon-edit"></i> Edit</li>
 				<li class="grid-container-options-list-item" role="reuse"><i class="icon-reuse"></i> Reuse</li>
 				{{/reused}}
 				<li class="grid-container-options-list-item" role="trash"><i class="icon-trash"></i> Delete</li>
