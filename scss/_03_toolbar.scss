@@ -4,12 +4,20 @@
 	box-sizing: border-box;
 	width: $dim-toolbar-width;
 	height: $dim-toolbar-height;
-	padding-top: 5px;
+	padding-top: 10px;
 	.grid-tool-list li{
 		display:inline;
+		margin-right: 15px;
+	}
+	button{
+		text-align: left;
+		padding: 0px;
+		margin: 0px;
 	}
 }
-
+.grid-toolbar-list{
+	margin: 20px 20px;
+}
 .grid-tool-list .grid-revisions{
 	display:none;
 }
@@ -30,12 +38,14 @@
 		text-align: center;
 		box-sizing: border-box;
 		display: inline-block;
+		text-transform: uppercase;
 		width: 50%;
 		font-weight: bold;
 		min-height: $dim-tool-element-tab-height;
 		padding-top: 20px;
 		transition: $transition-link;
 		position:relative;
+		background-color: $color-tool-elementtype;
 		&:hover,
 		&.active{
 			cursor:pointer;
@@ -204,6 +214,7 @@
 	bottom:0px;
 	left: 0px;
 	right: 0px;
+	text-transform: uppercase;
 	min-height: $dim-tool-element-trash-height;
 	background-color: $color-tool-element-trash-bg;
 	color: white;

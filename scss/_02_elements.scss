@@ -17,14 +17,13 @@
 	position: relative;
 }
 .grid-container-reused-layer{
+	cursor: move;
 	position: absolute;
 	z-index: $idx-container;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+	top: 5px;
+	left: 5px;
+	bottom: 5px;
+	right: 5px;
 	background-color: $color-container-reused-bg;
 	z-index: $idx-container-reused;
 	.grid-container-reused-label{
@@ -121,7 +120,11 @@
 .grid-box{
 	position: relative;
 }
+.grid-box-content{
+	font-size: 11px;
+}
 .grid-box-controls{
+	cursor: move;
 	color: white;
 	height: 0px;
 	overflow: hidden;
@@ -129,31 +132,60 @@
 	position: absolute;
 	left: 0px;
 	right:0px;
-	bottom: 0px;
-	top: 0px;
+	bottom: 10px;
+	top: 10px;
 	background-color: $color-box-controls-bg;
+	font-weight: bold;
+	text-transform: uppercase;
 	-webkit-transition: opacity .2s ease;
 	   -moz-transition: opacity .2s ease;
 	    -ms-transition: opacity .2s ease;
 	     -o-transition: opacity .2s ease;
 	        transition: opacity .2s ease;
-	.grid-box-edit{
+	.grid-box-control-button{
 		cursor: pointer;
 		position: absolute;
 		top: 0px;
-		bottom: 50%;
-		right: 0px;
-		left: 50%;
-		background-color: $color-edit;
-	}
-	.grid-box-delete{
-		cursor: pointer;
-		position: absolute;
-		top: 50%;
 		bottom: 0px;
 		right: 0px;
-		left: 50%;
+		width: 40px;
+		transition: $transitions;
+		&:hover{
+			width: 100%;
+		}
+		.grid-box-control-text{
+			opacity: 0;
+			transition: $transitions;
+		}
+		&:hover .grid-box-control-text{
+			opacity: 1;
+		}
+	}
+	.grid-box-control-wrapper{
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		margin-top: -13px;
+		white-space: nowrap;
+		overflow: hidden;
+		padding-left: 8px;
+	}
+
+	.grid-box-edit{
+		background-color: $color-edit;
+		top: 0px;
+		bottom: 50%;
+	}
+	.grid-box-delete{
+		top: 50%;
+		bottom: 0px;
 		background-color: $color-warning;
+	}
+	.grid-box-drag{
+		position: absolute;
+		top: 35%;
+		left: 10px;
 	}
 }
 .grid-box:hover .grid-box-controls{
@@ -161,5 +193,8 @@
 	overflow: visible;
 	display: block;
 	opacity:1;
+}
+.grid-box-sort-placeholder{
+	border: 2px dashed $color-box-sort-placeholder-border;
 }
 

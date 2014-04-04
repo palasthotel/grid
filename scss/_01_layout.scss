@@ -5,16 +5,19 @@ body,
 #page{
 	background-color: $color-grid-bg !important;
 }
+#page{
+	margin: 0px !important;
+	padding: 0px !important;
+}
 
 .grid-wrapper{
-	max-width: 960px;
-	width: 960px;
+	width: 80%;
+	box-sizing: border-box;
 	// remove margins
 	h1,h2,h3,h4,h5,h6,p{
 		margin:0px;
 	}
-	padding-top: 20px;
-	padding-bottom: 80px;
+	padding: 20px 10px 80px 10px;
 }
 
 // container dimensions
@@ -22,7 +25,7 @@ body,
 	
 	margin: 10px 0 0 0;
 	.grid-container-content{
-		padding: 5px 5px 0px 5px;
+		padding: 5px 5px 10px 5px;
 		position: relative;
 	}
 	.grid-container-controls{
@@ -383,27 +386,31 @@ body,
 // slot dimensions
 .grid-slot{
 	position: relative;
-	min-height: 30px;
-	height: 100%;
+	min-height: 50px;
 	padding-top: 20px;
 	.grid-slot-style-changer{
 		text-transform: uppercase;
 		width: 100%;
 		max-width: 400px;
 		position: absolute;
-		top: -14px;
+		top: -11px;
 		left: 0px;
 		display:none;
-		background-color: $color-slot-style-changer-bg;
+		font-size: 12px;
 	}
 }
 .grid-slot:hover .grid-slot-style-changer{
 	text-align: center;
 	font-weight: bold;
-	z-index: 10;
+	z-index: $idx-slot;
 	display:block;
 	.grid-style-changer-active{
 		padding: 6px 0px 4px 0px;
+		color: $color-style-changer-active;
+	}
+	&:hover .grid-style-changer-active{
+		background-color: $color-slot-style-changer-bg;
+		color: $color-style-changer-active-hover;
 	}
 	.grid-choose-style{
 		position: absolute;

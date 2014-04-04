@@ -221,7 +221,7 @@ GRID = {
             appendTo: this.getView().$el ,
             refreshPositions: true,
             helper: function(event, element){
-                return jQuery("<div class='c-sort-helper'></div>");
+                return jQuery("<div class='dragger-helper'></div>");
             },
             cursorAt: { left: 30, bottom: 30 },
             start: function( event, ui ){
@@ -252,8 +252,9 @@ GRID = {
 		box_deleted;
 		box_deleted=false;
 		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
-			items: ".box",
-			cancel: ".grid-box-edit, .grid-box-delete",
+			items: ".grid-box",
+			handle: ".grid-box-controls",
+			//cancel: ".grid-box-edit, .grid-box-delete",
 			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
 			placeholder: "grid-box-sort-placeholder",
 			forcePlaceholderSize: true,

@@ -37,11 +37,17 @@ body,
   background-color: #f3f5f7 !important;
 }
 
+#page {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
 .grid-wrapper {
-  max-width: 960px;
-  width: 960px;
-  padding-top: 20px;
-  padding-bottom: 80px;
+  width: 80%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px 10px 80px 10px;
 }
 .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
   margin: 0px;
@@ -51,7 +57,7 @@ body,
   margin: 10px 0 0 0;
 }
 .grid-container .grid-container-content {
-  padding: 5px 5px 0px 5px;
+  padding: 5px 5px 10px 5px;
   position: relative;
 }
 .grid-container .grid-container-controls {
@@ -439,8 +445,7 @@ body,
 
 .grid-slot {
   position: relative;
-  min-height: 30px;
-  height: 100%;
+  min-height: 50px;
   padding-top: 20px;
 }
 .grid-slot .grid-slot-style-changer {
@@ -448,20 +453,25 @@ body,
   width: 100%;
   max-width: 400px;
   position: absolute;
-  top: -14px;
+  top: -11px;
   left: 0px;
   display: none;
-  background-color: #eceff3;
+  font-size: 12px;
 }
 
 .grid-slot:hover .grid-slot-style-changer {
   text-align: center;
   font-weight: bold;
-  z-index: 10;
+  z-index: 80;
   display: block;
 }
 .grid-slot:hover .grid-slot-style-changer .grid-style-changer-active {
   padding: 6px 0px 4px 0px;
+  color: #b0bac2;
+}
+.grid-slot:hover .grid-slot-style-changer:hover .grid-style-changer-active {
+  background-color: #eceff3;
+  color: #3f4853;
 }
 .grid-slot:hover .grid-slot-style-changer .grid-choose-style {
   position: absolute;
@@ -510,13 +520,13 @@ body,
 }
 
 .grid-boxes-wrapper {
-  border-top: 2px solid #b0bac2;
+  border-top: 2px solid #f3f5f7;
 }
 
 .grid-box {
   padding: 12px 0;
   min-height: 80px;
-  border-bottom: 2px solid #b0bac2;
+  border-bottom: 2px solid #f3f5f7;
 }
 
 .grid-tool-state button,
@@ -535,14 +545,13 @@ body,
 }
 
 .grid-container-reused-layer {
+  cursor: move;
   position: absolute;
   z-index: 95;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  top: 5px;
+  left: 5px;
+  bottom: 5px;
+  right: 5px;
   background-color: rgba(63, 72, 83, 0.3);
   z-index: 94;
 }
@@ -647,7 +656,12 @@ body,
   position: relative;
 }
 
+.grid-box-content {
+  font-size: 11px;
+}
+
 .grid-box-controls {
+  cursor: move;
   color: white;
   height: 0px;
   overflow: hidden;
@@ -655,29 +669,59 @@ body,
   position: absolute;
   left: 0px;
   right: 0px;
-  bottom: 0px;
-  top: 0px;
+  bottom: 10px;
+  top: 10px;
   background-color: rgba(63, 72, 83, 0.9);
+  font-weight: bold;
+  text-transform: uppercase;
   -webkit-transition: opacity .2s ease;
   transition: opacity .2s ease;
 }
-.grid-box-controls .grid-box-edit {
+.grid-box-controls .grid-box-control-button {
   cursor: pointer;
   position: absolute;
   top: 0px;
-  bottom: 50%;
-  right: 0px;
-  left: 50%;
-  background-color: #3ac5d9;
-}
-.grid-box-controls .grid-box-delete {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
   bottom: 0px;
   right: 0px;
-  left: 50%;
+  width: 40px;
+  -webkit-transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
+}
+.grid-box-controls .grid-box-control-button:hover {
+  width: 100%;
+}
+.grid-box-controls .grid-box-control-button .grid-box-control-text {
+  opacity: 0;
+  -webkit-transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
+}
+.grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
+  opacity: 1;
+}
+.grid-box-controls .grid-box-control-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -13px;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-left: 8px;
+}
+.grid-box-controls .grid-box-edit {
+  background-color: #3ac5d9;
+  top: 0px;
+  bottom: 50%;
+}
+.grid-box-controls .grid-box-delete {
+  top: 50%;
+  bottom: 0px;
   background-color: #ed5032;
+}
+.grid-box-controls .grid-box-drag {
+  position: absolute;
+  top: 35%;
+  left: 10px;
 }
 
 .grid-box:hover .grid-box-controls {
@@ -687,18 +731,32 @@ body,
   opacity: 1;
 }
 
+.grid-box-sort-placeholder {
+  border: 2px dashed #3ac5d9;
+}
+
 .grid-toolbar {
   position: relative;
   background-color: white;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  width: 965px;
+  width: 100%;
   height: 50px;
-  padding-top: 5px;
+  padding-top: 10px;
 }
 .grid-toolbar .grid-tool-list li {
   display: inline;
+  margin-right: 15px;
+}
+.grid-toolbar button {
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.grid-toolbar-list {
+  margin: 20px 20px;
 }
 
 .grid-tool-list .grid-revisions {
@@ -714,8 +772,8 @@ body,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  right: -300px;
-  width: 300px;
+  right: 0px;
+  width: 20%;
   padding-bottom: 80px;
 }
 
@@ -725,6 +783,7 @@ body,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
+  text-transform: uppercase;
   width: 50%;
   font-weight: bold;
   min-height: 50px;
@@ -732,6 +791,7 @@ body,
   -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
   position: relative;
+  background-color: #f3f5f7;
 }
 .grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
   cursor: pointer;
@@ -908,6 +968,7 @@ body,
   bottom: 0px;
   left: 0px;
   right: 0px;
+  text-transform: uppercase;
   min-height: 80px;
   background-color: #b0bac2;
   color: white;
