@@ -8,8 +8,8 @@ var GridToolbarView = GridBackbone.View.extend({
         "click [role=preview]": "preview",
         "click [role=revert]": "revert",
         "click [role=revisions]": "revisions",
-        "click .grid-element-type[data-type=box]": "toggleBoxTools",
-        "click .grid-element-type[data-type=container]": "toggleContainerTools"
+        "click .grid-element-type[data-type=box]:not(.active)": "showBoxTools",
+        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools"
     },
     initialize: function() {
     	GRID.log("INIT GridToolbarView");
@@ -25,7 +25,7 @@ var GridToolbarView = GridBackbone.View.extend({
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
         this.$tab_box = this.$el.find(".grid-element-type[data-type=box]");
         this.$element_trash = this.$el.find(".grid-element-trash");
-        this.toggleContainerTools();
+        this.showContainerTools();
         return this;
     },
     publish: function(){
@@ -61,12 +61,23 @@ var GridToolbarView = GridBackbone.View.extend({
         return (this.$el.find(this.getToolContainersView().el).length == 1);
     },
     toggleContainerTools: function(){
-        GRID.log(["toggleContainerTools", this.containerToolsVisible()]);
-        if(this.boxToolsVisible()) this.toggleBoxTools();
+        this.hideBoxTools();
         if(!this.containerToolsVisible()){
+            this.showContainerTools();
+        } else {
+            this.hideContainerTools();
+        }
+    },
+    showContainerTools: function(){
+        this.hideBoxTools();
+        if(!this.containerToolsVisible()){
+            this.$el.find(this.getToolContainersView().el).remove();
             this.$el.find('.grid-element-type-content').append(this.getToolContainersView().render().el);
             this.$tab_container.addClass('active');
-        } else {
+        }
+    },
+    hideContainerTools: function(){
+        if( this.containerToolsVisible() ){
             this.$el.find(this.getToolContainersView().el).remove();
             this.$tab_container.removeClass('active');
         }
@@ -82,12 +93,22 @@ var GridToolbarView = GridBackbone.View.extend({
         return (this.$el.find(this.getToolBoxesView().el).length == 1);
     },
     toggleBoxTools: function(){
-        GRID.log(["toggleBoxTools", this.boxToolsVisible()]);
-        if(this.containerToolsVisible()) this.toggleContainerTools();
+        this.hideContainerTools();
+        if(!this.boxToolsVisible()){
+            this.showBoxTools
+        } else {
+            this.hideBoxTools();
+        }
+    },
+    showBoxTools: function(){
+        this.hideContainerTools();
         if(!this.boxToolsVisible()){
             this.$el.find('.grid-element-type-content').append(this.getToolBoxesView().render().el);
             this.$tab_box.addClass('active');
-        } else {
+        }
+    },
+    hideBoxTools: function(){
+        if(this.boxToolsVisible()) {
             this.$tab_box.removeClass('active');
             this.$el.find(this.getToolBoxesView().el).remove();
         }

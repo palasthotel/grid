@@ -1,24 +1,9 @@
 <!-- <div class="g-tool g-box"> -->
-
-   <!--  <ul class="box-type-tabs element-type-tabs clearfix"></ul>
-    <div class="search-bar">
-        <input name="box-search" type="text" class="form-text" placeholder="Search boxes" lang-id="placeholder-search-box" lang-type="placeholder">
-    </div>
-    <ul class="box-list clearfix" style="height: 634px;">
-
-    </ul> -->
 	
 	<dl class="grid-element-box-lists">
 		{{#boxtypes}}
         <dt class="grid-box-type" data-index="{{index}}" data-type="{{type}}">{{title}}</dt>
-        <dl class="grid-box-type-content">
-            {{#criteria}}
-            <div class="grid-box-type-search">
-                <input class="form-autocomplete" type="text" value="" />
-            </div>
-            {{/criteria}}
-            <div class="grid-box-blueprint-list"></div>
-        </dl>
+        <dl class="grid-box-type-content" data-type-content="{{type}}"></dl>
         {{/boxtypes}}
     </dl>
 
