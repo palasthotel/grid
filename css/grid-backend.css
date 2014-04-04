@@ -819,6 +819,27 @@ body,
   display: block;
 }
 
+.grid-box-drop-area-wrapper {
+  position: relative;
+}
+.grid-box-drop-area-wrapper .grid-box-drop-area {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  height: 20px;
+  top: -12px;
+  border: 2px dashed #3ac5d9;
+  width: 100%;
+  z-index: 95;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.grid-box-drop-area-wrapper .grid-box-drop-area.hover {
+  height: 24px;
+  top: -14px;
+}
+
 .dragger-helper {
   display: block;
   height: 50px;

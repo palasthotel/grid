@@ -67,14 +67,14 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
                 // var $toggle_btn = $toolbar.find("[role=hide_boxes]");
 
                 $slots.children(".grid-box").before($( document.createElement('div'))
-                                .addClass("box-drop-area-wrapper"));
+                                .addClass("grid-box-drop-area-wrapper"));
                 $slots.append($( document.createElement('div'))
-                                .addClass("box-drop-area-wrapper"));
-                $slots.find(".box-drop-area-wrapper").append($( document.createElement('div'))
-                                .addClass("box-drop-area"));
+                                .addClass("grid-box-drop-area-wrapper"));
+                $slots.find(".grid-box-drop-area-wrapper").append($( document.createElement('div'))
+                                .addClass("grid-box-drop-area"));
                 
-                $slots.find(".box-drop-area").droppable({ 
-                    accept: ".box-dragger",
+                $slots.find(".grid-box-drop-area").droppable({ 
+                    accept: ".grid-box-dragger",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
                         var $this_box = $(ui.draggable);
@@ -84,8 +84,8 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
                         var slot = GRID.getModel().getContainers().get($this_container.data("id")).getSlots().get($this_slot.data("id"));
                         var blueprint = self.blueprints.get($this_box.data("cid"));
 
-                        $new_box = $this_drop.parent().addClass('new-box-place').removeClass('box-drop-area-wrapper');
-                        GRID.getView().$el.find(".box-drop-area-wrapper").remove();
+                        $new_box = $this_drop.parent().addClass('grid-new-box-place').removeClass('grid-box-drop-area-wrapper');
+                        GRID.getView().$el.find(".grid-box-drop-area-wrapper").remove();
 
                         GRID.log(["DROPPED Box", $this_box.data("cid"), $this_drop, $this_slot, $this_container, slot, blueprint]);
                         var box = slot.createBox(blueprint, $new_box.index() );
@@ -94,7 +94,7 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
                 
             },
             stop: function( event, ui ){
-                GRID.getView().$el.find(".box-drop-area-wrapper").remove();
+                GRID.getView().$el.find(".grid-box-drop-area-wrapper").remove();
             }
         });
         return this;

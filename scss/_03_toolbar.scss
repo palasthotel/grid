@@ -154,6 +154,23 @@
 		display:block;
 	}
 }
+.grid-box-drop-area-wrapper{
+	position:relative;
+	.grid-box-drop-area{
+		box-sizing:border-box;
+		position: absolute;
+		height: 20px;
+		top: -12px;
+		border: 2px dashed $color-drop-area;
+		width: 100%;
+		z-index: $idx-container;
+		transition: $transitions-slow;
+		&.hover{
+			height: 24px;
+			top: -14px;
+		}
+	}
+}
 
 
 .dragger-helper{
