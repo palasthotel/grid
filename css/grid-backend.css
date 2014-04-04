@@ -7,10 +7,28 @@ Dimensions
 .grid-all-wrapper {
   font-family: "OpenSans", sans-serif;
 }
+.grid-all-wrapper input,
+.grid-all-wrapper textarea,
+.grid-all-wrapper select,
+.grid-all-wrapper button {
+  font-family: inherit;
+  font-size: 12px;
+}
+.grid-all-wrapper input {
+  height: 27px;
+  width: 100%;
+  line-height: 27px;
+  text-indent: 10px;
+  font-size: 1em;
+  border: solid 1px #eceff3;
+  margin-bottom: 15px;
+}
+.grid-all-wrapper input:hover {
+  border-color: #b0bac2;
+}
 .grid-all-wrapper button,
 .grid-all-wrapper button:focus {
   outline: none;
-  font-family: inherit;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -634,6 +652,12 @@ body,
 .grid-container-options .grid-container-options-list .grid-container-options-list-item:hover {
   background-color: #3f4853;
 }
+.grid-container-options .grid-container-options-list .grid-container-options-list-item:hover[role=trash] {
+  background-color: #ed5032;
+}
+.grid-container-options .grid-container-options-list .grid-container-options-list-item:hover[role=edit] {
+  background-color: #3ac5d9;
+}
 .grid-container-options .grid-container-options-list:before {
   content: "";
   border: 8px solid #b0bac2;
@@ -951,10 +975,11 @@ body,
   z-index: 95;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
+  background-color: white;
+  border-radius: 2px;
 }
 .grid-box-drop-area-wrapper .grid-box-drop-area.hover {
-  height: 24px;
-  top: -14px;
+  background-color: #3ac5d9;
 }
 
 .dragger-helper {

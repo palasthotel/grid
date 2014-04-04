@@ -78,6 +78,7 @@
 	}
 	&:hover .grid-container-options-icon{
 		color: $color-container-options-hover;
+		
 	}
 	.grid-container-options-list{
 		position: absolute;
@@ -95,6 +96,12 @@
 			font-weight: bold;
 			&:hover{
 				background-color: $color-container-options-list-bg-hover;
+				&[role=trash]{
+					background-color: $color-warning;
+				}
+				&[role=edit]{
+					background-color: $color-edit;
+				}
 			}
 		}
 		&:before{

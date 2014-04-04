@@ -13,7 +13,7 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
         this.delegateEvents();
         GRID.log(["render blueprints",this.model]);
         if(this.model.get("criteria").length > 0){
-            this.$el.append('<div class="grid-box-blueprints-search"><input class="form-autocomplete" type="text" value="" /></div>');
+            this.$el.append('<div class="grid-box-blueprints-search"><input placeholder="Which do you need?" type="text" value="" /></div>');
         }
         this.$blueprintslist = jQuery("<div class='grid-box-blueprints-list'></div>");
         this.$el.append(this.$blueprintslist);

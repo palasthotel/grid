@@ -192,9 +192,11 @@
 		width: 100%;
 		z-index: $idx-container;
 		transition: $transitions-slow;
+		background-color: white;
+		border-radius: 2px;
 		&.hover{
-			height: 24px;
-			top: -14px;
+			background-color: $color-edit;
+
 		}
 	}
 }

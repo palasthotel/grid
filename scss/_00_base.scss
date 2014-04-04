@@ -1,10 +1,28 @@
 
 .grid-all-wrapper{
 	font-family: "OpenSans", sans-serif;
+	input,
+	textarea,
+	select,
+	button{
+		font-family: inherit;
+		font-size: 12px;
+	}
+	input{
+		height:27px; 
+		width: 100%;
+		line-height:27px;
+		text-indent:10px; 
+		font-size:1em;  
+		border:solid 1px $color-input-border;
+		margin-bottom: 15px;
+		&:hover{
+			border-color: $color-input-border-hover;
+		}
+	}
 	button,
 	button:focus{
 		outline: none;
-		font-family: inherit;
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
