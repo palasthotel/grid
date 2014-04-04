@@ -66,7 +66,7 @@ var Grid = GridBackbone.Model.extend({
         isSidebar: false
 	},
 	getGridID: function(){
-		return this.get("id");
+		return GRID.ID;//this.get("id");
 	},
 	// invokes when the model is created
     initialize: function (spec) {

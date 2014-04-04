@@ -6,6 +6,7 @@ var GridAjax = function(method, params_array, settings){
 	var json={};
 	json["method"] = method;
 	json["params"] = params_array;
+	GRID.log(json);
 	if(typeof settings != "object"){ settings = {}; }
 	// default settings
 	this.settings = {

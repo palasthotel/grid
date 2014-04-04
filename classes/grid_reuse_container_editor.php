@@ -45,7 +45,7 @@ class grid_reuse_container_editor
 		return $grid->render(TRUE);
 	}
 	
-	public function runEditor($grid_db,$id,$ckeditor,$ajax,$preview)
+	public function runEditor($grid_db,$id,$ckeditor,$ajax,$debugmode,$preview)
 	{
 		$grid_lib=new grid_library();
 		return $grid_lib->getEditorHTML(
@@ -53,7 +53,7 @@ class grid_reuse_container_editor
 							"container",
 							$ckeditor,
 							$ajax,
-							variable_get('grid_debug_mode',0),
+							$debugmode,
 							$preview,
 							'');
 	}

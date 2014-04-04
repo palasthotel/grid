@@ -83,8 +83,8 @@ class grid_library
 	{
 		$css=array();
 		$home=$this->getHome();
-		$css[]=$home."css/font-icons/entypo.css";
-		$css[]=$home."css/font-opensans/font.css";
+		$css[]=$home."css/icon-font/css/grid.css";
+		$css[]=$home."css/icon-font/css/animation.css";
 		$css[]=$home."css/grid-backend.css";
 		if($rtl)
 		{
@@ -703,6 +703,12 @@ class grid_library
 	{
 		require_once("classes/grid_reuse_container_editor.php");
 		return new grid_reuse_container_editor();
+	}
+	
+	public function getReuseBoxEditor()
+	{
+		require_once("classes/grid_reuse_box_editor.php");
+		return new grid_reuse_box_editor();
 	}
 	
 	private function getUpdater()
