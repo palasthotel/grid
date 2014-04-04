@@ -158,13 +158,12 @@
 		position: absolute;
 		height: 20px;
 		top: -22px;
-		border: 2px dashed $color-drop-area;
 		width: 100%;
 		z-index: $idx-container;
 		transition: $transitions-slow;
+		background-color: lighten($color-edit, 20%);
 		&.hover{
-			height: 24px;
-			top: -24px;
+			background-color: $color-edit;
 		}
 	}
 }
@@ -188,12 +187,13 @@
 		position: absolute;
 		height: 20px;
 		top: -12px;
-		border: 2px dashed $color-drop-area;
+		// border: 2px dashed $color-drop-area;
+		// box-shadow: inset 0 0 7px lighten($color-edit, 10%);
+		
 		width: 100%;
 		z-index: $idx-container;
 		transition: $transitions-slow;
-		background-color: white;
-		border-radius: 2px;
+		background-color: lighten($color-edit, 40%);
 		&.hover{
 			background-color: $color-edit;
 

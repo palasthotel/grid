@@ -937,15 +937,14 @@ body,
   position: absolute;
   height: 20px;
   top: -22px;
-  border: 2px dashed #3ac5d9;
   width: 100%;
   z-index: 95;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
+  background-color: #90dee9;
 }
 .container-drop-area-wrapper .container-drop-area.hover {
-  height: 24px;
-  top: -24px;
+  background-color: #3ac5d9;
 }
 
 .grid-box-type-content {
@@ -970,13 +969,11 @@ body,
   position: absolute;
   height: 20px;
   top: -12px;
-  border: 2px dashed #3ac5d9;
   width: 100%;
   z-index: 95;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
-  background-color: white;
-  border-radius: 2px;
+  background-color: #e5f7fa;
 }
 .grid-box-drop-area-wrapper .grid-box-drop-area.hover {
   background-color: #3ac5d9;
