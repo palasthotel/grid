@@ -446,7 +446,7 @@ body,
   width: 100%;
   max-width: 400px;
   position: absolute;
-  top: 0px;
+  top: -14px;
   left: 0px;
   display: none;
   background-color: #eceff3;
@@ -641,6 +641,31 @@ body,
   display: block;
 }
 
+.grid-box {
+  position: relative;
+}
+
+.grid-box-controls {
+  height: 0px;
+  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+  background-color: rgba(63, 72, 83, 0.9);
+  -webkit-transition: opacity .2s ease;
+  transition: opacity .2s ease;
+}
+
+.grid-box:hover .grid-box-controls {
+  height: auto;
+  overflow: visible;
+  display: block;
+  opacity: 1;
+}
+
 .grid-toolbar {
   position: relative;
   background-color: white;
@@ -755,11 +780,7 @@ body,
   left: 4px;
 }
 
-.grid-container-type-content {
-  margin: 0px;
-  border-bottom: 2px solid #b0bac2;
-}
-.grid-container-type-content .new-container {
+.grid-new-element {
   cursor: move;
   position: relative;
   height: 40px;
@@ -767,7 +788,21 @@ body,
   margin-bottom: 8px;
   color: #eceff3;
 }
-.grid-container-type-content .new-container .grid-element-drag-icon {
+.grid-new-element .grid-element-title {
+  color: black;
+  padding-left: 20px;
+}
+.grid-new-element:hover {
+  color: #b0bac2;
+  border-color: #b0bac2;
+}
+
+.grid-container-type-content {
+  margin: 0px;
+  border-bottom: 2px solid #b0bac2;
+}
+
+.grid-element-drag-icon {
   content: '\23f6';
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -776,14 +811,6 @@ body,
   top: 12px;
   left: 5px;
   font-size: 250%;
-}
-.grid-container-type-content .new-container:hover {
-  color: #b0bac2;
-  border-color: #b0bac2;
-}
-.grid-container-type-content .new-container .grid-reusabe-container-title {
-  color: black;
-  padding-left: 20px;
 }
 
 .container-drop-area-wrapper {

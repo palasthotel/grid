@@ -1,9 +1,13 @@
 <!-- Is set in BoxView
-<div class="box" data-id="{{id}}" data-type="{{type}}"> -->
+<div class="grid-box" data-id="{{id}}" data-type="{{type}}"> -->
 		<h3>{{#titleurl}}<a href="${titleurl}" class="box-title">{{title}}</a>{{/titleurl}}{{^titleurl}}{{title}}{{/titleurl}}</h3>
 		{{^reference}}<span class='edit'></span>{{/reference}}
 		<div class="prolog">{{&prolog}}</div>
 		<div class="content">{{&html}}</div>
 		<div class="epilog">{{&epilog}}</div>
 		<p class="readmore"><a href="{{readmoreurl}}">{{readmore}}</a></p>
+		<div class="grid-box-controls">
+			<div class="grid-box-edit"><i class="icon-edit"></i>Edit</div>
+			<div class="grid-box-delete"><i class="icon-trash"></i>Delete</div>
+		</div>
 <!-- </div> -->
