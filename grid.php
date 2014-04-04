@@ -626,6 +626,21 @@ class grid_library
 				'primary key'=>array('id'),
 				'mysql_engine'=>'InnoDB',
 			),
+			'grid_schema'=>array(
+				'description'=>t('global schema info'),
+				'fields'=>array(
+					'propkey'=>array(
+						'type'=>'varchar',
+						'length'=>255,
+						'size'=>'normal',
+					),
+					'value'=>array(
+						'type'=>'varchar',
+						'length'=>255,
+						'size'=>'normal',
+					),
+				),
+			),
 		);
 	}
 	
@@ -659,6 +674,8 @@ class grid_library
 		db_query("insert into {grid_container_type} (type,numslots) values ('S-4-0',1)"); 
 		db_query("insert into {grid_container_type} (type,numslots) values ('S-0-4',1)");
 		db_query("insert into {grid_container_type} (type,numslots) values ('I-0',0)");
+		db_query("insert into {grid_schema} (propkey) values ('schema_version')");
+		$this->getUpdater()->markAsUpdated();
 	}
 	
 	public function uninstall()
@@ -686,5 +703,17 @@ class grid_library
 	{
 		require_once("classes/grid_reuse_container_editor.php");
 		return new grid_reuse_container_editor();
+	}
+	
+	private function getUpdater()
+	{
+		require_once("classes/grid_update.php");
+		return new grid_update();		
+	}
+	
+	public function update()
+	{
+		$update=$this->getUpdater();
+		$update->performUpdates();
 	}
 }
