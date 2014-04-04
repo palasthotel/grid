@@ -48,8 +48,10 @@ body,
 }
 
 .grid-container {
-  padding: 5px 5px 0px 5px;
   margin: 10px 0 0 0;
+}
+.grid-container .grid-container-content {
+  padding: 5px 5px 0px 5px;
   position: relative;
 }
 .grid-container .grid-container-controls {
@@ -646,6 +648,7 @@ body,
 }
 
 .grid-box-controls {
+  color: white;
   height: 0px;
   overflow: hidden;
   opacity: 0;
@@ -657,6 +660,24 @@ body,
   background-color: rgba(63, 72, 83, 0.9);
   -webkit-transition: opacity .2s ease;
   transition: opacity .2s ease;
+}
+.grid-box-controls .grid-box-edit {
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  bottom: 50%;
+  right: 0px;
+  left: 50%;
+  background-color: #3ac5d9;
+}
+.grid-box-controls .grid-box-delete {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  bottom: 0px;
+  right: 0px;
+  left: 50%;
+  background-color: #ed5032;
 }
 
 .grid-box:hover .grid-box-controls {

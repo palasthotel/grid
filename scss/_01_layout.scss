@@ -19,10 +19,12 @@ body,
 
 // container dimensions
 .grid-container{
-	padding: 5px 5px 0px 5px;
+	
 	margin: 10px 0 0 0;
-	position: relative;
-
+	.grid-container-content{
+		padding: 5px 5px 0px 5px;
+		position: relative;
+	}
 	.grid-container-controls{
 		position: relative;
 	}

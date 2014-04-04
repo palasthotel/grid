@@ -253,9 +253,9 @@ GRID = {
 		box_deleted=false;
 		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
 			items: ".box",
-			cancel: "span.edit",
+			cancel: ".grid-box-edit, .grid-box-delete",
 			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
-			placeholder: "b-sort-placeholder",
+			placeholder: "grid-box-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
 			refreshPositions: true,

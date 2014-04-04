@@ -227,7 +227,8 @@ var BoxesView = GridBackbone.View.extend({
 var BoxView = GridBackbone.View.extend({
     className: "grid-box box",
     events: {
-        'click .edit' : 'edit'
+        'click .grid-box-edit' : 'edit',
+        'click .grid-box-delete' : 'deleteBox'
     },
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
@@ -249,6 +250,9 @@ var BoxView = GridBackbone.View.extend({
         GRID.showBoxEditor(function(){
             jQuery("div#new-grid-boxeditor").html(editor.render().el);
         });
+    },
+    deleteBox: function(){
+        this.model.destroy();
     },
     selfdestruct: function(){
         this.remove();

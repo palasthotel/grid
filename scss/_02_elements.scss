@@ -122,6 +122,7 @@
 	position: relative;
 }
 .grid-box-controls{
+	color: white;
 	height: 0px;
 	overflow: hidden;
 	opacity: 0;
@@ -136,6 +137,24 @@
 	    -ms-transition: opacity .2s ease;
 	     -o-transition: opacity .2s ease;
 	        transition: opacity .2s ease;
+	.grid-box-edit{
+		cursor: pointer;
+		position: absolute;
+		top: 0px;
+		bottom: 50%;
+		right: 0px;
+		left: 50%;
+		background-color: $color-edit;
+	}
+	.grid-box-delete{
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		bottom: 0px;
+		right: 0px;
+		left: 50%;
+		background-color: $color-warning;
+	}
 }
 .grid-box:hover .grid-box-controls{
 	height: auto;
