@@ -2,39 +2,40 @@
 if ($this->firstcontentcontainer): 
 	$class = ($this->sidebarleft)? "C-0-8": "C-8-0";
 ?>
-<div class="content-container-wrapper <?= $class ?> first-content-container">
+<div class="grid-content-container-wrapper <?= $class ?> grid-first-content-container">
 <?php endif; ?>
 
 
-<div class="container <?=$this->style?> <?=$this->type?> <?=implode($this->classes," ")?> clearfix btcf">
-
-	<div class="c-before">
+<div class="grid-container <?=$this->style?> <?=$this->type?> <?=implode($this->classes," ")?> clearfix grid-btcf">
+	<div class="grid-container-content">
+	<div class="grid-container-before">
 		<?
 		if ($this->title!=""){
 			if ($this->titleurl !=""){
 			?>
-				<h2 class="c-title"><a href="<?=$this->titleurl?>"><?=$this->title?></a></h2>
+				<h2 class="grid-container-title"><a href="<?=$this->titleurl?>"><?=$this->title?></a></h2>
 			<?}else{?>
-				<h2 class="c-title"><?=$this->title?></h2>
+				<h2 class="grid-container-title"><?=$this->title?></h2>
 			<?}?>
 		<?}?>
-		<div class="c-prolog">
+		<div class="grid-container-prolog">
 			<?= ($this->sidebarleft)? "left": "right"; ?>
 		  	<?=$this->prolog?>
 		</div>
 	</div>
 
-	<div class="slots-wrapper clearfix">
+	<div class="grid-slots-wrapper clearfix">
 	<?=implode("", $slots)?>
 	</div>
 
-	<div class="c-after">
-		<div class="c-epilog">
+	<div class="grid-container-after">
+		<div class="grid-container-epilog">
 			<?=$this->epilog?>
 		</div>
 		<? if ($this->readmore!=""){?>
-		<a href="<?=$this->readmoreurl?>" class="c-readmore-link"><?=$this->readmore?></a>
+		<a href="<?=$this->readmoreurl?>" class="grid-container-readmore-link"><?=$this->readmore?></a>
 		<?}?>
+	</div>
 	</div>
 
 </div>
