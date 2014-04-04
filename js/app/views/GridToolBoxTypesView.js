@@ -21,11 +21,9 @@ var GridToolBoxTypesView = GridBackbone.View.extend({
         $this.toggleClass('active');
         if($this.hasClass('active')){
             var blueprints_view = new GridToolBoxBlueprintsView({model:this.collection.at($this.data("index"))});
-            blueprints_view.box_type = $this.data("type"); 
-            blueprints_view.render();
-            $this.next("dl").find(".grid-box-type-list").append(blueprints_view.$el);
+            $this.next("dl").append(blueprints_view.render().el);
         } else {
-            $this.next("dl").find(".grid-box-type-list").empty();
+            $this.next("dl").empty();
         }
     }
 });

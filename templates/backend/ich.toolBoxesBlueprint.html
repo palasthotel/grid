@@ -1,16 +1,5 @@
-<li class="box-dragger ui-draggable" data-index="{{index}}" data-cid="{{cid}}" data-type="{{type}}">
-    <div class="prolog"></div>
-    <div class="handle"></div>
-    <div class="title"></div>
-    <div class="content">
-        {{&html}}
-    </div>
-    <div class="epilog"></div>
-</li>
-<!-- 
-{{#boxs}}
-<div class="box-dragger new-box {{type}} ui-draggable" data-type="{{type}}" 
-	data-reusable="{{reused}}" data-id="{{id}}">
-	<span class="grid-element-drag-icon">&#9206;</span>
+
+<div class="grid-box-dragger grid-new-box {{type}} ui-draggable" data-type="{{type}}" 
+	data-reusable="{{reusable}}" data-cid="{{cid}}">
+	<span class="grid-element-drag-icon">&#9206;</span><span>{{html}}</span>
 </div>
-{{/boxes}} -->
