@@ -122,6 +122,7 @@
 		color: $color-draggable-border-hover;
 		border-color: $color-draggable-border-hover;
 	}
+
 }
 
 // new containers
@@ -129,8 +130,17 @@
 	margin:0px;
 	border-bottom: 2px solid $color-container-type-content-border;
 	.new-container{
-		
-		
+		.slot{
+			
+		}
+	}
+}
+.grid-new-container-slots{
+	margin: 5px 5px 5px 20px;
+	.slot{
+		height: 30px;
+		background-color: $color-tool-element-container-slot-bg;
+
 	}
 }
 .grid-element-drag-icon{

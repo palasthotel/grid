@@ -47,7 +47,7 @@ body,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 20px 10px 80px 10px;
+  padding: 20px 10px 120px 10px;
 }
 .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
   margin: 0px;
@@ -618,6 +618,7 @@ body,
 .grid-container-options .grid-container-options-list {
   position: absolute;
   display: none;
+  list-style: none;
   background-color: #b0bac2;
   color: white;
   width: 110px;
@@ -881,6 +882,14 @@ body,
 .grid-container-type-content {
   margin: 0px;
   border-bottom: 2px solid #b0bac2;
+}
+
+.grid-new-container-slots {
+  margin: 5px 5px 5px 20px;
+}
+.grid-new-container-slots .slot {
+  height: 30px;
+  background-color: #f0f0f0;
 }
 
 .grid-element-drag-icon {

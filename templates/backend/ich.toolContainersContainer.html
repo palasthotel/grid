@@ -5,9 +5,11 @@
     	<span class="grid-element-drag-icon">&#9206;</span>
         {{#reused}}<p class="grid-element-title grid-reusabe-container-title">{{reusetitle}}</p>{{/reused}}
         {{^reused}}
-        {{#slots}}
-            <div class="slot"></div>
-        {{/slots}}
+        <div class="grid-new-container-slots">
+            {{#slots}}
+                <div class="slot"></div>
+            {{/slots}}
+        </div>
         {{/reused}}
     </div>
     {{/containers}}
