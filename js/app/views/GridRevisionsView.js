@@ -1,5 +1,6 @@
 var GridRevisionsView = GridBackbone.View.extend({
-	tagName: 'table',
+	tagName: 'div',
+	className: 'grid-revisions',
 	events:{
 		'click .btn-preview':'onPreview',
 		'click .btn-delete':'onDelete',
@@ -7,6 +8,8 @@ var GridRevisionsView = GridBackbone.View.extend({
 	},
 	initialize:function(){
 		this.listenTo(this.collection, 'add',this.render);
+		this.$list = jQuery("<div class='grid-revisions-list'></ul>");
+		this.$el.append(this.$list);
 	},
 	render:function(){
 		var revisions=this.collection.toJSON();
@@ -36,7 +39,9 @@ var GridRevisionsView = GridBackbone.View.extend({
 				elem["editor"] = "unknown";
 			}
 		});
-		this.$el.html(ich.tpl_revisions({revisions:revisions,lang_values:document.lang_values}));
+		this.$list.html(ich.tpl_revisions({revisions:revisions,lang_values:document.lang_values}));
+		var list_width = this.$list.children().length * this.$list.children().first().outerWidth(true);
+		this.$list.css("width", list_width);
 		return this;
 	},
 	onPreview:function(e){

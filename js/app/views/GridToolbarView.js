@@ -17,9 +17,9 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     render: function() {
         GRID.log('i am rendering the toolbar');
-        _revisionsView=new GridRevisionsView({collection:GRID.revisions});
+        this._revisionsView = new GridRevisionsView({collection:GRID.revisions});
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
-        this.$el.find(".rev-wrapper table").replaceWith(_revisionsView.$el);
+        this.$el.append(this._revisionsView.$el.hide());
         this.$tool_elements = this.$el.find(".grid-tool-elements");
         this.$tool_element_content = this.$el.find(".grid-element-type-content");
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
@@ -45,7 +45,7 @@ var GridToolbarView = GridBackbone.View.extend({
         GRID.revert();
     },
     revisions: function(){
-        this.$el.find(".rev-wrapper").toggle();
+        this._revisionsView.$el.slideToggle();
     },
     toggleBoxes: function(){
         console.log("BTN toggleBoxes");

@@ -1,14 +1,10 @@
-{{#revisions}}
-<tr role="revision" data-revision="{{revision}}" state="{{state}}">
-	<td class="rev-revision">{{revision}}</td>
-	<td class="rev-info">
-		<span class="rev-date">{{readable_date}}</span><br/>
-		{{lang_values.rev-by-author}} <span class="rev-editor">{{editor}}</span>
-	</td>
-	<td class="rev-controls">
+{{#revisions}}<div class="grid-revision grid-revision-state-{{state}}" role="revision" data-revision="{{revision}}" state="{{state}}">
+	<p class="grid-revision-date">{{readable_date}}</p>
+	<p>{{editor}}</p>
+	<div class="rev-controls">
 		{{#isDraft}}
 			<button role="revision-preview" class="btn-preview">Preview</button>
-			<button role="revert" class="btn-delete">Delete</button>
+			<button role="revert" class="btn-delete">Revert</button>
 		{{/isDraft}}
 		{{#isDeprecated}}
 			<button role="revision-preview" class="btn-preview">Preview</button>
@@ -17,6 +13,5 @@
 		{{#isPublished}}
 			<button role="revision-preview" class="btn-preview">Preview</button>
 		{{/isPublished}}
-	</td>
-</tr>
-{{/revisions}}
+	</div>
+</div>{{/revisions}}

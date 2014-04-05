@@ -784,10 +784,6 @@ body,
   margin: 20px 20px;
 }
 
-.grid-tool-list .grid-revisions {
-  display: none;
-}
-
 /* ***************************
 * Container and Box Toolbar
 * ***************************/
@@ -1015,6 +1011,81 @@ body,
   border: 2px dashed white;
   border-bottom: none;
   text-align: center;
+}
+
+.grid-revisions {
+  list-style: none;
+  display: block;
+  overflow-x: scroll;
+  width: 80%;
+  padding: 5px 0px 15px 0px;
+}
+
+.grid-revisions-list {
+  padding: 0px 15px;
+}
+
+.grid-revision {
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 200px;
+  border-right: 5px solid #f3f5f7;
+  background-color: white;
+  padding: 10px;
+}
+.grid-revision .grid-revision-date {
+  font-weight: bold;
+}
+.grid-revision:last-child {
+  border-right: none;
+}
+.grid-revision.grid-revision-state-draft {
+  background-color: #ed7b3d;
+  color: white;
+}
+.grid-revision.grid-revision-state-draft button {
+  color: white;
+}
+.grid-revision.grid-revision-state-draft button:hover {
+  color: #3f4853;
+}
+.grid-revision.grid-revision-state-published {
+  background-color: #46bd7b;
+  color: white;
+}
+.grid-revision.grid-revision-state-published button {
+  color: white;
+}
+.grid-revision.grid-revision-state-published button:hover {
+  color: #3f4853;
+}
+.grid-revision p {
+  margin: 0px;
+}
+.grid-revision:first-child:before {
+  z-index: 99;
+  content: "";
+  border: 8px solid #ed7b3d;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  margin-left: -8px;
+  -webkit-transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
+}
+.grid-revision.grid-revision-state-published:first-child:before {
+  border-top-color: #46bd7b;
 }
 
 /*# sourceMappingURL=grid-backend.css.map */

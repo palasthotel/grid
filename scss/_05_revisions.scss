@@ -1,0 +1,65 @@
+.grid-revisions{
+	list-style: none;
+	display: block;
+	overflow-x: scroll;
+	width: $dim-revisions-width;
+	padding: 5px 0px 15px 0px;
+}
+.grid-revisions-list{
+	padding: 0px 15px;
+}
+.grid-revision{
+	position: relative;
+	box-sizing: border-box;
+	display: inline-block;
+	width: 200px;
+	border-right: 5px solid $color-revision-border;
+	background-color: $color-revision-bg;
+	padding: 10px;
+	.grid-revision-date{
+		font-weight: bold;
+	}
+	&:last-child{
+		border-right: none;
+	}
+	&.grid-revision-state-draft{
+		background-color: $color-revision-draft;
+		color: white;
+		button{
+			color: white;
+			&:hover{
+				color: $color-link;
+			}
+		}
+	}
+	&.grid-revision-state-published{
+		background-color: $color-revision-published;
+		color: white;
+		button{
+			color:white;
+			&:hover{
+				color: $color-link;
+			}
+		}
+	}
+	p{
+		margin: 0px;
+	}
+	&:first-child:before{
+		z-index: $idx-toolbar;
+		content:"";
+		border: 8px solid $color-revision-draft;
+		font-size:0;line-height:0;height:0;padding:0;margin:0;
+		border-left-color:    transparent;
+		border-right-color:  transparent;
+		border-bottom-color:   transparent;
+		position:absolute;
+		bottom:-16px;
+		left:50%;
+		margin-left: -8px;
+		transition: $transitions;
+	}
+	&.grid-revision-state-published:first-child:before{
+		border-top-color: $color-revision-published;
+	}
+}
