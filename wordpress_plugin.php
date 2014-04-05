@@ -6,13 +6,14 @@
  * Author: Palasthotel (in Person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  */
- 
-require('core/classes/bootstrap.php');
+
+require('lib/grid.php');
+global $grid_lib;
+$grid_lib=new grid_library(); 
 require('core/classes/wordpress/grid_sidebar_box.php');
 require('core/classes/wordpress/grid_post_box.php');
 require('core/classes/wordpress/grid_media_box.php');
 require('core/classes/wordpress/grid_posts_box.php');
-require('grid.install');
 
 
 class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint
@@ -45,6 +46,15 @@ function db_query($querystring)
 	$querystring = str_replace("}", "", $querystring);
 	global $grid_connection;
 	$result=$grid_connection->query($querystring) or die($querystring." failed: ".$grid_connection->error);
+	if(is_object($result))
+	{
+		$return=array();
+		while($row=$result->fetch_object())
+		{
+			$return[]=$row;
+		}
+		return $return;
+	}
 	return $result;
 }
 
@@ -54,10 +64,32 @@ function grid_wp_activate()
 	static $secondCall=FALSE;
 	global $wpdb;
 	global $grid_connection;
+	global $grid_lib;
 	$options=get_option("grid",array());
 	if(!isset($options['installed']))
 	{
-		$schema=grid_schema();
+		//TODO CONTINUE HERE!
+		$schema=$grid_lib->getDatabaseSchema();
+		$schema['grid_nodes']=array(
+			'description'=>t('references nodes'),
+			'fields'=>array(
+				'nid'=>array(
+					'description'=>t('node id'),
+					'type' => 'int',
+					'unsigned'=>true,
+					'not null'=>true,
+				),
+				'grid_id'=>array(
+					'description'=>t('grid id'),
+					'type'=>'int',
+					'size'=>'normal',
+					'unsigned'=>true,
+					'not null'=>true,
+				),
+			),
+			'primary key'=>array('nid'),
+			'mysql_engine'=>'InnoDB',
+		);
 		$grid_connection= grid_wp_get_mysqli();
 		foreach($schema as $tablename=>$data)
 		{
@@ -103,20 +135,14 @@ function grid_wp_activate()
 					$query.=" auto_increment";
 				}
 			}
-			$query.=",constraint primary key (".implode(",", $data['primary key']).")";
+			if(isset($data['primary key']))
+				$query.=",constraint primary key (".implode(",", $data['primary key']).")";			
 			$query.=") ";
-			$query.="ENGINE = ".$data['mysql_engine'];
+			if(isset($data['mysql_engine']))
+				$query.="ENGINE = ".$data['mysql_engine'];
 			$grid_connection->query($query) or die($grid_connection->error." ".$query);
 		}
-		grid_install();
-		$arr=get_defined_functions();
-		foreach($arr['user'] as $func)
-		{
-			if(preg_match("/^grid_update_\d\d\d\d$/", $func))
-			{
-				$options['installedupdates'][]=$func;
-			}
-		}
+		$grid_lib->install();
 		$grid_connection->close();
 		$options['installed']=TRUE;
 		update_option("grid",$options);
@@ -128,6 +154,7 @@ function grid_wp_activate()
 	else
 	{
 		//TODO: implement update support
+		$grid_lib->update();
 	}
 }
 register_activation_hook(__FILE__,"grid_wp_activate");
@@ -177,156 +204,10 @@ function grid_wp_styles()
 {
 	global $grid_connection;
 	$grid_connection=grid_wp_get_mysqli();
-	if(isset($_POST) && !empty($_POST))
-	{
-		foreach($_POST['container_styles'] as $idx=>$data)
-		{
-			if(!isset($data['id']))
-			{
-				if(!empty($data['slug']) && !empty($data['style']))
-				{
-					db_query("insert into {grid_container_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
-				}
-			}
-			else
-			{
-				if(isset($data['delete']))
-				{
-					db_query("delete from {grid_container_style} where id=".$data['id']);
-				}
-				else
-				{
-					db_query("update {grid_container_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
-				}
-			}
-		}
-		foreach($_POST['slot_styles'] as $idx=>$data)
-		{
-			if(!isset($data['id']))
-			{
-				if(!empty($data['slug']) && !empty($data['style']))
-				{
-					db_query("insert into {grid_slot_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
-				}
-			}
-			else
-			{
-				if(isset($data['delete']))
-				{
-					db_query("delete from {grid_slot_style} where id=".$data['id']);
-				}
-				else
-				{
-					db_query("update {grid_slot_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
-				}
-			}
-		}
-		foreach($_POST['box_styles'] as $idx=>$data)
-		{
-			if(!isset($data['id']))
-			{
-				if(!empty($data['slug']) && !empty($data['style']))
-				{
-					db_query("insert into {grid_box_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
-				}
-			}
-			else
-			{
-				if(isset($data['delete']))
-				{
-					db_query("delete from {grid_box_style} where id=".$data['id']);
-				}
-				else
-				{
-					db_query("update {grid_box_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
-				}
-			}
-		}
-	}
-	$styles=db_query("select id,style,slug from {grid_container_style} order by id asc");
-?>
-<form method="post">
-<p>Container Styles</p>
-<table>
-<tr>
-	<th>Slug</th>
-	<th>Style</th>
-	<th>Delete</th>
-</tr>
-<?php
-	while($style=$styles->fetch_object())
-	{
-?>
-<tr>
-	<td><input type="hidden" name="container_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="container_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
-	<td><input name="container_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
-	<td><input type="checkbox" name="container_styles[<?php echo $style->id;?>][delete]" value="1"></td>
-</tr>
-<?php
-	}
-?>
-<tr>
-	<td><input name="container_styles[-1][slug]" type="text"></td>
-	<td><input name="container_styles[-1][style]" type="text"></td>
-</tr>
-</table>
-<?php
-	$styles=db_query("select id,style,slug from {grid_slot_style} order by id asc");
-?>
-<p>Slot Styles</p>
-<table>
-<tr>
-	<th>Slug</th>
-	<th>Style</th>
-	<th>Delete</th>
-</tr>
-<?php
-	while($style=$styles->fetch_object())
-	{
-?>
-<tr>
-	<td><input type="hidden" name="slot_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="slot_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
-	<td><input name="slot_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
-	<td><input type="checkbox" name="slot_styles[<?php echo $style->id;?>][delete]" value="1"></td>
-</tr>
-<?php
-	}
-?>
-<tr>
-	<td><input name="slot_styles[-1][slug]" type="text"></td>
-	<td><input name="slot_styles[-1][style]" type="text"></td>
-</tr>
-</table>
-<?php
-	$styles=db_query("select id,style,slug from {grid_box_style} order by id asc");
-?>
-<p>Box Styles</p>
-<table>
-<tr>
-	<th>Slug</th>
-	<th>Style</th>
-	<th>Delete</th>
-</tr>
-<?php
-	while($style=$styles->fetch_object())
-	{
-?>
-<tr>
-	<td><input type="hidden" name="box_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>"><input name="box_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>"></td>
-	<td><input name="box_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
-	<td><input type="checkbox" name="box_styles[<?php echo $style->id;?>][delete]" value="1"></td>
-</tr>
-<?php
-	}
-?>
-<tr>
-	<td><input name="box_styles[-1][slug]" type="text"></td>
-	<td><input name="box_styles[-1][style]" type="text"></td>
-</tr>
-</table>
-<input type="submit">
-</form>
-<?php
+	global $grid_lib;
+	$editor=$grid_lib->getStyleEditor();
+	$html=$editor->run();
+	echo $html;
 	$grid_connection->close();
 }
 
@@ -647,44 +528,35 @@ function grid_wp_thegrid()
 	{
 
 		$grid_id=$rows[0]->grid_id;
-		$ckeditor_path=site_url().'/wp-content/plugins/grid/js/ckeditor/ckeditor.js';
-		$jslang="js/language/grid-en.js";
-		if(file_exists("js/language/grid-".WPLANG.".js"))
-			$jslang="js/language/grid-".WPLANG.".js";
-		?>
-		<script>
-		document.ID=<?php echo $grid_id?>;
-		document.gridmode="grid";
-		document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
-		document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
-		document.previewpattern="<?php echo add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid));?>";
-		document.previewurl="<?php echo add_query_arg(array("grid_preview"=>true),get_permalink($postid));?>";
-		document.grid_debug_mode = <?= (get_option("grid_debug_mode",FALSE)? "true": "false"); ?>
-		</script>
-		<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
-		</script>
-		<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
-		</script>
-		<script src="<?php echo plugins_url($jslang,__FILE__);?>">
-		</script>
-
-		<?php
+		global $grid_lib;
+		$css=$grid_lib->getEditorCSS(FALSE);
+		foreach($css as $idx=>$file)
+		{
+			wp_enqueue_style('grid_css_'.$idx,plugins_url('lib/'.$file,__FILE__));
+		}
+		$lang=WPLANG;
+		if(empty($lang))
+			$lang="en";
+		$js=$grid_lib->getEditorJS($lang,FALSE);
+		foreach($js as $idx=>$file)
+		{
+			wp_enqueue_script('grid_js_'.$idx,plugins_url('lib/'.$file,__FILE__));
+		}
+		$html=$grid_lib->getEditorHTML(
+			$grid_id,
+			'grid',
+			add_query_arg(array('noheader'=>true,'page'=>'grid_ckeditor_config'),admin_url('admin.php')),
+			add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php')),
+			get_option('grid_debug_mode',FALSE),
+			add_query_arg(array('grid_preview'=>true),get_permalink($postid)),
+			add_query_arg(array('grid_preview'=>true,'grid_revision'=>'{REV}'),get_permalink($postid))
+		);
 		grid_wp_load_js();
-		?>
-
-		<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-		<?php
-		require "core/templates/editor.html.tpl.php";
+		echo $html;
 	}
 }
 
 function grid_wp_load_js(){
-	$framework_dir = "js/frameworks/";
-	wp_enqueue_script("gridunderscore", plugins_url( $framework_dir."underscore.js" ,__FILE__), array(),"1.0",true);
-	wp_enqueue_script("gridbackbone", plugins_url( $framework_dir."GridBackbone.js" ,__FILE__), array(),"1.0",true);
-	//wp_enqueue_script("gridmustache", plugins_url( $framework_dir."mustache.js" ,__FILE__), array(),"1.0",true);
-	wp_enqueue_script("gridicanhaz", plugins_url( $framework_dir."GridiCanHaz.js" ,__FILE__), array(),"1.0",true);
-
 	// for wp.media and Backbone
 	if(function_exists( 'wp_enqueue_media' )){
 	    wp_enqueue_media();
@@ -693,264 +565,137 @@ function grid_wp_load_js(){
 	    wp_enqueue_script('media-upload');
 	    wp_enqueue_script('thickbox');
 	}
-
-	?>
-	
-	
-	
-	<!-- Grid templates -->
-	<?php 
-	$templates_dir = dirname(__FILE__)."/core/templates/backend/";
-	?>
-	<script id='tpl_toolbar' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolbar.html") ?></script>
-	<script id='tpl_toolContainers' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolContainers.html") ?></script>
-	<script id='tpl_toolContainersContainer' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolContainersContainer.html") ?></script>
-	<script id='tpl_toolBoxes' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolBoxes.html") ?></script>
-	<script id='tpl_toolBoxBlueprint' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.toolBoxBlueprint.html") ?></script>
-
-
-	<script id='tpl_grid' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.grid.html") ?></script>
-	<script id='tpl_container' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.container.html") ?></script>
-	<script id='tpl_containerEditor' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.containerEditor.html") ?></script>
-	<script id='tpl_slot' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.slot.html") ?></script>
-	<script id='tpl_slotstylechanger' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.slotstylechanger.html") ?></script>
-	
-	<script id='tpl_box' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.box.html") ?></script>
-	<script id='tpl_boxeditor' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.boxeditor.html") ?></script>
-	<script id='tpl_revisions' type='text/grid-icanhaz'><?= file_get_contents($templates_dir."ich.revisions.html") ?></script>
-	
-	<!-- Grid App -->
-	<?php 
-	$app_dir = "js/app/"; 
-	$scripts = array(
-		"GridViews",
-		"views/GridRevisionsView",
-		"views/GridToolbarView",
-		"views/GridToolContainersView",
-		"views/GridToolBoxesView",
-		"views/GridSlotStyleChangerView",
-	);
-	grid_wp_add_app_js_array($app_dir, $scripts);
-	grid_wp_add_app_js_dir(__DIR__."/".$app_dir."views/EditorWidgets/*.js");
-	$scripts = array(
-		"GridModels",
-		"models/GridBoxBlueprint",
-		"GridCollections",
-		"collections/GridBoxBlueprints",
-		"GridSync",
-		"Grid",
-	);
-	grid_wp_add_app_js_array($app_dir, $scripts);
-	grid_wp_add_app_js_array($app_dir, array("Grid"));
-
 }
-
-function grid_wp_add_app_js_dir($dir){
-	$files=glob( $dir );
-	foreach($files as $idx=>$file)
+function grid_wp_reuse_box_editor_prepare($editor)
+{
+	$css=$editor->getCSS(FALSE);
+	foreach($css as $idx=>$file)
 	{
-		$filename = basename($file, ".js");
-		$file_js = basename($file);
-		wp_enqueue_script($filename, plugins_url( "js/app/views/EditorWidgets/".$file_js ,__FILE__), array(),"1.0",true);
+		wp_enqueue_style("grid_reusebox_".$idx,plugins_url('lib/'.$file,__FILE__));
+	}
+	$lang=WPLANG;
+	if(empty($lang))
+		$lang='en';
+	$js=$editor->getJS($lang,FALSE);
+	foreach($js as $idx=>$file)
+	{
+		wp_enqueue_script("grid_reusebox_".$idx,plugins_url('lib/'.$file,__FILE__));
 	}
 }
-function grid_wp_add_app_js_array($dir, $arr){
-	foreach ($arr as $key => $script) {
-		wp_enqueue_script($script, plugins_url( $dir.$script.'.js',__FILE__), array(),"1.0",true);
-	}
-}
-
 function grid_wp_reuse_boxes()
 {
 	$storage=grid_wp_get_storage();
-
-	$usedIds=$storage->getReusedBoxIds();
-	$boxids=$storage->getReuseableBoxIds();
-	$boxes=array();
-	foreach($boxids as $boxid)
-	{
-		$boxes[]=$storage->loadReuseBox($boxid);
-	}
-	$grid=new grid_grid();
-	$grid->storage=$storage;
-	$grid->container=array();
-	foreach($boxes as $box)
-	{
-		$container=new grid_container();
-		$container->storage=$storage;
-		$container->type="C-12";
-		$container->stype="container";
-		$container->readmore=t("edit");
-		$container->readmoreurl=add_query_arg(array('page'=>'grid_edit_reuse_box','boxid'=>$box->boxid),admin_url('admin.php'));
-		if(!in_array($box->boxid, $usedIds))
-		{
-			$container->epilog="<a href='".add_query_arg(array('page'=>'grid_delete_reuse_box','boxid'=>$box->boxid),admin_url('admin.php'))."'>delete</a>";
-		}
-		
-		$container->slots=array();
-		$container->slots[]=new grid_slot();
-		$container->slots[0]->storage=$storage;
-		$container->slots[0]->boxes=array();
-		$container->slots[0]->boxes[]=$box;
-		$grid->container[]=$container;
-	}
-?>
-<link rel=stylesheet href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-<?php
-	echo $grid->render(TRUE);
+	global $grid_lib;
+	$editor=$grid_lib->getReuseBoxEditor();
+	grid_wp_reuse_box_editor_prepare($editor);
+	$html=$editor->run($storage,function($id){
+		return add_query_arg(array('page'=>'grid_edit_reuse_box','boxid'=>$id),admin_url('admin.php'));
+	},function($id){
+		return add_query_arg(array('noheader'=>true,'page'=>'grid_delete_reuse_box','boxid'=>$id),admin_url('admin.php'));
+	});
+	echo $html;
 }
 
 function grid_wp_edit_reuse_box()
 {
 	$boxid=$_GET['boxid'];
-
-	wp_enqueue_media();
-	$grid_id=$rows[0]->grid_id;
-	$ckeditor_path=site_url().'/wp-content/plugins/grid/js/ckeditor/ckeditor.js';
-	$jslang="js/language/grid-en.js";
-	if(file_exists("js/language/grid-".WPLANG.".js"))
-		$jslang="js/language/grid-".WPLANG.".js";
-?>
-<script>
-document.ID="box:<?php echo $boxid?>";
-document.gridmode="box";
-document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
-document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
-document.previewurl="";
-</script>
-
-<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url($jslang,__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
-</script>
-
-<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
-</script>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-<?php
-require "core/templates/editor.html.tpl.php";
+	global $grid_lib;
+	$editor=$grid_lib->getReuseBoxEditor();
+	grid_wp_reuse_box_editor_prepare($editor);
+	$storage=grid_wp_get_storage();
+	$html=$editor->runEditor(
+		$storage,
+		$boxid,
+		add_query_arg(array('noheader'=>true,'page'=>'grid_ckeditor_config'),admin_url('admin.php')),
+		add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php')),
+		get_option('grid_debug_mode',FALSE),
+		''
+	);
+	echo $html;
 }
 
 function grid_wp_delete_reuse_box()
 {
 	$boxid=$_GET['boxid'];
-	if(isset($_POST) && !empty($_POST))
+	global $grid_lib;
+	$editor=$grid_lib->getReuseBoxEditor();
+	grid_wp_reuse_box_editor_prepare($editor);
+	$storage=grid_wp_get_storage();
+	$html=$editor->runDelete($storage,$boxid);
+	if($html===TRUE)
 	{
-		$storage=grid_wp_get_storage();
-		$storage->deleteReusableBox($boxid);
-		wp_redirect(add_query_arg(array("page"=>"grid_reuse_boxes"),admin_url("tools.php")));
+		wp_redirect(add_query_arg(array('page'=>'grid_reuse_boxes'),admin_url('tools.php')));
+		return;		
 	}
-	else
+	echo $html;
+}
+
+function grid_wp_reuse_container_editor_prepare($editor)
+{
+	$css=$editor->getCSS(FALSE);
+	foreach($css as $idx=>$file)
 	{
-?>
-<form method="post" action="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_delete_reuse_box","boxid"=>$boxid),admin_url('admin.php'))?>">
-<p>Delete this box?</p>
-<?php echo submit_button();?>
-</form>
-<?php
+		wp_enqueue_style("grid_reusecontainer_".$idx,plugins_url('lib/'.$file,__FILE__));
+	}
+	$lang=WPLANG;
+	if(empty($lang))
+		$lang='en';
+	$js=$editor->getJS($lang,FALSE);
+	foreach($js as $idx=>$file)
+	{
+		wp_enqueue_script("grid_reusecontainer_".$idx,plugins_url('lib/'.$file,__FILE__));
 	}
 }
 
 function grid_wp_reuse_containers()
 {
 	$storage=grid_wp_get_storage();
-	$containerIds=$storage->getReuseContainerIds();
-	$usedIds=$storage->getReusedContainerIds();
-	
-	$grid=new grid_grid();
-	$grid->storage=$storage;
-	$grid->container=array();
-	foreach($containerIds as $id)
-	{
-		$container=$storage->loadReuseContainer($id);
-		$container->grid=$grid;
-		$grid->container[]=$container;
-		
-		$edit=new grid_container();
-		$edit->grid=$grid;
-		$edit->storage=$storage;
-		$edit->type="C-12";
-		$edit->readmore="edit";
-		$edit->slots=array();
-		$edit->prolog=$container->reusetitle;
-		$edit->readmoreurl=add_query_arg(array('page'=>'grid_edit_reuse_container','containerid'=>$id),admin_url('admin.php'));
-		if(!in_array($id, $usedIds))
-		{
-			$edit->epilog='<a href="'.add_query_arg(array('page'=>'grid_delete_reuse_container','containerid'=>$id),admin_url('admin.php')).'">delete</a>';
-		}
-		$grid->container[]=$edit;
-	}
-	
-?>
-<link rel=stylesheet href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-<?php
-	echo $grid->render(TRUE);
+	global $grid_lib;
+	$editor=$grid_lib->getReuseContainerEditor();
+	grid_wp_reuse_container_editor_prepare($editor);
+	$html=$editor->run($storage,function($id){
+		return add_query_arg(array('page'=>'grid_edit_reuse_container','containerid'=>$id),admin_url('admin.php'));
+	},function($id){
+		return add_query_arg(array('page'=>'grid_delete_reuse_container','containerid'=>$id,'noheader'=>true),admin_url('admin.php'));
+	});
+	echo $html;
 }
 
 function grid_wp_edit_reuse_container()
 {
 	$containerid=$_GET['containerid'];
 
-	wp_enqueue_media();
-	$grid_id=$rows[0]->grid_id;
-	$ckeditor_path=site_url().'/wp-content/plugins/grid/js/ckeditor/ckeditor.js';
-	$jslang="js/language/grid-en.js";
-	if(file_exists("js/language/grid-".WPLANG.".js"))
-		$jslang="js/language/grid-".WPLANG.".js";
-?>
-<script>
-document.ID="container:<?php echo $containerid?>";
-document.gridmode="container";
-document.PathToConfig="<?php echo add_query_arg(array("noheader"=>true,"page"=>"grid_ckeditor_config"),admin_url("admin.php"))?>";
-document.gridajax="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php'))?>";
-document.previewurl="";
-</script>
-
-<script src="<?php echo plugins_url('js/jquery-ui-1.10.2.custom.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.tmpl.min.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url($jslang,__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/templates.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.iframe-transport.js',__FILE__);?>">
-</script>
-<script src="<?php echo plugins_url('js/jquery.fileupload.js',__FILE__);?>">
-</script>
-
-<script src="<?php echo plugins_url('js/grid2.0.js',__FILE__);?>">
-</script>
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('core/templates/main.css',__FILE__);?>">
-<?php
-require "core/templates/editor.html.tpl.php";
+	$storage=grid_wp_get_storage();
+	global $grid_lib;
+	$editor=$grid_lib->getReuseContainerEditor();
+	grid_wp_reuse_container_editor_prepare($editor);
+	grid_wp_load_js();
+	$html=$editor->runEditor(
+		$storage,
+		$containerid,
+		add_query_arg(array('noheader'=>true,'page'=>'grid_ckeditor_config'),admin_url('admin.php')),
+		add_query_arg(array('noheader'=>true,'page'=>'grid_ajax'),admin_url('admin.php')),
+		get_option('grid_debug_mode',FALSE),
+		''
+	);
+	echo $html;
 }
 
 function grid_wp_delete_reuse_container()
 {
 	$containerid=$_GET['containerid'];
-	if(isset($_POST) && !empty($_POST))
+
+	$storage=grid_wp_get_storage();
+	global $grid_lib;
+	$editor=$grid_lib->getReuseContainerEditor();
+	grid_wp_reuse_container_editor_prepare($editor);
+	$html=$editor->runDelete($storage,$containerid);
+	if($html===TRUE)
 	{
-		$storage=grid_wp_get_storage();
-		$storage->deleteReusableContainer($containerid);
 		wp_redirect(add_query_arg(array('page'=>'grid_reuse_containers'),admin_url('tools.php')));
+		return;
 	}
-	else
-	{
-?>
-<form method="post" action="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_delete_reuse_container','containerid'=>$containerid),admin_url('admin.php'));?>">
-<p>Delete this container?</p>
-<?php echo submit_button();?>
-<?php
-	}
+	echo $html;
 }
 
 function grid_wp_ajax()
@@ -1041,7 +786,8 @@ function grid_wp_ckeditor_config()
 	
 	$styles=apply_filters("grid_styles",$styles);
 	$styles=apply_filters("grid_formats",$formats);
-	require("grid_htmlbox_ckeditor_config_js.tpl.php");
+	global $grid_lib;
+	echo $grid_lib->getCKEditorConfig($styles,$formats);
 	die();
 }
 
