@@ -2,9 +2,9 @@ var GridRevisionsView = GridBackbone.View.extend({
 	tagName: 'div',
 	className: 'grid-revisions',
 	events:{
-		'click .btn-preview':'onPreview',
-		'click .btn-delete':'onDelete',
-		'click .btn-revert':'onRevert'
+		'click [role=preview]':'onPreview',
+		'click [role=delete]':'onDelete',
+		'click [role=revert]':'onRevert'
 	},
 	initialize:function(){
 		this.listenTo(this.collection, 'add',this.render);
@@ -45,18 +45,16 @@ var GridRevisionsView = GridBackbone.View.extend({
 		return this;
 	},
 	onPreview:function(e){
-		var revision=jQuery(e.srcElement).parents("tr").data("revision");
-		var location =  GRID.PREVIEW_PATTERN.replace("{REV}", revision);
+		var $revision = jQuery(e.target).parents(".grid-revision");
+		var location =  GRID.PREVIEW_PATTERN.replace("{REV}", $revision.data("revision"));
 		window.open(location,"_blank");
 		this.$el.parents(".rev-wrapper").toggle();
 	},
 	onDelete:function(e){
 		GRID.revert();
-		this.$el.parents(".rev-wrapper").toggle();
 	},
 	onRevert:function(e){
-		var revision=jQuery(e.srcElement).parents("tr").data("revision");
+		var revision=jQuery(e.srcElement).parents(".grid-revision").data("revision");
 		GRID.setToRevision(revision);
-		this.$el.parents(".rev-wrapper").toggle();	
 	},
 });

@@ -1020,6 +1020,10 @@ body,
   width: 80%;
   padding: 5px 0px 15px 0px;
 }
+.grid-revisions button {
+  margin: 0px;
+  padding: 0px;
+}
 
 .grid-revisions-list {
   padding: 0px 15px;
@@ -1031,13 +1035,9 @@ body,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
-  width: 200px;
+  width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
-  padding: 10px;
-}
-.grid-revision .grid-revision-date {
-  font-weight: bold;
 }
 .grid-revision:last-child {
   border-right: none;
@@ -1062,9 +1062,6 @@ body,
 .grid-revision.grid-revision-state-published button:hover {
   color: #3f4853;
 }
-.grid-revision p {
-  margin: 0px;
-}
 .grid-revision:first-child:before {
   z-index: 99;
   content: "";
@@ -1086,6 +1083,39 @@ body,
 }
 .grid-revision.grid-revision-state-published:first-child:before {
   border-top-color: #46bd7b;
+}
+
+.grid-revision-description {
+  padding: 10px;
+}
+.grid-revision-description p {
+  margin: 0px;
+}
+.grid-revision-description .grid-revision-date {
+  font-weight: bold;
+}
+
+.grid-revision-controls {
+  position: relative;
+  padding-bottom: 40px;
+}
+.grid-revision-controls .grid-revision-button {
+  height: 40px;
+  position: absolute;
+  bottom: 0px;
+}
+.grid-revision-controls .grid-revision-preview-button {
+  left: 0px;
+  width: 50%;
+}
+.grid-revision-controls .grid-revision-delete-button,
+.grid-revision-controls .grid-revision-revert-button {
+  right: 0px;
+  width: 50%;
+}
+
+.grid-revision-state-published .grid-revision-controls .grid-revision-preview-button {
+  width: 100%;
 }
 
 /*# sourceMappingURL=grid-backend.css.map */

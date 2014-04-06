@@ -4,21 +4,22 @@
 	overflow-x: scroll;
 	width: $dim-revisions-width;
 	padding: 5px 0px 15px 0px;
+	button{
+		margin: 0px;
+		padding: 0px;
+	}
 }
 .grid-revisions-list{
 	padding: 0px 15px;
 }
+
 .grid-revision{
 	position: relative;
 	box-sizing: border-box;
 	display: inline-block;
-	width: 200px;
+	width: 220px;
 	border-right: 5px solid $color-revision-border;
 	background-color: $color-revision-bg;
-	padding: 10px;
-	.grid-revision-date{
-		font-weight: bold;
-	}
 	&:last-child{
 		border-right: none;
 	}
@@ -42,9 +43,6 @@
 			}
 		}
 	}
-	p{
-		margin: 0px;
-	}
 	&:first-child:before{
 		z-index: $idx-toolbar;
 		content:"";
@@ -61,5 +59,41 @@
 	}
 	&.grid-revision-state-published:first-child:before{
 		border-top-color: $color-revision-published;
+	}
+}
+
+// Description section 
+.grid-revision-description{
+	padding: 10px;
+	p{
+		margin: 0px;
+	}
+	.grid-revision-date{
+		font-weight: bold;
+	}
+}
+
+// controls section
+.grid-revision-controls{
+	position: relative;
+	padding-bottom: 40px;
+	.grid-revision-button{
+		height: 40px;
+		position: absolute;
+		bottom: 0px;
+	}
+	.grid-revision-preview-button{
+		left: 0px;
+		width: 50%;
+	}
+	.grid-revision-delete-button,
+	.grid-revision-revert-button{
+		right: 0px;
+		width: 50%;
+	}
+}
+.grid-revision-state-published .grid-revision-controls{
+	.grid-revision-preview-button{
+		width: 100%;
 	}
 }
