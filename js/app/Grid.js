@@ -29,6 +29,7 @@ window.GRID = {};
 var GRID = window.GRID;
 
 GRID = {
+	dom_root: "#new-grid-wrapper",
 	ID: -1,
 	// enable or disable debugging output
 	DEBUGGING: false,
@@ -67,18 +68,18 @@ GRID = {
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
 				GRID.gridview = new GridView({model: GRID.getModel() });
-				jQuery("#new-grid-wrapper").html( GRID.getView().render().el );
+				jQuery(GRID.dom_root).html( GRID.getView().render().el );
 				GRID._initializeContainerSortable();
 				GRID._initializeBoxSortable();
 				// load the revisions
 				GRID.revisions = new Revisions({grid: GRID.getModel() });
 		        GRID.revisions.fetch();
 		        // init toolbar
-				var toolbar  = new GridToolbarView({
+				GRID.toolbar  = new GridToolbarView({
 					model: GRID.getModel()
 				});
-				jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
-				jQuery(window).resize(function(){ toolbar.onResize() }).trigger("resize");
+				jQuery(GRID.dom_root).prepend(GRID.toolbar.render().el);
+				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
 			}
         });
 
@@ -154,6 +155,8 @@ GRID = {
 			document.previewpattern != ""){
 			PREVIEW_PATTERN = document.previewpattern;
 		}
+		GRID.mode = document.gridmode;
+		jQuery(GRID.dom_root).addClass('gridmode-'+GRID.mode);
 		GRID.PREVIEW_PATTERN=PREVIEW_PATTERN
 		console.log("PREVIEW_PATTERN: "+PREVIEW_PATTERN);
 	},

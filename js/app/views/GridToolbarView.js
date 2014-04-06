@@ -17,15 +17,23 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     render: function() {
         GRID.log('i am rendering the toolbar');
-        this._revisionsView = new GridRevisionsView({collection:GRID.revisions});
+
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
-        this.$el.append(this._revisionsView.$el.hide());
+        
         this.$tool_elements = this.$el.find(".grid-tool-elements");
         this.$tool_element_content = this.$el.find(".grid-element-type-content");
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
         this.$tab_box = this.$el.find(".grid-element-type[data-type=box]");
         this.$element_trash = this.$el.find(".grid-element-trash");
-        this.showContainerTools();
+
+        if(GRID.mode == "grid"){
+           this._revisionsView = new GridRevisionsView({collection:GRID.revisions}); 
+           this.$el.append(this._revisionsView.$el.hide());
+           this.showContainerTools();
+        } else if(GRID.mode == "container"){
+            this.showBoxTools();
+        }
+        
         return this;
     },
     publish: function(){

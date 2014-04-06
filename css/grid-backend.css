@@ -1118,4 +1118,27 @@ body,
   width: 100%;
 }
 
+.gridmode-container .grid-tool-list,
+.gridmode-container .grid-element-type[data-type=container],
+.gridmode-container .grid-container-sorthandle,
+.gridmode-container .grid-container-options-list [role=reuse],
+.gridmode-container .grid-container-options-list [role=trash],
+.gridmode-box .grid-tool-list,
+.gridmode-box .grid-element-type[data-type=container],
+.gridmode-box .grid-container-sorthandle,
+.gridmode-box .grid-container-options-list [role=reuse],
+.gridmode-box .grid-container-options-list [role=trash] {
+  display: none;
+}
+
+.gridmode-box .grid-toolbar,
+.gridmode-box .grid-container-controls,
+.gridmode-box .grid-box-delete {
+  display: none;
+}
+.gridmode-box .grid-box-edit {
+  bottom: 0px;
+  width: 100%;
+}
+
 /*# sourceMappingURL=grid-backend.css.map */

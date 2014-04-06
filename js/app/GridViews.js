@@ -177,9 +177,9 @@ var SlotView = GridBackbone.View.extend({
 	initialize: function(){
         GRID.log("INIT SlotView")
         this._boxesView = new BoxesView({collection: this.model.getBoxes() });
-        this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
-        this._boxesView._parentView = this;
-        this._slotStyleChangerView._parentView = this;
+        if(GRID.mode != "box"){
+            this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
+        }
         this.listenTo(this.model, 'change', this.render);
 	},
 	render: function(){
@@ -188,8 +188,10 @@ var SlotView = GridBackbone.View.extend({
         var json = this.model.toJSON();
         this.$el.attr("data-style", json.style).attr("data-id",json.id);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
-        this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
-        this._slotStyleChangerView.delegateEvents();
+        if(GRID.mode != "box"){
+            this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
+            this._slotStyleChangerView.delegateEvents();
+        }
         this._boxesView.render();
         this.$el.find(".boxes-wrapper").replaceWith(this._boxesView.$el);
         return this;
