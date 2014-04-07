@@ -6,7 +6,7 @@
 	height: $dim-toolbar-height;
 	padding-top: 10px;
 	.grid-tool-list li{
-		display:inline;
+		display:inline-block;
 		margin-right: 15px;
 	}
 	button{
@@ -17,6 +17,19 @@
 }
 .grid-toolbar-list{
 	margin: 20px 20px;
+}
+
+// Grid state display
+.grid-tool-state {
+	width: 70px;
+	span{
+		text-transform: uppercase;
+		font-weight: bold;
+		color: $color-draft;
+		&[data-draft=false]{
+			color: $color-ok;
+		}
+	}
 }
 
 /* ***************************
@@ -82,22 +95,18 @@
 		padding: 20px;
 		&:before{
 			z-index: $idx-toolbar;
-			content:"";
-			border: 6px solid black;
-			font-size:0;line-height:0;height:0;padding:0;margin:0;
-			border-bottom-color:    transparent;
-			border-right-color:  transparent;
-			border-top-color:   transparent;
+			content:"\25B8";
 			position:absolute;
-			top:24px;
+			top:20px;
 			left:6px;
+			font-size: 14px;
 			transition: $transitions;
 		}
 		&.active{
 			&:before{
 				transform: rotate(90deg);
-				top: 26px;
-				left:4px;
+				top: 20px;
+				left:5px;
 			}
 		}
 	}

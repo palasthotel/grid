@@ -1,16 +1,4 @@
 
-
-
-// Grid state display
-.grid-tool-state button,
-.grid-tool-state button:hover{
-	cursor: default;
-	color: $color-draft;
-	&[data-draft=false]{
-		color: $color-ok;
-	}
-}
-
 // elements in grid-container
 .grid-container-content{
 	background-color: $color-container-bg;

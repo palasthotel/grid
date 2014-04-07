@@ -14,6 +14,7 @@ var GridToolbarView = GridBackbone.View.extend({
     initialize: function() {
     	GRID.log("INIT GridToolbarView");
         this.listenTo(this.model, "change:isDraft", this.setState);
+        this.setState();
     },
     render: function() {
         GRID.log('i am rendering the toolbar');
@@ -41,8 +42,13 @@ var GridToolbarView = GridBackbone.View.extend({
         this.model.save();
     },
     setState: function(){
-        GRID.log(["Changed is draft", this.$el.find(".grid-tool-state button")]);
-        this.$el.find(".grid-tool-state button").attr("data-draft", this.model.get("isDraft"));
+        var isDraft = this.model.get("isDraft");
+        var $button = this.$el.find(".grid-tool-state span").attr("data-draft", isDraft);
+        if(isDraft){
+            $button.html("Draft");
+        } else {
+            $button.html("Published");
+        }
     },
     preview: function(){
         console.log("BTN preview");

@@ -12,7 +12,7 @@
 
     <ul class="grid-tool-list grid-toolbar-state" role="data">
 
-        <li class="grid-tool grid-tool-state"><button role="state" data-draft="{{isDraft}}">Draft</button></li>
+        <li class="grid-tool grid-tool-state"><span role="state" data-draft="{{isDraft}}">{{#isDraft}}Draft{{/isDraft}}{{^isDraft}}Published{{/isDraft}}</span></li>
         <li class="grid-tool grid-tool-publish"><button role="publish"><i class="icon-publish"></i>Publish</button></li>
         <li class="grid-tool grid-tool-preview"><button role="preview"><i class="icon-preview"></i>Preview</button></li>
         <li class="grid-tool grid-tool-revert"><button role="revert"><i class="icon-revert"></i>Revert</button></li>

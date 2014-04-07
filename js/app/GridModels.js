@@ -132,9 +132,8 @@ var Grid = GridBackbone.Model.extend({
             new_slot.addBox(clone, new_box_index);
         });
     },
-    getIsDraft: function(){
-        GridRequest.grid.read( this, { action: "checkdraft" } );
-        return this.get("isDraft"); 
+    checkIsDraft: function(){
+        GridRequest.grid.read(this, {action: "checkdraft"});
     },
     // handles all Server communication
     sync: function(method, model, options){

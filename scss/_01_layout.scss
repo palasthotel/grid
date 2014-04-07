@@ -395,11 +395,10 @@ body,
 		position: absolute;
 		top: -11px;
 		left: 0px;
-		display:none;
 		font-size: 12px;
 	}
 }
-.grid-slot:hover .grid-slot-style-changer{
+.grid-slot .grid-slot-style-changer{
 	text-align: center;
 	font-weight: bold;
 	z-index: $idx-slot;
