@@ -1,16 +1,18 @@
 .grid-revisions{
 	list-style: none;
+	box-sizing: border-box;
 	display: block;
 	overflow-x: scroll;
 	width: $dim-revisions-width;
-	padding: 5px 0px 15px 0px;
+	padding: 0px 0px 15px 50px;
+	margin-bottom: -30px;
 	button{
 		margin: 0px;
 		padding: 0px;
 	}
 }
 .grid-revisions-list{
-	padding: 0px 15px;
+	padding: 0px 15px 0px 0px;
 }
 
 .grid-revision{
@@ -18,7 +20,7 @@
 	box-sizing: border-box;
 	display: inline-block;
 	width: 220px;
-	border-right: 5px solid $color-revision-border;
+	border-right: 0px solid $color-revision-border;
 	background-color: $color-revision-bg;
 	&:last-child{
 		border-right: none;

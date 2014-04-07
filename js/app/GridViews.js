@@ -263,10 +263,10 @@ var BoxView = GridBackbone.View.extend({
 
 var BoxEditor = GridBackbone.View.extend({
     events: {
-        'click .btn-cancel' : 'onCancel',
+        'click .grid-box-editor-controls [role=cancel]' : 'onCancel',
         'click legend' : 'onToggle',
-        'click .btn-save' : 'onSave',
-        'click .btn-make-reusable' : 'onMakeReusable'
+        'click .grid-box-editor-controls [role=save]' : 'onSave',
+        'click .grid-box-editor-controls [role=reuse]' : 'onMakeReusable'
     },
     initialize: function(){
     },
@@ -289,7 +289,7 @@ var BoxEditor = GridBackbone.View.extend({
             'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
-        var fieldcontainer=jQuery(this.$el).find(".dynamic-fields .field-wrapper");
+        var fieldcontainer=jQuery(this.$el).find(".grid-dynamic-fields .field-wrapper");
         var views=[];
         var self=this;
         _.each(contentstructure,function(elem){
@@ -319,6 +319,7 @@ var BoxEditor = GridBackbone.View.extend({
         {
                 jQuery(this.$el).find(".box-styles-wrapper").hide();
         }
+        this.$el.find(".grid-collapsable-hidden .field-wrapper").hide();
         return this;
     },
     onCancel: function(){

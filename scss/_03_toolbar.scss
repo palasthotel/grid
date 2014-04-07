@@ -4,16 +4,50 @@
 	box-sizing: border-box;
 	width: $dim-toolbar-width;
 	height: $dim-toolbar-height;
-	padding-top: 10px;
-	.grid-tool-list li{
-		display:inline-block;
-		margin-right: 15px;
-	}
-	button{
-		text-align: left;
-		padding: 0px;
+	
+	.grid-tool-list {
+		list-style: none;
+		position: fixed;
+		z-index: $idx-max;
 		margin: 0px;
+		width: 40px;
+		li{
+			width: 135px;
+			right:90px;
+			position: relative;
+			background-color: $color-grid-bg;
+			transition: $transitions;
+			&:hover{
+				right:0px;
+			}
+			button{
+				text-align: right;
+				padding: 5px 48px 5px 5px;
+				margin: 0px;
+				font-size: 12px;
+				width: 100%;
+				height: 45px;
+				transition: $transitions;
+				[class^="icon-"], 
+				[class*=" icon-"]{
+					position: absolute;
+					right: 6px;
+					top: 6px;
+					font-size: 16px;
+				}
+				&:hover{
+					padding-right: 38px;
+					color: white;
+					background-color: $color-link;
+				}
+			}
+		}
+		
 	}
+}
+
+.grid-all-wrapper{
+	
 }
 .grid-toolbar-list{
 	margin: 20px 20px;
@@ -26,18 +60,25 @@
 		text-transform: uppercase;
 		font-weight: bold;
 		color: $color-draft;
-		&[data-draft=false]{
+	}
+}
+.grid-toolbar{
+	border-top: 4px solid $color-draft;
+	&[data-draft=false]{
+		border-top: 4px solid $color-ok;
+		.grid-tool-state span{
 			color: $color-ok;
 		}
 	}
+	
 }
 
 /* ***************************
 * Container and Box Toolbar
 * ***************************/
 .grid-tool-elements{
-	position: absolute;
-	top: 0px;
+	position: fixed;
+	//top: 0px;
 	box-sizing: border-box;
 	right: $dim-tool-elements-offset;
 	width: $dim-tool-elements-width;
@@ -51,8 +92,8 @@
 		text-transform: uppercase;
 		width: 50%;
 		font-weight: bold;
-		min-height: $dim-tool-element-tab-height;
-		padding-top: 20px;
+		height: $dim-tool-element-tab-height;
+		padding-top: 15px;
 		transition: $transition-link;
 		position:relative;
 		background-color: $color-tool-elementtype;
@@ -120,9 +161,12 @@
 	border: 1px solid $color-draggable-border;
 	margin-bottom: 8px;
 	color: $color-draggable-border;
+	overflow: hidden;
 	.grid-element-title{
 		color: $color-text;
 		padding-left: 20px;
+		margin: 0px;
+		padding-top: 10px; 
 	}
 	&:hover{
 		color: $color-draggable-border-hover;
@@ -134,12 +178,7 @@
 // new containers
 .grid-container-type-content{
 	margin:0px;
-	border-bottom: 2px solid $color-container-type-content-border;
-	.new-container{
-		.slot{
-			
-		}
-	}
+	border-bottom: 1px solid $color-grid-bg;
 }
 .grid-new-container-slots{
 	margin: 5px 5px 5px 20px;
@@ -153,7 +192,7 @@
 	content:'\23f6';
 	transform: rotate(90deg);
 	position: absolute;
-	top: 12px;
+	top: 10px;
 	left: 5px;
 	font-size: 250%;
 }
@@ -176,7 +215,7 @@
 // new boxes
 .grid-box-type-content{
 	margin:0px;
-	border-bottom: 2px solid $color-container-type-content-border;
+	border-bottom: 1px solid $color-grid-bg;
 }
 .grid-box-type{
 	& + dl .grid-box-type-search{

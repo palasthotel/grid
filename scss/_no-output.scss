@@ -15,6 +15,7 @@ $color-input-border-hover: rgba(176,186,194,1);
 
 $transition-link: all .1337s ease;
 $transitions: all .1337s ease;
+$transitions: all .250s ease;
 $transitions-slow: 0.3s ease;
 
 
@@ -81,10 +82,10 @@ Dimensions
 ****************/
 $dim-grid-width: 80%;
 $dim-toolbar-width: 100%;
-$dim-toolbar-height: 50px;
+$dim-toolbar-height: 0px;
 $dim-tool-elements-width: 20%;
 $dim-tool-elements-offset:0px;
-$dim-tool-element-tab-height: $dim-toolbar-height;
+$dim-tool-element-tab-height: 45px;
 
 $dim-tool-element-trash-height: 80px;
 
@@ -97,6 +98,7 @@ $dim-revisions-width: $dim-grid-width;
 
 $idx-max: 999;
 $idx-toolbar: 99;
+$idx-style-changer: 98;
 $idx-container: 95;
 $idx-container-reused: 94;
 $idx-slot: 80;

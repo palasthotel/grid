@@ -43,7 +43,8 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     setState: function(){
         var isDraft = this.model.get("isDraft");
-        var $button = this.$el.find(".grid-tool-state span").attr("data-draft", isDraft);
+        this.$el.find(".grid-toolbar").attr("data-draft", isDraft);
+        var $button = this.$el.find(".grid-tool-state span");
         if(isDraft){
             $button.html("Draft");
         } else {

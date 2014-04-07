@@ -1,7 +1,7 @@
- <div class="box-editor">
- 	<div class="content">
-		<div class="box-editor" data-b-index="{{b_index}}" data-id="{{box.id}}" data-c-id="{{c_id}}" data-s-id="{{s_id}}" data-type="{{box.type}}">
-			<fieldset class="collapsable collapsable-hidden text-fields">
+ <div class="grid-box-editor">
+ 	<div class="grid-box-editor-content">
+		<div data-b-index="{{b_index}}" data-id="{{box.id}}" data-c-id="{{c_id}}" data-s-id="{{s_id}}" data-type="{{box.type}}">
+			<fieldset class="grid-collapsable grid-collapsable-hidden">
 				<legend>{{lang_values.label-b-before}}</legend>
 				<div class="field-wrapper">
 					<label>{{lang_values.label-title}}</label>
@@ -12,11 +12,11 @@
 					<textarea name="f-b-prolog" class="form-html f-b-prolog">{{box.prolog}}</textarea>
 				</div>
 			</fieldset>
-			<fieldset class="collapsable dynamic-fields">
+			<fieldset class="grid-collapsable grid-dynamic-fields">
 				<legend>{{lang_values.label-b-dynamic}}</legend>
 				<div class="field-wrapper"></div>
 			</fieldset>
-			<fieldset class="collapsable collapsable-hidden text-fields">
+			<fieldset class="grid-collapsable grid-collapsable-hidden">
 				<legend>{{lang_values.label-b-after}}</legend>
 				<div class="field-wrapper">
 					<label>{{lang_values.label-epilog}}</label>
@@ -27,9 +27,9 @@
 					<input name="f-b-readmoreurl" type="text" value="{{box.readmoreurl}}" class="form-text f-b-readmoreurl" />
 				</div>
 			</fieldset>
-			<div class="box-styles-wrapper">
-				<label for="f-b-style">Style</label>
-				<select name="f-b-style" class="form-select f-b-style"  id="f-b-style">
+			<div class="grid-box-styles-wrapper">
+				<label for="grid-box-style">Style</label>
+				<select name="grid-box-style" class="form-select grid-box-style"  id="grid-box-style">
 					<option value="">{{lang_values.default-style}}</option>
 					{{#styles}}
 						<option {{selected}} value="{{slug}}">{{title}}</option>
@@ -38,9 +38,9 @@
 			</div>
 		</div>
     </div>
-    <div class="controls">
-    	<button role="cancel" class="btn-cancel" lang-id="btn-cancel" lang-type="text">Cancel</button>
-        <button role="save" class="btn-save" lang-id="btn-save" lang-type="text">Save</button>
-        <button role="reusable" class="btn-make-reusable" lang-id="btn-make-reusable" lang-type="text">Make reusable</button>
+    <div class="grid-box-editor-controls">
+    	<button role="cancel" class="grid-box-editor-cancle-button btn-cancel" lang-id="btn-cancel" lang-type="text">Cancel</button>
+        <button role="save" class="grid-box-editor-save-button btn-save" lang-id="btn-save" lang-type="text">Save</button>
+        <button role="reuse" class="grid-box-editor-reuse-button btn-make-reusable" lang-id="btn-make-reusable" lang-type="text">Make reusable</button>
     </div>
  </div>

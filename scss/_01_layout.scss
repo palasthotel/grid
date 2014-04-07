@@ -17,13 +17,14 @@ body,
 	h1,h2,h3,h4,h5,h6,p{
 		margin:0px;
 	}
-	padding: 20px 10px 120px 10px;
+	padding: 45px 10px 120px 50px;
+	
 }
 
 // container dimensions
 .grid-container{
 	
-	margin: 10px 0 0 0;
+	margin: 0px 0px 10px 0px;
 	.grid-container-content{
 		padding: 5px 5px 10px 5px;
 		position: relative;
@@ -393,16 +394,18 @@ body,
 		width: 100%;
 		max-width: 400px;
 		position: absolute;
-		top: -11px;
+		top: -10px;
 		left: 0px;
-		font-size: 12px;
+		font-size: 11px;
 	}
 }
 .grid-slot .grid-slot-style-changer{
 	text-align: center;
 	font-weight: bold;
-	z-index: $idx-slot;
+	z-index: $idx-style-changer;
 	display:block;
+	opacity: 0;
+	transition: $transitions;
 	.grid-style-changer-active{
 		padding: 6px 0px 4px 0px;
 		color: $color-style-changer-active;
@@ -435,9 +438,11 @@ body,
 			top:-16px;
 			left:47%;
 		}
-	}
-	
+	}	
 }
+.grid-container:hover .grid-slot-style-changer{
+	opacity: 1;
+} 
 [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style{
 	color: white;
 	display:block;

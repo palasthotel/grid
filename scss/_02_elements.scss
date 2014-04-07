@@ -35,10 +35,9 @@
 .grid-container-sorthandle{
 	position: absolute;
 	top: 5px;
-	left: 0px;
-	width: 40px;
+	left: -4px;
+	width: 100%;
 	height: 40px;
-	text-align: center;
 	cursor: move;
 	color: $color-container-options;
 	transition: $transitions;

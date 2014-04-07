@@ -1,0 +1,19 @@
+// boxeditor
+
+.grid-box-editor{
+	padding: 15px;
+	fieldset{
+		border: none;
+	}
+	legend{
+		cursor: pointer;
+	}
+}
+
+.grid-box-editor-controls{
+	button{
+		background-color: black;
+		color:white;
+		padding:10px;
+	}
+}

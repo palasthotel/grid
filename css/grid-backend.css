@@ -4,17 +4,23 @@ Dimensions
 /**************
 * index stack
 ***************/
-.grid-all-wrapper {
+.grid-all-wrapper,
+.grid-box-editor {
   font-family: "OpenSans", sans-serif;
 }
 .grid-all-wrapper input,
 .grid-all-wrapper textarea,
 .grid-all-wrapper select,
-.grid-all-wrapper button {
+.grid-all-wrapper button,
+.grid-box-editor input,
+.grid-box-editor textarea,
+.grid-box-editor select,
+.grid-box-editor button {
   font-family: inherit;
   font-size: 12px;
 }
-.grid-all-wrapper input {
+.grid-all-wrapper input,
+.grid-box-editor input {
   height: 27px;
   width: 100%;
   line-height: 27px;
@@ -23,17 +29,20 @@ Dimensions
   border: solid 1px #eceff3;
   margin-bottom: 15px;
 }
-.grid-all-wrapper input:hover {
+.grid-all-wrapper input:hover,
+.grid-box-editor input:hover {
   border-color: #b0bac2;
 }
 .grid-all-wrapper button,
-.grid-all-wrapper button:focus {
+.grid-all-wrapper button:focus,
+.grid-box-editor button,
+.grid-box-editor button:focus {
   outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
   color: #3f4853;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 0.05em;
@@ -43,10 +52,13 @@ Dimensions
   box-shadow: none;
 }
 .grid-all-wrapper button:hover,
-.grid-all-wrapper button:focus:hover {
+.grid-all-wrapper button:focus:hover,
+.grid-box-editor button:hover,
+.grid-box-editor button:focus:hover {
   color: #3ac5d9;
 }
-.grid-all-wrapper img {
+.grid-all-wrapper img,
+.grid-box-editor img {
   max-width: 100%;
 }
 
@@ -65,14 +77,14 @@ body,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 20px 10px 120px 10px;
+  padding: 45px 10px 120px 50px;
 }
 .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
   margin: 0px;
 }
 
 .grid-container {
-  margin: 10px 0 0 0;
+  margin: 0px 0px 10px 0px;
 }
 .grid-container .grid-container-content {
   padding: 5px 5px 10px 5px;
@@ -471,16 +483,19 @@ body,
   width: 100%;
   max-width: 400px;
   position: absolute;
-  top: -11px;
+  top: -10px;
   left: 0px;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .grid-slot .grid-slot-style-changer {
   text-align: center;
   font-weight: bold;
-  z-index: 80;
+  z-index: 98;
   display: block;
+  opacity: 0;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-slot .grid-slot-style-changer .grid-style-changer-active {
   padding: 6px 0px 4px 0px;
@@ -520,6 +535,10 @@ body,
   left: 47%;
 }
 
+.grid-container:hover .grid-slot-style-changer {
+  opacity: 1;
+}
+
 [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
   color: white;
   display: block;
@@ -528,8 +547,8 @@ body,
 }
 [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
   padding: 10px 0px 8px 0px;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
   cursor: pointer;
@@ -586,14 +605,13 @@ body,
 .grid-container-sorthandle {
   position: absolute;
   top: 5px;
-  left: 0px;
-  width: 40px;
+  left: -4px;
+  width: 100%;
   height: 40px;
-  text-align: center;
   cursor: move;
   color: #b0bac2;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-container-sorthandle:hover {
   color: #3f4853;
@@ -616,8 +634,8 @@ body,
   color: #b0bac2;
   text-transform: uppercase;
   font-weight: bold;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-container-options:hover .grid-container-options-icon {
   color: #3f4853;
@@ -698,16 +716,16 @@ body,
   bottom: 0px;
   right: 0px;
   width: 40px;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-box-controls .grid-box-control-button:hover {
   width: 100%;
 }
 .grid-box-controls .grid-box-control-button .grid-box-control-text {
   opacity: 0;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
   opacity: 1;
@@ -756,17 +774,47 @@ body,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
-  height: 50px;
-  padding-top: 10px;
+  height: 0px;
+}
+.grid-toolbar .grid-tool-list {
+  list-style: none;
+  position: fixed;
+  z-index: 999;
+  margin: 0px;
+  width: 40px;
 }
 .grid-toolbar .grid-tool-list li {
-  display: inline-block;
-  margin-right: 15px;
+  width: 135px;
+  right: 90px;
+  position: relative;
+  background-color: #f3f5f7;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
-.grid-toolbar button {
-  text-align: left;
-  padding: 0px;
+.grid-toolbar .grid-tool-list li:hover {
+  right: 0px;
+}
+.grid-toolbar .grid-tool-list li button {
+  text-align: right;
+  padding: 5px 48px 5px 5px;
   margin: 0px;
+  font-size: 12px;
+  width: 100%;
+  height: 45px;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+.grid-toolbar .grid-tool-list li button [class^="icon-"],
+.grid-toolbar .grid-tool-list li button [class*=" icon-"] {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  font-size: 16px;
+}
+.grid-toolbar .grid-tool-list li button:hover {
+  padding-right: 38px;
+  color: white;
+  background-color: #3f4853;
 }
 
 .grid-toolbar-list {
@@ -781,7 +829,14 @@ body,
   font-weight: bold;
   color: #ed7b3d;
 }
-.grid-tool-state span[data-draft=false] {
+
+.grid-toolbar {
+  border-top: 4px solid #ed7b3d;
+}
+.grid-toolbar[data-draft=false] {
+  border-top: 4px solid #46bd7b;
+}
+.grid-toolbar[data-draft=false] .grid-tool-state span {
   color: #46bd7b;
 }
 
@@ -789,8 +844,7 @@ body,
 * Container and Box Toolbar
 * ***************************/
 .grid-tool-elements {
-  position: absolute;
-  top: 0px;
+  position: fixed;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -808,8 +862,8 @@ body,
   text-transform: uppercase;
   width: 50%;
   font-weight: bold;
-  min-height: 50px;
-  padding-top: 20px;
+  height: 45px;
+  padding-top: 15px;
   -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
   position: relative;
@@ -863,8 +917,8 @@ body,
   top: 20px;
   left: 6px;
   font-size: 14px;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-element-type-content .grid-container-type.active:before,
 .grid-element-type-content .grid-box-type.active:before {
@@ -882,10 +936,13 @@ body,
   border: 1px solid #eceff3;
   margin-bottom: 8px;
   color: #eceff3;
+  overflow: hidden;
 }
 .grid-new-element .grid-element-title {
   color: black;
   padding-left: 20px;
+  margin: 0px;
+  padding-top: 10px;
 }
 .grid-new-element:hover {
   color: #b0bac2;
@@ -894,7 +951,7 @@ body,
 
 .grid-container-type-content {
   margin: 0px;
-  border-bottom: 2px solid #b0bac2;
+  border-bottom: 1px solid #f3f5f7;
 }
 
 .grid-new-container-slots {
@@ -911,7 +968,7 @@ body,
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
   position: absolute;
-  top: 12px;
+  top: 10px;
   left: 5px;
   font-size: 250%;
 }
@@ -938,7 +995,7 @@ body,
 
 .grid-box-type-content {
   margin: 0px;
-  border-bottom: 2px solid #b0bac2;
+  border-bottom: 1px solid #f3f5f7;
 }
 
 .grid-box-type + dl .grid-box-type-search {
@@ -1006,12 +1063,32 @@ body,
   text-align: center;
 }
 
+.grid-box-editor {
+  padding: 15px;
+}
+.grid-box-editor fieldset {
+  border: none;
+}
+.grid-box-editor legend {
+  cursor: pointer;
+}
+
+.grid-box-editor-controls button {
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+
 .grid-revisions {
   list-style: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   display: block;
   overflow-x: scroll;
   width: 80%;
-  padding: 5px 0px 15px 0px;
+  padding: 0px 0px 15px 50px;
+  margin-bottom: -30px;
 }
 .grid-revisions button {
   margin: 0px;
@@ -1019,7 +1096,7 @@ body,
 }
 
 .grid-revisions-list {
-  padding: 0px 15px;
+  padding: 0px 15px 0px 0px;
 }
 
 .grid-revision {
@@ -1029,7 +1106,7 @@ body,
   box-sizing: border-box;
   display: inline-block;
   width: 220px;
-  border-right: 5px solid #f3f5f7;
+  border-right: 0px solid #f3f5f7;
   background-color: white;
 }
 .grid-revision:last-child {
@@ -1071,8 +1148,8 @@ body,
   bottom: -16px;
   left: 50%;
   margin-left: -8px;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
 }
 .grid-revision.grid-revision-state-published:first-child:before {
   border-top-color: #46bd7b;
