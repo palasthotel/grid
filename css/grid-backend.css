@@ -787,7 +787,6 @@ body,
   width: 135px;
   right: 90px;
   position: relative;
-  background-color: #f3f5f7;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
 }
@@ -803,6 +802,7 @@ body,
   height: 45px;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
+  background-color: #f3f5f7;
 }
 .grid-toolbar .grid-tool-list li button [class^="icon-"],
 .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
@@ -821,23 +821,22 @@ body,
   margin: 20px 20px;
 }
 
-.grid-tool-state {
-  width: 70px;
-}
-.grid-tool-state span {
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #ed7b3d;
-}
-
 .grid-toolbar {
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
   border-top: 4px solid #ed7b3d;
+}
+.grid-toolbar li.grid-tool-publish button,
+.grid-toolbar li.grid-tool-publish button:hover {
+  background-color: #ed7b3d;
+  color: white;
 }
 .grid-toolbar[data-draft=false] {
   border-top: 4px solid #46bd7b;
 }
-.grid-toolbar[data-draft=false] .grid-tool-state span {
-  color: #46bd7b;
+.grid-toolbar[data-draft=false] li.grid-tool-publish button,
+.grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
+  background-color: #46bd7b;
 }
 
 /* ***************************

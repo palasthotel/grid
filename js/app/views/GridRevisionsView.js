@@ -33,7 +33,7 @@ var GridRevisionsView = GridBackbone.View.extend({
 			elem["readable_date"] = "--.--.----";
 			if(typeof elem["date"] != "undefined" && elem["date"] != "" && elem["date"] != null){
 				var date = new Date(parseInt(elem["date"])*1000);
-				elem["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+				elem["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" &bull; "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 			}
 			if(typeof elem["editor"] == "undefined" || elem["editor"] == "" || elem["editor"] == null){
 				elem["editor"] = "unknown";
