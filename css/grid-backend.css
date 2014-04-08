@@ -36,6 +36,12 @@ Dimensions
 .grid-editor-wrapper input:hover {
   border-color: #b0bac2;
 }
+.grid-all-wrapper input[type=checkbox],
+.grid-editor-wrapper input[type=checkbox] {
+  width: auto;
+  height: auto;
+  display: inline;
+}
 .grid-all-wrapper button,
 .grid-all-wrapper button:focus,
 .grid-editor-wrapper button,
@@ -1141,7 +1147,7 @@ body,
 .grid-editor-content textarea {
   border: none;
 }
-.grid-editor-content input {
+.grid-editor-content .grid-editor-title {
   font-size: 16px;
   height: 36px;
 }
