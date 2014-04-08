@@ -204,9 +204,10 @@ function grid_wp_styles()
 {
 	global $grid_connection;
 	$grid_connection=grid_wp_get_mysqli();
+	$storage=grid_wp_get_storage();
 	global $grid_lib;
 	$editor=$grid_lib->getStyleEditor();
-	$html=$editor->run();
+	$html=$editor->run($storage);
 	echo $html;
 	$grid_connection->close();
 }
