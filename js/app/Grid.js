@@ -30,6 +30,9 @@ var GRID = window.GRID;
 
 GRID = {
 	dom_root: "#new-grid-wrapper",
+	$root: null,
+	dom_root_editor: "#new-grid-editor-wrapper",
+	$root_editor: null,
 	ID: -1,
 	// enable or disable debugging output
 	DEBUGGING: false,
@@ -135,19 +138,26 @@ GRID = {
     },
 	// initializes the constatns
 	_initConstants: function(){
+		// root elements
+		this.$root = jQuery(this.dom_root);
+		this.$root_editor = jQuery(this.dom_root_editor);
+		// constants from CMS
+		this.mode = document.gridmode;
+		this.$root.addClass('gridmode-'+this.mode);
+
 		this.DEBUGGING = document.grid_debug_mode;
-		GRID.ID = document.ID;
-		GRID.SERVER = "/grid_ajax_endpoint";
+		this.ID = document.ID;
+		this.SERVER = "/grid_ajax_endpoint";
 		if( typeof document.gridajax != "undefined" && 
 			document.gridajax != null && 
 			document.gridajax != ""){
-			GRID.SERVER = document.gridajax;
+			this.SERVER = document.gridajax;
 		}
-		GRID.PREVIEW_URL = GRID.PREVIEW_URL.replace("//","/");
+		this.PREVIEW_URL = this.PREVIEW_URL.replace("//","/");
 		if( typeof document.previewurl != "undefined" && 
 			document.previewurl != null && 
 			document.previewurl != ""){
-			GRID.PREVIEW_URL = document.previewurl;
+			this.PREVIEW_URL = document.previewurl;
 		}
 		var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
 		if( typeof document.previewpattern != "undefined" && 
@@ -155,10 +165,7 @@ GRID = {
 			document.previewpattern != ""){
 			PREVIEW_PATTERN = document.previewpattern;
 		}
-		GRID.mode = document.gridmode;
-		jQuery(GRID.dom_root).addClass('gridmode-'+GRID.mode);
-		GRID.PREVIEW_PATTERN=PREVIEW_PATTERN
-		console.log("PREVIEW_PATTERN: "+PREVIEW_PATTERN);
+		this.PREVIEW_PATTERN=PREVIEW_PATTERN
 	},
 	// CKEDITOR functions
 	useCKEDITOR: function(selector){
@@ -185,30 +192,30 @@ GRID = {
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } },
 
-	showBoxEditor: function(callback) {
-		jQuery("#new-grid-wrapper").animate(
+	showEditor: function(callback) {
+		jQuery(GRID.$root).animate(
 			{
 				width:0
 			},
 			220,
 			function(){
-				jQuery("#new-grid-wrapper").hide();
+				jQuery(GRID.$root).hide();
 			}
 		);
 		setTimeout(function(){
-			jQuery(".grid-boxeditor").show();
-			jQuery(".grid-boxeditor").animate({width:"100%"},250,function(){
+			jQuery(GRID.$root_editor).show();
+			jQuery(GRID.$root_editor).animate({width:"100%"},250,function(){
 				callback();
 			});
 			window.scrollTo(0,0);
 		},50);
 	},
 
-	hideBoxEditor: function(callback) {
-		jQuery(".grid-boxeditor").animate({width:"0%"},220, function(){jQuery(".grid-boxeditor").hide();});
+	hideEditor: function(callback) {
+		jQuery(GRID.$root_editor).animate({width:"0%"},220, function(){jQuery(GRID.$root_editor).hide();});
 		setTimeout(function(){
-			jQuery("#new-grid-wrapper").show();
-			jQuery("#new-grid-wrapper").animate({width:"100%"},220,function(){
+			jQuery(GRID.$root).show();
+			jQuery(GRID.$root).animate({width:"100%"},220,function(){
 				callback();
 			})
 			window.scrollTo(0,0);

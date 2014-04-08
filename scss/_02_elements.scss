@@ -22,6 +22,16 @@
 		text-transform: uppercase;
 	}
 }
+
+
+.grid-container-title{
+	position: absolute;
+	top: 9px;
+	left: 20px;
+	color: $color-container-title;
+	font-weight: bold;
+	font-size: 90%;
+}
 .grid-container .grid-container-controls{
 	height: 40px;
 	background-color: transparent;
@@ -55,7 +65,7 @@
 	right: 0px;
 	display:block;
 	height: 40px;
-	z-index: $idx-container;
+	z-index: $idx-container-options;
 	
 	.grid-container-options-icon{
 		color: $color-container-options;

@@ -5,22 +5,25 @@ Dimensions
 * index stack
 ***************/
 .grid-all-wrapper,
-.grid-box-editor {
+.grid-editor-wrapper {
   font-family: "OpenSans", sans-serif;
 }
 .grid-all-wrapper input,
 .grid-all-wrapper textarea,
 .grid-all-wrapper select,
 .grid-all-wrapper button,
-.grid-box-editor input,
-.grid-box-editor textarea,
-.grid-box-editor select,
-.grid-box-editor button {
+.grid-editor-wrapper input,
+.grid-editor-wrapper textarea,
+.grid-editor-wrapper select,
+.grid-editor-wrapper button {
   font-family: inherit;
   font-size: 12px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .grid-all-wrapper input,
-.grid-box-editor input {
+.grid-editor-wrapper input {
   height: 27px;
   width: 100%;
   line-height: 27px;
@@ -30,13 +33,13 @@ Dimensions
   margin-bottom: 15px;
 }
 .grid-all-wrapper input:hover,
-.grid-box-editor input:hover {
+.grid-editor-wrapper input:hover {
   border-color: #b0bac2;
 }
 .grid-all-wrapper button,
 .grid-all-wrapper button:focus,
-.grid-box-editor button,
-.grid-box-editor button:focus {
+.grid-editor-wrapper button,
+.grid-editor-wrapper button:focus {
   outline: none;
   border: none;
   background-color: transparent;
@@ -53,12 +56,12 @@ Dimensions
 }
 .grid-all-wrapper button:hover,
 .grid-all-wrapper button:focus:hover,
-.grid-box-editor button:hover,
-.grid-box-editor button:focus:hover {
+.grid-editor-wrapper button:hover,
+.grid-editor-wrapper button:focus:hover {
   color: #3ac5d9;
 }
 .grid-all-wrapper img,
-.grid-box-editor img {
+.grid-editor-wrapper img {
   max-width: 100%;
 }
 
@@ -77,7 +80,7 @@ body,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 45px 10px 120px 50px;
+  padding: 5px 10px 120px 55px;
 }
 .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
   margin: 0px;
@@ -491,7 +494,7 @@ body,
 .grid-slot .grid-slot-style-changer {
   text-align: center;
   font-weight: bold;
-  z-index: 98;
+  z-index: 97;
   display: block;
   opacity: 0;
   -webkit-transition: all 0.25s ease;
@@ -589,6 +592,15 @@ body,
   text-transform: uppercase;
 }
 
+.grid-container-title {
+  position: absolute;
+  top: 9px;
+  left: 20px;
+  color: #b0bac2;
+  font-weight: bold;
+  font-size: 90%;
+}
+
 .grid-container .grid-container-controls {
   height: 40px;
   background-color: transparent;
@@ -628,7 +640,7 @@ body,
   right: 0px;
   display: block;
   height: 40px;
-  z-index: 95;
+  z-index: 98;
 }
 .grid-container-options .grid-container-options-icon {
   color: #b0bac2;
@@ -1062,20 +1074,60 @@ body,
   text-align: center;
 }
 
-.grid-box-editor {
+.grid-editor-controls {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0px;
+  margin: 0px 10%;
+  background-color: white;
   padding: 15px;
+  z-index: 999;
+  width: 80%;
 }
-.grid-box-editor fieldset {
-  border: none;
-}
-.grid-box-editor legend {
-  cursor: pointer;
-}
-
-.grid-box-editor-controls button {
+.grid-editor-controls button {
   background-color: black;
   color: white;
   padding: 10px;
+}
+.grid-editor-controls .grid-editor-save-button {
+  background-color: #46bd7b;
+  color: white;
+}
+.grid-editor-controls .grid-editor-cancel-button {
+  background-color: #ed5032;
+  color: white;
+}
+.grid-editor-controls .grid-editor-reuse-button {
+  background-color: #e5e3df;
+  color: #262e38;
+  float: right;
+}
+
+.grid-editor-content {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 15px;
+  margin: 0px 10%;
+  padding-bottom: 100px;
+}
+.grid-editor-content fieldset {
+  margin: 0px 0px 15px 0px;
+  border: none;
+  padding: 0px;
+}
+.grid-editor-content legend {
+  cursor: pointer;
+}
+.grid-editor-content input,
+.grid-editor-content textarea {
+  border: none;
+}
+.grid-editor-content input {
+  font-size: 16px;
+  height: 36px;
 }
 
 .grid-revisions {

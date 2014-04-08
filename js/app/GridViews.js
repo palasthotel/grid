@@ -4,9 +4,6 @@ var GridView = GridBackbone.View.extend({
     initialize: function() {
     	GRID.log("INIT GridView");
         this._containersView = new ContainersView({collection: this.model.getContainers() });
-        // listener comes at last position
-        this.listenTo(this.model, 'change', this.sortableBoxes);
-        // listener for each attribute but collection
     },
     render: function() {
         GRID.log('i am rendering the grid interface');
@@ -18,10 +15,6 @@ var GridView = GridBackbone.View.extend({
     renderContainers: function(){
         this.$el.find(".containers-wrapper").replaceWith(this._containersView.render().el);
         return this;
-    },
-    sortableBoxes: function(){
-        GRID.log("sortableBoxes");
-        
     }
 
 });
@@ -31,14 +24,9 @@ var ContainersView = GridBackbone.View.extend({
 	className: 'grid-containers-wrapper containers-wrapper',
 	initialize: function(){
         GRID.log('INIT ContainersView');
-		//this.listenTo(this.collection, 'change', this.render);
-        
         this.listenTo(this.collection, 'add',this.render);
-        //this.listenTo(this.collection, 'remove', this.remove);
 	},
 	render: function(){
-        // renders the containers
-		//render template with Mustache or something
     	GRID.log('i am rendering the container collection');
     	var self = this;
     	this.$el.empty();
@@ -55,18 +43,20 @@ var ContainerView = GridBackbone.View.extend({
 	className: 'grid-container container display clearfix',
     events:{
         "click [role=trash]": "selfdestruct",
-        "click [role=edit]": "renderEditor",
-        "click [role=reuse]": "reuse",
+        "click [role=edit]": "onEdit",
+        "click [role=reuse]": "onReuse",
         "click [role=revert]": "render",
         "click [role=ok]": "saveEditor"
     },
 	initialize: function(){
-		//this.listenTo(this.model, 'change', this.render);
+        var self = this;
+        var listen_to = ["title","titleurl","prolog","epilog", "readmore", "readmoreurl", "style"];
+        _.each(listen_to, function(value, key, list){
+            self.listenTo(self.model,'change:'+value, self.render);
+        });
         this._slotsView = new SlotsView({collection: this.model.getSlots() });
-        this._slotsView._parentView = this;
 	},
 	render: function(){
-		//render template with Mustache or something
     	GRID.log('i am rendering a single container');
         this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
@@ -75,27 +65,11 @@ var ContainerView = GridBackbone.View.extend({
         this.$el.find(".slots-wrapper").replaceWith(this._slotsView.$el);
         return this;
 	},
-    renderEditor: function(){
-        this.refreshAttr();
-        this.$el.removeClass('display').addClass('editor');
-        this.$el.html(ich.tpl_containerEditor(this.model.toJSON()));
-        var styles=GRID.getContainerStyles();
-        styles=styles.toJSON();
-        var self=this;
-        _.each(styles,function(style){
-            if(self.model.get("style")==style.slug)
-            {
-                style.selected="selected";
-            }
-            else
-            {
-                style.selected="";
-            }
+    onEdit: function(){
+        var editor=new GridContainerEditor({model:this.model});
+        GRID.showEditor(function(){
+            GRID.$root_editor.html(editor.render().el);
         });
-        this.$el.html(ich.tpl_containerEditor({model:this.model.toJSON(),styles:styles}));
-        GRID.useCKEDITOR("f-c-prolog");
-        GRID.useCKEDITOR("f-c-epilog");
-        return this;
     },
     refreshAttr: function(){
         var json = this.model.toJSON();
@@ -121,7 +95,7 @@ var ContainerView = GridBackbone.View.extend({
         this.model.save();
         return this.render();
     },
-    reuse: function(){
+    onReuse: function(){ 
         var reusetitle = prompt("Bitte gib einen Titel für den Container ein");
         if(reusetitle == "" || reusetitle == false){
             return false;
@@ -148,25 +122,18 @@ var SlotsView = GridBackbone.View.extend({
     className: 'grid-slots-wrapper slots-wrapper clearfix',
     initialize: function(){
         GRID.log('INIT SlotsView');
-        //this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
-        GRID.log(this.$el);
     },
     render: function(){
-        // renders the containers
-        //render template with Mustache or something
         GRID.log('i am rendering the slots collection');
         var self = this;
         this.$el.empty();
-        GRID.log(this.collection);
         this.collection.each(function(slot){
             var slotview = new SlotView({model: slot});
             slotview._parentView = self;
             self.$el.append(slotview.render().el);
         });
-        GRID.log(this._parentView);
-        //this._parentView.$el.find(".slots-wrapper").replaceWith(this.$el);
         return this;
     }
 });
@@ -183,7 +150,6 @@ var SlotView = GridBackbone.View.extend({
         this.listenTo(this.model, 'change', this.render);
 	},
 	render: function(){
-		//render template with Mustache or something
     	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
         this.$el.attr("data-style", json.style).attr("data-id",json.id);
@@ -203,25 +169,17 @@ var BoxesView = GridBackbone.View.extend({
     className: 'grid-boxes-wrapper boxes-wrapper',
     initialize: function(){
         GRID.log('INIT BoxesView');
-        //this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
-        //this.collection.bind('remove', this.remove, this);
-        GRID.log(this.$el);
     },
     render: function(){
-        // renders the containers
-        //render template with Mustache or something
         GRID.log('i am rendering the Boxes collection');
         var self = this;
         this.$el.empty();
-        GRID.log(this.collection);
         this.collection.each(function(box){
             var boxview = new BoxView({model: box});
             boxview._parentView = self;
             self.$el.append(boxview.render().el);
         });
-        GRID.log(this._parentView);
-        //this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
         return this;
     }
 });
@@ -237,7 +195,6 @@ var BoxView = GridBackbone.View.extend({
         this.listenTo(this.model, 'destroy', this.selfdestruct);
 	},
 	render: function(){
-		//render template with Mustache or something
     	GRID.log('i am rendering box');
         var json = this.model.toJSON();
         this.$el.attr("data-id",json.id).attr("data-type",json.type);
@@ -249,8 +206,8 @@ var BoxView = GridBackbone.View.extend({
 	},
     edit:function(){
         var editor=new BoxEditor({model:this.model});
-        GRID.showBoxEditor(function(){
-            jQuery("div#new-grid-boxeditor").html(editor.render().el);
+        GRID.showEditor(function(){
+            GRID.$root_editor.html(editor.render().el);
         });
     },
     deleteBox: function(){
@@ -260,107 +217,3 @@ var BoxView = GridBackbone.View.extend({
         this.remove();
     }
 });
-
-var BoxEditor = GridBackbone.View.extend({
-    events: {
-        'click .grid-box-editor-controls [role=cancel]' : 'onCancel',
-        'click legend' : 'onToggle',
-        'click .grid-box-editor-controls [role=save]' : 'onSave',
-        'click .grid-box-editor-controls [role=reuse]' : 'onMakeReusable'
-    },
-    initialize: function(){
-    },
-    render: function(){
-        GRID.log(this.model.toJSON());
-        var styles=GRID.getBoxStyles().toJSON();
-        var self=this;
-        _.each(styles,function(elem){
-            if(elem.slug==self.model.get("style"))
-                elem.selected="selected";
-            else
-                elem.selected="";
-        });
-        this.$el.html(ich.tpl_boxeditor({
-            'lang_values':document.lang_values,
-            'box':this.model.toJSON(),
-            'b_index':this.model.getIndex(),
-            'c_id':this.model.getContainer().get("id"),
-            's_id':this.model.getSlot().get("id"),
-            'styles':styles,
-        }));
-        var contentstructure=this.model.get("contentstructure");
-        var fieldcontainer=jQuery(this.$el).find(".grid-dynamic-fields .field-wrapper");
-        var views=[];
-        var self=this;
-        _.each(contentstructure,function(elem){
-            var type=elem.type;
-            var view=new boxEditorControls[type](
-            {
-                model:
-                {
-                    structure:elem,
-                    container:self.model.get("content"),
-                    box:self.model,
-                    parentpath:"",
-                }
-            });
-            views.push(view);
-            fieldcontainer.append(view.render().el);
-        });
-        this.views=views;
-        jQuery.each(jQuery(this.$el).find(".form-html"), function(index, element) {
-            CKEDITOR.replace(
-                element,{
-                customConfig : document.PathToConfig
-            });
-        });
-
-        if(GRID.getBoxStyles().length<1)
-        {
-                jQuery(this.$el).find(".box-styles-wrapper").hide();
-        }
-        this.$el.find(".grid-collapsable-hidden .field-wrapper").hide();
-        return this;
-    },
-    onCancel: function(){
-        GRID.hideBoxEditor(function(){
-            jQuery("div#new-grid-boxeditor").html("");
-        });
-    },
-
-    onToggle:function(e)
-    {
-        jQuery(e.srcElement).siblings(".field-wrapper").slideToggle(300);
-    },
-
-    onMakeReusable:function(e)
-    {
-        if(!confirm(document.lang_values["confirm-box-reuse"])) return;
-        this.model.save(null,{action:"reuse"});
-        GRID.hideBoxEditor(function(){
-            jQuery("div#new-grid-boxeditor").html("");
-        });
-    },
-
-    onSave:function(e)
-    {
-        var obj={};
-        _.each(this.views,function(view){
-            obj[view.model.structure.key]=view.fetchValue();
-        });
-        this.model.set('content',obj);
-        this.model.set('title',jQuery(this.$el).find(".f-b-title").val());
-        this.model.set('titleurl',jQuery(this.$el).find(".f-b-titleurl").val());
-        this.model.set('prolog',CKEDITOR.instances["f-b-prolog"].getData());
-        this.model.set('epilog',CKEDITOR.instances['f-b-epilog'].getData());
-        this.model.set('readmore',jQuery(this.$el).find('.f-b-readmore').val());
-        this.model.set('readmoreurl',jQuery(this.$el).find('.f-b-readmoreurl').val());
-        this.model.set('style',jQuery(this.$el).find(".box-styles-wrapper select").val());
-        this.model.save();
-        GRID.hideBoxEditor(function(){
-            jQuery("div#new-grid-boxeditor").html("");
-        });
-    }
-});
-
-boxEditorControls={};

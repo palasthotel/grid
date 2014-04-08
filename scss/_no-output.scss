@@ -4,6 +4,10 @@ $color-draft: rgba(237,123,61,1);
 $color-warning: rgba(237,80,50,1);
 $color-edit: rgba(58,197,217,1);
 
+$color-dark: rgba(38,46,56,1);
+$color-dark-light: rgba(63,72,83,1);
+$color-light: rgba(229,227,223,1);
+
 // grid
 $color-grid-bg: rgba(243,245,247,1);
 
@@ -28,6 +32,8 @@ $color-container-options-list: white;
 $color-container-options-list-bg: $color-container-options;
 $color-container-options-list-bg-hover: $color-link;
 $color-container-reused-bg: rgba(63,72,83,0.3);
+
+$color-container-title: $color-container-options;
 
 $color-container-sort-placeholder-border: $color-edit;
 
@@ -76,6 +82,15 @@ $color-revision-border: $color-grid-bg;
 $color-revision-draft: $color-draft;
 $color-revision-published: $color-ok;
 
+// Editor
+$color-editor-save-bg: $color-ok;
+$color-editor-save: white;
+$color-editor-cancel-bg: $color-warning;
+$color-editor-cancel: white;
+$color-editor-reuse-bg: $color-light;
+$color-editor-reuse: $color-dark;
+
+
 
 /* **************
 Dimensions
@@ -98,7 +113,8 @@ $dim-revisions-width: $dim-grid-width;
 
 $idx-max: 999;
 $idx-toolbar: 99;
-$idx-style-changer: 98;
+$idx-container-options: 98;
+$idx-style-changer: 97;
 $idx-container: 95;
 $idx-container-reused: 94;
 $idx-slot: 80;

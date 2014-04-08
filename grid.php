@@ -41,6 +41,7 @@ class grid_library
 		$scripts=array();
 		$scripts[]=$framework_dir."jquery-1.8.3.min.js";
 		$scripts[]=$framework_dir."jquery-ui-1.10.2.custom.js";
+		$scripts[]=$framework_dir."jquery.ui.touch-punch.js";
 		$scripts[]=$framework_dir."jquery.iframe-transport.js";
 		$scripts[]=$framework_dir."jquery.fileupload.js";
 		$scripts[]=$framework_dir."underscore.js";
@@ -48,6 +49,8 @@ class grid_library
 		$scripts[]=$framework_dir."GridICanHaz.js";
 		$scripts[]=$home."js/ckeditor/ckeditor.js";
 		$scripts[]=$app_dir."GridViews.js";
+		$scripts[]=$app_dir."views/GridContainerEditorView.js";
+		$scripts[]=$app_dir."views/GridBoxEditorView.js";
 		foreach($editorwidgets as $idx=>$path)
 		{
 			$scripts[]=$path;

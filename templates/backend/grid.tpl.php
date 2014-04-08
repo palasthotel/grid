@@ -28,8 +28,8 @@ document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
 <script id="tpl_container" type="text/grid-icanhaz">
 <?php require('ich.container.html');?>
 </script>
-<script id="tpl_containerEditor" type="text/grid-icanhaz">
-<?php require('ich.containerEditor.html');?>
+<script id="tpl_containereditor" type="text/grid-icanhaz">
+<?php require('ich.containereditor.html');?>
 </script>
 <script id="tpl_slot" type="text/grid-icanhaz">
 <?php require('ich.slot.html');?>
@@ -48,4 +48,4 @@ document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
 </script>
 
 <div id="new-grid-wrapper" class="grid-all-wrapper"></div>
-<div id="new-grid-boxeditor" class="grid-boxeditor"></div>
+<div id="new-grid-editor-wrapper" class="grid-editor-wrapper"></div>

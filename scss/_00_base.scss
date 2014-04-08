@@ -1,6 +1,6 @@
 
 .grid-all-wrapper,
-.grid-box-editor{
+.grid-editor-wrapper{
 	font-family: "OpenSans", sans-serif;
 	input,
 	textarea,
@@ -8,13 +8,14 @@
 	button{
 		font-family: inherit;
 		font-size: 12px;
+		box-sizing: border-box;
 	}
 	input{
 		height:27px; 
 		width: 100%;
 		line-height:27px;
 		text-indent:10px; 
-		font-size:1em;  
+		font-size:1em;
 		border:solid 1px $color-input-border;
 		margin-bottom: 15px;
 		&:hover{
