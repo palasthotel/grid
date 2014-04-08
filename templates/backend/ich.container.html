@@ -3,7 +3,7 @@
 data-reused="{{reused}}"> -->
 	
 	<div class="grid-container-controls">
-		<span class="grid-container-title">{{title}}</span>
+		<span class="grid-container-title">{{title_short}}</span>
 		<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
 		{{#reused}}<span class="grid-container-reused" title="${reusetitle}"><i class="icon-reused"></i></span>{{/reused}}
 		<div class="grid-container-options">
@@ -23,13 +23,13 @@ data-reused="{{reused}}"> -->
 		
 		<div class="grid-container-before">
 			<p class="grid-container-titleurl">{{titleurl}}</p>
-			<div class="grid-container-prolog">{{&prolog}}</div>
+			<div class="grid-container-prolog">{{&prolog_short}}</div>
 		</div>
 		
 		<div class="grid-slots-wrapper slots-wrapper clearfix"></div>
 
 		<div class="grid-container-after">
-			<div class="grid-container-epilog">{{&epilog}}</div>
+			<div class="grid-container-epilog">{{&epilog_short}}</div>
 			<p class="grid-container-style">{{style}}</p>
 		</div>
 		{{#reused}}

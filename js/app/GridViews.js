@@ -44,9 +44,7 @@ var ContainerView = GridBackbone.View.extend({
     events:{
         "click [role=trash]": "selfdestruct",
         "click [role=edit]": "onEdit",
-        "click [role=reuse]": "onReuse",
-        "click [role=revert]": "render",
-        "click [role=ok]": "saveEditor"
+        "click [role=reuse]": "onReuse"
     },
 	initialize: function(){
         var self = this;
@@ -60,7 +58,16 @@ var ContainerView = GridBackbone.View.extend({
     	GRID.log('i am rendering a single container');
         this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
-    	this.$el.html(ich.tpl_container( this.model.toJSON() ));
+        var json = this.model.toJSON();
+
+        var prolog = jQuery(json.prolog).text();
+        var epilog = jQuery(json.epilog).text();
+        var cut = 60;
+        json.title_short = ( json.title.length <= cut ? json.title : json.title.substring(0,cut) );
+        json.prolog_short = "<p>"+( prolog <= cut ? prolog : prolog.substring(0,cut)+"&hellip;" )+"</p>";
+        json.epilog_short = "<p>"+( epilog <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
+
+    	this.$el.html(ich.tpl_container( json));
         this._slotsView.render();
         this.$el.find(".slots-wrapper").replaceWith(this._slotsView.$el);
         return this;

@@ -1,9 +1,8 @@
+/****************
+ * container 
+ ****************/
 
-// elements in grid-container
-.grid-container-content{
-	background-color: $color-container-bg;
-	position: relative;
-}
+
 .grid-container-reused-layer{
 	cursor: move;
 	position: absolute;
@@ -24,23 +23,15 @@
 }
 
 
+.grid-container-controls{
+	height: 40px;
+}
 .grid-container-title{
 	position: absolute;
 	top: 9px;
 	left: 20px;
-	color: $color-container-title;
 	font-weight: bold;
 	font-size: 90%;
-}
-.grid-container .grid-container-controls{
-	height: 40px;
-	background-color: transparent;
-	opacity: 0.3;
-	transition: $transitions-slow;
-}
-.grid-container:hover .grid-container-controls{
-	background-color: $color-container-bg;
-	opacity: 1;
 }
 .grid-container-sorthandle{
 	position: absolute;
@@ -49,11 +40,6 @@
 	width: 100%;
 	height: 40px;
 	cursor: move;
-	color: $color-container-options;
-	transition: $transitions;
-	&:hover{
-		color: $color-container-options-hover;
-	}
 }
 .grid-container-sort-placeholder{
 	height: 20px;
@@ -66,20 +52,12 @@
 	display:block;
 	height: 40px;
 	z-index: $idx-container-options;
-	
 	.grid-container-options-icon{
-		color: $color-container-options;
 		text-transform: uppercase;
 		font-weight: bold;
-		transition: $transitions;
-	}
-	&:hover .grid-container-options-icon{
-		color: $color-container-options-hover;
-		
 	}
 	.grid-container-options-list{
 		position: absolute;
-		display:none;
 		list-style: none;
 		background-color: $color-container-options-list-bg;
 		color: $color-container-options-list;
@@ -91,15 +69,6 @@
 			padding: 5px;
 			text-transform: uppercase;
 			font-weight: bold;
-			&:hover{
-				background-color: $color-container-options-list-bg-hover;
-				&[role=trash]{
-					background-color: $color-warning;
-				}
-				&[role=edit]{
-					background-color: $color-edit;
-				}
-			}
 		}
 		&:before{
 			content:"";
@@ -113,15 +82,71 @@
 			left:47%;
 		}
 	}
-	&:hover .grid-container-options-list{
-		display:block;
-		
+}
+
+.grid-container-content{
+	background-color: $color-container-bg;
+	position: relative;
+}
+
+/**********************************
+ * container hover states
+ **********************************/
+
+// controls background hover
+.grid-container{
+	.grid-container-controls{
+		background-color: transparent;
+	}
+	&:hover .grid-container-controls{
+		background-color: $color-container-bg;
 	}
 }
 
-//////////////////////////////
-// box
-// /////////////////
+// text color for hover states of controls
+.grid-container-title,
+.grid-container-sorthandle,
+.grid-container-options-icon{
+	color: $color-container-controls-nohover;
+	transition: $transitions-slow;
+}
+.grid-container:hover{
+	.grid-container-title,
+	.grid-container-sorthandle,
+	.grid-container-options-icon{
+		color: $color-container-controls;
+		&:hover{
+			color: $color-container-controls-hover;
+		}
+	}
+
+}
+
+// options list hover
+.grid-container-options{
+	.grid-container-options-list{
+		display:none;
+	}
+	&:hover .grid-container-options-list{
+		display: block;
+	}
+}
+
+// options list item hover
+.grid-container-options-list-item:hover{
+	background-color: $color-container-options-list-bg-hover;
+	&[role=trash]{
+		background-color: $color-warning;
+	}
+	&[role=edit]{
+		background-color: $color-edit;
+	}
+}
+
+
+/*********************
+* box
+*******************/
 .grid-box{
 	position: relative;
 }

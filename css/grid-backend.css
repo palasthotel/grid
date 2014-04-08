@@ -568,11 +568,9 @@ body,
   border-bottom: 2px solid #f3f5f7;
 }
 
-.grid-container-content {
-  background-color: white;
-  position: relative;
-}
-
+/****************
+ * container 
+ ****************/
 .grid-container-reused-layer {
   cursor: move;
   position: absolute;
@@ -592,26 +590,16 @@ body,
   text-transform: uppercase;
 }
 
+.grid-container-controls {
+  height: 40px;
+}
+
 .grid-container-title {
   position: absolute;
   top: 9px;
   left: 20px;
-  color: #b0bac2;
   font-weight: bold;
   font-size: 90%;
-}
-
-.grid-container .grid-container-controls {
-  height: 40px;
-  background-color: transparent;
-  opacity: 0.3;
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
-}
-
-.grid-container:hover .grid-container-controls {
-  background-color: white;
-  opacity: 1;
 }
 
 .grid-container-sorthandle {
@@ -621,12 +609,6 @@ body,
   width: 100%;
   height: 40px;
   cursor: move;
-  color: #b0bac2;
-  -webkit-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-}
-.grid-container-sorthandle:hover {
-  color: #3f4853;
 }
 
 .grid-container-sort-placeholder {
@@ -643,18 +625,11 @@ body,
   z-index: 98;
 }
 .grid-container-options .grid-container-options-icon {
-  color: #b0bac2;
   text-transform: uppercase;
   font-weight: bold;
-  -webkit-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-}
-.grid-container-options:hover .grid-container-options-icon {
-  color: #3f4853;
 }
 .grid-container-options .grid-container-options-list {
   position: absolute;
-  display: none;
   list-style: none;
   background-color: #b0bac2;
   color: white;
@@ -667,15 +642,6 @@ body,
   padding: 5px;
   text-transform: uppercase;
   font-weight: bold;
-}
-.grid-container-options .grid-container-options-list .grid-container-options-list-item:hover {
-  background-color: #3f4853;
-}
-.grid-container-options .grid-container-options-list .grid-container-options-list-item:hover[role=trash] {
-  background-color: #ed5032;
-}
-.grid-container-options .grid-container-options-list .grid-container-options-list-item:hover[role=edit] {
-  background-color: #3ac5d9;
 }
 .grid-container-options .grid-container-options-list:before {
   content: "";
@@ -692,10 +658,61 @@ body,
   top: -16px;
   left: 47%;
 }
+
+.grid-container-content {
+  background-color: white;
+  position: relative;
+}
+
+/**********************************
+ * container hover states
+ **********************************/
+.grid-container .grid-container-controls {
+  background-color: transparent;
+}
+.grid-container:hover .grid-container-controls {
+  background-color: white;
+}
+
+.grid-container-title,
+.grid-container-sorthandle,
+.grid-container-options-icon {
+  color: rgba(176, 186, 194, 0.3);
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+.grid-container:hover .grid-container-title,
+.grid-container:hover .grid-container-sorthandle,
+.grid-container:hover .grid-container-options-icon {
+  color: #b0bac2;
+}
+.grid-container:hover .grid-container-title:hover,
+.grid-container:hover .grid-container-sorthandle:hover,
+.grid-container:hover .grid-container-options-icon:hover {
+  color: #3f4853;
+}
+
+.grid-container-options .grid-container-options-list {
+  display: none;
+}
 .grid-container-options:hover .grid-container-options-list {
   display: block;
 }
 
+.grid-container-options-list-item:hover {
+  background-color: #3f4853;
+}
+.grid-container-options-list-item:hover[role=trash] {
+  background-color: #ed5032;
+}
+.grid-container-options-list-item:hover[role=edit] {
+  background-color: #3ac5d9;
+}
+
+/*********************
+* box
+*******************/
 .grid-box {
   position: relative;
 }

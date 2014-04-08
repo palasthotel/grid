@@ -26,7 +26,13 @@ $transitions-slow: 0.3s ease;
 
 // container
 $color-container-bg: white;
+
+$color-container-controls: rgba(176,186,194,1);
+$color-container-controls-nohover: rgba($color-container-controls, 0.3);
+$color-container-controls-hover: $color-link;
+
 $color-container-options: rgba(176,186,194,1);
+$color-container-controls-nohover: rgba($color-container-options, 0.3);
 $color-container-options-hover: $color-link;
 $color-container-options-list: white;
 $color-container-options-list-bg: $color-container-options;
