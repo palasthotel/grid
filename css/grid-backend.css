@@ -504,10 +504,6 @@ body,
   padding: 6px 0px 4px 0px;
   color: #b0bac2;
 }
-.grid-slot .grid-slot-style-changer:hover .grid-style-changer-active {
-  background-color: #eceff3;
-  color: #3f4853;
-}
 .grid-slot .grid-slot-style-changer .grid-choose-style {
   position: absolute;
   display: none;
@@ -542,6 +538,10 @@ body,
   opacity: 1;
 }
 
+[data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
+  background-color: #eceff3;
+  color: #3f4853;
+}
 [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
   color: white;
   display: block;
@@ -620,7 +620,6 @@ body,
   position: absolute;
   top: 5px;
   right: 0px;
-  display: block;
   height: 40px;
   z-index: 98;
 }

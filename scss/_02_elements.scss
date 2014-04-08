@@ -49,7 +49,6 @@
 	position: absolute;
 	top: 5px;
 	right: 0px;
-	display:block;
 	height: 40px;
 	z-index: $idx-container-options;
 	.grid-container-options-icon{
@@ -125,7 +124,7 @@
 // options list hover
 .grid-container-options{
 	.grid-container-options-list{
-		display:none;
+		display: none;
 	}
 	&:hover .grid-container-options-list{
 		display: block;

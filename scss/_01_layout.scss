@@ -410,10 +410,6 @@ body,
 		padding: 6px 0px 4px 0px;
 		color: $color-style-changer-active;
 	}
-	&:hover .grid-style-changer-active{
-		background-color: $color-slot-style-changer-bg;
-		color: $color-style-changer-active-hover;
-	}
 	.grid-choose-style{
 		position: absolute;
 		display:none;
@@ -443,21 +439,27 @@ body,
 .grid-container:hover .grid-slot-style-changer{
 	opacity: 1;
 } 
-[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style{
-	color: white;
-	display:block;
-	width: 100%;
-	padding-top: 2px;
-	li{
-		padding: 10px 0px 8px 0px;
-		transition: $transitions;
-		&:hover{
-			cursor: pointer;
-			background-color: $color-slot-style-changer-styles-bg-hover;
-		}
+[data-reused=false] .grid-slot-style-changer:hover{
+	&:hover .grid-style-changer-active{
+		background-color: $color-slot-style-changer-bg;
+		color: $color-style-changer-active-hover;
 	}
+	.grid-choose-style{
+		color: white;
+		display:block;
+		width: 100%;
+		padding-top: 2px;
+		li{
+			padding: 10px 0px 8px 0px;
+			transition: $transitions;
+			&:hover{
+				cursor: pointer;
+				background-color: $color-slot-style-changer-styles-bg-hover;
+			}
+		}
 
-}
+	}	
+} 
 
 
 // box dimension
