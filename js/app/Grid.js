@@ -33,7 +33,7 @@ GRID = {
 	$root: null,
 	dom_root_editor: "#new-grid-editor-wrapper",
 	$root_editor: null,
-	ID: -1,
+	ID: null,
 	// enable or disable debugging output
 	DEBUGGING: false,
 	// the server URL
@@ -52,8 +52,10 @@ GRID = {
     styles_box: null,
     revisions: null,
 	init: function(){
+
 		// initialize constants
 		this._initConstants();
+		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
 
 		// load all model classes for grid works
 		this.getBoxTypes().fetch();
