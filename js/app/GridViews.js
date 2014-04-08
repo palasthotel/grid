@@ -59,13 +59,20 @@ var ContainerView = GridBackbone.View.extend({
         this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
         var json = this.model.toJSON();
-
-        var prolog = jQuery(json.prolog).text();
-        var epilog = jQuery(json.epilog).text();
         var cut = 60;
-        json.title_short = ( json.title.length <= cut ? json.title : json.title.substring(0,cut) );
-        json.prolog_short = "<p>"+( prolog <= cut ? prolog : prolog.substring(0,cut)+"&hellip;" )+"</p>";
-        json.epilog_short = "<p>"+( epilog <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
+
+        if(json.title){
+            json.title_short = ( json.title.length <= cut ? json.title : json.title.substring(0,cut)+"&hellip;" );
+        }
+        if(json.prolog){
+            var prolog = jQuery(json.prolog).text();
+            json.prolog_short = "<p>"+( prolog.length <= cut ? prolog : prolog.substring(0,cut)+"&hellip;" )+"</p>";
+        }
+        if(json.epilog){
+            var epilog = jQuery(json.epilog).text();
+            json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
+        }
+        
 
     	this.$el.html(ich.tpl_container( json));
         this._slotsView.render();
