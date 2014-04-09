@@ -669,6 +669,11 @@ body,
   position: relative;
 }
 
+.grid-container-prolog p,
+.grid-container-epilog p {
+  margin-bottom: 10px;
+}
+
 /**********************************
  * container hover states
  **********************************/
@@ -681,7 +686,9 @@ body,
 
 .grid-container-title,
 .grid-container-sorthandle,
-.grid-container-options-icon {
+.grid-container-options-icon,
+.grid-container-prolog,
+.grid-container-epilog {
   color: rgba(176, 186, 194, 0.3);
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
@@ -689,12 +696,16 @@ body,
 
 .grid-container:hover .grid-container-title,
 .grid-container:hover .grid-container-sorthandle,
-.grid-container:hover .grid-container-options-icon {
+.grid-container:hover .grid-container-options-icon,
+.grid-container:hover .grid-container-prolog,
+.grid-container:hover .grid-container-epilog {
   color: #b0bac2;
 }
 .grid-container:hover .grid-container-title:hover,
 .grid-container:hover .grid-container-sorthandle:hover,
-.grid-container:hover .grid-container-options-icon:hover {
+.grid-container:hover .grid-container-options-icon:hover,
+.grid-container:hover .grid-container-prolog:hover,
+.grid-container:hover .grid-container-epilog:hover {
   color: #3f4853;
 }
 
@@ -995,14 +1006,10 @@ body,
 }
 
 .grid-element-drag-icon {
-  content: '\23f6';
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
   position: absolute;
-  top: 10px;
-  left: 5px;
-  font-size: 250%;
+  top: 4px;
+  left: -6px;
+  font-size: 120%;
 }
 
 .container-drop-area-wrapper {
@@ -1141,6 +1148,20 @@ body,
 }
 .grid-editor-content legend {
   cursor: pointer;
+  position: relative;
+  padding-left: 14px;
+}
+.grid-editor-content legend .icon-arrow {
+  position: absolute;
+  left: -8px;
+  top: -3px;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.grid-editor-content legend.active .icon-arrow {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .grid-editor-content input,
 .grid-editor-content textarea {

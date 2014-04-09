@@ -28,7 +28,7 @@ var BoxEditor = GridBackbone.View.extend({
             'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
-        var fieldcontainer=jQuery(this.$el).find(".grid-dynamic-fields .field-wrapper");
+        var fieldcontainer=this.$el.find(".grid-dynamic-fields .field-wrapper");
         var views=[];
         var self=this;
         _.each(contentstructure,function(elem){
@@ -47,7 +47,7 @@ var BoxEditor = GridBackbone.View.extend({
             fieldcontainer.append(view.render().el);
         });
         this.views=views;
-        jQuery.each(jQuery(this.$el).find(".form-html"), function(index, element) {
+        jQuery.each(this.$el.find(".form-html"), function(index, element) {
             CKEDITOR.replace(
                 element,{
                 customConfig : document.PathToConfig
@@ -56,9 +56,10 @@ var BoxEditor = GridBackbone.View.extend({
 
         if(GRID.getBoxStyles().length<1)
         {
-                jQuery(this.$el).find(".grid-editor-box-styles-wrapper").hide();
+                this.$el.find(".grid-editor-box-styles-wrapper").hide();
         }
         this.$el.find(".grid-collapsable-hidden .field-wrapper").hide();
+        this.$el.find(".grid-collapsable-shown legend").addClass('active');
         return this;
     },
     onCancel: function(){
@@ -69,7 +70,7 @@ var BoxEditor = GridBackbone.View.extend({
 
     onToggle:function(e)
     {
-        jQuery(e.srcElement).siblings(".field-wrapper").slideToggle(300);
+        jQuery(e.srcElement).toggleClass('active').siblings(".field-wrapper").slideToggle(300);
     },
 
     onMakeReusable:function(e)
@@ -88,13 +89,13 @@ var BoxEditor = GridBackbone.View.extend({
             obj[view.model.structure.key]=view.fetchValue();
         });
         this.model.set('content',obj);
-        this.model.set('title',jQuery(this.$el).find(".grid-editor-title").val());
-        this.model.set('titleurl',jQuery(this.$el).find(".grid-editor-titleurl").val());
+        this.model.set('title',this.$el.find(".grid-editor-title").val());
+        this.model.set('titleurl',this.$el.find(".grid-editor-titleurl").val());
         this.model.set('prolog',CKEDITOR.instances["grid-editor-prolog"].getData());
         this.model.set('epilog',CKEDITOR.instances['grid-editor-epilog'].getData());
-        this.model.set('readmore',jQuery(this.$el).find('.grid-editor-readmore').val());
-        this.model.set('readmoreurl',jQuery(this.$el).find('.grid-editor-readmoreurl').val());
-        this.model.set('style',jQuery(this.$el).find(".grid-editor-styles-wrapper select").val());
+        this.model.set('readmore',this.$el.find('.grid-editor-readmore').val());
+        this.model.set('readmoreurl',this.$el.find('.grid-editor-readmoreurl').val());
+        this.model.set('style',this.$el.find(".grid-editor-styles-wrapper select").val());
         this.model.save();
         GRID.hideEditor(function(){
             GRID.$root_editor.html("");

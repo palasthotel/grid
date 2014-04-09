@@ -87,6 +87,12 @@
 	background-color: $color-container-bg;
 	position: relative;
 }
+.grid-container-prolog,
+.grid-container-epilog{
+	p{
+		margin-bottom: 10px;
+	}
+}
 
 /**********************************
  * container hover states
@@ -105,14 +111,19 @@
 // text color for hover states of controls
 .grid-container-title,
 .grid-container-sorthandle,
-.grid-container-options-icon{
+.grid-container-options-icon,
+.grid-container-prolog,
+.grid-container-epilog{
 	color: $color-container-controls-nohover;
 	transition: $transitions-slow;
 }
 .grid-container:hover{
 	.grid-container-title,
 	.grid-container-sorthandle,
-	.grid-container-options-icon{
+	.grid-container-options-icon,
+	.grid-container-prolog,
+	.grid-container-epilog
+	{
 		color: $color-container-controls;
 		&:hover{
 			color: $color-container-controls-hover;

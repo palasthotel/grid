@@ -44,6 +44,17 @@
 	}
 	legend{
 		cursor: pointer;
+		position: relative;
+		padding-left: 14px;
+		.icon-arrow{
+			position: absolute;
+			left: -8px;
+			top: -3px;
+			transition: $transitions-slow;
+		}
+		&.active .icon-arrow{
+			transform: rotate(90deg);
+		}
 	}
 	input,
 	textarea{
