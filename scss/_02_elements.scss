@@ -178,6 +178,7 @@
 		bottom: 0px;
 		right: 0px;
 		width: 40px;
+		max-width: 250px;
 		transition: $transitions;
 		&:hover{
 			width: 100%;

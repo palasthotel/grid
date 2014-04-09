@@ -34,6 +34,7 @@
 					right: 6px;
 					top: 6px;
 					font-size: 16px;
+					font-family: 'Entypo';
 				}
 				&:hover{
 					padding-right: 38px;
@@ -146,21 +147,23 @@
 		text-transform: uppercase;
 		cursor: pointer;
 		padding: 20px;
-		&:before{
+		.icon-arrow{
 			z-index: $idx-toolbar;
-			content:"\25B8";
 			position:absolute;
-			top:20px;
-			left:6px;
+			top:16px;
+			left:-4px;
 			font-size: 14px;
-			transition: $transitions;
+			transition: $transitions-slow;
 		}
 		&.active{
-			&:before{
+			.icon-arrow{
 				transform: rotate(90deg);
-				top: 20px;
-				left:5px;
 			}
+			// &:before{
+			// 	transform: rotate(90deg);
+			// 	top: 20px;
+			// 	left:5px;
+			// }
 		}
 	}
 }
@@ -213,8 +216,8 @@
 	.container-drop-area{
 		box-sizing:border-box;
 		position: absolute;
-		height: 20px;
-		top: -22px;
+		height: 40px;
+		top: -5px;
 		width: 100%;
 		z-index: $idx-container;
 		transition: $transitions-slow;

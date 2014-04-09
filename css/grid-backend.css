@@ -750,6 +750,7 @@ body,
   bottom: 0px;
   right: 0px;
   width: 40px;
+  max-width: 250px;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
 }
@@ -844,6 +845,7 @@ body,
   right: 6px;
   top: 6px;
   font-size: 16px;
+  font-family: 'Entypo';
 }
 .grid-toolbar .grid-tool-list li button:hover {
   padding-right: 38px;
@@ -942,24 +944,21 @@ body,
   cursor: pointer;
   padding: 20px;
 }
-.grid-element-type-content .grid-container-type:before,
-.grid-element-type-content .grid-box-type:before {
+.grid-element-type-content .grid-container-type .icon-arrow,
+.grid-element-type-content .grid-box-type .icon-arrow {
   z-index: 99;
-  content: "\25B8";
   position: absolute;
-  top: 20px;
-  left: 6px;
+  top: 16px;
+  left: -4px;
   font-size: 14px;
-  -webkit-transition: all 0.25s ease;
-  transition: all 0.25s ease;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
 }
-.grid-element-type-content .grid-container-type.active:before,
-.grid-element-type-content .grid-box-type.active:before {
+.grid-element-type-content .grid-container-type.active .icon-arrow,
+.grid-element-type-content .grid-box-type.active .icon-arrow {
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
-  top: 20px;
-  left: 5px;
 }
 
 .grid-new-element {
@@ -1014,8 +1013,8 @@ body,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: absolute;
-  height: 20px;
-  top: -22px;
+  height: 40px;
+  top: -5px;
   width: 100%;
   z-index: 95;
   -webkit-transition: 0.3s ease;

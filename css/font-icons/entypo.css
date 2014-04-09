@@ -59,6 +59,7 @@
 .icon-preview:before { content: '\e70a';}
 .icon-publish:before { content: '\1f4e3';}
 .icon-elipse:before{ content:'\23f6'; }
+.icon-arrow:before{ content:'\25B8'; }
 .icon-drag:before{ 
   content:'\23f6';
   -webkit-transform: rotate(90deg);

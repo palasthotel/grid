@@ -1,11 +1,27 @@
 
 
 boxEditorControls['list']=GridBackbone.View.extend({
+    className: "grid-editor-widget grid-editor-widget-list",
+    events:{
+        "click .grid-editor-widget-list-add": "onAdd"
+    },
     initialize:function(){
 
     },
     render:function(){
-        var html="<label>"+this.model.structure.label+"</label>";
+        jQuery("<label></label>")
+                .text(this.model.structure.label)
+                    .appendTo(this.$el);
+
+        this.$list = jQuery("<div></div>")
+                    .addClass('grid-editor-widget-list-items');
+        this.$el.append(this.$list);
+
+        jQuery("<button></button>")
+                .text("Add item")
+                .addClass('grid-editor-widget-list-add')
+                    .appendTo(this.$el);
+
         var list=this.model.container[this.model.structure.key];
         var self=this;
         var views=[];
@@ -19,12 +35,23 @@ boxEditorControls['list']=GridBackbone.View.extend({
                 }
             });
             views.push(view);
-            html+=view.render().el;
+            this.$list.append(view.render().el);
         });
-        //TODO: add "add" button
-        jQuery(this.$el).html(html);
         this.views=views;
         return this;
+    },
+    onAdd: function(){
+        GRID.log(["add List Item", this.model]);
+        var view = new boxEditorControls['listitem']({
+            model: {
+                structure: this.model.structure.contentstructure,
+                container:{},
+                box: this.model.box,
+                parentpath: this.model.parentpath+this.model.structure.key+"."
+            }
+        });
+        this.views.push(view);
+        this.$list.append(view.render().el);
     },
     fetchValue:function(){
         var content=[];
@@ -40,8 +67,8 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
 
     },
     render:function(){
-        var fieldcontainer=jQuery("<div></div>");
         var views=[];
+        var self = this;
         _.each(this.model.structure,function(elem){
             var type=elem.type;
             var view=new boxEditorControls[type](
@@ -49,15 +76,14 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
                 model:
                 {
                     structure:elem,
-                    container:this.model.get("content"),
+                    container:self.model.container,
                     box:self.model.box,
                     parentpath:self.model.parentpath
                 }
             });
             views.push(view);
-            fieldcontainer.append(view.render().el);
+            self.$el.append(view.render().el);
         });
-        jQuery(this.$el).html(fieldcontainer);
         this.views=views;
         return this;
     },
