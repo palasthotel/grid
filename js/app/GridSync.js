@@ -265,6 +265,7 @@ var GridRequest = {
 						GRID.log(data);
 						container.set("id", data.result.id);
 						container.set("slots", data.result.slots);
+						container.set("style",data.result.style);
 						container.setSlots(data.result.slots);
 						options.success();
 					}
