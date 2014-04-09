@@ -71,16 +71,6 @@ Dimensions
   max-width: 100%;
 }
 
-body,
-#page {
-  background-color: #f3f5f7 !important;
-}
-
-#page {
-  margin: 0px !important;
-  padding: 0px !important;
-}
-
 .grid-wrapper {
   width: 80%;
   -webkit-box-sizing: border-box;

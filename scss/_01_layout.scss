@@ -1,15 +1,6 @@
 // width and height of layout elements
 // Grid, container, slot, box, toolbar
 
-body,
-#page{
-	background-color: $color-grid-bg !important;
-}
-#page{
-	margin: 0px !important;
-	padding: 0px !important;
-}
-
 .grid-wrapper{
 	width: 80%;
 	box-sizing: border-box;
