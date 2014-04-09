@@ -528,9 +528,10 @@ function grid_wp_thegrid()
 	}
 	else
 	{
-
+		
 		$grid_id=$rows[0]->grid_id;
 		global $grid_lib;
+		wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 		$css=$grid_lib->getEditorCSS(FALSE);
 		foreach($css as $idx=>$file)
 		{
@@ -559,7 +560,7 @@ function grid_wp_thegrid()
 }
 
 function grid_wp_load_js(){
-	// for wp.media and Backbone
+	// for wp.media 
 	if(function_exists( 'wp_enqueue_media' )){
 	    wp_enqueue_media();
 	}else{
@@ -570,6 +571,7 @@ function grid_wp_load_js(){
 }
 function grid_wp_reuse_box_editor_prepare($editor)
 {
+	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 	$css=$editor->getCSS(FALSE);
 	foreach($css as $idx=>$file)
 	{
@@ -633,7 +635,8 @@ function grid_wp_delete_reuse_box()
 }
 
 function grid_wp_reuse_container_editor_prepare($editor)
-{
+{	
+	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 	$css=$editor->getCSS(FALSE);
 	foreach($css as $idx=>$file)
 	{
