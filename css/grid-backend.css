@@ -995,14 +995,10 @@ body,
 }
 
 .grid-element-drag-icon {
-  content: '\23f6';
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
   position: absolute;
-  top: 10px;
-  left: 5px;
-  font-size: 250%;
+  top: 4px;
+  left: -6px;
+  font-size: 120%;
 }
 
 .container-drop-area-wrapper {
