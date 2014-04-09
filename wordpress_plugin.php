@@ -154,6 +154,7 @@ function grid_wp_activate()
 	else
 	{
 		//TODO: implement update support
+		$grid_connection = grid_wp_get_mysqli();
 		$grid_lib->update();
 	}
 }
