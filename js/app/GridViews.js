@@ -76,7 +76,7 @@ var ContainerView = GridBackbone.View.extend({
 
     	this.$el.html(ich.tpl_container( json));
         this._slotsView.render();
-        this.$el.find(".slots-wrapper").replaceWith(this._slotsView.$el);
+        this.$el.find(".grid-slots-wrapper").replaceWith(this._slotsView.$el);
         return this;
 	},
     onEdit: function(){
@@ -133,7 +133,7 @@ var ContainerView = GridBackbone.View.extend({
 
 var SlotsView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'grid-slots-wrapper slots-wrapper clearfix',
+    className: 'grid-slots-wrapper slots-wrapper grid-clearfix',
     initialize: function(){
         GRID.log('INIT SlotsView');
         this.collection.bind('add',this.render, this);
