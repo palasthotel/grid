@@ -531,12 +531,13 @@ function grid_wp_thegrid()
 		
 		$grid_id=$rows[0]->grid_id;
 		global $grid_lib;
-		wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
+		
 		$css=$grid_lib->getEditorCSS(FALSE);
 		foreach($css as $idx=>$file)
 		{
 			wp_enqueue_style('grid_css_'.$idx,plugins_url('lib/'.$file,__FILE__));
 		}
+		wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 		$lang=WPLANG;
 		if(empty($lang))
 			$lang="en";
@@ -545,6 +546,7 @@ function grid_wp_thegrid()
 		{
 			wp_enqueue_script('grid_js_'.$idx,plugins_url('lib/'.$file,__FILE__));
 		}
+		wp_enqueue_script("grid_js_wp_js",plugins_url('grid-wordpress.js', __FILE__));
 		$html=$grid_lib->getEditorHTML(
 			$grid_id,
 			'grid',
@@ -571,12 +573,13 @@ function grid_wp_load_js(){
 }
 function grid_wp_reuse_box_editor_prepare($editor)
 {
-	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
+	
 	$css=$editor->getCSS(FALSE);
 	foreach($css as $idx=>$file)
 	{
 		wp_enqueue_style("grid_reusebox_".$idx,plugins_url('lib/'.$file,__FILE__));
 	}
+	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 	$lang=WPLANG;
 	if(empty($lang))
 		$lang='en';
@@ -585,6 +588,8 @@ function grid_wp_reuse_box_editor_prepare($editor)
 	{
 		wp_enqueue_script("grid_reusebox_".$idx,plugins_url('lib/'.$file,__FILE__));
 	}
+	wp_enqueue_script("grid_reusebox_wp_js",plugins_url('grid-wordpress.js', __FILE__));
+	
 }
 function grid_wp_reuse_boxes()
 {
@@ -636,20 +641,22 @@ function grid_wp_delete_reuse_box()
 
 function grid_wp_reuse_container_editor_prepare($editor)
 {	
-	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
+	
 	$css=$editor->getCSS(FALSE);
 	foreach($css as $idx=>$file)
 	{
 		wp_enqueue_style("grid_reusecontainer_".$idx,plugins_url('lib/'.$file,__FILE__));
 	}
+	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 	$lang=WPLANG;
 	if(empty($lang))
 		$lang='en';
 	$js=$editor->getJS($lang,FALSE);
 	foreach($js as $idx=>$file)
 	{
-		wp_enqueue_script("grid_reusecontainer_".$idx,plugins_url('lib/'.$file,__FILE__));
+		wp_enqueue_script("grid_reusecontainer_".$idx,plugins_url('lib/'.$file, __FILE__));
 	}
+	wp_enqueue_script("grid_reusecontainer_wp_js",plugins_url('grid-wordpress.js', __FILE__));
 }
 
 function grid_wp_reuse_containers()

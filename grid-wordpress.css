@@ -1,6 +1,6 @@
+body{
+	/*background-color: rgba(243,245,247,1);*/
+}
 #new-grid-wrapper{
 	margin-left: -20px;
-}
-#adminmenuwrap{
-	z-index:101;
 }
