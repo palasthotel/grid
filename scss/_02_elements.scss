@@ -118,7 +118,7 @@
 .grid-container-prolog,
 .grid-container-epilog{
 	color: $color-container-controls-nohover;
-	transition: $transitions-slow;
+	@include transition(all, .3s, ease);
 }
 .grid-container:hover{
 	.grid-container-title,
@@ -183,11 +183,9 @@
 	background-color: $color-box-controls-bg;
 	font-weight: bold;
 	text-transform: uppercase;
-	-webkit-transition: opacity .2s ease;
-	   -moz-transition: opacity .2s ease;
-	    -ms-transition: opacity .2s ease;
-	     -o-transition: opacity .2s ease;
-	        transition: opacity .2s ease;
+
+	@include transition(opacity, .2s, ease);
+
 	.grid-box-control-button{
 		cursor: pointer;
 		position: absolute;
@@ -196,13 +194,13 @@
 		right: 0px;
 		width: 40px;
 		max-width: 250px;
-		transition: $transitions;
+		@include transition(all, .3s, ease);
 		&:hover{
 			width: 100%;
 		}
 		.grid-box-control-text{
 			opacity: 0;
-			transition: $transitions;
+			@include transition(all, .3s, ease);
 		}
 		&:hover .grid-box-control-text{
 			opacity: 1;

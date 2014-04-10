@@ -6,11 +6,13 @@
 	width: $dim-revisions-width;
 	padding: 0px 0px 15px 50px;
 	margin-bottom: -30px;
+
 	button{
 		margin: 0px;
 		padding: 0px;
 	}
 }
+
 .grid-revisions-list{
 	padding: 0px 15px 0px 0px;
 }
@@ -22,9 +24,11 @@
 	width: 220px;
 	border-right: 0px solid $color-revision-border;
 	background-color: $color-revision-bg;
+
 	&:last-child{
 		border-right: none;
 	}
+
 	&.grid-revision-state-draft{
 		background-color: $color-revision-draft;
 		color: white;
@@ -35,6 +39,7 @@
 			}
 		}
 	}
+
 	&.grid-revision-state-published{
 		background-color: $color-revision-published;
 		color: white;
@@ -45,11 +50,16 @@
 			}
 		}
 	}
+
 	&:first-child:before{
 		z-index: $idx-toolbar;
 		content:"";
 		border: 8px solid $color-revision-draft;
-		font-size:0;line-height:0;height:0;padding:0;margin:0;
+		font-size:0;
+		line-height:0;
+		height:0;
+		padding:0;
+		margin:0;
 		border-left-color:    transparent;
 		border-right-color:  transparent;
 		border-bottom-color:   transparent;
@@ -57,45 +67,51 @@
 		bottom:-16px;
 		left:50%;
 		margin-left: -8px;
-		transition: $transitions;
+		@include transition();
 	}
+
 	&.grid-revision-state-published:first-child:before{
 		border-top-color: $color-revision-published;
 	}
 }
 
 // Description section 
-.grid-revision-description{
+.grid-revision-description {
 	padding: 10px;
-	p{
+
+	p {
 		margin: 0px;
 	}
-	.grid-revision-date{
+
+	.grid-revision-date {
 		font-weight: bold;
 	}
 }
 
 // controls section
-.grid-revision-controls{
+.grid-revision-controls {
 	position: relative;
 	padding-bottom: 40px;
-	.grid-revision-button{
+
+	.grid-revision-button {
 		height: 40px;
 		position: absolute;
 		bottom: 0px;
 	}
-	.grid-revision-preview-button{
+
+	.grid-revision-preview-button {
 		left: 0px;
 		width: 50%;
 	}
+
 	.grid-revision-delete-button,
-	.grid-revision-revert-button{
+	.grid-revision-revert-button {
 		right: 0px;
 		width: 50%;
 	}
 }
-.grid-revision-state-published .grid-revision-controls{
-	.grid-revision-preview-button{
+.grid-revision-state-published .grid-revision-controls {
+	.grid-revision-preview-button {
 		width: 100%;
 	}
 }
