@@ -59,7 +59,7 @@ GRID = {
 
 		GRID.$root.mutate('height',function (element,info){
 		    console.log('a div with  has changed it\'s height, the function below should do something about this...');
-		    GRID.onSidebarCalculation();
+		    //GRID.onSidebarCalculation();
 		});
 
 		// load all model classes for grid works
@@ -189,16 +189,16 @@ GRID = {
 		var permissionsList = GRID.getSidebarWhitelist($sidebar.data("type"));
 		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
 		var $sidebar_slot = $sidebar.find('.grid-slot');
-		var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
+		//var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
 		if(c_height < $sidebar_slot.outerHeight(true)){
 			// if sidebar is taller than containers make puffer margin top
-			var needed_margin_top = $sidebar_slot.outerHeight()+sidebar_margin_bottom;
+			var needed_margin_top = $sidebar_slot.outerHeight();
 			needed_margin_top -= c_height;
 			$sidebar.css("margin-top", needed_margin_top);
 		} else if(c_height > $sidebar_slot.outerHeight(true)){
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
-			need_bottom_offset += sidebar_margin_bottom;
+			//need_bottom_offset += sidebar_margin_bottom;
 			$sidebar_slot.css("padding-bottom",need_bottom_offset);
 		}
 	},	

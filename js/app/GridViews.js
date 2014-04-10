@@ -3,9 +3,7 @@ var GridView = GridBackbone.View.extend({
     className: 'grid-wrapper',
     initialize: function() {
     	GRID.log("INIT GridView");
-        this._containersView = new ContainersView({collection: this.model.getContainers() });
-        this.listenTo(this.model, "change", GRID.onSidebarCalculation);
-    },
+        this._containersView = new ContainersView({collection: this.model.getContainers() });    },
     render: function() {
         GRID.log('i am rendering the grid interface');
         this.$el.empty();
@@ -42,7 +40,7 @@ var ContainersView = GridBackbone.View.extend({
 });
 
 var ContainerView = GridBackbone.View.extend({
-	className: 'grid-container container display clearfix',
+	className: 'grid-container container display',
     events:{
         "click [role=trash]": "selfdestruct",
         "click [role=edit]": "onEdit",
