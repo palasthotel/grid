@@ -1,0 +1,33 @@
+.grid-element-type-select{
+	.grid-element-type{
+		text-align: center;
+		box-sizing: border-box;
+		display: inline-block;
+		text-transform: uppercase;
+		width: 50%;
+		font-weight: bold;
+		height: $dim-tool-element-tab-height;
+		padding-top: 15px;
+		@include transition();
+		position:relative;
+		background-color: $color-tool-elementtype;
+		&:hover,
+		&.active{
+			cursor:pointer;
+			color: white;
+			background-color: $color-tool-elementtype-active;
+			&.active:after{
+				z-index: $idx-toolbar;
+				content:"";
+				border: 9px solid $color-tool-elementtype-active;
+				font-size:0;line-height:0;height:0;padding:0;margin:0;
+				border-bottom-color:    transparent;
+				border-right-color:  transparent;
+				border-left-color:   transparent;
+				position:absolute;
+				bottom:-18px;
+				left:47%;
+			}
+		}
+	}
+}

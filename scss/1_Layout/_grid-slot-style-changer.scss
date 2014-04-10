@@ -1,0 +1,29 @@
+.grid-container:hover .grid-slot-style-changer{
+	opacity: 1;
+} 
+
+[data-reused=false] .grid-slot-style-changer:hover{
+	z-index: $idx-style-changer-hover;
+	&:hover .grid-style-changer-active{
+		background-color: $color-slot-style-changer-bg;
+		color: $color-style-changer-active-hover;
+
+	}
+	.grid-choose-style{		
+		color: white;
+		display:block;
+		width: 100%;
+		padding-top: 2px;
+		li{
+			padding: 10px 0px 8px 0px;
+			@include transition();
+			margin: 0px;
+			&:hover{
+				cursor: pointer;
+				background-color: $color-slot-style-changer-styles-bg-hover;
+			}
+		}
+
+	}	
+} 
+

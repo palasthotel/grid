@@ -31,6 +31,19 @@
 ************ 12 er ********
 ************************/
 /** Container C-12 **/
+
+
+.slot {
+	border-left: 2px solid $color-grid-bg;
+	box-sizing: border-box;
+}
+
+.slot:first-child {
+	border-left: none;
+}
+
+
+
 .C-12{
 	
 }

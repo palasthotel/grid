@@ -1,0 +1,511 @@
+
+// slot dimensions
+.grid-slot {
+	position: relative;
+	min-height: 50px;
+	padding-top: 20px;
+
+	border-left: 2px solid $color-grid-bg;
+	box-sizing: border-box;
+
+	.grid-slot-style-changer{
+		text-transform: uppercase;
+		width: 100%;
+		max-width: 400px;
+		position: absolute;
+		top: -10px;
+		left: 0px;
+		font-size: 11px;
+	}
+}
+
+.grid-slot .grid-slot-style-changer {
+	text-align: center;
+	font-weight: bold;
+	z-index: $idx-style-changer;
+	display:block;
+	opacity: 0;
+	@include transition();
+	.grid-style-changer-active {
+		padding: 6px 0px 4px 0px;
+		color: $color-style-changer-active;
+	}
+
+	.grid-choose-style {
+		position: absolute;
+		display:none;
+		padding: 0px;
+		margin: 0px;
+		list-style: none;
+
+		li {
+			background-color: $color-slot-style-changer-styles-bg;
+			border-top: 1px solid $color-slot-style-changer-border;
+			&:first-child {
+				border-top:none;
+			}
+		}
+
+		&:before{
+			content:"";
+			border: 9px solid $color-slot-style-changer-styles-bg;
+			font-size:0;line-height:0;height:0;padding:0;margin:0;
+			border-top-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			top:-16px;
+			left:47%;
+		}
+	}	
+}
+
+
+
+
+/*************************
+************ 12 er ********
+************************/
+/** Container C-12 **/
+
+
+.slot:first-child {
+	border-left: none;
+}
+
+
+
+.C-12{
+	
+}
+.C-12 .slot{
+	width:100%;
+}
+
+/** Container C-6-6 **/
+.C-6-6{
+	
+}
+.C-6-6 .slot{
+	width:49.5%;
+	float:right;
+}
+.C-6-6 .slot:first-child{
+	margin-right: 1%;
+	float:left;
+}
+
+
+/** Container C-4-4-4 **/
+.C-4-4-4{
+}
+.C-4-4-4 .slot{
+	width:33%;
+	float:left;
+	margin-right:1%;
+}
+.C-4-4-4 .slot:last-child{
+	width:32%;
+	float:right;
+	margin-right:0px;
+}
+
+/** Container C-8-4 **/
+.C-8-4{
+}
+.C-8-4 .slot:nth-child(1){
+	width:66%;
+	float:left;
+	
+}
+.C-8-4 .slot:nth-child(2){
+	width:33%;
+	float:right;
+	margin-left:1%;
+}
+
+/** Container C-4-8 **/
+.C-4-8{
+	
+}
+.C-4-8 .slot:nth-child(1){
+	width:33%;
+	float:left;
+	margin-right:1%;
+}
+.C-4-8 .slot:nth-child(2){
+	width:66%;
+	float:right;
+}
+
+/** Container C-3-3-3-3 **/
+[data-type=C-3-3-3-3] .slot{
+	width:24%;
+	margin-right: 1%;
+	float:left;
+}
+[data-type=C-3-3-3-3] .slot:last-child{
+	width:25%;
+	margin-right: 0;
+}
+
+/** Container C-2-2-2-2-2-2 **/
+.C-2-2-2-2-2-2{
+	
+}
+.C-2-2-2-2-2-2 .slot{
+	width:15.8%;
+	float:left;
+	margin-right:1%;
+}
+.C-2-2-2-2-2-2 .slot:last-child{
+	margin-right:0px;
+	float:right;
+}
+
+/** Container C-0-8 and C-8-0 **/
+.C-0-8 .slot{
+	width:66.6%;
+	float:right;
+}
+.C-8-0 .slot{
+	width:66.6%;
+	float:left;
+}
+.grid-wrapper .C-8-0,
+.grid-wrapper .C-0-8{
+	width: 66.6% !important;
+}
+.grid-wrapper .C-0-8{
+	margin-left: 33.3%;
+}
+.grid-wrapper .C-8-0 .slot,
+.grid-wrapper .C-0-8 .slot{
+	width: 100%;
+}
+
+/** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
+.C-4-4-0 .slot{
+	width:33%;
+	float:left;
+	margin-right:1%;
+}
+.C-4-4-0 .slot:last-child{
+	margin-right: 0;
+	float: left;
+}
+.C-0-4-4 .slot{
+	width:33%;
+	float:right;
+	margin-left:1%;
+}
+.C-0-4-0 .slot{
+	width: 33.3%;
+	margin-left: 33.3%;
+}
+.grid-wrapper .C-0-4-4,
+.grid-wrapper .C-4-4-0{
+	width: 66.6% !important;
+}
+.grid-wrapper .C-0-4-4{
+	margin-left: 33.3%;
+}
+.grid-wrapper .C-4-4-0 .slot,
+.grid-wrapper .C-0-4-4 .slot{
+	width: 49%;
+}
+.grid-wrapper .C-4-4-0 .slot:last-child{
+	float: right;
+}
+.grid-wrapper .C-0-4-0{
+	width: 33.3% !important;
+	margin-left: 33.3%;
+}
+.grid-wrapper .C-0-4-0 .slot{
+	width: 100%;
+	margin-left: 0px;
+}
+
+/** Container C-4-2-2-0 and C-2-2-4-0 **/
+.C-4-2-2-0 .slot,
+.C-2-2-4-0 .slot{
+	width: 16%;
+	margin-right: 1%;
+	float: left;
+}
+.C-4-2-2-0 .slot:first-child,
+.C-2-2-4-0 .slot:last-child{
+	width: 33%;
+}
+.grid-wrapper .C-4-2-2-0,
+.grid-wrapper .C-2-2-4-0{
+	width: 66.6% !important;
+}
+.grid-wrapper .C-4-2-2-0 .slot,
+.grid-wrapper .C-2-2-4-0 .slot{
+	width: 24%;
+	margin-right: 1%;
+}
+.grid-wrapper .C-4-2-2-0 .slot:first-child,
+.grid-wrapper .C-2-2-4-0 .slot:last-child{
+	width:49%;
+}
+
+
+/** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
+.C-2-2-2-2-0 .slot{
+	width:16%;
+	float:left;
+	margin-right:1%;
+}
+.C-0-2-2-2-2 .slot{
+	margin-left: 1%;
+	float:right;
+}
+#grid .C-2-2-2-2-0{
+	width: 66.6% !important;
+}
+.grid-wrapper .C-2-2-2-2-0 .slot,
+.grid-wrapper .C-0-2-2-2-2 .slot{
+	width: 24%;
+}
+
+
+/*************************
+************ 18 er ********
+************************/
+/** Container C-18 **/
+.C-18 .slot{
+	width: 100%;
+}
+.C-6-6-6{
+}
+.C-6-6-6 .slot{
+	width:33%;
+	float:left;
+	margin-right:1%;
+}
+.C-6-6-6 .slot:last-child{
+	width:32%;
+	float:right;
+	margin-right:0px;
+}
+.C-12-6 .slot{
+	float:left;
+	width: 66%;
+}
+.C-12-6 .slot:last-child{
+	width: 33%;
+	float:right;
+	margin-right: 0px;
+}
+.C-4-4-4-6 .slot{
+	width: 22%;
+	margin-right: 0.5%;
+	float: left;
+}
+.C-4-4-4-6 .slot:last-child{
+	width:32%;
+	float:right;
+	margin-right: 0px;
+}
+.C-3-3-3-3-3-3 .slot{
+	width: 16%;
+	margin-right: 0.8%;
+	float: left;
+}
+.C-3-3-3-3-3-3 .slot:last-child{
+	float:right;
+	margin-right: 0px;
+}
+/** Container C-12-0 **/
+.C-12-0 .slot{
+	width:66.6%;
+	float:left;
+}
+.C-12-0{
+	width: 66.6% !important;
+}
+.C-12-0 .slot{
+	width: 100%;
+}
+/** Container C-4-4-4-0 **/
+.C-4-4-4-0 .slot{
+	width:22%;
+	margin-right: 0.5%;
+	float:left;
+}
+.C-4-4-4-0{
+	width: 66.6% !important;
+}
+.C-4-4-4-0 .slot{
+	width: 33%;
+	margin-right: 0.5%;
+}
+
+.C-4-4-4-0 .slot:last-child{
+	margin-right: 0px;
+}
+/** Container C-6-6-0 **/
+.C-6-6-0 .slot{
+	width:33.3%;
+	margin-right: 0.5%;
+	float:left;
+}
+.C-6-6-0{
+	width: 66.6% !important;
+}
+.C-6-6-0 .slot{
+	width: 49.5%;
+	margin-right: 1%;
+}
+.C-6-6-0 .slot:last-child{
+	margin-right: 0px;
+}
+/** Container C-3-3-3-3-0 **/
+.C-3-3-3-3-0 .slot{
+	width:16%;
+	margin-right: 0.5%;
+	float:left;
+}
+.C-3-3-3-3-0{
+	width: 66.6% !important;
+}
+.C-3-3-3-3-0 .slot{
+	width: 24.5%;
+	margin-right: 0.5%;
+}
+
+.C-3-3-3-3-0 .slot:last-child{
+	margin-right: 0px;
+}
+
+/* container sidebars */
+.S-0-4 .slot{
+	width: 33%;
+	float: right;
+}
+.S-4-0 .slot{
+	width: 33%;
+}
+.grid-wrapper .grid-container[data-type*=S-] {
+	width: 100% !important;
+	padding:0px;
+	margin: 0px;
+	background-color: transparent;
+	border:none;
+	.grid-box{
+		border:none;
+		background-color: white;
+	}
+	.grid-slot{
+		width: 33.3%;
+		// sidebar to left
+		position: absolute;
+		bottom: 55px;
+		padding-bottom: 10px;
+		left: 0px;
+		padding-right: 10px;
+		box-sizing: border-box;
+	}
+	&[data-type*=S-0] .grid-slot{
+		// sidebar to right
+		left: auto;
+		right: 0px;
+		padding-right: 0px;
+		padding-left: 10px;
+	}
+}
+
+/** Container Sidebars */
+
+
+
+// slot dimensions
+.grid-slot{
+	position: relative;
+	min-height: 50px;
+	padding-top: 20px;
+	.grid-slot-style-changer{
+		text-transform: uppercase;
+		width: 100%;
+		max-width: 400px;
+		position: absolute;
+		top: -10px;
+		left: 0px;
+		font-size: 11px;
+	}
+}
+.grid-slot .grid-slot-style-changer{
+	text-align: center;
+	font-weight: bold;
+	z-index: $idx-style-changer;
+	display:block;
+	opacity: 0;
+	@include transition();
+	.grid-style-changer-active{
+		padding: 6px 0px 4px 0px;
+		color: $color-style-changer-active;
+	}
+	.grid-choose-style{
+		position: absolute;
+		display:none;
+		padding: 0px;
+		margin: 0px;
+		list-style: none;
+		li{
+			background-color: $color-slot-style-changer-styles-bg;
+			border-top: 1px solid $color-slot-style-changer-border;
+			&:first-child{
+				border-top:none;
+			}
+		}
+		&:before{
+			content:"";
+			border: 9px solid $color-slot-style-changer-styles-bg;
+			font-size:0;line-height:0;height:0;padding:0;margin:0;
+			border-top-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			top:-16px;
+			left:47%;
+		}
+	}	
+}
+.grid-container:hover .grid-slot-style-changer{
+	opacity: 1;
+} 
+
+[data-reused=false] .grid-slot-style-changer:hover{
+	z-index: $idx-style-changer-hover;
+	&:hover .grid-style-changer-active{
+		background-color: $color-slot-style-changer-bg;
+		color: $color-style-changer-active-hover;
+	}
+	.grid-choose-style{		
+		color: white;
+		display:block;
+		width: 100%;
+		padding-top: 2px;
+		li{
+			padding: 10px 0px 8px 0px;
+			@include transition();
+			margin: 0px;
+			&:hover{
+				cursor: pointer;
+				background-color: $color-slot-style-changer-styles-bg-hover;
+			}
+		}
+	}	
+} 
+
+// box dimension
+.grid-boxes-wrapper{
+	border-top: 2px solid $color-box-border;
+}
+.grid-box{
+	padding: 12px 0;
+	min-height: 80px;
+	border-bottom: 2px solid $color-box-border;
+}

@@ -1,0 +1,16 @@
+.container-drop-area-wrapper {
+	position:relative;
+	.container-drop-area{
+		box-sizing:border-box;
+		position: absolute;
+		height: 40px;
+		top: -5px;
+		width: 100%;
+		z-index: $idx-container;
+		@include transition(all, .3s, ease);
+		background-color: lighten($color-edit, 20%);
+		&.hover{
+			background-color: $color-edit;
+		}
+	}
+}

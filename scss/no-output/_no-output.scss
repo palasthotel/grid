@@ -17,15 +17,6 @@ $color-link-hover: black;
 $color-input-border: rgba(236,239,243,1);
 $color-input-border-hover: rgba(176,186,194,1);
 
-
-/*
-$transition-link: 	@include transition();
-$transitions: 		@include transition(all, .1337s, ease);
-$transitions: 		@include transition(all, .1337s, ease);
-$transitions-slow: 	@include transition(all, .3s, ease);
-*/
-
-
 // container
 $color-container-bg: white;
 
@@ -61,6 +52,8 @@ $color-box-border: $color-grid-bg;
 $color-box-controls-bg: rgba(63,72,83,0.9);
 
 $color-box-sort-placeholder-border: $color-edit;
+
+
 
 // toolbar
 $color-toolbar-bg: white;

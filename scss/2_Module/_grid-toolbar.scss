@@ -1,0 +1,74 @@
+// Grid state display
+
+.grid-toolbar {
+	@include transition();
+	border-top: 4px solid $color-draft;
+
+
+	
+	position:relative;
+	background-color: $color-toolbar-bg;
+	box-sizing: border-box;
+	width: $dim-toolbar-width;
+	height: $dim-toolbar-height;
+	
+	.grid-tool-list {
+		list-style: none;
+		position: fixed;
+		z-index: $idx-toolbar;
+		margin: 0px;
+		width: 40px;
+		li {
+			width: 135px;
+			right:90px;
+			position: relative;
+			@include transition();
+			&:hover {
+				right:0px;
+			}
+			button {
+				text-align: right;
+				padding: 5px 48px 5px 5px;
+				margin: 0px;
+				font-size: 12px;
+				width: 100%;
+				height: 45px;
+				@include transition();
+
+				// background-color: $color-grid-bg;
+				[class^="icon-"], 
+				[class*=" icon-"]{
+					position: absolute;
+					right: 6px;
+					top: 6px;
+					font-size: 16px;
+					font-family: 'Entypo';
+				}
+				&:hover{
+					padding-right: 38px;
+					color: white;
+					background-color: $color-link;
+				}
+			}
+		}
+	}
+
+	li.grid-tool-publish button,
+	li.grid-tool-publish button:hover{
+		background-color: $color-draft;
+		color: white;
+	}
+
+	&[data-draft=false] {
+		border-top: 4px solid $color-ok;
+
+		li.grid-tool-publish button,
+		li.grid-tool-publish button:hover{
+			background-color: $color-ok;
+		}
+	}
+}
+
+.grid-toolbar-list{
+	margin: 20px 20px;
+}

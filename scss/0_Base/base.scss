@@ -6,12 +6,13 @@
 	input,
 	textarea,
 	select,
-	button{
+	button {
 		font-family: inherit;
 		font-size: 12px;
 		box-sizing: border-box;
 	}
-	input{
+
+	input {
 		height:27px; 
 		width: 100%;
 		line-height:27px;
@@ -19,17 +20,18 @@
 		font-size:1em;
 		border:solid 1px $color-input-border;
 		margin-bottom: 15px;
-		&:hover{
+
+		&:hover {
 			border-color: $color-input-border-hover;
 		}
 	}
-	input[type=checkbox]{
+	input[type=checkbox] {
 		width: auto;
 		height: auto;
 		display:inline;
 	}
 	button,
-	button:focus{
+	button:focus {
 		outline: none;
 		border: none;
 		background-color: transparent;
@@ -39,11 +41,8 @@
 		text-transform: uppercase;
 		font-weight: bold;
 		letter-spacing: 0.05em;
-
-
 		
 		@include transition();
-		//@include $transition-link;
 		box-shadow: none;
 		&:hover{
 			color: $color-edit;
