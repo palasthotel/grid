@@ -2,7 +2,7 @@
 // Grid, container, slot, box, toolbar
 
 .grid-wrapper{
-	width: 80%;
+	margin-right: 260px;
 	box-sizing: border-box;
 	// remove margins
 	h1,h2,h3,h4,h5,h6,p{
@@ -11,7 +11,9 @@
 	padding: 5px 10px 120px 55px;
 	
 }
-
+.grid-containers-wrapper{
+	box-sizing: border-box;
+}
 // container dimensions
 .grid-container{
 	

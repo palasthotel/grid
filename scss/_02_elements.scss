@@ -63,11 +63,13 @@
 		width:110px;
 		right: 0px;
 		top: 26px;
+
 		.grid-container-options-list-item{
 			cursor:pointer;
 			padding: 5px;
 			text-transform: uppercase;
 			font-weight: bold;
+			margin-bottom: 0px;
 		}
 		&:before{
 			content:"";

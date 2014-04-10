@@ -104,7 +104,7 @@ Dimensions
 $dim-grid-width: 80%;
 $dim-toolbar-width: 100%;
 $dim-toolbar-height: 0px;
-$dim-tool-elements-width: 20%;
+$dim-tool-elements-width: 260px;
 $dim-tool-elements-offset:0px;
 $dim-tool-element-tab-height: 45px;
 
@@ -118,10 +118,10 @@ $dim-revisions-width: $dim-grid-width;
 ***************/
 
 $idx-max: 999;
-$idx-toolbar: 99;
-$idx-container-options: 98;
-$idx-style-changer: 97;
-$idx-container: 95;
-$idx-container-reused: 94;
-$idx-slot: 80;
-$idx-box: 60;
+$idx-toolbar: 90;
+$idx-container-options: 80;
+$idx-style-changer: 70;
+$idx-container: 60;
+$idx-container-reused: 50;
+$idx-slot: 40;
+$idx-box: 30;
