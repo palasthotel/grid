@@ -4,6 +4,7 @@ var GridView = GridBackbone.View.extend({
     initialize: function() {
     	GRID.log("INIT GridView");
         this._containersView = new ContainersView({collection: this.model.getContainers() });
+        this.listenTo(this.model, "change", GRID.onSidebarCalculation);
     },
     render: function() {
         GRID.log('i am rendering the grid interface');
@@ -25,6 +26,7 @@ var ContainersView = GridBackbone.View.extend({
 	initialize: function(){
         GRID.log('INIT ContainersView');
         this.listenTo(this.collection, 'add',this.render);
+        this.listenTo(this.collection, 'change', this.onSidebarCalculation);
 	},
 	render: function(){
     	GRID.log('i am rendering the container collection');
@@ -36,7 +38,10 @@ var ContainersView = GridBackbone.View.extend({
     	});
         GRID._initializeBoxSortable();
     	return this;
-	}
+	},
+    onSidebarCalculation: function(){
+        GRID.log("SIDEBAR");
+    }
 });
 
 var ContainerView = GridBackbone.View.extend({

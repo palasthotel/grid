@@ -43,7 +43,6 @@ var StyleType = GridBackbone.Model.extend({});
 
 var Revision = GridBackbone.Model.extend({
     initialize: function(spec){
-        GRID.log(["GRID Revision model", spec, this.model]);
         this.set("id",spec.revision);
     }
 });

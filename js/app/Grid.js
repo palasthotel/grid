@@ -57,6 +57,11 @@ GRID = {
 		this._initConstants();
 		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
 
+		GRID.$root.mutate('height',function (element,info){
+		    console.log('a div with  has changed it\'s height, the function below should do something about this...');
+		    GRID.onSidebarCalculation();
+		});
+
 		// load all model classes for grid works
 		this.getBoxTypes().fetch();
 		this.getContainerTypes().fetch();
@@ -73,7 +78,7 @@ GRID = {
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
 				GRID.gridview = new GridView({model: GRID.getModel() });
-				jQuery(GRID.dom_root).html( GRID.getView().render().el );
+				GRID.$root.html( GRID.getView().render().el );
 				GRID._initializeContainerSortable();
 				GRID._initializeBoxSortable();
 				// load the revisions
@@ -83,8 +88,9 @@ GRID = {
 				GRID.toolbar  = new GridToolbarView({
 					model: GRID.getModel()
 				});
-				jQuery(GRID.dom_root).prepend(GRID.toolbar.render().el);
+				GRID.$root.prepend(GRID.toolbar.render().el);
 				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
+				GRID.onSidebarCalculation();
 			}
         });
 
@@ -167,7 +173,61 @@ GRID = {
 			document.previewpattern != ""){
 			PREVIEW_PATTERN = document.previewpattern;
 		}
-		this.PREVIEW_PATTERN=PREVIEW_PATTERN
+		this.PREVIEW_PATTERN=PREVIEW_PATTERN;
+	},
+	// calculates Sidebar
+	onSidebarCalculation: function(){
+		GRID.$root.find(".grid-container").css("margin-top", "0px");
+		GRID.$root.find(".grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
+
+		// add new offsets
+		jQuery.each(GRID.$root.find('.grid-container[class*=S-]'), function(index, sidebar) {
+			GRID.makeSidebarPuffer(jQuery(sidebar));
+		});
+	},
+	makeSidebarPuffer: function($sidebar){
+		var permissionsList = GRID.getSidebarWhitelist($sidebar.data("type"));
+		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
+		var $sidebar_slot = $sidebar.find('.grid-slot');
+		var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
+		if(c_height < $sidebar_slot.outerHeight(true)){
+			// if sidebar is taller than containers make puffer margin top
+			var needed_margin_top = $sidebar_slot.outerHeight()+sidebar_margin_bottom;
+			needed_margin_top -= c_height;
+			$sidebar.css("margin-top", needed_margin_top);
+		} else if(c_height > $sidebar_slot.outerHeight(true)){
+			// if sidebar is smaller than containers expend sidebar slot
+			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
+			need_bottom_offset += sidebar_margin_bottom;
+			$sidebar_slot.css("padding-bottom",need_bottom_offset);
+		}
+	},	
+	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
+		var c_height = 0;
+		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
+			c_height += $container.outerHeight(true);
+			$container = $container.prev();
+		}
+		return c_height;
+	},
+	getSidebarWhitelist: function(sidebar_type){
+		switch(sidebar_type){
+			case "S-0-4":
+				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true,
+						"S-4-0":true, "C-0-4-0":true,
+						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
+				break;
+			case "S-4-0":
+				return {"C-0-8":true,"C-0-4-4":true, 
+						"S-0-4":true, "C-0-4-0":true, 
+						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
+				break;
+			case "S-0-6":
+				return {"C-12-0":true, "C-4-4-4-0":true, "C-6-6-0":true, "C-3-3-3-3-0":true,
+						"c-sort-placeholder": true, "container-drop-area-wrapper": true };
+				break;
+		}
+		return {};
 	},
 	// CKEDITOR functions
 	useCKEDITOR: function(selector){
@@ -323,7 +383,6 @@ GRID = {
 								.getSlots().get(new_slot_id);
 
 				GRID.getModel().moveBox(box, new_slot, new_box_index);
-
 			}
 		});
 	}

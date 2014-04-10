@@ -44,6 +44,8 @@ class grid_library
 		$scripts[]=$framework_dir."jquery.ui.touch-punch.js";
 		$scripts[]=$framework_dir."jquery.iframe-transport.js";
 		$scripts[]=$framework_dir."jquery.fileupload.js";
+		$scripts[]=$framework_dir."mutate.events.js";
+		$scripts[]=$framework_dir."mutate.min.js";
 		$scripts[]=$framework_dir."underscore.js";
 		$scripts[]=$framework_dir."GridBackbone.js";
 		$scripts[]=$framework_dir."GridICanHaz.js";
