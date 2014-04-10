@@ -128,15 +128,15 @@
 	width:66.6%;
 	float:left;
 }
-#grid .C-8-0,
-#grid .C-0-8{
+.grid-wrapper .C-8-0,
+.grid-wrapper .C-0-8{
 	width: 66.6% !important;
 }
-#grid .C-0-8{
+.grid-wrapper .C-0-8{
 	margin-left: 33.3%;
 }
-#grid .C-8-0 .slot,
-#grid .C-0-8 .slot{
+.grid-wrapper .C-8-0 .slot,
+.grid-wrapper .C-0-8 .slot{
 	width: 100%;
 }
 
@@ -159,25 +159,25 @@
 	width: 33.3%;
 	margin-left: 33.3%;
 }
-#grid .C-0-4-4,
-#grid .C-4-4-0{
+.grid-wrapper .C-0-4-4,
+.grid-wrapper .C-4-4-0{
 	width: 66.6% !important;
 }
-#grid .C-0-4-4{
+.grid-wrapper .C-0-4-4{
 	margin-left: 33.3%;
 }
-#grid .C-4-4-0 .slot,
-#grid .C-0-4-4 .slot{
+.grid-wrapper .C-4-4-0 .slot,
+.grid-wrapper .C-0-4-4 .slot{
 	width: 49%;
 }
-#grid .C-4-4-0 .slot:last-child{
+.grid-wrapper .C-4-4-0 .slot:last-child{
 	float: right;
 }
-#grid .C-0-4-0{
+.grid-wrapper .C-0-4-0{
 	width: 33.3% !important;
 	margin-left: 33.3%;
 }
-#grid .C-0-4-0 .slot{
+.grid-wrapper .C-0-4-0 .slot{
 	width: 100%;
 	margin-left: 0px;
 }
@@ -193,17 +193,17 @@
 .C-2-2-4-0 .slot:last-child{
 	width: 33%;
 }
-#grid .C-4-2-2-0,
-#grid .C-2-2-4-0{
+.grid-wrapper .C-4-2-2-0,
+.grid-wrapper .C-2-2-4-0{
 	width: 66.6% !important;
 }
-#grid .C-4-2-2-0 .slot,
-#grid .C-2-2-4-0 .slot{
+.grid-wrapper .C-4-2-2-0 .slot,
+.grid-wrapper .C-2-2-4-0 .slot{
 	width: 24%;
 	margin-right: 1%;
 }
-#grid .C-4-2-2-0 .slot:first-child,
-#grid .C-2-2-4-0 .slot:last-child{
+.grid-wrapper .C-4-2-2-0 .slot:first-child,
+.grid-wrapper .C-2-2-4-0 .slot:last-child{
 	width:49%;
 }
 
@@ -221,8 +221,8 @@
 #grid .C-2-2-2-2-0{
 	width: 66.6% !important;
 }
-#grid .C-2-2-2-2-0 .slot,
-#grid .C-0-2-2-2-2 .slot{
+.grid-wrapper .C-2-2-2-2-0 .slot,
+.grid-wrapper .C-0-2-2-2-2 .slot{
 	width: 24%;
 }
 
@@ -433,11 +433,13 @@
 	opacity: 1;
 } 
 [data-reused=false] .grid-slot-style-changer:hover{
+	z-index: $idx-style-changer-hover;
 	&:hover .grid-style-changer-active{
 		background-color: $color-slot-style-changer-bg;
 		color: $color-style-changer-active-hover;
+
 	}
-	.grid-choose-style{
+	.grid-choose-style{		
 		color: white;
 		display:block;
 		width: 100%;
@@ -445,6 +447,7 @@
 		li{
 			padding: 10px 0px 8px 0px;
 			transition: $transitions;
+			margin: 0px;
 			&:hover{
 				cursor: pointer;
 				background-color: $color-slot-style-changer-styles-bg-hover;

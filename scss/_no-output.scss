@@ -119,8 +119,10 @@ $dim-revisions-width: $dim-grid-width;
 
 $idx-max: 999;
 $idx-toolbar: 90;
+$idx-container-options-hover: 81;
 $idx-container-options: 80;
-$idx-style-changer: 70;
+$idx-style-changer-hover: $idx-container-options-hover;
+$idx-style-changer: $idx-container-options;
 $idx-container: 60;
 $idx-container-reused: 50;
 $idx-slot: 40;

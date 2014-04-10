@@ -174,15 +174,15 @@ Dimensions
   width: 66.6%;
   float: left; }
 
-#grid .C-8-0,
-#grid .C-0-8 {
+.grid-wrapper .C-8-0,
+.grid-wrapper .C-0-8 {
   width: 66.6% !important; }
 
-#grid .C-0-8 {
+.grid-wrapper .C-0-8 {
   margin-left: 33.3%; }
 
-#grid .C-8-0 .slot,
-#grid .C-0-8 .slot {
+.grid-wrapper .C-8-0 .slot,
+.grid-wrapper .C-0-8 .slot {
   width: 100%; }
 
 /** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
@@ -204,25 +204,25 @@ Dimensions
   width: 33.3%;
   margin-left: 33.3%; }
 
-#grid .C-0-4-4,
-#grid .C-4-4-0 {
+.grid-wrapper .C-0-4-4,
+.grid-wrapper .C-4-4-0 {
   width: 66.6% !important; }
 
-#grid .C-0-4-4 {
+.grid-wrapper .C-0-4-4 {
   margin-left: 33.3%; }
 
-#grid .C-4-4-0 .slot,
-#grid .C-0-4-4 .slot {
+.grid-wrapper .C-4-4-0 .slot,
+.grid-wrapper .C-0-4-4 .slot {
   width: 49%; }
 
-#grid .C-4-4-0 .slot:last-child {
+.grid-wrapper .C-4-4-0 .slot:last-child {
   float: right; }
 
-#grid .C-0-4-0 {
+.grid-wrapper .C-0-4-0 {
   width: 33.3% !important;
   margin-left: 33.3%; }
 
-#grid .C-0-4-0 .slot {
+.grid-wrapper .C-0-4-0 .slot {
   width: 100%;
   margin-left: 0px; }
 
@@ -237,17 +237,17 @@ Dimensions
 .C-2-2-4-0 .slot:last-child {
   width: 33%; }
 
-#grid .C-4-2-2-0,
-#grid .C-2-2-4-0 {
+.grid-wrapper .C-4-2-2-0,
+.grid-wrapper .C-2-2-4-0 {
   width: 66.6% !important; }
 
-#grid .C-4-2-2-0 .slot,
-#grid .C-2-2-4-0 .slot {
+.grid-wrapper .C-4-2-2-0 .slot,
+.grid-wrapper .C-2-2-4-0 .slot {
   width: 24%;
   margin-right: 1%; }
 
-#grid .C-4-2-2-0 .slot:first-child,
-#grid .C-2-2-4-0 .slot:last-child {
+.grid-wrapper .C-4-2-2-0 .slot:first-child,
+.grid-wrapper .C-2-2-4-0 .slot:last-child {
   width: 49%; }
 
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
@@ -263,8 +263,8 @@ Dimensions
 #grid .C-2-2-2-2-0 {
   width: 66.6% !important; }
 
-#grid .C-2-2-2-2-0 .slot,
-#grid .C-0-2-2-2-2 .slot {
+.grid-wrapper .C-2-2-2-2-0 .slot,
+.grid-wrapper .C-0-2-2-2-2 .slot {
   width: 24%; }
 
 /** Container Sidebars */
@@ -425,7 +425,7 @@ Dimensions
 .grid-slot .grid-slot-style-changer {
   text-align: center;
   font-weight: bold;
-  z-index: 70;
+  z-index: 80;
   display: block;
   opacity: 0;
   -webkit-transition: all 0.25s ease;
@@ -462,21 +462,24 @@ Dimensions
 .grid-container:hover .grid-slot-style-changer {
   opacity: 1; }
 
-[data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
-  background-color: #eceff3;
-  color: #3f4853; }
-[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
-  color: white;
-  display: block;
-  width: 100%;
-  padding-top: 2px; }
-  [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
-    padding: 10px 0px 8px 0px;
-    -webkit-transition: all 0.25s ease;
-    transition: all 0.25s ease; }
-    [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
-      cursor: pointer;
-      background-color: #3f4853; }
+[data-reused=false] .grid-slot-style-changer:hover {
+  z-index: 81; }
+  [data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
+    background-color: #eceff3;
+    color: #3f4853; }
+  [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
+    color: white;
+    display: block;
+    width: 100%;
+    padding-top: 2px; }
+    [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
+      padding: 10px 0px 8px 0px;
+      -webkit-transition: all 0.25s ease;
+      transition: all 0.25s ease;
+      margin: 0px; }
+      [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
+        cursor: pointer;
+        background-color: #3f4853; }
 
 .grid-boxes-wrapper {
   border-top: 2px solid #f3f5f7; }
@@ -544,7 +547,7 @@ Dimensions
     color: white;
     width: 110px;
     right: 0px;
-    top: 26px; }
+    top: 18px; }
     .grid-container-options .grid-container-options-list .grid-container-options-list-item {
       cursor: pointer;
       padding: 5px;
@@ -603,6 +606,9 @@ Dimensions
   .grid-container:hover .grid-container-prolog:hover,
   .grid-container:hover .grid-container-epilog:hover {
     color: #3f4853; }
+
+.grid-container-options:hover {
+  z-index: 81; }
 
 .grid-container-options .grid-container-options-list {
   display: none; }

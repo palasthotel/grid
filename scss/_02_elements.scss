@@ -62,7 +62,7 @@
 		color: $color-container-options-list;
 		width:110px;
 		right: 0px;
-		top: 26px;
+		top: 18px;
 
 		.grid-container-options-list-item{
 			cursor:pointer;
@@ -135,6 +135,9 @@
 }
 
 // options list hover
+.grid-container-options:hover{
+	z-index: $idx-container-options-hover;
+}
 .grid-container-options{
 	.grid-container-options-list{
 		display: none;
