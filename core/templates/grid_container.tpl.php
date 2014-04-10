@@ -19,7 +19,6 @@ if ($this->firstcontentcontainer):
 			<?}?>
 		<?}?>
 		<div class="c-prolog">
-			<?= ($this->sidebarleft)? "left": "right"; ?>
 		  	<?=$this->prolog?>
 		</div>
 	</div>
