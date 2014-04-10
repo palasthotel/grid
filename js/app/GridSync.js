@@ -321,6 +321,7 @@ var GridRequest = {
 			new GridAjax("deleteContainer", params,
 				{
 				success_fn: function(data){
+					GRID.getModel().getContainers().remove(container);
 					options.success();
 				}
 			});

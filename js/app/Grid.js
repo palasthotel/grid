@@ -225,6 +225,10 @@ GRID = {
 	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
+		var container_deleted;
+		container_deleted=false;
+		var container;
+		var self=this;
 		this.getView().$el.sortable({
             handle: ".grid-container-sorthandle, .grid-container-reused-layer",
             items:".container:not(.SC-4)",
@@ -238,11 +242,25 @@ GRID = {
             cursorAt: { left: 30, bottom: 30 },
             start: function( event, ui ){
                 GRID.log(["container sort START"], event, ui);
+                var old_container_id=ui.item.data("id");
+                jQuery(".grid-element-trash").droppable({
+	                accept: '.grid-container',
+	                hoverClass: 'ui-state-hover',
+	                drop:function(e,ui) {
+	                	container=GRID.getModel().getContainers().get(old_container_id);
+	                	container_deleted=true;
+	                }
+                });
             },
             stop: function(event, ui){
+            	if(container_deleted)
+            	{
+            		container.destroy();
+            	}
                 //$(".box").slideDown(100);
             },
             update: function( event, ui ){
+            	if(container_deleted)return;
             	var containerview = ui.item.attr("data-cid");
                
                 var newIndex = ui.item.index();
@@ -283,7 +301,7 @@ GRID = {
 				old_container_id = ui.item.parents(".container").data("id");
 
 				GRID.log(["START BOX SORT", old_box_index, old_slot_id, old_container_id]);
-				jQuery(".c-box-trash").droppable({
+				jQuery(".grid-element-trash").droppable({
 					accept: '.slot .box',
 					hoverClass: 'ui-state-hover',
 					drop:function(e,ui) {

@@ -25,6 +25,7 @@ var ContainersView = GridBackbone.View.extend({
 	initialize: function(){
         GRID.log('INIT ContainersView');
         this.listenTo(this.collection, 'add',this.render);
+        this.listenTo(this.collection, 'remove',this.render);
 	},
 	render: function(){
     	GRID.log('i am rendering the container collection');
