@@ -323,7 +323,7 @@ var BoxEditor = GridBackbone.View.extend({
 
     onToggle:function(e)
     {
-        jQuery(e.srcElement).siblings(".field-wrapper").slideToggle(300);
+        jQuery(e.target).siblings(".field-wrapper").slideToggle(300);
     },
 
     onMakeReusable:function(e)
