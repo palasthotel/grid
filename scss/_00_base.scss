@@ -39,11 +39,11 @@
 		text-transform: uppercase;
 		font-weight: bold;
 		letter-spacing: 0.05em;
-		-webkit-transition: $transition-link;
-		   -moz-transition: $transition-link;
-		    -ms-transition: $transition-link;
-		     -o-transition: $transition-link;
-		        transition: $transition-link;
+
+
+		
+		@include transition();
+		//@include $transition-link;
 		box-shadow: none;
 		&:hover{
 			color: $color-edit;

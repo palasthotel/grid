@@ -17,11 +17,13 @@ $color-link-hover: black;
 $color-input-border: rgba(236,239,243,1);
 $color-input-border-hover: rgba(176,186,194,1);
 
-$transition-link: all .1337s ease;
-$transitions: all .1337s ease;
-$transitions: all .250s ease;
-$transitions-slow: 0.3s ease;
 
+/*
+$transition-link: 	@include transition();
+$transitions: 		@include transition(all, .1337s, ease);
+$transitions: 		@include transition(all, .1337s, ease);
+$transitions-slow: 	@include transition(all, .3s, ease);
+*/
 
 
 // container
@@ -127,3 +129,6 @@ $idx-container: 60;
 $idx-container-reused: 50;
 $idx-slot: 40;
 $idx-box: 30;
+
+
+

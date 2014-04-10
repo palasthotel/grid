@@ -398,7 +398,7 @@
 	z-index: $idx-style-changer;
 	display:block;
 	opacity: 0;
-	transition: $transitions;
+	@include transition();
 	.grid-style-changer-active{
 		padding: 6px 0px 4px 0px;
 		color: $color-style-changer-active;
@@ -446,7 +446,7 @@
 		padding-top: 2px;
 		li{
 			padding: 10px 0px 8px 0px;
-			transition: $transitions;
+			@include transition();
 			margin: 0px;
 			&:hover{
 				cursor: pointer;

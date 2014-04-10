@@ -15,7 +15,7 @@
 			width: 135px;
 			right:90px;
 			position: relative;
-			transition: $transitions;
+			@include transition();
 			&:hover{
 				right:0px;
 			}
@@ -26,7 +26,8 @@
 				font-size: 12px;
 				width: 100%;
 				height: 45px;
-				transition: $transitions;
+				@include transition();
+
 				background-color: $color-grid-bg;
 				[class^="icon-"], 
 				[class*=" icon-"]{
@@ -57,7 +58,7 @@
 // Grid state display
 
 .grid-toolbar{
-	transition: $transitions;
+	@include transition();
 	border-top: 4px solid $color-draft;
 	li.grid-tool-publish button,
 	li.grid-tool-publish button:hover{
@@ -107,7 +108,7 @@
 		font-weight: bold;
 		height: $dim-tool-element-tab-height;
 		padding-top: 15px;
-		transition: $transition-link;
+		@include transition();
 		position:relative;
 		background-color: $color-tool-elementtype;
 		&:hover,
@@ -131,33 +132,36 @@
 	}
 }
 
-.grid-element-type-content{
+.grid-element-type-content {
 	min-height: 100px;
 	padding: 15px 10px;
 	overflow-y: scroll;
 	background-color: $color-tool-element-content-bg;
+
 	.grid-element-container-list,
-	.grid-element-box-list{
+	.grid-element-box-list {
 		margin: 0px;
 	}
+
 	.grid-container-type,
-	.grid-box-type{
+	.grid-box-type {
 		position: relative;
 		font-weight: bold;
 		text-transform: uppercase;
 		cursor: pointer;
 		padding: 20px;
-		.icon-arrow{
+		.icon-arrow {
 			z-index: $idx-toolbar;
 			position:absolute;
 			top:16px;
 			left:-4px;
 			font-size: 14px;
-			transition: $transitions-slow;
+			@include transition(all, .3s, ease);;
+			//transition: $transitions-slow;
 		}
-		&.active{
-			.icon-arrow{
-				transform: rotate(90deg);
+		&.active {
+			.icon-arrow {
+				@include rotate(90);
 			}
 			// &:before{
 			// 	transform: rotate(90deg);
@@ -169,7 +173,7 @@
 }
 // new Element -> container or box
 // Design thats the same for both types belongs here
-.grid-new-element{
+.grid-new-element {
 	cursor: move;
 	position: relative;
 	height: 40px;
@@ -177,13 +181,15 @@
 	margin-bottom: 8px;
 	color: $color-draggable-border;
 	overflow: hidden;
-	.grid-element-title{
+
+	.grid-element-title {
 		color: $color-text;
 		padding-left: 20px;
 		margin: 0px;
 		padding-top: 10px; 
 	}
-	&:hover{
+
+	&:hover {
 		color: $color-draggable-border-hover;
 		border-color: $color-draggable-border-hover;
 	}
@@ -191,11 +197,12 @@
 }
 
 // new containers
-.grid-container-type-content{
+.grid-container-type-content {
 	margin:0px;
 	border-bottom: 1px solid $color-grid-bg;
 }
-.grid-new-container-slots{
+
+.grid-new-container-slots {
 	margin: 5px 5px 5px 20px;
 	.slot{
 		height: 30px;
@@ -203,13 +210,15 @@
 
 	}
 }
-.grid-element-drag-icon{
+
+.grid-element-drag-icon {
 	position: absolute;
 	top: 4px;
 	left: -6px;
 	font-size: 120%;
 }
-.container-drop-area-wrapper{
+
+.container-drop-area-wrapper {
 	position:relative;
 	.container-drop-area{
 		box-sizing:border-box;
@@ -218,29 +227,33 @@
 		top: -5px;
 		width: 100%;
 		z-index: $idx-container;
-		transition: $transitions-slow;
+		@include transition(all, .3s, ease);
 		background-color: lighten($color-edit, 20%);
 		&.hover{
 			background-color: $color-edit;
 		}
 	}
 }
+
 // new boxes
-.grid-box-type-content{
+.grid-box-type-content {
 	margin:0px;
 	border-bottom: 1px solid $color-grid-bg;
 }
-.grid-box-type{
-	& + dl .grid-box-type-search{
+
+.grid-box-type {
+	& + dl .grid-box-type-search {
 		display:none;
 	}
-	&.active + dl .grid-box-type-search{
+
+	&.active + dl .grid-box-type-search {
 		display:block;
 	}
 }
-.grid-box-drop-area-wrapper{
+
+.grid-box-drop-area-wrapper {
 	position:relative;
-	.grid-box-drop-area{
+	.grid-box-drop-area {
 		box-sizing:border-box;
 		position: absolute;
 		height: 20px;
@@ -250,7 +263,7 @@
 		
 		width: 100%;
 		z-index: $idx-container;
-		transition: $transitions-slow;
+		@include transition(all, .3s, ease);
 		background-color: lighten($color-edit, 40%);
 		&.hover{
 			background-color: $color-edit;
@@ -260,7 +273,7 @@
 }
 
 
-.dragger-helper{
+.dragger-helper {
 	display:block;
 	height:50px;
 	width:38px;
@@ -271,15 +284,15 @@
 	border:1px solid #ccc;
 	background-color:#fff;
 	z-index: 1000;
-	box-shadow: 4px 4px 0 #fff,
-				5px 5px 0 #ccc,
-				9px 9px 0 #fff,
-				10px 10px 0 #ccc,
-				14px 14px 0 #fff;
+	/*@include box-shadow (	4px 4px 0 #fff,
+							5px 5px 0 #ccc,
+							9px 9px 0 #fff,
+							10px 10px 0 #ccc,
+							14px 14px 0 #fff);*/
 }
 
 
-.grid-element-trash{
+.grid-element-trash {
 	position: absolute;
 	bottom:0px;
 	left: 0px;
