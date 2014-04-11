@@ -13,7 +13,7 @@
 }
 
 .grid-wrapper .grid-container[data-type*=S-] {
-	width: 100% !important;
+	width: 100%;
 	padding:0px;
 	//margin: 0px;
 	background-color: transparent;
@@ -38,5 +38,15 @@
 		right: 0px;
 		padding-right: 0px;
 		padding-left: 10px;
+	}
+}
+
+// new file ? what name? tell me...
+.grid-wrapper .grid-container .grid-box .grid .SC-4{
+	.grid-slot{
+		position: relative;
+		top: auto;
+		left: auto;
+		width: auto;
 	}
 }

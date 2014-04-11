@@ -177,11 +177,11 @@ GRID = {
 	},
 	// calculates Sidebar
 	onSidebarCalculation: function(){
-		GRID.$root.find(".grid-container").css("margin-top", "0px");
-		GRID.$root.find(".grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
+		GRID.$root.find(".grid-containers-wrapper > .grid-container").css("margin-top", "0px");
+		GRID.$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
 
 		// add new offsets
-		jQuery.each(GRID.$root.find('.grid-container[class*=S-]'), function(index, sidebar) {
+		jQuery.each(GRID.$root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
 			GRID.makeSidebarPuffer(jQuery(sidebar));
 		});
 	},

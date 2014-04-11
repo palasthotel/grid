@@ -1033,7 +1033,7 @@ h3 {
     margin: 0px; }
 
 .grid-wrapper .grid-container[data-type*=S-] {
-  width: 100% !important;
+  width: 100%;
   padding: 0px;
   background-color: transparent;
   border: none; }
@@ -1055,6 +1055,12 @@ h3 {
     right: 0px;
     padding-right: 0px;
     padding-left: 10px; }
+
+.grid-wrapper .grid-container .grid-box .grid .SC-4 .grid-slot {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: auto; }
 
 .gridmode-container .grid-tool-list,
 .gridmode-container .grid-element-type[data-type=container],
