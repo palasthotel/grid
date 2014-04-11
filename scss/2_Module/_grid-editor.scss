@@ -1,6 +1,7 @@
 // container and box editor
 
-.grid-editor-wrapper{	
+.grid-editor-wrapper{
+	@extend .grid-all-wrapper;	
 }
 
 .grid-editor-controls{

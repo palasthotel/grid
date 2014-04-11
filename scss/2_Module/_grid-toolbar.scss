@@ -3,8 +3,6 @@
 .grid-toolbar {
 	@include transition();
 	border-top: 4px solid $color-draft;
-
-
 	
 	position:relative;
 	background-color: $color-toolbar-bg;
@@ -22,6 +20,7 @@
 			width: 135px;
 			right:90px;
 			position: relative;
+			margin: 0;
 			@include transition();
 			&:hover {
 				right:0px;
@@ -34,6 +33,7 @@
 				width: 100%;
 				height: 45px;
 				@include transition();
+				border: none;
 
 				// background-color: $color-grid-bg;
 				[class^="icon-"], 

@@ -1,39 +1,35 @@
 @import "no-output/no-output";
 @import "no-output/mixins";
 
-@import "0_Base/base";
-
-
 /**
 **/
-@import "1_Layout/grid-box";
-@import "1_Layout/grid-boxes-wrapper";
-@import "1_Layout/grid-container";
-@import "1_Layout/grid-container-wrapper";
-@import "1_Layout/grid-slot";
-@import "1_Layout/grid-slot-style-changer";
-@import "1_Layout/grid-wrapper";
 
-
-
+@import "0_Base/grid-base";
+@import "0_Base/grid-all-wrapper";
 /**
 **/
-@import "2_Module/container-drop-area-wrapper.scss";
-@import "2_Module/dragger-helper.scss";
-@import "2_Module/grid-box-drop-area-wrapper.scss";
-@import "2_Module/grid-box.scss";
-@import "2_Module/grid-container.scss";
-@import "2_Module/grid-editor.scss";
-@import "2_Module/grid-element-drag-icon.scss";
-@import "2_Module/grid-element-trash.scss";
-@import "2_Module/grid-element-type-content.scss";
-@import "2_Module/grid-element-type-select.scss";
-@import "2_Module/grid-new-container-slots.scss";
-@import "2_Module/grid-new-element.scss";
-@import "2_Module/grid-revisions.scss";
-@import "2_Module/grid-tool-elements.scss";
-@import "2_Module/grid-toolbar.scss";
-@import "2_Module/gridmode.scss";
+
+@import "2_Module/_grid-container-drop-area-wrapper.scss";
+@import "2_Module/_grid-dragger-helper.scss";
+@import "2_Module/_grid-box-drop-area-wrapper.scss";
+@import "2_Module/_grid-box.scss";
+@import "2_Module/_grid-boxes-wrapper.scss";
+@import "2_Module/_grid-container-wrapper.scss";
+@import "2_Module/_grid-container.scss";
+@import "2_Module/_grid-editor.scss";
+@import "2_Module/_grid-element-drag-icon.scss";
+@import "2_Module/_grid-element-trash.scss";
+@import "2_Module/_grid-element-type-content.scss";
+@import "2_Module/_grid-element-type-select.scss";
+@import "2_Module/_grid-new-container-slots.scss";
+@import "2_Module/_grid-new-element.scss";
+@import "2_Module/_grid-revisions.scss";
+@import "2_Module/_grid-slot-style-changer.scss";
+@import "2_Module/_grid-slot.scss";
+@import "2_Module/_grid-tool-elements.scss";
+@import "2_Module/_grid-toolbar.scss";
+@import "2_Module/_grid-wrapper.scss";
+@import "2_Module/_grid-gridmode.scss";
 
 /**
 **/

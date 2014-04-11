@@ -2,24 +2,62 @@
  * container 
  ****************/
 
+// container dimensions
+.grid-container{
+	
+	margin: 0px 0px 20px 0px;
+	
+
+	&:hover {
+		
+		.grid-container-sorthandle,
+		.grid-container-options-icon,
+		.grid-container-prolog,
+		.grid-container-epilog
+		{
+			color: $color-container-controls;
+			&:hover{
+				color: $color-container-controls-hover;
+			}
+		}
+
+		.grid-container-title {
+			color: $color-dark;
+		}
+
+		.grid-container-controls{
+			background-color: $color-container-bg;
+			border: 1px solid $color-container-border;
+			border-bottom: none;
+		}
+
+		.grid-container-content{
+			border-top: 1px solid white;
+			
+		}
+	}
+}
+
+.grid-container-content{
+	position: relative;
+	background-color: $color-container-bg;
+	border: 1px solid $color-container-border;
+}
+
+.grid-container-controls{
+	position: relative;
+	background-color: transparent;
+	height: 40px;
+	border: 1px solid transparent;
+	border-bottom: none;
+}
 
 
 /**********************************
  * container hover states
  **********************************/
 
-// controls background hover
-.grid-container{
 
-	// @include box-shadow(0, 0, 3px, 0, #C7C7C7);
-
-	.grid-container-controls{
-		background-color: transparent;
-	}
-	&:hover .grid-container-controls{
-		background-color: $color-container-bg;
-	}
-}
 
 // text color for hover states of controls
 .grid-container-title,
@@ -31,34 +69,12 @@
 	@include transition(all, .3s, ease);
 }
 
-.grid-container:hover{
-	.grid-container-title,
-	.grid-container-sorthandle,
-	.grid-container-options-icon,
-	.grid-container-prolog,
-	.grid-container-epilog
-	{
-		color: $color-container-controls;
-		&:hover{
-			color: $color-container-controls-hover;
-		}
-	}
 
-}
+
 
 // options list hover
-.grid-container-options:hover{
-	z-index: $idx-container-options-hover;
-}
 
-.grid-container-options{
-	.grid-container-options-list{
-		display: none;
-	}
-	&:hover .grid-container-options-list{
-		display: block;
-	}
-}
+
 
 // options list item hover
 .grid-container-options-list-item:hover{
@@ -98,9 +114,7 @@
 }
 
 
-.grid-container-controls {
-	height: 40px;
-}
+
 
 .grid-container-title{
 	position: absolute;
@@ -124,12 +138,18 @@
 	border: 2px dashed $color-container-sort-placeholder-border;
 }
 
+
 .grid-container-options{
 	position: absolute;
 	top: 5px;
 	right: 0px;
 	height: 40px;
 	z-index: $idx-container-options;
+
+	&:hover{
+		z-index: $idx-container-options-hover;
+	}
+
 	.grid-container-options-icon{
 		text-transform: uppercase;
 		font-weight: bold;
@@ -144,6 +164,8 @@
 		top: 30px;
 		margin: 0px;
 		padding: 0px;
+		display: none;
+
 		.grid-container-options-list-item{
 			cursor:pointer;
 			padding: 5px;
@@ -154,7 +176,11 @@
 		&:before{
 			content:"";
 			border: 8px solid $color-slot-style-changer-styles-bg;
-			font-size:0;line-height:0;height:0;padding:0;margin:0;
+			font-size:0;
+			line-height:0;
+			height:0;
+			padding:0;
+			margin:0;
 			border-top-color:    transparent;
 			border-right-color:  transparent;
 			border-left-color:   transparent;
@@ -163,11 +189,10 @@
 			left:47%;
 		}
 	}
-}
 
-.grid-container-content{
-	background-color: $color-container-bg;
-	position: relative;
+	&:hover .grid-container-options-list{
+		display: block;
+	}
 }
 
 .grid-container-prolog,
