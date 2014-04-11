@@ -1,8 +1,8 @@
 .grid-new-container-slots {
-	margin: 5px 5px 5px 20px;
-	.slot{
+	margin: 0 0 0 20px;
+	.grid-slot{
 		height: 30px;
 		background-color: $color-tool-element-container-slot-bg;
-
+		border-left: 4px solid white;
 	}
 }

@@ -521,10 +521,11 @@ h3 {
       left: 47%; }
 
 .grid-new-container-slots {
-  margin: 5px 5px 5px 20px; }
-  .grid-new-container-slots .slot {
+  margin: 0 0 0 20px; }
+  .grid-new-container-slots .grid-slot {
     height: 30px;
-    background-color: #f0f0f0; }
+    background-color: #f0f0f0;
+    border-left: 4px solid white; }
 
 .grid-new-element {
   cursor: move;
@@ -703,53 +704,53 @@ h3 {
   float: left;
   box-sizing: border-box; }
 
-.slot:first-child {
+.grid-slot:first-child {
   border-left: none; }
 
-.C-12 .slot {
+.C-12 .grid-slot {
   width: 100%; }
 
 /** Container C-6-6 **/
-.C-6-6 .slot {
+.C-6-6 .grid-slot {
   width: 50%; }
 
 /** Container C-4-4-4 **/
-.C-4-4-4 .slot {
+.C-4-4-4 .grid-slot {
   width: 33.3%; }
 
-.C-4-4-4 .slot:last-child {
+.C-4-4-4 .grid-slot:last-child {
   width: 33.3%; }
 
 /** Container C-8-4 **/
-.C-8-4 .slot:nth-child(1) {
+.C-8-4 .grid-slot:nth-child(1) {
   width: 66.6%; }
 
-.C-8-4 .slot:nth-child(2) {
+.C-8-4 .grid-slot:nth-child(2) {
   width: 33.3%; }
 
 /** Container C-4-8 **/
-.C-4-8 .slot:nth-child(1) {
+.C-4-8 .grid-slot:nth-child(1) {
   width: 33.3%; }
 
-.C-4-8 .slot:nth-child(2) {
+.C-4-8 .grid-slot:nth-child(2) {
   width: 66%; }
 
 /** Container C-3-3-3-3 **/
-[data-type=C-3-3-3-3] .slot {
+[data-type=C-3-3-3-3] .grid-slot {
   width: 25%; }
 
-[data-type=C-3-3-3-3] .slot:last-child {
+[data-type=C-3-3-3-3] .grid-slot:last-child {
   width: 25%; }
 
 /** Container C-2-2-2-2-2-2 **/
-.C-2-2-2-2-2-2 .slot {
+.C-2-2-2-2-2-2 .grid-slot {
   width: 16.666%; }
 
 /** Container C-0-8 and C-8-0 **/
-.C-0-8 .slot {
+.C-0-8 .grid-slot {
   width: 66.6%; }
 
-.C-8-0 .slot {
+.C-8-0 .grid-slot {
   width: 66.6%; }
 
 .grid-wrapper .C-8-0,
@@ -759,18 +760,18 @@ h3 {
 .grid-wrapper .C-0-8 {
   margin-left: 33.3%; }
 
-.grid-wrapper .C-8-0 .slot,
-.grid-wrapper .C-0-8 .slot {
+.grid-wrapper .C-8-0 .grid-slot,
+.grid-wrapper .C-0-8 .grid-slot {
   width: 100%; }
 
 /** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
-.C-4-4-0 .slot {
+.C-4-4-0 .grid-slot {
   width: 33%; }
 
-.C-0-4-4 .slot {
+.C-0-4-4 .grid-slot {
   width: 33%; }
 
-.C-0-4-0 .slot {
+.C-0-4-0 .grid-slot {
   width: 33.3%; }
 
 .grid-wrapper .C-0-4-4,
@@ -780,118 +781,118 @@ h3 {
 .grid-wrapper .C-0-4-4 {
   margin-left: 33.3%; }
 
-.grid-wrapper .C-4-4-0 .slot,
-.grid-wrapper .C-0-4-4 .slot {
+.grid-wrapper .C-4-4-0 .grid-slot,
+.grid-wrapper .C-0-4-4 .grid-slot {
   width: 49%; }
 
 .grid-wrapper .C-0-4-0 {
   width: 33.3% !important;
   margin-left: 33.3%; }
 
-.grid-wrapper .C-0-4-0 .slot {
+.grid-wrapper .C-0-4-0 .grid-slot {
   width: 100%; }
 
 /** Container C-4-2-2-0 and C-2-2-4-0 **/
-.C-4-2-2-0 .slot,
-.C-2-2-4-0 .slot {
+.C-4-2-2-0 .grid-slot,
+.C-2-2-4-0 .grid-slot {
   width: 16%; }
 
-.C-4-2-2-0 .slot:first-child,
-.C-2-2-4-0 .slot:last-child {
+.C-4-2-2-0 .grid-slot:first-child,
+.C-2-2-4-0 .grid-slot:last-child {
   width: 33%; }
 
 .grid-wrapper .C-4-2-2-0,
 .grid-wrapper .C-2-2-4-0 {
   width: 66.6% !important; }
 
-.grid-wrapper .C-4-2-2-0 .slot,
-.grid-wrapper .C-2-2-4-0 .slot {
+.grid-wrapper .C-4-2-2-0 .grid-slot,
+.grid-wrapper .C-2-2-4-0 .grid-slot {
   width: 24%; }
 
-.grid-wrapper .C-4-2-2-0 .slot:first-child,
-.grid-wrapper .C-2-2-4-0 .slot:last-child {
+.grid-wrapper .C-4-2-2-0 .grid-slot:first-child,
+.grid-wrapper .C-2-2-4-0 .grid-slot:last-child {
   width: 49%; }
 
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
-.C-2-2-2-2-0 .slot {
+.C-2-2-2-2-0 .grid-slot {
   width: 16%; }
 
-.C-0-2-2-2-2 .slot {
+.C-0-2-2-2-2 .grid-slot {
   float: right; }
 
 #grid .C-2-2-2-2-0 {
   width: 66.6% !important; }
 
-.grid-wrapper .C-2-2-2-2-0 .slot,
-.grid-wrapper .C-0-2-2-2-2 .slot {
+.grid-wrapper .C-2-2-2-2-0 .grid-slot,
+.grid-wrapper .C-0-2-2-2-2 .grid-slot {
   width: 24%; }
 
 /*************************
 ************ 18 er ********
 ************************/
 /** Container C-18 **/
-.C-18 .slot {
+.C-18 .grid-slot {
   width: 100%; }
 
-.C-6-6-6 .slot {
+.C-6-6-6 .grid-slot {
   width: 33%; }
 
-.C-6-6-6 .slot:last-child {
+.C-6-6-6 .grid-slot:last-child {
   width: 32%; }
 
-.C-12-6 .slot {
+.C-12-6 .grid-slot {
   width: 66%; }
 
-.C-12-6 .slot:last-child {
+.C-12-6 .grid-slot:last-child {
   width: 33%; }
 
-.C-4-4-4-6 .slot {
+.C-4-4-4-6 .grid-slot {
   width: 22%; }
 
-.C-4-4-4-6 .slot:last-child {
+.C-4-4-4-6 .grid-slot:last-child {
   width: 32%; }
 
-.C-3-3-3-3-3-3 .slot {
+.C-3-3-3-3-3-3 .grid-slot {
   width: 16%; }
 
-.C-3-3-3-3-3-3 .slot:last-child {
+.C-3-3-3-3-3-3 .grid-slot:last-child {
   float: right; }
 
 /** Container C-12-0 **/
-.C-12-0 .slot {
+.C-12-0 .grid-slot {
   width: 66.6%; }
 
 .C-12-0 {
   width: 66.6% !important; }
 
-.C-12-0 .slot {
+.C-12-0 .grid-slot {
   width: 100%; }
 
 /** Container C-4-4-4-0 **/
-.C-4-4-4-0 .slot {
+.C-4-4-4-0 .grid-slot {
   width: 22%; }
 
 .C-4-4-4-0 {
   width: 66.6% !important; }
 
-.C-4-4-4-0 .slot {
+.C-4-4-4-0 .grid-slot {
   width: 33%; }
 
 /** Container C-6-6-0 **/
-.C-6-6-0 .slot {
+.C-6-6-0 .grid-slot {
   width: 33.3%; }
 
 .C-6-6-0 {
   width: 66.6% !important; }
 
-.C-6-6-0 .slot {
+.C-6-6-0 .grid-slot {
   width: 50%; }
 
-.C-6-6-0 .slot:last-child {
+.C-6-6-0 .grid-slot:last-child {
   margin-right: 0px; }
 
 /** Container C-3-3-3-3-0 **/
-.C-3-3-3-3-0 .slot {
+.C-3-3-3-3-0 .grid-slot {
   width: 16%; }
 
 .C-3-3-3-3-0 {
@@ -901,11 +902,11 @@ h3 {
   width: 24.5%; }
 
 /* container sidebars */
-.S-0-4 .slot {
+.S-0-4 .grid-slot {
   width: 33%;
   float: right; }
 
-.S-4-0 .slot {
+.S-4-0 .grid-slot {
   width: 33%; }
 
 .grid-tool-elements {
@@ -1023,3 +1024,5 @@ h3 {
 
 /**
 **/
+
+/*# sourceMappingURL=grid-backend.css.map */
