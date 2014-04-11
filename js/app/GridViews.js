@@ -72,7 +72,6 @@ var ContainerView = GridBackbone.View.extend({
             var epilog = jQuery(json.epilog).text();
             json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
         }
-        
 
     	this.$el.html(ich.tpl_container( json));
         this._slotsView.render();

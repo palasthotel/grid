@@ -124,4 +124,19 @@
 	}
 }
 
+// sidebar boxes
+.grid-container[class*="S-"] .grid-box{
+	.grid-box-controls{
+		cursor: default;
+	}
+	.grid-box-delete{
+		display: none;
+	}
+	.grid-box-edit{
+		bottom: 0px;
+	}
+	.grid-box-drag{
+		display: none;
+	}
+}
 

@@ -220,6 +220,15 @@ h3 {
 .grid-box-type.active + dl .grid-box-type-search {
   display: block; }
 
+.grid-container[class*="S-"] .grid-box .grid-box-controls {
+  cursor: default; }
+.grid-container[class*="S-"] .grid-box .grid-box-delete {
+  display: none; }
+.grid-container[class*="S-"] .grid-box .grid-box-edit {
+  bottom: 0px; }
+.grid-container[class*="S-"] .grid-box .grid-box-drag {
+  display: none; }
+
 .grid-boxes-wrapper {
   min-height: 60px; }
 
