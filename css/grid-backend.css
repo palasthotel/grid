@@ -1059,7 +1059,8 @@ h3 {
   position: relative;
   top: auto;
   left: auto;
-  width: auto; }
+  width: auto;
+  float: none; }
 
 .gridmode-container .grid-tool-list,
 .gridmode-container .grid-element-type[data-type=container],
