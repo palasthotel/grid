@@ -1,11 +1,13 @@
 
 <!-- <div data-id="{{id}}" data-type="{{type}}" class="container display {{type}} clearfix" data-type="{{style}}"
 data-reused="{{reused}}"> -->
-	
+	{{^isSidebarGrid}}
 	<div class="grid-container-controls">
+
 		<span class="grid-container-title">{{title_short}}</span>
 		<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
 		{{#reused}}<span class="grid-container-reused" title="${reusetitle}"><i class="icon-reused"></i></span>{{/reused}}
+		
 		<div class="grid-container-options">
 			<span class="grid-container-options-icon">Options <i class="icon-options"></i></span>
 	        <ul class="grid-container-options-list">
@@ -17,8 +19,9 @@ data-reused="{{reused}}"> -->
 				<li class="grid-container-options-list-item" role="trash"><i class="icon-trash"></i> Delete</li>
 	        </ul>
 	    </div>
+	    
     </div>
-
+	{{/isSidebarGrid}}
 	<div class="grid-container-content">
 		
 		<div class="grid-container-before">

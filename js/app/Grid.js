@@ -77,9 +77,16 @@ GRID = {
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
+				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
+				
 				GRID.gridview = new GridView({model: GRID.getModel() });
 				GRID.$root.html( GRID.getView().render().el );
-				GRID._initializeContainerSortable();
+				
+				GRID.$root
+					.data("isSidebar",GRID.IS_SIDEBAR)
+					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
+
+				if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
 				GRID._initializeBoxSortable();
 				// load the revisions
 				GRID.revisions = new Revisions({grid: GRID.getModel() });

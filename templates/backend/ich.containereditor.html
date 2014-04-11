@@ -9,21 +9,21 @@
     </div>
 	
 	<div class="grid-editor-content">
-        <input placeholder="Title" type="text" name="grid-editor-container-title" value="{{model.title}}" class="grid-editor-container-title" />
-        <input placeholder="Title URL" type="text" name="grid-editor-container-titleurl" value="{{model.titleurl}}" scope="titleurl" class="grid-editor-container-titleurl" />
+        <input placeholder="Title" type="text" name="grid-editor-title" value="{{model.title}}" class="grid-editor-title" />
+        <input placeholder="Title URL" type="text" name="grid-editor-container-titleurl" value="{{model.titleurl}}" scope="titleurl" class="grid-editor-titleurl" />
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
 	        <label>Prolog</label>
-	        <textarea name="grid-editor-container-prolog" class="form-html grid-editor-container-prolog">{{model.prolog}}</textarea>
+	        <textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{model.prolog}}</textarea>
 		</fieldset>
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
 	        <label>Epilog</label>
-			<textarea name="grid-editor-container-epilog" class="form-html grid-editor-container-epilog">{{model.epilog}}</textarea>
+			<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
 		</fieldset>
 
-		<input placeholder="Readmore" type="text" name="grid-editor-container-readmore" class="grid-editor-container-readmore" value="{{model.readmore}}" />
-		<input placeholder="Readmore URL" type="text" name="grid-editor-container-readmoreurl" class="grid-editor-container-readmoreurl" value="{{model.readmoreurl}}" />
+		<input placeholder="Readmore" type="text" name="grid-editor-readmore" class="grid-editor-readmore" value="{{model.readmore}}" />
+		<input placeholder="Readmore URL" type="text" name="grid-editor-readmoreurl" class="grid-editor-readmoreurl" value="{{model.readmoreurl}}" />
  
-		<select name="grid-editor-container-style" class="grid-editor-container-style">
+		<select name="grid-editor-style" class="grid-editor-style">
 			<option value="">Default Style</option>
 			{{#styles}}
 			<option {{selected}} value="{{slug}}">{{title}}</option>

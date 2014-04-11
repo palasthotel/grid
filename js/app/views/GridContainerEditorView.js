@@ -39,11 +39,11 @@ var GridContainerEditor = GridBackbone.View.extend({
 
     onSave:function(e)
     {
-        var class_prefix = ".grid-editor-container-";
+        var class_prefix = ".grid-editor-";
         this.model.set('title',this.$el.find(class_prefix+"title").val());
         this.model.set('titleurl', this.$el.find(class_prefix+"titleurl").val());
-        this.model.set('prolog',CKEDITOR.instances["grid-editor-container-prolog"].getData());
-        this.model.set('epilog',CKEDITOR.instances["grid-editor-container-epilog"].getData());
+        this.model.set('prolog',CKEDITOR.instances["grid-editor-prolog"].getData());
+        this.model.set('epilog',CKEDITOR.instances["grid-editor-epilog"].getData());
         this.model.set('readmore', this.$el.find(class_prefix+"readmore").val());
         this.model.set('readmoreurl',this.$el.find(class_prefix+"readmoreurl").val());
         this.model.set('style', this.$el.find(class_prefix+"style").val());

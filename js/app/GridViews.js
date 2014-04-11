@@ -72,6 +72,7 @@ var ContainerView = GridBackbone.View.extend({
             var epilog = jQuery(json.epilog).text();
             json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
         }
+        json.isSidebarGrid = GRID.IS_SIDEBAR;
 
     	this.$el.html(ich.tpl_container( json));
         this._slotsView.render();

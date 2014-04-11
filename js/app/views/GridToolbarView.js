@@ -34,6 +34,10 @@ var GridToolbarView = GridBackbone.View.extend({
         } else if(GRID.mode == "container"){
             this.showBoxTools();
         }
+        if(GRID.IS_SIDEBAR){
+            this.$tab_container.remove();
+            this.showBoxTools();
+        }
         
         return this;
     },
