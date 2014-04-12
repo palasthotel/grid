@@ -1,10 +1,12 @@
 <?php // Open Content Container Wrapper
+/*
 if ($this->firstcontentcontainer): 
 	$class = ($this->sidebarleft)? "C-0-8": "C-8-0";
 ?>
 <div class="grid-content-container-wrapper <?= $class ?> grid-first-content-container">
 <?php endif; ?>
-
+*/
+?>
 
 <div class="grid-container <?=$this->style?> <?=$this->type?> <?=implode($this->classes," ")?> clearfix grid-btcf">
 	<div class="grid-container-content">
@@ -40,6 +42,9 @@ if ($this->firstcontentcontainer):
 </div>
 
 <?php // Close Content Container Wrapper
+/*
 if ($this->lastcontentcontainer): ?>
 </div><!-- /.content-container-wrapper -->
 <?php endif; ?>
+*/
+?>
