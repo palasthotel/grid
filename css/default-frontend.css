@@ -2,7 +2,7 @@
 *	Default frontend structure for grid 
 *	NO DESIGN, JUST STRUCTURE
 */
-.container, .slot, .box{
+.container, .grid-slot, .box{
 	box-sizing: border-box;
 }
 
@@ -25,51 +25,51 @@
 }
 /** Container C-12 **/
 
-.C-12 .slot{
+.C-12 .grid-slot{
 	width:100%;
 }
 
 /** Container C-6-6 **/
-.C-6-6 .slot{
+.C-6-6 .grid-slot{
 	width:50%;
 	float:left;
 }
 
 /** Container C-4-4-4 **/
-.C-4-4-4 .slot{
+.C-4-4-4 .grid-slot {
 	width:33.333%;
 	float:left;
 }
 
 /** Container C-8-4 **/
-.C-8-4 .slot:nth-child(1){
+.C-8-4 .grid-slot:nth-child(1){
 	width:66.666%;
 	float:left;
 	
 }
-.C-8-4 .slot:nth-child(2){
+.C-8-4 .grid-slot:nth-child(2){
 	width:33.333%;
 	float: right;
 }
 
 /** Container C-4-8 **/
-.C-4-8 .slot:nth-child(1){
+.C-4-8 .grid-slot:nth-child(1){
 	width:33.333%;
 	float:left;
 }
-.C-4-8 .slot:nth-child(2){
+.C-4-8 .grid-slot:nth-child(2){
 	width:66.666%;
 	float: right;
 }
 
 /** Container C-3-3-3-3 **/
-.C-3-3-3-3 .slot{
+.C-3-3-3-3 .grid-slot{
 	width: 25%;
 	float:left;
 }
 
 /** Container C-2-2-2-2-2-2 **/
-.C-2-2-2-2-2-2 .slot{
+.C-2-2-2-2-2-2 .grid-slot{
 	width:16.666%;
 	float:left;
 }
@@ -86,8 +86,8 @@
 	float: right;
 	margin-left: 1%;
 }
-.C-4-4-0 .slot,
-.C-0-4-4 .slot{
+.C-4-4-0 .grid-slot,
+.C-0-4-4 .grid-slot{
 	width: 50%;
 	float: left;
 }
@@ -109,7 +109,7 @@
 }
 
 /* slot styles */
-.container .slot{
+.container .grid-slot{
 	padding-top: 8px;
 }
 
@@ -121,7 +121,7 @@
 	padding-top: 15px;
 }
 /*
-.container .slot:nth-child(n+2) .box{
+.container .grid-slot:nth-child(n+2) .box{
 	padding-left: 15px;
 }*/
 .box img{
