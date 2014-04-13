@@ -195,7 +195,6 @@ GRID = {
 		var permissionsList = GRID.getSidebarWhitelist($sidebar.data("type"));
 		var $sidebar_slot = $sidebar.find('.grid-slot').first();
 		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
-		console.log([c_height, $sidebar_slot, $sidebar_slot.outerHeight(true), permissionsList]);
 		//var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
 		if(c_height < $sidebar_slot.outerHeight(true)){
 			// if sidebar is taller than containers make puffer margin top
@@ -220,7 +219,7 @@ GRID = {
 	getSidebarWhitelist: function(sidebar_type){
 		switch(sidebar_type){
 			case "S-0-4":
-				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true,
+				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true, "C-2-2-4-0": true,
 						"S-4-0":true, "C-0-4-0":true,
 						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;

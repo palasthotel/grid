@@ -3,7 +3,8 @@ var GridView = GridBackbone.View.extend({
     className: 'grid-wrapper',
     initialize: function() {
     	GRID.log("INIT GridView");
-        this._containersView = new ContainersView({collection: this.model.getContainers() });    },
+        this._containersView = new ContainersView({collection: this.model.getContainers() });    
+    },
     render: function() {
         GRID.log('i am rendering the grid interface');
         this.$el.empty();
