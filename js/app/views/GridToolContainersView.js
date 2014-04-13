@@ -92,7 +92,12 @@ var GridToolContainersView = GridBackbone.View.extend({
                 GRID.log("Start dragging")
                 var $ = jQuery;
                 var $grid = GRID.getView().$el;
-                var $containers = $grid.find(".grid-container");
+
+                // only first layer of .grid-containers (needed if sidebar with nested grid)
+                var $containers = $grid.find('.grid-container').filter(function(){
+                   return !$(this).parent().closest(".grid-container").length;
+                });
+
                 var $dropArea = $(document.createElement("div"))
                                 .addClass("container-drop-area-wrapper")
                                 .attr("data-type","container-drop-area-wrapper");
@@ -112,8 +117,7 @@ var GridToolContainersView = GridBackbone.View.extend({
                         $dropwrapper.removeClass('container-drop-area-wrapper').addClass('new-container-target');
                         GRID.getView().$el.find('.container-drop-area-wrapper').remove();
                         var new_index = $dropwrapper.index();
-
-                        GRID.log(["DROPPiNG", $draggable, containerReusable]);
+                        
                         if(containerReusable == true || containerReusable == "true"){
                             var container = GRID.getReusableContainers().at($draggable.index());
                             GRID.getModel().addReuseContainer(container, new_index);
