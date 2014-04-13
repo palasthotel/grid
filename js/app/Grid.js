@@ -210,7 +210,8 @@ GRID = {
 	},	
 	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
 		var c_height = 0;
-		while($container.length > 0 && floatablePermissionList[$container.data('type')] ){
+		while( ($container.length > 0 && floatablePermissionList[$container.data('type')]) 
+				|| $contianer.hasClass('grid-container-sort-placeholder') ){
 			c_height += $container.outerHeight(true);
 			$container = $container.prev();
 		}
@@ -221,16 +222,16 @@ GRID = {
 			case "S-0-4":
 				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true, "C-2-2-4-0": true,
 						"S-4-0":true, "C-0-4-0":true,
-						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true};
+						"container-drop-area-wrapper": true};
 				break;
 			case "S-4-0":
 				return {"C-0-8":true,"C-0-4-4":true, 
 						"S-0-4":true, "C-0-4-0":true, 
-						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true};
+						"container-drop-area-wrapper": true};
 				break;
 			case "S-0-6":
 				return {"C-12-0":true, "C-4-4-4-0":true, "C-6-6-0":true, "C-3-3-3-3-0":true,
-						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true };
+				 		"container-drop-area-wrapper": true };
 				break;
 		}
 		return {};
@@ -312,7 +313,7 @@ GRID = {
                 var old_container_id=ui.item.data("id");
                 jQuery(".grid-element-trash").droppable({
 	                accept: '.grid-container',
-	                hoverClass: 'ui-state-hover',
+	                hoverClass: 'grid-hover',
 	                drop:function(e,ui) {
 	                	container=GRID.getModel().getContainers().get(old_container_id);
 	                	container_deleted=true;
@@ -352,7 +353,7 @@ GRID = {
 			items: ".grid-box",
 			handle: ".grid-box-controls",
 			//cancel: ".grid-box-edit, .grid-box-delete",
-			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
+			connectWith: ".container[data-reused=false] .boxes-wrapper, .grid-element-trash",
 			placeholder: "grid-box-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
@@ -364,13 +365,13 @@ GRID = {
 			start: function(e, ui){
 				jQuery(".c-box-trash").show();
 				old_box_index = ui.item.index();
-				old_slot_id = ui.item.parents(".slot").data("id");
-				old_container_id = ui.item.parents(".container").data("id");
+				old_slot_id = ui.item.parents(".grid-slot").data("id");
+				old_container_id = ui.item.parents(".grid-container").data("id");
 
 				GRID.log(["START BOX SORT", old_box_index, old_slot_id, old_container_id]);
 				jQuery(".grid-element-trash").droppable({
 					accept: '.slot .box',
-					hoverClass: 'ui-state-hover',
+					hoverClass: 'grid-hover',
 					drop:function(e,ui) {
 						var box = GRID.getModel().getContainers()
 											     .get(old_container_id)

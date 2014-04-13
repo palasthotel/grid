@@ -481,6 +481,8 @@ h3 {
     border: 2px dashed white;
     border-bottom: none;
     text-align: center; }
+  .grid-element-trash.grid-hover {
+    background-color: #ed5032; }
 
 .grid-element-type-content {
   min-height: 100px;
