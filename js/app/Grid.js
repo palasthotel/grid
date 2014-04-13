@@ -57,11 +57,6 @@ GRID = {
 		this._initConstants();
 		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
 
-		GRID.$root.mutate('height',function (element,info){
-		    console.log('a div with  has changed it\'s height, the function below should do something about this...');
-		    //GRID.onSidebarCalculation();
-		});
-
 		// load all model classes for grid works
 		this.getBoxTypes().fetch();
 		this.getContainerTypes().fetch();
@@ -80,8 +75,12 @@ GRID = {
 				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 				
 				GRID.gridview = new GridView({model: GRID.getModel() });
-				GRID.$root.html( GRID.getView().render().el );
+				GRID.$root.append( GRID.getView().render().el );
 				
+				GRID.$root.mutate('height',function (element,info){
+				    GRID.onSidebarCalculation();
+				});
+
 				GRID.$root
 					.data("isSidebar",GRID.IS_SIDEBAR)
 					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
@@ -194,8 +193,9 @@ GRID = {
 	},
 	makeSidebarPuffer: function($sidebar){
 		var permissionsList = GRID.getSidebarWhitelist($sidebar.data("type"));
+		var $sidebar_slot = $sidebar.find('.grid-slot').first();
 		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
-		var $sidebar_slot = $sidebar.find('.grid-slot');
+		console.log([c_height, $sidebar_slot, $sidebar_slot.outerHeight(true), permissionsList]);
 		//var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
 		if(c_height < $sidebar_slot.outerHeight(true)){
 			// if sidebar is taller than containers make puffer margin top
@@ -206,7 +206,7 @@ GRID = {
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
 			//need_bottom_offset += sidebar_margin_bottom;
-			$sidebar_slot.css("padding-bottom",need_bottom_offset);
+			$sidebar_slot.css("padding-bottom",need_bottom_offset+"px");
 		}
 	},	
 	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
@@ -222,16 +222,16 @@ GRID = {
 			case "S-0-4":
 				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true,
 						"S-4-0":true, "C-0-4-0":true,
-						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
+						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 			case "S-4-0":
 				return {"C-0-8":true,"C-0-4-4":true, 
 						"S-0-4":true, "C-0-4-0":true, 
-						"c-sort-placeholder": true, "container-drop-area-wrapper": true};
+						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true};
 				break;
 			case "S-0-6":
 				return {"C-12-0":true, "C-4-4-4-0":true, "C-6-6-0":true, "C-3-3-3-3-0":true,
-						"c-sort-placeholder": true, "container-drop-area-wrapper": true };
+						"grid-container-sort-placeholder": true, "container-drop-area-wrapper": true };
 				break;
 		}
 		return {};
@@ -286,6 +286,7 @@ GRID = {
 			jQuery(GRID.$root).show();
 			jQuery(GRID.$root).animate({width:"100%"},220,function(){
 				callback();
+				GRID.onSidebarCalculation();
 			})
 			window.scrollTo(0,0);
 		},50);
