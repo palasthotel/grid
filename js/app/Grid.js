@@ -211,7 +211,7 @@ GRID = {
 	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
 		var c_height = 0;
 		while( ($container.length > 0 && floatablePermissionList[$container.data('type')]) 
-				|| $contianer.hasClass('grid-container-sort-placeholder') ){
+				||  $container.hasClass('grid-container-sort-placeholder') ){
 			c_height += $container.outerHeight(true);
 			$container = $container.prev();
 		}
