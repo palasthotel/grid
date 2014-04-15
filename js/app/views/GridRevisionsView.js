@@ -13,7 +13,6 @@ var GridRevisionsView = GridBackbone.View.extend({
 	},
 	render:function(){
 		var revisions=this.collection.toJSON();
-		GRID.log(revisions);
 		_.each(revisions,function(elem){
 			elem.isDraft=false;
 			elem.isPublished=false;

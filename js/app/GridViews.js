@@ -36,6 +36,7 @@ var ContainersView = GridBackbone.View.extend({
     		self.$el.append(containerview.render().el);
     	});
         GRID._initializeBoxSortable();
+        GRID.onSidebarCalculation();
     	return this;
 	}
 });

@@ -77,7 +77,7 @@ GRID = {
 				GRID.gridview = new GridView({model: GRID.getModel() });
 				GRID.$root.append( GRID.getView().render().el );
 				
-				GRID.$root.mutate('height',function (element,info){
+				jQuery(GRID.dom_root).mutate('height',function (element,info){
 				    GRID.onSidebarCalculation();
 				});
 
@@ -182,12 +182,14 @@ GRID = {
 		this.PREVIEW_PATTERN=PREVIEW_PATTERN;
 	},
 	// calculates Sidebar
-	onSidebarCalculation: function(){
-		GRID.$root.find(".grid-containers-wrapper > .grid-container").css("margin-top", "0px");
-		GRID.$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
+	onSidebarCalculation: function($root){
+		if(typeof $root == "undefined") $root = GRID.$root;
+		$root.find(".grid-containers-wrapper > .grid-container").css("margin-top", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
 
 		// add new offsets
-		jQuery.each(GRID.$root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
+		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
+			GRID.log(index);
 			GRID.makeSidebarPuffer(jQuery(sidebar));
 		});
 	},
