@@ -2,6 +2,9 @@
 // Grid, container, slot, box, toolbar
 
 .grid-wrapper{
+
+	margin-top: 40px;
+
 	margin-right: 260px;
 	box-sizing: border-box;
 	// remove margins
@@ -15,7 +18,6 @@
 .grid-wrapper .grid-container[data-type*=S-] {
 	width: 100%;
 	padding:0px;
-	//margin: 0px;
 	background-color: transparent;
 	border:none;
 	.grid-box{
