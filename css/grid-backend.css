@@ -687,6 +687,7 @@ h3 {
 .grid-editor-content fieldset {
   border: none;
   border-bottom: 1px solid #eceff3;
+  padding: 0;
   margin: -1px -15px 0px -15px;
 }
 /* line 55, ../scss/2_Module/_grid-editor.scss */
