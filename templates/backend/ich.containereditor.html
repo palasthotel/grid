@@ -9,7 +9,9 @@
     </div>
 	
 	<div class="grid-editor-content">
+		<label>Containertitle</label>
         <input placeholder="Title" type="text" name="grid-editor-title" value="{{model.title}}" class="grid-editor-title" />
+        <label>Containertitle-URL</label>
         <div class="grid-editor-url-builder">
         	<input placeholder="Title URL" type="text" name="grid-editor-titleurl" value="{{model.titleurl}}" scope="titleurl" class="grid-editor-titleurl grid-editor-url-input" />
         	<button class="grid-editor-url-button">Add link</button>
@@ -24,15 +26,24 @@
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
 	        <legend><i class="icon-arrow"></i> Epilog</legend>
 	        <div class="field-wrapper">
+	        	
+	        	<label>Text</label>
 				<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
+
+
+				<label>Readmoretext</label>
+				<input placeholder="Readmore" type="text" name="grid-editor-readmore" class="grid-editor-readmore" value="{{model.readmore}}" />
+				<label>Readmore-URL</label>
+				<div class="grid-editor-url-builder">
+					<input placeholder="Readmore URL" type="text" name="grid-editor-readmoreurl" class="grid-editor-readmoreurl grid-editor-url-input" value="{{model.readmoreurl}}" />
+					<button class="grid-editor-url-button">Add link</button>
+				</div>
+
+
 			</div>
 		</fieldset>
-
-		<input placeholder="Readmore" type="text" name="grid-editor-readmore" class="grid-editor-readmore" value="{{model.readmore}}" />
-		<div class="grid-editor-url-builder">
-			<input placeholder="Readmore URL" type="text" name="grid-editor-readmoreurl" class="grid-editor-readmoreurl grid-editor-url-input" value="{{model.readmoreurl}}" />
-			<button class="grid-editor-url-button">Add link</button>
-		</div>
+	
+		
  
 		<select name="grid-editor-style" class="grid-editor-style">
 			<option value="">Default Style</option>
