@@ -54,7 +54,7 @@ var GridContainerEditor = GridBackbone.View.extend({
             $parent.find('input').attr("disabled","disabled").val("");
             $parent.find('button').html("Add link");
         } else {
-            $parent.find('button').html("Remove Link");
+            $parent.find('button').html("Delete Link");
             $parent.find('input').removeAttr('disabled');
         }
         jQuery(e.target).parent().toggleClass('grid-editor-url-show');

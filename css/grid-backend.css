@@ -149,6 +149,9 @@ h3 {
 .icon-style:before {
   content: '\e79a'; }
 
+.icon-link:before {
+  content: '\1f517'; }
+
 .icon-revisions:before {
   content: '\e771'; }
 
@@ -516,7 +519,7 @@ h3 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 15px 35px;
   margin: 20px 10%;
   padding-bottom: 100px;
   background-color: white;
@@ -525,7 +528,7 @@ h3 {
     border: none;
     border-bottom: 1px solid #eceff3;
     padding: 0;
-    margin: -1px -15px 0px -15px; }
+    margin: -1px -35px 0px -35px; }
     .grid-editor-content fieldset .grid-editor-field-wrapper {
       display: none; }
   .grid-editor-content legend {
@@ -538,8 +541,8 @@ h3 {
     position: relative;
     font-size: 14px;
     font-weight: bold;
-    border-top: 1px solid #eceff3;
-    background-color: white;
+    border-top: 1px solid #cdd5df;
+    background-color: #eceae7;
     -webkit-transition: background-color 0.5s ease;
     transition: background-color 0.5s ease; }
     .grid-editor-content legend .icon-arrow {
@@ -556,17 +559,21 @@ h3 {
     font-weight: bold;
     color: #8193a9;
     display: block; }
+  .grid-editor-content .grid-editor-header {
+    margin-bottom: 15px; }
   .grid-editor-content .grid-editor-title {
     font-weight: bold;
     font-size: 16px;
     padding: 7px;
     height: auto; }
+  .grid-editor-content .grid-editor-footer {
+    margin-top: 15px; }
 
 .grid-editor-content .grid-active {
   border-bottom: 2px solid #24a9bc; }
   .grid-editor-content .grid-active .grid-editor-field-wrapper {
     display: block;
-    margin: 15px; }
+    margin: 15px 35px; }
   .grid-editor-content .grid-active legend {
     background-color: #3ac5d9;
     border-bottom: 2px solid #24a9bc;
@@ -581,23 +588,30 @@ h3 {
 
 .grid-editor-url-builder {
   position: relative;
-  width: 120px;
+  width: 130px;
   -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
   font-size: 11px; }
   .grid-editor-url-builder .grid-editor-url-input {
     width: 100%;
-    padding-right: 120px; }
-  .grid-editor-url-builder .grid-editor-url-button {
+    padding-right: 130px;
+    opacity: 0; }
+  .grid-editor-url-builder .grid-editor-url-button,
+  .grid-editor-url-builder .grid-editor-url-button:focus {
     position: absolute;
     right: 0px;
     top: 0px;
-    width: 120px;
-    color: #262e38; }
+    width: 130px;
+    color: #262e38;
+    background-color: #e5e3df; }
   .grid-editor-url-builder.grid-editor-url-show {
     width: 100%; }
-    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
-      color: #ed5032; }
+    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button {
+      background-color: transparent; }
+      .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
+        color: #ed5032; }
+    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input {
+      opacity: 1; }
 
 .grid-element-drag-icon {
   position: absolute;
