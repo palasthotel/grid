@@ -77,7 +77,7 @@ GRID = {
 				GRID.gridview = new GridView({model: GRID.getModel() });
 				GRID.$root.append( GRID.getView().render().el );
 				
-				GRID.$root.mutate('height',function (element,info){
+				jQuery(GRID.dom_root).mutate('height',function (element,info){
 				    GRID.onSidebarCalculation();
 				});
 
@@ -182,12 +182,14 @@ GRID = {
 		this.PREVIEW_PATTERN=PREVIEW_PATTERN;
 	},
 	// calculates Sidebar
-	onSidebarCalculation: function(){
-		GRID.$root.find(".grid-containers-wrapper > .grid-container").css("margin-top", "0px");
-		GRID.$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
+	onSidebarCalculation: function($root){
+		if(typeof $root == "undefined") $root = GRID.$root;
+		$root.find(".grid-containers-wrapper > .grid-container").css("padding-top", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
 
 		// add new offsets
-		jQuery.each(GRID.$root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
+		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
+			GRID.log(index);
 			GRID.makeSidebarPuffer(jQuery(sidebar));
 		});
 	},
@@ -200,7 +202,7 @@ GRID = {
 			// if sidebar is taller than containers make puffer margin top
 			var needed_margin_top = $sidebar_slot.outerHeight();
 			needed_margin_top -= c_height;
-			$sidebar.css("margin-top", needed_margin_top);
+			$sidebar.css("padding-top", needed_margin_top);
 		} else if(c_height > $sidebar_slot.outerHeight(true)){
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();

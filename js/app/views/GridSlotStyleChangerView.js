@@ -5,11 +5,9 @@ var GridSlotStyleChangerView = GridBackbone.View.extend({
         "click li": "changeStyle",
     },
     initialize: function() {
-    	GRID.log("INIT GridToolbarView");
         this.listenTo(GRID.getSlotStyles(),"add",this.render);
     },
     render: function() {
-        GRID.log('i am rendering slot styles changer');
         var styles = [];
         var activestyle = "Default Style";
         var self = this;

@@ -39,26 +39,6 @@ var GridToolContainersView = GridBackbone.View.extend({
     getRenderedContainerList: function(json){
         return ich.tpl_toolContainersContainer(json);
     },
-    renderContainerTypes: function(event){
-        var $target = jQuery(event.target);
-        this.$el.find(".element-type-tabs li").removeClass('active');
-        $target.addClass('active');
-        var containers = {};
-        switch($target.attr("role")){
-            case "show-reusable":
-            containers = this.getReusable();
-            break;
-            case "show-containers":
-            containers = this.getContainers($target.attr("scope"));
-            break;
-        }
-        var $ul = this.$el.find(".element-list");
-        $ul.empty();
-        GRID.log(["containers", containers]);
-        $ul.replaceWith(ich.tpl_toolContainersContainer(containers));
-        this.initializesDraggable();
-        return this;
-    },
     getContainers: function(scope){
         var scope_val = "C-";
         if(scope == "sidebar"){ scope_val = "S-"; }
@@ -73,7 +53,6 @@ var GridToolContainersView = GridBackbone.View.extend({
                 }
             }           
         });
-        GRID.log(["getContainers",scope, containers]);
         return containers;
     },
     getReusable: function(){

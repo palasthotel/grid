@@ -12,12 +12,10 @@ var GridToolbarView = GridBackbone.View.extend({
         "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools"
     },
     initialize: function() {
-    	GRID.log("INIT GridToolbarView");
         this.listenTo(this.model, "change:isDraft", this.setState);
         this.setState();
     },
     render: function() {
-        GRID.log('i am rendering the toolbar');
 
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
         
@@ -42,7 +40,6 @@ var GridToolbarView = GridBackbone.View.extend({
         return this;
     },
     publish: function(){
-        console.log("BTN publish");
         this.model.save();
     },
     setState: function(){
@@ -56,18 +53,16 @@ var GridToolbarView = GridBackbone.View.extend({
         }
     },
     preview: function(){
-        console.log("BTN preview");
         window.open(this.model.get("PREVIEW_URL"),"_blank");
     },
     revert: function(){
-        console.log("BTN revert");
         GRID.revert();
     },
     revisions: function(){
         this._revisionsView.$el.slideToggle();
     },
     toggleBoxes: function(){
-        console.log("BTN toggleBoxes");
+        GRID.log("BTN toggleBoxes");
     },
     // container tools
     getToolContainersView: function(){
