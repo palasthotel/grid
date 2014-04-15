@@ -8,12 +8,13 @@
 	font-weight: bold;
 	
 	display:block;
-	// opacity: 0;
-	@include transition();
-	overflow: hidden; 
-	height: 0;
 
-	// padding: 0 20px;
+	@include transition(max-height, 0.321s, ease);
+
+	overflow: hidden; 
+	// height: 0;
+	max-height: 0;
+
 
 	.grid-style-changer-active {
 		padding: 6px 0px 4px 0px;
@@ -59,8 +60,8 @@
 
 .grid-container-show-slot-styles {
 	.grid-slot-style-changer {
-		@include transition();
-		height: auto;
+		// @include transition();
+		max-height: 100px;
 		overflow: visible;
 	}
 }
