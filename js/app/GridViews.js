@@ -2,11 +2,9 @@ var GridView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-wrapper',
     initialize: function() {
-    	GRID.log("INIT GridView");
         this._containersView = new ContainersView({collection: this.model.getContainers() });    
     },
     render: function() {
-        GRID.log('i am rendering the grid interface');
         this.$el.empty();
         this.$el.append(ich.tpl_grid(this.model.toJSON() ));
         this.renderContainers();
@@ -23,12 +21,10 @@ var ContainersView = GridBackbone.View.extend({
 	tagName: 'div',
 	className: 'grid-containers-wrapper containers-wrapper',
 	initialize: function(){
-        GRID.log('INIT ContainersView');
         this.listenTo(this.collection, 'add',this.render);
         this.listenTo(this.collection, 'remove',this.render);
 	},
 	render: function(){
-    	GRID.log('i am rendering the container collection');
     	var self = this;
     	this.$el.empty();
     	this.collection.each(function(container){
@@ -54,10 +50,16 @@ var ContainerView = GridBackbone.View.extend({
         _.each(listen_to, function(value, key, list){
             self.listenTo(self.model,'change:'+value, self.render);
         });
+        this.model.getSlots().each(function(slot, key, list){
+            self.listenTo(slot.getBoxes(), "add", self.onSlotChange);
+            self.listenTo(slot.getBoxes(), "remove", self.onSlotChange);
+        });
         this._slotsView = new SlotsView({collection: this.model.getSlots() });
 	},
+    onSlotChange: function(){
+        jQuery(this._slotsView.el).css("min-height", jQuery(this._slotsView.el).outerHeight()+"px");
+    },
 	render: function(){
-    	GRID.log('i am rendering a single container');
         this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
         var json = this.model.toJSON();
@@ -75,10 +77,11 @@ var ContainerView = GridBackbone.View.extend({
             json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
         }
         json.isSidebarGrid = GRID.IS_SIDEBAR;
-
-    	this.$el.html(ich.tpl_container( json));
-        this._slotsView.render();
-        this.$el.find(".grid-slots-wrapper").replaceWith(this._slotsView.$el);
+        this.$el.empty();
+    	this.$el.append(ich.tpl_container( json));
+        
+        this.$slots_wrapper = this.$el.find(".grid-slots-wrapper");
+        this.$slots_wrapper.replaceWith(this._slotsView.render().el);
         return this;
 	},
     onEdit: function(){
@@ -127,7 +130,6 @@ var ContainerView = GridBackbone.View.extend({
         return this;
     },
     selfdestruct: function(){
-        console.log("delete container");
         this.model.destroy({wait:true});
         this.remove();
     }
@@ -137,12 +139,10 @@ var SlotsView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-slots-wrapper slots-wrapper grid-clearfix',
     initialize: function(){
-        GRID.log('INIT SlotsView');
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
     },
     render: function(){
-        GRID.log('i am rendering the slots collection');
         var self = this;
         this.$el.empty();
         this.collection.each(function(slot){
@@ -150,6 +150,7 @@ var SlotsView = GridBackbone.View.extend({
             slotview._parentView = self;
             self.$el.append(slotview.render().el);
         });
+        this.$el.css("min-height", this.$el.outerHeight(true)+"px");
         return this;
     }
 });
@@ -158,7 +159,6 @@ var SlotView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-slot slot',
 	initialize: function(){
-        GRID.log("INIT SlotView")
         this._boxesView = new BoxesView({collection: this.model.getBoxes() });
         if(GRID.mode != "box"){
             this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
@@ -166,7 +166,6 @@ var SlotView = GridBackbone.View.extend({
         this.listenTo(this.model, 'change', this.render);
 	},
 	render: function(){
-    	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
         this.$el.attr("data-style", json.style).attr("data-id",json.id);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
@@ -184,11 +183,9 @@ var BoxesView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-boxes-wrapper boxes-wrapper',
     initialize: function(){
-        GRID.log('INIT BoxesView');
         this.collection.bind('add',this.render, this);
     },
     render: function(){
-        GRID.log('i am rendering the Boxes collection');
         var self = this;
         this.$el.empty();
         this.collection.each(function(box){
@@ -211,7 +208,6 @@ var BoxView = GridBackbone.View.extend({
         this.listenTo(this.model, 'destroy', this.selfdestruct);
 	},
 	render: function(){
-    	GRID.log('i am rendering box');
         var json = this.model.toJSON();
         this.$el.attr("data-id",json.id).attr("data-type",json.type);
         if(json.type == "reference"){

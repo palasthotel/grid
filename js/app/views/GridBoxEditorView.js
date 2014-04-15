@@ -10,7 +10,6 @@ var BoxEditor = GridBackbone.View.extend({
     initialize: function(){
     },
     render: function(){
-        GRID.log(this.model.toJSON());
         var styles=GRID.getBoxStyles().toJSON();
         var self=this;
         _.each(styles,function(elem){

@@ -11,7 +11,6 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
         this.listenTo(this.blueprints,"add", this.addBlueprintBox);
         this.model.searchBoxes();
         this.delegateEvents();
-        GRID.log(["render blueprints",this.model]);
         if(this.model.get("criteria").length > 0){
             this.$el.append('<div class="grid-box-blueprints-search"><input placeholder="Which do you need?" type="text" value="" /></div>');
         }
@@ -20,7 +19,6 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
         return this;
     },
     addBlueprintBox: function(blueprint,collection,event){
-        GRID.log(["addBlueprintBox",blueprint,collection,event, this.model]);
         var json = blueprint.toJSON();
         json.cid = blueprint.cid;
         if(this.box_type == "reference"){
@@ -33,7 +31,6 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
         return this;
     },
     searchString:function(event){
-        GRID.log(["Searching", event]);
         var input=jQuery(event.target).val();
         if(input.length>0 && input.length<2)return;
         var self=this;
@@ -86,8 +83,7 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
 
                         $new_box = $this_drop.parent().addClass('grid-new-box-place').removeClass('grid-box-drop-area-wrapper');
                         GRID.getView().$el.find(".grid-box-drop-area-wrapper").remove();
-
-                        GRID.log(["DROPPED Box", $this_box.data("cid"), $this_drop, $this_slot, $this_container, slot, blueprint]);
+                        
                         var box = slot.createBox(blueprint, $new_box.index() );
                     }
                 });
