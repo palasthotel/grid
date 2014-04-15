@@ -12,7 +12,7 @@ var GridToolContainersView = GridBackbone.View.extend({
         return this;
     },
     renderContainerType: function(event){
-        var $type = jQuery(event.target);
+        var $type = jQuery(event.currentTarget);
         $type.toggleClass('active');
         var role = $type.attr("role");
         var list = "";
@@ -109,7 +109,6 @@ var GridToolContainersView = GridBackbone.View.extend({
                 });
             },
             stop: function( event, ui ){
-                GRID.log("stop Dragging");
                 GRID.getView().$el.find('.container-drop-area-wrapper').remove();
             }
         });

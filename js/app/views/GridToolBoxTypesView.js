@@ -17,7 +17,7 @@ var GridToolBoxTypesView = GridBackbone.View.extend({
         return this;
     },
     toggleBoxType: function(event){
-        var $this = jQuery(event.target);
+        var $this = jQuery(event.currentTarget);
         $this.toggleClass('active');
         if($this.hasClass('active')){
             var blueprints_view = new GridToolBoxBlueprintsView({model:this.collection.at($this.data("index"))});
