@@ -686,22 +686,17 @@ h3 {
 /* line 49, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content fieldset {
   border: none;
-  border-top: 1px solid #eceff3;
-  margin: 0 -15px 0px -15px;
-  padding: 15px 0 15px 30px;
+  border-bottom: 1px solid #eceff3;
+  margin: -1px -15px 0px -15px;
 }
-/* line 58, ../scss/2_Module/_grid-editor.scss */
+/* line 55, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content fieldset .grid-editor-field-wrapper {
   display: none;
 }
-/* line 62, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content fieldset .grid-active .grid-editor-field-wrapper {
-  display: block;
-}
-/* line 68, ../scss/2_Module/_grid-editor.scss */
+/* line 60, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend {
-  margin: 0 -15px 0px -15px;
-  padding: 15px 0 15px 30px;
+  padding: 15px 0px 15px 35px;
+  box-sizing: border-box;
   width: 100%;
   cursor: pointer;
   position: relative;
@@ -709,15 +704,50 @@ h3 {
   font-weight: bold;
   border-top: 1px solid #eceff3;
 }
-/* line 81, ../scss/2_Module/_grid-editor.scss */
+/* line 72, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend .icon-arrow {
   position: absolute;
   left: 5px;
   top: 10px;
   transition: all 0.1337s ease;
 }
-/* line 88, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content legend.grid-active .icon-arrow {
+/* line 82, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content input,
+.grid-editor-content textarea {
+  border: 1px solid #eceff3;
+}
+/* line 87, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content label {
+  padding: 10px 0;
+  font-weight: bold;
+  color: #8193a9;
+  display: block;
+}
+/* line 93, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-editor-title {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 7px;
+  height: auto;
+}
+
+/* line 102, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-active {
+  border-bottom: 2px solid #24a9bc;
+}
+/* line 106, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-active .grid-editor-field-wrapper {
+  display: block;
+  margin: 15px;
+}
+/* line 111, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-active legend {
+  background-color: #3ac5d9;
+  border-bottom: 2px solid #24a9bc;
+  color: white;
+}
+/* line 116, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-active legend .icon-arrow {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -726,31 +756,6 @@ h3 {
   filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
   zoom: 1;
-}
-/* line 92, ../scss/2_Module/_grid-editor.scss */
-.grid-active .grid-editor-content legend {
-  background-color: #3ac5d9;
-  border-bottom: 2px solid #24a9bc;
-  color: white;
-}
-/* line 100, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content input,
-.grid-editor-content textarea {
-  border: 1px solid #eceff3;
-}
-/* line 105, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content label {
-  padding: 10px 0;
-  font-weight: bold;
-  color: #8193a9;
-  display: block;
-}
-/* line 111, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-editor-title {
-  font-weight: bold;
-  font-size: 16px;
-  padding: 7px;
-  height: auto;
 }
 
 /* line 1, ../scss/2_Module/_grid-editor-url-builder.scss */
@@ -1153,7 +1158,7 @@ h3 {
   position: relative;
   min-height: 50px;
   padding-top: 20px;
-  border-left: 1px solid rgba(176, 186, 194, 0.7);
+  border-left: 2px solid rgba(176, 186, 194, 0.7);
   box-sizing: border-box;
 }
 

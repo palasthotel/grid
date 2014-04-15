@@ -47,28 +47,19 @@
 
 
 	fieldset{
-		
 		border: none;
-		border-top: 1px solid $color-input-border;
+		border-bottom: 1px solid $color-input-border;
 
-		margin: 0 -15px 0px -15px;
-		padding: 15px 0 15px 30px;
-
+		margin: -1px -15px 0px -15px;
 
 		.grid-editor-field-wrapper {
 			display: none;
 		}
-
-		.grid-active .grid-editor-field-wrapper {
-			display: block;
-		}
-
 	}
 
 	legend{
-		
-		margin: 0 -15px 0px -15px;
-		padding: 15px 0 15px 30px;
+		padding: 15px 0px 15px 35px;
+		box-sizing: border-box;
 		width: 100%;
 
 		cursor: pointer;
@@ -85,15 +76,6 @@
 			@include transition();
 		}
 
-		&.grid-active .icon-arrow{
-			@include rotate(90);
-		}
-
-		.grid-active &{
-			background-color: $color-edit;
-			border-bottom: 2px solid darken($color-edit, 10%);	
-			color: white;
-		}
 		
 	}
 
@@ -113,6 +95,27 @@
 		font-size: 16px;
 		padding: 7px; 
 		height: auto;
+	}
+
+}
+
+.grid-editor-content .grid-active {
+
+	border-bottom: 2px solid darken($color-edit, 10%);	
+
+	.grid-editor-field-wrapper {
+		display: block;
+		margin: 15px;
+	}
+
+	legend {
+		background-color: $color-edit;
+		border-bottom: 2px solid darken($color-edit, 10%);	
+		color: white;
+
+		.icon-arrow{
+			@include rotate(90);
+		}
 	}
 
 }
