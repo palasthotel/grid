@@ -60,6 +60,14 @@ var BoxEditor = GridBackbone.View.extend({
         }
         this.$el.find(".grid-collapsable-hidden .field-wrapper").hide();
         this.$el.find(".grid-collapsable-shown legend").addClass('active');
+
+        jQuery.each(this.$el.find(".grid-editor-url-input"), function(index, val) {
+             var $url = jQuery(val);
+             if($url.val() != ""){
+                $url.siblings('button').trigger("click");
+             }
+        });
+        
         return this;
     },
     onCancel: function(){
