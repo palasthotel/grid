@@ -14,11 +14,6 @@
 	z-index: $idx-max;
 	width: 80%;
 
-/*
-	-webkit-box-shadow: 0 -3px 3px 0 #DEDEDE;
-			box-shadow: 0 -3px 3px 0 #DEDEDE;
-*/
-
 
 	button{
 		background-color: black;
@@ -43,33 +38,49 @@
 .grid-editor-content{
 	box-sizing: border-box;
 	padding: 15px;
-	margin: 0px 10%;
+	margin: 20px 10%;
 	padding-bottom: 100px;
 
+	background-color: white;
+
 	fieldset{
-		margin: 0px 0px 15px 0px;
+		
 		border: none;
+		border-top: 1px solid $color-input-border;
 		padding:0px;
+
+
 	}
 
 	legend{
+		
+		margin: 0 -15px 0px -15px;
+		padding: 15px 0 15px 30px;
+		width: 100%;
+
 		cursor: pointer;
 		position: relative;
 		font-size: 14px; 
 		font-weight: bold;
 
-		padding: 10px 0;
+		border-top: 1px solid $color-input-border;
+
+		// padding: 10px 0;
 
 		.icon-arrow{
 			position: absolute;
-			left: -20px;
-			top: 5px;
+			left: 5px;
+			top: 10px;
 			@include transition();
 		}
 
 		&.active .icon-arrow{
-			// transform: rotate(90deg);
 			@include rotate(90);
+		}
+
+		&.active {
+			background-color: $color-input-border;
+			border-bottom: 2px solid darken($color-input-border, 5%);	
 		}
 		
 	}
@@ -92,6 +103,10 @@
 		height: auto;
 	}
 
+}
+
+.grid-editor-field-wrapper {
+	margin: 20px 0;
 }
 
 
