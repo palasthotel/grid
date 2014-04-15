@@ -19,6 +19,7 @@
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
 	        <legend><i class="icon-arrow"></i> Prolog</legend>
 	        <div class="field-wrapper">
+	        	<label>Text</label>
 	        	<textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{model.prolog}}</textarea>
 	        </div>
 		</fieldset>
@@ -26,7 +27,7 @@
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
 	        <legend><i class="icon-arrow"></i> Epilog</legend>
 	        <div class="field-wrapper">
-	        	
+
 	        	<label>Text</label>
 				<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
 
@@ -44,7 +45,7 @@
 		</fieldset>
 	
 		
- 
+ 		<label>Containerstyle</label>
 		<select name="grid-editor-style" class="grid-editor-style">
 			<option value="">Default Style</option>
 			{{#styles}}

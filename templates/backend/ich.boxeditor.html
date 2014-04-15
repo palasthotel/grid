@@ -22,6 +22,7 @@
 			<fieldset class="grid-collapsable grid-collapsable-hidden">
 				<legend><span class="icon-arrow"></span>{{lang_values.label-b-before}}</legend>
 				<div class="field-wrapper">
+					<label>Text</label>
 					<textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{box.prolog}}</textarea>
 				</div>
 			</fieldset>
@@ -36,7 +37,7 @@
 			<fieldset class="grid-collapsable grid-collapsable-hidden">
 				<legend><span class="icon-arrow"></span>{{lang_values.label-b-after}}</legend>
 				<div class="field-wrapper">
-					
+
 					<label>Text</label>
 					<textarea name="grid-editor-epilog"  class="form-html grid-editor-epilog">{{box.epilog}}</textarea>
 
@@ -57,7 +58,7 @@
 
 			<!-- style -->
 			<div class="grid-editor-styles-wrapper">
-				<label for="grid-editor-style">Style</label>
+				<label for="grid-editor-style">Boxstyle</label>
 				<select name="grid-editor-style" class="form-select grid-editor-style"  id="grid-editor-style">
 					<option value="">{{lang_values.default-style}}</option>
 					{{#styles}}
