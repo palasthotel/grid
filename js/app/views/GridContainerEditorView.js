@@ -31,8 +31,7 @@ var GridContainerEditor = GridBackbone.View.extend({
             });
         });
 
-        this.$el.find(".grid-collapsable-hidden .grid-editor-field-wrapper").hide();
-        this.$el.find(".grid-collapsable-shown legend").addClass('active');
+        this.$el.find(".grid-collapsable-shown").trigger("grid-active");
 
         jQuery.each(this.$el.find(".grid-editor-url-input"), function(index, val) {
              var $url = jQuery(val);
@@ -46,7 +45,7 @@ var GridContainerEditor = GridBackbone.View.extend({
 
     onToggle:function(e)
     {
-        jQuery(e.currentTarget).toggleClass('active').siblings(".grid-editor-field-wrapper").slideToggle(300);
+        jQuery(e.currentTarget).parent().toggleClass('grid-active');
     },
     
     onUrlToggle: function(e){
