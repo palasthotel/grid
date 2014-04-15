@@ -3,39 +3,37 @@
  ****************/
 
 // container dimensions
-.grid-container{
+.grid-container {
 	
-	margin: 0px 0px 20px 0px;
+	margin: 40px 0px 20px 0px;
 	
 
-	&:hover {
 		
-		.grid-container-sorthandle,
-		.grid-container-options-icon,
-		.grid-container-prolog,
-		.grid-container-epilog
-		{
-			color: $color-container-controls;
-			&:hover{
-				color: $color-container-controls-hover;
-			}
-		}
-
-		.grid-container-title {
-			color: $color-dark;
-		}
-
-		.grid-container-controls{
-			background-color: $color-container-bg;
-			border: 1px solid $color-container-border;
-			border-bottom: none;
-		}
-
-		.grid-container-content{
-			border-top: 1px solid white;
-			
+	.grid-container-sorthandle,
+	.grid-container-options-icon,
+	.grid-container-prolog,
+	.grid-container-epilog {
+		color: $color-container-controls;
+		&:hover {
+			color: $color-container-controls-hover;
 		}
 	}
+
+	.grid-container-title {
+		color: $color-dark;
+	}
+
+	.grid-container-controls {
+		background-color: $color-container-bg;
+		border: 1px solid $color-container-border;
+		// border-bottom: none;
+	}
+
+	.grid-container-content {
+		border-top: 1px solid white;
+	}
+			
+	
 }
 
 .grid-container-content{

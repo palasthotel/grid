@@ -10,11 +10,6 @@
 
 }
 
-
-
-
-
-
 /*************************
 ************ 12 er ********
 ************************/
@@ -22,11 +17,12 @@
 
 
 .grid-slot {
-	padding: 30px 10px 0 10px;
-	float: left;
+	padding: 30px 7px 0 7px;
+	// float: left;
 	box-sizing: border-box;
+	//height: 100%;
+	display: table-cell;
 }
-
 
 
 

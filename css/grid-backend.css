@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* **************
 Dimensions
 ****************/
@@ -6,93 +7,258 @@ Dimensions
 ***************/
 /**
 **/
+/* line 1, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix:before,
 .grid-clearfix:after {
   content: "";
-  display: table; }
+  display: table;
+}
 
+/* line 6, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix:after {
-  clear: both; }
+  clear: both;
+}
 
+/* line 9, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix {
   zoom: 1;
-  /* For IE 6/7 (trigger hasLayout) */ }
+  /* For IE 6/7 (trigger hasLayout) */
+}
 
+/* line 15, ../scss/0_Base/_grid-base.scss */
 h3 {
   word-break: break-all;
-  font-size: 12px; }
+  font-size: 12px;
+}
 
+/* line 1, ../scss/0_Base/_grid-all-wrapper.scss */
 .grid-all-wrapper, .grid-editor-wrapper {
   font-family: "OpenSans", sans-serif;
-  background-color: #f3f5f7; }
-  .grid-all-wrapper input, .grid-editor-wrapper input,
-  .grid-all-wrapper textarea,
-  .grid-editor-wrapper textarea,
-  .grid-all-wrapper select,
-  .grid-editor-wrapper select,
-  .grid-all-wrapper button,
-  .grid-editor-wrapper button {
-    font-family: inherit;
-    font-size: 12px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .grid-all-wrapper input, .grid-editor-wrapper input {
-    height: 27px;
-    width: 100%;
-    line-height: 27px;
-    text-indent: 10px;
-    font-size: 1em;
-    border: solid 1px #eceff3;
-    margin-bottom: 15px; }
-    .grid-all-wrapper input:hover, .grid-editor-wrapper input:hover {
-      border-color: #b0bac2; }
-  .grid-all-wrapper input[type=checkbox], .grid-editor-wrapper input[type=checkbox] {
-    width: auto;
-    height: auto;
-    display: inline; }
-  .grid-all-wrapper button, .grid-editor-wrapper button,
-  .grid-all-wrapper button:focus,
-  .grid-editor-wrapper button:focus {
-    outline: none;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    color: #3f4853;
-    font-size: 13px;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 0.05em;
-    -webkit-transition: all 0.1337s ease;
-    transition: all 0.1337s ease;
-    -webkit-box-shadow: none;
-    box-shadow: none; }
-    .grid-all-wrapper button:hover, .grid-editor-wrapper button:hover,
-    .grid-all-wrapper button:focus:hover,
-    .grid-editor-wrapper button:focus:hover {
-      color: #3ac5d9; }
-  .grid-all-wrapper img, .grid-editor-wrapper img {
-    max-width: 100%; }
+  background-color: #f3f5f7;
+}
+/* line 5, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input, .grid-editor-wrapper input,
+.grid-all-wrapper textarea,
+.grid-editor-wrapper textarea,
+.grid-all-wrapper select,
+.grid-editor-wrapper select,
+.grid-all-wrapper button,
+.grid-editor-wrapper button {
+  font-family: inherit;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+/* line 14, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input, .grid-editor-wrapper input {
+  height: 27px;
+  width: 100%;
+  line-height: 27px;
+  text-indent: 10px;
+  font-size: 1em;
+  border: solid 1px #eceff3;
+  margin-bottom: 15px;
+}
+/* line 23, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input:hover, .grid-editor-wrapper input:hover {
+  border-color: #b0bac2;
+}
+/* line 27, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input[type=checkbox], .grid-editor-wrapper input[type=checkbox] {
+  width: auto;
+  height: auto;
+  display: inline;
+}
+/* line 32, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper button, .grid-editor-wrapper button,
+.grid-all-wrapper button:focus,
+.grid-editor-wrapper button:focus {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #3f4853;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  transition: all 0.1337s ease;
+  box-shadow: none;
+}
+/* line 46, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper button:hover, .grid-editor-wrapper button:hover,
+.grid-all-wrapper button:focus:hover,
+.grid-editor-wrapper button:focus:hover {
+  color: #3ac5d9;
+}
+/* line 50, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper img, .grid-editor-wrapper img {
+  max-width: 100%;
+}
+
+/**
+ * Font Include
+ * @author Stephan Kroppenstedt <sk@palasthotel.de>
+ * @created 15.04.2014 10:07
+ */
+/* ICON FONT */
+@font-face {
+  font-family: 'Entypo';
+  src: url("../fonts/font-icons/entypo/entypo.eot");
+  src: url("../fonts/entypo/entypo.eot") format("embedded-opentype"), url("../fonts/entypo/entypo.woff") format("woff"), url("../fonts/entypo/entypo.ttf") format("truetype"), url("../fonts/entypo/entypo.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EntypoSocial';
+  src: url("../fonts/entypo/entypo-social.eot");
+  src: url("../fonts/entypo/entypo-social.eot") format("embedded-opentype"), url("../fonts/entypo/entypo-social.woff") format("woff"), url("../fonts/entypo/entypo-social.ttf") format("truetype"), url("../fonts/entypo/entypo-social.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+/* TEXT FONT */
+@font-face {
+  font-family: 'OpenSans';
+  src: local("OpenSans"), local("Open Sans"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.eot");
+  src: local("OpenSans"), local("Open Sans"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.woff") format("woff"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.ttf") format("truetype"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.svg#open_sansregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: local("OpenSans-Semibold"), local("Open Sans Semibold"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.eot");
+  src: local("OpenSans-Semibold"), local("Open Sans Semibold"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.woff") format("woff"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.ttf") format("truetype"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.svg#open_sanssemibold") format("svg");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: local("OpenSans-Bold"), local("Open Sans Bold"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.eot");
+  src: local("OpenSans-Bold"), local("Open Sans Bold"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.woff") format("woff"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.ttf") format("truetype"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.svg#open_sansbold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'OpenSans';
+  src: local("OpenSans-Italic"), local("Open Sans Italic"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.eot");
+  src: local("OpenSans-Italic"), local("Open Sans Italic"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.woff") format("woff"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.ttf") format("truetype"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.svg#open_sansitalic") format("svg");
+  font-weight: normal;
+  font-style: italic;
+}
+/* line 79, ../scss/0_Base/_grid-font.scss */
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "Entypo";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  /*margin-right: .2em;*/
+  text-align: center;
+  /* opacity: .8; */
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  /*margin-left: .2em;*/
+  /* you can be more comfortable with increased icons size */
+  font-size: 200%;
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+/* line 110, ../scss/0_Base/_grid-font.scss */
+.icon-reuse:before {
+  content: '\e73e';
+}
+
+/* '' */
+/* line 111, ../scss/0_Base/_grid-font.scss */
+.icon-style:before {
+  content: '\e79a';
+}
+
+/* line 112, ../scss/0_Base/_grid-font.scss */
+.icon-revisions:before {
+  content: '\e771';
+}
+
+/* line 113, ../scss/0_Base/_grid-font.scss */
+.icon-revert:before {
+  content: '\27f2';
+}
+
+/* line 114, ../scss/0_Base/_grid-font.scss */
+.icon-edit:before {
+  content: '\270e';
+}
+
+/* line 115, ../scss/0_Base/_grid-font.scss */
+.icon-trash:before {
+  content: '\e729';
+}
+
+/* line 116, ../scss/0_Base/_grid-font.scss */
+.icon-preview:before {
+  content: '\e70a';
+}
+
+/* line 117, ../scss/0_Base/_grid-font.scss */
+.icon-publish:before {
+  content: '\1f4e3';
+}
+
+/* line 118, ../scss/0_Base/_grid-font.scss */
+.icon-elipse:before {
+  content: '\23f6';
+}
+
+/* line 119, ../scss/0_Base/_grid-font.scss */
+.icon-arrow:before {
+  content: '\25B8';
+}
+
+/* line 120, ../scss/0_Base/_grid-font.scss */
+.icon-drag:before {
+  content: '\23f6';
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+/* line 128, ../scss/0_Base/_grid-font.scss */
+.icon-options:before {
+  content: '\2699';
+}
 
 /**
 **/
+/* line 1, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
 .container-drop-area-wrapper {
-  position: relative; }
-  .container-drop-area-wrapper .container-drop-area {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    position: absolute;
-    height: 40px;
-    top: -5px;
-    width: 100%;
-    z-index: 60;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    background-color: #90dee9; }
-    .container-drop-area-wrapper .container-drop-area.hover {
-      background-color: #3ac5d9; }
+  position: relative;
+}
+/* line 3, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
+.container-drop-area-wrapper .container-drop-area {
+  box-sizing: border-box;
+  position: absolute;
+  height: 40px;
+  top: -5px;
+  width: 100%;
+  z-index: 60;
+  transition: all 0.3s ease;
+  background-color: #90dee9;
+}
+/* line 12, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
+.container-drop-area-wrapper .container-drop-area.hover {
+  background-color: #3ac5d9;
+}
 
+/* line 2, ../scss/2_Module/_grid-dragger-helper.scss */
 .dragger-helper {
   display: block;
   height: 50px;
@@ -108,44 +274,57 @@ h3 {
   						5px 5px 0 #ccc,
   						9px 9px 0 #fff,
   						10px 10px 0 #ccc,
-  						14px 14px 0 #fff);*/ }
+  						14px 14px 0 #fff);*/
+}
 
+/* line 1, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
 .grid-box-drop-area-wrapper {
-  position: relative; }
-  .grid-box-drop-area-wrapper .grid-box-drop-area {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    position: absolute;
-    height: 20px;
-    top: -12px;
-    width: 100%;
-    z-index: 60;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    background-color: #e5f7fa; }
-    .grid-box-drop-area-wrapper .grid-box-drop-area.hover {
-      background-color: #3ac5d9; }
+  position: relative;
+}
+/* line 3, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
+.grid-box-drop-area-wrapper .grid-box-drop-area {
+  box-sizing: border-box;
+  position: absolute;
+  height: 20px;
+  top: -12px;
+  width: 100%;
+  z-index: 60;
+  transition: all 0.3s ease;
+  background-color: #e5f7fa;
+}
+/* line 15, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
+.grid-box-drop-area-wrapper .grid-box-drop-area.hover {
+  background-color: #3ac5d9;
+}
 
 /*********************
 * box
 *******************/
+/* line 6, ../scss/2_Module/_grid-box.scss */
 .grid-box {
   padding: 12px 0;
   margin: 10px 0;
   min-height: 50px;
-  background-color: #fcfdfd;
+  background-color: #f3f5f7;
   -webkit-box-shadow: inset 0 0 2px 0px #b0bac2;
   box-shadow: inset 0 0 2px 0px #b0bac2;
-  border-radius: 2px; }
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
 
+/* line 26, ../scss/2_Module/_grid-box.scss */
 .grid-box {
-  position: relative; }
+  position: relative;
+}
 
+/* line 30, ../scss/2_Module/_grid-box.scss */
 .grid-box-content {
   font-size: 11px;
-  padding: 0 10px; }
+  padding: 0 10px;
+}
 
+/* line 35, ../scss/2_Module/_grid-box.scss */
 .grid-box-controls {
   cursor: move;
   color: white;
@@ -160,142 +339,201 @@ h3 {
   background-color: rgba(63, 72, 83, 0.9);
   font-weight: bold;
   text-transform: uppercase;
-  -webkit-transition: opacity 0.2s ease;
-  transition: opacity 0.2s ease; }
-  .grid-box-controls .grid-box-control-button {
-    cursor: pointer;
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    right: 0px;
-    width: 40px;
-    max-width: 250px;
-    -webkit-transition: all 0.3s ease;
-    transition: all 0.3s ease; }
-    .grid-box-controls .grid-box-control-button:hover {
-      width: 100%; }
-    .grid-box-controls .grid-box-control-button .grid-box-control-text {
-      opacity: 0;
-      -webkit-transition: all 0.3s ease;
-      transition: all 0.3s ease; }
-    .grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
-      opacity: 1; }
-  .grid-box-controls .grid-box-control-wrapper {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    margin-top: -13px;
-    white-space: nowrap;
-    overflow: hidden;
-    padding-left: 8px; }
-  .grid-box-controls .grid-box-edit {
-    background-color: #3ac5d9;
-    top: 0px;
-    bottom: 50%; }
-  .grid-box-controls .grid-box-delete {
-    top: 50%;
-    bottom: 0px;
-    background-color: #ed5032; }
-  .grid-box-controls .grid-box-drag {
-    position: absolute;
-    top: 35%;
-    left: 10px; }
+  transition: opacity 0.2s ease;
+}
+/* line 52, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-control-button {
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  width: 40px;
+  max-width: 250px;
+  transition: all 0.3s ease;
+}
+/* line 61, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-control-button:hover {
+  width: 100%;
+}
+/* line 64, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-control-button .grid-box-control-text {
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+/* line 68, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
+  opacity: 1;
+}
+/* line 72, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-control-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -13px;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-left: 8px;
+}
+/* line 83, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-edit {
+  background-color: #3ac5d9;
+  top: 0px;
+  bottom: 50%;
+}
+/* line 88, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-delete {
+  top: 50%;
+  bottom: 0px;
+  background-color: #ed5032;
+}
+/* line 93, ../scss/2_Module/_grid-box.scss */
+.grid-box-controls .grid-box-drag {
+  position: absolute;
+  top: 35%;
+  left: 10px;
+}
 
+/* line 99, ../scss/2_Module/_grid-box.scss */
 .grid-box:hover .grid-box-controls {
   height: auto;
   overflow: visible;
   display: block;
-  opacity: 1; }
+  opacity: 1;
+}
 
+/* line 105, ../scss/2_Module/_grid-box.scss */
 .grid-box-sort-placeholder {
-  border: 2px dashed #3ac5d9; }
+  border: 2px dashed #3ac5d9;
+}
 
+/* line 112, ../scss/2_Module/_grid-box.scss */
 .grid-box-type-content {
   margin: 0px;
-  border-bottom: 1px solid #f3f5f7; }
+  border-bottom: 1px solid #f3f5f7;
+}
 
+/* line 118, ../scss/2_Module/_grid-box.scss */
 .grid-box-type + dl .grid-box-type-search {
-  display: none; }
+  display: none;
+}
+/* line 122, ../scss/2_Module/_grid-box.scss */
 .grid-box-type.active + dl .grid-box-type-search {
-  display: block; }
+  display: block;
+}
 
+/* line 129, ../scss/2_Module/_grid-box.scss */
 .grid-container[class*="S-"] .grid-box .grid-box-controls {
-  cursor: default; }
+  cursor: default;
+}
+/* line 132, ../scss/2_Module/_grid-box.scss */
 .grid-container[class*="S-"] .grid-box .grid-box-delete {
-  display: none; }
+  display: none;
+}
+/* line 135, ../scss/2_Module/_grid-box.scss */
 .grid-container[class*="S-"] .grid-box .grid-box-edit {
-  bottom: 0px; }
+  bottom: 0px;
+}
+/* line 138, ../scss/2_Module/_grid-box.scss */
 .grid-container[class*="S-"] .grid-box .grid-box-drag {
-  display: none; }
+  display: none;
+}
 
+/* line 3, ../scss/2_Module/_grid-boxes-wrapper.scss */
 .grid-boxes-wrapper {
-  min-height: 60px; }
+  min-height: 60px;
+}
 
+/* line 2, ../scss/2_Module/_grid-container-wrapper.scss */
 .grid-containers-wrapper {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 /****************
  * container 
  ****************/
+/* line 6, ../scss/2_Module/_grid-container.scss */
 .grid-container {
-  margin: 0px 0px 20px 0px; }
-  .grid-container:hover .grid-container-sorthandle,
-  .grid-container:hover .grid-container-options-icon,
-  .grid-container:hover .grid-container-prolog,
-  .grid-container:hover .grid-container-epilog {
-    color: #b0bac2; }
-    .grid-container:hover .grid-container-sorthandle:hover,
-    .grid-container:hover .grid-container-options-icon:hover,
-    .grid-container:hover .grid-container-prolog:hover,
-    .grid-container:hover .grid-container-epilog:hover {
-      color: #3f4853; }
-  .grid-container:hover .grid-container-title {
-    color: #262e38; }
-  .grid-container:hover .grid-container-controls {
-    background-color: white;
-    border: 1px solid rgba(176, 186, 194, 0.7);
-    border-bottom: none; }
-  .grid-container:hover .grid-container-content {
-    border-top: 1px solid white; }
+  margin: 40px 0px 20px 0px;
+}
+/* line 12, ../scss/2_Module/_grid-container.scss */
+.grid-container .grid-container-sorthandle,
+.grid-container .grid-container-options-icon,
+.grid-container .grid-container-prolog,
+.grid-container .grid-container-epilog {
+  color: #b0bac2;
+}
+/* line 17, ../scss/2_Module/_grid-container.scss */
+.grid-container .grid-container-sorthandle:hover,
+.grid-container .grid-container-options-icon:hover,
+.grid-container .grid-container-prolog:hover,
+.grid-container .grid-container-epilog:hover {
+  color: #3f4853;
+}
+/* line 22, ../scss/2_Module/_grid-container.scss */
+.grid-container .grid-container-title {
+  color: #262e38;
+}
+/* line 26, ../scss/2_Module/_grid-container.scss */
+.grid-container .grid-container-controls {
+  background-color: white;
+  border: 1px solid rgba(176, 186, 194, 0.7);
+}
+/* line 32, ../scss/2_Module/_grid-container.scss */
+.grid-container .grid-container-content {
+  border-top: 1px solid white;
+}
 
+/* line 39, ../scss/2_Module/_grid-container.scss */
 .grid-container-content {
   position: relative;
   background-color: white;
-  border: 1px solid rgba(176, 186, 194, 0.7); }
+  border: 1px solid rgba(176, 186, 194, 0.7);
+}
 
+/* line 45, ../scss/2_Module/_grid-container.scss */
 .grid-container-controls {
   position: relative;
   background-color: transparent;
   height: 40px;
   border: 1px solid transparent;
-  border-bottom: none; }
+  border-bottom: none;
+}
 
 /**********************************
  * container hover states
  **********************************/
+/* line 61, ../scss/2_Module/_grid-container.scss */
 .grid-container-title,
 .grid-container-sorthandle,
 .grid-container-options-icon,
 .grid-container-prolog,
 .grid-container-epilog {
   color: rgba(176, 186, 194, 0.3);
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease; }
+  transition: all 0.3s ease;
+}
 
+/* line 78, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover {
-  background-color: #3f4853; }
-  .grid-container-options-list-item:hover[role=trash] {
-    background-color: #ed5032; }
-  .grid-container-options-list-item:hover[role=edit] {
-    background-color: #3ac5d9; }
+  background-color: #3f4853;
+}
+/* line 80, ../scss/2_Module/_grid-container.scss */
+.grid-container-options-list-item:hover[role=trash] {
+  background-color: #ed5032;
+}
+/* line 83, ../scss/2_Module/_grid-container.scss */
+.grid-container-options-list-item:hover[role=edit] {
+  background-color: #3ac5d9;
+}
 
+/* line 89, ../scss/2_Module/_grid-container.scss */
 .grid-container-type-content {
   margin: 0px;
-  border-bottom: 1px solid #f3f5f7; }
+  border-bottom: 1px solid #f3f5f7;
+}
 
+/* line 95, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer {
   cursor: move;
   position: absolute;
@@ -305,85 +543,109 @@ h3 {
   bottom: 5px;
   right: 5px;
   background-color: rgba(63, 72, 83, 0.3);
-  z-index: 50; }
-  .grid-container-reused-layer .grid-container-reused-label {
-    position: absolute;
-    top: -3px;
-    left: 50%;
-    color: white;
-    text-transform: uppercase; }
+  z-index: 50;
+}
+/* line 105, ../scss/2_Module/_grid-container.scss */
+.grid-container-reused-layer .grid-container-reused-label {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  color: white;
+  text-transform: uppercase;
+}
 
+/* line 117, ../scss/2_Module/_grid-container.scss */
 .grid-container-title {
   position: absolute;
   top: 9px;
   left: 20px;
   font-weight: bold;
-  font-size: 90%; }
+  font-size: 90%;
+}
 
+/* line 125, ../scss/2_Module/_grid-container.scss */
 .grid-container-sorthandle {
   position: absolute;
   top: 5px;
   left: -4px;
   width: 100%;
   height: 40px;
-  cursor: move; }
+  cursor: move;
+}
 
+/* line 134, ../scss/2_Module/_grid-container.scss */
 .grid-container-sort-placeholder {
   height: 20px;
-  border: 2px dashed #3ac5d9; }
+  border: 2px dashed #3ac5d9;
+}
 
+/* line 140, ../scss/2_Module/_grid-container.scss */
 .grid-container-options {
   position: absolute;
   top: 5px;
   right: 0px;
   height: 40px;
-  z-index: 80; }
-  .grid-container-options:hover {
-    z-index: 81; }
-  .grid-container-options .grid-container-options-icon {
-    text-transform: uppercase;
-    font-weight: bold; }
-  .grid-container-options .grid-container-options-list {
-    position: absolute;
-    list-style: none;
-    background-color: #b0bac2;
-    color: white;
-    width: 110px;
-    right: 0px;
-    top: 30px;
-    margin: 0px;
-    padding: 0px;
-    display: none; }
-    .grid-container-options .grid-container-options-list .grid-container-options-list-item {
-      cursor: pointer;
-      padding: 5px;
-      text-transform: uppercase;
-      font-weight: bold;
-      margin-bottom: 0px; }
-    .grid-container-options .grid-container-options-list:before {
-      content: "";
-      border: 8px solid #b0bac2;
-      font-size: 0;
-      line-height: 0;
-      height: 0;
-      padding: 0;
-      margin: 0;
-      border-top-color: transparent;
-      border-right-color: transparent;
-      border-left-color: transparent;
-      position: absolute;
-      top: -16px;
-      left: 47%; }
-  .grid-container-options:hover .grid-container-options-list {
-    display: block; }
+  z-index: 80;
+}
+/* line 147, ../scss/2_Module/_grid-container.scss */
+.grid-container-options:hover {
+  z-index: 81;
+}
+/* line 151, ../scss/2_Module/_grid-container.scss */
+.grid-container-options .grid-container-options-icon {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+/* line 155, ../scss/2_Module/_grid-container.scss */
+.grid-container-options .grid-container-options-list {
+  position: absolute;
+  list-style: none;
+  background-color: #b0bac2;
+  color: white;
+  width: 110px;
+  right: 0px;
+  top: 30px;
+  margin: 0px;
+  padding: 0px;
+  display: none;
+}
+/* line 167, ../scss/2_Module/_grid-container.scss */
+.grid-container-options .grid-container-options-list .grid-container-options-list-item {
+  cursor: pointer;
+  padding: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+/* line 174, ../scss/2_Module/_grid-container.scss */
+.grid-container-options .grid-container-options-list:before {
+  content: "";
+  border: 8px solid #b0bac2;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  top: -16px;
+  left: 47%;
+}
+/* line 191, ../scss/2_Module/_grid-container.scss */
+.grid-container-options:hover .grid-container-options-list {
+  display: block;
+}
 
+/* line 198, ../scss/2_Module/_grid-container.scss */
 .grid-container-prolog p,
 .grid-container-epilog p {
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+}
 
+/* line 7, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: fixed;
   bottom: 0px;
@@ -395,72 +657,99 @@ h3 {
   /*
   	-webkit-box-shadow: 0 -3px 3px 0 #DEDEDE;
   			box-shadow: 0 -3px 3px 0 #DEDEDE;
-  */ }
-  .grid-editor-controls button {
-    background-color: black;
-    color: white;
-    padding: 10px; }
-  .grid-editor-controls .grid-editor-save-button {
-    background-color: #46bd7b;
-    color: white; }
-  .grid-editor-controls .grid-editor-cancel-button {
-    background-color: #ed5032;
-    color: white; }
-  .grid-editor-controls .grid-editor-reuse-button {
-    background-color: #e5e3df;
-    color: #262e38;
-    float: right; }
+  */
+}
+/* line 23, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls button {
+  background-color: black;
+  color: white;
+  padding: 10px;
+}
+/* line 28, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-save-button {
+  background-color: #46bd7b;
+  color: white;
+}
+/* line 32, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-cancel-button {
+  background-color: #ed5032;
+  color: white;
+}
+/* line 36, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-reuse-button {
+  background-color: #e5e3df;
+  color: #262e38;
+  float: right;
+}
 
+/* line 43, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 15px;
   margin: 0px 10%;
-  padding-bottom: 100px; }
-  .grid-editor-content fieldset {
-    margin: 0px 0px 15px 0px;
-    border: none;
-    padding: 0px; }
-  .grid-editor-content legend {
-    cursor: pointer;
-    position: relative;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px 0; }
-    .grid-editor-content legend .icon-arrow {
-      position: absolute;
-      left: -20px;
-      top: 5px;
-      -webkit-transition: all 0.1337s ease;
-      transition: all 0.1337s ease; }
-    .grid-editor-content legend.active .icon-arrow {
-      -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-      transform: rotate(90deg);
-      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
-      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
-      zoom: 1; }
-  .grid-editor-content input,
-  .grid-editor-content textarea {
-    border: 1px solid #eceff3; }
-  .grid-editor-content label {
-    padding: 10px 0;
-    font-weight: bold;
-    color: #8193a9;
-    display: block; }
-  .grid-editor-content .grid-editor-title {
-    font-weight: bold;
-    font-size: 16px;
-    padding: 7px;
-    height: auto; }
+  padding-bottom: 100px;
+}
+/* line 49, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content fieldset {
+  margin: 0px 0px 15px 0px;
+  border: none;
+  padding: 0px;
+}
+/* line 55, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content legend {
+  cursor: pointer;
+  position: relative;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 0;
+}
+/* line 63, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content legend .icon-arrow {
+  position: absolute;
+  left: -20px;
+  top: 5px;
+  transition: all 0.1337s ease;
+}
+/* line 70, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content legend.active .icon-arrow {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
+  zoom: 1;
+}
+/* line 77, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content input,
+.grid-editor-content textarea {
+  border: 1px solid #eceff3;
+}
+/* line 82, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content label {
+  padding: 10px 0;
+  font-weight: bold;
+  color: #8193a9;
+  display: block;
+}
+/* line 88, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-editor-title {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 7px;
+  height: auto;
+}
 
+/* line 1, ../scss/2_Module/_grid-element-drag-icon.scss */
 .grid-element-drag-icon {
   position: absolute;
   top: 4px;
   left: -6px;
-  font-size: 120%; }
+  font-size: 120%;
+}
 
+/* line 2, ../scss/2_Module/_grid-element-trash.scss */
 .grid-element-trash {
   position: absolute;
   bottom: 0px;
@@ -470,57 +759,70 @@ h3 {
   min-height: 80px;
   background-color: #b0bac2;
   color: white;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 10px 10px 0 10px;
-  vertical-align: baseline; }
-  .grid-element-trash > div {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    border: 2px dashed white;
-    border-bottom: none;
-    text-align: center; }
-  .grid-element-trash.grid-hover {
-    background-color: #ed5032; }
+  vertical-align: baseline;
+}
+/* line 14, ../scss/2_Module/_grid-element-trash.scss */
+.grid-element-trash > div {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border: 2px dashed white;
+  border-bottom: none;
+  text-align: center;
+}
+/* line 21, ../scss/2_Module/_grid-element-trash.scss */
+.grid-element-trash.grid-hover {
+  background-color: #ed5032;
+}
 
+/* line 1, ../scss/2_Module/_grid-element-type-content.scss */
 .grid-element-type-content {
   min-height: 100px;
   padding: 15px 10px;
   overflow-y: scroll;
-  background-color: white; }
-  .grid-element-type-content .grid-element-container-list,
-  .grid-element-type-content .grid-element-box-list {
-    margin: 0px; }
-  .grid-element-type-content .grid-container-type,
-  .grid-element-type-content .grid-box-type {
-    position: relative;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    padding: 20px; }
-    .grid-element-type-content .grid-container-type .icon-arrow,
-    .grid-element-type-content .grid-box-type .icon-arrow {
-      z-index: 90;
-      position: absolute;
-      top: 16px;
-      left: -4px;
-      font-size: 14px;
-      -webkit-transition: all 0.3s ease;
-      transition: all 0.3s ease; }
-    .grid-element-type-content .grid-container-type.active .icon-arrow,
-    .grid-element-type-content .grid-box-type.active .icon-arrow {
-      -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-      transform: rotate(90deg);
-      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
-      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
-      zoom: 1; }
+  background-color: white;
+}
+/* line 7, ../scss/2_Module/_grid-element-type-content.scss */
+.grid-element-type-content .grid-element-container-list,
+.grid-element-type-content .grid-element-box-list {
+  margin: 0px;
+}
+/* line 12, ../scss/2_Module/_grid-element-type-content.scss */
+.grid-element-type-content .grid-container-type,
+.grid-element-type-content .grid-box-type {
+  position: relative;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 20px;
+}
+/* line 19, ../scss/2_Module/_grid-element-type-content.scss */
+.grid-element-type-content .grid-container-type .icon-arrow,
+.grid-element-type-content .grid-box-type .icon-arrow {
+  z-index: 90;
+  position: absolute;
+  top: 16px;
+  left: -4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+/* line 29, ../scss/2_Module/_grid-element-type-content.scss */
+.grid-element-type-content .grid-container-type.active .icon-arrow,
+.grid-element-type-content .grid-box-type.active .icon-arrow {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
+  zoom: 1;
+}
 
+/* line 2, ../scss/2_Module/_grid-element-type-select.scss */
 .grid-element-type-select .grid-element-type {
   text-align: center;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
   text-transform: uppercase;
@@ -528,37 +830,46 @@ h3 {
   font-weight: bold;
   height: 45px;
   padding-top: 15px;
-  -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
   position: relative;
-  background-color: #f3f5f7; }
-  .grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
-    cursor: pointer;
-    color: white;
-    background-color: #3ac5d9; }
-    .grid-element-type-select .grid-element-type:hover.active:after, .grid-element-type-select .grid-element-type.active.active:after {
-      z-index: 90;
-      content: "";
-      border: 9px solid #3ac5d9;
-      font-size: 0;
-      line-height: 0;
-      height: 0;
-      padding: 0;
-      margin: 0;
-      border-bottom-color: transparent;
-      border-right-color: transparent;
-      border-left-color: transparent;
-      position: absolute;
-      bottom: -18px;
-      left: 47%; }
+  background-color: #f3f5f7;
+}
+/* line 14, ../scss/2_Module/_grid-element-type-select.scss */
+.grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
+  cursor: pointer;
+  color: white;
+  background-color: #3ac5d9;
+}
+/* line 19, ../scss/2_Module/_grid-element-type-select.scss */
+.grid-element-type-select .grid-element-type:hover.active:after, .grid-element-type-select .grid-element-type.active.active:after {
+  z-index: 90;
+  content: "";
+  border: 9px solid #3ac5d9;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  bottom: -18px;
+  left: 47%;
+}
 
+/* line 1, ../scss/2_Module/_grid-new-container-slots.scss */
 .grid-new-container-slots {
-  margin: 0 0 0 20px; }
-  .grid-new-container-slots .grid-slot {
-    height: 30px;
-    background-color: #f0f0f0;
-    border-left: 4px solid white; }
+  margin: 0 0 0 20px;
+}
+/* line 3, ../scss/2_Module/_grid-new-container-slots.scss */
+.grid-new-container-slots .grid-slot {
+  height: 30px;
+  background-color: #f0f0f0;
+  border-left: 4px solid white;
+}
 
+/* line 4, ../scss/2_Module/_grid-new-element.scss */
 .grid-new-element {
   cursor: move;
   position: relative;
@@ -566,103 +877,146 @@ h3 {
   border: 1px solid #eceff3;
   margin-bottom: 8px;
   color: #eceff3;
-  overflow: hidden; }
-  .grid-new-element .grid-element-title {
-    color: #1e1e1e;
-    padding-left: 20px;
-    margin: 0px;
-    padding-top: 10px; }
-  .grid-new-element:hover {
-    color: #b0bac2;
-    border-color: #b0bac2; }
+  overflow: hidden;
+}
+/* line 13, ../scss/2_Module/_grid-new-element.scss */
+.grid-new-element .grid-element-title {
+  color: #1e1e1e;
+  padding-left: 20px;
+  margin: 0px;
+  padding-top: 10px;
+}
+/* line 20, ../scss/2_Module/_grid-new-element.scss */
+.grid-new-element:hover {
+  color: #b0bac2;
+  border-color: #b0bac2;
+}
 
+/* line 1, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions {
   list-style: none;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
   overflow-x: scroll;
   width: 80%;
-  padding: 0px 0px 15px 50px; }
-  .grid-revisions button {
-    margin: 0px;
-    padding: 0px; }
+  padding: 0px 0px 15px 50px;
+}
+/* line 9, ../scss/2_Module/_grid-revisions.scss */
+.grid-revisions button {
+  margin: 0px;
+  padding: 0px;
+}
 
+/* line 15, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions-list {
-  padding: 0px 15px 0px 0px; }
+  padding: 0px 15px 0px 0px;
+}
 
+/* line 19, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision {
   position: relative;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: inline-block;
   width: 220px;
   border-right: 0px solid #f3f5f7;
-  background-color: white; }
-  .grid-revision:last-child {
-    border-right: none; }
-  .grid-revision.grid-revision-state-draft {
-    background-color: #ed7b3d;
-    color: white; }
-    .grid-revision.grid-revision-state-draft button {
-      color: white; }
-      .grid-revision.grid-revision-state-draft button:hover {
-        color: #3f4853; }
-  .grid-revision.grid-revision-state-published {
-    background-color: #46bd7b;
-    color: white; }
-    .grid-revision.grid-revision-state-published button {
-      color: white; }
-      .grid-revision.grid-revision-state-published button:hover {
-        color: #3f4853; }
-  .grid-revision:first-child:before {
-    z-index: 90;
-    content: "";
-    border: 8px solid #ed7b3d;
-    font-size: 0;
-    line-height: 0;
-    height: 0;
-    padding: 0;
-    margin: 0;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: transparent;
-    position: absolute;
-    bottom: -16px;
-    left: 50%;
-    margin-left: -8px;
-    -webkit-transition: all 0.1337s ease;
-    transition: all 0.1337s ease; }
-  .grid-revision.grid-revision-state-published:first-child:before {
-    border-top-color: #46bd7b; }
+  background-color: white;
+}
+/* line 27, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision:last-child {
+  border-right: none;
+}
+/* line 31, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-draft {
+  background-color: #ed7b3d;
+  color: white;
+}
+/* line 34, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-draft button {
+  color: white;
+}
+/* line 36, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-draft button:hover {
+  color: #3f4853;
+}
+/* line 42, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-published {
+  background-color: #46bd7b;
+  color: white;
+}
+/* line 45, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-published button {
+  color: white;
+}
+/* line 47, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-published button:hover {
+  color: #3f4853;
+}
+/* line 53, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision:first-child:before {
+  z-index: 90;
+  content: "";
+  border: 8px solid #ed7b3d;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  margin-left: -8px;
+  transition: all 0.1337s ease;
+}
+/* line 72, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision.grid-revision-state-published:first-child:before {
+  border-top-color: #46bd7b;
+}
 
+/* line 78, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description {
-  padding: 10px; }
-  .grid-revision-description p {
-    margin: 0px; }
-  .grid-revision-description .grid-revision-date {
-    font-weight: bold; }
+  padding: 10px;
+}
+/* line 81, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision-description p {
+  margin: 0px;
+}
+/* line 85, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision-description .grid-revision-date {
+  font-weight: bold;
+}
 
+/* line 91, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls {
   position: relative;
-  padding-bottom: 40px; }
-  .grid-revision-controls .grid-revision-button {
-    height: 40px;
-    position: absolute;
-    bottom: 0px; }
-  .grid-revision-controls .grid-revision-preview-button {
-    left: 0px;
-    width: 50%; }
-  .grid-revision-controls .grid-revision-delete-button,
-  .grid-revision-controls .grid-revision-revert-button {
-    right: 0px;
-    width: 50%; }
+  padding-bottom: 40px;
+}
+/* line 95, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision-controls .grid-revision-button {
+  height: 40px;
+  position: absolute;
+  bottom: 0px;
+}
+/* line 101, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision-controls .grid-revision-preview-button {
+  left: 0px;
+  width: 50%;
+}
+/* line 106, ../scss/2_Module/_grid-revisions.scss */
+.grid-revision-controls .grid-revision-delete-button,
+.grid-revision-controls .grid-revision-revert-button {
+  right: 0px;
+  width: 50%;
+}
 
+/* line 113, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-state-published .grid-revision-controls .grid-revision-preview-button {
-  width: 100%; }
+  width: 100%;
+}
 
+/* line 1, ../scss/2_Module/_grid-slot-style-changer.scss */
 .grid-slot-style-changer {
   text-transform: uppercase;
   position: absolute;
@@ -674,396 +1028,574 @@ h3 {
   z-index: 80;
   display: block;
   opacity: 0;
-  -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
-  padding: 0 20px; }
-  .grid-slot-style-changer .grid-style-changer-active {
-    padding: 6px 0px 4px 0px;
-    color: #b0bac2; }
-  .grid-slot-style-changer .grid-choose-style {
-    position: absolute;
-    display: none;
-    padding: 0px;
-    margin: 0px;
-    list-style: none; }
-    .grid-slot-style-changer .grid-choose-style li {
-      background-color: #b0bac2;
-      border-top: 1px solid #d0d8dd; }
-      .grid-slot-style-changer .grid-choose-style li:first-child {
-        border-top: none; }
-    .grid-slot-style-changer .grid-choose-style:before {
-      content: "";
-      border: 9px solid #b0bac2;
-      font-size: 0;
-      line-height: 0;
-      height: 0;
-      padding: 0;
-      margin: 0;
-      border-top-color: transparent;
-      border-right-color: transparent;
-      border-left-color: transparent;
-      position: absolute;
-      top: -16px;
-      left: 47%; }
+  padding: 0 20px;
+}
+/* line 20, ../scss/2_Module/_grid-slot-style-changer.scss */
+.grid-slot-style-changer .grid-style-changer-active {
+  padding: 6px 0px 4px 0px;
+  color: #b0bac2;
+}
+/* line 25, ../scss/2_Module/_grid-slot-style-changer.scss */
+.grid-slot-style-changer .grid-choose-style {
+  position: absolute;
+  display: none;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+/* line 32, ../scss/2_Module/_grid-slot-style-changer.scss */
+.grid-slot-style-changer .grid-choose-style li {
+  background-color: #b0bac2;
+  border-top: 1px solid #d0d8dd;
+}
+/* line 35, ../scss/2_Module/_grid-slot-style-changer.scss */
+.grid-slot-style-changer .grid-choose-style li:first-child {
+  border-top: none;
+}
+/* line 40, ../scss/2_Module/_grid-slot-style-changer.scss */
+.grid-slot-style-changer .grid-choose-style:before {
+  content: "";
+  border: 9px solid #b0bac2;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  position: absolute;
+  top: -16px;
+  left: 47%;
+}
 
+/* line 58, ../scss/2_Module/_grid-slot-style-changer.scss */
 .grid-container:hover .grid-slot-style-changer {
-  opacity: 1; }
+  opacity: 1;
+}
 
+/* line 62, ../scss/2_Module/_grid-slot-style-changer.scss */
 [data-reused=false] .grid-slot-style-changer:hover {
-  z-index: 81; }
-  [data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
-    color: #3f4853; }
-  [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
-    color: white;
-    display: block;
-    padding-top: 2px; }
-    [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
-      padding: 10px 20px;
-      -webkit-transition: all 0.1337s ease;
-      transition: all 0.1337s ease;
-      margin: 0px; }
-      [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
-        cursor: pointer;
-        background-color: #3f4853; }
+  z-index: 81;
+}
+/* line 65, ../scss/2_Module/_grid-slot-style-changer.scss */
+[data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
+  color: #3f4853;
+}
+/* line 70, ../scss/2_Module/_grid-slot-style-changer.scss */
+[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
+  color: white;
+  display: block;
+  padding-top: 2px;
+}
+/* line 75, ../scss/2_Module/_grid-slot-style-changer.scss */
+[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
+  padding: 10px 20px;
+  transition: all 0.1337s ease;
+  margin: 0px;
+}
+/* line 79, ../scss/2_Module/_grid-slot-style-changer.scss */
+[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
+  cursor: pointer;
+  background-color: #3f4853;
+}
 
+/* line 3, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   position: relative;
   min-height: 50px;
   padding-top: 20px;
   border-left: 1px solid rgba(176, 186, 194, 0.7);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 /*************************
 ************ 12 er ********
 ************************/
 /** Container C-12 **/
+/* line 19, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
-  padding: 30px 10px 0 10px;
-  float: left;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  padding: 30px 7px 0 7px;
+  box-sizing: border-box;
+  display: table-cell;
+}
 
+/* line 29, ../scss/2_Module/_grid-slot.scss */
 .grid-slot:first-child {
-  border-left: none; }
+  border-left: none;
+}
 
+/* line 38, ../scss/2_Module/_grid-slot.scss */
 .C-12 .grid-slot {
-  width: 100%; }
+  width: 100%;
+}
 
 /** Container C-6-6 **/
+/* line 46, ../scss/2_Module/_grid-slot.scss */
 .C-6-6 .grid-slot {
-  width: 50%; }
+  width: 50%;
+}
 
 /** Container C-4-4-4 **/
+/* line 59, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4 .grid-slot {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
+/* line 64, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4 .grid-slot:last-child {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
 /** Container C-8-4 **/
+/* line 71, ../scss/2_Module/_grid-slot.scss */
 .C-8-4 .grid-slot:nth-child(1) {
-  width: 66.6%; }
+  width: 66.6%;
+}
 
+/* line 74, ../scss/2_Module/_grid-slot.scss */
 .C-8-4 .grid-slot:nth-child(2) {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
 /** Container C-4-8 **/
+/* line 82, ../scss/2_Module/_grid-slot.scss */
 .C-4-8 .grid-slot:nth-child(1) {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
+/* line 85, ../scss/2_Module/_grid-slot.scss */
 .C-4-8 .grid-slot:nth-child(2) {
-  width: 66%; }
+  width: 66%;
+}
 
 /** Container C-3-3-3-3 **/
+/* line 90, ../scss/2_Module/_grid-slot.scss */
 [data-type=C-3-3-3-3] .grid-slot {
-  width: 25%; }
+  width: 25%;
+}
 
+/* line 93, ../scss/2_Module/_grid-slot.scss */
 [data-type=C-3-3-3-3] .grid-slot:last-child {
-  width: 25%; }
+  width: 25%;
+}
 
 /** Container C-2-2-2-2-2-2 **/
+/* line 101, ../scss/2_Module/_grid-slot.scss */
 .C-2-2-2-2-2-2 .grid-slot {
-  width: 16.666%; }
+  width: 16.666%;
+}
 
 /** Container C-0-8 and C-8-0 **/
+/* line 109, ../scss/2_Module/_grid-slot.scss */
 .C-0-8 .grid-slot {
-  width: 66.6%; }
+  width: 66.6%;
+}
 
+/* line 112, ../scss/2_Module/_grid-slot.scss */
 .C-8-0 .grid-slot {
-  width: 66.6%; }
+  width: 66.6%;
+}
 
+/* line 115, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-8-0,
 .grid-wrapper .C-0-8 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 119, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-8 {
-  margin-left: 33.3%; }
+  margin-left: 33.3%;
+}
 
+/* line 122, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-8-0 .grid-slot,
 .grid-wrapper .C-0-8 .grid-slot {
-  width: 100%; }
+  width: 100%;
+}
 
 /** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
+/* line 128, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-0 .grid-slot {
-  width: 33%; }
+  width: 33%;
+}
 
+/* line 133, ../scss/2_Module/_grid-slot.scss */
 .C-0-4-4 .grid-slot {
-  width: 33%; }
+  width: 33%;
+}
 
+/* line 136, ../scss/2_Module/_grid-slot.scss */
 .C-0-4-0 .grid-slot {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
+/* line 139, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-4,
 .grid-wrapper .C-4-4-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 143, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-4 {
-  margin-left: 33.3%; }
+  margin-left: 33.3%;
+}
 
+/* line 146, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-4-0 .grid-slot,
 .grid-wrapper .C-0-4-4 .grid-slot {
-  width: 49%; }
+  width: 49%;
+}
 
+/* line 152, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-0 {
   width: 33.3% !important;
-  margin-left: 33.3%; }
+  margin-left: 33.3%;
+}
 
+/* line 156, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-0 .grid-slot {
-  width: 100%; }
+  width: 100%;
+}
 
 /** Container C-4-2-2-0 and C-2-2-4-0 **/
+/* line 161, ../scss/2_Module/_grid-slot.scss */
 .C-4-2-2-0 .grid-slot,
 .C-2-2-4-0 .grid-slot {
-  width: 16%; }
+  width: 16%;
+}
 
+/* line 165, ../scss/2_Module/_grid-slot.scss */
 .C-4-2-2-0 .grid-slot:first-child,
 .C-2-2-4-0 .grid-slot:last-child {
-  width: 33%; }
+  width: 33%;
+}
 
+/* line 169, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0,
 .grid-wrapper .C-2-2-4-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 173, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0 .grid-slot,
 .grid-wrapper .C-2-2-4-0 .grid-slot {
-  width: 24%; }
+  width: 24%;
+}
 
+/* line 178, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0 .grid-slot:first-child,
 .grid-wrapper .C-2-2-4-0 .grid-slot:last-child {
-  width: 49%; }
+  width: 49%;
+}
 
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
+/* line 185, ../scss/2_Module/_grid-slot.scss */
 .C-2-2-2-2-0 .grid-slot {
-  width: 16%; }
+  width: 16%;
+}
 
+/* line 188, ../scss/2_Module/_grid-slot.scss */
 .C-0-2-2-2-2 .grid-slot {
-  float: right; }
+  float: right;
+}
 
+/* line 191, ../scss/2_Module/_grid-slot.scss */
 #grid .C-2-2-2-2-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 194, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-2-2-2-2-0 .grid-slot,
 .grid-wrapper .C-0-2-2-2-2 .grid-slot {
-  width: 24%; }
+  width: 24%;
+}
 
 /*************************
 ************ 18 er ********
 ************************/
 /** Container C-18 **/
+/* line 204, ../scss/2_Module/_grid-slot.scss */
 .C-18 .grid-slot {
-  width: 100%; }
+  width: 100%;
+}
 
+/* line 209, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-6 .grid-slot {
-  width: 33%; }
+  width: 33%;
+}
 
+/* line 212, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-6 .grid-slot:last-child {
-  width: 32%; }
+  width: 32%;
+}
 
+/* line 215, ../scss/2_Module/_grid-slot.scss */
 .C-12-6 .grid-slot {
-  width: 66%; }
+  width: 66%;
+}
 
+/* line 218, ../scss/2_Module/_grid-slot.scss */
 .C-12-6 .grid-slot:last-child {
-  width: 33%; }
+  width: 33%;
+}
 
+/* line 221, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-6 .grid-slot {
-  width: 22%; }
+  width: 22%;
+}
 
+/* line 224, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-6 .grid-slot:last-child {
-  width: 32%; }
+  width: 32%;
+}
 
+/* line 227, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-3-3 .grid-slot {
-  width: 16%; }
+  width: 16%;
+}
 
+/* line 230, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-3-3 .grid-slot:last-child {
-  float: right; }
+  float: right;
+}
 
 /** Container C-12-0 **/
+/* line 234, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 .grid-slot {
-  width: 66.6%; }
+  width: 66.6%;
+}
 
+/* line 237, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 240, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 .grid-slot {
-  width: 100%; }
+  width: 100%;
+}
 
 /** Container C-4-4-4-0 **/
+/* line 244, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 .grid-slot {
-  width: 22%; }
+  width: 22%;
+}
 
+/* line 247, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 250, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 .grid-slot {
-  width: 33%; }
+  width: 33%;
+}
 
 /** Container C-6-6-0 **/
+/* line 257, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
+/* line 261, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 264, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot {
-  width: 50%; }
+  width: 50%;
+}
 
+/* line 267, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot:last-child {
-  margin-right: 0px; }
+  margin-right: 0px;
+}
 
 /** Container C-3-3-3-3-0 **/
+/* line 271, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 .grid-slot {
-  width: 16%; }
+  width: 16%;
+}
 
+/* line 274, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 {
-  width: 66.6% !important; }
+  width: 66.6% !important;
+}
 
+/* line 277, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 .grid-slot {
-  width: 24.5%; }
+  width: 24.5%;
+}
 
 /* container sidebars */
+/* line 285, ../scss/2_Module/_grid-slot.scss */
 .S-0-4 .grid-slot {
   width: 33%;
-  float: right; }
+  float: right;
+}
 
+/* line 289, ../scss/2_Module/_grid-slot.scss */
 .S-4-0 .grid-slot {
-  width: 33%; }
+  width: 33%;
+}
 
+/* line 293, ../scss/2_Module/_grid-slot.scss */
 .SC-4 .grid-slot {
-  width: 100%; }
+  width: 100%;
+}
 
+/**
+ * Grid Slots Wrapper
+ * @author Stephan Kroppenstedt <sk@palasthotel.de>
+ * @created 15.04.2014 11:46
+ */
+/* line 7, ../scss/2_Module/_grid-slots-wrapper.scss */
+.grid-slots-wrapper {
+  display: table;
+  width: 100%;
+}
+
+/* line 1, ../scss/2_Module/_grid-tool-elements.scss */
 .grid-tool-elements {
   position: fixed;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   right: 0px;
   width: 260px;
   padding-bottom: 80px;
-  border-left: 1px solid rgba(176, 186, 194, 0.7); }
+  border-left: 1px solid rgba(176, 186, 194, 0.7);
+}
 
+/* line 3, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar {
-  -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
   border-top: 4px solid #ed7b3d;
   position: relative;
   background-color: white;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
-  height: 0px; }
-  .grid-toolbar .grid-tool-list {
-    list-style: none;
-    position: fixed;
-    z-index: 90;
-    margin: 0px;
-    width: 40px; }
-    .grid-toolbar .grid-tool-list li {
-      width: 135px;
-      right: 90px;
-      position: relative;
-      margin: 0;
-      -webkit-transition: all 0.1337s ease;
-      transition: all 0.1337s ease; }
-      .grid-toolbar .grid-tool-list li:hover {
-        right: 0px; }
-      .grid-toolbar .grid-tool-list li button {
-        text-align: right;
-        padding: 5px 48px 5px 5px;
-        margin: 0px;
-        font-size: 12px;
-        width: 100%;
-        height: 45px;
-        -webkit-transition: all 0.1337s ease;
-        transition: all 0.1337s ease;
-        border: none; }
-        .grid-toolbar .grid-tool-list li button [class^="icon-"],
-        .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
-          position: absolute;
-          right: 6px;
-          top: 6px;
-          font-size: 16px;
-          font-family: 'Entypo'; }
-        .grid-toolbar .grid-tool-list li button:hover {
-          padding-right: 38px;
-          color: white;
-          background-color: #3f4853; }
-  .grid-toolbar li.grid-tool-publish button,
-  .grid-toolbar li.grid-tool-publish button:hover {
-    background-color: #ed7b3d;
-    color: white; }
-  .grid-toolbar[data-draft=false] {
-    border-top: 4px solid #46bd7b; }
-    .grid-toolbar[data-draft=false] li.grid-tool-publish button,
-    .grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
-      background-color: #46bd7b; }
+  height: 0px;
+}
+/* line 13, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar .grid-tool-list {
+  list-style: none;
+  position: fixed;
+  z-index: 90;
+  margin: 0px;
+  width: 40px;
+}
+/* line 19, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar .grid-tool-list li {
+  width: 135px;
+  right: 90px;
+  position: relative;
+  margin: 0;
+  transition: all 0.1337s ease;
+}
+/* line 25, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar .grid-tool-list li:hover {
+  right: 0px;
+}
+/* line 28, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar .grid-tool-list li button {
+  text-align: right;
+  padding: 5px 48px 5px 5px;
+  margin: 0px;
+  font-size: 12px;
+  width: 100%;
+  height: 45px;
+  transition: all 0.1337s ease;
+  border: none;
+}
+/* line 39, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar .grid-tool-list li button [class^="icon-"],
+.grid-toolbar .grid-tool-list li button [class*=" icon-"] {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  font-size: 16px;
+  font-family: 'Entypo';
+}
+/* line 47, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar .grid-tool-list li button:hover {
+  padding-right: 38px;
+  color: white;
+  background-color: #3f4853;
+}
+/* line 56, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar li.grid-tool-publish button,
+.grid-toolbar li.grid-tool-publish button:hover {
+  background-color: #ed7b3d;
+  color: white;
+}
+/* line 62, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar[data-draft=false] {
+  border-top: 4px solid #46bd7b;
+}
+/* line 65, ../scss/2_Module/_grid-toolbar.scss */
+.grid-toolbar[data-draft=false] li.grid-tool-publish button,
+.grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
+  background-color: #46bd7b;
+}
 
+/* line 72, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar-list {
-  margin: 20px 20px; }
+  margin: 20px 20px;
+}
 
+/* line 4, ../scss/2_Module/_grid-wrapper.scss */
 .grid-wrapper {
   margin-right: 260px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 5px 10px 120px 55px; }
-  .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
-    margin: 0px; }
+  padding: 5px 10px 120px 55px;
+}
+/* line 8, ../scss/2_Module/_grid-wrapper.scss */
+.grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
+  margin: 0px;
+}
 
+/* line 15, ../scss/2_Module/_grid-wrapper.scss */
 .grid-wrapper .grid-container[data-type*=S-] {
   width: 100%;
   padding: 0px;
   background-color: transparent;
-  border: none; }
-  .grid-wrapper .grid-container[data-type*=S-] .grid-box {
-    border: none;
-    background-color: white; }
-  .grid-wrapper .grid-container[data-type*=S-] .grid-slot {
-    width: 33.3%;
-    position: absolute;
-    bottom: 40px;
-    padding-bottom: 10px;
-    left: 0px;
-    padding-right: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .grid-wrapper .grid-container[data-type*=S-][data-type*=S-0] .grid-slot {
-    left: auto;
-    right: 0px;
-    padding-right: 0px;
-    padding-left: 10px; }
+  border: none;
+}
+/* line 21, ../scss/2_Module/_grid-wrapper.scss */
+.grid-wrapper .grid-container[data-type*=S-] .grid-box {
+  border: none;
+  background-color: white;
+}
+/* line 25, ../scss/2_Module/_grid-wrapper.scss */
+.grid-wrapper .grid-container[data-type*=S-] .grid-slot {
+  width: 33.3%;
+  position: absolute;
+  bottom: 40px;
+  padding-bottom: 10px;
+  left: 0px;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+/* line 35, ../scss/2_Module/_grid-wrapper.scss */
+.grid-wrapper .grid-container[data-type*=S-][data-type*=S-0] .grid-slot {
+  left: auto;
+  right: 0px;
+  padding-right: 0px;
+  padding-left: 10px;
+}
 
+/* line 46, ../scss/2_Module/_grid-wrapper.scss */
 .grid-wrapper .grid-container .grid-box .grid .SC-4 .grid-slot {
   position: relative;
   top: auto;
   left: auto;
   width: auto;
-  float: none; }
+  float: none;
+}
 
+/* line 4, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-container .grid-tool-list,
 .gridmode-container .grid-element-type[data-type=container],
 .gridmode-container .grid-container-sorthandle,
@@ -1074,17 +1606,20 @@ h3 {
 .gridmode-box .grid-container-sorthandle,
 .gridmode-box .grid-container-options-list [role=reuse],
 .gridmode-box .grid-container-options-list [role=trash] {
-  display: none; }
+  display: none;
+}
 
+/* line 14, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-box .grid-toolbar,
 .gridmode-box .grid-container-controls,
 .gridmode-box .grid-box-delete {
-  display: none; }
+  display: none;
+}
+/* line 19, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-box .grid-box-edit {
   bottom: 0px;
-  width: 100%; }
+  width: 100%;
+}
 
 /**
 **/
-
-/*# sourceMappingURL=grid-backend.css.map */

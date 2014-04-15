@@ -6,6 +6,9 @@
 
 @import "0_Base/grid-base";
 @import "0_Base/grid-all-wrapper";
+
+@import "0_Base/_grid-font.scss";
+
 /**
 **/
 
@@ -26,6 +29,8 @@
 @import "2_Module/_grid-revisions.scss";
 @import "2_Module/_grid-slot-style-changer.scss";
 @import "2_Module/_grid-slot.scss";
+@import "2_Module/_grid-slots-wrapper.scss";
+
 @import "2_Module/_grid-tool-elements.scss";
 @import "2_Module/_grid-toolbar.scss";
 @import "2_Module/_grid-wrapper.scss";
