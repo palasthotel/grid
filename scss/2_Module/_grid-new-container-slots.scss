@@ -1,8 +1,25 @@
 .grid-new-container-slots {
 	margin: 0 0 0 20px;
+	width: 210px;
+
+	display: table;
+	
+	padding: 3px;
+	border: 1px solid $color-box-border;
+
+
+
 	.grid-slot{
-		height: 30px;
-		background-color: $color-tool-element-container-slot-bg;
+		height: 32px;
+		background-color: $color-grid-bg;
 		border-left: 4px solid white;
+
+		-webkit-box-shadow:inset 0 0 2px 0px $color-box-border;
+			box-shadow:inset 0 0 2px 0px $color-box-border;
+
+		-webkit-border-radius: 2px;
+		   -moz-border-radius: 2px;
+				border-radius: 2px;
+				
 	}
 }

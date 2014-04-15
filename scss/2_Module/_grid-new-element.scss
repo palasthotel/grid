@@ -5,7 +5,7 @@
 	cursor: move;
 	position: relative;
 	height: 40px;
-	border: 1px solid $color-draggable-border;
+	
 	margin-bottom: 8px;
 	color: $color-draggable-border;
 	overflow: hidden;
@@ -22,3 +22,6 @@
 		border-color: $color-draggable-border-hover;
 	}
 }
+
+
+// border: 1px solid $color-draggable-border;

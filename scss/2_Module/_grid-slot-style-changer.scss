@@ -1,20 +1,17 @@
 .grid-slot-style-changer {
 
 	text-transform: uppercase;
-	//width: 100%;
-	//max-width: 400px;
-	position: absolute;
 	position: relative;
-	// top: -10px;
-	// left: 0px;
 	font-size: 11px;
 
 	text-align: center;
 	font-weight: bold;
-	z-index: $idx-style-changer;
+	
 	display:block;
 	// opacity: 0;
 	@include transition();
+	overflow: hidden; 
+	height: 0;
 
 	// padding: 0 20px;
 
@@ -31,7 +28,7 @@
 		margin: 0px;
 		margin-left: -75px;
 		list-style: none;
-
+		z-index: $idx-style-changer;
 		width: 150px;
 
 		li {
@@ -60,9 +57,13 @@
 	}	
 }
 
-.grid-container:hover .grid-slot-style-changer {
-	opacity: 1;
-} 
+.grid-container-show-slot-styles {
+	.grid-slot-style-changer {
+		@include transition();
+		height: auto;
+		overflow: visible;
+	}
+}
 
 [data-reused=false] .grid-slot-style-changer:hover {
 	z-index: $idx-style-changer-hover;
