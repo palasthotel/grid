@@ -4,18 +4,19 @@
 	//width: 100%;
 	//max-width: 400px;
 	position: absolute;
-	top: -10px;
-	left: 0px;
+	position: relative;
+	// top: -10px;
+	// left: 0px;
 	font-size: 11px;
 
 	text-align: center;
 	font-weight: bold;
 	z-index: $idx-style-changer;
 	display:block;
-	opacity: 0;
+	// opacity: 0;
 	@include transition();
 
-	padding: 0 20px;
+	// padding: 0 20px;
 
 	.grid-style-changer-active {
 		padding: 6px 0px 4px 0px;
@@ -24,10 +25,14 @@
 
 	.grid-choose-style {
 		position: absolute;
+		left: 50%;
 		display:none;
 		padding: 0px;
 		margin: 0px;
+		margin-left: -75px;
 		list-style: none;
+
+		width: 150px;
 
 		li {
 			background-color: $color-slot-style-changer-styles-bg;
