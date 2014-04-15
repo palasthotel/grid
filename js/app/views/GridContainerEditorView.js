@@ -3,7 +3,8 @@ var GridContainerEditor = GridBackbone.View.extend({
     events: {
         'click .grid-editor-controls [role=cancel]' : 'onCancel',
         'click .grid-editor-controls [role=save]' : 'onSave',
-        'click legend' : 'onToggle'
+        'click legend' : 'onToggle',
+        'click .grid-editor-url-button': 'onUrlToggle'
     },
     initialize: function(){
     },
@@ -41,6 +42,17 @@ var GridContainerEditor = GridBackbone.View.extend({
         jQuery(e.target).toggleClass('active').siblings(".field-wrapper").slideToggle(300);
     },
     
+    onUrlToggle: function(e){
+        var $parent = jQuery(e.target).parent();
+        if($parent.hasClass('grid-editor-url-show')){
+            $parent.find('input').val("");
+            $parent.find('button').html("Add link");
+        } else {
+            $parent.find('button').html("Remove Link");
+        }
+        jQuery(e.target).parent().toggleClass('grid-editor-url-show');
+    },
+
     onCancel: function(){
         GRID.hideEditor(function(){
             jQuery(GRID.$root_editor).html("");

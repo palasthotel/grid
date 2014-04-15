@@ -1,0 +1,19 @@
+.grid-editor-url-builder{
+	position: relative;
+	width: 120px;
+	@include transition();
+	.grid-editor-url-input{
+		width: 100%;
+	}
+	.grid-editor-url-button{
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		width: 120px;
+		background-color: black;
+		color: white;
+	}
+	&.grid-editor-url-show{
+		width: 100%;
+	}
+}
