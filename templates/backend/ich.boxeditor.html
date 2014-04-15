@@ -12,8 +12,10 @@
 
 			<!-- title with url option -->
 			<input placeholder="{{lang_values.label-title}}" name="grid-editor-title" type="text" value="{{box.title}}" class="grid-editor-title" />
-			<input placeholder="{{lang_values.label-title-url}}" name="grid-editor-titleurl" type="text" value="{{box.titleurl}}" class="grid-editor-titleurl" />
-
+			<div class="grid-editor-url-builder">
+				<input placeholder="{{lang_values.label-title-url}}" name="grid-editor-titleurl" type="text" value="{{box.titleurl}}" class="grid-editor-titleurl grid-editor-url-input" />
+				<button class="grid-editor-url-button">Add link</button>
+			</div>
 			<!-- prolog -->
 			<fieldset class="grid-collapsable grid-collapsable-hidden">
 				<legend><i class="icon-arrow"></i>{{lang_values.label-b-before}}</legend>
@@ -38,7 +40,10 @@
 			
 			<!-- readmore with url option -->
 			<input placeholder="{{lang_values.label-readmore}}" name="grid-editor-readmore" type="text" value="{{box.readmore}}" class="grid-editor-readmore" />
-			<input placeholder="{{lang_values.label-readmore-url}}" name="grid-editor-readmoreurl" type="text" value="{{box.readmoreurl}}" class="grid-editor-readmoreurl" />
+			<div class="grid-editor-url-builder">
+				<input placeholder="{{lang_values.label-readmore-url}}" name="grid-editor-readmoreurl" type="text" value="{{box.readmoreurl}}" class="grid-editor-readmoreurl grid-editor-url-input" />
+					<button class="grid-editor-url-button">Add link</button>
+			</div>
 
 			<!-- style -->
 			<div class="grid-editor-styles-wrapper">

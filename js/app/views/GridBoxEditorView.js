@@ -5,7 +5,8 @@ var BoxEditor = GridBackbone.View.extend({
         'click .grid-editor-controls [role=cancel]' : 'onCancel',
         'click legend' : 'onToggle',
         'click .grid-editor-controls [role=save]' : 'onSave',
-        'click .grid-editor-controls [role=reuse]' : 'onMakeReusable'
+        'click .grid-editor-controls [role=reuse]' : 'onMakeReusable',
+        'click .grid-editor-url-button': 'onUrlToggle'
     },
     initialize: function(){
     },
@@ -70,6 +71,17 @@ var BoxEditor = GridBackbone.View.extend({
     onToggle:function(e)
     {
         jQuery(e.target).toggleClass('active').siblings(".field-wrapper").slideToggle(300);
+    },
+
+    onUrlToggle: function(e){
+        var $parent = jQuery(e.target).parent();
+        if($parent.hasClass('grid-editor-url-show')){
+            $parent.find('input').val("");
+            $parent.find('button').html("Add link");
+        } else {
+            $parent.find('button').html("Remove Link");
+        }
+        jQuery(e.target).parent().toggleClass('grid-editor-url-show');
     },
 
     onMakeReusable:function(e)
