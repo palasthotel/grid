@@ -2,7 +2,8 @@ var GridContainerEditor = GridBackbone.View.extend({
     className: "grid-container-editor",
     events: {
         'click .grid-editor-controls [role=cancel]' : 'onCancel',
-        'click .grid-editor-controls [role=save]' : 'onSave'
+        'click .grid-editor-controls [role=save]' : 'onSave',
+        'click legend' : 'onToggle'
     },
     initialize: function(){
     },
@@ -28,7 +29,16 @@ var GridContainerEditor = GridBackbone.View.extend({
                 customConfig : document.PathToConfig
             });
         });
+
+        this.$el.find(".grid-collapsable-hidden .field-wrapper").hide();
+        this.$el.find(".grid-collapsable-shown legend").addClass('active');
+
         return this;
+    },
+
+    onToggle:function(e)
+    {
+        jQuery(e.target).toggleClass('active').siblings(".field-wrapper").slideToggle(300);
     },
     
     onCancel: function(){

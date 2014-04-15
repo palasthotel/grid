@@ -13,13 +13,17 @@
         <input placeholder="Title URL" type="text" name="grid-editor-container-titleurl" value="{{model.titleurl}}" scope="titleurl" class="grid-editor-titleurl" />
 		
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
-	        <label><i class="icon-arrow"></i> Prolog</label>
-	        <textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{model.prolog}}</textarea>
+	        <legend><i class="icon-arrow"></i> Prolog</legend>
+	        <div class="field-wrapper">
+	        	<textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{model.prolog}}</textarea>
+	        </div>
 		</fieldset>
 
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
-	        <label><i class="icon-arrow"></i> Epilog</label>
-			<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
+	        <legend><i class="icon-arrow"></i> Epilog</legend>
+	        <div class="field-wrapper">
+				<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
+			</div>
 		</fieldset>
 
 		<input placeholder="Readmore" type="text" name="grid-editor-readmore" class="grid-editor-readmore" value="{{model.readmore}}" />
