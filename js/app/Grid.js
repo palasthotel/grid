@@ -184,7 +184,7 @@ GRID = {
 	// calculates Sidebar
 	onSidebarCalculation: function($root){
 		if(typeof $root == "undefined") $root = GRID.$root;
-		$root.find(".grid-containers-wrapper > .grid-container").css("margin-top", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container").css("padding-top", "0px");
 		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
 
 		// add new offsets
@@ -202,7 +202,7 @@ GRID = {
 			// if sidebar is taller than containers make puffer margin top
 			var needed_margin_top = $sidebar_slot.outerHeight();
 			needed_margin_top -= c_height;
-			$sidebar.css("margin-top", needed_margin_top);
+			$sidebar.css("padding-top", needed_margin_top);
 		} else if(c_height > $sidebar_slot.outerHeight(true)){
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
