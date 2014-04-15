@@ -50,15 +50,8 @@ var ContainerView = GridBackbone.View.extend({
         _.each(listen_to, function(value, key, list){
             self.listenTo(self.model,'change:'+value, self.render);
         });
-        this.model.getSlots().each(function(slot, key, list){
-            self.listenTo(slot.getBoxes(), "add", self.onSlotChange);
-            self.listenTo(slot.getBoxes(), "remove", self.onSlotChange);
-        });
         this._slotsView = new SlotsView({collection: this.model.getSlots() });
 	},
-    onSlotChange: function(){
-        jQuery(this._slotsView.el).css("min-height", jQuery(this._slotsView.el).outerHeight()+"px");
-    },
 	render: function(){
         this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
