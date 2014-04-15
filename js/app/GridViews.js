@@ -42,7 +42,8 @@ var ContainerView = GridBackbone.View.extend({
     events:{
         "click [role=trash]": "selfdestruct",
         "click [role=edit]": "onEdit",
-        "click [role=reuse]": "onReuse"
+        "click [role=reuse]": "onReuse",
+        "click [role=toggleslotstyles]": "onToggleSlotStyles"
     },
 	initialize: function(){
         var self = this;
@@ -122,6 +123,9 @@ var ContainerView = GridBackbone.View.extend({
         });
         return this;
     },
+    onToggleSlotStyles: function(){
+        this.$el.toggleClass('grid-container-show-slot-styles');
+    },
     selfdestruct: function(){
         this.model.destroy({wait:true});
         this.remove();
@@ -130,7 +134,7 @@ var ContainerView = GridBackbone.View.extend({
 
 var SlotsView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'grid-slots-wrapper slots-wrapper grid-clearfix',
+    className: 'grid-slots-wrapper slots-wrapper',
     initialize: function(){
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
@@ -143,7 +147,6 @@ var SlotsView = GridBackbone.View.extend({
             slotview._parentView = self;
             self.$el.append(slotview.render().el);
         });
-        this.$el.css("min-height", this.$el.outerHeight(true)+"px");
         return this;
     }
 });
