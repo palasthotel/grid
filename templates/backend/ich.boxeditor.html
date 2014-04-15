@@ -9,14 +9,16 @@
 
  	<div class="grid-editor-content">
 		<div data-b-index="{{b_index}}" data-id="{{box.id}}" data-c-id="{{c_id}}" data-s-id="{{s_id}}" data-type="{{box.type}}">
-			<p class="grid-editor-box-type">{{box.type}}</p>
+
+			<p class="grid-editor-element-type">Boxtype: <span class="grid-editor-box-type-name">{{box.type}}</span></p>
+
 			<!-- title with url option -->
 			<label>Boxtitle</label>
 			<input placeholder="{{lang_values.label-title}}" name="grid-editor-title" type="text" value="{{box.title}}" class="grid-editor-title" />
-			<label>Boxtitle-URL</label>
-			<div class="grid-editor-url-builder">
+			<!-- <label>Boxtitle-URL</label> -->
+			<div class="grid-editor-url-builder grid-editor-url-show">
 				<input placeholder="{{lang_values.label-title-url}}" name="grid-editor-titleurl" type="text" value="{{box.titleurl}}" class="grid-editor-titleurl grid-editor-url-input" />
-				<button class="grid-editor-url-button">Add link</button>
+				<button class="grid-editor-url-button">Delete link</button>
 			</div>
 			<!-- prolog -->
 			<fieldset class="grid-collapsable grid-collapsable-hidden">
@@ -45,10 +47,10 @@
 					<!-- readmore with url option -->
 					<label>Readmore</label>
 					<input placeholder="{{lang_values.label-readmore}}" name="grid-editor-readmore" type="text" value="{{box.readmore}}" class="grid-editor-readmore" />
-					<label>Readmore URL</label>
-					<div class="grid-editor-url-builder">
+					<!-- <label>Readmore URL</label> -->
+					<div class="grid-editor-url-builder grid-editor-url-show">
 						<input placeholder="{{lang_values.label-readmore-url}}" name="grid-editor-readmoreurl" type="text" value="{{box.readmoreurl}}" class="grid-editor-readmoreurl grid-editor-url-input" />
-							<button class="grid-editor-url-button">Add link</button>
+							<button class="grid-editor-url-button">Delete link</button>
 					</div>
 
 				</div>

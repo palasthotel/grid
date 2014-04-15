@@ -9,20 +9,20 @@
 
 	.grid-editor-url-input{
 		width: 100%;
+		padding-right: 120px;
 	}
 	.grid-editor-url-button {
 		position: absolute;
 		right: 0px;
 		top: 0px;
 		width: 120px;
-		background-color: black;
-		color: white;
-	
-
-
+		color: $color-editor-reuse;
 	}
 
 	&.grid-editor-url-show {
 		width: 100%;
+		.grid-editor-url-button:hover{
+			color: $color-warning;
+		}
 	}
 }

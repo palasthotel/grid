@@ -11,11 +11,12 @@
 	<div class="grid-editor-content">
 		<label>Containertitle</label>
         <input placeholder="Title" type="text" name="grid-editor-title" value="{{model.title}}" class="grid-editor-title" />
-        <label>Containertitle-URL</label>
-        <div class="grid-editor-url-builder">
+        <!-- <label>Containertitle-URL</label> -->
+        <div class="grid-editor-url-builder grid-editor-url-show">
         	<input placeholder="Title URL" type="text" name="grid-editor-titleurl" value="{{model.titleurl}}" scope="titleurl" class="grid-editor-titleurl grid-editor-url-input" />
-        	<button class="grid-editor-url-button">Add link</button>
+        	<button class="grid-editor-url-button">Delete link</button>
 		</div>
+
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
 	        <legend><i class="icon-arrow"></i> Prolog</legend>
 	        <div class="grid-editor-field-wrapper">
@@ -34,10 +35,10 @@
 
 				<label>Readmoretext</label>
 				<input placeholder="Readmore" type="text" name="grid-editor-readmore" class="grid-editor-readmore" value="{{model.readmore}}" />
-				<label>Readmore-URL</label>
-				<div class="grid-editor-url-builder">
+				<!-- <label>Readmore-URL</label> -->
+				<div class="grid-editor-url-builder grid-editor-url-show">
 					<input placeholder="Readmore URL" type="text" name="grid-editor-readmoreurl" class="grid-editor-readmoreurl grid-editor-url-input" value="{{model.readmoreurl}}" />
-					<button class="grid-editor-url-button">Add link</button>
+					<button class="grid-editor-url-button">Delete link</button>
 				</div>
 
 

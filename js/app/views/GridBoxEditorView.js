@@ -63,7 +63,7 @@ var BoxEditor = GridBackbone.View.extend({
 
         jQuery.each(this.$el.find(".grid-editor-url-input"), function(index, val) {
              var $url = jQuery(val);
-             if($url.val() != ""){
+             if($url.val() == ""){
                 $url.siblings('button').trigger("click");
              }
         });
@@ -84,10 +84,11 @@ var BoxEditor = GridBackbone.View.extend({
     onUrlToggle: function(e){
         var $parent = jQuery(e.target).parent();
         if($parent.hasClass('grid-editor-url-show')){
-            $parent.find('input').val("");
+            $parent.find('input').attr("disabled","disabled").val("");
             $parent.find('button').html("Add link");
         } else {
             $parent.find('button').html("Remove Link");
+            $parent.find('input').removeAttr('disabled');
         }
         jQuery(e.target).parent().toggleClass('grid-editor-url-show');
     },
