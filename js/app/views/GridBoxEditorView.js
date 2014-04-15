@@ -28,7 +28,7 @@ var BoxEditor = GridBackbone.View.extend({
             'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
-        var fieldcontainer=this.$el.find(".grid-dynamic-fields .field-wrapper");
+        var fieldcontainer=this.$el.find(".grid-dynamic-fields .grid-editor-field-wrapper");
         var views=[];
         var self=this;
         _.each(contentstructure,function(elem){
