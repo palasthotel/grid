@@ -11,12 +11,14 @@
 	<div class="grid-editor-content">
         <input placeholder="Title" type="text" name="grid-editor-title" value="{{model.title}}" class="grid-editor-title" />
         <input placeholder="Title URL" type="text" name="grid-editor-container-titleurl" value="{{model.titleurl}}" scope="titleurl" class="grid-editor-titleurl" />
+		
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
-	        <label>Prolog</label>
+	        <label><i class="icon-arrow"></i> Prolog</label>
 	        <textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{model.prolog}}</textarea>
 		</fieldset>
+
 		<fieldset class="grid-collapsable grid-collapsable-hidden">
-	        <label>Epilog</label>
+	        <label><i class="icon-arrow"></i> Epilog</label>
 			<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
 		</fieldset>
 
