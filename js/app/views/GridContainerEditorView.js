@@ -39,7 +39,7 @@ var GridContainerEditor = GridBackbone.View.extend({
 
     onToggle:function(e)
     {
-        jQuery(e.target).toggleClass('active').siblings(".field-wrapper").slideToggle(300);
+        jQuery(e.currentTarget).toggleClass('active').siblings(".field-wrapper").slideToggle(300);
     },
     
     onUrlToggle: function(e){
