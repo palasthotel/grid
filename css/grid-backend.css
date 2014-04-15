@@ -524,6 +524,7 @@ h3 {
   .grid-editor-content fieldset {
     border: none;
     border-bottom: 1px solid #eceff3;
+    padding: 0;
     margin: -1px -15px 0px -15px; }
     .grid-editor-content fieldset .grid-editor-field-wrapper {
       display: none; }
@@ -537,7 +538,10 @@ h3 {
     position: relative;
     font-size: 14px;
     font-weight: bold;
-    border-top: 1px solid #eceff3; }
+    border-top: 1px solid #eceff3;
+    background-color: white;
+    -webkit-transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease; }
     .grid-editor-content legend .icon-arrow {
       position: absolute;
       left: 5px;
