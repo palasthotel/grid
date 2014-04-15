@@ -681,14 +681,24 @@ h3 {
   margin: 20px 10%;
   padding-bottom: 100px;
   background-color: white;
+  border: 1px solid #eceff3;
 }
-/* line 46, ../scss/2_Module/_grid-editor.scss */
+/* line 49, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content fieldset {
   border: none;
   border-top: 1px solid #eceff3;
-  padding: 0px;
+  margin: 0 -15px 0px -15px;
+  padding: 15px 0 15px 30px;
 }
-/* line 55, ../scss/2_Module/_grid-editor.scss */
+/* line 58, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content fieldset .grid-editor-field-wrapper {
+  display: none;
+}
+/* line 62, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content fieldset .grid-active .grid-editor-field-wrapper {
+  display: block;
+}
+/* line 68, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend {
   margin: 0 -15px 0px -15px;
   padding: 15px 0 15px 30px;
@@ -699,15 +709,15 @@ h3 {
   font-weight: bold;
   border-top: 1px solid #eceff3;
 }
-/* line 70, ../scss/2_Module/_grid-editor.scss */
+/* line 81, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend .icon-arrow {
   position: absolute;
   left: 5px;
   top: 10px;
   transition: all 0.1337s ease;
 }
-/* line 77, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content legend.active .icon-arrow {
+/* line 88, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content legend.grid-active .icon-arrow {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -717,34 +727,30 @@ h3 {
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
   zoom: 1;
 }
-/* line 81, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content legend.active {
-  background-color: #eceff3;
-  border-bottom: 2px solid #dce2e9;
+/* line 92, ../scss/2_Module/_grid-editor.scss */
+.grid-active .grid-editor-content legend {
+  background-color: #3ac5d9;
+  border-bottom: 2px solid #24a9bc;
+  color: white;
 }
-/* line 88, ../scss/2_Module/_grid-editor.scss */
+/* line 100, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content input,
 .grid-editor-content textarea {
   border: 1px solid #eceff3;
 }
-/* line 93, ../scss/2_Module/_grid-editor.scss */
+/* line 105, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content label {
   padding: 10px 0;
   font-weight: bold;
   color: #8193a9;
   display: block;
 }
-/* line 99, ../scss/2_Module/_grid-editor.scss */
+/* line 111, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-editor-title {
   font-weight: bold;
   font-size: 16px;
   padding: 7px;
   height: auto;
-}
-
-/* line 108, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-field-wrapper {
-  margin: 20px 0;
 }
 
 /* line 1, ../scss/2_Module/_grid-editor-url-builder.scss */

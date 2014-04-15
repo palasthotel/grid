@@ -43,12 +43,25 @@
 
 	background-color: white;
 
+	border: 1px solid $color-input-border;
+
+
 	fieldset{
 		
 		border: none;
 		border-top: 1px solid $color-input-border;
-		padding:0px;
 
+		margin: 0 -15px 0px -15px;
+		padding: 15px 0 15px 30px;
+
+
+		.grid-editor-field-wrapper {
+			display: none;
+		}
+
+		.grid-active .grid-editor-field-wrapper {
+			display: block;
+		}
 
 	}
 
@@ -65,8 +78,6 @@
 
 		border-top: 1px solid $color-input-border;
 
-		// padding: 10px 0;
-
 		.icon-arrow{
 			position: absolute;
 			left: 5px;
@@ -74,13 +85,14 @@
 			@include transition();
 		}
 
-		&.active .icon-arrow{
+		&.grid-active .icon-arrow{
 			@include rotate(90);
 		}
 
-		&.active {
-			background-color: $color-input-border;
-			border-bottom: 2px solid darken($color-input-border, 5%);	
+		.grid-active &{
+			background-color: $color-edit;
+			border-bottom: 2px solid darken($color-edit, 10%);	
+			color: white;
 		}
 		
 	}
@@ -105,9 +117,8 @@
 
 }
 
-.grid-editor-field-wrapper {
-	margin: 20px 0;
-}
+
+
 
 
 
