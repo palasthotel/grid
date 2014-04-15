@@ -188,7 +188,7 @@ h3 {
 
 /* line 113, ../scss/0_Base/_grid-font.scss */
 .icon-revert:before {
-  content: '\27f3';
+  content: '\27f2';
 }
 
 /* line 114, ../scss/0_Base/_grid-font.scss */
@@ -455,7 +455,7 @@ h3 {
  ****************/
 /* line 6, ../scss/2_Module/_grid-container.scss */
 .grid-container {
-  margin: 0px 0px 20px 0px;
+  margin: 40px 0px 20px 0px;
 }
 /* line 12, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-sorthandle,
@@ -1114,199 +1114,199 @@ h3 {
 ************ 12 er ********
 ************************/
 /** Container C-12 **/
-/* line 24, ../scss/2_Module/_grid-slot.scss */
+/* line 19, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   padding: 30px 7px 0 7px;
-  float: left;
   box-sizing: border-box;
+  display: table-cell;
 }
 
-/* line 32, ../scss/2_Module/_grid-slot.scss */
+/* line 29, ../scss/2_Module/_grid-slot.scss */
 .grid-slot:first-child {
   border-left: none;
 }
 
-/* line 41, ../scss/2_Module/_grid-slot.scss */
+/* line 38, ../scss/2_Module/_grid-slot.scss */
 .C-12 .grid-slot {
   width: 100%;
 }
 
 /** Container C-6-6 **/
-/* line 49, ../scss/2_Module/_grid-slot.scss */
+/* line 46, ../scss/2_Module/_grid-slot.scss */
 .C-6-6 .grid-slot {
   width: 50%;
 }
 
 /** Container C-4-4-4 **/
-/* line 62, ../scss/2_Module/_grid-slot.scss */
+/* line 59, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4 .grid-slot {
   width: 33.3%;
 }
 
-/* line 67, ../scss/2_Module/_grid-slot.scss */
+/* line 64, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4 .grid-slot:last-child {
   width: 33.3%;
 }
 
 /** Container C-8-4 **/
-/* line 74, ../scss/2_Module/_grid-slot.scss */
+/* line 71, ../scss/2_Module/_grid-slot.scss */
 .C-8-4 .grid-slot:nth-child(1) {
   width: 66.6%;
 }
 
-/* line 77, ../scss/2_Module/_grid-slot.scss */
+/* line 74, ../scss/2_Module/_grid-slot.scss */
 .C-8-4 .grid-slot:nth-child(2) {
   width: 33.3%;
 }
 
 /** Container C-4-8 **/
-/* line 85, ../scss/2_Module/_grid-slot.scss */
+/* line 82, ../scss/2_Module/_grid-slot.scss */
 .C-4-8 .grid-slot:nth-child(1) {
   width: 33.3%;
 }
 
-/* line 88, ../scss/2_Module/_grid-slot.scss */
+/* line 85, ../scss/2_Module/_grid-slot.scss */
 .C-4-8 .grid-slot:nth-child(2) {
   width: 66%;
 }
 
 /** Container C-3-3-3-3 **/
-/* line 93, ../scss/2_Module/_grid-slot.scss */
+/* line 90, ../scss/2_Module/_grid-slot.scss */
 [data-type=C-3-3-3-3] .grid-slot {
   width: 25%;
 }
 
-/* line 96, ../scss/2_Module/_grid-slot.scss */
+/* line 93, ../scss/2_Module/_grid-slot.scss */
 [data-type=C-3-3-3-3] .grid-slot:last-child {
   width: 25%;
 }
 
 /** Container C-2-2-2-2-2-2 **/
-/* line 104, ../scss/2_Module/_grid-slot.scss */
+/* line 101, ../scss/2_Module/_grid-slot.scss */
 .C-2-2-2-2-2-2 .grid-slot {
   width: 16.666%;
 }
 
 /** Container C-0-8 and C-8-0 **/
-/* line 112, ../scss/2_Module/_grid-slot.scss */
+/* line 109, ../scss/2_Module/_grid-slot.scss */
 .C-0-8 .grid-slot {
   width: 66.6%;
 }
 
-/* line 115, ../scss/2_Module/_grid-slot.scss */
+/* line 112, ../scss/2_Module/_grid-slot.scss */
 .C-8-0 .grid-slot {
   width: 66.6%;
 }
 
-/* line 118, ../scss/2_Module/_grid-slot.scss */
+/* line 115, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-8-0,
 .grid-wrapper .C-0-8 {
   width: 66.6% !important;
 }
 
-/* line 122, ../scss/2_Module/_grid-slot.scss */
+/* line 119, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-8 {
   margin-left: 33.3%;
 }
 
-/* line 125, ../scss/2_Module/_grid-slot.scss */
+/* line 122, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-8-0 .grid-slot,
 .grid-wrapper .C-0-8 .grid-slot {
   width: 100%;
 }
 
 /** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
-/* line 131, ../scss/2_Module/_grid-slot.scss */
+/* line 128, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-0 .grid-slot {
   width: 33%;
 }
 
-/* line 136, ../scss/2_Module/_grid-slot.scss */
+/* line 133, ../scss/2_Module/_grid-slot.scss */
 .C-0-4-4 .grid-slot {
   width: 33%;
 }
 
-/* line 139, ../scss/2_Module/_grid-slot.scss */
+/* line 136, ../scss/2_Module/_grid-slot.scss */
 .C-0-4-0 .grid-slot {
   width: 33.3%;
 }
 
-/* line 142, ../scss/2_Module/_grid-slot.scss */
+/* line 139, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-4,
 .grid-wrapper .C-4-4-0 {
   width: 66.6% !important;
 }
 
-/* line 146, ../scss/2_Module/_grid-slot.scss */
+/* line 143, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-4 {
   margin-left: 33.3%;
 }
 
-/* line 149, ../scss/2_Module/_grid-slot.scss */
+/* line 146, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-4-0 .grid-slot,
 .grid-wrapper .C-0-4-4 .grid-slot {
   width: 49%;
 }
 
-/* line 155, ../scss/2_Module/_grid-slot.scss */
+/* line 152, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-0 {
   width: 33.3% !important;
   margin-left: 33.3%;
 }
 
-/* line 159, ../scss/2_Module/_grid-slot.scss */
+/* line 156, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-0 .grid-slot {
   width: 100%;
 }
 
 /** Container C-4-2-2-0 and C-2-2-4-0 **/
-/* line 164, ../scss/2_Module/_grid-slot.scss */
+/* line 161, ../scss/2_Module/_grid-slot.scss */
 .C-4-2-2-0 .grid-slot,
 .C-2-2-4-0 .grid-slot {
   width: 16%;
 }
 
-/* line 168, ../scss/2_Module/_grid-slot.scss */
+/* line 165, ../scss/2_Module/_grid-slot.scss */
 .C-4-2-2-0 .grid-slot:first-child,
 .C-2-2-4-0 .grid-slot:last-child {
   width: 33%;
 }
 
-/* line 172, ../scss/2_Module/_grid-slot.scss */
+/* line 169, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0,
 .grid-wrapper .C-2-2-4-0 {
   width: 66.6% !important;
 }
 
-/* line 176, ../scss/2_Module/_grid-slot.scss */
+/* line 173, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0 .grid-slot,
 .grid-wrapper .C-2-2-4-0 .grid-slot {
   width: 24%;
 }
 
-/* line 181, ../scss/2_Module/_grid-slot.scss */
+/* line 178, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0 .grid-slot:first-child,
 .grid-wrapper .C-2-2-4-0 .grid-slot:last-child {
   width: 49%;
 }
 
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
-/* line 188, ../scss/2_Module/_grid-slot.scss */
+/* line 185, ../scss/2_Module/_grid-slot.scss */
 .C-2-2-2-2-0 .grid-slot {
   width: 16%;
 }
 
-/* line 191, ../scss/2_Module/_grid-slot.scss */
+/* line 188, ../scss/2_Module/_grid-slot.scss */
 .C-0-2-2-2-2 .grid-slot {
   float: right;
 }
 
-/* line 194, ../scss/2_Module/_grid-slot.scss */
+/* line 191, ../scss/2_Module/_grid-slot.scss */
 #grid .C-2-2-2-2-0 {
   width: 66.6% !important;
 }
 
-/* line 197, ../scss/2_Module/_grid-slot.scss */
+/* line 194, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-2-2-2-2-0 .grid-slot,
 .grid-wrapper .C-0-2-2-2-2 .grid-slot {
   width: 24%;
@@ -1316,134 +1316,145 @@ h3 {
 ************ 18 er ********
 ************************/
 /** Container C-18 **/
-/* line 207, ../scss/2_Module/_grid-slot.scss */
+/* line 204, ../scss/2_Module/_grid-slot.scss */
 .C-18 .grid-slot {
   width: 100%;
 }
 
-/* line 212, ../scss/2_Module/_grid-slot.scss */
+/* line 209, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-6 .grid-slot {
   width: 33%;
 }
 
-/* line 215, ../scss/2_Module/_grid-slot.scss */
+/* line 212, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-6 .grid-slot:last-child {
   width: 32%;
 }
 
-/* line 218, ../scss/2_Module/_grid-slot.scss */
+/* line 215, ../scss/2_Module/_grid-slot.scss */
 .C-12-6 .grid-slot {
   width: 66%;
 }
 
-/* line 221, ../scss/2_Module/_grid-slot.scss */
+/* line 218, ../scss/2_Module/_grid-slot.scss */
 .C-12-6 .grid-slot:last-child {
   width: 33%;
 }
 
-/* line 224, ../scss/2_Module/_grid-slot.scss */
+/* line 221, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-6 .grid-slot {
   width: 22%;
 }
 
-/* line 227, ../scss/2_Module/_grid-slot.scss */
+/* line 224, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-6 .grid-slot:last-child {
   width: 32%;
 }
 
-/* line 230, ../scss/2_Module/_grid-slot.scss */
+/* line 227, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-3-3 .grid-slot {
   width: 16%;
 }
 
-/* line 233, ../scss/2_Module/_grid-slot.scss */
+/* line 230, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-3-3 .grid-slot:last-child {
   float: right;
 }
 
 /** Container C-12-0 **/
-/* line 237, ../scss/2_Module/_grid-slot.scss */
+/* line 234, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 .grid-slot {
   width: 66.6%;
 }
 
-/* line 240, ../scss/2_Module/_grid-slot.scss */
+/* line 237, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 {
   width: 66.6% !important;
 }
 
-/* line 243, ../scss/2_Module/_grid-slot.scss */
+/* line 240, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 .grid-slot {
   width: 100%;
 }
 
 /** Container C-4-4-4-0 **/
-/* line 247, ../scss/2_Module/_grid-slot.scss */
+/* line 244, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 .grid-slot {
   width: 22%;
 }
 
-/* line 250, ../scss/2_Module/_grid-slot.scss */
+/* line 247, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 {
   width: 66.6% !important;
 }
 
-/* line 253, ../scss/2_Module/_grid-slot.scss */
+/* line 250, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 .grid-slot {
   width: 33%;
 }
 
 /** Container C-6-6-0 **/
-/* line 260, ../scss/2_Module/_grid-slot.scss */
+/* line 257, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot {
   width: 33.3%;
 }
 
-/* line 264, ../scss/2_Module/_grid-slot.scss */
+/* line 261, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 {
   width: 66.6% !important;
 }
 
-/* line 267, ../scss/2_Module/_grid-slot.scss */
+/* line 264, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot {
   width: 50%;
 }
 
-/* line 270, ../scss/2_Module/_grid-slot.scss */
+/* line 267, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot:last-child {
   margin-right: 0px;
 }
 
 /** Container C-3-3-3-3-0 **/
-/* line 274, ../scss/2_Module/_grid-slot.scss */
+/* line 271, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 .grid-slot {
   width: 16%;
 }
 
-/* line 277, ../scss/2_Module/_grid-slot.scss */
+/* line 274, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 {
   width: 66.6% !important;
 }
 
-/* line 280, ../scss/2_Module/_grid-slot.scss */
+/* line 277, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 .grid-slot {
   width: 24.5%;
 }
 
 /* container sidebars */
-/* line 288, ../scss/2_Module/_grid-slot.scss */
+/* line 285, ../scss/2_Module/_grid-slot.scss */
 .S-0-4 .grid-slot {
   width: 33%;
   float: right;
 }
 
-/* line 292, ../scss/2_Module/_grid-slot.scss */
+/* line 289, ../scss/2_Module/_grid-slot.scss */
 .S-4-0 .grid-slot {
   width: 33%;
 }
 
-/* line 296, ../scss/2_Module/_grid-slot.scss */
+/* line 293, ../scss/2_Module/_grid-slot.scss */
 .SC-4 .grid-slot {
+  width: 100%;
+}
+
+/**
+ * Grid Slots Wrapper
+ * @author Stephan Kroppenstedt <sk@palasthotel.de>
+ * @created 15.04.2014 11:46
+ */
+/* line 7, ../scss/2_Module/_grid-slots-wrapper.scss */
+.grid-slots-wrapper {
+  display: table;
   width: 100%;
 }
 
