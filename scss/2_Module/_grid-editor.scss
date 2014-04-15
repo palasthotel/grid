@@ -53,7 +53,9 @@
 		margin: -1px -15px 0px -15px;
 
 		.grid-editor-field-wrapper {
-			display: none;
+			 display: none;
+
+
 		}
 	}
 
@@ -68,6 +70,9 @@
 		font-weight: bold;
 
 		border-top: 1px solid $color-input-border;
+		background-color: white;
+
+		@include transition(background-color, 0.5s, ease);
 
 		.icon-arrow{
 			position: absolute;

@@ -694,7 +694,7 @@ h3 {
 .grid-editor-content fieldset .grid-editor-field-wrapper {
   display: none;
 }
-/* line 60, ../scss/2_Module/_grid-editor.scss */
+/* line 62, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend {
   padding: 15px 0px 15px 35px;
   box-sizing: border-box;
@@ -704,27 +704,29 @@ h3 {
   font-size: 14px;
   font-weight: bold;
   border-top: 1px solid #eceff3;
+  background-color: white;
+  transition: background-color 0.5s ease;
 }
-/* line 72, ../scss/2_Module/_grid-editor.scss */
+/* line 77, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend .icon-arrow {
   position: absolute;
   left: 5px;
   top: 10px;
   transition: all 0.1337s ease;
 }
-/* line 82, ../scss/2_Module/_grid-editor.scss */
+/* line 87, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content input,
 .grid-editor-content textarea {
   border: 1px solid #eceff3;
 }
-/* line 87, ../scss/2_Module/_grid-editor.scss */
+/* line 92, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content label {
   padding: 10px 0;
   font-weight: bold;
   color: #8193a9;
   display: block;
 }
-/* line 93, ../scss/2_Module/_grid-editor.scss */
+/* line 98, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-editor-title {
   font-weight: bold;
   font-size: 16px;
@@ -732,22 +734,22 @@ h3 {
   height: auto;
 }
 
-/* line 102, ../scss/2_Module/_grid-editor.scss */
+/* line 107, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active {
   border-bottom: 2px solid #24a9bc;
 }
-/* line 106, ../scss/2_Module/_grid-editor.scss */
+/* line 111, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active .grid-editor-field-wrapper {
   display: block;
   margin: 15px;
 }
-/* line 111, ../scss/2_Module/_grid-editor.scss */
+/* line 116, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active legend {
   background-color: #3ac5d9;
   border-bottom: 2px solid #24a9bc;
   color: white;
 }
-/* line 116, ../scss/2_Module/_grid-editor.scss */
+/* line 121, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active legend .icon-arrow {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
