@@ -4,22 +4,11 @@
 
 	display: table;
 	
-	padding: 3px;
-	border: 1px solid $color-box-border;
-
-
+	padding: 3px 0;
+	border: 1px solid $color-container-border;
 
 	.grid-slot{
 		height: 32px;
-		background-color: $color-grid-bg;
 		border-left: 4px solid white;
-
-		-webkit-box-shadow:inset 0 0 2px 0px $color-box-border;
-			box-shadow:inset 0 0 2px 0px $color-box-border;
-
-		-webkit-border-radius: 2px;
-		   -moz-border-radius: 2px;
-				border-radius: 2px;
-				
 	}
 }
