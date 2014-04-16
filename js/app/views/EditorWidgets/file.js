@@ -1,4 +1,5 @@
 boxEditorControls['file']=GridBackbone.View.extend({
+	className: "grid-editor-widget-file",
     initialize:function(){
 
     },

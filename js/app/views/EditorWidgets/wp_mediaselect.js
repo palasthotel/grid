@@ -1,4 +1,5 @@
 boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
+    className: "grid-editor-widget-wp-mediaselect",
     events:{
         "click .upload_image_button": "open_wp_media"
     },

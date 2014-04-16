@@ -60,6 +60,7 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     revisions: function(){
         this._revisionsView.$el.slideToggle();
+        jQuery("html, body").animate({scrollTop: 0},300);
     },
     toggleBoxes: function(){
         GRID.log("BTN toggleBoxes");

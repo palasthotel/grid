@@ -17,7 +17,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
         var list=this.model.container[this.model.structure.key];
         var self=this;
         var views=[];
-        
+
         jQuery("<button></button>")
                 .text("Add item")
                 .addClass('grid-editor-widget-list-add')
@@ -30,21 +30,20 @@ boxEditorControls['list']=GridBackbone.View.extend({
         _.each(list,function(elem){
             var view=new boxEditorControls['listitem']({
                 model:{
-                    structure:self.structure.contentstructure,
+                    structure:self.model.structure.contentstructure,
                     container:elem,
                     box:self.model.box,
-                    parentpath:self.model.parentpath+self.structure.key+"."
+                    parentpath:self.model.parentpath+self.model.structure.key+"."
                 }
             });
             views.push(view);
-            this.$list.append(view.render().el);
+            self.$list.append(view.render().el);
         });
         this.views=views;
 
         return this;
     },
     onAdd: function(){
-        GRID.log(["add List Item", this.model]);
         var view = new boxEditorControls['listitem']({
             model: {
                 structure: this.model.structure.contentstructure,
@@ -73,6 +72,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
 });
 
 boxEditorControls['listitem']=GridBackbone.View.extend({
+    className: "grid-editor-widget-listitem",
     initialize:function(){
 
     },

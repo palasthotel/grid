@@ -1,4 +1,5 @@
 boxEditorControls['text']=GridBackbone.View.extend({
+    className: "grid-editor-widget-text",
     initialize:function(){
 
     },

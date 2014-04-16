@@ -1,4 +1,5 @@
 boxEditorControls['checkbox']=GridBackbone.View.extend({
+    className: "grid-editor-widget-checkbox",
     initialize:function(){
 
     },
