@@ -464,24 +464,29 @@ h3 {
 .grid-container .grid-container-title {
   color: #262e38;
 }
-/* line 22, ../scss/2_Module/_grid-container.scss */
+/* line 21, ../scss/2_Module/_grid-container.scss */
+.grid-container .grid-container-title .grid-container-style {
+  font-weight: normal;
+  font-size: 11px;
+}
+/* line 29, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-controls {
   background-color: white;
   border: 1px solid rgba(176, 186, 194, 0.7);
 }
-/* line 28, ../scss/2_Module/_grid-container.scss */
+/* line 34, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-content {
-  border-top: 1px solid white;
+  border-top: none;
 }
 
-/* line 35, ../scss/2_Module/_grid-container.scss */
+/* line 41, ../scss/2_Module/_grid-container.scss */
 .grid-container-content {
   position: relative;
   background-color: white;
   border: 1px solid rgba(176, 186, 194, 0.7);
 }
 
-/* line 41, ../scss/2_Module/_grid-container.scss */
+/* line 47, ../scss/2_Module/_grid-container.scss */
 .grid-container-controls {
   position: relative;
   background-color: transparent;
@@ -493,7 +498,7 @@ h3 {
 /**********************************
  * container hover states
  **********************************/
-/* line 57, ../scss/2_Module/_grid-container.scss */
+/* line 63, ../scss/2_Module/_grid-container.scss */
 .grid-container-title,
 .grid-container-sorthandle,
 .grid-container-options-icon {
@@ -501,26 +506,26 @@ h3 {
   transition: all 0.3s ease;
 }
 
-/* line 72, ../scss/2_Module/_grid-container.scss */
+/* line 78, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover {
   background-color: #3f4853;
 }
-/* line 74, ../scss/2_Module/_grid-container.scss */
+/* line 80, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover[role=trash] {
   background-color: #ed5032;
 }
-/* line 77, ../scss/2_Module/_grid-container.scss */
+/* line 83, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover[role=edit] {
   background-color: #3ac5d9;
 }
 
-/* line 83, ../scss/2_Module/_grid-container.scss */
+/* line 89, ../scss/2_Module/_grid-container.scss */
 .grid-container-type-content {
   margin: 0px;
   border-bottom: 1px solid #f3f5f7;
 }
 
-/* line 89, ../scss/2_Module/_grid-container.scss */
+/* line 95, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer {
   cursor: move;
   position: absolute;
@@ -532,7 +537,7 @@ h3 {
   background-color: rgba(63, 72, 83, 0.3);
   z-index: 50;
 }
-/* line 99, ../scss/2_Module/_grid-container.scss */
+/* line 105, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer .grid-container-reused-label {
   position: absolute;
   top: -3px;
@@ -541,7 +546,7 @@ h3 {
   text-transform: uppercase;
 }
 
-/* line 111, ../scss/2_Module/_grid-container.scss */
+/* line 117, ../scss/2_Module/_grid-container.scss */
 .grid-container-title {
   position: absolute;
   top: 9px;
@@ -550,7 +555,7 @@ h3 {
   font-size: 90%;
 }
 
-/* line 119, ../scss/2_Module/_grid-container.scss */
+/* line 125, ../scss/2_Module/_grid-container.scss */
 .grid-container-sorthandle {
   position: absolute;
   top: 5px;
@@ -560,13 +565,13 @@ h3 {
   cursor: move;
 }
 
-/* line 128, ../scss/2_Module/_grid-container.scss */
+/* line 134, ../scss/2_Module/_grid-container.scss */
 .grid-container-sort-placeholder {
   height: 20px;
   border: 2px dashed #3ac5d9;
 }
 
-/* line 134, ../scss/2_Module/_grid-container.scss */
+/* line 140, ../scss/2_Module/_grid-container.scss */
 .grid-container-options {
   position: absolute;
   top: 5px;
@@ -574,16 +579,16 @@ h3 {
   height: 40px;
   z-index: 80;
 }
-/* line 141, ../scss/2_Module/_grid-container.scss */
+/* line 147, ../scss/2_Module/_grid-container.scss */
 .grid-container-options:hover {
   z-index: 81;
 }
-/* line 145, ../scss/2_Module/_grid-container.scss */
+/* line 151, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-icon {
   text-transform: uppercase;
   font-weight: bold;
 }
-/* line 149, ../scss/2_Module/_grid-container.scss */
+/* line 155, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-list {
   position: absolute;
   list-style: none;
@@ -596,7 +601,7 @@ h3 {
   padding: 0px;
   display: none;
 }
-/* line 161, ../scss/2_Module/_grid-container.scss */
+/* line 167, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-list .grid-container-options-list-item {
   cursor: pointer;
   padding: 5px;
@@ -604,7 +609,7 @@ h3 {
   font-weight: bold;
   margin-bottom: 0px;
 }
-/* line 168, ../scss/2_Module/_grid-container.scss */
+/* line 174, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-list:before {
   content: "";
   border: 8px solid #b0bac2;
@@ -620,17 +625,17 @@ h3 {
   top: -16px;
   left: 47%;
 }
-/* line 185, ../scss/2_Module/_grid-container.scss */
+/* line 191, ../scss/2_Module/_grid-container.scss */
 .grid-container-options:hover .grid-container-options-list {
   display: block;
 }
 
-/* line 190, ../scss/2_Module/_grid-container.scss */
+/* line 196, ../scss/2_Module/_grid-container.scss */
 .grid-container-prolog,
 .grid-container-epilog {
   padding: 7px 10px;
 }
-/* line 194, ../scss/2_Module/_grid-container.scss */
+/* line 200, ../scss/2_Module/_grid-container.scss */
 .grid-container-prolog p,
 .grid-container-epilog p {
   font-size: 11px;
@@ -1528,6 +1533,7 @@ h3 {
   width: 260px;
   padding-bottom: 80px;
   border-left: 1px solid rgba(176, 186, 194, 0.7);
+  z-index: 90;
 }
 
 /* line 3, ../scss/2_Module/_grid-toolbar.scss */
