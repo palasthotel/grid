@@ -55,7 +55,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
     },
     fetchValue:function(){
         var content=[];
-        _.each(views,function(view){
+        _.each(this.views,function(view){
             content.push(view.fetchValue());
         });
         return content;
