@@ -93,6 +93,9 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
             views.push(view);
             self.$el.append(view.render().el);
         });
+        jQuery("<button class='widget-list-remove-item-button'><span class='icon-minus'></span>Remove item</button>").on('click', function(event) {
+            self.remove();
+        }).appendTo(this.$el);
         this.views=views;
         return this;
     },

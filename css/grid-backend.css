@@ -155,6 +155,9 @@ h3 {
 .icon-plus:before {
   content: '\2795'; }
 
+.icon-minus:before {
+  content: '\2796'; }
+
 .icon-revisions:before {
   content: '\e771'; }
 
@@ -1258,6 +1261,9 @@ h3 {
 .grid-editor-widget-textarea textarea {
   width: 100%;
   min-height: 200px; }
+
+.grid-editor-widget-list .widget-list-remove-item-button {
+  margin-left: -15px; }
 
 .grid-editor-widget-listitem {
   border-left: 4px solid #eceae7;
