@@ -515,8 +515,7 @@ h3 {
   list-style: none;
   position: fixed;
   z-index: 90;
-  margin: 0px;
-  width: 40px;
+  margin: 200px 0 0 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -533,7 +532,6 @@ h3 {
     right: 160px;
     position: relative;
     margin: 0;
-    top: 40%;
     -webkit-transition: all 0.1337s ease;
     transition: all 0.1337s ease; }
     .grid-editor-controls .grid-editor-control:hover {

@@ -5,9 +5,7 @@
 	list-style: none;
 	position: fixed;
 	z-index: 90;
-	margin: 0px;
-	width: 40px;
-
+	margin: 200px 0 0 0;
 
 	box-sizing: border-box;
 	@include transition();
@@ -28,7 +26,7 @@
 		right:160px;
 		position: relative;
 		margin: 0;
-		top: 40%; 
+		
 		@include transition();
 		&:hover {
 			right: 20px;
