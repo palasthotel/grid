@@ -1,30 +1,85 @@
 // container and box editor
 
-.grid-editor-wrapper{
-	@extend .grid-all-wrapper;	
-}
-
 .grid-editor-controls{
+
+	list-style: none;
+	position: fixed;
+	z-index: 90;
+	margin: 0px;
+	width: 40px;
+
+
 	box-sizing: border-box;
+	@include transition();
+
+	width: $dim-toolbar-width;
+	height: $dim-toolbar-height;
 
 	button{
 		background-color: black;
 		color:white;
 		padding:10px;
 	}
-	.grid-editor-save-button{
-		background-color: $color-editor-save-bg;
-		color: $color-editor-save;
+
+
+
+	.grid-editor-control {
+		width: 185px;
+		right:160px;
+		position: relative;
+		margin: 0;
+		top: 40%; 
+		@include transition();
+		&:hover {
+			right: 20px;
+		}
+		button {
+			text-align: right;
+			padding: 5px 48px 5px 5px;
+			margin: 0px;
+			font-size: 12px;
+			width: 100%;
+			height: 45px;
+			@include transition();
+			border: none;
+			background-color: $color-grid-bg;
+
+			[class^="icon-"], 
+			[class*=" icon-"]{
+				position: absolute;
+				right: 6px;
+				top: 6px;
+				font-size: 16px;
+				font-family: 'Entypo';
+			}
+			&:hover{
+				padding-right: 38px;
+				// color: white;
+				// background-color: $color-link;
+			}
+		}
+
+		.grid-editor-save-button {
+
+			background-color: $color-editor-save-bg;
+			color: $color-editor-save;
+		}
+		.grid-editor-cancel-button{
+			background-color: $color-editor-cancel-bg;
+			color: $color-editor-cancel;
+		}
+		.grid-editor-reuse-button{
+			background-color: $color-editor-reuse-bg;
+			color: $color-editor-reuse;
+		}
 	}
-	.grid-editor-cancel-button{
-		background-color: $color-editor-cancel-bg;
-		color: $color-editor-cancel;
-	}
-	.grid-editor-reuse-button{
-		background-color: $color-editor-reuse-bg;
-		color: $color-editor-reuse;
-	}
+
+	
+
+	
 }
+
+
 
 .grid-editor-content{
 	box-sizing: border-box;
@@ -71,6 +126,7 @@
 	input,
 	textarea{
 		border: 1px solid $color-input-border;
+		width: 100%;
 	}
 
 	label {
