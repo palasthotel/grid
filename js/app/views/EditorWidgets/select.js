@@ -1,4 +1,5 @@
 boxEditorControls['select']=GridBackbone.View.extend({
+    className: "grid-editor-widget-select",
     initialize:function(){
 
     },

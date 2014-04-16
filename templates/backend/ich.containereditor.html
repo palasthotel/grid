@@ -1,0 +1,63 @@
+
+
+<!-- <div data-id="{{model.id}}" data-type="{{model.type}}" class="container editor {{model.type}} clearfix"> -->
+
+    <ul class="grid-editor-controls">
+		<li class="grid-editor-control grid-editor-control-save"><button role="save" class="grid-editor-save-button"><i class="icon-ok"></i>Save</button></li>
+		<li class="grid-editor-control grid-editor-control-cancel"><button role="cancel" class="grid-editor-cancel-button"><i class="icon-cancel"></i>Cancel</button></li>
+		<li class="grid-editor-control grid-editor-control-reuse"><button role="reuse" class="grid-editor-reuse-button"><i class="icon-reuse"></i>Make reusable</button></li>
+    </ul>
+	
+	<div class="grid-editor-content">
+		<div class="grid-editor-header">
+			<label>Containertitle</label>
+	        <input placeholder="Title" type="text" name="grid-editor-title" value="{{model.title}}" class="grid-editor-title" />
+	        <!-- <label>Containertitle-URL</label> -->
+	        <div class="grid-editor-url-builder grid-editor-url-show">
+	        	<input placeholder="Title URL" type="text" name="grid-editor-titleurl" 
+	        	value="{{model.titleurl}}" scope="titleurl" class="grid-editor-titleurl grid-editor-url-input" />
+	        	<button class="grid-editor-url-button icon-link">Delete link</button>
+			</div>
+		</div>
+
+		<fieldset class="grid-collapsable grid-collapsable-hidden">
+	        <legend><i class="icon-arrow"></i> Prolog</legend>
+	        <div class="grid-editor-field-wrapper">
+	        	<label>Text</label>
+	        	<textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{model.prolog}}</textarea>
+	        </div>
+		</fieldset>
+
+		<fieldset class="grid-collapsable grid-collapsable-hidden">
+	        <legend><i class="icon-arrow"></i> Epilog</legend>
+	        <div class="grid-editor-field-wrapper">
+
+	        	<label>Text</label>
+				<textarea name="grid-editor-epilog" class="form-html grid-editor-epilog">{{model.epilog}}</textarea>
+
+
+				<label>Readmoretext</label>
+				<input placeholder="Readmore" type="text" name="grid-editor-readmore" class="grid-editor-readmore" value="{{model.readmore}}" />
+				<!-- <label>Readmore-URL</label> -->
+				<div class="grid-editor-url-builder grid-editor-url-show">
+					<input placeholder="Readmore URL" type="text" name="grid-editor-readmoreurl" 
+					class="grid-editor-readmoreurl grid-editor-url-input" value="{{model.readmoreurl}}" />
+					<button class="grid-editor-url-button icon-link">Delete link</button>
+				</div>
+
+
+			</div>
+		</fieldset>
+	
+		<div class="grid-editor-footer">
+	 		<label>Containerstyle</label>
+			<select name="grid-editor-style" class="grid-editor-style">
+				<option value="">Default Style</option>
+				{{#styles}}
+				<option {{selected}} value="{{slug}}">{{title}}</option>
+				{{/styles}}
+		   </select>
+	   </div>
+
+	</div>
+<!-- </div> -->

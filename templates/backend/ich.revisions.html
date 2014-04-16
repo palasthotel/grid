@@ -1,0 +1,15 @@
+{{#revisions}}<div class="grid-revision grid-revision-state-{{state}}" data-revision="{{revision}}" data-state="{{state}}">
+	<div class="grid-revision-description">
+		<p class="grid-revision-date">{{readable_date}}</p>
+		<p class="grid-revision-editor">{{editor}}</p>
+	</div>
+	<div class="grid-revision-controls">
+		<button role="preview" class="grid-revision-button grid-revision-preview-button"><i class="icon-preview"></i>Preview</button>
+		{{#isDraft}}
+			<button role="delete" class="grid-revision-button grid-revision-delete-button"><i class="icon-trash"></i>Delete</button>
+		{{/isDraft}}
+		{{#isDeprecated}}
+			<button role="revert" class="grid-revision-button grid-revision-revert-button"><i class="icon-revert"></i>Revert</button>
+		{{/isDeprecated}}
+	</div>
+</div>{{/revisions}}

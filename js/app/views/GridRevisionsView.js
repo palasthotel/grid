@@ -1,16 +1,18 @@
 var GridRevisionsView = GridBackbone.View.extend({
-	tagName: 'table',
+	tagName: 'div',
+	className: 'grid-revisions',
 	events:{
-		'click .btn-preview':'onPreview',
-		'click .btn-delete':'onDelete',
-		'click .btn-revert':'onRevert'
+		'click [role=preview]':'onPreview',
+		'click [role=delete]':'onDelete',
+		'click [role=revert]':'onRevert'
 	},
 	initialize:function(){
 		this.listenTo(this.collection, 'add',this.render);
+		this.$list = jQuery("<div class='grid-revisions-list'></ul>");
+		this.$el.append(this.$list);
 	},
 	render:function(){
 		var revisions=this.collection.toJSON();
-		GRID.log(revisions);
 		_.each(revisions,function(elem){
 			elem.isDraft=false;
 			elem.isPublished=false;
@@ -30,28 +32,28 @@ var GridRevisionsView = GridBackbone.View.extend({
 			elem["readable_date"] = "--.--.----";
 			if(typeof elem["date"] != "undefined" && elem["date"] != "" && elem["date"] != null){
 				var date = new Date(parseInt(elem["date"])*1000);
-				elem["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+				elem["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" &bull; "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 			}
 			if(typeof elem["editor"] == "undefined" || elem["editor"] == "" || elem["editor"] == null){
 				elem["editor"] = "unknown";
 			}
 		});
-		this.$el.html(ich.tpl_revisions({revisions:revisions,lang_values:document.lang_values}));
+		this.$list.html(ich.tpl_revisions({revisions:revisions,lang_values:document.lang_values}));
+		var list_width = this.$list.children().length * this.$list.children().first().outerWidth(true);
+		this.$list.css("width", list_width);
 		return this;
 	},
 	onPreview:function(e){
-		var revision=jQuery(e.srcElement).parents("tr").data("revision");
-		var location =  GRID.PREVIEW_PATTERN.replace("{REV}", revision);
+		var $revision = jQuery(e.target).parents(".grid-revision");
+		var location =  GRID.PREVIEW_PATTERN.replace("{REV}", $revision.data("revision"));
 		window.open(location,"_blank");
 		this.$el.parents(".rev-wrapper").toggle();
 	},
 	onDelete:function(e){
 		GRID.revert();
-		this.$el.parents(".rev-wrapper").toggle();
 	},
 	onRevert:function(e){
-		var revision=jQuery(e.srcElement).parents("tr").data("revision");
+		var revision=jQuery(e.srcElement).parents(".grid-revision").data("revision");
 		GRID.setToRevision(revision);
-		this.$el.parents(".rev-wrapper").toggle();	
 	},
 });

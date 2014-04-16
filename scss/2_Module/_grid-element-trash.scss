@@ -1,0 +1,24 @@
+
+.grid-element-trash {
+	position: absolute;
+	bottom:0px;
+	left: 0px;
+	right: 0px;
+	text-transform: uppercase;
+	min-height: $dim-tool-element-trash-height;
+	background-color: $color-tool-element-trash-bg;
+	color: white;
+	box-sizing: border-box;
+	padding: 10px 10px 0 10px;
+	vertical-align: baseline; 
+	& > div{
+		padding-top: 25px;
+		padding-bottom: 25px;
+		border: 2px dashed white;
+		border-bottom: none;
+		text-align: center;
+	}
+	&.grid-hover{
+		background-color: $color-warning;
+	}
+}

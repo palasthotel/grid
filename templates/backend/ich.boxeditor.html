@@ -1,0 +1,81 @@
+
+
+	<ul class="grid-editor-controls">
+		<li class="grid-editor-control grid-editor-control-save"><button role="save" class="grid-editor-save-button"><i class="icon-ok"></i>Save</button></li>
+		<li class="grid-editor-control grid-editor-control-cancel"><button role="cancel" class="grid-editor-cancel-button"><i class="icon-cancel"></i>Cancel</button></li>
+		{{^isSidebarBox}}
+		<li class="grid-editor-control grid-editor-control-reuse"><button role="reuse" class="grid-editor-reuse-button"><i class="icon-reuse"></i>Make reusable</button></li>
+		{{/isSidebarBox}}
+    </ul>
+
+
+ 	<div class="grid-editor-content">
+		<div data-b-index="{{b_index}}" data-id="{{box.id}}" data-c-id="{{c_id}}" data-s-id="{{s_id}}" data-type="{{box.type}}">
+			
+			<div class="grid-editor-header">
+				<p class="grid-editor-element-type">Boxtype: <span class="grid-editor-box-type-name">{{box.type}}</span></p>
+
+				<!-- title with url option -->
+				<label>Boxtitle</label>
+				<input placeholder="{{lang_values.label-title}}" name="grid-editor-title" type="text" value="{{box.title}}" class="grid-editor-title" />
+				<!-- <label>Boxtitle-URL</label> -->
+				<div class="grid-editor-url-builder grid-editor-url-show">
+					<input placeholder="{{lang_values.label-title-url}}" name="grid-editor-titleurl" type="text" value="{{box.titleurl}}" class="grid-editor-titleurl grid-editor-url-input" />
+					<button class="grid-editor-url-button icon-link">Delete link</button>
+				</div>
+
+			</div>
+
+			<!-- prolog -->
+			<fieldset class="grid-collapsable grid-collapsable-hidden">
+				<legend><span class="icon-arrow"></span>{{lang_values.label-b-before}}</legend>
+				<div class="grid-editor-field-wrapper">
+					<label>Text</label>
+					<textarea name="grid-editor-prolog" class="form-html grid-editor-prolog">{{box.prolog}}</textarea>
+				</div>
+			</fieldset>
+
+			<!-- box spezific inputs -->
+			<fieldset class="grid-collapsable grid-collapsable-shown grid-dynamic-fields">
+				<legend><span class="icon-arrow"></span>{{lang_values.label-b-dynamic}}</legend>
+				<div class="grid-editor-field-wrapper"></div>
+			</fieldset>
+
+			<!-- epilog and readmore -->
+			<fieldset class="grid-collapsable grid-collapsable-hidden">
+				<legend><span class="icon-arrow"></span>{{lang_values.label-b-after}}</legend>
+				<div class="grid-editor-field-wrapper">
+
+					<label>Text</label>
+					<textarea name="grid-editor-epilog"  class="form-html grid-editor-epilog">{{box.epilog}}</textarea>
+
+
+					<!-- readmore with url option -->
+					<label>Readmore</label>
+					<input placeholder="{{lang_values.label-readmore}}" name="grid-editor-readmore" type="text" value="{{box.readmore}}" class="grid-editor-readmore" />
+					<!-- <label>Readmore URL</label> -->
+					<div class="grid-editor-url-builder grid-editor-url-show">
+						<input placeholder="{{lang_values.label-readmore-url}}" name="grid-editor-readmoreurl" type="text" value="{{box.readmoreurl}}" class="grid-editor-readmoreurl grid-editor-url-input" />
+							<button class="grid-editor-url-button icon-link">Delete link</button>
+					</div>
+
+				</div>
+			</fieldset>
+			
+
+			<div class="grid-editor-footer">
+				<!-- style -->
+				<div class="grid-editor-styles-wrapper">
+					<label for="grid-editor-style">Boxstyle</label>
+					<select name="grid-editor-style" class="form-select grid-editor-style"  id="grid-editor-style">
+						<option value="">{{lang_values.default-style}}</option>
+						{{#styles}}
+							<option {{selected}} value="{{slug}}">{{title}}</option>
+						{{/styles}}
+					</select>
+				</div>
+			</div>
+
+		</div>
+    </div>
+

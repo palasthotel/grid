@@ -1,0 +1,8 @@
+.grid-editor-widget-listitem{
+	border-left: 4px solid lighten($color-light, 3%);;
+	padding-left: 10px;
+	margin-bottom: 15px;
+	&:hover{
+		border-color: $color-edit
+	}
+}

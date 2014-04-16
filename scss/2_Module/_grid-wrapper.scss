@@ -1,0 +1,16 @@
+// width and height of layout elements
+// Grid, container, slot, box, toolbar
+
+.grid-wrapper{
+
+	margin-top: 40px;
+
+	margin-right: 260px;
+	box-sizing: border-box;
+	// remove margins
+	h1,h2,h3,h4,h5,h6,p{
+		margin:0px;
+	}
+	padding: 5px 10px 120px 55px;
+	
+}

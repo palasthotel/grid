@@ -1,0 +1,18 @@
+.grid-clearfix:before,
+.grid-clearfix:after {
+    content:"";
+    display:table;
+}
+.grid-clearfix:after {
+    clear:both;
+}
+.grid-clearfix {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+
+
+h3 {
+	word-break:break-all;
+	font-size: 12px;
+}

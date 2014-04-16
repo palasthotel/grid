@@ -1,0 +1,92 @@
+.grid-slot-style-changer {
+
+	text-transform: uppercase;
+	position: relative;
+	font-size: 11px;
+
+	text-align: center;
+	font-weight: bold;
+	
+	display:block;
+
+	@include transition(max-height, 0.321s, ease);
+
+	overflow: hidden; 
+	// height: 0;
+	max-height: 0;
+
+
+	.grid-style-changer-active {
+		padding: 6px 0px 4px 0px;
+		color: $color-style-changer-active;
+	}
+
+	.grid-choose-style {
+		position: absolute;
+		left: 50%;
+		display:none;
+		padding: 0px;
+		margin: 0px;
+		margin-left: -75px;
+		list-style: none;
+		z-index: $idx-style-changer;
+		width: 150px;
+
+		li {
+			background-color: $color-slot-style-changer-styles-bg;
+			border-top: 1px solid $color-slot-style-changer-border;
+			&:first-child {
+				border-top:none;
+			}
+		}
+
+		&:before {
+			content:"";
+			border: 9px solid $color-slot-style-changer-styles-bg;
+			font-size:0;
+			line-height:0;
+			height:0;
+			padding:0;
+			margin:0;
+			border-top-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			top:-16px;
+			left:47%;
+		}
+	}	
+}
+
+.grid-container-show-slot-styles {
+	.grid-slot-style-changer {
+		// @include transition();
+		max-height: 100px;
+		overflow: visible;
+	}
+}
+
+[data-reused=false] .grid-slot-style-changer:hover {
+	z-index: $idx-style-changer-hover;
+
+	&:hover .grid-style-changer-active {
+		// background-color: $color-slot-style-changer-bg;
+		color: $color-style-changer-active-hover;
+
+	}
+	.grid-choose-style {		
+		color: white;
+		display:block;
+		//width: 100%;
+		padding-top: 2px;
+		li {
+			padding: 10px 20px;
+			@include transition();
+			margin: 0px;
+			&:hover {
+				cursor: pointer;
+				background-color: $color-slot-style-changer-styles-bg-hover;
+			}
+		}
+	}	
+} 

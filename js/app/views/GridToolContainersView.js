@@ -1,40 +1,47 @@
 var GridToolContainersView = GridBackbone.View.extend({
-    className: "g-tool g-container clearfix",
+    className: "grid-tool grid-element-container",
     events:{
-        "click .element-type-tabs li": "renderContainerTypes"
+        "click .grid-container-type": "renderContainerType"
     },
     render: function(){
         this.$el.empty();
         this.$el.append(ich.tpl_toolContainers({}));
-        // because of old css
-        this.$el.show();
         this.delegateEvents();
-        this.$el.find(".element-type-tabs li:first-child()").trigger("click");
+        // if you want to show containers on default uncomment next line
+        //this.$el.find(".grid-container-type").first().trigger("click");
         return this;
     },
-    renderContainerTypes: function(event){
-        var $target = jQuery(event.target);
-        this.$el.find(".element-type-tabs li").removeClass('active');
-        $target.addClass('active');
-        var containers = {};
-        switch($target.attr("role")){
-            case "show-reusable":
-            containers = this.getReusable();
-            break;
-            case "show-containers":
-            containers = this.getContainers($target.attr("scope"));
-            break;
+    renderContainerType: function(event){
+        var $type = jQuery(event.currentTarget);
+        $type.toggleClass('active');
+        var role = $type.attr("role");
+        var list = "";
+        if(role == "reusable"){
+            // reusables
+            var reusables = this.getReusable();
+            list = this.getRenderedContainerList(reusables);
+        } else {
+            // containers and sidebars
+            var containers = this.getContainers(role);
+            list = this.getRenderedContainerList(containers);
         }
-        var $ul = this.$el.find(".element-list");
-        $ul.empty();
-        GRID.log(["containers", containers]);
-        $ul.replaceWith(ich.tpl_toolContainersContainer(containers));
+        // DOM manipulation
+        if($type.hasClass('active')){
+            // add elements
+            $type.next("dl").append(list);
+        } else {
+            // remove elements
+            $type.next("dl").empty();
+        }
         this.initializesDraggable();
         return this;
     },
+    getRenderedContainerList: function(json){
+        return ich.tpl_toolContainersContainer(json);
+    },
     getContainers: function(scope){
         var scope_val = "C-";
-        if(scope == "sidebars"){ scope_val = "S-"; }
+        if(scope == "sidebar"){ scope_val = "S-"; }
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
             value.slots = [];
@@ -46,7 +53,6 @@ var GridToolContainersView = GridBackbone.View.extend({
                 }
             }           
         });
-        GRID.log(["getContainers",scope, containers]);
         return containers;
     },
     getReusable: function(){
@@ -65,7 +71,12 @@ var GridToolContainersView = GridBackbone.View.extend({
                 GRID.log("Start dragging")
                 var $ = jQuery;
                 var $grid = GRID.getView().$el;
-                var $containers = $grid.find(".container");
+
+                // only first layer of .grid-containers (needed if sidebar with nested grid)
+                var $containers = $grid.find('.grid-container').filter(function(){
+                   return !$(this).parent().closest(".grid-container").length;
+                });
+
                 var $dropArea = $(document.createElement("div"))
                                 .addClass("container-drop-area-wrapper")
                                 .attr("data-type","container-drop-area-wrapper");
@@ -85,8 +96,7 @@ var GridToolContainersView = GridBackbone.View.extend({
                         $dropwrapper.removeClass('container-drop-area-wrapper').addClass('new-container-target');
                         GRID.getView().$el.find('.container-drop-area-wrapper').remove();
                         var new_index = $dropwrapper.index();
-
-                        GRID.log(["DROPPiNG", $draggable, containerReusable]);
+                        
                         if(containerReusable == true || containerReusable == "true"){
                             var container = GRID.getReusableContainers().at($draggable.index());
                             GRID.getModel().addReuseContainer(container, new_index);
@@ -99,7 +109,6 @@ var GridToolContainersView = GridBackbone.View.extend({
                 });
             },
             stop: function( event, ui ){
-                GRID.log("stop Dragging");
                 GRID.getView().$el.find('.container-drop-area-wrapper').remove();
             }
         });

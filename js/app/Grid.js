@@ -29,7 +29,11 @@ window.GRID = {};
 var GRID = window.GRID;
 
 GRID = {
-	ID: -1,
+	dom_root: "#new-grid-wrapper",
+	$root: null,
+	dom_root_editor: "#new-grid-editor-wrapper",
+	$root_editor: null,
+	ID: null,
 	// enable or disable debugging output
 	DEBUGGING: false,
 	// the server URL
@@ -48,8 +52,10 @@ GRID = {
     styles_box: null,
     revisions: null,
 	init: function(){
+
 		// initialize constants
 		this._initConstants();
+		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
 
 		// load all model classes for grid works
 		this.getBoxTypes().fetch();
@@ -66,18 +72,31 @@ GRID = {
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
+				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
+				
 				GRID.gridview = new GridView({model: GRID.getModel() });
-				jQuery("#new-grid-wrapper").html( GRID.getView().render().el );
-				GRID._initializeContainerSortable();
+				GRID.$root.append( GRID.getView().render().el );
+				
+				jQuery(GRID.dom_root).mutate('height',function (element,info){
+				    GRID.onSidebarCalculation();
+				});
+
+				GRID.$root
+					.data("isSidebar",GRID.IS_SIDEBAR)
+					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
+
+				if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
 				GRID._initializeBoxSortable();
 				// load the revisions
 				GRID.revisions = new Revisions({grid: GRID.getModel() });
 		        GRID.revisions.fetch();
 		        // init toolbar
-				var toolbar  = new GridToolbarView({
+				GRID.toolbar  = new GridToolbarView({
 					model: GRID.getModel()
 				});
-				jQuery("#new-grid-wrapper").prepend(toolbar.render().el);
+				GRID.$root.prepend(GRID.toolbar.render().el);
+				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
+				GRID.onSidebarCalculation();
 			}
         });
 
@@ -133,19 +152,26 @@ GRID = {
     },
 	// initializes the constatns
 	_initConstants: function(){
+		// root elements
+		this.$root = jQuery(this.dom_root);
+		this.$root_editor = jQuery(this.dom_root_editor);
+		// constants from CMS
+		this.mode = document.gridmode;
+		this.$root.addClass('gridmode-'+this.mode);
+
 		this.DEBUGGING = document.grid_debug_mode;
-		GRID.ID = document.ID;
-		GRID.SERVER = "/grid_ajax_endpoint";
+		this.ID = document.ID;
+		this.SERVER = "/grid_ajax_endpoint";
 		if( typeof document.gridajax != "undefined" && 
 			document.gridajax != null && 
 			document.gridajax != ""){
-			GRID.SERVER = document.gridajax;
+			this.SERVER = document.gridajax;
 		}
-		GRID.PREVIEW_URL = GRID.PREVIEW_URL.replace("//","/");
+		this.PREVIEW_URL = this.PREVIEW_URL.replace("//","/");
 		if( typeof document.previewurl != "undefined" && 
 			document.previewurl != null && 
 			document.previewurl != ""){
-			GRID.PREVIEW_URL = document.previewurl;
+			this.PREVIEW_URL = document.previewurl;
 		}
 		var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
 		if( typeof document.previewpattern != "undefined" && 
@@ -153,8 +179,68 @@ GRID = {
 			document.previewpattern != ""){
 			PREVIEW_PATTERN = document.previewpattern;
 		}
-		GRID.PREVIEW_PATTERN=PREVIEW_PATTERN
-		console.log("PREVIEW_PATTERN: "+PREVIEW_PATTERN);
+		this.PREVIEW_PATTERN=PREVIEW_PATTERN;
+	},
+	// calculates Sidebar
+	onSidebarCalculation: function($root){
+		if(typeof $root == "undefined") $root = GRID.$root;
+		$root.find(".grid-containers-wrapper > .grid-container").css("padding-top", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot")
+																.css("padding-bottom", "0px")
+																.css("bottom", "0px");
+
+		// add new offsets
+		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
+			GRID.log(index);
+			GRID.makeSidebarPuffer(jQuery(sidebar));
+		});
+	},
+	makeSidebarPuffer: function($sidebar){
+		var permissionsList = GRID.getSidebarWhitelist($sidebar.data("type"));
+		var $sidebar_slot = $sidebar.find('.grid-slot').first();
+		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
+		//var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
+		$sidebar_slot.css("bottom", $sidebar.outerHeight()+"px");
+		if(c_height < $sidebar_slot.outerHeight(true)){
+			// if sidebar is taller than containers make puffer margin top
+			var needed_margin_top = $sidebar_slot.outerHeight();
+			needed_margin_top -= c_height;
+			$sidebar.css("padding-top", needed_margin_top);
+		} else if(c_height > $sidebar_slot.outerHeight(true)){
+			// if sidebar is smaller than containers expend sidebar slot
+			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
+			//need_bottom_offset += sidebar_margin_bottom;
+			$sidebar_slot.css("padding-bottom",need_bottom_offset+"px");
+		}
+		
+	},	
+	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
+		var c_height = 0;
+		while( ($container.length > 0 && floatablePermissionList[$container.data('type')]) 
+				||  $container.hasClass('grid-container-sort-placeholder') ){
+			c_height += $container.outerHeight(true);
+			$container = $container.prev();
+		}
+		return c_height;
+	},
+	getSidebarWhitelist: function(sidebar_type){
+		switch(sidebar_type){
+			case "S-0-4":
+				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true, "C-2-2-4-0": true,
+						"S-4-0":true, "C-0-4-0":true,
+						"container-drop-area-wrapper": true};
+				break;
+			case "S-4-0":
+				return {"C-0-8":true,"C-0-4-4":true, 
+						"S-0-4":true, "C-0-4-0":true, 
+						"container-drop-area-wrapper": true};
+				break;
+			case "S-0-6":
+				return {"C-12-0":true, "C-4-4-4-0":true, "C-6-6-0":true, "C-3-3-3-3-0":true,
+				 		"container-drop-area-wrapper": true };
+				break;
+		}
+		return {};
 	},
 	// CKEDITOR functions
 	useCKEDITOR: function(selector){
@@ -181,55 +267,74 @@ GRID = {
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } },
 
-	showBoxEditor: function(callback) {
-		jQuery("#new-grid-wrapper").animate(
+	showEditor: function(callback) {
+		jQuery(GRID.$root).animate(
 			{
 				width:0
 			},
 			220,
 			function(){
-				jQuery("#new-grid-wrapper").hide();
+				jQuery(GRID.$root).hide();
 			}
 		);
 		setTimeout(function(){
-			jQuery(".grid-boxeditor").show();
-			jQuery(".grid-boxeditor").animate({width:"100%"},250,function(){
+			jQuery(GRID.$root_editor).show();
+			jQuery(GRID.$root_editor).animate({width:"100%"},250,function(){
 				callback();
 			});
 			window.scrollTo(0,0);
 		},50);
 	},
 
-	hideBoxEditor: function(callback) {
-		jQuery(".grid-boxeditor").animate({width:"0%"},220, function(){jQuery(".grid-boxeditor").hide();});
+	hideEditor: function(callback) {
+		jQuery(GRID.$root_editor).animate({width:"0%"},220, function(){jQuery(GRID.$root_editor).hide();});
 		setTimeout(function(){
-			jQuery("#new-grid-wrapper").show();
-			jQuery("#new-grid-wrapper").animate({width:"100%"},220,function(){
+			jQuery(GRID.$root).show();
+			jQuery(GRID.$root).animate({width:"100%"},220,function(){
 				callback();
+				GRID.onSidebarCalculation();
 			})
 			window.scrollTo(0,0);
 		},50);
 	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
+		var container_deleted;
+		container_deleted=false;
+		var container;
+		var self=this;
 		this.getView().$el.sortable({
-            handle: ".c-sort-handle",
+            handle: ".grid-container-sorthandle, .grid-container-reused-layer",
             items:".container:not(.SC-4)",
-            placeholder: "c-sort-placeholder",
+            placeholder: "grid-container-sort-placeholder",
             pullPlaceholder: true,
             appendTo: this.getView().$el ,
             refreshPositions: true,
             helper: function(event, element){
-                return jQuery("<div class='c-sort-helper'></div>");
+                return jQuery("<div class='dragger-helper'></div>");
             },
             cursorAt: { left: 30, bottom: 30 },
             start: function( event, ui ){
                 GRID.log(["container sort START"], event, ui);
+                var old_container_id=ui.item.data("id");
+                jQuery(".grid-element-trash").droppable({
+	                accept: '.grid-container',
+	                hoverClass: 'grid-hover',
+	                drop:function(e,ui) {
+	                	container=GRID.getModel().getContainers().get(old_container_id);
+	                	container_deleted=true;
+	                }
+                });
             },
             stop: function(event, ui){
+            	if(container_deleted)
+            	{
+            		container.destroy();
+            	}
                 //$(".box").slideDown(100);
             },
             update: function( event, ui ){
+            	if(container_deleted)return;
             	var containerview = ui.item.attr("data-cid");
                
                 var newIndex = ui.item.index();
@@ -251,10 +356,11 @@ GRID = {
 		box_deleted;
 		box_deleted=false;
 		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
-			items: ".box",
-			cancel: "span.edit",
-			connectWith: ".container[data-reused=false] .boxes-wrapper, .c-box-trash",
-			placeholder: "b-sort-placeholder",
+			items: ".grid-box",
+			handle: ".grid-box-controls",
+			//cancel: ".grid-box-edit, .grid-box-delete",
+			connectWith: ".container[data-reused=false] .boxes-wrapper, .grid-element-trash",
+			placeholder: "grid-box-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
 			refreshPositions: true,
@@ -265,13 +371,13 @@ GRID = {
 			start: function(e, ui){
 				jQuery(".c-box-trash").show();
 				old_box_index = ui.item.index();
-				old_slot_id = ui.item.parents(".slot").data("id");
-				old_container_id = ui.item.parents(".container").data("id");
+				old_slot_id = ui.item.parents(".grid-slot").data("id");
+				old_container_id = ui.item.parents(".grid-container").data("id");
 
 				GRID.log(["START BOX SORT", old_box_index, old_slot_id, old_container_id]);
-				jQuery(".c-box-trash").droppable({
+				jQuery(".grid-element-trash").droppable({
 					accept: '.slot .box',
-					hoverClass: 'ui-state-hover',
+					hoverClass: 'grid-hover',
 					drop:function(e,ui) {
 						var box = GRID.getModel().getContainers()
 											     .get(old_container_id)
@@ -309,7 +415,6 @@ GRID = {
 								.getSlots().get(new_slot_id);
 
 				GRID.getModel().moveBox(box, new_slot, new_box_index);
-
 			}
 		});
 	}

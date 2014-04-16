@@ -1,34 +1,69 @@
 
 
 boxEditorControls['list']=GridBackbone.View.extend({
+    className: "grid-editor-widget grid-editor-widget-list",
     initialize:function(){
 
     },
     render:function(){
-        var html="<label>"+this.model.structure.label+"</label>";
+        jQuery("<label></label>")
+                .text(this.model.structure.label)
+                    .appendTo(this.$el);
+
+        this.$list = jQuery("<div></div>")
+                    .addClass('grid-editor-widget-list-items');
+        this.$el.append(this.$list);
+
         var list=this.model.container[this.model.structure.key];
         var self=this;
         var views=[];
+
+        jQuery("<button><span class='icon-plus'></span>Add item</button>")
+                .addClass('grid-editor-widget-list-add')
+                    .appendTo(this.$el).on('click', function(event) {
+                        event.preventDefault();
+                       self.onAdd();
+                    });
+
+        
         _.each(list,function(elem){
             var view=new boxEditorControls['listitem']({
                 model:{
-                    structure:self.structure.contentstructure,
+                    structure:self.model.structure.contentstructure,
                     container:elem,
                     box:self.model.box,
-                    parentpath:self.model.parentpath+self.structure.key+"."
+                    parentpath:self.model.parentpath+self.model.structure.key+"."
                 }
             });
             views.push(view);
-            html+=view.render().el;
+            self.$list.append(view.render().el);
         });
-        //TODO: add "add" button
-        jQuery(this.$el).html(html);
         this.views=views;
+
         return this;
+    },
+    onAdd: function(){
+        var view = new boxEditorControls['listitem']({
+            model: {
+                structure: this.model.structure.contentstructure,
+                container:{},
+                box: this.model.box,
+                parentpath: this.model.parentpath+this.model.structure.key+"."
+            }
+        });
+        this.views.push(view);
+        this.$list.append(view.render().el);
+
+        jQuery.each(view.$el.find(".form-html"), function(index, element) {
+            CKEDITOR.replace(
+                element,{
+                customConfig : document.PathToConfig
+            });
+        });
     },
     fetchValue:function(){
         var content=[];
-        _.each(views,function(view){
+        _.each(this.views,function(view){
             content.push(view.fetchValue());
         });
         return content;
@@ -36,12 +71,13 @@ boxEditorControls['list']=GridBackbone.View.extend({
 });
 
 boxEditorControls['listitem']=GridBackbone.View.extend({
+    className: "grid-editor-widget-listitem",
     initialize:function(){
 
     },
     render:function(){
-        var fieldcontainer=jQuery("<div></div>");
         var views=[];
+        var self = this;
         _.each(this.model.structure,function(elem){
             var type=elem.type;
             var view=new boxEditorControls[type](
@@ -49,15 +85,17 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
                 model:
                 {
                     structure:elem,
-                    container:this.model.get("content"),
+                    container:self.model.container,
                     box:self.model.box,
                     parentpath:self.model.parentpath
                 }
             });
             views.push(view);
-            fieldcontainer.append(view.render().el);
+            self.$el.append(view.render().el);
         });
-        jQuery(this.$el).html(fieldcontainer);
+        jQuery("<button class='widget-list-remove-item-button'><span class='icon-minus'></span>Remove item</button>").on('click', function(event) {
+            self.remove();
+        }).appendTo(this.$el);
         this.views=views;
         return this;
     },

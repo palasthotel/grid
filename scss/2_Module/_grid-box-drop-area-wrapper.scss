@@ -1,0 +1,21 @@
+.grid-box-drop-area-wrapper {
+	position:relative;
+	.grid-box-drop-area {
+		box-sizing:border-box;
+		position: absolute;
+		height: 20px;
+		top: -12px;
+		// border: 2px dashed $color-drop-area;
+		// box-shadow: inset 0 0 7px lighten($color-edit, 10%);
+		
+		width: 100%;
+		z-index: $idx-container;
+		@include transition(all, .3s, ease);
+		background-color: lighten($color-edit, 40%);
+		&.hover{
+			background-color: $color-edit;
+
+		}
+	}
+}
+

@@ -1,7 +1,0 @@
-<?php
-
-function grid_facebook_like_box_grid_load_classes() {
-	require "grid_fb_like_box_box.php";
-}
-
-?>

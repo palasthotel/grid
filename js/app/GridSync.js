@@ -7,6 +7,7 @@ var GridAjax = function(method, params_array, settings){
 	json["method"] = method;
 	json["params"] = params_array;
 	if(typeof settings != "object"){ settings = {}; }
+	if(typeof settings.checkIsDraft == "undefined"){ settings.checkIsDraft = true; }
 	// default settings
 	this.settings = {
 		url: GRID.SERVER,
@@ -37,8 +38,13 @@ var GridAjax = function(method, params_array, settings){
 			// GRID.log(jqXHR);
 			// GRID.log(json);
 			// GRID.log("---------!");
+			GRID.log(["AJAX Success",settings]);
 			if(typeof settings.success_fn == 'function' ){
 				settings.success_fn(data, textStatus, jqXHR);
+			}
+			if(settings.checkIsDraft == true){
+				GRID.getModel().checkIsDraft();
+				GRID.revisions.fetch();
 			}
    		},
    		data: JSON.stringify(json),
@@ -69,7 +75,8 @@ var GridRequest = {
 			   		new GridAjax("checkDraftStatus",[grid.getGridID()],{
 			   			success_fn: function(data){
 			   				grid.set("isDraft",data.result);
-			   			}
+			   			},
+			   			checkIsDraft: false
 			   		});
 					break;
 				default:
@@ -86,7 +93,7 @@ var GridRequest = {
 									 grid.addContainer(new Container(container));
 								});
 								options.success();
-							}	
+							}
 						}
 					);
 			}
@@ -98,10 +105,8 @@ var GridRequest = {
 				case "revertDraft":
 					new GridAjax("revertDraft", [grid.getGridID()],{
 						success_fn: function(data){
-							GRID.log("revertDraft success");
-							GRID.log(data);
+							GRID.log(["revertDraft success",data]);
 							grid.fetch();
-							GRID.revisions.fetch();
 						}
 					});
 					break;
@@ -112,7 +117,6 @@ var GridRequest = {
 							GRID.log("setToRevision success");
 							GRID.log(data);
 							grid.fetch();
-							GRID.revisions.fetch();
 						}
 					});
 					break;
@@ -161,7 +165,8 @@ var GridRequest = {
 					_.each(data.result, function(revision){
 						revisions.add( new Revision(revision) );						
 					});
-				} 
+				},
+			   	checkIsDraft: false 
 			}
 		);
 	},
@@ -179,7 +184,8 @@ var GridRequest = {
 					_.each(data.result, function(containertype){
 						containertypes.add( new ContainerType(containertype) );						
 					});
-				} 
+				},
+			   	checkIsDraft: false
 			}
 		);
 	},
@@ -192,7 +198,8 @@ var GridRequest = {
 					_.each(data.result, function(container) {
 						collection.add(new ContainerType(container) );
 					});
-				}
+				},
+			   	checkIsDraft: false
 			}
 		);
 	},
@@ -208,7 +215,8 @@ var GridRequest = {
 					_.each(data.result, function(boxtype){
 						boxtypes.add( new BoxType(boxtype) );						
 					});
-				} 
+				},
+			   	checkIsDraft: false
 			}
 		);
 	},
@@ -222,7 +230,8 @@ var GridRequest = {
 						var blueprint = new GridBoxBlueprint(value);
 						boxblueprints.add(blueprint);
 					});
-				}
+				},
+			   	checkIsDraft: false
 		});
 	},
 	styles: function(styles, options){
@@ -238,7 +247,8 @@ var GridRequest = {
 					_.each(data.result, function(style){
 						styles.add( new StyleType(style) );						
 					});
-				} 
+				},
+			   	checkIsDraft: false
 			}
 		);
 	},
@@ -255,6 +265,7 @@ var GridRequest = {
 						GRID.log(data);
 						container.set("id", data.result.id);
 						container.set("slots", data.result.slots);
+						container.set("style",data.result.style);
 						container.setSlots(data.result.slots);
 						options.success();
 					}
@@ -274,7 +285,8 @@ var GridRequest = {
 						success_fn: function(data){
 							container.set("reused", true);
 							options.success(data);
-						}
+						},
+			   			checkIsDraft: false
 					});
 					break;
 				case "move":
@@ -309,6 +321,7 @@ var GridRequest = {
 			new GridAjax("deleteContainer", params,
 				{
 				success_fn: function(data){
+					GRID.getModel().getContainers().remove(container);
 					options.success();
 				}
 			});
@@ -374,7 +387,8 @@ var GridRequest = {
 					GRID.log(data);
 					box.attributes = _.extend(box.attributes, data.result);
 					box.trigger('change');
-				}
+				},
+			   	checkIsDraft: false
 			});
 			
 		},
@@ -393,7 +407,8 @@ var GridRequest = {
 							success_fn: function(data){
 								box.attributes=data.result;
 								box.trigger('change');
-							}
+							},
+			   				checkIsDraft: false
 						});
 					break;
 				case "move":

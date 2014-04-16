@@ -1,4 +1,5 @@
 boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
+    className: "grid-editor-autocomplete-with-links",
     events:{
         "keyup .i-autocomplete":"keyup",
         "click .suggestion-list li":"listItemSelected",

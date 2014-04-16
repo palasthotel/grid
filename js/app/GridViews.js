@@ -2,14 +2,9 @@ var GridView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-wrapper',
     initialize: function() {
-    	GRID.log("INIT GridView");
-        this._containersView = new ContainersView({collection: this.model.getContainers() });
-        // listener comes at last position
-        this.listenTo(this.model, 'change', this.sortableBoxes);
-        // listener for each attribute but collection
+        this._containersView = new ContainersView({collection: this.model.getContainers() });    
     },
     render: function() {
-        GRID.log('i am rendering the grid interface');
         this.$el.empty();
         this.$el.append(ich.tpl_grid(this.model.toJSON() ));
         this.renderContainers();
@@ -18,28 +13,18 @@ var GridView = GridBackbone.View.extend({
     renderContainers: function(){
         this.$el.find(".containers-wrapper").replaceWith(this._containersView.render().el);
         return this;
-    },
-    sortableBoxes: function(){
-        GRID.log("sortableBoxes");
-        
     }
 
 });
 
 var ContainersView = GridBackbone.View.extend({
 	tagName: 'div',
-	className: 'containers-wrapper',
+	className: 'grid-containers-wrapper containers-wrapper',
 	initialize: function(){
-        GRID.log('INIT ContainersView');
-		//this.listenTo(this.collection, 'change', this.render);
-        
         this.listenTo(this.collection, 'add',this.render);
-        //this.listenTo(this.collection, 'remove', this.remove);
+        this.listenTo(this.collection, 'remove',this.render);
 	},
 	render: function(){
-        // renders the containers
-		//render template with Mustache or something
-    	GRID.log('i am rendering the container collection');
     	var self = this;
     	this.$el.empty();
     	this.collection.each(function(container){
@@ -47,55 +32,57 @@ var ContainersView = GridBackbone.View.extend({
     		self.$el.append(containerview.render().el);
     	});
         GRID._initializeBoxSortable();
+        GRID.onSidebarCalculation();
     	return this;
 	}
 });
 
 var ContainerView = GridBackbone.View.extend({
-	className: 'container display clearfix',
+	className: 'grid-container container display',
     events:{
         "click [role=trash]": "selfdestruct",
-        "click [role=edit]": "renderEditor",
-        "click [role=reuse]": "reuse",
-        "click [role=revert]": "render",
-        "click [role=ok]": "saveEditor"
+        "click [role=edit]": "onEdit",
+        "click [role=reuse]": "onReuse",
+        "click [role=toggleslotstyles]": "onToggleSlotStyles"
     },
 	initialize: function(){
-		//this.listenTo(this.model, 'change', this.render);
+        var self = this;
+        var listen_to = ["title","titleurl","prolog","epilog", "readmore", "readmoreurl", "style"];
+        _.each(listen_to, function(value, key, list){
+            self.listenTo(self.model,'change:'+value, self.render);
+        });
         this._slotsView = new SlotsView({collection: this.model.getSlots() });
-        this._slotsView._parentView = this;
 	},
 	render: function(){
-		//render template with Mustache or something
-    	GRID.log('i am rendering a single container');
         this.$el.addClass('display').removeClass('editor');
         this.refreshAttr();
-    	this.$el.html(ich.tpl_container( this.model.toJSON() ));
-        this._slotsView.render();
-        this.$el.find(".slots-wrapper").replaceWith(this._slotsView.$el);
+        var json = this.model.toJSON();
+        var cut = 60;
+
+        if(json.title){
+            json.title_short = ( json.title.length <= cut ? json.title : json.title.substring(0,cut)+"&hellip;" );
+        }
+        if(json.prolog){
+            var prolog = jQuery(json.prolog).text();
+            json.prolog_short = "<p>"+( prolog.length <= cut ? prolog : prolog.substring(0,cut)+"&hellip;" )+"</p>";
+        }
+        if(json.epilog){
+            var epilog = jQuery(json.epilog).text();
+            json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
+        }
+        json.isSidebarGrid = GRID.IS_SIDEBAR;
+        this.$el.empty();
+    	this.$el.append(ich.tpl_container( json));
+        
+        this.$slots_wrapper = this.$el.find(".grid-slots-wrapper");
+        this.$slots_wrapper.replaceWith(this._slotsView.render().el);
         return this;
 	},
-    renderEditor: function(){
-        this.refreshAttr();
-        this.$el.removeClass('display').addClass('editor');
-        this.$el.html(ich.tpl_containerEditor(this.model.toJSON()));
-        var styles=GRID.getContainerStyles();
-        styles=styles.toJSON();
-        var self=this;
-        _.each(styles,function(style){
-            if(self.model.get("style")==style.slug)
-            {
-                style.selected="selected";
-            }
-            else
-            {
-                style.selected="";
-            }
+    onEdit: function(){
+        var editor=new GridContainerEditor({model:this.model});
+        GRID.showEditor(function(){
+            GRID.$root_editor.html(editor.render().el);
         });
-        this.$el.html(ich.tpl_containerEditor({model:this.model.toJSON(),styles:styles}));
-        GRID.useCKEDITOR("f-c-prolog");
-        GRID.useCKEDITOR("f-c-epilog");
-        return this;
     },
     refreshAttr: function(){
         var json = this.model.toJSON();
@@ -121,9 +108,9 @@ var ContainerView = GridBackbone.View.extend({
         this.model.save();
         return this.render();
     },
-    reuse: function(){
+    onReuse: function(){ 
         var reusetitle = prompt("Bitte gib einen Titel für den Container ein");
-        if(reusetitle == ""){
+        if(reusetitle == "" || reusetitle == false){
             return false;
         }
         var self = this;
@@ -136,8 +123,10 @@ var ContainerView = GridBackbone.View.extend({
         });
         return this;
     },
+    onToggleSlotStyles: function(){
+        this.$el.toggleClass('grid-container-show-slot-styles');
+    },
     selfdestruct: function(){
-        console.log("delete container");
         this.model.destroy({wait:true});
         this.remove();
     }
@@ -145,51 +134,41 @@ var ContainerView = GridBackbone.View.extend({
 
 var SlotsView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'slots-wrapper clearfix',
+    className: 'grid-slots-wrapper slots-wrapper',
     initialize: function(){
-        GRID.log('INIT SlotsView');
-        //this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
         this.collection.bind('remove', this.render, this);
-        GRID.log(this.$el);
     },
     render: function(){
-        // renders the containers
-        //render template with Mustache or something
-        GRID.log('i am rendering the slots collection');
         var self = this;
         this.$el.empty();
-        GRID.log(this.collection);
         this.collection.each(function(slot){
             var slotview = new SlotView({model: slot});
             slotview._parentView = self;
             self.$el.append(slotview.render().el);
         });
-        GRID.log(this._parentView);
-        //this._parentView.$el.find(".slots-wrapper").replaceWith(this.$el);
         return this;
     }
 });
 
 var SlotView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'slot',
+    className: 'grid-slot slot',
 	initialize: function(){
-        GRID.log("INIT SlotView")
         this._boxesView = new BoxesView({collection: this.model.getBoxes() });
-        this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
-        this._boxesView._parentView = this;
-        this._slotStyleChangerView._parentView = this;
+        if(GRID.mode != "box"){
+            this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
+        }
         this.listenTo(this.model, 'change', this.render);
 	},
 	render: function(){
-		//render template with Mustache or something
-    	GRID.log('i am rendering slot');
         var json = this.model.toJSON();
         this.$el.attr("data-style", json.style).attr("data-id",json.id);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
-        this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
-        this._slotStyleChangerView.delegateEvents();
+        if(GRID.mode != "box"){
+            this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
+            this._slotStyleChangerView.delegateEvents();
+        }
         this._boxesView.render();
         this.$el.find(".boxes-wrapper").replaceWith(this._boxesView.$el);
         return this;
@@ -198,44 +177,33 @@ var SlotView = GridBackbone.View.extend({
 
 var BoxesView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'boxes-wrapper',
+    className: 'grid-boxes-wrapper boxes-wrapper',
     initialize: function(){
-        GRID.log('INIT BoxesView');
-        //this.listenTo(this.collection, 'change', this.render);
         this.collection.bind('add',this.render, this);
-        //this.collection.bind('remove', this.remove, this);
-        GRID.log(this.$el);
     },
     render: function(){
-        // renders the containers
-        //render template with Mustache or something
-        GRID.log('i am rendering the Boxes collection');
         var self = this;
         this.$el.empty();
-        GRID.log(this.collection);
         this.collection.each(function(box){
             var boxview = new BoxView({model: box});
             boxview._parentView = self;
             self.$el.append(boxview.render().el);
         });
-        GRID.log(this._parentView);
-        //this._parentView.$el.find(".boxes-wrapper").replaceWith(this.$el);
         return this;
     }
 });
 
 var BoxView = GridBackbone.View.extend({
-    className: "box",
+    className: "grid-box box",
     events: {
-        'click .edit' : 'edit'
+        'click .grid-box-edit' : 'edit',
+        'click .grid-box-delete' : 'deleteBox'
     },
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
         this.listenTo(this.model, 'destroy', this.selfdestruct);
 	},
 	render: function(){
-		//render template with Mustache or something
-    	GRID.log('i am rendering box');
         var json = this.model.toJSON();
         this.$el.attr("data-id",json.id).attr("data-type",json.type);
         if(json.type == "reference"){
@@ -246,9 +214,12 @@ var BoxView = GridBackbone.View.extend({
 	},
     edit:function(){
         var editor=new BoxEditor({model:this.model});
-        GRID.showBoxEditor(function(){
-            jQuery("div#new-grid-boxeditor").html(editor.render().el);
+        GRID.showEditor(function(){
+            GRID.$root_editor.html(editor.render().el);
         });
+    },
+    deleteBox: function(){
+        this.model.destroy();
     },
     selfdestruct: function(){
         this.remove();

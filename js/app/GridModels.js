@@ -8,9 +8,15 @@ var BoxType = GridBackbone.Model.extend({
         criteria: null,
         blueprints: null
     },
+    getBlueprints: function(){
+        if(!(this.blueprints instanceof GridBoxBlueprints)){
+            this.blueprints = new GridBoxBlueprints();
+        }
+        return this.blueprints;
+    },
     searchBoxes: function(){
         GRID.log(["BoxType->searchBoxes", this]);
-        var blueprints = new GridBoxBlueprints();
+        var blueprints = this.getBlueprints();
         blueprints.fetch({
             type:this.get("type"),
             criteria: this.get("criteria"),
@@ -60,7 +66,7 @@ var Grid = GridBackbone.Model.extend({
         isSidebar: false
 	},
 	getGridID: function(){
-		return this.get("id");
+		return GRID.ID;//this.get("id");
 	},
 	// invokes when the model is created
     initialize: function (spec) {
@@ -126,9 +132,8 @@ var Grid = GridBackbone.Model.extend({
             new_slot.addBox(clone, new_box_index);
         });
     },
-    getIsDraft: function(){
-        GridRequest.grid.read( this, { action: "checkdraft" } );
-        return this.get("isDraft"); 
+    checkIsDraft: function(){
+        GridRequest.grid.read(this, {action: "checkdraft"});
     },
     // handles all Server communication
     sync: function(method, model, options){
