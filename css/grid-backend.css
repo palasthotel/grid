@@ -503,13 +503,36 @@ h3 {
   .grid-container-epilog p {
     font-size: 11px; }
 
+.grid-wrapper .grid-container .grid-box .grid .SC-4 .grid-slot {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: auto;
+  float: none; }
+
+.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid-slot {
+  position: absolute;
+  width: 32%;
+  bottom: 0px;
+  padding-bottom: 4px;
+  left: 0px;
+  padding-right: 4px;
+  padding-left: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-][data-type*=S-0] .grid-slot {
+  left: auto;
+  right: 0px; }
 .grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-container,
 .grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-slot,
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-box {
+.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-box,
+.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-container-content {
   padding: 0px;
   margin: 0px;
   border: none;
-  background-color: transparent; }
+  background-color: transparent;
+  width: auto; }
 
 .grid-editor-controls {
   list-style: none;
@@ -1262,37 +1285,6 @@ h3 {
   padding: 5px 10px 120px 55px; }
   .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
     margin: 0px; }
-
-.grid-wrapper .grid-container[data-type*=S-] {
-  width: 100%;
-  padding: 0px;
-  background-color: transparent;
-  border: none; }
-  .grid-wrapper .grid-container[data-type*=S-] .grid-box {
-    border: none;
-    background-color: white; }
-  .grid-wrapper .grid-container[data-type*=S-] .grid-slot {
-    width: 33.3%;
-    position: absolute;
-    bottom: 40px;
-    padding-bottom: 10px;
-    left: 0px;
-    padding-right: 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  .grid-wrapper .grid-container[data-type*=S-][data-type*=S-0] .grid-slot {
-    left: auto;
-    right: 0px;
-    padding-right: 0px;
-    padding-left: 10px; }
-
-.grid-wrapper .grid-container .grid-box .grid .SC-4 .grid-slot {
-  position: relative;
-  top: auto;
-  left: auto;
-  width: auto;
-  float: none; }
 
 .gridmode-container .grid-tool-list,
 .gridmode-container .grid-element-type[data-type=container],

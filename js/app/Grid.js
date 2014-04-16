@@ -185,7 +185,9 @@ GRID = {
 	onSidebarCalculation: function($root){
 		if(typeof $root == "undefined") $root = GRID.$root;
 		$root.find(".grid-containers-wrapper > .grid-container").css("padding-top", "0px");
-		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot").css("padding-bottom", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot")
+																.css("padding-bottom", "0px")
+																.css("bottom", "0px");
 
 		// add new offsets
 		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
@@ -198,6 +200,7 @@ GRID = {
 		var $sidebar_slot = $sidebar.find('.grid-slot').first();
 		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
 		//var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
+		$sidebar_slot.css("bottom", $sidebar.outerHeight()+"px");
 		if(c_height < $sidebar_slot.outerHeight(true)){
 			// if sidebar is taller than containers make puffer margin top
 			var needed_margin_top = $sidebar_slot.outerHeight();
@@ -209,6 +212,7 @@ GRID = {
 			//need_bottom_offset += sidebar_margin_bottom;
 			$sidebar_slot.css("padding-bottom",need_bottom_offset+"px");
 		}
+		
 	},	
 	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
 		var c_height = 0;
