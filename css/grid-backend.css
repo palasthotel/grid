@@ -182,46 +182,51 @@ h3 {
 }
 
 /* line 112, ../scss/0_Base/_grid-font.scss */
+.icon-link:before {
+  content: '\1f517';
+}
+
+/* line 113, ../scss/0_Base/_grid-font.scss */
 .icon-revisions:before {
   content: '\e771';
 }
 
-/* line 113, ../scss/0_Base/_grid-font.scss */
+/* line 114, ../scss/0_Base/_grid-font.scss */
 .icon-revert:before {
   content: '\27f2';
 }
 
-/* line 114, ../scss/0_Base/_grid-font.scss */
+/* line 115, ../scss/0_Base/_grid-font.scss */
 .icon-edit:before {
   content: '\270e';
 }
 
-/* line 115, ../scss/0_Base/_grid-font.scss */
+/* line 116, ../scss/0_Base/_grid-font.scss */
 .icon-trash:before {
   content: '\e729';
 }
 
-/* line 116, ../scss/0_Base/_grid-font.scss */
+/* line 117, ../scss/0_Base/_grid-font.scss */
 .icon-preview:before {
   content: '\e70a';
 }
 
-/* line 117, ../scss/0_Base/_grid-font.scss */
+/* line 118, ../scss/0_Base/_grid-font.scss */
 .icon-publish:before {
   content: '\1f4e3';
 }
 
-/* line 118, ../scss/0_Base/_grid-font.scss */
+/* line 119, ../scss/0_Base/_grid-font.scss */
 .icon-elipse:before {
   content: '\23f6';
 }
 
-/* line 119, ../scss/0_Base/_grid-font.scss */
+/* line 120, ../scss/0_Base/_grid-font.scss */
 .icon-arrow:before {
   content: '\25B8';
 }
 
-/* line 120, ../scss/0_Base/_grid-font.scss */
+/* line 121, ../scss/0_Base/_grid-font.scss */
 .icon-drag:before {
   content: '\23f6';
   -webkit-transform: rotate(90deg);
@@ -231,7 +236,7 @@ h3 {
   transform: rotate(90deg);
 }
 
-/* line 128, ../scss/0_Base/_grid-font.scss */
+/* line 129, ../scss/0_Base/_grid-font.scss */
 .icon-options:before {
   content: '\2699';
 }
@@ -677,7 +682,7 @@ h3 {
 /* line 37, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content {
   box-sizing: border-box;
-  padding: 15px;
+  padding: 15px 35px;
   margin: 20px 10%;
   padding-bottom: 100px;
   background-color: white;
@@ -688,7 +693,7 @@ h3 {
   border: none;
   border-bottom: 1px solid #eceff3;
   padding: 0;
-  margin: -1px -15px 0px -15px;
+  margin: -1px -35px 0px -35px;
 }
 /* line 51, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content fieldset .grid-editor-field-wrapper {
@@ -703,8 +708,8 @@ h3 {
   position: relative;
   font-size: 14px;
   font-weight: bold;
-  border-top: 1px solid #eceff3;
-  background-color: white;
+  border-top: 1px solid #cdd5df;
+  background-color: #eceae7;
   transition: background-color 0.5s ease;
 }
 /* line 71, ../scss/2_Module/_grid-editor.scss */
@@ -727,29 +732,37 @@ h3 {
   display: block;
 }
 /* line 90, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-editor-header {
+  margin-bottom: 15px;
+}
+/* line 93, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-editor-title {
   font-weight: bold;
   font-size: 16px;
   padding: 7px;
   height: auto;
 }
-
 /* line 99, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-content .grid-editor-footer {
+  margin-top: 15px;
+}
+
+/* line 105, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active {
   border-bottom: 2px solid #24a9bc;
 }
-/* line 103, ../scss/2_Module/_grid-editor.scss */
+/* line 109, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active .grid-editor-field-wrapper {
   display: block;
-  margin: 15px;
+  margin: 15px 35px;
 }
-/* line 108, ../scss/2_Module/_grid-editor.scss */
+/* line 114, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active legend {
   background-color: #3ac5d9;
   border-bottom: 2px solid #24a9bc;
   color: white;
 }
-/* line 113, ../scss/2_Module/_grid-editor.scss */
+/* line 119, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active legend .icon-arrow {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
@@ -764,26 +777,41 @@ h3 {
 /* line 1, ../scss/2_Module/_grid-editor-url-builder.scss */
 .grid-editor-url-builder {
   position: relative;
-  width: 120px;
+  width: 130px;
   transition: all 0.1337s ease;
   font-size: 11px;
 }
 /* line 10, ../scss/2_Module/_grid-editor-url-builder.scss */
 .grid-editor-url-builder .grid-editor-url-input {
   width: 100%;
+  padding-right: 130px;
+  opacity: 0;
 }
-/* line 13, ../scss/2_Module/_grid-editor-url-builder.scss */
-.grid-editor-url-builder .grid-editor-url-button {
+/* line 15, ../scss/2_Module/_grid-editor-url-builder.scss */
+.grid-editor-url-builder .grid-editor-url-button,
+.grid-editor-url-builder .grid-editor-url-button:focus {
   position: absolute;
   right: 0px;
-  top: 0px;
-  width: 120px;
-  background-color: black;
-  color: white;
+  top: -2px;
+  width: 130px;
+  color: #262e38;
+  background-color: #e5e3df;
 }
 /* line 25, ../scss/2_Module/_grid-editor-url-builder.scss */
 .grid-editor-url-builder.grid-editor-url-show {
   width: 100%;
+}
+/* line 27, ../scss/2_Module/_grid-editor-url-builder.scss */
+.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button {
+  background-color: transparent;
+}
+/* line 28, ../scss/2_Module/_grid-editor-url-builder.scss */
+.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
+  color: #ed5032;
+}
+/* line 34, ../scss/2_Module/_grid-editor-url-builder.scss */
+.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input {
+  opacity: 1;
 }
 
 /* line 1, ../scss/2_Module/_grid-element-drag-icon.scss */
@@ -954,57 +982,57 @@ h3 {
   width: 80%;
   padding: 0px 0px 15px 50px;
 }
-/* line 9, ../scss/2_Module/_grid-revisions.scss */
+/* line 8, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions button {
   margin: 0px;
   padding: 0px;
 }
 
-/* line 15, ../scss/2_Module/_grid-revisions.scss */
+/* line 14, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions-list {
   padding: 0px 15px 0px 0px;
 }
 
-/* line 19, ../scss/2_Module/_grid-revisions.scss */
+/* line 18, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision {
   position: relative;
   box-sizing: border-box;
   display: inline-block;
   width: 220px;
-  border-right: 0px solid #f3f5f7;
+  border-right: 5px solid #f3f5f7;
   background-color: white;
 }
-/* line 27, ../scss/2_Module/_grid-revisions.scss */
+/* line 26, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision:last-child {
   border-right: none;
 }
-/* line 31, ../scss/2_Module/_grid-revisions.scss */
+/* line 30, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-draft {
   background-color: #ed7b3d;
   color: white;
 }
-/* line 34, ../scss/2_Module/_grid-revisions.scss */
+/* line 33, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-draft button {
   color: white;
 }
-/* line 36, ../scss/2_Module/_grid-revisions.scss */
+/* line 35, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-draft button:hover {
   color: #3f4853;
 }
-/* line 42, ../scss/2_Module/_grid-revisions.scss */
+/* line 41, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published {
   background-color: #46bd7b;
   color: white;
 }
-/* line 45, ../scss/2_Module/_grid-revisions.scss */
+/* line 44, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published button {
   color: white;
 }
-/* line 47, ../scss/2_Module/_grid-revisions.scss */
+/* line 46, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published button:hover {
   color: #3f4853;
 }
-/* line 53, ../scss/2_Module/_grid-revisions.scss */
+/* line 52, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision:first-child:before {
   z-index: 90;
   content: "";
@@ -1023,48 +1051,48 @@ h3 {
   margin-left: -8px;
   transition: all 0.1337s ease;
 }
-/* line 72, ../scss/2_Module/_grid-revisions.scss */
+/* line 71, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published:first-child:before {
   border-top-color: #46bd7b;
 }
 
-/* line 78, ../scss/2_Module/_grid-revisions.scss */
+/* line 77, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description {
   padding: 10px;
 }
-/* line 81, ../scss/2_Module/_grid-revisions.scss */
+/* line 80, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description p {
   margin: 0px;
 }
-/* line 85, ../scss/2_Module/_grid-revisions.scss */
+/* line 84, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description .grid-revision-date {
   font-weight: bold;
 }
 
-/* line 91, ../scss/2_Module/_grid-revisions.scss */
+/* line 90, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls {
   position: relative;
   padding-bottom: 40px;
 }
-/* line 95, ../scss/2_Module/_grid-revisions.scss */
+/* line 94, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls .grid-revision-button {
   height: 40px;
   position: absolute;
   bottom: 0px;
 }
-/* line 101, ../scss/2_Module/_grid-revisions.scss */
+/* line 100, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls .grid-revision-preview-button {
   left: 0px;
   width: 50%;
 }
-/* line 106, ../scss/2_Module/_grid-revisions.scss */
+/* line 105, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls .grid-revision-delete-button,
 .grid-revision-controls .grid-revision-revert-button {
   right: 0px;
   width: 50%;
 }
 
-/* line 113, ../scss/2_Module/_grid-revisions.scss */
+/* line 112, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-state-published .grid-revision-controls .grid-revision-preview-button {
   width: 100%;
 }
@@ -1564,8 +1592,9 @@ h3 {
   height: 45px;
   transition: all 0.1337s ease;
   border: none;
+  background-color: #f3f5f7;
 }
-/* line 39, ../scss/2_Module/_grid-toolbar.scss */
+/* line 40, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar .grid-tool-list li button [class^="icon-"],
 .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
   position: absolute;
@@ -1574,29 +1603,29 @@ h3 {
   font-size: 16px;
   font-family: 'Entypo';
 }
-/* line 47, ../scss/2_Module/_grid-toolbar.scss */
+/* line 48, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar .grid-tool-list li button:hover {
   padding-right: 38px;
   color: white;
   background-color: #3f4853;
 }
-/* line 56, ../scss/2_Module/_grid-toolbar.scss */
+/* line 57, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar li.grid-tool-publish button,
 .grid-toolbar li.grid-tool-publish button:hover {
   background-color: #ed7b3d;
   color: white;
 }
-/* line 62, ../scss/2_Module/_grid-toolbar.scss */
+/* line 63, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar[data-draft=false] {
   border-top: 4px solid #46bd7b;
 }
-/* line 65, ../scss/2_Module/_grid-toolbar.scss */
+/* line 66, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar[data-draft=false] li.grid-tool-publish button,
 .grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
   background-color: #46bd7b;
 }
 
-/* line 72, ../scss/2_Module/_grid-toolbar.scss */
+/* line 73, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar-list {
   margin: 20px 20px;
 }

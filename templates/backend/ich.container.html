@@ -5,7 +5,7 @@ data-reused="{{reused}}"> -->
 	{{^isSidebarGrid}}
 	<div class="grid-container-controls">
 
-		<span class="grid-container-title">{{title_short}}</span>
+		<span class="grid-container-title">{{title_short}} {{#titleurl}}<span class="icon-link" title="{{titleurl}}"></span>{{/titleurl}}</span>
 		<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
 		{{#reused}}<span class="grid-container-reused" title="${reusetitle}"><i class="icon-reused"></i></span>{{/reused}}
 		
@@ -28,7 +28,7 @@ data-reused="{{reused}}"> -->
 	<div class="grid-container-content">
 		
 		<div class="grid-container-before">
-			<p class="grid-container-titleurl">{{titleurl}}</p>
+			<!-- <p class="grid-container-titleurl">{{titleurl}}</p> -->
 			<div class="grid-container-prolog">{{&prolog_short}}</div>
 		</div>
 		

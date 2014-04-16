@@ -1,6 +1,6 @@
 .grid-editor-url-builder {
 	position: relative;
-	width: 120px;
+	width: 130px;
 	@include transition();
 
 
@@ -9,20 +9,30 @@
 
 	.grid-editor-url-input{
 		width: 100%;
+		padding-right: 130px;
+		opacity: 0;
 	}
-	.grid-editor-url-button {
+	.grid-editor-url-button,
+	.grid-editor-url-button:focus {
 		position: absolute;
 		right: 0px;
-		top: 0px;
-		width: 120px;
-		background-color: black;
-		color: white;
-	
-
-
+		top: -2px;
+		width: 130px;
+		color: $color-editor-reuse;
+		background-color: $color-editor-reuse-bg;
 	}
 
 	&.grid-editor-url-show {
 		width: 100%;
+		.grid-editor-url-button{
+			&:hover{
+				color: $color-warning;
+			}
+			
+			background-color: transparent;
+		}
+		.grid-editor-url-input{
+			opacity: 1;
+		}
 	}
 }
