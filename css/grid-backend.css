@@ -311,12 +311,12 @@ h3 {
   padding: 12px 0;
   margin: 10px 0;
   min-height: 50px;
-  background-color: #f3f5f7;
-  -webkit-box-shadow: inset 0 0 2px 0px #b0bac2;
-  box-shadow: inset 0 0 2px 0px #b0bac2;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  background-color: white;
+  -webkit-box-shadow: inset 0 0 2px 0px #838688;
+  box-shadow: inset 0 0 2px 0px #838688;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 
 /* line 26, ../scss/2_Module/_grid-box.scss */
@@ -460,40 +460,31 @@ h3 {
 }
 /* line 12, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-sorthandle,
-.grid-container .grid-container-options-icon,
-.grid-container .grid-container-prolog,
-.grid-container .grid-container-epilog {
+.grid-container .grid-container-options-icon {
   color: #b0bac2;
 }
-/* line 17, ../scss/2_Module/_grid-container.scss */
-.grid-container .grid-container-sorthandle:hover,
-.grid-container .grid-container-options-icon:hover,
-.grid-container .grid-container-prolog:hover,
-.grid-container .grid-container-epilog:hover {
-  color: #3f4853;
-}
-/* line 22, ../scss/2_Module/_grid-container.scss */
+/* line 18, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-title {
   color: #262e38;
 }
-/* line 26, ../scss/2_Module/_grid-container.scss */
+/* line 22, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-controls {
   background-color: white;
   border: 1px solid rgba(176, 186, 194, 0.7);
 }
-/* line 32, ../scss/2_Module/_grid-container.scss */
+/* line 28, ../scss/2_Module/_grid-container.scss */
 .grid-container .grid-container-content {
   border-top: 1px solid white;
 }
 
-/* line 39, ../scss/2_Module/_grid-container.scss */
+/* line 35, ../scss/2_Module/_grid-container.scss */
 .grid-container-content {
   position: relative;
   background-color: white;
   border: 1px solid rgba(176, 186, 194, 0.7);
 }
 
-/* line 45, ../scss/2_Module/_grid-container.scss */
+/* line 41, ../scss/2_Module/_grid-container.scss */
 .grid-container-controls {
   position: relative;
   background-color: transparent;
@@ -505,36 +496,34 @@ h3 {
 /**********************************
  * container hover states
  **********************************/
-/* line 61, ../scss/2_Module/_grid-container.scss */
+/* line 57, ../scss/2_Module/_grid-container.scss */
 .grid-container-title,
 .grid-container-sorthandle,
-.grid-container-options-icon,
-.grid-container-prolog,
-.grid-container-epilog {
+.grid-container-options-icon {
   color: rgba(176, 186, 194, 0.3);
   transition: all 0.3s ease;
 }
 
-/* line 78, ../scss/2_Module/_grid-container.scss */
+/* line 72, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover {
   background-color: #3f4853;
 }
-/* line 80, ../scss/2_Module/_grid-container.scss */
+/* line 74, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover[role=trash] {
   background-color: #ed5032;
 }
-/* line 83, ../scss/2_Module/_grid-container.scss */
+/* line 77, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover[role=edit] {
   background-color: #3ac5d9;
 }
 
-/* line 89, ../scss/2_Module/_grid-container.scss */
+/* line 83, ../scss/2_Module/_grid-container.scss */
 .grid-container-type-content {
   margin: 0px;
   border-bottom: 1px solid #f3f5f7;
 }
 
-/* line 95, ../scss/2_Module/_grid-container.scss */
+/* line 89, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer {
   cursor: move;
   position: absolute;
@@ -546,7 +535,7 @@ h3 {
   background-color: rgba(63, 72, 83, 0.3);
   z-index: 50;
 }
-/* line 105, ../scss/2_Module/_grid-container.scss */
+/* line 99, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer .grid-container-reused-label {
   position: absolute;
   top: -3px;
@@ -555,7 +544,7 @@ h3 {
   text-transform: uppercase;
 }
 
-/* line 117, ../scss/2_Module/_grid-container.scss */
+/* line 111, ../scss/2_Module/_grid-container.scss */
 .grid-container-title {
   position: absolute;
   top: 9px;
@@ -564,7 +553,7 @@ h3 {
   font-size: 90%;
 }
 
-/* line 125, ../scss/2_Module/_grid-container.scss */
+/* line 119, ../scss/2_Module/_grid-container.scss */
 .grid-container-sorthandle {
   position: absolute;
   top: 5px;
@@ -574,13 +563,13 @@ h3 {
   cursor: move;
 }
 
-/* line 134, ../scss/2_Module/_grid-container.scss */
+/* line 128, ../scss/2_Module/_grid-container.scss */
 .grid-container-sort-placeholder {
   height: 20px;
   border: 2px dashed #3ac5d9;
 }
 
-/* line 140, ../scss/2_Module/_grid-container.scss */
+/* line 134, ../scss/2_Module/_grid-container.scss */
 .grid-container-options {
   position: absolute;
   top: 5px;
@@ -588,16 +577,16 @@ h3 {
   height: 40px;
   z-index: 80;
 }
-/* line 147, ../scss/2_Module/_grid-container.scss */
+/* line 141, ../scss/2_Module/_grid-container.scss */
 .grid-container-options:hover {
   z-index: 81;
 }
-/* line 151, ../scss/2_Module/_grid-container.scss */
+/* line 145, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-icon {
   text-transform: uppercase;
   font-weight: bold;
 }
-/* line 155, ../scss/2_Module/_grid-container.scss */
+/* line 149, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-list {
   position: absolute;
   list-style: none;
@@ -610,7 +599,7 @@ h3 {
   padding: 0px;
   display: none;
 }
-/* line 167, ../scss/2_Module/_grid-container.scss */
+/* line 161, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-list .grid-container-options-list-item {
   cursor: pointer;
   padding: 5px;
@@ -618,7 +607,7 @@ h3 {
   font-weight: bold;
   margin-bottom: 0px;
 }
-/* line 174, ../scss/2_Module/_grid-container.scss */
+/* line 168, ../scss/2_Module/_grid-container.scss */
 .grid-container-options .grid-container-options-list:before {
   content: "";
   border: 8px solid #b0bac2;
@@ -634,27 +623,20 @@ h3 {
   top: -16px;
   left: 47%;
 }
-/* line 191, ../scss/2_Module/_grid-container.scss */
+/* line 185, ../scss/2_Module/_grid-container.scss */
 .grid-container-options:hover .grid-container-options-list {
   display: block;
 }
 
-/* line 198, ../scss/2_Module/_grid-container.scss */
-.grid-container-prolog p,
-.grid-container-epilog p {
-  margin-bottom: 10px;
+/* line 190, ../scss/2_Module/_grid-container.scss */
+.grid-container-prolog,
+.grid-container-epilog {
+  padding: 10px;
 }
 
 /* line 7, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls {
   box-sizing: border-box;
-  position: fixed;
-  bottom: 0px;
-  margin: 0px 10%;
-  background-color: white;
-  padding: 15px;
-  z-index: 999;
-  width: 80%;
 }
 /* line 17, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls button {
@@ -676,7 +658,6 @@ h3 {
 .grid-editor-controls .grid-editor-reuse-button {
   background-color: #e5e3df;
   color: #262e38;
-  float: right;
 }
 
 /* line 37, ../scss/2_Module/_grid-editor.scss */
@@ -937,15 +918,15 @@ h3 {
   width: 210px;
   display: table;
   padding: 3px;
-  border: 1px solid #b0bac2;
+  border: 1px solid #838688;
 }
 /* line 12, ../scss/2_Module/_grid-new-container-slots.scss */
 .grid-new-container-slots .grid-slot {
   height: 32px;
   background-color: #f3f5f7;
   border-left: 4px solid white;
-  -webkit-box-shadow: inset 0 0 2px 0px #b0bac2;
-  box-shadow: inset 0 0 2px 0px #b0bac2;
+  -webkit-box-shadow: inset 0 0 2px 0px #838688;
+  box-shadow: inset 0 0 2px 0px #838688;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
@@ -1189,208 +1170,209 @@ h3 {
   position: relative;
   min-height: 50px;
   padding-top: 20px;
-  border-left: 2px solid rgba(176, 186, 194, 0.7);
+  border-left: 4px solid white;
   box-sizing: border-box;
+  background-color: #eaeaea;
 }
 
 /*************************
 ************ 12 er ********
 ************************/
 /** Container C-12 **/
-/* line 19, ../scss/2_Module/_grid-slot.scss */
+/* line 20, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   padding: 30px 7px 0 7px;
-  padding: 0 7px;
+  padding: 0 5px;
   box-sizing: border-box;
   display: table-cell;
 }
 
-/* line 30, ../scss/2_Module/_grid-slot.scss */
+/* line 31, ../scss/2_Module/_grid-slot.scss */
 .grid-slot:first-child {
   border-left: none;
 }
 
-/* line 39, ../scss/2_Module/_grid-slot.scss */
+/* line 40, ../scss/2_Module/_grid-slot.scss */
 .C-12 .grid-slot {
   width: 100%;
 }
 
 /** Container C-6-6 **/
-/* line 47, ../scss/2_Module/_grid-slot.scss */
+/* line 48, ../scss/2_Module/_grid-slot.scss */
 .C-6-6 .grid-slot {
   width: 50%;
 }
 
 /** Container C-4-4-4 **/
-/* line 60, ../scss/2_Module/_grid-slot.scss */
+/* line 61, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4 .grid-slot {
   width: 33.3%;
 }
 
-/* line 65, ../scss/2_Module/_grid-slot.scss */
+/* line 66, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4 .grid-slot:last-child {
   width: 33.3%;
 }
 
 /** Container C-8-4 **/
-/* line 72, ../scss/2_Module/_grid-slot.scss */
+/* line 73, ../scss/2_Module/_grid-slot.scss */
 .C-8-4 .grid-slot:nth-child(1) {
   width: 66.6%;
 }
 
-/* line 75, ../scss/2_Module/_grid-slot.scss */
+/* line 76, ../scss/2_Module/_grid-slot.scss */
 .C-8-4 .grid-slot:nth-child(2) {
   width: 33.3%;
 }
 
 /** Container C-4-8 **/
-/* line 83, ../scss/2_Module/_grid-slot.scss */
+/* line 84, ../scss/2_Module/_grid-slot.scss */
 .C-4-8 .grid-slot:nth-child(1) {
   width: 33.3%;
 }
 
-/* line 86, ../scss/2_Module/_grid-slot.scss */
+/* line 87, ../scss/2_Module/_grid-slot.scss */
 .C-4-8 .grid-slot:nth-child(2) {
   width: 66%;
 }
 
 /** Container C-3-3-3-3 **/
-/* line 91, ../scss/2_Module/_grid-slot.scss */
+/* line 92, ../scss/2_Module/_grid-slot.scss */
 [data-type=C-3-3-3-3] .grid-slot {
   width: 25%;
 }
 
-/* line 94, ../scss/2_Module/_grid-slot.scss */
+/* line 95, ../scss/2_Module/_grid-slot.scss */
 [data-type=C-3-3-3-3] .grid-slot:last-child {
   width: 25%;
 }
 
 /** Container C-2-2-2-2-2-2 **/
-/* line 102, ../scss/2_Module/_grid-slot.scss */
+/* line 103, ../scss/2_Module/_grid-slot.scss */
 .C-2-2-2-2-2-2 .grid-slot {
   width: 16.666%;
 }
 
 /** Container C-0-8 and C-8-0 **/
-/* line 110, ../scss/2_Module/_grid-slot.scss */
+/* line 111, ../scss/2_Module/_grid-slot.scss */
 .C-0-8 .grid-slot {
   width: 66.6%;
 }
 
-/* line 113, ../scss/2_Module/_grid-slot.scss */
+/* line 114, ../scss/2_Module/_grid-slot.scss */
 .C-8-0 .grid-slot {
   width: 66.6%;
 }
 
-/* line 116, ../scss/2_Module/_grid-slot.scss */
+/* line 117, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-8-0,
 .grid-wrapper .C-0-8 {
   width: 66.6% !important;
 }
 
-/* line 120, ../scss/2_Module/_grid-slot.scss */
+/* line 121, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-8 {
   margin-left: 33.3%;
 }
 
-/* line 123, ../scss/2_Module/_grid-slot.scss */
+/* line 124, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-8-0 .grid-slot,
 .grid-wrapper .C-0-8 .grid-slot {
   width: 100%;
 }
 
 /** Container C-0-4-4,C-4-4-0 and C-0-4-0 **/
-/* line 129, ../scss/2_Module/_grid-slot.scss */
+/* line 130, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-0 .grid-slot {
   width: 33%;
 }
 
-/* line 134, ../scss/2_Module/_grid-slot.scss */
+/* line 135, ../scss/2_Module/_grid-slot.scss */
 .C-0-4-4 .grid-slot {
   width: 33%;
 }
 
-/* line 137, ../scss/2_Module/_grid-slot.scss */
+/* line 138, ../scss/2_Module/_grid-slot.scss */
 .C-0-4-0 .grid-slot {
   width: 33.3%;
 }
 
-/* line 140, ../scss/2_Module/_grid-slot.scss */
+/* line 141, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-4,
 .grid-wrapper .C-4-4-0 {
   width: 66.6% !important;
 }
 
-/* line 144, ../scss/2_Module/_grid-slot.scss */
+/* line 145, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-4 {
   margin-left: 33.3%;
 }
 
-/* line 147, ../scss/2_Module/_grid-slot.scss */
+/* line 148, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-4-0 .grid-slot,
 .grid-wrapper .C-0-4-4 .grid-slot {
   width: 49%;
 }
 
-/* line 153, ../scss/2_Module/_grid-slot.scss */
+/* line 154, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-0 {
   width: 33.3% !important;
   margin-left: 33.3%;
 }
 
-/* line 157, ../scss/2_Module/_grid-slot.scss */
+/* line 158, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-0-4-0 .grid-slot {
   width: 100%;
 }
 
 /** Container C-4-2-2-0 and C-2-2-4-0 **/
-/* line 162, ../scss/2_Module/_grid-slot.scss */
+/* line 163, ../scss/2_Module/_grid-slot.scss */
 .C-4-2-2-0 .grid-slot,
 .C-2-2-4-0 .grid-slot {
   width: 16%;
 }
 
-/* line 166, ../scss/2_Module/_grid-slot.scss */
+/* line 167, ../scss/2_Module/_grid-slot.scss */
 .C-4-2-2-0 .grid-slot:first-child,
 .C-2-2-4-0 .grid-slot:last-child {
   width: 33%;
 }
 
-/* line 170, ../scss/2_Module/_grid-slot.scss */
+/* line 171, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0,
 .grid-wrapper .C-2-2-4-0 {
   width: 66.6% !important;
 }
 
-/* line 174, ../scss/2_Module/_grid-slot.scss */
+/* line 175, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0 .grid-slot,
 .grid-wrapper .C-2-2-4-0 .grid-slot {
   width: 24%;
 }
 
-/* line 179, ../scss/2_Module/_grid-slot.scss */
+/* line 180, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-4-2-2-0 .grid-slot:first-child,
 .grid-wrapper .C-2-2-4-0 .grid-slot:last-child {
   width: 49%;
 }
 
 /** Container C-2-2-2-2-0 and C-0-2-2-2-2 **/
-/* line 186, ../scss/2_Module/_grid-slot.scss */
+/* line 187, ../scss/2_Module/_grid-slot.scss */
 .C-2-2-2-2-0 .grid-slot {
   width: 16%;
 }
 
-/* line 189, ../scss/2_Module/_grid-slot.scss */
+/* line 190, ../scss/2_Module/_grid-slot.scss */
 .C-0-2-2-2-2 .grid-slot {
   float: right;
 }
 
-/* line 192, ../scss/2_Module/_grid-slot.scss */
+/* line 193, ../scss/2_Module/_grid-slot.scss */
 #grid .C-2-2-2-2-0 {
   width: 66.6% !important;
 }
 
-/* line 195, ../scss/2_Module/_grid-slot.scss */
+/* line 196, ../scss/2_Module/_grid-slot.scss */
 .grid-wrapper .C-2-2-2-2-0 .grid-slot,
 .grid-wrapper .C-0-2-2-2-2 .grid-slot {
   width: 24%;
@@ -1400,133 +1382,133 @@ h3 {
 ************ 18 er ********
 ************************/
 /** Container C-18 **/
-/* line 205, ../scss/2_Module/_grid-slot.scss */
+/* line 206, ../scss/2_Module/_grid-slot.scss */
 .C-18 .grid-slot {
   width: 100%;
 }
 
-/* line 210, ../scss/2_Module/_grid-slot.scss */
+/* line 211, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-6 .grid-slot {
   width: 33%;
 }
 
-/* line 213, ../scss/2_Module/_grid-slot.scss */
+/* line 214, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-6 .grid-slot:last-child {
   width: 32%;
 }
 
-/* line 216, ../scss/2_Module/_grid-slot.scss */
+/* line 217, ../scss/2_Module/_grid-slot.scss */
 .C-12-6 .grid-slot {
   width: 66%;
 }
 
-/* line 219, ../scss/2_Module/_grid-slot.scss */
+/* line 220, ../scss/2_Module/_grid-slot.scss */
 .C-12-6 .grid-slot:last-child {
   width: 33%;
 }
 
-/* line 222, ../scss/2_Module/_grid-slot.scss */
+/* line 223, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-6 .grid-slot {
   width: 22%;
 }
 
-/* line 225, ../scss/2_Module/_grid-slot.scss */
+/* line 226, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-6 .grid-slot:last-child {
   width: 32%;
 }
 
-/* line 228, ../scss/2_Module/_grid-slot.scss */
+/* line 229, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-3-3 .grid-slot {
   width: 16%;
 }
 
-/* line 231, ../scss/2_Module/_grid-slot.scss */
+/* line 232, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-3-3 .grid-slot:last-child {
   float: right;
 }
 
 /** Container C-12-0 **/
-/* line 235, ../scss/2_Module/_grid-slot.scss */
+/* line 236, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 .grid-slot {
   width: 66.6%;
 }
 
-/* line 238, ../scss/2_Module/_grid-slot.scss */
+/* line 239, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 {
   width: 66.6% !important;
 }
 
-/* line 241, ../scss/2_Module/_grid-slot.scss */
+/* line 242, ../scss/2_Module/_grid-slot.scss */
 .C-12-0 .grid-slot {
   width: 100%;
 }
 
 /** Container C-4-4-4-0 **/
-/* line 245, ../scss/2_Module/_grid-slot.scss */
+/* line 246, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 .grid-slot {
   width: 22%;
 }
 
-/* line 248, ../scss/2_Module/_grid-slot.scss */
+/* line 249, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 {
   width: 66.6% !important;
 }
 
-/* line 251, ../scss/2_Module/_grid-slot.scss */
+/* line 252, ../scss/2_Module/_grid-slot.scss */
 .C-4-4-4-0 .grid-slot {
   width: 33%;
 }
 
 /** Container C-6-6-0 **/
-/* line 258, ../scss/2_Module/_grid-slot.scss */
+/* line 259, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot {
   width: 33.3%;
 }
 
-/* line 262, ../scss/2_Module/_grid-slot.scss */
+/* line 263, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 {
   width: 66.6% !important;
 }
 
-/* line 265, ../scss/2_Module/_grid-slot.scss */
+/* line 266, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot {
   width: 50%;
 }
 
-/* line 268, ../scss/2_Module/_grid-slot.scss */
+/* line 269, ../scss/2_Module/_grid-slot.scss */
 .C-6-6-0 .grid-slot:last-child {
   margin-right: 0px;
 }
 
 /** Container C-3-3-3-3-0 **/
-/* line 272, ../scss/2_Module/_grid-slot.scss */
+/* line 273, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 .grid-slot {
   width: 16%;
 }
 
-/* line 275, ../scss/2_Module/_grid-slot.scss */
+/* line 276, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 {
   width: 66.6% !important;
 }
 
-/* line 278, ../scss/2_Module/_grid-slot.scss */
+/* line 279, ../scss/2_Module/_grid-slot.scss */
 .C-3-3-3-3-0 .grid-slot {
   width: 24.5%;
 }
 
 /* container sidebars */
-/* line 286, ../scss/2_Module/_grid-slot.scss */
+/* line 287, ../scss/2_Module/_grid-slot.scss */
 .S-0-4 .grid-slot {
   width: 33%;
   float: right;
 }
 
-/* line 290, ../scss/2_Module/_grid-slot.scss */
+/* line 291, ../scss/2_Module/_grid-slot.scss */
 .S-4-0 .grid-slot {
   width: 33%;
 }
 
-/* line 294, ../scss/2_Module/_grid-slot.scss */
+/* line 295, ../scss/2_Module/_grid-slot.scss */
 .SC-4 .grid-slot {
   width: 100%;
 }

@@ -11,14 +11,14 @@
 	margin: 10px 0;
 	min-height: 50px;
 
-	background-color: $color-grid-bg;
+	background-color: white;
 
 	-webkit-box-shadow:inset 0 0 2px 0px $color-box-border;
 			box-shadow:inset 0 0 2px 0px $color-box-border;
 
-	-webkit-border-radius: 2px;
-	   -moz-border-radius: 2px;
-			border-radius: 2px;
+	-webkit-border-radius: 3px;
+	   -moz-border-radius: 3px;
+			border-radius: 3px;
 
 	
 }

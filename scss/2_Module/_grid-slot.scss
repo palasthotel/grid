@@ -5,9 +5,10 @@
 	min-height: 50px;
 	padding-top: 20px;
 
-	border-left: 2px solid $color-container-border;
+	border-left: 4px solid white;
 	box-sizing: border-box;
 
+	background-color: $color-grid-slot;
 }
 
 /*************************
@@ -18,7 +19,7 @@
 
 .grid-slot {
 	padding: 30px 7px 0 7px;
-	padding: 0 7px;
+	padding: 0 5px;
 	// float: left;
 	box-sizing: border-box;
 	//height: 100%;
