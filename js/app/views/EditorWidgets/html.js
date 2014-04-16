@@ -5,10 +5,10 @@ boxEditorControls['html']=GridBackbone.View.extend({
     render:function(){
         var text=this.model.container[this.model.structure.key];
         if(!text)text="";
-        this.$el.html("<label>"+this.model.structure.label+"</label><textarea class='dynamic-value form-html'>"+text+"</textarea>");
+        this.$el.html("<label>"+this.model.structure.label+"</label><textarea name='"+this.cid+"' class='dynamic-value form-html'>"+text+"</textarea>");
         return this;
     },
     fetchValue:function(){
-        return CKEDITOR.instances[this.$el.find("div.cke").attr("id").substring(4)].getData();
+        return CKEDITOR.instances[this.cid].getData();
     }
 });

@@ -2,9 +2,6 @@
 
 boxEditorControls['list']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-list",
-    events:{
-        "click .grid-editor-widget-list-add": "onAdd"
-    },
     initialize:function(){
 
     },
@@ -17,14 +14,19 @@ boxEditorControls['list']=GridBackbone.View.extend({
                     .addClass('grid-editor-widget-list-items');
         this.$el.append(this.$list);
 
-        jQuery("<button></button>")
-                .text("Add item")
-                .addClass('grid-editor-widget-list-add')
-                    .appendTo(this.$el);
-
         var list=this.model.container[this.model.structure.key];
         var self=this;
         var views=[];
+        
+        jQuery("<button></button>")
+                .text("Add item")
+                .addClass('grid-editor-widget-list-add')
+                    .appendTo(this.$el).on('click', function(event) {
+                        event.preventDefault();
+                       self.onAdd();
+                    });
+
+        
         _.each(list,function(elem){
             var view=new boxEditorControls['listitem']({
                 model:{
@@ -38,6 +40,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
             this.$list.append(view.render().el);
         });
         this.views=views;
+
         return this;
     },
     onAdd: function(){
@@ -52,6 +55,13 @@ boxEditorControls['list']=GridBackbone.View.extend({
         });
         this.views.push(view);
         this.$list.append(view.render().el);
+
+        jQuery.each(view.$el.find(".form-html"), function(index, element) {
+            CKEDITOR.replace(
+                element,{
+                customConfig : document.PathToConfig
+            });
+        });
     },
     fetchValue:function(){
         var content=[];
