@@ -6,13 +6,6 @@
 
 .grid-editor-controls{
 	box-sizing: border-box;
-	//position: fixed;
-	//bottom: 0px;
-	//margin: 0px 10%;
-	//background-color: white;
-	//padding: 15px;
-	//z-index: $idx-max;
-	//width: 80%;
 
 	button{
 		background-color: black;
@@ -30,7 +23,6 @@
 	.grid-editor-reuse-button{
 		background-color: $color-editor-reuse-bg;
 		color: $color-editor-reuse;
-		//float: right;
 	}
 }
 
