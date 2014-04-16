@@ -32,24 +32,27 @@ h3 {
 }
 
 /* line 1, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper, .grid-editor-wrapper {
+.grid-all-wrapper,
+.grid-editor-wrapper {
   font-family: "OpenSans", sans-serif;
   background-color: #f3f5f7;
 }
-/* line 5, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input, .grid-editor-wrapper input,
+/* line 6, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input,
 .grid-all-wrapper textarea,
-.grid-editor-wrapper textarea,
 .grid-all-wrapper select,
-.grid-editor-wrapper select,
 .grid-all-wrapper button,
+.grid-editor-wrapper input,
+.grid-editor-wrapper textarea,
+.grid-editor-wrapper select,
 .grid-editor-wrapper button {
   font-family: inherit;
   font-size: 12px;
   box-sizing: border-box;
 }
-/* line 14, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input, .grid-editor-wrapper input {
+/* line 15, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input,
+.grid-editor-wrapper input {
   height: 27px;
   width: 100%;
   line-height: 27px;
@@ -58,19 +61,22 @@ h3 {
   border: solid 1px #eceff3;
   margin-bottom: 5px;
 }
-/* line 23, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input:hover, .grid-editor-wrapper input:hover {
+/* line 24, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input:hover,
+.grid-editor-wrapper input:hover {
   border-color: #b0bac2;
 }
-/* line 27, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input[type=checkbox], .grid-editor-wrapper input[type=checkbox] {
+/* line 28, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper input[type=checkbox],
+.grid-editor-wrapper input[type=checkbox] {
   width: auto;
   height: auto;
   display: inline;
 }
-/* line 32, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper button, .grid-editor-wrapper button,
+/* line 33, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper button,
 .grid-all-wrapper button:focus,
+.grid-editor-wrapper button,
 .grid-editor-wrapper button:focus {
   outline: none;
   border: none;
@@ -84,14 +90,16 @@ h3 {
   transition: all 0.1337s ease;
   box-shadow: none;
 }
-/* line 46, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper button:hover, .grid-editor-wrapper button:hover,
+/* line 47, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper button:hover,
 .grid-all-wrapper button:focus:hover,
+.grid-editor-wrapper button:hover,
 .grid-editor-wrapper button:focus:hover {
   color: #3ac5d9;
 }
-/* line 50, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper img, .grid-editor-wrapper img {
+/* line 51, ../scss/0_Base/_grid-all-wrapper.scss */
+.grid-all-wrapper img,
+.grid-editor-wrapper img {
   max-width: 100%;
 }
 
@@ -641,33 +649,79 @@ h3 {
   font-size: 11px;
 }
 
-/* line 7, ../scss/2_Module/_grid-editor.scss */
+/* line 3, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls {
+  list-style: none;
+  position: fixed;
+  z-index: 90;
+  margin: 0px;
+  width: 40px;
   box-sizing: border-box;
+  transition: all 0.1337s ease;
+  width: 100%;
+  height: 0px;
 }
-/* line 10, ../scss/2_Module/_grid-editor.scss */
+/* line 18, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls button {
   background-color: black;
   color: white;
   padding: 10px;
 }
-/* line 15, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-save-button {
+/* line 26, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control {
+  width: 185px;
+  right: 160px;
+  position: relative;
+  margin: 0;
+  top: 50%;
+  transition: all 0.1337s ease;
+}
+/* line 33, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control:hover {
+  right: 20px;
+}
+/* line 36, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control button {
+  text-align: right;
+  padding: 5px 48px 5px 5px;
+  margin: 0px;
+  font-size: 12px;
+  width: 100%;
+  height: 45px;
+  transition: all 0.1337s ease;
+  border: none;
+  background-color: #f3f5f7;
+}
+/* line 47, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control button [class^="icon-"],
+.grid-editor-controls .grid-editor-control button [class*=" icon-"] {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  font-size: 16px;
+  font-family: 'Entypo';
+}
+/* line 55, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control button:hover {
+  padding-right: 38px;
+}
+/* line 62, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control .grid-editor-save-button {
   background-color: #46bd7b;
   color: white;
 }
-/* line 19, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-cancel-button {
+/* line 67, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control .grid-editor-cancel-button {
   background-color: #ed5032;
   color: white;
 }
-/* line 23, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-reuse-button {
+/* line 71, ../scss/2_Module/_grid-editor.scss */
+.grid-editor-controls .grid-editor-control .grid-editor-reuse-button {
   background-color: #e5e3df;
   color: #262e38;
 }
 
-/* line 29, ../scss/2_Module/_grid-editor.scss */
+/* line 84, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content {
   box-sizing: border-box;
   padding: 15px 35px;
@@ -676,18 +730,18 @@ h3 {
   background-color: white;
   border: 1px solid #eceff3;
 }
-/* line 37, ../scss/2_Module/_grid-editor.scss */
+/* line 92, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content fieldset {
   border: none;
   border-bottom: 1px solid #eceff3;
   padding: 0;
   margin: -1px -35px 0px -35px;
 }
-/* line 43, ../scss/2_Module/_grid-editor.scss */
+/* line 98, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content fieldset .grid-editor-field-wrapper {
   display: none;
 }
-/* line 48, ../scss/2_Module/_grid-editor.scss */
+/* line 103, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend {
   padding: 15px 0px 15px 35px;
   box-sizing: border-box;
@@ -700,57 +754,58 @@ h3 {
   background-color: #eceae7;
   transition: background-color 0.5s ease;
 }
-/* line 63, ../scss/2_Module/_grid-editor.scss */
+/* line 118, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content legend .icon-arrow {
   position: absolute;
   left: 5px;
   top: 10px;
   transition: all 0.1337s ease;
 }
-/* line 71, ../scss/2_Module/_grid-editor.scss */
+/* line 126, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content input,
 .grid-editor-content textarea {
   border: 1px solid #eceff3;
+  width: 100%;
 }
-/* line 76, ../scss/2_Module/_grid-editor.scss */
+/* line 132, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content label {
   padding: 10px 0;
   font-weight: bold;
   color: #8193a9;
   display: block;
 }
-/* line 82, ../scss/2_Module/_grid-editor.scss */
+/* line 138, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-editor-header {
   margin-bottom: 15px;
 }
-/* line 85, ../scss/2_Module/_grid-editor.scss */
+/* line 141, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-editor-title {
   font-weight: bold;
   font-size: 16px;
   padding: 7px;
   height: auto;
 }
-/* line 91, ../scss/2_Module/_grid-editor.scss */
+/* line 147, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-editor-footer {
   margin-top: 15px;
 }
 
-/* line 97, ../scss/2_Module/_grid-editor.scss */
+/* line 153, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active {
   border-bottom: 2px solid #24a9bc;
 }
-/* line 101, ../scss/2_Module/_grid-editor.scss */
+/* line 157, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active .grid-editor-field-wrapper {
   display: block;
   margin: 15px 35px;
 }
-/* line 106, ../scss/2_Module/_grid-editor.scss */
+/* line 162, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active legend {
   background-color: #3ac5d9;
   border-bottom: 2px solid #24a9bc;
   color: white;
 }
-/* line 111, ../scss/2_Module/_grid-editor.scss */
+/* line 167, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active legend .icon-arrow {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
@@ -1580,7 +1635,7 @@ h3 {
   border: none;
   background-color: #f3f5f7;
 }
-/* line 40, ../scss/2_Module/_grid-toolbar.scss */
+/* line 39, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar .grid-tool-list li button [class^="icon-"],
 .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
   position: absolute;
@@ -1589,29 +1644,29 @@ h3 {
   font-size: 16px;
   font-family: 'Entypo';
 }
-/* line 48, ../scss/2_Module/_grid-toolbar.scss */
+/* line 47, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar .grid-tool-list li button:hover {
   padding-right: 38px;
   color: white;
   background-color: #3f4853;
 }
-/* line 57, ../scss/2_Module/_grid-toolbar.scss */
+/* line 56, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar li.grid-tool-publish button,
 .grid-toolbar li.grid-tool-publish button:hover {
   background-color: #ed7b3d;
   color: white;
 }
-/* line 63, ../scss/2_Module/_grid-toolbar.scss */
+/* line 62, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar[data-draft=false] {
   border-top: 4px solid #46bd7b;
 }
-/* line 66, ../scss/2_Module/_grid-toolbar.scss */
+/* line 65, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar[data-draft=false] li.grid-tool-publish button,
 .grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
   background-color: #46bd7b;
 }
 
-/* line 73, ../scss/2_Module/_grid-toolbar.scss */
+/* line 72, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar-list {
   margin: 20px 20px;
 }
