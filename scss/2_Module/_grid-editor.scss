@@ -14,7 +14,6 @@
 	z-index: $idx-max;
 	width: 80%;
 
-
 	button{
 		background-color: black;
 		color:white;
@@ -40,11 +39,8 @@
 	padding: 15px;
 	margin: 20px 10%;
 	padding-bottom: 100px;
-
 	background-color: white;
-
 	border: 1px solid $color-input-border;
-
 
 	fieldset{
 		border: none;
@@ -54,8 +50,6 @@
 
 		.grid-editor-field-wrapper {
 			 display: none;
-
-
 		}
 	}
 
@@ -79,9 +73,7 @@
 			left: 5px;
 			top: 10px;
 			@include transition();
-		}
-
-		
+		} 
 	}
 
 	input,
