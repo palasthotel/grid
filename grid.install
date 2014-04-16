@@ -458,6 +458,24 @@ function grid_schema()
 					'size'=>'normal',
 					'length'=>255,
 				),
+				'dimension'=>array(
+					'description'=>t('slot dimension code'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+				'space_to_right'=>array(
+					'description'=>t('space to right'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
+				'space_to_left'=>array(
+					'description'=>t('space to left'),
+					'type'=>'varchar',
+					'size'=>'normal',
+					'length'=>255,
+				),
 				'numslots'=>array(
 					'description'=>t('number of slots this container has'),
 					'type'=>'int',
