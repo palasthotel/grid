@@ -18,8 +18,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
         var self=this;
         var views=[];
 
-        jQuery("<button></button>")
-                .text("Add item")
+        jQuery("<button><span class='icon-plus'></span>Add item</button>")
                 .addClass('grid-editor-widget-list-add')
                     .appendTo(this.$el).on('click', function(event) {
                         event.preventDefault();
