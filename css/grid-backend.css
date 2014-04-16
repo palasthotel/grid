@@ -600,7 +600,7 @@ h3 {
   .grid-editor-url-builder .grid-editor-url-button:focus {
     position: absolute;
     right: 0px;
-    top: 0px;
+    top: -2px;
     width: 130px;
     color: #262e38;
     background-color: #e5e3df; }
@@ -763,7 +763,7 @@ h3 {
   box-sizing: border-box;
   display: inline-block;
   width: 220px;
-  border-right: 0px solid #f3f5f7;
+  border-right: 5px solid #f3f5f7;
   background-color: white; }
   .grid-revision:last-child {
     border-right: none; }
@@ -1175,7 +1175,8 @@ h3 {
         height: 45px;
         -webkit-transition: all 0.1337s ease;
         transition: all 0.1337s ease;
-        border: none; }
+        border: none;
+        background-color: #f3f5f7; }
         .grid-toolbar .grid-tool-list li button [class^="icon-"],
         .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
           position: absolute;

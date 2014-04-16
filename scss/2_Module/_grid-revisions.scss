@@ -5,11 +5,10 @@
 	overflow-x: scroll;
 	width: $dim-revisions-width;
 	padding: 0px 0px 15px 50px;
-
 	button{
 		margin: 0px;
 		padding: 0px;
-	}
+	} 
 }
 
 .grid-revisions-list{
@@ -21,7 +20,7 @@
 	box-sizing: border-box;
 	display: inline-block;
 	width: 220px;
-	border-right: 0px solid $color-revision-border;
+	border-right: 5px solid $color-revision-border;
 	background-color: $color-revision-bg;
 
 	&:last-child{
