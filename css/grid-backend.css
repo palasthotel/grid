@@ -970,12 +970,12 @@ h3 {
   padding: 0px;
 }
 
-/* line 14, ../scss/2_Module/_grid-revisions.scss */
+/* line 16, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions-list {
   padding: 0px 15px 0px 0px;
 }
 
-/* line 18, ../scss/2_Module/_grid-revisions.scss */
+/* line 20, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision {
   position: relative;
   box-sizing: border-box;
@@ -983,38 +983,40 @@ h3 {
   width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
+  -webkit-box-shadow: inset 0 0 2px 0 #aaaaaa;
+  box-shadow: inset 0 0 2px 0 #aaaaaa;
 }
-/* line 26, ../scss/2_Module/_grid-revisions.scss */
+/* line 31, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision:last-child {
   border-right: none;
 }
-/* line 30, ../scss/2_Module/_grid-revisions.scss */
+/* line 35, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-draft {
   background-color: #ed7b3d;
   color: white;
 }
-/* line 33, ../scss/2_Module/_grid-revisions.scss */
+/* line 38, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-draft button {
   color: white;
 }
-/* line 35, ../scss/2_Module/_grid-revisions.scss */
+/* line 40, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-draft button:hover {
   color: #3f4853;
 }
-/* line 41, ../scss/2_Module/_grid-revisions.scss */
+/* line 46, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published {
   background-color: #46bd7b;
   color: white;
 }
-/* line 44, ../scss/2_Module/_grid-revisions.scss */
+/* line 49, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published button {
   color: white;
 }
-/* line 46, ../scss/2_Module/_grid-revisions.scss */
+/* line 51, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published button:hover {
   color: #3f4853;
 }
-/* line 52, ../scss/2_Module/_grid-revisions.scss */
+/* line 57, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision:first-child:before {
   z-index: 90;
   content: "";
@@ -1033,48 +1035,48 @@ h3 {
   margin-left: -8px;
   transition: all 0.1337s ease;
 }
-/* line 71, ../scss/2_Module/_grid-revisions.scss */
+/* line 76, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision.grid-revision-state-published:first-child:before {
   border-top-color: #46bd7b;
 }
 
-/* line 77, ../scss/2_Module/_grid-revisions.scss */
+/* line 82, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description {
   padding: 10px;
 }
-/* line 80, ../scss/2_Module/_grid-revisions.scss */
+/* line 85, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description p {
   margin: 0px;
 }
-/* line 84, ../scss/2_Module/_grid-revisions.scss */
+/* line 89, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description .grid-revision-date {
   font-weight: bold;
 }
 
-/* line 90, ../scss/2_Module/_grid-revisions.scss */
+/* line 95, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls {
   position: relative;
   padding-bottom: 40px;
 }
-/* line 94, ../scss/2_Module/_grid-revisions.scss */
+/* line 99, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls .grid-revision-button {
   height: 40px;
   position: absolute;
   bottom: 0px;
 }
-/* line 100, ../scss/2_Module/_grid-revisions.scss */
+/* line 105, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls .grid-revision-preview-button {
   left: 0px;
   width: 50%;
 }
-/* line 105, ../scss/2_Module/_grid-revisions.scss */
+/* line 110, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls .grid-revision-delete-button,
 .grid-revision-controls .grid-revision-revert-button {
   right: 0px;
   width: 50%;
 }
 
-/* line 112, ../scss/2_Module/_grid-revisions.scss */
+/* line 117, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-state-published .grid-revision-controls .grid-revision-preview-button {
   width: 100%;
 }
