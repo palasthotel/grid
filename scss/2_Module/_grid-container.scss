@@ -10,13 +10,9 @@
 
 		
 	.grid-container-sorthandle,
-	.grid-container-options-icon,
-	.grid-container-prolog,
-	.grid-container-epilog {
+	.grid-container-options-icon {
 		color: $color-container-controls;
-		&:hover {
-			color: $color-container-controls-hover;
-		}
+		
 	}
 
 	.grid-container-title {
@@ -60,9 +56,7 @@
 // text color for hover states of controls
 .grid-container-title,
 .grid-container-sorthandle,
-.grid-container-options-icon,
-.grid-container-prolog,
-.grid-container-epilog{
+.grid-container-options-icon {
 	color: $color-container-controls-nohover;
 	@include transition(all, .3s, ease);
 }
@@ -195,7 +189,5 @@
 
 .grid-container-prolog,
 .grid-container-epilog{
-	p{
-		margin-bottom: 10px;
-	}
+	padding: 10px;
 }
