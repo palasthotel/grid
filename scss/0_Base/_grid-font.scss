@@ -107,7 +107,9 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-reuse:before { content: '\e73e'; } /* '' */
+.icon-ok:before { content: '\2713'; }
+.icon-cancel:before { content: '\274c'; }
+.icon-reuse:before { content: '\e73e'; }
 .icon-style:before { content: '\e79a'; }
 .icon-link:before { content: '\1f517'; }
 .icon-plus:before { content: '\2795'; }

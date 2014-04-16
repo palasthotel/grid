@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /* **************
 Dimensions
 ****************/
@@ -142,10 +141,15 @@ h3 {
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
+.icon-ok:before {
+  content: '\2713'; }
+
+.icon-cancel:before {
+  content: '\274c'; }
+
 .icon-reuse:before {
   content: '\e73e'; }
 
-/* '' */
 .icon-style:before {
   content: '\e79a'; }
 
