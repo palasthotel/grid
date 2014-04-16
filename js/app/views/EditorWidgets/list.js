@@ -18,8 +18,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
         var self=this;
         var views=[];
 
-        jQuery("<button></button>")
-                .text("Add item")
+        jQuery("<button><span class='icon-plus'></span>Add item</button>")
                 .addClass('grid-editor-widget-list-add')
                     .appendTo(this.$el).on('click', function(event) {
                         event.preventDefault();
@@ -94,6 +93,9 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
             views.push(view);
             self.$el.append(view.render().el);
         });
+        jQuery("<button class='widget-list-remove-item-button'><span class='icon-minus'></span>Remove item</button>").on('click', function(event) {
+            self.remove();
+        }).appendTo(this.$el);
         this.views=views;
         return this;
     },
