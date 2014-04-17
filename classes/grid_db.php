@@ -121,7 +121,8 @@ class grid_db {
 			$grid->container[]=new grid_container();
 			$grid->container[0]->grid=$grid;
 			$grid->container[0]->storage=$this;
-			$grid->container[0]->type="C-12";
+			$grid->container[0]->type="c";
+			$grid->container[0]->dimension="1d1";
 			$grid->container[0]->containerid=-1;
 			$grid->container[0]->slots=array();
 			$grid->container[0]->slots[]=new grid_slot();
@@ -428,6 +429,9 @@ grid_container.readmore as container_readmore,
 grid_container.readmore_url as container_readmoreurl,
 grid_container.reuse_containerid as container_reuseid,
 grid_container_type.type as container_type,
+grid_container_type.dimension as container_dimension,
+grid_container_type.space_to_right as container_space_to_right,
+grid_container_type.space_to_left as container_space_to_left,
 grid_container2slot.slot_id as slot_id,
 grid_slot_style.slug as slot_style,
 grid_box.id as box_id,
@@ -505,6 +509,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 					$currentcontainer->containerid=$row['container_id'];
 					$currentcontainer->style=$row['container_style'];
 					$currentcontainer->type=$row['container_type'];
+					$currentcontainer->dimension=$row['container_dimension'];
+					$currentcontainer->space_to_left=$row['container_space_to_left'];
+					$currentcontainer->space_to_right=$row['container_space_to_right'];
 					$currentcontainer->title=$row['container_title'];
 					$currentcontainer->titleurl=$row['container_titleurl'];
 					$currentcontainer->prolog=$row['container_prolog'];
