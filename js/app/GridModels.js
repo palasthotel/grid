@@ -153,8 +153,6 @@ var Container = GridBackbone.Model.extend({
 	},
 	initialize: function(spec){
 		var self = this;
-		GRID.log("init container");
-		GRID.log(spec.slots);
         this.setSlots(spec.slots);
 	},
     getIndex: function(){
@@ -163,8 +161,10 @@ var Container = GridBackbone.Model.extend({
     setSlots: function(slots_array){
         this.getSlots().reset();
         var self = this;
+        var slots_dimension = this.get("dimension").split("-");
+        var i=0;
         _.each(slots_array, function(slot) {
-            GRID.log(slot);
+            slot.dimension = slots_dimension[i++];
             self.addSlot(new Slot(slot));
         });
     },

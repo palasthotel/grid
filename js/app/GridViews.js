@@ -166,6 +166,9 @@ var SlotView = GridBackbone.View.extend({
         this.$el.attr("data-style", json.style)
                 .attr("data-id",json.id)
                 .attr("data-dimension",json.dimension);
+
+        this.$el.addClass('grid-slot-'+json.dimension); 
+
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
         if(GRID.mode != "box"){
             this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
