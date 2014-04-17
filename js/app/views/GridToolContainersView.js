@@ -44,12 +44,15 @@ var GridToolContainersView = GridBackbone.View.extend({
         if(type == "sidebar"){ scope_type = "s"; }
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
-            value.slots = [];
+
             if( value.type  != scope_type ){
                 delete containers.containers[key];
             } else {
+                value.slots = [];
+                var slots_dimension = value.dimension.split("-");
+                var i=0;
                 for( var i = 0 ;i < value.numslots; i++){
-                    value.slots.push(i);
+                    value.slots.push({dimension: slots_dimension[i]});
                 }
             }           
         });
