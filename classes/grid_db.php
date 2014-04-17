@@ -947,12 +947,17 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function fetchContainerTypes()
 	{
-		$query="select type,numslots from ".$this->prefix."grid_container_type";
+		$query="select type,dimension,space_to_right,space_to_left,numslots from ".$this->prefix."grid_container_type";
 		$result=$this->connection->query($query) or die($this->connection->error);
 		$return=array();
 		while($row=$result->fetch_assoc())
 		{
-			$return[]=array('type'=>$row['type'],'numslots'=>$row['numslots']);
+			$return[]=array(
+				'type'=>$row['type'],
+				'dimension'=>$row['dimension'],
+				'space_to_left'=>$row['space_to_left'],
+				'space_to_right'=>$row['space_to_right'],
+				'numslots'=>$row['numslots']);
 		}
 		return $return;
 	}

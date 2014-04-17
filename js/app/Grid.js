@@ -305,7 +305,7 @@ GRID = {
 		var self=this;
 		this.getView().$el.sortable({
             handle: ".grid-container-sorthandle, .grid-container-reused-layer",
-            items:".container:not(.SC-4)",
+            items:".grid-container:not(.grid-container-type-sc)",
             placeholder: "grid-container-sort-placeholder",
             pullPlaceholder: true,
             appendTo: this.getView().$el ,
@@ -355,11 +355,11 @@ GRID = {
 		new_container_id,
 		box_deleted;
 		box_deleted=false;
-		this.getView().$el.find(".container[data-reused=false][data-type*=C-] .boxes-wrapper").sortable({
+		this.getView().$el.find(".grid-container-type-c[data-reused=false] .grid-boxes-wrapper").sortable({
 			items: ".grid-box",
 			handle: ".grid-box-controls",
 			//cancel: ".grid-box-edit, .grid-box-delete",
-			connectWith: ".container[data-reused=false] .boxes-wrapper, .grid-element-trash",
+			connectWith: ".grid-container-type-c[data-reused=false] .grid-boxes-wrapper, .grid-element-trash",
 			placeholder: "grid-box-sort-placeholder",
 			forcePlaceholderSize: true,
 			distance: 10,
@@ -369,14 +369,14 @@ GRID = {
 			},
 			cursorAt: { left: 30, top:30 },
 			start: function(e, ui){
-				jQuery(".c-box-trash").show();
+				// jQuery(".grid-box-trash").show();
 				old_box_index = ui.item.index();
 				old_slot_id = ui.item.parents(".grid-slot").data("id");
 				old_container_id = ui.item.parents(".grid-container").data("id");
 
 				GRID.log(["START BOX SORT", old_box_index, old_slot_id, old_container_id]);
 				jQuery(".grid-element-trash").droppable({
-					accept: '.slot .box',
+					accept: '.grid-slot .grid-box',
 					hoverClass: 'grid-hover',
 					drop:function(e,ui) {
 						var box = GRID.getModel().getContainers()
@@ -389,12 +389,12 @@ GRID = {
 				});
 			},
 			stop: function(e, ui){
-				jQuery(".c-box-trash").hide();
+				//jQuery(".grid-box-trash").hide();
 				if(box_deleted)
 					return;
 				
-				new_container_id = ui.item.parents(".container").data("id");
-				new_slot_id = ui.item.parents(".slot").data("id");
+				new_container_id = ui.item.parents(".grid-container").data("id");
+				new_slot_id = ui.item.parents(".grid-slot").data("id");
 				new_box_index = ui.item.index();
 
 				GRID.log(["STOP BOX SORT", old_box_index, old_slot_id, old_container_id, new_box_index, new_slot_id, new_container_id]);

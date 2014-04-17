@@ -39,13 +39,13 @@ var GridToolContainersView = GridBackbone.View.extend({
     getRenderedContainerList: function(json){
         return ich.tpl_toolContainersContainer(json);
     },
-    getContainers: function(scope){
-        var scope_val = "C-";
-        if(scope == "sidebar"){ scope_val = "S-"; }
+    getContainers: function(type){
+        var scope_type = "c";
+        if(type == "sidebar"){ scope_type = "s"; }
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
             value.slots = [];
-            if( value.type.indexOf(scope_val) != 0 ){
+            if( value.type  != scope_type ){
                 delete containers.containers[key];
             } else {
                 for( var i = 0 ;i < value.numslots; i++){

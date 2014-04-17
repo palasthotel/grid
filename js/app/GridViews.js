@@ -38,7 +38,7 @@ var ContainersView = GridBackbone.View.extend({
 });
 
 var ContainerView = GridBackbone.View.extend({
-	className: 'grid-container container display',
+	className: 'grid-container',
     events:{
         "click [role=trash]": "selfdestruct",
         "click [role=edit]": "onEdit",
@@ -54,11 +54,19 @@ var ContainerView = GridBackbone.View.extend({
         this._slotsView = new SlotsView({collection: this.model.getSlots() });
 	},
 	render: function(){
-        this.$el.addClass('display').removeClass('editor');
-        this.refreshAttr();
         var json = this.model.toJSON();
-        var cut = 60;
 
+        this.$el
+            .attr("data-id", json.id)
+            .attr("data-type", json.type)
+            .attr("data-style", json.style)
+            .attr("data-reused", json.reused)
+            .attr("data-cid", this.model.cid)
+            .attr("data-dimension",json.dimension);
+        this.$el.addClass('grid-container-type-'+json.type);
+
+        // shorten title, prolog and epilog
+        var cut = 60;
         if(json.title){
             json.title_short = ( json.title.length <= cut ? json.title : json.title.substring(0,cut)+"&hellip;" );
         }
@@ -70,6 +78,8 @@ var ContainerView = GridBackbone.View.extend({
             var epilog = jQuery(json.epilog).text();
             json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
         }
+
+
         json.isSidebarGrid = GRID.IS_SIDEBAR;
         this.$el.empty();
     	this.$el.append(ich.tpl_container( json));
@@ -83,16 +93,6 @@ var ContainerView = GridBackbone.View.extend({
         GRID.showEditor(function(){
             GRID.$root_editor.html(editor.render().el);
         });
-    },
-    refreshAttr: function(){
-        var json = this.model.toJSON();
-        this.$el
-            .attr("data-id", json.id)
-            .attr("data-type", json.type)
-            .attr("data-style", json.style)
-            .attr("data-reused", json.reused)
-            .attr("data-cid", this.model.cid)
-            .addClass(json.type+" display");
     },
     saveEditor: function(){
         var self = this;
@@ -153,7 +153,7 @@ var SlotsView = GridBackbone.View.extend({
 
 var SlotView = GridBackbone.View.extend({
     tagName: 'div',
-    className: 'grid-slot slot',
+    className: 'grid-slot',
 	initialize: function(){
         this._boxesView = new BoxesView({collection: this.model.getBoxes() });
         if(GRID.mode != "box"){
@@ -163,7 +163,9 @@ var SlotView = GridBackbone.View.extend({
 	},
 	render: function(){
         var json = this.model.toJSON();
-        this.$el.attr("data-style", json.style).attr("data-id",json.id);
+        this.$el.attr("data-style", json.style)
+                .attr("data-id",json.id)
+                .attr("data-dimension",json.dimension);
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
         if(GRID.mode != "box"){
             this.$el.find(".style-changer").replaceWith(this._slotStyleChangerView.render().el);
@@ -205,7 +207,8 @@ var BoxView = GridBackbone.View.extend({
 	},
 	render: function(){
         var json = this.model.toJSON();
-        this.$el.attr("data-id",json.id).attr("data-type",json.type);
+        this.$el.attr("data-id",json.id)
+                .attr("data-type",json.type);
         if(json.type == "reference"){
             json.reference = true;
         }
