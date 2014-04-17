@@ -1,14 +1,14 @@
 
-    {{#containers}}
-    <div class="grid-new-element container-dragger new-container grid-clearfix grid-container-type-{{type}} grid-container-{{dimension}} ui-draggable" data-type="{{type}}" data-dimension="{{dimension}}" data-reusable="{{reused}}" data-id="{{id}}">
-    	<i class="icon-drag grid-element-drag-icon"></i>
-        {{#reused}}<p class="grid-element-title grid-reusabe-container-title">{{reusetitle}}</p>{{/reused}}
-        {{^reused}}
-        <div class="grid-new-container-slots">
-            {{#slots}}
-                <div class="grid-slot grid-slot-{{dimension}}"></div>
-            {{/slots}}
-        </div>
-        {{/reused}}
+{{#containers}}
+<div class="grid-new-element container-dragger new-container grid-clearfix grid-container-type-{{type}} grid-container-{{dimension}} ui-draggable" data-type="{{type}}" data-dimension="{{dimension}}" data-reusable="{{reused}}" data-id="{{id}}">
+	<i class="icon-drag grid-element-drag-icon"></i>
+    {{#reused}}<p class="grid-element-title grid-reusabe-container-title">{{reusetitle}}</p>{{/reused}}
+    {{^reused}}
+    <div class="grid-new-container-slots">
+        {{#slots}}
+            <div class="grid-slot grid-slot-{{dimension}}"></div>
+        {{/slots}}
     </div>
-    {{/containers}}
+    {{/reused}}
+</div>
+{{/containers}}

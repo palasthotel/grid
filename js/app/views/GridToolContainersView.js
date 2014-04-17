@@ -62,7 +62,7 @@ var GridToolContainersView = GridBackbone.View.extend({
         return { containers: GRID.getReusableContainers().toJSON() };
     },
     initializesDraggable: function(){
-        this.$el.find(".container-dragger").draggable({ 
+        this.$el.find(".grid-new-container").draggable({ 
             helper: function(event, element){
                 return jQuery("<div class='dragger-helper'></div>");
             },
