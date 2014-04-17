@@ -143,6 +143,18 @@ class grid_update
 		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6', space_to_left='1d3' ".
 					" WHERE type = 'C-0-2-2-2-2' OR type = 'C-0-3-3-3-3';");
 
+		// c-0-4-0 c-0-6-0
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3', space_to_left='1d3', space_to_right='1d3' ".
+					" WHERE type = 'C-0-4-0' OR type = 'C-0-6-0';");
+
+		// c-2-2-4-0 c-3-3-6-0
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-2d6', space_to_right='1d3' ".
+					" WHERE type = 'C-2-2-4-0' OR type = 'C-3-3-6-0';");
+
+		// c-4-2-2-0 c-6-3-3-0
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d6-1d6-1d6', space_to_right='1d3' ".
+					" WHERE type = 'C-4-2-2-0' OR type = 'C-6-3-3-0';");
+
 		// s-4-0 s-0-4 && s-6-0 s-0-6
 		db_query("UPDATE {grid_container_type} SET type='s', dimension='1d3', space_to_left='2d3' ".
 					" WHERE type = 'S-0-4' OR type = 'S-0-6';");
@@ -150,8 +162,7 @@ class grid_update
 					" WHERE type = 'S-4-0' OR type = 'S-6-0';");
 
 		// I-0
-		db_query("insert into {grid_container_type} (type, numslots) values ('i','0', 0);");
-		db_query("UPDATE {grid_container_type} SET type='i', dimension='0' ".
+		db_query("UPDATE {grid_container_type} SET type='i' ".
 					" WHERE type = 'I-0';");
 
 	}
