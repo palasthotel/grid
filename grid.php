@@ -596,6 +596,24 @@ class grid_library
 						'size'=>'normal',
 						'length'=>255,
 					),
+					'dimension'=>array(
+						'description'=>t('slot dimension code'),
+						'type'=>'varchar',
+						'size'=>'normal',
+						'length'=>255,
+					),
+					'space_to_right'=>array(
+						'description'=>t('space to right'),
+						'type'=>'varchar',
+						'size'=>'normal',
+						'length'=>255,
+					),
+					'space_to_left'=>array(
+						'description'=>t('space to left'),
+						'type'=>'varchar',
+						'size'=>'normal',
+						'length'=>255,
+					),
 					'numslots'=>array(
 						'description'=>t('number of slots this container has'),
 						'type'=>'int',
@@ -663,22 +681,23 @@ class grid_library
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
 		
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-12',1)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4',3)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-8-4',2)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-4-8',2)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-2-2-2-2',6)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-3-3-3-3',4)");
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6',2)");
-		db_query("insert into {grid_container_type} (type,numslots) values ('SC-4',1)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-4',2)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-0',2)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-0-8',1)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-8-0',1)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-0',1)");
-		db_query("insert into {grid_container_type} (type,numslots) values ('S-4-0',1)"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('S-0-4',1)");
-		db_query("insert into {grid_container_type} (type,numslots) values ('I-0',0)");
+		// TODO: new container types
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-12',1)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4',3)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-8-4',2)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-8',2)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-2-2-2-2',6)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-3-3-3-3',4)");
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6',2)");
+		// db_query("insert into {grid_container_type} (type,numslots) values ('SC-4',1)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-4',2)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-0',2)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-0-8',1)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-8-0',1)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-0',1)");
+		// db_query("insert into {grid_container_type} (type,numslots) values ('S-4-0',1)"); 
+		// db_query("insert into {grid_container_type} (type,numslots) values ('S-0-4',1)");
+		// db_query("insert into {grid_container_type} (type,numslots) values ('I-0',0)");
 		db_query("insert into {grid_schema} (propkey) values ('schema_version')");
 		$this->getUpdater()->markAsUpdated();
 	}

@@ -79,51 +79,80 @@ class grid_update
 		db_query("ALTER TABLE {grid_container_type} ADD space_to_right varchar(255) DEFAULT NULL AFTER `dimension`;");
 		db_query("ALTER TABLE {grid_container_type} ADD space_to_left varchar(255) DEFAULT NULL AFTER `dimension`;");
 
-		$result = db_query("SELECT * FROM {grid_container_type};");
+		// $result = db_query("SELECT * FROM {grid_container_type};");
 
-		foreach ($result as $record) {
-			$type = split("-", $recored->type);
-			for($i = 1; $i < count($type); $i++){
-				
-			}
-		}
+		// foreach ($result as $record) {
+		// 	$id = $record->id;
+		// 	$type = split("-", $recored->type);
+		// 	$overall = 0;
+		// 	$new_type = strtolower($type[0]);
+		// 	for($i = 1; $i < count($type); $i++){
+		// 		if($type==0){
+
+		// 		}
+		// 		$overall+= $type[$i];
+		// 	}
+		// 	db_query("UPDATE {grid_container_type} SET type='$new_type', dimension='$dimension' WHERE id = '$id';")
+		// }
 
 		// c-12 c-18
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d1',1);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d1' WHERE type = 'C-12' OR type = 'C-18';");
 
 		// c-4-4-4 c-6-6-6
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d3-1d3-1d3',3);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-1d3-1d3' ".
+					" WHERE type = 'C-4-4-4' OR type = 'C-6-6-6';");
 
 		// c-8-4 c-4-8 c-6-12 c-12-6
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d3-2d3',2);");
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','2d3-1d3',2);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d3-1d3' ".
+					" WHERE type = 'C-8-4' OR type = 'C-12-6';");
+
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-2d3' ".
+					" WHERE type = 'C-4-8' OR type = 'C-6-12';");
 
 		// c-2-2-2-2-2-2 c-3-3-3-3-3-3
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d6-1d6-1d6-1d6-1d6-1d6',6);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6-1d6-1d6' ".
+					" WHERE type = 'C-2-2-2-2-2-2' OR type = 'C-3-3-3-3-3-3';");
 
 		//c-3-3-3-3
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d4-1d4-1d4-1d4',4);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d4-1d4-1d4-1d4' ".
+					" WHERE type = 'C-3-3-3-3';");
 
 		// c-6-6 c-8-8
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d2-1d2',2);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d2-1d2' ".
+					" WHERE type = 'C-6-6' OR type = 'C-8-8';");
 
 		// sc-4 sc-6
-		db_query("insert into {grid_container_type} (type, dimension, numslots) values ('c','1d1',1);");
+		db_query("UPDATE {grid_container_type} SET type='sc', dimension='1d1' ".
+					" WHERE type = 'SC-4' OR type = 'SC-6';");
 
 		// c-0-4-4 c-0-6-6 && c-4-4-0 c-6-6-0
-		db_query("insert into {grid_container_type} (type, dimension, space_to_left, numslots) values ('c','1d3-1d3', '1d3',2);");
-		db_query("insert into {grid_container_type} (type, dimension, space_to_right, numslots) values ('c','1d3-1d3', '1d3',2);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-1d3', space_to_left='1d3' ".
+					" WHERE type = 'C-0-4-4' OR type = 'C-0-6-6';");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-1d3', space_to_right='1d3' ".
+					" WHERE type = 'C-4-4-0' OR type = 'C-6-6-0';");
 
 		// c-0-8 c-0-12 && c-8-0 c-12-0
-		db_query("insert into {grid_container_type} (type, dimension, space_to_left, numslots) values ('c','2d3', '1d3',1);");
-		db_query("insert into {grid_container_type} (type, dimension, space_to_right, numslots) values ('c','2d3', '1d3',1);");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d3', space_to_right='1d3' ".
+					" WHERE type = 'C-8-0' OR type = 'C-12-0';");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d3', space_to_left='1d3' ".
+					" WHERE type = 'C-0-8' OR type = 'C-0-12';");
+
+		// c-2-2-2-2-0 c-3-3-3-3-0 and revers
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6', space_to_right='1d3' ".
+					" WHERE type = 'C-2-2-2-2-0' OR type = 'C-3-3-3-3-0';");
+		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6', space_to_left='1d3' ".
+					" WHERE type = 'C-0-2-2-2-2' OR type = 'C-0-3-3-3-3';");
 
 		// s-4-0 s-0-4 && s-6-0 s-0-6
-		db_query("insert into {grid_container_type} (type, dimension, space_to_left, numslots) values ('s','1d3', '2d3',1);");
-		db_query("insert into {grid_container_type} (type, dimension, space_to_right, numslots) values ('s','1d3', '2d3',1);");
+		db_query("UPDATE {grid_container_type} SET type='s', dimension='1d3', space_to_left='2d3' ".
+					" WHERE type = 'S-0-4' OR type = 'S-0-6';");
+		db_query("UPDATE {grid_container_type} SET type='s', dimension='1d3', space_to_right='2d3' ".
+					" WHERE type = 'S-4-0' OR type = 'S-6-0';");
 
 		// I-0
 		db_query("insert into {grid_container_type} (type, numslots) values ('i','0', 0);");
+		db_query("UPDATE {grid_container_type} SET type='i', dimension='0' ".
+					" WHERE type = 'I-0';");
 
 	}
 
