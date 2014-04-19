@@ -11,6 +11,9 @@ var ContainerType = GridBackbone.Model.extend({
         });
         return dimension.substring(1);
     },
+    getType: function(){
+        return this.get("type").split("-")[0];
+    },
 });
 var BoxType = GridBackbone.Model.extend({
     defaults:{

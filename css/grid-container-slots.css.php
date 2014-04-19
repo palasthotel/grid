@@ -1,5 +1,15 @@
 <?php 
 header('Content-Type: text/css'); 
+?>
+.grid-slots-wrapper{
+	display: table;
+	box-sizing: border-box;
+}
+.grid-slot{
+	box-sizing:border-box;
+	display: table-cell;
+}
+<?php
 
 $result = db_query("SELECT * FROM {grid_container_type}");
 foreach ($result as $key => $type) {
