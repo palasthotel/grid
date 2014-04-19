@@ -21,7 +21,6 @@
 @import "2_Module/_grid-container.scss";
 @import "2_Module/_grid-container-sidebar.scss";
 @import "2_Module/_grid-editor.scss";
-@import "2_Module/_grid-editor-url-builder.scss";
 @import "2_Module/_grid-element-drag-icon.scss";
 @import "2_Module/_grid-element-trash.scss";
 @import "2_Module/_grid-element-type-content.scss";
@@ -41,6 +40,8 @@
 /**
 **/
 
+
+@import "3_Editor-Widget/grid-editor-url-builder";
 @import "3_Editor-Widget/grid-editor-widget-textarea";
 @import "3_Editor-Widget/grid-editor-widget-list";
 @import "3_Editor-Widget/grid-editor-widget-listitem";

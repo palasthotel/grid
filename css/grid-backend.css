@@ -661,33 +661,6 @@ h3 {
       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
       zoom: 1; }
 
-.grid-editor-url-builder {
-  position: relative;
-  width: 130px;
-  -webkit-transition: all 0.1337s ease;
-  transition: all 0.1337s ease;
-  font-size: 11px; }
-  .grid-editor-url-builder .grid-editor-url-input {
-    width: 100%;
-    padding-right: 130px;
-    opacity: 0; }
-  .grid-editor-url-builder .grid-editor-url-button,
-  .grid-editor-url-builder .grid-editor-url-button:focus {
-    position: absolute;
-    right: 0px;
-    top: -2px;
-    width: 130px;
-    color: #262e38;
-    background-color: #e5e3df; }
-  .grid-editor-url-builder.grid-editor-url-show {
-    width: 100%; }
-    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button {
-      background-color: transparent; }
-      .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
-        color: #ed5032; }
-    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input {
-      opacity: 1; }
-
 .grid-element-drag-icon {
   position: absolute;
   top: 4px;
@@ -1308,6 +1281,33 @@ h3 {
 
 /**
 **/
+.grid-editor-url-builder {
+  position: relative;
+  width: 140px;
+  -webkit-transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
+  font-size: 11px; }
+  .grid-editor-url-builder .grid-editor-url-input {
+    width: 100%;
+    padding-right: 130px;
+    opacity: 0; }
+  .grid-editor-url-builder .grid-editor-url-button,
+  .grid-editor-url-builder .grid-editor-url-button:focus {
+    position: absolute;
+    right: 0px;
+    top: -2px;
+    width: 140px;
+    color: #262e38;
+    background-color: #e5e3df; }
+  .grid-editor-url-builder.grid-editor-url-show {
+    width: 100%; }
+    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button {
+      background-color: transparent; }
+      .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
+        color: #ed5032; }
+    .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input {
+      opacity: 1; }
+
 .grid-editor-widget-textarea textarea {
   width: 100%;
   min-height: 200px; }

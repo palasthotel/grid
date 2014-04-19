@@ -1,6 +1,6 @@
 .grid-editor-url-builder {
 	position: relative;
-	width: 130px;
+	width: 140px;
 	@include transition();
 
 
@@ -17,7 +17,7 @@
 		position: absolute;
 		right: 0px;
 		top: -2px;
-		width: 130px;
+		width: 140px;
 		color: $color-editor-reuse;
 		background-color: $color-editor-reuse-bg;
 	}
