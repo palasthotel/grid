@@ -40,16 +40,17 @@ var GridToolContainersView = GridBackbone.View.extend({
         return ich.tpl_toolContainersContainer(json);
     },
     getContainers: function(type){
-        var scope_type = "c";
-        if(type == "sidebar"){ scope_type = "s"; }
+        var scope_type = "c-";
+        if(type == "sidebar"){ scope_type = "s-"; }
+        var collection = this.collection;
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
 
-            if( value.type  != scope_type ){
+            if( value.type.indexOf(scope_type) != 0 ){
                 delete containers.containers[key];
             } else {
                 value.slots = [];
-                var slots_dimension = value.dimension.split("-");
+                var slots_dimension = collection.at(key).getDimension().split("-");
                 var i=0;
                 for( var i = 0 ;i < value.numslots; i++){
                     value.slots.push({dimension: slots_dimension[i]});
@@ -62,7 +63,7 @@ var GridToolContainersView = GridBackbone.View.extend({
         return { containers: GRID.getReusableContainers().toJSON() };
     },
     initializesDraggable: function(){
-        this.$el.find(".grid-new-container").draggable({ 
+        this.$el.find(".grid-new-element").draggable({ 
             helper: function(event, element){
                 return jQuery("<div class='dragger-helper'></div>");
             },
@@ -87,7 +88,7 @@ var GridToolContainersView = GridBackbone.View.extend({
                 $containers.after( $dropArea.clone() );
                 $grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
                 $grid.find(".container-drop-area").droppable({ 
-                    accept: ".new-container",
+                    accept: ".grid-new-element",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
                         

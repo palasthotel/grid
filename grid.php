@@ -107,6 +107,18 @@ class grid_library
 		}
 		return $return;
 	}
+	// renderes css for avaiable container slots
+	public function getContainerSlotCSS(){
+		ob_start();
+		require "css/grid-container-slots.css.php";
+		$return = ob_get_contents();
+		ob_end_clean();
+		return $return;
+	}
+	private function calculateSpace($space){
+		$calc = explode("d", $space);
+		return ($calc[0]/$calc[1])*100;
+	}
 	
 	//renders the CKEditor configuration
 	public function getCKEditorConfig($styles,$formats)
@@ -591,13 +603,7 @@ class grid_library
 						'unsigned'=>true,
 					),
 					'type'=>array(
-						'description'=>t('type name'),
-						'type'=>'varchar',
-						'size'=>'normal',
-						'length'=>255,
-					),
-					'dimension'=>array(
-						'description'=>t('slot dimension code'),
+						'description'=>t('type of container'),
 						'type'=>'varchar',
 						'size'=>'normal',
 						'length'=>255,

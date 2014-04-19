@@ -1,7 +1,17 @@
 // ----------------------
 // type models
 // ---------------------
-var ContainerType = GridBackbone.Model.extend({});
+var ContainerType = GridBackbone.Model.extend({
+    getDimension:function(){
+        var dimension = "";
+        var i = 0;
+        _.each( this.get("type").split("-"), function(value, key, list){
+            if(value == 0 || i++ == 0) return;
+            dimension+= "-"+value;
+        });
+        return dimension.substring(1);
+    },
+});
 var BoxType = GridBackbone.Model.extend({
     defaults:{
         type: null,
@@ -97,7 +107,7 @@ var Grid = GridBackbone.Model.extend({
                 self.addContainer(container, index);
             },
             error: function(container, response, options){
-                GRID.log("CreateContainerrror::");
+                GRID.log("CreateContainerror::");
                 GRID.log([container, response, options]);
             }
         });
@@ -144,7 +154,7 @@ var Grid = GridBackbone.Model.extend({
 //---------------------
 // element models
 // -------------------
-var Container = GridBackbone.Model.extend({
+var Container =  ContainerType.extend({
     getGrid: function(){
         return this.get("parent");
     },
@@ -161,7 +171,7 @@ var Container = GridBackbone.Model.extend({
     setSlots: function(slots_array){
         this.getSlots().reset();
         var self = this;
-        var slots_dimension = this.get("dimension").split("-");
+        var slots_dimension = this.getDimension().split("-");
         var i=0;
         _.each(slots_array, function(slot) {
             slot.dimension = slots_dimension[i++];

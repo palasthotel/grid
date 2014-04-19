@@ -266,6 +266,8 @@ var GridRequest = {
 						container.set("id", data.result.id);
 						container.set("slots", data.result.slots);
 						container.set("style",data.result.style);
+						container.set("space_to_right",data.result.space_to_right);
+						container.set("space_to_left",data.result.space_to_left);
 						container.setSlots(data.result.slots);
 						options.success();
 					}

@@ -117,7 +117,9 @@ class grid_ajaxendpoint {
 		$result=array(
 			'id'=>$container->containerid,
 			'style'=>$container->style,
-			'slots'=>array()
+			'slots'=>array(),
+			'space_to_right'=>$container->space_to_right,
+			'space_to_left' => $container->space_to_left,
 		);
 		foreach($container->slots as $slot)
 		{

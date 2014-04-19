@@ -27,6 +27,8 @@ class grid_container extends grid_base {
 		
 	public function render($editmode)
 	{
+		$this->classes[] = "grid-container";
+		$this->classes[] = "grid-container-".$this->type;
 		switch (count($this->slots)) 
 		{
 			case 0:
@@ -39,13 +41,18 @@ class grid_container extends grid_base {
 				$this->classes[] = "grid-container-has-multiple-slots";
 				break;
 		}
-		
-		if( $this->type == "s" && $editmode==FALSE)
+		// prepare slot dimensions
+		$type_arr = explode("-", $this->type);
+		$counter = 0;
+		$slots_dimension = array_slice($type_arr,1);
+		if($slots_dimension[$counter] == "0") $counter++;
+
+		if( $type_arr[0] == "s" && $editmode==FALSE)
 		{
 			$slot=$this->slots[0];
+			$slot->dimension = $slots_dimension[$counter++];
 			array_push( $slot->classes, 
 							"grid-slot-sidebar", 
-							"grid-slot-".$this->dimension, 
 							"grid-slot-first", 
 							"grid-slot-last", 
 							"grid-slot-has-one-box");
@@ -59,8 +66,7 @@ class grid_container extends grid_base {
 			} else if($this->space_to_left){
 				$this->sidebarright = true;
 			}
-			$counter = 0;
-			$slots_dimension = explode("-", $this->dimension);
+			
 			foreach($this->slots as $slot)
 			{
 				$slot->dimension = $slots_dimension[$counter++];			  

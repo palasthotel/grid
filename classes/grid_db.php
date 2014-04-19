@@ -429,7 +429,6 @@ grid_container.readmore as container_readmore,
 grid_container.readmore_url as container_readmoreurl,
 grid_container.reuse_containerid as container_reuseid,
 grid_container_type.type as container_type,
-grid_container_type.dimension as container_dimension,
 grid_container_type.space_to_right as container_space_to_right,
 grid_container_type.space_to_left as container_space_to_left,
 grid_container2slot.slot_id as slot_id,
@@ -509,7 +508,6 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 					$currentcontainer->containerid=$row['container_id'];
 					$currentcontainer->style=$row['container_style'];
 					$currentcontainer->type=$row['container_type'];
-					$currentcontainer->dimension=$row['container_dimension'];
 					$currentcontainer->space_to_left=$row['container_space_to_left'];
 					$currentcontainer->space_to_right=$row['container_space_to_right'];
 					$currentcontainer->title=$row['container_title'];
@@ -647,10 +645,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function createContainer($grid,$containertype)
 	{
-		$query="select id,type,numslots from ".$this->prefix."grid_container_type where type=\"$containertype\"";
+		$query="select id,type,space_to_left,space_to_right,numslots from ".$this->prefix."grid_container_type where type=\"$containertype\"";
 		$result=$this->connection->query($query) or die($this->connection->error);
 		$row=$result->fetch_assoc();
 		$type=$row['id'];
+		$type_space_to_left = $row['space_to_left'];
+		$type_space_to_right = $row['space_to_right'];
 		$gridid=$grid->gridid;
 		$gridrevision=$grid->gridrevision;
 		//how to fetch the ID? well, how about max+1? know nothing better. but... that might generate sync problems.
@@ -669,6 +669,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$container->type=$containertype;
 		$container->style=$this->containerstyle;
 		$container->slots=array();
+		$container->space_to_left = $type_space_to_left;
+		$container->space_to_right = $type_space_to_right;
 		$numslots=$row['numslots'];
 		for($i=1;$i<=$numslots;$i++)
 		{
@@ -947,14 +949,13 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function fetchContainerTypes()
 	{
-		$query="select type,dimension,space_to_right,space_to_left,numslots from ".$this->prefix."grid_container_type";
+		$query="select type,space_to_right,space_to_left,numslots from ".$this->prefix."grid_container_type";
 		$result=$this->connection->query($query) or die($this->connection->error);
 		$return=array();
 		while($row=$result->fetch_assoc())
 		{
 			$return[]=array(
 				'type'=>$row['type'],
-				'dimension'=>$row['dimension'],
 				'space_to_left'=>$row['space_to_left'],
 				'space_to_right'=>$row['space_to_right'],
 				'numslots'=>$row['numslots']);

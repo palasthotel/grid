@@ -75,9 +75,8 @@ class grid_update
 	}
 
 	public function update_2(){
-		db_query("ALTER TABLE {grid_container_type} ADD dimension varchar(255) DEFAULT NULL AFTER `type`;");
-		db_query("ALTER TABLE {grid_container_type} ADD space_to_right varchar(255) DEFAULT NULL AFTER `dimension`;");
-		db_query("ALTER TABLE {grid_container_type} ADD space_to_left varchar(255) DEFAULT NULL AFTER `dimension`;");
+		db_query("ALTER TABLE {grid_container_type} ADD space_to_right varchar(255) DEFAULT NULL AFTER `type`;");
+		db_query("ALTER TABLE {grid_container_type} ADD space_to_left varchar(255) DEFAULT NULL AFTER `type`;");
 
 		// $result = db_query("SELECT * FROM {grid_container_type};");
 
@@ -96,73 +95,73 @@ class grid_update
 		// }
 
 		// c-12 c-18
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d1' WHERE type = 'C-12' OR type = 'C-18';");
+		db_query("UPDATE {grid_container_type} SET type='c-1d1' WHERE type = 'C-12' OR type = 'C-18';");
 
 		// c-4-4-4 c-6-6-6
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-1d3-1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d3-1d3-1d3' ".
 					" WHERE type = 'C-4-4-4' OR type = 'C-6-6-6';");
 
 		// c-8-4 c-4-8 c-6-12 c-12-6
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d3-1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-2d3-1d3' ".
 					" WHERE type = 'C-8-4' OR type = 'C-12-6';");
 
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-2d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d3-2d3' ".
 					" WHERE type = 'C-4-8' OR type = 'C-6-12';");
 
 		// c-2-2-2-2-2-2 c-3-3-3-3-3-3
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6-1d6-1d6' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d6-1d6-1d6-1d6-1d6-1d6' ".
 					" WHERE type = 'C-2-2-2-2-2-2' OR type = 'C-3-3-3-3-3-3';");
 
 		//c-3-3-3-3
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d4-1d4-1d4-1d4' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d4-1d4-1d4-1d4' ".
 					" WHERE type = 'C-3-3-3-3';");
 
 		// c-6-6 c-8-8
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d2-1d2' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d2-1d2' ".
 					" WHERE type = 'C-6-6' OR type = 'C-8-8';");
 
 		// sc-4 sc-6
-		db_query("UPDATE {grid_container_type} SET type='sc', dimension='1d1' ".
+		db_query("UPDATE {grid_container_type} SET type='sc-1d3' ".
 					" WHERE type = 'SC-4' OR type = 'SC-6';");
 
 		// c-0-4-4 c-0-6-6 && c-4-4-0 c-6-6-0
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-1d3', space_to_left='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-0-1d3-1d3', space_to_left='1d3' ".
 					" WHERE type = 'C-0-4-4' OR type = 'C-0-6-6';");
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3-1d3', space_to_right='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d3-1d3-0', space_to_right='1d3' ".
 					" WHERE type = 'C-4-4-0' OR type = 'C-6-6-0';");
 
 		// c-0-8 c-0-12 && c-8-0 c-12-0
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d3', space_to_right='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-2d3-0', space_to_right='1d3' ".
 					" WHERE type = 'C-8-0' OR type = 'C-12-0';");
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d3', space_to_left='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-0-2d3', space_to_left='1d3' ".
 					" WHERE type = 'C-0-8' OR type = 'C-0-12';");
 
 		// c-2-2-2-2-0 c-3-3-3-3-0 and revers
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6', space_to_right='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d6-1d6-1d6-1d6-0', space_to_right='1d3' ".
 					" WHERE type = 'C-2-2-2-2-0' OR type = 'C-3-3-3-3-0';");
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-1d6-1d6', space_to_left='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-0-1d6-1d6-1d6-1d6', space_to_left='1d3' ".
 					" WHERE type = 'C-0-2-2-2-2' OR type = 'C-0-3-3-3-3';");
 
 		// c-0-4-0 c-0-6-0
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d3', space_to_left='1d3', space_to_right='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-0-1d3-0', space_to_left='1d3', space_to_right='1d3' ".
 					" WHERE type = 'C-0-4-0' OR type = 'C-0-6-0';");
 
 		// c-2-2-4-0 c-3-3-6-0
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='1d6-1d6-2d6', space_to_right='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-1d6-1d6-2d6-0', space_to_right='1d3' ".
 					" WHERE type = 'C-2-2-4-0' OR type = 'C-3-3-6-0';");
 
 		// c-4-2-2-0 c-6-3-3-0
-		db_query("UPDATE {grid_container_type} SET type='c', dimension='2d6-1d6-1d6', space_to_right='1d3' ".
+		db_query("UPDATE {grid_container_type} SET type='c-2d6-1d6-1d6-0', space_to_right='1d3' ".
 					" WHERE type = 'C-4-2-2-0' OR type = 'C-6-3-3-0';");
 
 		// s-4-0 s-0-4 && s-6-0 s-0-6
-		db_query("UPDATE {grid_container_type} SET type='s', dimension='1d3', space_to_left='2d3' ".
+		db_query("UPDATE {grid_container_type} SET type='s-0-1d3', space_to_left='2d3' ".
 					" WHERE type = 'S-0-4' OR type = 'S-0-6';");
-		db_query("UPDATE {grid_container_type} SET type='s', dimension='1d3', space_to_right='2d3' ".
+		db_query("UPDATE {grid_container_type} SET type='s-1d3-0', space_to_right='2d3' ".
 					" WHERE type = 'S-4-0' OR type = 'S-6-0';");
 
 		// I-0
-		db_query("UPDATE {grid_container_type} SET type='i' ".
+		db_query("UPDATE {grid_container_type} SET type='i-0' ".
 					" WHERE type = 'I-0';");
 
 	}

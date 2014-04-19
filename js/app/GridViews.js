@@ -61,10 +61,10 @@ var ContainerView = GridBackbone.View.extend({
             .attr("data-type", json.type)
             .attr("data-style", json.style)
             .attr("data-reused", json.reused)
-            .attr("data-cid", this.model.cid)
-            .attr("data-dimension",json.dimension);
-        this.$el.addClass('grid-container-type-'+json.type);
-
+            .attr("data-cid", this.model.cid);
+        this.$el.addClass('grid-container-'+json.type);
+        this.$el.addClass('grid-container-left-space-'+json.space_to_left);
+        this.$el.addClass('grid-container-right-space-'+json.space_to_right);
         // shorten title, prolog and epilog
         var cut = 60;
         if(json.title){

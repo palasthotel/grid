@@ -6,14 +6,9 @@ if ($this->firstcontentcontainer):
 <div class="grid-content-container-wrapper <?= $class ?> grid-first-content-container">
 <?php endif; ?>
 */
-$class_prefix="grid-container";
-$container_classes = $class_prefix;
-$container_classes.= " ".$class_prefix."-type-".$this->type;
-$container_classes.= " ".$class_prefix."-".$this->dimension;
-$container_classes.= " ".implode($this->classes," ");
 ?>
 
-<div class="<?php echo $container_classes; ?>">
+<div class="<?php echo implode($this->classes," "); ?>">
 	<div class="grid-container-content">
 	<div class="grid-container-before">
 		<?
