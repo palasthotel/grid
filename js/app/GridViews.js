@@ -61,7 +61,9 @@ var ContainerView = GridBackbone.View.extend({
             .attr("data-type", json.type)
             .attr("data-style", json.style)
             .attr("data-reused", json.reused)
-            .attr("data-cid", this.model.cid);
+            .attr("data-cid", this.model.cid)
+            .attr("data-space-left", this.model.getSpace("left"))
+            .attr("data-space-right", this.model.getSpace("right"));
         this.$el.addClass('grid-container-type-'+this.model.getType());
         this.$el.addClass('grid-container-'+json.type);
         this.$el.addClass('grid-container-left-space-'+json.space_to_left);

@@ -184,22 +184,19 @@ GRID = {
 	// calculates Sidebar
 	onSidebarCalculation: function($root){
 		if(typeof $root == "undefined") $root = GRID.$root;
-		$root.find(".grid-containers-wrapper > .grid-container").css("padding-top", "0px");
-		$root.find(".grid-containers-wrapper > .grid-container[data-type*=S] .grid-slot")
-																.css("padding-bottom", "0px")
-																.css("bottom", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container-type-s")
+					.css("padding-top", "0px");
+		$root.find(".grid-containers-wrapper > .grid-container-type-s .grid-slot")
+					.css("padding-bottom", "0px")
+					.css("bottom", "0px");
 
-		// add new offsets
-		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container[class*=S-]'), function(index, sidebar) {
-			GRID.log(index);
+		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container-type-s'), function(index, sidebar) {
 			GRID.makeSidebarPuffer(jQuery(sidebar));
 		});
 	},
 	makeSidebarPuffer: function($sidebar){
-		var permissionsList = GRID.getSidebarWhitelist($sidebar.data("type"));
 		var $sidebar_slot = $sidebar.find('.grid-slot').first();
-		var c_height = GRID.calculateSidebarableContainerHeight($sidebar.prev(), permissionsList);
-		//var sidebar_margin_bottom = parseInt($sidebar.css("margin-bottom"));
+		var c_height = GRID.calculateSidebarableContainerHeight($sidebar);
 		$sidebar_slot.css("bottom", $sidebar.outerHeight()+"px");
 		if(c_height < $sidebar_slot.outerHeight(true)){
 			// if sidebar is taller than containers make puffer margin top
@@ -209,38 +206,35 @@ GRID = {
 		} else if(c_height > $sidebar_slot.outerHeight(true)){
 			// if sidebar is smaller than containers expend sidebar slot
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
-			//need_bottom_offset += sidebar_margin_bottom;
 			$sidebar_slot.css("padding-bottom",need_bottom_offset+"px");
 		}
 		
 	},	
-	calculateSidebarableContainerHeight: function($container, floatablePermissionList){
+	calculateSidebarableContainerHeight: function($sidebar){
 		var c_height = 0;
-		while( ($container.length > 0 && floatablePermissionList[$container.data('type')]) 
-				||  $container.hasClass('grid-container-sort-placeholder') ){
+		var container_side = null;
+		var sidebar_space = 0;
+		if($sidebar.data("space-left") > 0){
+			container_side = "right";
+			sidebar_space = $sidebar.data("space-left");
+		} else if($sidebar.data("space-right")>0){
+			container_side = "left";
+			sidebar_space = $sidebar.data("space-right");
+		} else {
+			GRID.log(["sidebar with no space?", $sidebar]);
+			return c_height;
+		}
+		var $container = $sidebar.prev();
+		while( $container.length > 0 && 
+				(
+					Math.abs( 1-($container.data("space-"+container_side)+sidebar_space)) < 0.005 
+					||  $container.hasClass('grid-container-sort-placeholder') 
+				)
+			){
 			c_height += $container.outerHeight(true);
 			$container = $container.prev();
 		}
 		return c_height;
-	},
-	getSidebarWhitelist: function(sidebar_type){
-		switch(sidebar_type){
-			case "S-0-4":
-				return {"C-8-0":true,"C-4-4-0":true, "C-4-2-2-0": true, "C-2-2-4-0": true,
-						"S-4-0":true, "C-0-4-0":true,
-						"container-drop-area-wrapper": true};
-				break;
-			case "S-4-0":
-				return {"C-0-8":true,"C-0-4-4":true, 
-						"S-0-4":true, "C-0-4-0":true, 
-						"container-drop-area-wrapper": true};
-				break;
-			case "S-0-6":
-				return {"C-12-0":true, "C-4-4-4-0":true, "C-6-6-0":true, "C-3-3-3-3-0":true,
-				 		"container-drop-area-wrapper": true };
-				break;
-		}
-		return {};
 	},
 	// CKEDITOR functions
 	useCKEDITOR: function(selector){

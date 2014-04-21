@@ -167,7 +167,16 @@ var Container =  ContainerType.extend({
 	initialize: function(spec){
 		var self = this;
         this.setSlots(spec.slots);
+        this.set("left_space", this.getSpace("left"));
+        this.set("right_space", this.getSpace("right"));
 	},
+    getSpace: function(side){
+        if(typeof side == "undefined") var side = "left";
+        space = this.get("space_to_"+side);
+        if(space == "" || typeof space == "undefined" || space == null) return 0;
+        var space_arr =  space.split("d");
+        return (space_arr[0]/space_arr[1]);
+    },
     getIndex: function(){
         return this.get("parent").getContainers().indexOf(this);
     },

@@ -1,4 +1,4 @@
-.grid-wrapper .grid-container[data-type*=S-] {
+.grid-wrapper .grid-container-type-s {
 	// width: 100%;
 	// padding:0px;
 	// background-color: transparent;
@@ -12,7 +12,7 @@
 }
 
 // new file ? what name? tell me...
-.grid-wrapper .grid-container .grid-box .grid .SC-4{
+.grid-wrapper .grid-container-type-s .grid-box .grid .sc-4{
 	.grid-slot{
 		position: relative;
 		top: auto;
@@ -22,7 +22,7 @@
 	}
 }
 
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-]{
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s{
 	
 	.grid-slot{
 		position: absolute;
@@ -34,7 +34,7 @@
 		padding-left: 4px;
 		box-sizing: border-box;
 	}
-	&[data-type*=S-0] .grid-slot{
+	&[data-type*=s-0] .grid-slot{
 		// sidebar to right
 		left: auto;
 		right: 0px;

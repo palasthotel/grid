@@ -503,14 +503,14 @@ h3 {
   .grid-container-epilog p {
     font-size: 11px; }
 
-.grid-wrapper .grid-container .grid-box .grid .SC-4 .grid-slot {
+.grid-wrapper .grid-container-type-s .grid-box .grid .sc-4 .grid-slot {
   position: relative;
   top: auto;
   left: auto;
   width: auto;
   float: none; }
 
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid-slot {
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid-slot {
   position: absolute;
   width: 32%;
   bottom: 0px;
@@ -521,13 +521,13 @@ h3 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-][data-type*=S-0] .grid-slot {
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s[data-type*=s-0] .grid-slot {
   left: auto;
   right: 0px; }
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-container,
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-slot,
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-box,
-.grid-wrapper .grid-containers-wrapper .grid-container[data-type*=S-] .grid .grid-container-content {
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-container,
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-slot,
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-box,
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-container-content {
   padding: 0px;
   margin: 0px;
   border: none;
@@ -692,7 +692,7 @@ h3 {
 
 .grid-element-type-content {
   min-height: 100px;
-  padding: 15px 10px;
+  padding: 15px 20px 15px 10px;
   overflow-y: scroll;
   background-color: white; }
   .grid-element-type-content .grid-element-container-list,
@@ -759,8 +759,6 @@ h3 {
       left: 47%; }
 
 .grid-new-container-slots {
-  margin: 0 0 0 20px;
-  width: 210px;
   display: table;
   padding: 3px 0;
   border: 1px solid rgba(176, 186, 194, 0.7); }
@@ -772,9 +770,9 @@ h3 {
   cursor: move;
   position: relative;
   height: 40px;
+  padding-left: 20px;
   margin-bottom: 8px;
-  color: #eceff3;
-  overflow: hidden; }
+  color: #eceff3; }
   .grid-new-element .grid-element-title {
     color: #1e1e1e;
     padding-left: 20px;
