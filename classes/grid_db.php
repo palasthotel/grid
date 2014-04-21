@@ -691,7 +691,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$slot->style=$this->slotstyle;
 			$container->slots[]=$slot;
 			$this->persistSlot($slot);
-			if(strpos($containertype, "S-")===0)
+			if(strpos($containertype, "s-")===0)
 			{
 				$box=new grid_sidebar_box();
 				$box->storage=$this;

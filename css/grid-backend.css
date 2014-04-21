@@ -532,7 +532,8 @@ h3 {
   margin: 0px;
   border: none;
   background-color: transparent;
-  width: auto; }
+  width: auto;
+  position: relative; }
 
 .grid-editor-controls {
   list-style: none;
