@@ -15,7 +15,7 @@ class grid_library
 	public function getFrontendCSS($absolute=FALSE)
 	{
 		$home=$this->getHome();
-		$path=$home."css/default-frontend.css";
+		$path=$home."css/grid-container-slots.css.php";
 		if($absolute)
 			return $path;
 		$path=substr($path, strlen($home));
