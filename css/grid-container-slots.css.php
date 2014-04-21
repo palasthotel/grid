@@ -18,12 +18,14 @@ foreach ($result as $key => $type) {
 	$dimensions = array_slice($type_arr, 1);
 	$dimension = implode("-",$dimensions);
 
-	if(!($container_type == "c")) continue;
+	if(!($container_type == "c" || $container_type == "s")) continue;
 
 	$space_to_right = ($type->space_to_right)? $this->calculateSpace($type->space_to_right) : 0;
 	$space_to_left = ($type->space_to_left)? $this->calculateSpace($type->space_to_left) : 0;
 	$container_dimension = (100-($space_to_left+$space_to_right));
 
+
+	if($container_type == "s") print ".grid-toolbar ";
 	?>
 	.grid-container-<?php echo $type->type;
 					echo ($space_to_left > 0)? ".grid-container-left-space-".$type->space_to_left: "";
