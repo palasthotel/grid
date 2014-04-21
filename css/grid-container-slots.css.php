@@ -23,8 +23,7 @@ foreach ($result as $key => $type) {
 	$space_to_right = ($type->space_to_right)? $this->calculateSpace($type->space_to_right) : 0;
 	$space_to_left = ($type->space_to_left)? $this->calculateSpace($type->space_to_left) : 0;
 	$container_dimension = (100-($space_to_left+$space_to_right));
-
-
+	
 	if($container_type == "s") print ".grid-toolbar ";
 	?>
 	.grid-container-<?php echo $type->type;
