@@ -65,6 +65,7 @@ class grid_library
 		$scripts[]=$app_dir."views/GridSlotStyleChangerView.js";
 		$scripts[]=$app_dir."GridModels.js";
 		$scripts[]=$app_dir."models/GridBoxBlueprint.js";
+		$scripts[]=$app_dir."models/GridRights.js";
 		$scripts[]=$app_dir."GridCollections.js";
 		$scripts[]=$app_dir."collections/GridBoxBlueprints.js";
 		$scripts[]=$app_dir."GridSync.js";

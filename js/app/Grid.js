@@ -64,6 +64,7 @@ GRID = {
 		this.getContainerStyles().fetch();
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
+		this.getRights().fetch();
 
 		// load the grid + view
 		this.grid = new Grid({
@@ -145,6 +146,12 @@ GRID = {
             this.styles_box = new Styles({type:"box"});
         }
         return this.styles_box;
+    },
+    getRights: function(){
+    	if(!(this.rights instanceof GridRights)){
+    		this.rights = new GridRights();
+    	}
+    	return this.rights;
     },
     // revisions
     setToRevision: function(revision){

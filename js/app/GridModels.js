@@ -296,9 +296,3 @@ var Box = GridBackbone.Model.extend({
     	GridRequest.box[method](model, options);
     }
 });
-// subclasses of Box
-var ImageBox = Box.extend({
-	initialize: function(spec){
-
-	}
-});

@@ -252,6 +252,24 @@ var GridRequest = {
 			}
 		);
 	},
+	rights: function(rights, options){
+		GRID.log("Rights->read");
+		new GridAjax(
+			"Rights",
+			[],
+			{ 
+				success_fn: function(data){ 
+					GRID.log(data);
+					_.each(data.result, function(value, key, list){
+					
+						rights.set(value,true);
+					
+					});
+				},
+			   	checkIsDraft: false
+			}
+		);
+	},
 	// element model calls
 	container: {
 		create: function(container, options){
