@@ -33,6 +33,7 @@
 		padding-right: 4px;
 		padding-left: 4px;
 		box-sizing: border-box;
+		z-index: $idx-container;
 	}
 	&[data-type*=s-0] .grid-slot{
 		// sidebar to right

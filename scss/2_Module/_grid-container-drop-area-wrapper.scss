@@ -3,14 +3,17 @@
 	.container-drop-area{
 		box-sizing:border-box;
 		position: absolute;
-		height: 40px;
-		top: -5px;
+		height: 30px;
+		top: -25px;
 		width: 100%;
 		z-index: $idx-container;
 		@include transition(all, .3s, ease);
-		background-color: lighten($color-edit, 20%);
+		background-color: lighten($color-edit, 40%);
+		border: 3px dashed $color-edit;
 		&.hover{
 			background-color: $color-edit;
+			height:40px;
+			top: -30px;
 		}
 	}
 }
