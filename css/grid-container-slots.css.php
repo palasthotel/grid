@@ -11,8 +11,8 @@ header('Content-Type: text/css');
 }
 <?php
 
-$result = db_query("SELECT * FROM {grid_container_type}");
-foreach ($result as $key => $type) {
+// $result = db_query("SELECT * FROM {grid_container_type}");
+foreach ($container_types as $key => $type) {
 	$type_arr = explode("-",$type->type);
 	$container_type = $container_type = $type_arr[0];
 	$dimensions = array_slice($type_arr, 1);

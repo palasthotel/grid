@@ -109,7 +109,7 @@ class grid_library
 		return $return;
 	}
 	// renderes css for avaiable container slots
-	public function getContainerSlotCSS(){
+	public function getContainerSlotCSS($container_types){
 		ob_start();
 		require "css/grid-container-slots.css.php";
 		$return = ob_get_contents();
