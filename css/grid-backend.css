@@ -790,7 +790,7 @@ h3 {
   box-sizing: border-box;
   display: block;
   overflow-x: scroll;
-  width: 80%;
+  margin-right: 260px;
   padding: 0px 0px 15px 50px; }
   .grid-revisions button {
     margin: 0px;
