@@ -149,7 +149,7 @@ function grid_wp_activate()
 		update_option("grid_landing_page_enabled",true);
 		update_option("grid_sidebar_enabled",true);
 		update_option("grid_sidebar_post_type","sidebar");
-		update_option("grid_default_container","C-3-3-3-3");
+		update_option("grid_default_container","c-1d1");
 	}
 	else
 	{
@@ -403,7 +403,7 @@ function grid_wp_default_container_html()
 	foreach($containers as $container)
 	{
 		$type=$container['type'];
-		if(strpos($type, "C-")===0)
+		if(strpos($type, "c-")===0)
 		{
 ?>
 <option value="<?php echo $type?>" <?php echo (get_option('grid_default_container')==$type ? 'selected' : '')?> ><?php echo $type?></option>
@@ -508,7 +508,7 @@ function grid_wp_thegrid()
 		$post=get_post($postid);
 		if($post->post_type==get_option('grid_sidebar_post_type'))
 		{
-			$grid->insertContainer("SC-4",0);		
+			$grid->insertContainer("sc-1d3",0);		
 		}
 		else if(get_option('grid_default_container','__NONE__')!='__NONE__')
 		{
