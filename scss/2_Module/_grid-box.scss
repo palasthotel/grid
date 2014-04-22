@@ -112,7 +112,7 @@
 }
 
 // sidebar boxes
-.grid-container[class*="S-"] .grid-box{
+.grid-container-type-s *:not(.grid) .grid-box{
 	.grid-box-controls{
 		cursor: default;
 	}

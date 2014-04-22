@@ -349,13 +349,13 @@ h3 {
 .grid-box-type.active + dl .grid-box-type-search {
   display: block; }
 
-.grid-container[class*="S-"] .grid-box .grid-box-controls {
+.grid-container-type-s *:not(.grid) .grid-box .grid-box-controls {
   cursor: default; }
-.grid-container[class*="S-"] .grid-box .grid-box-delete {
+.grid-container-type-s *:not(.grid) .grid-box .grid-box-delete {
   display: none; }
-.grid-container[class*="S-"] .grid-box .grid-box-edit {
+.grid-container-type-s *:not(.grid) .grid-box .grid-box-edit {
   bottom: 0px; }
-.grid-container[class*="S-"] .grid-box .grid-box-drag {
+.grid-container-type-s *:not(.grid) .grid-box .grid-box-drag {
   display: none; }
 
 .grid-box-sort-placeholder {
@@ -536,7 +536,8 @@ h3 {
   border: none;
   background-color: transparent;
   width: auto;
-  position: relative; }
+  position: relative;
+  z-index: inherit; }
 
 .grid-container-sort-placeholder {
   height: 20px;
