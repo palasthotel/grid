@@ -9,6 +9,12 @@ This library does not work on it's own - it needs some help from outside.
 
 * you need to provide db_query() which replaces {...} with PREFIX... and executes the statement
 
+## supported browser
+
+ * Chrome  
+ * Firefox 4.0+
+ * Safari
+ * IE9+
 
 ## Usage
 
@@ -29,3 +35,4 @@ This library does not work on it's own - it needs some help from outside.
 * getReuseContainerEditor() returns the editor class for reusable containers
 * getReuseBoxEditor() returns the editor class for reusable boxes
 * update() performs needed database updates
+
