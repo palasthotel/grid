@@ -689,7 +689,7 @@ class grid_library
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
 		
 		// TODO: new container types
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-12',1)"); 
+		db_query("insert into {grid_container_type} (type, numslots) values ('c-1d1',1)"); 
 		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4',3)"); 
 		// db_query("insert into {grid_container_type} (type,numslots) values ('C-8-4',2)"); 
 		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-8',2)"); 
