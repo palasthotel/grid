@@ -188,6 +188,7 @@ function grid_wp_admin_menu()
 	add_submenu_page(null,'The Grid','The Grid','edit_posts','grid','grid_wp_thegrid');
 	add_submenu_page(null,'Grid AJAX','The Grid AJAX','edit_posts','grid_ajax','grid_wp_ajax');
 	add_submenu_page(null,'Grid CKEditor Config','Grid CKEditor Config','edit_posts','grid_ckeditor_config','grid_wp_ckeditor_config');
+	add_submenu_page(null,'Grid Container slots CSS','Grid Conatiner slots CSS','edit_posts','grid_wp_container_slots_css','grid_wp_container_slots_css');
 	
 	add_submenu_page('tools.php','Reusable grid boxes','Reusable grid boxes','edit_posts','grid_reuse_boxes','grid_wp_reuse_boxes');
 	add_submenu_page(null,'edit reuse box','edit reuse box','edit_posts','grid_edit_reuse_box','grid_wp_edit_reuse_box');
@@ -538,6 +539,8 @@ function grid_wp_thegrid()
 			wp_enqueue_style('grid_css_'.$idx,plugins_url('lib/'.$file,__FILE__));
 		}
 		wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
+		wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg(array('noheader'=>true,'page'=>'grid_wp_container_slots_css'), admin_url('admin.php')) );
+
 		$lang=WPLANG;
 		if(empty($lang))
 			$lang="en";
@@ -560,6 +563,7 @@ function grid_wp_thegrid()
 		echo $html;
 	}
 }
+
 
 function grid_wp_load_js(){
 	// for wp.media 
@@ -800,6 +804,14 @@ function grid_wp_ckeditor_config()
 	$styles=apply_filters("grid_formats",$formats);
 	global $grid_lib;
 	echo $grid_lib->getCKEditorConfig($styles,$formats);
+	die();
+}
+function grid_wp_container_slots_css()
+{
+	global $grid_lib;
+	global $wpdb;
+	$rows=$wpdb->get_results("select * from ".$wpdb->prefix."grid_container_type");
+	echo $grid_lib->getContainerSlotCSS($rows);
 	die();
 }
 
