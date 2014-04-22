@@ -70,7 +70,10 @@ class grid_library
 		$scripts[]=$app_dir."collections/GridBoxBlueprints.js";
 		$scripts[]=$app_dir."GridSync.js";
 		$scripts[]=$app_dir."Grid.js";
-		$scripts[]=$home."/js/language/grid-".$language.".js";
+		if(is_file($home."/js/language/grid-".$language.".js")){
+			$scripts[]=$home."/js/language/grid-".$language.".js";
+		}
+		$scripts[]=$home."/js/language/grid-en.js";
 		
 		if($absolute)
 		{
@@ -111,7 +114,7 @@ class grid_library
 	// renderes css for avaiable container slots
 	public function getContainerSlotCSS($container_types){
 		ob_start();
-		require "css/grid-container-slots.css.php";
+		require $this->getHome()."css/grid-container-slots.css.php";
 		$return = ob_get_contents();
 		ob_end_clean();
 		return $return;
@@ -125,7 +128,7 @@ class grid_library
 	public function getCKEditorConfig($styles,$formats)
 	{
 		ob_start();
-		require("js/grid_htmlbox_ckeditor_config.js.php");
+		require($this->getHome()."js/grid_htmlbox_ckeditor_config.js.php");
 		$str=ob_get_contents();
 		ob_end_clean();
 		return $str;
