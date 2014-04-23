@@ -140,9 +140,8 @@ var GridToolbarView = GridBackbone.View.extend({
     // resize Container and Box toolbar
     onResize: function(){
         var window_height = jQuery(window).height();
-        var elements_top_offset = this.$tool_element_content.offset().top;
-        var tab_height = this.$tab_container.outerHeight(true);
-        var trash_height = this.$element_trash.outerHeight(true);
-        this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height-trash_height));
+        var elements_top_offset = this.$el.offset().top;
+        var tab_height = this.$tab_container.outerHeight();
+        this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height));
     }
 });

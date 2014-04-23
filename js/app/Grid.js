@@ -329,7 +329,7 @@ GRID = {
             start: function( event, ui ){
                 GRID.log(["container sort START"], event, ui);
                 var old_container_id=ui.item.data("id");
-                jQuery(".grid-element-trash").droppable({
+                jQuery(".grid-element-trash").addClass("grid-active").droppable({
 	                accept: '.grid-container',
 	                hoverClass: 'grid-hover',
 	                drop:function(e,ui) {
@@ -339,11 +339,11 @@ GRID = {
                 });
             },
             stop: function(event, ui){
+            	jQuery(".grid-element-trash").removeClass('grid-active');
             	if(container_deleted)
             	{
             		container.destroy();
             	}
-                //$(".box").slideDown(100);
             },
             update: function( event, ui ){
             	if(container_deleted)return;
@@ -388,7 +388,7 @@ GRID = {
 				old_container_id = ui.item.parents(".grid-container").data("id");
 
 				GRID.log(["START BOX SORT", old_box_index, old_slot_id, old_container_id]);
-				jQuery(".grid-element-trash").droppable({
+				jQuery(".grid-element-trash").addClass("grid-active").droppable({
 					accept: '.grid-slot .grid-box',
 					hoverClass: 'grid-hover',
 					drop:function(e,ui) {
@@ -403,6 +403,7 @@ GRID = {
 			},
 			stop: function(e, ui){
 				//jQuery(".grid-box-trash").hide();
+				jQuery(".grid-element-trash").removeClass("grid-active")
 				if(box_deleted)
 					return;
 				
