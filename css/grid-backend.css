@@ -271,7 +271,6 @@ h3 {
   padding: 0 10px; }
 
 .grid-box-controls {
-  cursor: move;
   color: white;
   height: 0;
   overflow: hidden;
@@ -285,6 +284,8 @@ h3 {
   font-weight: bold;
   text-transform: uppercase;
   transition: opacity 0.2s ease; }
+  .grid-box-controls.grid-box-movable {
+    cursor: move; }
   .grid-box-controls .grid-box-control-button {
     cursor: pointer;
     position: absolute;

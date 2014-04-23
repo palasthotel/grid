@@ -263,7 +263,7 @@ var GridRequest = {
 					_.each(data.result, function(value, key, list){
 						rights.set(value,true);
 					});
-					rights.setNoRights();
+					//rights.setNoRights();
 				},
 			   	checkIsDraft: false
 			}

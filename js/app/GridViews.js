@@ -227,6 +227,17 @@ var BoxView = GridBackbone.View.extend({
         if(json.type == "reference"){
             json.reference = true;
         }
+
+        json.right_move = GRID.getRights().get("move-box");
+        json.right_edit = GRID.getRights().get("edit-box");
+        json.right_delete = GRID.getRights().get("delete-box");
+
+        json.right_none = false;
+        if(!(json.right_move || json.right_edit || json.right_delete)){
+            json.right_none = true;
+        }
+        GRID.log(["render box", json]);
+
         this.$el.html(ich.tpl_box( json ));
         return this;
 	},

@@ -24,7 +24,9 @@
 }
 
 .grid-box-controls {
-	cursor: move;
+	&.grid-box-movable{
+		cursor: move;
+	}
 	color: white;
 	height: 0;
 	overflow: hidden;
