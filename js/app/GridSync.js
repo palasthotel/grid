@@ -259,12 +259,11 @@ var GridRequest = {
 			[],
 			{ 
 				success_fn: function(data){ 
-					GRID.log(data);
+					GRID.log(["rights",data]);
 					_.each(data.result, function(value, key, list){
-					
 						rights.set(value,true);
-					
 					});
+					rights.setNoRights();
 				},
 			   	checkIsDraft: false
 			}

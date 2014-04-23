@@ -82,6 +82,15 @@ var ContainerView = GridBackbone.View.extend({
             json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
         }
 
+        json.right_edit = GRID.getRights().get("edit-container");
+        json.right_delete = GRID.getRights().get("delete-container");
+
+        json.right_options = true;
+        if(!json.right_delete && (!json.right_edit || json.reused)){
+            json.right_options = false;
+        }
+
+        json.right_move = GRID.getRights().get("move-container");
 
         json.isSidebarGrid = GRID.IS_SIDEBAR;
         this.$el.empty();

@@ -28,12 +28,21 @@ var GridToolbarView = GridBackbone.View.extend({
         if(GRID.mode == "grid"){
            this._revisionsView = new GridRevisionsView({collection:GRID.revisions}); 
            this.$el.append(this._revisionsView.$el.hide());
-           this.showContainerTools();
-        } else if(GRID.mode == "container"){
-            this.showBoxTools();
-        }
-        if(GRID.IS_SIDEBAR){
+           
+        } 
+        var type = "container";
+        if(GRID.mode == "container" || GRID.IS_SIDEBAR || !GRID.getRights().get("create-container")){
             this.$tab_container.remove();
+            type = "box";
+        }
+        if(!GRID.getRights().get("create-box")){
+            this.$tab_box.remove();
+            type = false;
+        }
+
+        if(type == "container" ){
+            this.showContainerTools();
+        } else if(type == "box"){
             this.showBoxTools();
         }
         

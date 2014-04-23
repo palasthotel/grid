@@ -58,13 +58,14 @@ GRID = {
 		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
 
 		// load all model classes for grid works
+		this.getRights().fetch();
 		this.getBoxTypes().fetch();
 		this.getContainerTypes().fetch();
 		this.getReusableContainers().fetch();
 		this.getContainerStyles().fetch();
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
-		this.getRights().fetch();
+
 
 		// load the grid + view
 		this.grid = new Grid({
@@ -76,6 +77,9 @@ GRID = {
 				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 				
 				GRID.gridview = new GridView({model: GRID.getModel() });
+				// handle rights
+				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
+
 				GRID.$root.append( GRID.getView().render().el );
 				
 				jQuery(GRID.dom_root).mutate('height',function (element,info){
@@ -156,6 +160,12 @@ GRID = {
     // revisions
     setToRevision: function(revision){
         GridRequest.grid.update(GRID.grid, {action: "setToRevision", revision: revision});
+    },
+    // onRightsChange
+    onRights: function(rights){
+    	GRID.log(["onrights",rights]);
+    	GRID.getView().render();
+    	GRID.toolbar.render();
     },
 	// initializes the constatns
 	_initConstants: function(){
@@ -300,6 +310,7 @@ GRID = {
 	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
+		if(!GRID.getRights().get("move-container")) return false;
 		var container_deleted;
 		container_deleted=false;
 		var container;
@@ -348,6 +359,7 @@ GRID = {
 	},
 	// initializes function to sort the containers
 	_initializeBoxSortable: function(){
+		if(!GRID.getRights().get("move-box")) return false;
 		var old_box_index,
 		old_slot_id,
 		old_container_id,
