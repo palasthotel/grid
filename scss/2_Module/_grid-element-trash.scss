@@ -14,7 +14,7 @@
 	z-index: $idx-toolbar;
 	@include transition();
 	& > div{
-		padding-top: 50%;
+		padding-top: 25px;
 		padding-bottom: 100%;
 		height: 100%;
 		border: 3px dashed white;
@@ -23,7 +23,7 @@
 	}
 	&.grid-active{
 		padding: 10px 10px 0 10px;
-		height: 100%;
+		height: 50%;
 	}
 	&.grid-hover{
 		background-color: $color-warning;

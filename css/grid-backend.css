@@ -696,7 +696,7 @@ h3 {
   -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease; }
   .grid-element-trash > div {
-    padding-top: 50%;
+    padding-top: 25px;
     padding-bottom: 100%;
     height: 100%;
     border: 3px dashed white;
@@ -704,7 +704,7 @@ h3 {
     text-align: center; }
   .grid-element-trash.grid-active {
     padding: 10px 10px 0 10px;
-    height: 100%; }
+    height: 50%; }
   .grid-element-trash.grid-hover {
     background-color: #ed5032; }
 
