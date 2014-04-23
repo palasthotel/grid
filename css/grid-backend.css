@@ -363,7 +363,8 @@ h3 {
   background-color: #3ac5d9; }
 
 .grid-boxes-wrapper {
-  min-height: 60px; }
+  min-height: 60px;
+  position: relative; }
 
 .grid-containers-wrapper {
   -webkit-box-sizing: border-box;
