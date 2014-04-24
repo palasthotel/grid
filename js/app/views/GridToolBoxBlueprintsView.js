@@ -57,7 +57,8 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
             start: function(event, ui){
                 
                 var $ = jQuery;
-                $slots = jQuery(GRID.getView().el).find(".grid-container-type-c[data-reused=false] .grid-slot .grid-boxes-wrapper");
+                $slots = jQuery(GRID.getView().el).find(".grid-container-type-c[data-reused=false] .grid-slot .grid-boxes-wrapper"+
+                                                        ", .grid-container-type-sc .grid-slot .grid-boxes-wrapper");
                 GRID.log($slots);
                 // drop place template
                 // TODO: if boxes toggled hidden 
