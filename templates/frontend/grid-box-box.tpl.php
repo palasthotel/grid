@@ -1,4 +1,4 @@
-<div class="box <?=$this->style?> <?=implode($this->classes," ")?>">
+<div class="box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
 	<?
 	if ($this->title!=""){
 

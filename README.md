@@ -36,3 +36,6 @@ This library does not work on it's own - it needs some help from outside.
 * getReuseBoxEditor() returns the editor class for reusable boxes
 * update() performs needed database updates
 
+## License
+
+GPL v3 - see license.txt
