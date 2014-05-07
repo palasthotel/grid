@@ -4,12 +4,12 @@
 .grid-new-element {
 	cursor: move;
 	position: relative;
-	height: 40px;
 
 	padding-left: 20px;
 	
 	margin-bottom: 8px;
 	color: $color-draggable-border;
+	
 
 	.grid-element-title {
 		color: $color-text;
