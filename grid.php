@@ -691,23 +691,28 @@ class grid_library
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
 		
-		// TODO: new container types
+		db_query("insert into {grid_container_type} (type,numslots) values ('i-0',0)");
+
 		db_query("insert into {grid_container_type} (type, numslots) values ('c-1d1',1)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-4',3)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-8-4',2)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-8',2)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-2-2-2-2-2-2',6)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-3-3-3-3',4)");
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-6-6',2)");
-		// db_query("insert into {grid_container_type} (type,numslots) values ('SC-4',1)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-4',2)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-4-4-0',2)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-0-8',1)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-8-0',1)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('C-0-4-0',1)");
-		// db_query("insert into {grid_container_type} (type,numslots) values ('S-4-0',1)"); 
-		// db_query("insert into {grid_container_type} (type,numslots) values ('S-0-4',1)");
-		// db_query("insert into {grid_container_type} (type,numslots) values ('I-0',0)");
+		
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d3',3)"); 
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d3',2)"); 
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-2d3',2)"); 
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d6-1d6',6)"); 
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d4-1d4-1d4-1d4',4)");
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d2-1d2',2)");
+
+		db_query("insert into {grid_container_type} (type,numslots, space_to_right) values ('s-1d3-0',1,'2d3')"); 
+		db_query("insert into {grid_container_type} (type,numslots, space_to_left) values ('s-0-1d3',1,'2d3')");
+		db_query("insert into {grid_container_type} (type,numslots) values ('sc-1d3',1)"); 
+
+		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-1d3-1d3',2,'1d3')"); 
+		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-1d3-1d3-0',2,'1d3')"); 
+		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3')"); 
+		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('C-2d3-0',1,'1d3')"); 
+		db_query("insert into {grid_container_type} (type,numslots,space_to_left,space_to_right) values ('c-0-1d3-0',1,'1d3','1d3')");
+		
+		
 		db_query("insert into {grid_schema} (propkey) values ('schema_version')");
 		$this->getUpdater()->markAsUpdated();
 	}
