@@ -29,10 +29,19 @@ class grid_media_box extends grid_static_base_box
 			if($editmode)
 			{
 				$metadata=wp_get_attachment_metadata($this->content->fileid->id);
-				$a_post.=" (".$metadata['file'].")";
+				if(is_array($metadata) && isset($metadata["file"])){
+					$a_post.=" (".$metadata['file'].")";
+				} else {
+					$a_post.= json_encode( $this->content->fileid->sizes->{$this->content->fileid->size}->url );
+					$a_post.= " (".$this->content->fileid->id.")";
+				}				
 			}
+			$img_tag = wp_get_attachment_image($this->content->fileid->id,$this->content->fileid->size);
+			if( ( !$img_tag || $img_tag == "") && !$editmode && is_object($this->content->fileid) ){
 
-			return $a_pre.wp_get_attachment_image($this->content->fileid->id,$this->content->fileid->size).$a_post;
+				$img_tag = "<img src='".$this->content->fileid->sizes->{$this->content->fileid->size}->url. "'/>";
+			}
+			return $a_pre.$img_tag.$a_post;
 		}
 		return 'Media-Box';
 	}
