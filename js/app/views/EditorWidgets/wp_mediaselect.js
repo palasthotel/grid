@@ -51,13 +51,23 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
             selection.add( attachment ? [ attachment ] : [] );                          
         });
         frame.on('close',function() {
-            // get selections and save to hidden input plus other AJAX stuff etc.
-            var selection = frame.state().get('selection');
+            var selection = frame.state().get('selection');            
             jQuery.each(frame.state().get('selection')._byId, function(id, val) {
+                var sizes = val.get("sizes");
+                if(typeof sizes == "undefined"){
+                    sizes = {
+                        full: {
+                            height: "",
+                            width: "",
+                            url: val.get("url"),
+                            orientation: ""
+                        }
+                    };
+                }
                 var r_json = {
                     id: val.id,
                     size: "full",
-                    sizes: val.attributes.sizes
+                    sizes: sizes
                 };
                 self.$input.val(JSON.stringify(r_json));
                 self.buildImageSizeSelect();
@@ -85,6 +95,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
             this.$select_image_size.hide();
             return;
         }
+        this.$select_image_size.empty();
         jQuery.each(json.sizes, function(index, size) {
              selected = "";
              if(json.size == index){
