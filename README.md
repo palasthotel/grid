@@ -15,3 +15,7 @@ After putting everything in place, simply enable the grid plugin. You will get a
 ## Use
 
 For now, there is no Info on how to use it. I hope we'll be able to change this soon.
+
+## License
+
+GPL v3 - see license.txt
