@@ -956,6 +956,8 @@ h3 {
 .grid-element-box-lists .grid-new-element {
   border: 1px solid #eceff3;
   padding-bottom: 10px; }
+.grid-element-box-lists .grid-element-title {
+  padding-left: 0px; }
 
 .grid-toolbar {
   transition: all 0.1337s ease;
