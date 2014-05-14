@@ -781,24 +781,25 @@ function grid_wp_render($content)
 }
 add_filter('the_content','grid_wp_render');
 
-// --------------------------------------------
-// for default frontend CSS
-add_action('wp_ajax_gridfrontendCSS', 'grid_default_frontendCSS');
-add_action('wp_ajax_nopriv_gridfrontendCSS', 'grid_default_frontendCSS');
-function grid_default_frontendCSS(){
-	grid_wp_container_slots_css();
-}
 function grid_wp_head(){
-
 	if(file_exists(get_template_directory()."/grid/default-frontend.css")){
 		wp_enqueue_style("grid_frontend",get_template_directory_uri()."/grid/default-frontend.css");
 	} else {
 		wp_enqueue_style("grid_frontend",admin_url('admin-ajax.php')."?action=gridfrontendCSS");
 	}
-	
 }
 add_action("wp_enqueue_scripts","grid_wp_head");
-// --------------------------------------------
+
+add_action('wp_ajax_gridfrontendCSS', 'grid_wp_container_slots_css');
+add_action('wp_ajax_nopriv_gridfrontendCSS', 'grid_wp_container_slots_css');
+function grid_wp_container_slots_css()
+{
+	global $grid_lib;
+	global $wpdb;
+	$rows=$wpdb->get_results("select * from ".$wpdb->prefix."grid_container_type");
+	echo $grid_lib->getContainerSlotCSS($rows);
+	die();
+}
 
 function grid_wp_ckeditor_config()
 {
@@ -809,14 +810,6 @@ function grid_wp_ckeditor_config()
 	$styles=apply_filters("grid_formats",$formats);
 	global $grid_lib;
 	echo $grid_lib->getCKEditorConfig($styles,$formats);
-	die();
-}
-function grid_wp_container_slots_css()
-{
-	global $grid_lib;
-	global $wpdb;
-	$rows=$wpdb->get_results("select * from ".$wpdb->prefix."grid_container_type");
-	echo $grid_lib->getContainerSlotCSS($rows);
 	die();
 }
 
