@@ -447,7 +447,8 @@ grid_box.content as box_content,
 grid_box.readmore as box_readmore,
 grid_box.readmore_url as box_readmoreurl,
 grid_box_type.type as box_type,
-grid_box_style.slug as box_style
+grid_box_style.slug as box_style,
+grid_box_style.style as box_style_label
 from ".$this->prefix."grid_grid2container grid_grid2container
 left join ".$this->prefix."grid_container grid_container
      on container_id=grid_container.id 
