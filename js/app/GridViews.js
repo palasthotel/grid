@@ -47,7 +47,7 @@ var ContainerView = GridBackbone.View.extend({
     },
 	initialize: function(){
         var self = this;
-        var listen_to = ["title","titleurl","prolog","epilog", "readmore", "readmoreurl", "style"];
+        var listen_to = ["title","titleurl","prolog","epilog", "readmore", "readmoreurl", "style", "style_label"];
         _.each(listen_to, function(value, key, list){
             self.listenTo(self.model,'change:'+value, self.render);
         });

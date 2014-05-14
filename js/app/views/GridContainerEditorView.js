@@ -76,6 +76,8 @@ var GridContainerEditor = GridBackbone.View.extend({
         this.model.set('readmore', this.$el.find(class_prefix+"readmore").val());
         this.model.set('readmoreurl',this.$el.find(class_prefix+"readmoreurl").val());
         this.model.set('style', this.$el.find(class_prefix+"style").val());
+        this.model.set('style_label', jQuery(this.$el).find(class_prefix+"style option:selected").text());
+        console.log(["contaienr editor", jQuery(this.$el).find(class_prefix+"style option:selected").text(), this.model]);
         this.model.save();
         GRID.hideEditor(function(){
             GRID.$root_editor.html("");
