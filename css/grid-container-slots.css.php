@@ -8,10 +8,12 @@ header('Content-Type: text/css');
 .grid-slot{
 	box-sizing:border-box;
 	display: table-cell;
+	vertical-align: top;
 }
 <?php
 
 // $result = db_query("SELECT * FROM {grid_container_type}");
+
 foreach ($container_types as $key => $type) {
 	$type_arr = explode("-",$type->type);
 	$container_type = $container_type = $type_arr[0];
@@ -36,8 +38,10 @@ foreach ($container_types as $key => $type) {
 		?>
 	}
 	<?php
+	$calculated = array();
 	foreach ($dimensions as $key => $slot) {
-		if($slot == 0) continue;
+		if($slot == 0 || in_array($slot, $calculated)) continue;
+		$calculated[] = $slot;
 		?>
 		.grid-container-<?php echo $type->type; ?> .grid-slot-<?php echo $slot; ?>{
 			<?php
