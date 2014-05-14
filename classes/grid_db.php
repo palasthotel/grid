@@ -168,6 +168,7 @@ class grid_db {
 		$box->storage=$this;
 		$box->boxid=$row['box_id'];
 		$box->style=$row['box_style'];
+		$box->style_label=$row['box_style_label'];
 		$box->title=$row['box_title'];
 		$box->titleurl=$row['box_titleurl'];
 		$box->prolog=$row['box_prolog'];
@@ -316,6 +317,7 @@ grid_container.epilog as container_epilog,
 grid_container.readmore as container_readmore,
 grid_container.readmore_url as container_readmoreurl,
 grid_container.reuse_containerid as container_reuseid,
+grid_container_style.style as container_style_label,
 grid_container_type.type as container_type,
 grid_container2slot.slot_id as slot_id,
 grid_slot_style.slug as slot_style,
@@ -328,7 +330,8 @@ grid_box.content as box_content,
 grid_box.readmore as box_readmore,
 grid_box.readmore_url as box_readmoreurl,
 grid_box_type.type as box_type,
-grid_box_style.slug as box_style
+grid_box_style.slug as box_style,
+grid_box_style.style as box_style_label
 from ".$this->prefix."grid_container grid_container
 left join ".$this->prefix."grid_container_style grid_container_style
      on grid_container.style=grid_container_style.id
@@ -370,6 +373,7 @@ where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_cont
 				$currentcontainer->containerid=$row['container_id'];
 				$currentcontainer->reusetitle=$row['container_reuse_title'];
 				$currentcontainer->style=$row['container_style'];
+				$currentcontainer->style_label=$row['container_style_label'];
 				$currentcontainer->type=$row['container_type'];
 				$currentcontainer->title=$row['container_title'];
 				$currentcontainer->titleurl=$row['container_titleurl'];
@@ -428,6 +432,7 @@ grid_container.epilog as container_epilog,
 grid_container.readmore as container_readmore,
 grid_container.readmore_url as container_readmoreurl,
 grid_container.reuse_containerid as container_reuseid,
+grid_container_style.style as container_style_label,
 grid_container_type.type as container_type,
 grid_container_type.space_to_right as container_space_to_right,
 grid_container_type.space_to_left as container_space_to_left,
@@ -507,6 +512,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 					$currentcontainer->grid=$grid;
 					$currentcontainer->containerid=$row['container_id'];
 					$currentcontainer->style=$row['container_style'];
+					$currentcontainer->style_label=$row['container_style_label'];
 					$currentcontainer->type=$row['container_type'];
 					$currentcontainer->space_to_left=$row['container_space_to_left'];
 					$currentcontainer->space_to_right=$row['container_space_to_right'];
