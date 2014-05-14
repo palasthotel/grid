@@ -8,6 +8,7 @@ header('Content-Type: text/css');
 .grid-slot{
 	box-sizing:border-box;
 	display: table-cell;
+	vertical-align: top;
 }
 <?php
 
