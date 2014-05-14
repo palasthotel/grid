@@ -709,7 +709,7 @@ class grid_library
 		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-1d3-1d3',2,'1d3')"); 
 		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-1d3-1d3-0',2,'1d3')"); 
 		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3')"); 
-		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('C-2d3-0',1,'1d3')"); 
+		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-2d3-0',1,'1d3')"); 
 		db_query("insert into {grid_container_type} (type,numslots,space_to_left,space_to_right) values ('c-0-1d3-0',1,'1d3','1d3')");
 		
 		
