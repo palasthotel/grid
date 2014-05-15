@@ -113,7 +113,7 @@ class grid_container extends grid_base {
 	}
 	
 	public function is_content_container(){
-		if($this->type == "c" && ($this->space_to_left || $this->space_to_right)){
+		if( strpos($this->type, "c") !== false && ($this->space_to_left != null || $this->space_to_right != null) ){
 			$this->iscontentcontainer = true;
 			return true;
 		}else{

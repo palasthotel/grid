@@ -1,11 +1,17 @@
-<?php // Open Content Container Wrapper
-/*
-if ($this->firstcontentcontainer): 
-	$class = ($this->sidebarleft)? "C-0-8": "C-8-0";
+<?php
+if ($this->firstcontentcontainer){
+
+	if($this->space_to_right != null){
+		$math = split("d", $this->space_to_right);
+	} else {
+		$math = split("d", $this->space_to_left);
+	}
+	$width = $math[1]-$math[0];
+	$class = ($this->space_to_right)? "c-".$width."d".$math[1]."-0" : "c-0-".$width."d".$math[1];
 ?>
 <div class="grid-content-container-wrapper <?= $class ?> grid-first-content-container">
-<?php endif; ?>
-*/
+<?php
+}
 ?>
 
 <div class="<?php echo ($this->style)? $this->style." ":""; echo implode($this->classes," "); ?>">
@@ -41,10 +47,10 @@ if ($this->firstcontentcontainer):
 
 </div>
 
-<?php // Close Content Container Wrapper
-/*
-if ($this->lastcontentcontainer): ?>
-</div><!-- /.content-container-wrapper -->
-<?php endif; ?>
-*/
+<?php
+if ($this->lastcontentcontainer):
+?>
+</div>
+<?php
+endif; 
 ?>
