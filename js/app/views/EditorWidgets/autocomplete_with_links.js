@@ -11,17 +11,17 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
     render:function(){
         var html="<label>"+this.model.structure.label+"</label>";
         var classes="autocomplete-wrapper form-autocomplete dynamic-value";
-        var disabled="";
+        var readonly="";
         var fetch=false;
         if(this.model.container[this.model.structure.key]!='' ||
             this.model.container[this.model.structure.key]===0)
         {
             classes+=" locked";            
-            disabled="disabled=disabled";
+            readonly="readonly";
             fetch=true;
         }
         html+="<div class='"+classes+"'>";
-        html+="<input type=text class='form-text autocomplete i-autocomplete' "+disabled+"/>";
+        html+="<input type=text class='form-text autocomplete i-autocomplete' "+readonly+"/>";
         html+="<div class='cancel'><span class='icon-cancel'></span></div>";
         html+="<ul class='suggestion-list'></ul>";
 
@@ -53,6 +53,8 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
     },
 
     keyup:function(e) {
+        var $input = this.$el.find("input.i-autocomplete");
+        if($input.hasAttr('readonly')) return;
         if(e.which==13)
         {
             this.selectItem(this.$el.find(".suggestion-list li").first());
@@ -82,7 +84,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         this.$el.find(".autocomplete-wrapper").addClass("locked");
         this.$el.find("input.i-autocomplete")
             .val(value)
-            .attr("disabled","disabled")
+            .attr("readonly","readonly")
             .data("key",key);
         this.$el.find(".suggestion-list").empty();
         var $linkurl=this.$el.find("a.full");
@@ -95,7 +97,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         this.$el.find(".autocomplete-wrapper").removeClass("locked");
         this.$el.find("input.i-autocomplete")
             .data("key","")
-            .removeAttr("disabled")
+            .removeAttr("readonly")
             .val("");
         this.old_search_string="";
     }
