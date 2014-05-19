@@ -54,7 +54,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
 
     keyup:function(e) {
         var $input = this.$el.find("input.i-autocomplete");
-        if($input.hasAttr('readonly')) return;
+        if($input.attr('readonly') !== 'undefined' && $input.attr('readonly') !== false ) return;
         if(e.which==13)
         {
             this.selectItem(this.$el.find(".suggestion-list li").first());
