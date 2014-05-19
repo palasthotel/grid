@@ -79,7 +79,6 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         }
     },
     selectItem:function($item){
-        console.log(["seletItem",$item, $item.data("key")]);
         var key=$item.data("key");
         var value=$item.text();
         this.$el.find(".autocomplete-wrapper").addClass("locked");
@@ -92,7 +91,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         $linkurl.attr('href',$linkurl.data('raw').replace('%',key));
     },
     listItemSelected:function(e){
-        this.selectItem(jQuery(e.srcElement));
+        this.selectItem(jQuery(e.target));
     },
     cancelSelection:function(e){
         this.$el.find(".autocomplete-wrapper").removeClass("locked");
