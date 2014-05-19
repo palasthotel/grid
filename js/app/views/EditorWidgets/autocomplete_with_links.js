@@ -79,6 +79,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         }
     },
     selectItem:function($item){
+        console.log(["seletItem",$item, $item.data("key")]);
         var key=$item.data("key");
         var value=$item.text();
         this.$el.find(".autocomplete-wrapper").addClass("locked");
