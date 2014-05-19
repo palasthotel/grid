@@ -20,19 +20,19 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
             disabled="disabled=disabled";
             fetch=true;
         }
-        html+="<div class='"+classes+"'><input type=text class='form-text autocomplete i-autocomplete' "+disabled+"/>";
-        html+="<div class=loading rotate'></div>";
-        html+="<div class='cancel'></div>";
+        html+="<div class='"+classes+"'>";
+        html+="<input type=text class='form-text autocomplete i-autocomplete' "+disabled+"/>";
+        html+="<div class='cancel'><span class='icon-cancel'></span></div>";
         html+="<ul class='suggestion-list'></ul>";
 
 		html+='<p class="links">';
+        html+=  '<a class="empty" data-raw="'+this.model.structure.emptyurl+'" href="'+this.model.structure.emptyurl+'" target="_blank">'+this.model.structure.emptylinktext+'</a>';
 		html+=	'<a class="full" data-raw="'+this.model.structure.url+'" href="" target="_blank">'+this.model.structure.linktext+'</a>';
-		html+=	'<a class="empty" data-raw="'+this.model.structure.emptyurl+'" href="'+this.model.structure.emptyurl+'" target="_blank">'+this.model.structure.emptylinktext+'</a>';
 		html+='</p>';
+        html+= "</div>";
 
         jQuery(this.$el).html(html);
-        if(fetch)
-        {
+        if(fetch) {
             var key=this.model.container[this.model.structure.key];
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;

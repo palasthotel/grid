@@ -2,12 +2,13 @@
 if ($this->firstcontentcontainer){
 
 	if($this->space_to_right != null){
-		$math = split("d", $this->space_to_right);
+		$math = explode("d", $this->space_to_right);
 	} else {
-		$math = split("d", $this->space_to_left);
+		$math = explode("d", $this->space_to_left);
 	}
 	$width = $math[1]-$math[0];
 	$class = ($this->space_to_right)? "c-".$width."d".$math[1]."-0" : "c-0-".$width."d".$math[1];
+	$class = "grid-container-".$class;
 ?>
 <div class="grid-content-container-wrapper <?= $class ?> grid-first-content-container">
 <?php
@@ -31,7 +32,7 @@ if ($this->firstcontentcontainer){
 		</div>
 	</div>
 
-	<div class="grid-slots-wrapper clearfix">
+	<div class="grid-slots-wrapper">
 	<?=implode("", $slots)?>
 	</div>
 

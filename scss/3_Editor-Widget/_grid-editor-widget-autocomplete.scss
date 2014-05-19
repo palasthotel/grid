@@ -1,0 +1,71 @@
+.grid-editor-widget-autocomplete,
+.grid-editor-autocomplete-with-links{
+	.autocomplete-wrapper{
+		position:relative;
+	}
+	.icon-cancel{
+		font-size: 140%;
+	}
+	.suggestion-list{
+		position: relative;
+		li{
+			padding: 8px 15px;
+			background-color: $color-light;
+			cursor: pointer;
+			margin-bottom: 0px;
+			border-bottom: 1px solid lighten($color-dark,60%);
+			&:last-child{
+				border-bottom: none;
+			}
+			&:hover{
+				background-color: $color-edit;
+				color: white;
+			}
+		}
+		&:empty{
+			display:none;
+		}
+		&:before{
+			content:"";
+			border: 8px solid $color-light;
+			font-size:0;
+			line-height:0;
+			height:0;
+			padding:0;
+			margin:0;
+			border-top-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			top:-16px;
+			left:10px;
+		}
+	}
+	.links a{
+		margin-right: 15px;
+		&.full{
+			display:none;
+		}
+	}
+	.cancel{
+		position: absolute;
+		cursor: pointer;
+		top: -3px;
+		display: none;
+	}
+	input{
+		padding-left: 0px;
+		@include transition(all, .3s, ease);		
+	}
+	.locked{
+		.links .full{
+			display:inline;
+		}
+		input{
+			padding-left: 20px;
+		}	
+		.cancel{
+			display:block;
+		}	
+	}
+}
