@@ -78,22 +78,6 @@ class grid_update
 		db_query("ALTER TABLE {grid_container_type} ADD space_to_right varchar(255) DEFAULT NULL AFTER `type`;");
 		db_query("ALTER TABLE {grid_container_type} ADD space_to_left varchar(255) DEFAULT NULL AFTER `type`;");
 
-		// $result = db_query("SELECT * FROM {grid_container_type};");
-
-		// foreach ($result as $record) {
-		// 	$id = $record->id;
-		// 	$type = split("-", $recored->type);
-		// 	$overall = 0;
-		// 	$new_type = strtolower($type[0]);
-		// 	for($i = 1; $i < count($type); $i++){
-		// 		if($type==0){
-
-		// 		}
-		// 		$overall+= $type[$i];
-		// 	}
-		// 	db_query("UPDATE {grid_container_type} SET type='$new_type', dimension='$dimension' WHERE id = '$id';")
-		// }
-
 		// c-12 c-18
 		db_query("UPDATE {grid_container_type} SET type='c-1d1' WHERE type = 'C-12' OR type = 'C-18';");
 
@@ -163,6 +147,29 @@ class grid_update
 		// I-0
 		db_query("UPDATE {grid_container_type} SET type='i-0' ".
 					" WHERE type = 'I-0';");
+
+	}
+
+	public function update_3(){
+		$result = db_query("SELECT * FROM {grid_container_type};");
+
+		foreach ($result as $record) {
+			if(strpos($record->type, "C-" === false || strpos($record->type, "-0")) !== false ) continue;
+			$id = $record->id;
+			$type = split("-", $recored->type);
+			$overall = 0;
+			$new_type = strtolower($type[0]);
+			$parts = array();
+			for($i = 1; $i < count($type); $i++){
+				$parts[] = $type[$i];
+				$overall+= $type[$i];
+			}
+			$new_type = "c";
+			foreach ($parts as $key => $part) {
+				$new_type .= "-".$part."d".$overall;
+			}
+			db_query("UPDATE {grid_container_type} SET type='$new_type' WHERE id = '$id';");
+		}
 
 	}
 
