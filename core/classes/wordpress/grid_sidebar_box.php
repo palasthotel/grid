@@ -78,7 +78,7 @@ class grid_sidebar_box extends grid_box
 			$i++;
 			$query->the_post();
 			$post=get_post();
-			if(is_numeric(strpos($post->post_title,$querystr)))
+			if(is_numeric(strpos( mb_strtolower($post->post_title, 'UTF-8'),mb_strtolower($querystr, "UTF-8" ) )))
 			{
 				$results[]=array('key'=>$post->ID,'value'=>$post->post_title);
 			}
