@@ -550,6 +550,8 @@ function grid_wp_thegrid()
 			wp_enqueue_script('grid_js_'.$idx,plugins_url('lib/'.$file,__FILE__));
 		}
 		wp_enqueue_script("grid_js_wp_js",plugins_url('grid-wordpress.js', __FILE__));
+		$post=get_post($postid);
+		echo "<div class='wrap'><h2>".$post->post_title." <a class='add-new-h2' href='/wp-admin/post.php?post=".$postid."&action=edit' >Edit Post</a></h2></div>";
 		$html=$grid_lib->getEditorHTML(
 			$grid_id,
 			'grid',
