@@ -673,6 +673,7 @@ class grid_library
 						'size'=>'normal',
 					),
 				),
+				'mysql_engine'=>'InnoDB',
 			),
 		);
 	}
