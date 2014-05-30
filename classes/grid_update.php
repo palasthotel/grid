@@ -150,27 +150,4 @@ class grid_update
 
 	}
 
-	public function update_3(){
-		$result = db_query("SELECT * FROM {grid_container_type};");
-
-		foreach ($result as $record) {
-			if(strpos($record->type, "C-" === false || strpos($record->type, "-0")) !== false ) continue;
-			$id = $record->id;
-			$type = split("-", $recored->type);
-			$overall = 0;
-			$new_type = strtolower($type[0]);
-			$parts = array();
-			for($i = 1; $i < count($type); $i++){
-				$parts[] = $type[$i];
-				$overall+= $type[$i];
-			}
-			$new_type = "c";
-			foreach ($parts as $key => $part) {
-				$new_type .= "-".$part."d".$overall;
-			}
-			db_query("UPDATE {grid_container_type} SET type='$new_type' WHERE id = '$id';");
-		}
-
-	}
-
 }

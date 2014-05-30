@@ -368,7 +368,7 @@ GRID = {
 		new_container_id,
 		box_deleted;
 		box_deleted=false;
-		this.getView().$el.find(".grid-container-type-c[data-reused=false] .grid-boxes-wrapper").sortable({
+		this.getView().$el.find(".grid-container-type-c[data-reused=false] .grid-boxes-wrapper, .grid-container-type-sc .grid-boxes-wrapper").sortable({
 			items: ".grid-box",
 			handle: ".grid-box-controls",
 			//cancel: ".grid-box-edit, .grid-box-delete",
