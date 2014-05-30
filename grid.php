@@ -112,7 +112,8 @@ class grid_library
 		return $return;
 	}
 	// renderes css for avaiable container slots
-	public function getContainerSlotCSS($container_types){
+	public function getContainerSlotCSS(){
+		$container_types = db_query("SELECT * FROM {grid_container_type}");
 		ob_start();
 		require $this->getHome()."css/grid-container-slots.css.php";
 		$return = ob_get_contents();
@@ -120,7 +121,9 @@ class grid_library
 		return $return;
 	}
 	private function calculateSpace($space){
+		if($space == null || $space == "") return null;
 		$calc = explode("d", $space);
+		if(count($calc) < 2) return null;
 		return ($calc[0]/$calc[1])*100;
 	}
 	

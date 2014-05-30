@@ -4,6 +4,8 @@ header('Content-Type: text/css');
 .grid-slots-wrapper{
 	display: table;
 	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
 }
 .grid-slot{
 	box-sizing:border-box;
