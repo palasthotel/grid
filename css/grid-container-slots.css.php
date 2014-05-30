@@ -14,7 +14,7 @@ header('Content-Type: text/css');
 }
 <?php
 
-// $result = db_query("SELECT * FROM {grid_container_type}");
+// $container_types = db_query("SELECT * FROM {grid_container_type}");
 
 foreach ($container_types as $key => $type) {
 	$type_arr = explode("-",$type->type);

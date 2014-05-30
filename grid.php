@@ -112,8 +112,8 @@ class grid_library
 		return $return;
 	}
 	// renderes css for avaiable container slots
-	public function getContainerSlotCSS(){
-		$container_types = db_query("SELECT * FROM {grid_container_type}");
+	public function getContainerSlotCSS($container_types){
+		// $container_types = db_query("SELECT * FROM {grid_container_type}");
 		ob_start();
 		require $this->getHome()."css/grid-container-slots.css.php";
 		$return = ob_get_contents();
