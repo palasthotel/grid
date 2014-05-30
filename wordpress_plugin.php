@@ -742,7 +742,7 @@ function grid_wp_load($post)
 	if(get_option('grid_'.$post->post_type.'_enabled',FALSE))
 	{
 		$rows=$wpdb->get_results("select grid_id from ".$wpdb->prefix."grid_nodes where nid=$postid");
-		if(count($rows)>0)
+		if($wpdb->num_rows > 0)
 		{
 			$grid_id=$rows[0]->grid_id;
 			$storage=grid_wp_get_storage();
