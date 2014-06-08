@@ -224,6 +224,7 @@ function grid_wp_admin_menu()
 	
 	add_submenu_page('tools.php','grid styles','Grid Styles','edit_posts','grid_styles','grid_wp_styles');
 	add_submenu_page('tools.php','grid privileges','Grid Privileges','edit_users','grid_privileges','grid_wp_privileges');
+	add_submenu_page('tools.php','grid containers','Grid Containers','edit_posts','grid_containers','grid_wp_containers');
 }
 add_action("admin_menu","grid_wp_admin_menu");
 
@@ -784,6 +785,16 @@ function grid_wp_reuse_container_editor_prepare($editor)
 		wp_enqueue_script("grid_reusecontainer_".$idx,plugins_url('lib/'.$file, __FILE__));
 	}
 	wp_enqueue_script("grid_reusecontainer_wp_js",plugins_url('grid-wordpress.js', __FILE__));
+}
+
+function grid_wp_containers()
+{
+	$storage=grid_wp_get_storage();
+	global $grid_lib;
+	$editor=$grid_lib->getContainerEditor();
+	grid_wp_reuse_container_editor_prepare($editor);
+	$html=$editor->run($storage);
+	echo $html;
 }
 
 function grid_wp_reuse_containers()
