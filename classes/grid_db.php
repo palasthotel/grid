@@ -653,7 +653,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function createContainer($grid,$containertype)
 	{
 		$query="select id,type,space_to_left,space_to_right,numslots from ".$this->prefix."grid_container_type where type=\"$containertype\"";
-		$result=$this->connection->query($query) or die($this->connection->error);
+		$result=$this->connection->query($query) or die($this->connection->error. ": ".$query);
 		$row=$result->fetch_assoc();
 		$type=$row['id'];
 		$type_space_to_left = $row['space_to_left'];
@@ -668,7 +668,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$query="update ".$this->prefix."grid_grid set next_containerid=next_containerid+1 where id=$gridid and revision=$gridrevision";
 		$this->connection->query($query);
 		$query="insert into ".$this->prefix."grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
-		$this->connection->query($query) or die($this->connection->error);
+		$this->connection->query($query) or die($this->connection->error.": ".$query);
 		$container=new grid_container();
 		$container->grid=$grid;
 		$container->storage=$this;
@@ -968,6 +968,21 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				'numslots'=>$row['numslots']);
 		}
 		return $return;
+	}
+	
+	public function createContainerType($type,$space_to_left,$space_to_right,$numslots)
+	{
+		$query="insert into ".$this->prefix."grid_container_type (type,space_to_left,space_to_right,numslots) values ('$type',";
+		if($space_to_left==NULL)
+			$query.="NULL,";
+		else
+			$query.="'$space_to_left',";
+		if($space_to_right==NULL)
+			$query.="NULL,";
+		else
+			$query.="'$space_to_right',";
+		$query.="$numslots)";
+		$this->connection->query($query) or die($this->connection->error).": ".$query;
 	}
 	
 	public function fetchContainerStyles()

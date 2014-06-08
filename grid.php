@@ -754,6 +754,12 @@ class grid_library
 		return new grid_reuse_box_editor();
 	}
 	
+	public function getContainerEditor()
+	{
+		require_once("classes/grid_container_editor.php");
+		return new grid_container_editor();
+	}
+	
 	private function getUpdater()
 	{
 		require_once("classes/grid_update.php");
