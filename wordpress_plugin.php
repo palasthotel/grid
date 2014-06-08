@@ -35,6 +35,30 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint
 		}
 		return $return;
 	}
+
+	public function Rights()
+	{
+		$privs=grid_wp_get_privs();
+		$privileges=array();
+		foreach($privs as $role=>$privs)
+		{
+			if(current_user_can($role))
+			{
+				foreach($privs as $key=>$val)
+				{
+					if($val)
+					{
+						if(!in_array($key, $privileges))
+						{
+							$privileges[]=$key;
+						}
+					}
+				}
+			}
+		}
+		return $privileges;
+	}
+
 }
 
 function t($str){return $str;}
@@ -199,8 +223,104 @@ function grid_wp_admin_menu()
 	add_submenu_page(null,'delete reuse container','delete reuse container','edit_posts','grid_delete_reuse_container','grid_wp_delete_reuse_container');
 	
 	add_submenu_page('tools.php','grid styles','Grid Styles','edit_posts','grid_styles','grid_wp_styles');
+	add_submenu_page('tools.php','grid privileges','Grid Privileges','edit_users','grid_privileges','grid_wp_privileges');
 }
 add_action("admin_menu","grid_wp_admin_menu");
+
+function grid_wp_get_privs()
+{
+global $wp_roles;
+	$names=$wp_roles->get_names();
+	$ajaxendpoint=new grid_ajaxendpoint();
+	$rights=$ajaxendpoint->Rights();
+	$default=array();
+	foreach($rights as $right)
+	{
+		$defaults['administrator'][$right]=true;
+		$defaults['editor'][$right]=true;
+	}
+	foreach($names as $key=>$name)
+	{
+		if(!isset($defaults[$key]))
+		{
+			foreach($rights as $right)
+			{
+				$defaults[$key][$right]=false;
+			}
+		}
+	}
+	$privileges=get_option('grid_privileges',$defaults);
+	return $privileges;
+}
+
+function grid_wp_privileges()
+{
+	global $wp_roles;
+	$names=$wp_roles->get_names();
+	$ajaxendpoint=new grid_ajaxendpoint();
+	$rights=$ajaxendpoint->Rights();
+	
+	if(!empty($_POST))
+	{
+		$privileges=$_POST['privileges'];
+		foreach($privileges as $role=>$privs)
+		{
+			foreach($privs as $key)
+			{
+				if($privileges[$role][$key]=="on")
+					$privileges[$role][$key]=true;
+				else
+					$privileges[$role][$key]=false;
+			}
+		}
+		update_option("grid_privileges",$privileges);
+		wp_redirect(add_query_arg(array('page'=>'grid_privileges'),admin_url('tools.php')));
+		return;
+	}
+	$privileges=grid_wp_get_privs();
+
+?>
+<form method="post" action="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_privileges'),admin_url('tools.php'));?>">
+<table>
+	<tr>
+		<th>Role</th>
+<?php
+	foreach($rights as $right)
+	{
+?>
+		<th><?php echo $right; ?></th>
+<?
+	}
+?>
+	</tr>
+<?php
+	foreach($names as $key=>$name)
+	{
+?>
+	<tr>
+		<td><?php echo $name ?></td>
+<?php
+		foreach($rights as $right)
+		{
+			$checked="";
+			if($privileges[$key][$right])
+			{
+				$checked="checked";
+			}
+?>
+		<td><input type="checkbox" name="privileges[<?php echo $key;?>][<?php echo $right; ?>]" <?php echo $checked ?>></td>
+<?php
+		}
+?>
+	</tr>
+<?php
+	}
+?>
+</table>
+<input type="submit">
+</form>
+<?php
+}
 
 function grid_wp_styles()
 {
