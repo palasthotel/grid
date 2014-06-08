@@ -540,7 +540,9 @@ class grid_ajaxendpoint {
 			'create-box',
 			'edit-box',
 			'delete-box',
-			'move-box'
+			'move-box',
+			'publish',
+			'revert',
 		);
 	}
 	
