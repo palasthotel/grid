@@ -165,8 +165,8 @@ class grid_container_editor
 		<h3>Create a new container</h3>
 		<div class="grid-new-container-values">
 			<div>
-				<label>Support for Sidebars:</label><br/>
-				<select name="sidebar_support">
+				<label for="grid-container-editor-sidebar_support">Support for Sidebars:</label><br/>
+				<select id="grid-container-editor-sidebar_support" name="sidebar_support">
 					<option value="none" <?php if($support=="none")echo "selected";?>>None</option>
 					<option value="left" <?php if($support=="left")echo "selected";?>>Left</option>
 					<option value="right" <?php if($support=="right")echo "selected";?>>Right</option>
@@ -174,12 +174,12 @@ class grid_container_editor
 				</select>
 			</div>
 			<div>
-				<label>Denominator:</label><br/>
-				<input required type="number" name="denominator" value="<?php echo $new_denominator;?>">
+				<label for="grid-container-editor-denominator">Denominator:</label><br/>
+				<input id="grid-container-editor-denominator" required type="number" name="denominator" value="<?php echo $new_denominator;?>">
 			</div>
 			<div>
-				<label>Slot Sizes (divided by a comma):</label><br/>
-				<input required type="text" name="slots" value="<?php echo implode(",", $slots);?>">
+				<label for="grid-container-editor-slots">Slot Sizes (divided by a comma):</label><br/>
+				<input id="grid-container-editor-slots" required type="text" name="slots" value="<?php echo implode(",", $slots);?>">
 			</div>
 		</div>
 		<div>
