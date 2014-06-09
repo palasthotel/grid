@@ -82,6 +82,9 @@ Dimensions
 .grid-container-editor-form button:focus:hover {
   color: #3ac5d9;
 }
+.grid-container-editor-form label {
+  display: inline;
+}
 .grid-container-editor-form .grid-new-container-values {
   margin-bottom: 10px;
 }

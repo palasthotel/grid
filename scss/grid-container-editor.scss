@@ -78,6 +78,9 @@
 			color: $color-edit;
 		}
 	}
+	label{
+		display: inline;
+	}
 	.grid-new-container-values{
 		margin-bottom: 10px;
 		> div{
