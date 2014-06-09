@@ -8,7 +8,8 @@
 	margin-top: 10px;
 	border: none;
 	margin-bottom: 10px;
-
+	width: 100%;
+	padding-right: 20px;
 }
 .grid-container-editor-table th,
 .grid-container-editor-table td{
@@ -77,4 +78,11 @@
 			color: $color-edit;
 		}
 	}
+	.grid-new-container-values{
+		margin-bottom: 10px;
+		> div{
+			margin-bottom: 8px;
+		}
+	}
+	 
 }

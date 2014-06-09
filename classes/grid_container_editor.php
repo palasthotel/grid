@@ -163,25 +163,27 @@ class grid_container_editor
 	</table>
 	<form class="grid-container-editor-form" method="POST">
 		<h3>Create a new container</h3>
-		<div>
-		Support for Sidebars:
-		<select name="sidebar_support">
-			<option value="none" <?php if($support=="none")echo "selected";?>>None</option>
-			<option value="left" <?php if($support=="left")echo "selected";?>>Left</option>
-			<option value="right" <?php if($support=="right")echo "selected";?>>Right</option>
-			<option value="both" <?php if($support=="both")echo "selected";?>>Both</option>
-		</select>
+		<div class="grid-new-container-values">
+			<div>
+				<label>Support for Sidebars:</label><br/>
+				<select name="sidebar_support">
+					<option value="none" <?php if($support=="none")echo "selected";?>>None</option>
+					<option value="left" <?php if($support=="left")echo "selected";?>>Left</option>
+					<option value="right" <?php if($support=="right")echo "selected";?>>Right</option>
+					<option value="both" <?php if($support=="both")echo "selected";?>>Both</option>
+				</select>
+			</div>
+			<div>
+				<label>Denominator:</label><br/>
+				<input required type="number" name="denominator" value="<?php echo $new_denominator;?>">
+			</div>
+			<div>
+				<label>Slot Sizes (divided by a comma):</label><br/>
+				<input required type="text" name="slots" value="<?php echo implode(",", $slots);?>">
+			</div>
 		</div>
 		<div>
-		Denominator:
-		<input required type="number" name="denominator" value="<?php echo $new_denominator;?>">
-		</div>
-		<div>
-		Slot Sizes (divided by a comma):
-		<input required type="text" name="slots" value="<?php echo implode(",", $slots);?>">
-		</div>
-		<div>
-		<button type="submit" >Create Container</button>
+			<button type="submit" >Create Container</button>
 		</div>
 	</form>
 <?php

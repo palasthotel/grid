@@ -11,6 +11,8 @@ Dimensions
   margin-top: 10px;
   border: none;
   margin-bottom: 10px;
+  width: 100%;
+  padding-right: 20px;
 }
 
 .grid-container-editor-table th,
@@ -79,6 +81,12 @@ Dimensions
 .grid-container-editor-form button:hover,
 .grid-container-editor-form button:focus:hover {
   color: #3ac5d9;
+}
+.grid-container-editor-form .grid-new-container-values {
+  margin-bottom: 10px;
+}
+.grid-container-editor-form .grid-new-container-values > div {
+  margin-bottom: 8px;
 }
 
 /*# sourceMappingURL=grid-container-editor.css.map */
