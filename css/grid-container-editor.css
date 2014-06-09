@@ -12,29 +12,25 @@ Dimensions
   border: none;
   margin-bottom: 10px;
   width: 100%;
-  padding-right: 20px;
-}
-
-.grid-container-editor-table th,
-.grid-container-editor-table td {
-  text-align: left;
-  padding: 20px 10px 20px 10px;
-  min-width: 150px;
-}
-
-.grid-container-editor-table th {
-  border-bottom: 1px solid #E1E1E2;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.grid-container-editor-table tr {
-  background-color: #fff;
-}
-
-.grid-container-editor-table tr:nth-child(2n) {
-  background-color: #f9f9f9;
-}
+  padding-right: 20px; }
+  .grid-container-editor-table th, .grid-container-editor-table td {
+    text-align: left;
+    padding: 20px 10px 20px 10px;
+    min-width: 150px;
+    border: none; }
+    .grid-container-editor-table th:last-child, .grid-container-editor-table td:last-child {
+      border-right: none; }
+  .grid-container-editor-table th {
+    border: none;
+    border-bottom: 1px solid #E1E1E2;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    font-weight: bold; }
+  .grid-container-editor-table tr {
+    background-color: #fff; }
+  .grid-container-editor-table tr:nth-child(2n) {
+    background-color: #f9f9f9; }
 
 /**
 * New container form
@@ -47,19 +43,16 @@ Dimensions
   font-size: 12px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
 .grid-container-editor-form input {
   height: 27px;
   line-height: 27px;
   text-indent: 10px;
   font-size: 1em;
   border: solid 1px #eceff3;
-  margin-bottom: 5px;
-}
-.grid-container-editor-form input:hover {
-  border-color: #b0bac2;
-}
+  margin-bottom: 5px; }
+  .grid-container-editor-form input:hover {
+    border-color: #b0bac2; }
 .grid-container-editor-form button,
 .grid-container-editor-form button:focus {
   outline: none;
@@ -76,20 +69,16 @@ Dimensions
   -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
   -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.grid-container-editor-form button:hover,
-.grid-container-editor-form button:focus:hover {
-  color: #3ac5d9;
-}
+  box-shadow: none; }
+  .grid-container-editor-form button:hover,
+  .grid-container-editor-form button:focus:hover {
+    color: #3ac5d9; }
 .grid-container-editor-form label {
   display: inline;
-}
+  font-weight: normal; }
 .grid-container-editor-form .grid-new-container-values {
-  margin-bottom: 10px;
-}
-.grid-container-editor-form .grid-new-container-values > div {
-  margin-bottom: 8px;
-}
+  padding: 10px; }
+  .grid-container-editor-form .grid-new-container-values > div {
+    margin-bottom: 8px; }
 
 /*# sourceMappingURL=grid-container-editor.css.map */
