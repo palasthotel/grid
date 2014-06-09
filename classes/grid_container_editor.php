@@ -84,7 +84,7 @@ class grid_container_editor
 ?>
 	</div>
 	<p>For an overview we'll show you a list of existing containers here. Some of those are special containers which are needed by grid itself.</p>
-	<table>
+	<table class="grid-container-editor-table">
 		<tr>
 			<th>Identifier</th>
 			<th>Sidebar-Support</th>
@@ -159,7 +159,7 @@ class grid_container_editor
 	}
 ?>
 	</table>
-	<form method="POST">
+	<form class="grid-container-editor-form" method="POST">
 		<h3>Create a new container</h3>
 		<div>
 		Support for Sidebars:
