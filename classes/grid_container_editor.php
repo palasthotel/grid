@@ -4,7 +4,9 @@ class grid_container_editor
 {
 	public function getCSS($absolute=FALSE)
 	{
-		return array();
+		return array(
+			'css/grid-container-editor.css'
+		);
 	}
 	
 	public function getJS($absolute=FALSE)
@@ -84,7 +86,7 @@ class grid_container_editor
 ?>
 	</div>
 	<p>For an overview we'll show you a list of existing containers here. Some of those are special containers which are needed by grid itself.</p>
-	<table class="grid-container-editor-table">
+	<table cellspacing="0" cellpadding="0" class="grid-container-editor-table">
 		<tr>
 			<th>Identifier</th>
 			<th>Sidebar-Support</th>
@@ -172,14 +174,14 @@ class grid_container_editor
 		</div>
 		<div>
 		Denominator:
-		<input type="number" name="denominator" value="<?php echo $new_denominator;?>">
+		<input required type="number" name="denominator" value="<?php echo $new_denominator;?>">
 		</div>
 		<div>
 		Slot Sizes (divided by a comma):
-		<input type="text" name="slots" value="<?php echo implode(",", $slots);?>">
+		<input required type="text" name="slots" value="<?php echo implode(",", $slots);?>">
 		</div>
 		<div>
-		<input type="submit" value="Create Container">
+		<button type="submit" >Create Container</button>
 		</div>
 	</form>
 <?php
