@@ -4,3 +4,26 @@ body{
 #new-grid-wrapper{
 	margin-left: -20px;
 }
+
+/*
+* Privileges page
+*/
+.grid-privileges-editor{
+	margin-top: 10px;
+	border: none;
+	margin-bottom: 10px;
+}
+.grid-privileges-editor th,
+.grid-privileges-editor td{
+	text-align: left;
+	padding: 20px 10px 20px 10px;
+}
+.grid-privileges-editor td{
+
+}
+.grid-privileges-editor td:nth-child(n+2){
+	text-align: center;
+}
+.grid-privileges-editor tr:nth-child(2n){
+	background-color: #dfdfdf;
+}

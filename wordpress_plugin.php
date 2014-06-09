@@ -279,10 +279,11 @@ function grid_wp_privileges()
 		return;
 	}
 	$privileges=grid_wp_get_privs();
+	wp_enqueue_style('grid_css_wordpress',plugins_url('grid-wordpress.css',__FILE__));
 
 ?>
 <form method="post" action="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_privileges'),admin_url('tools.php'));?>">
-<table>
+<table cellspacing="0" cellpadding="0" class="grid-privileges-editor">
 	<tr>
 		<th>Role</th>
 <?php
@@ -318,7 +319,7 @@ function grid_wp_privileges()
 	}
 ?>
 </table>
-<input type="submit">
+<input class="button" type="submit">
 </form>
 <?php
 }
