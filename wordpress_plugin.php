@@ -310,7 +310,7 @@ function grid_wp_privileges()
 				$checked="checked";
 			}
 ?>
-		<td><input type="checkbox" name="privileges[<?php echo $key;?>][<?php echo $right; ?>]" <?php echo $checked ?>></td>
+		<td><input title="<?php echo $name." can ".$right; ?>" type="checkbox" name="privileges[<?php echo $key;?>][<?php echo $right; ?>]" <?php echo $checked ?>></td>
 <?php
 		}
 ?>

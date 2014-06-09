@@ -18,12 +18,17 @@ body{
 	text-align: left;
 	padding: 20px 10px 20px 10px;
 }
-.grid-privileges-editor td{
-
+.grid-privileges-editor th{
+	border-bottom: 1px solid #E1E1E2;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.grid-privileges-editor tr{
+	background-color: #fff;
+}
+.grid-privileges-editor tr:nth-child(2n){
+	background-color: #f9f9f9;
 }
 .grid-privileges-editor td:nth-child(n+2){
 	text-align: center;
-}
-.grid-privileges-editor tr:nth-child(2n){
-	background-color: #dfdfdf;
 }
