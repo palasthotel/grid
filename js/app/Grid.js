@@ -270,7 +270,13 @@ GRID = {
 		}
 	},
 	// publishes the grid
-	publish: function(){ new GridAjax("publishDraft",[GRID.ID]); },
+	publish: function(){ 
+		if( !GRID.getRights().get("publish") ){
+			alert("Sorry you have no rights for that...");
+			return false;
+		}
+		new GridAjax("publishDraft",[GRID.ID]); 
+	},
 	// revert to old revision
 	revert: function(){	
         GridRequest.grid.update(GRID.grid, {action: "revertDraft"});

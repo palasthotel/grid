@@ -50,9 +50,17 @@ var GridRevisionsView = GridBackbone.View.extend({
 		this.$el.parents(".rev-wrapper").toggle();
 	},
 	onDelete:function(e){
+		if(!GRID.getRights().get("revert")){
+            alert("You have no rights for that...");
+            return false;
+        }
 		GRID.revert();
 	},
 	onRevert:function(e){
+		if(!GRID.getRights().get("revert")){
+            alert("You have no rights for that...");
+            return false;
+        }
 		var revision=jQuery(e.srcElement).parents(".grid-revision").data("revision");
 		GRID.setToRevision(revision);
 	},
