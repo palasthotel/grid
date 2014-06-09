@@ -11,8 +11,7 @@ Dimensions
   margin-top: 10px;
   border: 1px solid #e1e1e2;
   margin-bottom: 10px;
-  width: 100%;
-  padding-right: 20px; }
+  width: 100%; }
   .grid-container-editor-table th, .grid-container-editor-table td {
     text-align: left;
     padding: 20px 10px 20px 10px;
@@ -41,8 +40,6 @@ Dimensions
 .grid-container-editor-form button {
   font-family: inherit;
   font-size: 12px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box; }
 .grid-container-editor-form input {
   height: 27px;
@@ -66,9 +63,7 @@ Dimensions
   color: #262e38;
   background-color: #e5e3df;
   padding: 10px;
-  -webkit-transition: all 0.1337s ease;
   transition: all 0.1337s ease;
-  -webkit-box-shadow: none;
   box-shadow: none; }
   .grid-container-editor-form button:hover,
   .grid-container-editor-form button:focus:hover {
@@ -80,5 +75,3 @@ Dimensions
   padding: 0px 10px; }
   .grid-container-editor-form .grid-new-container-values > div {
     margin-bottom: 8px; }
-
-/*# sourceMappingURL=grid-container-editor.css.map */
