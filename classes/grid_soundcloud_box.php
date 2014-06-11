@@ -30,7 +30,6 @@ class grid_soundcloud_box extends grid_static_base_box {
 			$curl = curl_init($url);
 		    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		    curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
 		    $return = curl_exec($curl);
 		    curl_close($curl);
 
