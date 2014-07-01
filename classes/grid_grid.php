@@ -154,6 +154,7 @@ class grid_grid extends grid_base {
 	
 	public function preprocessContainer(){
 		// Start Container Preprocessing by ben_
+		// optimized by edward
 		$precontainer = false;
 		$nextcontainer = false;
 		
@@ -177,8 +178,8 @@ class grid_grid extends grid_base {
 				$nextcontainer = $this->container[$i+1];
 			}
 			
-					
-			if($mycontainer->is_content_container() and !$prevcontainer->is_content_container()){
+			// if container with sidebarspace and previous was none or was last one, than start wrapper
+			if($mycontainer->is_content_container() && (!$prevcontainer->is_content_container() || $prevcontainer->lastcontentcontainer) ){
 				$this->container[$i]->firstcontentcontainer = true;
 				$withincontentcontainers = true;
 				$contentcontaineropencounter ++;
@@ -186,9 +187,23 @@ class grid_grid extends grid_base {
 				$this->container[$i]->firstcontentcontainer = false;
 			}
 			
-			if($withincontentcontainers and $mycontainer->is_content_container() and $nextcontainer->is_content_container()){
+
+			if(
+				$withincontentcontainers && 
+				$mycontainer->is_content_container() && 
+				$nextcontainer->is_content_container() &&
+				$mycontainer->space_to_right == $nextcontainer->space_to_right &&
+				$mycontainer->space_to_left == $nextcontainer->space_to_left
+				){
 				$this->container[$i]->lastcontentcontainer = false;
-			}elseif($withincontentcontainers and $mycontainer->is_content_container() and !$nextcontainer->is_content_container()){
+			}elseif(
+				$withincontentcontainers && 
+				$mycontainer->is_content_container() && 
+				
+				( !$nextcontainer->is_content_container() || 
+				$mycontainer->space_to_right != $nextcontainer->space_to_right ||
+				$mycontainer->space_to_left != $nextcontainer->space_to_left ) ){
+
 				$this->container[$i]->lastcontentcontainer = true;
 				$withincontentcontainers = false;
 				$contentcontainerclosecounter ++;
@@ -198,6 +213,7 @@ class grid_grid extends grid_base {
 			$i++;
 		}
 		// End Container Preprocessing by ben_
+		// optimized by edward
 	}
 	
 }
