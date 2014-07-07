@@ -11,15 +11,15 @@ class grid_post_box extends grid_box {
 		$post=get_post($this->content->postid);
 		if($post==FALSE)
 		{
-			return "Post is lost";
+			return 'Post is lost';
 		}
 		if($editmode)
 		{
-			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.")";//date("Y-m-d h:i:s",$post->post_date).")";
+			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.')';//date("Y-m-d h:i:s",$post->post_date).")";
 		}
 		else
 		{
-			$query=new WP_Query(array("p"=>$this->content->postid,"post_type"=>array('post','page')));
+			$query=new WP_Query(array('p'=>$this->content->postid,'post_type'=>array('post','page')));
 			if($query->have_posts())
 			{
 				$query->the_post();
@@ -49,11 +49,11 @@ class grid_post_box extends grid_box {
 	}
 	
 	public function metaTitle() {
-		return t("Contents");
+		return t('Contents');
 	}
 	
 	public function metaSearchCriteria() {
-		return array("title");
+		return array('title');
 	}
 	
 	public function metaSearch($criteria,$search) {

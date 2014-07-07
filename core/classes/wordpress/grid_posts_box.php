@@ -4,11 +4,11 @@ class grid_posts_box extends grid_list_box {
 	
 	function __construct() {
 		$this->content=new Stdclass();
-		$this->content->viewmode="excerpt";
+		$this->content->viewmode='excerpt';
 		$this->content->posts_per_page=5;
 		$this->content->offset=0;
-		$this->content->category="";
-		$this->content->post_type="post";
+		$this->content->category='';
+		$this->content->post_type='post';
 	}
 	
 	public function type()
@@ -19,17 +19,17 @@ class grid_posts_box extends grid_list_box {
 	public function build($editmode) {
 		if($editmode)
 		{
-			return "Liste von Inhalten";
+			return 'Liste von Inhalten';
 		}
 		else
 		{
 			$args=array();
-			if(isset($this->content->category) && $this->content->category!="")
+			if(isset($this->content->category) && $this->content->category!='')
 				$args['cat']=$this->content->category;
 			$args['posts_per_page']=$this->content->posts_per_page;
 			$args['offset']=$this->content->offset;
 			$args['post_type']=$this->content->post_type;
-			$output="";
+			$output='';
 			$query=new WP_Query($args);
 			while($query->have_posts())
 			{
@@ -103,7 +103,7 @@ class grid_posts_box extends grid_list_box {
 		$result[]=array('key'=>100,'value'=>'Helper to check');
 		foreach($categories as $category)
 		{
-			if($query=="" || strstr($category->name, $query)!==FALSE)
+			if($query=='' || strstr($category->name, $query)!==FALSE)
 			{
 				$results[]=array('key'=>$category->term_id,'value'=>$category->name);
 			}

@@ -10,6 +10,6 @@
  
 function grid_wp_facebook_like_box_define_boxes()
 {
-	require("grid_facebook_like_box/grid_fb_like_box_box.php");
+	require('grid_facebook_like_box/grid_fb_like_box_box.php');
 }
-add_action("grid_load_classes","grid_wp_facebook_like_box_define_boxes");
+add_action('grid_load_classes','grid_wp_facebook_like_box_define_boxes');

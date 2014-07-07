@@ -4,7 +4,7 @@ class grid_sidebar_box extends grid_box
 {
 	public function type()
 	{
-		return "sidebar";
+		return 'sidebar';
 	}
 	
 	public function __construct()
@@ -25,12 +25,12 @@ class grid_sidebar_box extends grid_box
 			}
 			else
 			{
-				return "sidebar is lost.";
+				return 'sidebar is lost.';
 			}
 		}
 		else
 		{
-			return "Sidebar not found or none set";
+			return 'Sidebar not found or none set';
 		}
 	}
 	
@@ -78,7 +78,7 @@ class grid_sidebar_box extends grid_box
 			$i++;
 			$query->the_post();
 			$post=get_post();
-			if(is_numeric(strpos( mb_strtolower($post->post_title, 'UTF-8'),mb_strtolower($querystr, "UTF-8" ) )))
+			if(is_numeric(strpos( mb_strtolower($post->post_title, 'UTF-8'),mb_strtolower($querystr, 'UTF-8' ) )))
 			{
 				$results[]=array('key'=>$post->ID,'value'=>$post->post_title);
 			}

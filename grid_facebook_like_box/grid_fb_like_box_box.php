@@ -11,24 +11,24 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	{
 		$this->content=new Stdclass();
 		$this->content->fb_page='';
-		$this->content->appid = "";
-		$this->content->show_faces = "true";
-		$this->content->show_header = "true";
-		$this->content->datastream = "false";
-		$this->content->colorscheme = "light";
-		$this->content->show_border = "true";
-		$this->content->force_wall = "false";
+		$this->content->appid = '';
+		$this->content->show_faces = 'true';
+		$this->content->show_header = 'true';
+		$this->content->datastream = 'false';
+		$this->content->colorscheme = 'light';
+		$this->content->show_border = 'true';
+		$this->content->force_wall = 'false';
 	}
 
 	public function build($editmode) {
 		if($editmode)
 		{
-			return t("Facebook Like Box").": <br/>".$this->content->fb_page;
+			return t('Facebook Like Box').': <br/>'.$this->content->fb_page;
 		}
 		else
 		{
 			$fb_page = $this->content->fb_page;
-			$appid = "";
+			$appid = '';
 			if(isset($this->content->appid)) $appid = $this->content->appid;
 			$show_faces = $this->content->show_faces;
 			$show_header = $this->content->show_header;
@@ -37,8 +37,8 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			$show_border = $this->content->show_border;
 			$force_wall = $this->content->force_wall;
 
-			$fb_url = "http://www.facebook.com/";
-			$fbs_url = "https://www.facebook.com/";
+			$fb_url = 'http://www.facebook.com/';
+			$fbs_url = 'https://www.facebook.com/';
 			if(strpos($fb_page, $fb_url) === false && strpos($fb_page, $fbs_url) === false){
 				$fb_page = $fb_url.$fb_page;
 			}
@@ -56,19 +56,19 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			  var js = d.getElementsByTagName(s)[0];
 			  if (d.getElementById(id)) return;
 			  js = d.createElement(s); js.id = id;
-			  js.src = "//connect.facebook.net/de_DE/all.js#xfbml=1&appId=<?= $appid; ?>";
+			  js.src = '//connect.facebook.net/de_DE/all.js#xfbml=1&appId=<?php echo $appid; ?>';
 			  d.head.insertBefore(js, document.head.childNodes[0])
 			}(document, 'script', 'facebook-jssdk'));
 			</script>
 			
 			<div 
 			class="fb-like-box" 
-			data-href="<?= $fb_page; ?>" 
-			data-colorscheme="<?= $colorscheme; ?>" 
-			data-show-faces="<?= $show_faces; ?>" 
-			data-header="<?= $show_header; ?>" 
-			data-stream="<?= $datastream; ?>" 
-			data-show-border="<?= $show_border; ?>"></div>
+			data-href="<?php echo $fb_page; ?>" 
+			data-colorscheme="<?php echo $colorscheme; ?>" 
+			data-show-faces="<?php echo $show_faces; ?>" 
+			data-header="<?php echo $show_header; ?>" 
+			data-stream="<?php echo $datastream; ?>" 
+			data-show-border="<?php echo $show_border; ?>"></div>
 
 			<?php
 			$output = ob_get_contents();
@@ -106,12 +106,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'selections'=>
 				array(
 					array(
-						"key" => "light",
-						"text" => t("light"),
+						'key' => 'light',
+						'text' => t('light'),
 					),
 					array(
-						"key" => "dark",
-						"text" => t("dark"),
+						'key' => 'dark',
+						'text' => t('dark'),
 					),
 				),
 			),
@@ -122,12 +122,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'selections'=>
 				array(
 					array(
-						"key" => "true",
-						"text" => t("show"),
+						'key' => 'true',
+						'text' => t('show'),
 					),
 					array(
-						"key" => "false",
-						"text" => t("hide"),
+						'key' => 'false',
+						'text' => t('hide'),
 					),
 				),
 			),
@@ -138,12 +138,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'selections'=>
 				array(
 					array(
-						"key" => "true",
-						"text" => t("show"),
+						'key' => 'true',
+						'text' => t('show'),
 					),
 					array(
-						"key" => "false",
-						"text" => t("hide"),
+						'key' => 'false',
+						'text' => t('hide'),
 					),
 				),
 			),
@@ -154,12 +154,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'selections'=>
 				array(
 					array(
-						"key" => "true",
-						"text" => t("show"),
+						'key' => 'true',
+						'text' => t('show'),
 					),
 					array(
-						"key" => "false",
-						"text" => t("hide"),
+						'key' => 'false',
+						'text' => t('hide'),
 					),
 				),
 			),
@@ -170,12 +170,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'selections'=>
 				array(
 					array(
-						"key" => "true",
-						"text" => t("show"),
+						'key' => 'true',
+						'text' => t('show'),
 					),
 					array(
-						"key" => "false",
-						"text" => t("hide"),
+						'key' => 'false',
+						'text' => t('hide'),
 					),
 				),
 			),
@@ -186,12 +186,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'selections'=>
 				array(
 					array(
-						"key" => "true",
-						"text" => t("On"),
+						'key' => 'true',
+						'text' => t('On'),
 					),
 					array(
-						"key" => "false",
-						"text" => t("Off"),
+						'key' => 'false',
+						'text' => t('Off'),
 					),
 				),
 			),

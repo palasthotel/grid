@@ -6,8 +6,8 @@ class grid_twitter_box extends grid_static_base_box {
 	{
 		$this->content=new Stdclass();
 		$this->content->limit=5;
-		$this->content->user="";
-		$this->content->retweet = "timeline";
+		$this->content->user='';
+		$this->content->retweet = 'timeline';
 	}
 	
 	public function type()
@@ -17,18 +17,18 @@ class grid_twitter_box extends grid_static_base_box {
 	
 	protected function prebuild()
 	{
-		if($this->content->user=="")
-			return "";
+		if($this->content->user=='')
+			return '';
 		return NULL;
 	}
 	
 	protected function fetch($connection)
 	{
-		if($this->content->retweet == "retweets"){
-			$result=$connection->get("https://api.twitter.com:443/1.1/search/tweets.json?src=typd&q=".$this->content->user);
+		if($this->content->retweet == 'retweets'){
+			$result=$connection->get('https://api.twitter.com:443/1.1/search/tweets.json?src=typd&q='.$this->content->user);
 			$result = $result->statuses;
 		} else {
-			$result=$connection->get("https://api.twitter.com:443/1.1/statuses/user_timeline.json",array("screen_name"=>$this->content->user));
+			$result=$connection->get('https://api.twitter.com:443/1.1/statuses/user_timeline.json',array('screen_name'=>$this->content->user));
 		}
 		
 		return $result;		
@@ -37,7 +37,7 @@ class grid_twitter_box extends grid_static_base_box {
 	public function build($editmode) {
 		if($editmode)
 		{
-			return "Twitter Box";
+			return 'Twitter Box';
 		}
 		else
 		{
@@ -49,7 +49,7 @@ class grid_twitter_box extends grid_static_base_box {
 				$token=get_option('grid_twitterbox_accesstoken');
 				if(!isset($token['oauth_token']) ||!isset($token['oauth_token_secret']))
 				{
-					return "";
+					return '';
 				}
 				$connection=new TwitterOAuth(get_option('grid_twitterbox_consumer_key',''),get_option('grid_twitterbox_consumer_secret',''),$token['oauth_token'],$token['oauth_token_secret']);
 				$result=$this->fetch($connection);
@@ -59,13 +59,13 @@ class grid_twitter_box extends grid_static_base_box {
 				}
 				ob_start();
 				$content=$result;
-				if(file_exists($this->storage->templatesPath."/grid_twitterbox.tpl.php"))
+				if(file_exists($this->storage->templatesPath.'/grid_twitterbox.tpl.php'))
 				{
-					require($this->storage->templatesPath."/grid_twitterbox.tpl.php");
+					require($this->storage->templatesPath.'/grid_twitterbox.tpl.php');
 				}
 				else
 				{
-					require("grid_twitterbox.tpl.php");
+					require('grid_twitterbox.tpl.php');
 				}
 				$result=ob_get_clean();
 				return $result;
@@ -117,17 +117,17 @@ class grid_twitter_hashtag_box extends grid_twitter_box {
 	{
 		$this->content=new Stdclass();
 		$this->content->limit=5;
-		$this->content->hashtag="";
+		$this->content->hashtag='';
 	}
 
 	public function type()
 	{
-		return "twitter_hashtag";
+		return 'twitter_hashtag';
 	}
 	
 	public function fetch($connection)
 	{
-		$output=$connection->get("https://api.twitter.com:443/1.1/search/tweets.json",array("q"=>$this->content->hashtag));
+		$output=$connection->get('https://api.twitter.com:443/1.1/search/tweets.json',array('q'=>$this->content->hashtag));
 		if(isset($output->statuses))
 			$result=$output->statuses;
 		else
@@ -137,15 +137,15 @@ class grid_twitter_hashtag_box extends grid_twitter_box {
 	
 	protected function prebuild()
 	{
-		if($this->content->hashtag=="")
-			return "";
+		if($this->content->hashtag=='')
+			return '';
 		return NULL;
 	}
 	
 	public function build($editmode) {
 		if($editmode)
 		{
-			return "Twitter Hashtag Box";
+			return 'Twitter Hashtag Box';
 		}
 		else
 		{
