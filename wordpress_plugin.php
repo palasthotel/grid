@@ -230,7 +230,7 @@ add_action("admin_menu","grid_wp_admin_menu");
 
 function grid_wp_get_privs()
 {
-global $wp_roles;
+	global $wp_roles;
 	$names=$wp_roles->get_names();
 	$ajaxendpoint=new grid_ajaxendpoint();
 	$rights=$ajaxendpoint->Rights();
@@ -291,7 +291,7 @@ function grid_wp_privileges()
 	{
 ?>
 		<th><?php echo $right; ?></th>
-<?
+<?php
 	}
 ?>
 	</tr>
@@ -434,7 +434,7 @@ function grid_wp_default_container_style_html()
 	}
 ?>
 </select>
-<?
+<?php
 }
 
 function grid_wp_default_slot_style_html()
@@ -454,7 +454,7 @@ function grid_wp_default_slot_style_html()
 	}
 ?>
 </select>
-<?
+<?php
 }
 
 function grid_wp_default_box_style_html()
@@ -474,7 +474,7 @@ function grid_wp_default_box_style_html()
 	}
 ?>
 </select>
-<?
+<?php
 }
 
 function grid_wp_post_type_html($args)
@@ -507,7 +507,7 @@ function grid_wp_sidebar_html()
 	}
 ?>
 </select>
-<?
+<?php
 }
 
 function grid_wp_default_container_section()
