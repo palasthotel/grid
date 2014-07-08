@@ -9,25 +9,19 @@
 
 require_once 'grid_twitterbox/twitteroauth/twitteroauth.php';
 
- 
-function grid_wp_twitterbox_define_boxes()
-{
+function grid_wp_twitterbox_define_boxes() {
 	require('grid_twitterbox/grid_wp_twitterboxes.php');
 }
 add_action('grid_load_classes','grid_wp_twitterbox_define_boxes');
 
-function grid_wp_twitterbox_admin_menu()
-{
+function grid_wp_twitterbox_admin_menu() {
 	add_submenu_page('options-general.php','Grid Twitterbox','Grid Twitterbox','manage_options','grid_wp_twitterbox_settings','grid_wp_twitterbox_settings');
 	add_submenu_page(null,'Grid Twitter Callback','Grid Twitter Callback','manage_options','grid_wp_twitterbox_callback','grid_wp_twitterbox_callback');
-
 }
 add_action('admin_menu','grid_wp_twitterbox_admin_menu');
 
-function grid_wp_twitterbox_settings()
-{
-	if(isset($_POST) && !empty($_POST))
-	{
+function grid_wp_twitterbox_settings() {
+	if(isset($_POST) && !empty($_POST)) {
 		update_option('grid_twitterbox_consumer_key',$_POST['grid_twitterbox_consumer_key']);
 		update_option('grid_twitterbox_consumer_secret',$_POST['grid_twitterbox_consumer_secret']);
 
@@ -36,12 +30,10 @@ function grid_wp_twitterbox_settings()
 		session_start();
 		$_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
 		$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-	    $url = $connection->getAuthorizeURL($token);
-	    header('Location: ' . $url);
-	    die();
-	}
-	else
-	{
+		$url = $connection->getAuthorizeURL($token);
+		header('Location: ' . $url);
+		die();
+	} else {
 ?>
 <form method="POST" action="<?php echo add_query_arg(array('noheader'=>true,'page'=>'grid_wp_twitterbox_settings'),admin_url('options-general.php'))?>">
 <label for="grid_twitterbox_consumer_key">Consumer Key:</label>
@@ -60,8 +52,7 @@ Access Token:
 	}
 }
 
-function grid_wp_twitterbox_callback()
-{
+function grid_wp_twitterbox_callback() {
 	session_start();
 	$connection = new TwitterOAuth(get_option('grid_twitterbox_consumer_key',''), get_option('grid_twitterbox_consumer_secret',''), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 	

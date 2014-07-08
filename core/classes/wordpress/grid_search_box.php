@@ -6,45 +6,37 @@ class grid_posts_box extends grid_static_base_box {
 		$this->content=new Stdclass();
 	}
 	
-	public function type()
-	{
+	public function type() {
 		return 'wp-search';
 	}
 	
 	public function build($editmode) {
-		if($editmode)
-		{
+		if($editmode) {
 			return t('WP Search');
-		}
-		else
-		{
+		} else {
 			$args=array();
-			if(isset($this->content->category) && $this->content->category!='')
+			if(isset($this->content->category) && $this->content->category!='') {
 				$args['cat']=$this->content->category;
+			}
 			$args['posts_per_page']=$this->content->posts_per_page;
 			$args['offset']=$this->content->offset;
 			$args['post_type']=$this->content->post_type;
 			$output='';
 			$query=new WP_Query($args);
-			while($query->have_posts())
-			{
+			while($query->have_posts()) {
 				$query->the_post();
 				ob_start();
 				$found=FALSE;
-				if($this->storage->templatesPath!=NULL)
-				{
-					if(file_exists($this->storage->templatesPath.'/post_content.tpl.php'))
-					{
+				if($this->storage->templatesPath!=NULL) {
+					if(file_exists($this->storage->templatesPath.'/post_content.tpl.php')) {
 						$found=TRUE;
 						include $this->storage->templatesPath.'/post_content.tpl.php';
 					}
 				}
-				if(!$found)
-				{
+				if(!$found) {
 					include dirname(__FILE__).'/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output.=ob_get_clean();
-
 			}
 			wp_reset_postdata();
 			return $output;
@@ -54,8 +46,7 @@ class grid_posts_box extends grid_static_base_box {
 	public function contentStructure() {
 		$post_types=array();
 		$input=get_post_types(array(),'objects');
-		foreach($input as $post_type=>$info)
-		{
+		foreach($input as $post_type=>$info) {
 			$post_types[]=array('key'=>$post_type,'text'=>$info->labels->name);
 		}
 		return array(
@@ -89,31 +80,25 @@ class grid_posts_box extends grid_static_base_box {
 		);
 	}
 
-	public function performElementSearch($key,$query)
-	{
-		if($key!='category')
+	public function performElementSearch($key,$query) {
+		if($key!='category') {
 			return array(array('key'=>-1,'value'=>'invalid key'));
+		}
 		$categories=get_categories();
 		$result=array();
 		$result[]=array('key'=>100,'value'=>'Helper to check');
-		foreach($categories as $category)
-		{
-			if($query=='' || strstr($category->name, $query)!==FALSE)
-			{
+		foreach($categories as $category) {
+			if($query=='' || strstr($category->name, $query)!==FALSE) {
 				$results[]=array('key'=>$category->term_id,'value'=>$category->name);
 			}
 		}
 		return $results;
 	}
 
-	public function getElementValue($path,$id)
-	{
-		if($path!='category')
-		{
+	public function getElementValue($path,$id) {
+		if($path!='category') {
 			return '';
-		}
-		else
-		{
+		} else {
 			$thisCat=get_category($id);
 			return $thisCat->name;
 		}

@@ -2,31 +2,26 @@
 
 class grid_fb_like_box_box extends grid_static_base_box {
 	
-	public function type()
-	{
+	public function type() {
 		return 'fb_like_box';
 	}
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->content=new Stdclass();
-		$this->content->fb_page='';
-		$this->content->appid = '';
-		$this->content->show_faces = 'true';
+		$this->content->fb_page     ='';
+		$this->content->appid       = '';
+		$this->content->show_faces  = 'true';
 		$this->content->show_header = 'true';
-		$this->content->datastream = 'false';
+		$this->content->datastream  = 'false';
 		$this->content->colorscheme = 'light';
 		$this->content->show_border = 'true';
-		$this->content->force_wall = 'false';
+		$this->content->force_wall  = 'false';
 	}
 
 	public function build($editmode) {
-		if($editmode)
-		{
+		if($editmode) {
 			return t('Facebook Like Box').': <br/>'.$this->content->fb_page;
-		}
-		else
-		{
+		} else {
 			$fb_page = $this->content->fb_page;
 			$appid = '';
 			if(isset($this->content->appid)) $appid = $this->content->appid;
@@ -39,7 +34,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 
 			$fb_url = 'http://www.facebook.com/';
 			$fbs_url = 'https://www.facebook.com/';
-			if(strpos($fb_page, $fb_url) === false && strpos($fb_page, $fbs_url) === false){
+			if(strpos($fb_page, $fb_url) === false && strpos($fb_page, $fbs_url) === false) {
 				$fb_page = $fb_url.$fb_page;
 			}
 
@@ -197,5 +192,4 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			),
 		);
 	}
-
 }

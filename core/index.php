@@ -3,8 +3,7 @@
 include 'classes/bootstrap.php';
 
 $storage=new grid_db('localhost','enno','','grid');
-if(isset($_REQUEST['path']) && $_REQUEST['path']=='/ajax')
-{
+if(isset($_REQUEST['path']) && $_REQUEST['path']=='/ajax') {
 	$storage->handleAjaxCall();
 	return;
 }
