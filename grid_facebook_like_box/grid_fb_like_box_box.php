@@ -7,7 +7,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	}
 
 	public function __construct() {
-		$this->content=new Stdclass();
+		$this->content = new Stdclass();
 		$this->content->fb_page     ='';
 		$this->content->appid       = '';
 		$this->content->show_faces  = 'true';
@@ -19,12 +19,12 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	}
 
 	public function build($editmode) {
-		if($editmode) {
-			return t('Facebook Like Box').': <br/>'.$this->content->fb_page;
+		if ( $editmode ) {
+			return t( 'Facebook Like Box' ).': <br/>'.$this->content->fb_page;
 		} else {
 			$fb_page = $this->content->fb_page;
 			$appid = '';
-			if(isset($this->content->appid)) $appid = $this->content->appid;
+			if ( isset( $this->content->appid ) ) $appid = $this->content->appid;
 			$show_faces = $this->content->show_faces;
 			$show_header = $this->content->show_header;
 			$datastream = $this->content->datastream;
@@ -34,7 +34,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 
 			$fb_url = 'http://www.facebook.com/';
 			$fbs_url = 'https://www.facebook.com/';
-			if(strpos($fb_page, $fb_url) === false && strpos($fb_page, $fbs_url) === false) {
+			if ( strpos( $fb_page, $fb_url ) === false && strpos( $fb_page, $fbs_url ) === false ) {
 				$fb_page = $fb_url.$fb_page;
 			}
 
@@ -75,118 +75,118 @@ class grid_fb_like_box_box extends grid_static_base_box {
 	public function contentStructure () {
 		return array(
 			array(
-				'key'=>'fb_page',
-				'label'=>t('Facebook page'),
-				'type'=>'text'
+				'key' => 'fb_page',
+				'label' => t( 'Facebook page' ),
+				'type' => 'text'
 			),
 			array(
-				'key'=>'appid',
-				'label'=>t('Facebook APP Id'),
-				'type'=>'text'
+				'key' => 'appid',
+				'label' => t( 'Facebook APP Id' ),
+				'type' => 'text'
 			),
 			array(
 				'key' => 'width',
-				'label' => t('Width in pixel (optional, default 300)'),
+				'label' => t( 'Width in pixel (optional, default 300)' ),
 				'type' => 'number',
 			),
 			array(
 				'key' => 'height',
-				'label' => t('Height in pixel(optional, default 556 or 63 without stram and faces)'),
+				'label' => t( 'Height in pixel(optional, default 556 or 63 without stram and faces)' ),
 				'type' => 'number',
 			),
 			array(
 				'key' => 'colorscheme',
-				'label' => t('Color scheme'),
+				'label' => t( 'Color scheme' ),
 				'type' => 'select',
 				'selections'=>
 				array(
 					array(
 						'key' => 'light',
-						'text' => t('light'),
+						'text' => t( 'light' ),
 					),
 					array(
 						'key' => 'dark',
-						'text' => t('dark'),
+						'text' => t( 'dark' ),
 					),
 				),
 			),
 			array(
 				'key' => 'show_faces',
-				'label' => t('Faces'),
+				'label' => t( 'Faces' ),
 				'type' => 'select',
 				'selections'=>
 				array(
 					array(
 						'key' => 'true',
-						'text' => t('show'),
+						'text' => t( 'show' ),
 					),
 					array(
 						'key' => 'false',
-						'text' => t('hide'),
+						'text' => t( 'hide' ),
 					),
 				),
 			),
 			array(
 				'key' => 'show_header',
-				'label' => t('Box header'),
+				'label' => t( 'Box header' ),
 				'type' => 'select',
 				'selections'=>
 				array(
 					array(
 						'key' => 'true',
-						'text' => t('show'),
+						'text' => t( 'show' ),
 					),
 					array(
 						'key' => 'false',
-						'text' => t('hide'),
+						'text' => t( 'hide' ),
 					),
 				),
 			),
 			array(
 				'key' => 'datastream',
-				'label' => t('Stream of latest posts'),
+				'label' => t( 'Stream of latest posts' ),
 				'type' => 'select',
 				'selections'=>
 				array(
 					array(
 						'key' => 'true',
-						'text' => t('show'),
+						'text' => t( 'show' ),
 					),
 					array(
 						'key' => 'false',
-						'text' => t('hide'),
+						'text' => t( 'hide' ),
 					),
 				),
 			),
 			array(
 				'key' => 'show_border',
-				'label' => t('Border of box'),
+				'label' => t( 'Border of box' ),
 				'type' => 'select',
 				'selections'=>
 				array(
 					array(
 						'key' => 'true',
-						'text' => t('show'),
+						'text' => t( 'show' ),
 					),
 					array(
 						'key' => 'false',
-						'text' => t('hide'),
+						'text' => t( 'hide' ),
 					),
 				),
 			),
 			array(
 				'key' => 'force_wall',
-				'label' => t('Force "place" Pages'),
+				'label' => t( 'Force "place" Pages' ),
 				'type' => 'select',
 				'selections'=>
 				array(
 					array(
 						'key' => 'true',
-						'text' => t('On'),
+						'text' => t( 'On' ),
 					),
 					array(
 						'key' => 'false',
-						'text' => t('Off'),
+						'text' => t( 'Off' ),
 					),
 				),
 			),
