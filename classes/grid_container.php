@@ -48,14 +48,19 @@ class grid_container extends grid_base {
 		if($slots_dimension[$counter] == "0") $counter++;
 
 		if( $type_arr[0] == "s" && $editmode==FALSE)
-		{
+		{	
+			$side = "right";
+			if($this->space_to_right){
+				$side = "left";
+			}
 			$slot=$this->slots[0];
 			$slot->dimension = $slots_dimension[$counter++];
 			array_push( $slot->classes, 
 							"grid-slot-sidebar", 
 							"grid-slot-first", 
 							"grid-slot-last", 
-							"grid-slot-has-one-box");
+							"grid-slot-has-one-box",
+							"grid-$side-sidebar");
 			$output=$slot->render($editmode, $this);
 			return $output;
 		}

@@ -9,8 +9,10 @@ if ($this->firstcontentcontainer){
 	$width = $math[1]-$math[0];
 	$class = ($this->space_to_right)? "c-".$width."d".$math[1]."-0" : "c-0-".$width."d".$math[1];
 	$class = "grid-container-".$class;
+	$str = "grid-container-right-space-".$this->space_to_right;
+	$stl = "grid-container-left-space-".$this->space_to_left
 ?>
-<div class="grid-content-container-wrapper <?= $class ?> grid-first-content-container">
+<div class="grid-content-container-wrapper <?= $class." ".$str." ".$stl; ?> grid-first-content-container">
 <?php
 }
 ?>

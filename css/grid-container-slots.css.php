@@ -16,7 +16,8 @@ header('Content-Type: text/css');
 
 // $container_types = db_query("SELECT * FROM {grid_container_type}");
 
-foreach ($container_types as $key => $type) {
+foreach ($container_types as $key => $type) 
+{
 	$type_arr = explode("-",$type->type);
 	$container_type = $type_arr[0];
 	$dimensions = array_slice($type_arr, 1);
@@ -29,17 +30,20 @@ foreach ($container_types as $key => $type) {
 	$container_dimension = (100-($space_to_left+$space_to_right));
 	
 	if($container_type == "s") print ".grid-toolbar ";
-		print ".grid-container-".$type->type;
-		print ($space_to_left > 0)? ".grid-container-left-space-".$type->space_to_left: "";
-		print ($space_to_right > 0)? ".grid-container-right-space-".$type->space_to_right: "";
-		print "{"; 
-			print ($space_to_left > 0)? "padding-left:".$space_to_left."%;" : "";
-			print ($space_to_right > 0)? "padding-right:".$space_to_right."%;" : "";
-			print "width:$container_dimension%;";
-		print "}";
+
+	print ".grid-container-".$type->type;
+	print ($space_to_left > 0)? ".grid-container-left-space-".$type->space_to_left: "";
+	print ($space_to_right > 0)? ".grid-container-right-space-".$type->space_to_right: "";
+	print "{"; 
+		print ($space_to_left > 0)? "padding-left:".$space_to_left."%;" : "";
+		print ($space_to_right > 0)? "padding-right:".$space_to_right."%;" : "";
+		print "width:$container_dimension%;";
+	print "}";
+
 
 	$calculated = array();
-	foreach ($dimensions as $key => $slot) {
+	foreach ($dimensions as $key => $slot) 
+	{
 		if($slot == 0 || in_array($slot, $calculated)) continue;
 		$calculated[] = $slot;
 		print ".grid-container-".$type->type." .grid-slot-".$slot."{";
@@ -49,3 +53,32 @@ foreach ($container_types as $key => $type) {
 }
 
 ?>
+// for frontend only
+.grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0 .grid-container-*,
+.grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3 .grid-container-*
+{
+	width: 100%;
+	padding: 0px;
+}
+.grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0
+{
+	padding: 0px;
+	float: left;
+}
+.grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3
+{
+	padding: 0px;
+	float:right;
+}
+.grid-frontend .grid-slot-sidebar{
+	display: block;
+	width: 33.3%;
+}
+.grid-frontend .grid-slot-sidebar.grid-right-sidebar
+{
+	float: right;
+}
+.grid-frontend .grid-slot-sidebar.grid-left-sidebar
+{
+	float:left;
+}
