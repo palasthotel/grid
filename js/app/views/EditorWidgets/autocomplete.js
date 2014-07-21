@@ -22,7 +22,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         }
         html+="<div class='"+classes+"'><input type=text class='form-text autocomplete i-autocomplete' "+disabled+"/>";
         html+="<div class=loading rotate'></div>";
-        html+="<div class='cancel'></div>";
+        html+="<div class='cancel icon-cancel'></div>";
         html+="<ul class='suggestion-list'></ul>";
         jQuery(this.$el).html(html);
         if(fetch)
