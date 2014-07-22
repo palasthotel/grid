@@ -28,6 +28,7 @@ class grid_posts_box extends grid_list_box {
 			$args['post_type'] = $this->content->post_type;
 			$output = '';
 			$query = new WP_Query( $args );
+			$counter = 0;
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				ob_start();
@@ -42,6 +43,10 @@ class grid_posts_box extends grid_list_box {
 					include dirname(__FILE__).'/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output .= ob_get_clean();
+				$counter ++;
+				if($counter == $this->content->posts_per_page){
+					break;
+				}
 			}
 			wp_reset_postdata();
 			return $output;
