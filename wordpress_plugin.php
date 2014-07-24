@@ -161,6 +161,7 @@ function grid_wp_init() {
 		'labels' => array(
 			'singular_name' => 'Landing Page',
 		),
+		'supports' =>  array('title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions'),
 	);
 	register_post_type( 'landing_page', $args );
 	
