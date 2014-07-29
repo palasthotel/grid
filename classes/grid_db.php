@@ -219,6 +219,7 @@ class grid_db {
 		readmore_url box_readmoreurl,
 		content box_content,
 		grid_box_style.slug box_style,
+		grid_box_style.style box_style_label,
 		grid_box_type.type box_type
 		
 		from ".$this->prefix."grid_box grid_box
