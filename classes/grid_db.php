@@ -1136,32 +1136,36 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	}
 
 	public function fetchGridRevisions($gridid) {
-		$query = "SELECT revision,author,revision_date,published FROM ".$this->prefix."grid_grid WHERE id = $gridid ORDER BY revision DESC";
-		$result=$this->connection->query($query) or die($this->connection->error);
-		$revisions = array();
-		$was_draft = false;
-		// state=0 => depreciated
-		// state=1 => published
-		// state=2 => draft
-		while($row=$result->fetch_assoc()) {
-			$state = "deprecated";
-			if(!$was_draft){
-				$state="draft";
-				$was_draft = true;
+		if(!strncmp("box:",$gridid,strlen("box:")) && !strncmp("container:",$gridid,strlen("container:")))
+		{
+			$query = "SELECT revision,author,revision_date,published FROM ".$this->prefix."grid_grid WHERE id = $gridid ORDER BY revision DESC";
+			$result=$this->connection->query($query) or die($this->connection->error);
+			$revisions = array();
+			$was_draft = false;
+			// state=0 => depreciated
+			// state=1 => published
+			// state=2 => draft
+			while($row=$result->fetch_assoc()) {
+				$state = "deprecated";
+				if(!$was_draft){
+					$state="draft";
+					$was_draft = true;
+				}
+				if($row["published"] == 1){
+					$state = "published";
+					$next_draft = true;
+				}
+				$revisions[] = array( 
+								"revision" => $row["revision"], 
+								"published"=> $row["published"],
+								"state"=> $state,
+								"editor"=> $row['author'],
+								"date"=> $row['revision_date'],
+								);
 			}
-			if($row["published"] == 1){
-				$state = "published";
-				$next_draft = true;
-			}
-			$revisions[] = array( 
-							"revision" => $row["revision"], 
-							"published"=> $row["published"],
-							"state"=> $state,
-							"editor"=> $row['author'],
-							"date"=> $row['revision_date'],
-							);
+			return $revisions;			
 		}
-		return $revisions;
+		return array();
 	}
 	
 	public function getMetaTypes() {

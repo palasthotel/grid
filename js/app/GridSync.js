@@ -23,6 +23,7 @@ var GridAjax = function(method, params_array, settings){
 			// GRID.log("--------!");
 			if(GRID.DEBUGGING)
 			{
+				GRID.log(jqXHR.responseText);
 				jQuery(".error-messages").html("Method: "+method+"<br>"+
 						"Status: ("+jqXHR.status+") -> "+textStatus+"<br>"+
 						"ResponseText: <br><pre>"+jqXHR.responseText+"</pre>").show();
