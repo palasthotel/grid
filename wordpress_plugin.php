@@ -20,13 +20,16 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 	{
 		global $wpdb;
 		$return = parent::loadGrid($gridid);
-		$rows = $wpdb->get_results('select nid from '.$wpdb->prefix."grid_nodes where grid_id=$gridid");
-		$post = get_post( $rows[0]->nid );
-		$type = $post->post_type;
-		if ( $type == get_option( 'grid_sidebar_post_type' ) ) {
-			$return['isSidebar'] = TRUE;
-		} else {
-			$return['isSidebar'] = FALSE;
+		if(!strncmp("box:",$gridid,strlen("box:")) && !strncmp("container:",$gridid,strlen("container:")))
+		{
+			$rows = $wpdb->get_results('select nid from '.$wpdb->prefix."grid_nodes where grid_id=$gridid");
+			$post = get_post( $rows[0]->nid );
+			$type = $post->post_type;
+			if ( $type == get_option( 'grid_sidebar_post_type' ) ) {
+				$return['isSidebar'] = TRUE;
+			} else {
+				$return['isSidebar'] = FALSE;
+			}
 		}
 		return $return;
 	}
