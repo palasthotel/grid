@@ -20,7 +20,7 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 	{
 		global $wpdb;
 		$return = parent::loadGrid($gridid);
-		if(!strncmp("box:",$gridid,strlen("box:")) && !strncmp("container:",$gridid,strlen("container:")))
+		if(strncmp("box:",$gridid,strlen("box:"))!=0 && strncmp("container:",$gridid,strlen("container:"))!=0)
 		{
 			$rows = $wpdb->get_results('select nid from '.$wpdb->prefix."grid_nodes where grid_id=$gridid");
 			$post = get_post( $rows[0]->nid );
