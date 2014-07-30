@@ -94,6 +94,9 @@ var GridRequest = {
 									 grid.addContainer(new Container(container));
 								});
 								options.success();
+								if(options.reverted){
+									GRID.flash();
+								}
 							}
 						}
 					);
@@ -117,7 +120,7 @@ var GridRequest = {
 						success_fn: function(data){
 							GRID.log("setToRevision success");
 							GRID.log(data);
-							grid.fetch();
+							grid.fetch({reverted: true});
 						}
 					});
 					break;

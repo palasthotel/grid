@@ -410,8 +410,7 @@ GRID = {
 			stop: function(e, ui){
 				//jQuery(".grid-box-trash").hide();
 				jQuery(".grid-element-trash").removeClass("grid-active")
-				if(box_deleted)
-					return;
+				if(box_deleted)	return;
 				
 				new_container_id = ui.item.parents(".grid-container").data("id");
 				new_slot_id = ui.item.parents(".grid-slot").data("id");
@@ -437,6 +436,9 @@ GRID = {
 				GRID.getModel().moveBox(box, new_slot, new_box_index);
 			}
 		});
+	},
+	flash: function(){
+		GRID.gridview.$el.fadeIn(100).fadeOut(100).fadeIn(100);
 	}
 };
 
