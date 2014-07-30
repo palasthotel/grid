@@ -91,7 +91,7 @@ class grid_db {
 	//loads a complete grid with all regions and boxes belonging to it.
 	public function loadGrid($gridId,$preferDrafts=TRUE)
 	{
-		if(!strncmp("container:",$gridId,strlen("container:")))
+		if(strncmp("container:",$gridId,strlen("container:"))==0)
 		{
 			$grid=$this->getReuseGrid();
 			$split=explode(":",$gridId);
@@ -111,7 +111,7 @@ class grid_db {
 			}
 			return $grid;
 		}
-		if(!strncmp("box:",$gridId,strlen("box:")))
+		if(strncmp("box:",$gridId,strlen("box:"))==0)
 		{
 			$grid=$this->getReuseGrid();
 			$split=explode(":", $gridId);
@@ -1136,7 +1136,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	}
 
 	public function fetchGridRevisions($gridid) {
-		if(!strncmp("box:",$gridid,strlen("box:")) && !strncmp("container:",$gridid,strlen("container:")))
+		if(strncmp("box:",$gridid,strlen("box:"))!=0 && strncmp("container:",$gridid,strlen("container:"))!=0)
 		{
 			$query = "SELECT revision,author,revision_date,published FROM ".$this->prefix."grid_grid WHERE id = $gridid ORDER BY revision DESC";
 			$result=$this->connection->query($query) or die($this->connection->error);
