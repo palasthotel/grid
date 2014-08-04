@@ -95,8 +95,7 @@ class grid_posts_box extends grid_list_box {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
 		}
 		$categories = get_categories();
-		$result = array();
-		$result[] = array( 'key' => 100, 'value' => 'Helper to check' );
+		$results = array();
 		foreach ( $categories as $category ) {
 			if ( $query == '' || strstr( $category->name, $query ) !== FALSE ) {
 				$results[] = array( 'key' => $category->term_id, 'value' => $category->name );
@@ -106,7 +105,7 @@ class grid_posts_box extends grid_list_box {
 	}
 
 	public function getElementValue( $path, $id ) {
-		if( $path != 'category' ) {
+		if( $path != 'category' || $id == null || $id == "" ) {
 			return '';
 		} else {
 			$thisCat = get_category( $id );
