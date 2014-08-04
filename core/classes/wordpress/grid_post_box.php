@@ -52,17 +52,15 @@ class grid_post_box extends grid_box {
 			return array();
 		}
 		$results = array();
-		$query = new WP_Query( array( 'post_type' => array( 'post', 'page' ) ) );
+		$query = new WP_Query( array( 'post_type' => array( 'post', 'page' ), 'grid_title'=>$search ) );
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			$post = get_post();
-			if( strstr( $post->post_title, $search ) !== FALSE ) {
-				$box = new grid_post_box();
-				$box->content = new StdClass();
-				$box->content->viewmode = 'excerpt';
-				$box->content->postid = $post->ID;
-				$results[] = $box;
-			}
+			$box = new grid_post_box();
+			$box->content = new StdClass();
+			$box->content->viewmode = 'excerpt';
+			$box->content->postid = $post->ID;
+			$results[] = $box;
 		}
 		wp_reset_postdata();
 		return $results;
