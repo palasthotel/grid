@@ -79,7 +79,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         this.$el.find(".suggestion-list").empty();
     },
     listItemSelected:function(e){
-        this.selectItem(jQuery(e.srcElement));
+        this.selectItem(jQuery(e.target));
     },
     cancelSelection:function(e){
         this.$el.find(".autocomplete-wrapper").removeClass("locked");
