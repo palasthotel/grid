@@ -1,8 +1,9 @@
 <?php
-
+// Media Box is considered as static content
 class grid_media_box extends grid_static_base_box {
 
 	public function __construct() {
+		// Constructor initializes editor widgets
 		$this->content = new StdClass();
 		$this->content->fileid = new StdClass();
 		$this->content->fileid->id = '';
@@ -11,11 +12,12 @@ class grid_media_box extends grid_static_base_box {
 	}
 	
 	public function type() {
+		// Sets box type
 		return 'media';
 	}
 
 	public function build( $editmode ) {
-		//boxes render their content in here
+		// Box renders its content in here
 		if ( isset( $this->content->fileid->id ) && $this->content->fileid->id != '' ) {
 			$a_pre = '';
 			$a_post = '';
@@ -38,11 +40,13 @@ class grid_media_box extends grid_static_base_box {
 			}
 			return $a_pre.$img_tag.$a_post;
 		}
+		// Determines menu label of the box
 		return 'Media-Box';
 	}
 
 
 	public function contentStructure () {
+		// Determines editor widgets used in backend
 		return array(
 			array(
 				'key' => 'fileid',

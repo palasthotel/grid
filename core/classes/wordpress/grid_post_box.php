@@ -1,19 +1,22 @@
 <?php
+// MetaType "CONTENT"
 
 class grid_post_box extends grid_box {
 	
 	public function type() {
+		// Sets box type
 		return 'post';
 	}
 
 	public function build( $editmode ) {
-		$post = get_post( $this->content->postid );
+		$post = get_post( $this->content->postid ); // Returns post id or FALSE
 		if ( $post == FALSE ) {
 			return 'Post is lost';
 		}
 		if ( $editmode ) {
-			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.')';//date("Y-m-d h:i:s",$post->post_date).")";
+			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.')'; // date("Y-m-d h:i:s",$post->post_date).")";
 		} else {
+			// START of WordPress Loop
 			$query = new WP_Query( array( 'p' => $this->content->postid, 'post_type' => array( 'post', 'page' ) ) );
 			if ( $query->have_posts() ) {
 				$query->the_post();
@@ -31,19 +34,23 @@ class grid_post_box extends grid_box {
 				$output = ob_get_clean();
 				wp_reset_postdata();
 				return $output;
+			// END of WordPress Loop
 			}
 		}
 	}
 	
 	public function isMetaType() {
+		// Makes post_box a MetaType
 		return TRUE;
 	}
 	
 	public function metaTitle() {
+		// Name of MetaType that is shown in Grid menu
 		return t( 'Contents' );
 	}
 	
 	public function metaSearchCriteria() {
+		// Criteria for meta search
 		return array( 'title' );
 	}
 	
@@ -52,6 +59,7 @@ class grid_post_box extends grid_box {
 			return array();
 		}
 		$results = array();
+		// START of WordPress Loop
 		$query = new WP_Query( array( 'post_type' => array( 'post', 'page' ), 'grid_title'=>$search ) );
 		while ( $query->have_posts() ) {
 			$query->the_post();
@@ -64,9 +72,11 @@ class grid_post_box extends grid_box {
 		}
 		wp_reset_postdata();
 		return $results;
+		// END of WordPress Loop
 	}
 	
 	public function contentStructure () {
+		// Determines editor widgets used in backend
 		$params=array(
 			array(
 				'key' => 'viewmode',
