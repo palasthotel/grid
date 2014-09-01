@@ -1,26 +1,27 @@
 <?php
-
+// Grid-Box is parent to all Grid boxes
 class grid_box extends grid_base {
 	public $boxid;
 	public $grid;
-	public $style; // Define the Style of Boxes
+	public $style; // Defines the style of boxes
 	public $classes=array();
-	public $title;
-	public $titleurl;
-	public $readmore;
-	public $readmoreurl;
-	public $prolog;
-	public $epilog;
+	public $title; // Title of the box
+	public $titleurl; // Optional link on box title
+	public $readmore; // Defines read more text
+	public $readmoreurl; // Optional link to read more
+	public $prolog; // Prolog textarea
+	public $epilog; // Epilog textarea
 	public $layout;
 	public $language;
-	public $content;
+	public $content; // Main content textarea
 
 	public function type() {
+		// Sets box type
 		return 'box';
 	}
 
 	public function build($editmode) {
-		//boxes render their content in here
+		// Box renders its content in here
 		return '';
 	}
 	
@@ -54,22 +55,27 @@ class grid_box extends grid_base {
 	}
 	
 	public function isMetaType() {
+		// Makes grid_box a MetaType
 		return FALSE;
 	}
 	
 	public function metaTitle() {
+		// Name of MetaType that is shown in Grid menu
 		return NULL;
 	}
 	
 	public function metaSearchCriteria() {
+		// Criteria for meta search
 		return array();
 	}
 	
 	public function metaSearch($criteria,$query) {
+		// Implements meta search
 		return array();
 	}
 	
 	public function contentStructure () {
+		// Determines editor widgets used in backend
 		return array();
 	}
 	
@@ -78,11 +84,12 @@ class grid_box extends grid_base {
 	}
 	
 	public function delete() {
+		// Delete function
 		return $this->storage->deleteBox($this);
 	}
 	
-	public function updateBox($boxdata)
-	{
+	public function updateBox($boxdata)	{
+		// Refreshes box content
 		$this->style=$boxdata->style;
 		$this->title=$boxdata->title;
 		$this->titleurl=$boxdata->titleurl;
@@ -94,19 +101,19 @@ class grid_box extends grid_base {
 		return $this->persist();
 	}
 	
-	public function performElementSearch($key,$query)
-	{
+	public function performElementSearch($key,$query) {
+		// Implements search for keys
 		return array(array('key'=>-1,'value'=>'This box seems not to implement search'));
 	}
 	
-	public function getElementValue($path,$id)
-	{
+	public function getElementValue($path,$id) {
+		// Gets values for element search
 		return "BOX DOESNT SUPPORT THIS";
 	}
 	
-	public function performFileUpload($key,$path,$original_file)
-	{
-		return FALSE;//array('result'=>FALSE,'error'=>'wrong box');
+	public function performFileUpload($key,$path,$original_file) {
+		// array('result'=>FALSE,'error'=>'wrong box');
+		return FALSE;
 	}
 	
 	public function prepareReuseDeletion()

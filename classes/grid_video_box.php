@@ -1,14 +1,14 @@
 <?php
-
+// Video-Box is considered a static content
 class grid_video_box extends grid_static_base_box
 {
-	public function type()
-	{
+	public function type() {
+		// Sets box type
 		return "video";
 	}
 
-	public function __construct()
-	{
+	public function __construct() {
+		// Constructor initializes editor widgets
 		$this->content=new Stdclass();
 		$this->content->url='';
 		$this->content->title = 0;
@@ -16,20 +16,19 @@ class grid_video_box extends grid_static_base_box
 		$this->content->html='';
 	}
 
-	public function build($editmode)
-	{
-		if($editmode)
-		{
+	public function build($editmode) {
+		if($editmode) {
+			// Determines menu label of the box
 			return t("Video-box");
 		}
-		else
-		{
+		else {
+			// Box renders its content in here
 			return $this->content->html;
 		}
 	}
 
-	public function contentStructure()
-	{
+	public function contentStructure() {
+		// Determines editor widgets used in backend
 		return array(
 			array(
 				'key'=>'url',
@@ -57,7 +56,7 @@ class grid_video_box extends grid_static_base_box
 	{
 		if(isset($this->content->url) && !empty($this->content->url))
 		{
-			//ok, we have an url, we need to do our oembed vodoo.
+			// OK, we have an url, we need to do our oembed vodoo.
 			$result=parse_url($this->content->url);
 			if(preg_match("/\w*?\.youtube\./um", $result['host']))
 			{
@@ -81,12 +80,11 @@ class grid_video_box extends grid_static_base_box
 				curl_close($request);
 				$result=json_decode($result);
 				$html=$result->html;
-				// prevents flash bug in Firefox (no playback on click)
+				// Prevents flash bug in Firefox (no playback on click)
 				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1'.$url_related.$url_show_info, $html);
 				$this->content->html=$html;
 			}
-			else if(preg_match("/youtu\.be/um", $result['host']) )
-			{
+			else if(preg_match("/youtu\.be/um", $result['host']) ) {
 				$url_show_info = "&showinfo=";
 				if($this->content->title){
 					$url_show_info.="1";
@@ -108,7 +106,7 @@ class grid_video_box extends grid_static_base_box
 				curl_close($request);
 				$result=json_decode($result);
 				$html=$result->html;
-				// prevents flash bug in Firefox (no playback on click)
+				// Prevents flash bug in Firefox (no playback on click)
 				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1'.$url_related.$url_show_info, $html);
 				$this->content->html=$html;
 			}
