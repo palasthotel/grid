@@ -1,20 +1,34 @@
 <?php
-// MetaType "CONTENT"
-
+/** 
+* Meta type "CONTENT"
+*
+* Creates a new meta type used as category for boxes. 
+*/
 class grid_post_box extends grid_box {
 	
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
-		// Sets box type
 		return 'post';
 	}
 
+	/**
+	* Box renders its menu label and its content in here.
+	*
+	* @uses array date("Y-m-d h:i:s",$post->post_date).")
+	*
+	* @return string
+	*/
 	public function build( $editmode ) {
 		$post = get_post( $this->content->postid ); // Returns post id or FALSE
 		if ( $post == FALSE ) {
 			return 'Post is lost';
 		}
 		if ( $editmode ) {
-			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.')'; // date("Y-m-d h:i:s",$post->post_date).")";
+			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.')';
 		} else {
 			// START of WordPress Loop
 			$query = new WP_Query( array( 'p' => $this->content->postid, 'post_type' => array( 'post', 'page' ) ) );
@@ -39,21 +53,44 @@ class grid_post_box extends grid_box {
 		}
 	}
 	
+	/**
+	* Checks if class is meta type
+	*
+	* Makes post_box a meta type
+	*
+	* @return boolean
+	*/
 	public function isMetaType() {
-		// Makes post_box a MetaType
 		return TRUE;
 	}
 	
+	/**
+	* Determines name of meta type that is shown in Grid menu
+	*
+	* @return string
+	*/
 	public function metaTitle() {
-		// Name of MetaType that is shown in Grid menu
 		return t( 'Contents' );
 	}
 	
+	/**
+	* Criteria for meta search
+	*
+	* @return string[]
+	*/
 	public function metaSearchCriteria() {
-		// Criteria for meta search
 		return array( 'title' );
 	}
 	
+	/**
+	* Implements meta search
+	*
+	* @param string $criteria
+	*
+	* @param mixed $search
+	*
+	* @return array
+	*/
 	public function metaSearch( $criteria, $search ) {
 		if( $search == '' ) {
 			return array();
@@ -75,8 +112,12 @@ class grid_post_box extends grid_box {
 		// END of WordPress Loop
 	}
 	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure () {
-		// Determines editor widgets used in backend
 		$params=array(
 			array(
 				'key' => 'viewmode',

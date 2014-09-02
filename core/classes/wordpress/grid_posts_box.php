@@ -1,9 +1,17 @@
 <?php
-// Posts-Box aka list of contents is considered a list
+/**
+* Posts-Box is considered a list
+* 
+* In the Grid selection menu, Posts-Box is named "List Of Contents".
+*/
 class grid_posts_box extends grid_list_box {
 	
+	/**
+	* Class contructor
+	*
+	* Initializes editor widgets for backend
+	*/
 	function __construct() {
-		// Constructor initializes editor widgets
 		$this->content = new Stdclass();
 		$this->content->viewmode = 'excerpt';
 		$this->content->posts_per_page = 5;
@@ -12,17 +20,26 @@ class grid_posts_box extends grid_list_box {
 		$this->content->post_type = 'post';
 	}
 	
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
-		// Sets box type
 		return 'posts';
 	}
 	
+	/**
+	* Box renders its menu label and its content in here.
+	*
+	* @param boolean $editmode
+	*
+	* @return string
+	*/
 	public function build( $editmode ) {
 		if( $editmode ) {
-			// Determines menu label of the box
 			return 'Liste von Inhalten';
 		} else {
-			// Box renders its content in here
 			$args = array();
 			// Checks if catergory is set
 			if ( isset( $this->content->category ) && $this->content->category != '' ) {
@@ -61,9 +78,13 @@ class grid_posts_box extends grid_list_box {
 			// END of WordPress Loop
 		}
 	}
-		
+	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure() {
-		// Determines editor widgets used in backend
 		$post_types = array();
 		$input = get_post_types( array(), 'objects' );
 		foreach ( $input as $post_type => $info ) {
@@ -100,8 +121,16 @@ class grid_posts_box extends grid_list_box {
 		);
 	}
 
+	/**
+	* Implements search for categories
+	*
+	* @param integer $key
+	*
+	* @param string $query
+	*
+	* @return array
+	*/
 	public function performElementSearch( $key, $query) {
-		// Implements search for categories
 		if ( $key != 'category' ) {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
 		}
@@ -115,8 +144,16 @@ class grid_posts_box extends grid_list_box {
 		return $results;
 	}
 
+	/**
+	* Gets categories
+	*
+	* @param string $path
+	*
+	* @param integer $id
+	*
+	* @return string
+	*/
 	public function getElementValue( $path, $id ) {
-		// Gets categories
 		if( $path != 'category' || $id == null || $id == "" ) {
 			return '';
 		} else {
