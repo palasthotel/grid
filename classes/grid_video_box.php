@@ -1,14 +1,24 @@
 <?php
-// Video-Box is considered a static content
+/**
+* Video-Box is considered a static content
+*/
 class grid_video_box extends grid_static_base_box
 {
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
-		// Sets box type
 		return "video";
 	}
 
+	/**
+	* Class contructor
+	*
+	* Initializes editor widgets for backend
+	*/
 	public function __construct() {
-		// Constructor initializes editor widgets
 		$this->content=new Stdclass();
 		$this->content->url='';
 		$this->content->title = 0;
@@ -16,19 +26,28 @@ class grid_video_box extends grid_static_base_box
 		$this->content->html='';
 	}
 
+	/**
+	* Box renders its menu label and renders its content in here.
+	*
+	* @param boolean $editmode
+	*
+	* @return string
+	*/
 	public function build($editmode) {
 		if($editmode) {
-			// Determines menu label of the box
 			return t("Video-box");
 		}
 		else {
-			// Box renders its content in here
 			return $this->content->html;
 		}
 	}
-
+	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure() {
-		// Determines editor widgets used in backend
 		return array(
 			array(
 				'key'=>'url',
@@ -52,6 +71,11 @@ class grid_video_box extends grid_static_base_box
 		);
 	}
 
+	/**
+	* Persists function
+	*
+	* @return mixed
+	*/
 	public function persist()
 	{
 		if(isset($this->content->url) && !empty($this->content->url))

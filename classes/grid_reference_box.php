@@ -1,31 +1,57 @@
 <?php
-// Metatype "REFERENCE"
+/** 
+* Meta type "REFERENCE"
+*
+* Creates a new meta type used as category for boxes. 
+*/
 class grid_reference_box extends grid_box {
 
+	/**
+	* Class contructor
+	*
+	* Initializes editor widgets for backend
+	*/
 	public function __construct() {
-		// Constructor initializes editor widgets
 		$this->content=new Stdclass();
 		$this->content->boxid=-1;
 	}
 	
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
-		// Sets box type
 		return 'reference';
 	}
 
+	/**
+	* Box renders its menu label and its content in here.
+	*
+	* @return mixed
+	*/
 	public function build($editmode) {
 		$box=$this->storage->loadReuseBox($this->content->boxid);
 		return $box->build($editmode);
 	}
 	
+	/**
+	* Box renders itself here.
+	*
+	* @return mixed
+	*/
 	public function render($editmode) {
 		$box=$this->storage->loadReuseBox($this->content->boxid);
 		$box->classes=$this->classes;
 		return $box->render($editmode);
 	}
 	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure () {
-		// Determines editor widgets used in backend
 		return array(
 			array(
 				'key'=>'boxid',
@@ -34,24 +60,45 @@ class grid_reference_box extends grid_box {
 		);
 	}
 	
+	/**
+	* Checks if class is meta type
+	*
+	* Makes grid_reference_box a meta type
+	*
+	* @return boolean
+	*/
 	public function isMetaType() {
-		// Makes reference_box a MetaType
 		return TRUE;
 	}
 	
+	/**
+	* Determines name of meta type that is shown in Grid menu
+	*
+	* @return string
+	*/
 	public function metaTitle() {
-		// Name of MetaType that is shown in Grid menu
 		return t("Reusable boxes");
 	}
 	
+	/**
+	* Criteria for meta search
+	*
+	* @return array
+	*/
 	public function metaSearchCriteria() {
-		// Criteria for meta search
 		return array();
 	}
 
-	
+	/**
+	* Implements meta search
+	*
+	* @param string $criteria
+	*
+	* @param mixed $query
+	*
+	* @return array
+	*/
 	public function metaSearch($criteria,$query) {
-		// Implements meta search
 		$ids=$this->storage->getReuseableBoxIds();
 		$results=array();
 		foreach($ids as $id)

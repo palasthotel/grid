@@ -1,25 +1,39 @@
 <?php
-// Soundcloud-Box is considered a static content
+/**
+* Soundcloud-Box is considered an abstract list
+*/
 class grid_soundcloud_box extends grid_static_base_box {
 
+    /**
+    * Sets box type
+    *
+    * @return string
+    */
     public function type() {
-        // Sets box type
         return 'soundcloud';
     }
 
+    /**
+    * Class contructor
+    *
+    * Initializes editor widgets for backend
+    */
     public function __construct() {
-        // Constructor initializes editor widgets
         $this->content=new Stdclass();
         $this->content->url= "";
         $this->content->color = "";
     }
 
+    /**
+    * Box renders its menu label and its content in here.
+    *
+    * @return boolean
+    */
     public function build($editmode) {
         if($editmode) {
             return t("Soundcloud").": ".$this->content->url;
         }
         else {
-            // Box renders its content in here
             // KM added support for IE9 and below
             $url = $this->content->url;
 
@@ -81,8 +95,12 @@ EOT;
         }
     }
 
+    /**
+    * Determines editor widgets used in backend
+    *
+    * @return array
+    */
     public function contentStructure () {
-        // Determines editor widgets used in backend
         return array(
             array(
                 'key'=>'url',

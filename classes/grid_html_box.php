@@ -1,31 +1,50 @@
 <?php
-// HTML-Box contents is considered a static content
+/**
+* HTML-Box contents is considered a static content.
+*/
 class grid_html_box extends grid_static_base_box {
 	
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
-		// Sets box type
 		return 'html';
 	}
 
+	/**
+	* Class constructor
+	*
+	* Constructor initializes editor widgets.
+	*/
 	public function __construct() {
-		// Constructor initializes editor widgets
 		$this->content=new Stdclass();
 		$this->content->html='';
 	}
 
+	/**
+	* Box determins its menu label and renders its content in here.
+	*
+	* @param boolean $editmode
+	*
+	* @return string
+	*/
 	public function build($editmode) {
 		if($editmode && empty($this->content->html)) {
-			// Determines menu label of the box
 			return t("Static HTML-Content");
 		}
 		else {
-			// Box renders its content in here
 			return $this->content->html;
 		}
 	}
 	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure () {
-		// Determines editor widgets used in backend
 		return array(
 			array(
 				'key'=>'html',
