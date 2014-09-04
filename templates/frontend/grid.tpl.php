@@ -1,3 +1,3 @@
 <div class="grid clearfix grid-frontend">
-	<?=implode("", $containerlist)?>
+	<?php echo implode("", $containerlist)?>
 </div>
