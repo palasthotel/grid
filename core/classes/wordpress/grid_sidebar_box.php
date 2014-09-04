@@ -1,16 +1,36 @@
 <?php
-
+/**
+* Sidebar-Box is considered a Grid-Box.
+* It needs no meta type because it's directly embedded into the sidebar container.
+*/  
 class grid_sidebar_box extends grid_box {
 
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
 		return 'sidebar';
 	}
 	
+	/**
+	* Class contructor
+	*
+	* Initializes editor widgets for backend
+	*/
 	public function __construct() {
 		$this->content = new Stdclass();
 		$this->content->postid = '';
 	}
 	
+	/**
+	* Box renders its menu label and its content in here.
+	*
+	* @param boolean $editmode
+	*
+	* @return string
+	*/
 	public function build( $editmode ) {
 		if ( $this->content->postid != '' ) {
 			$gridid = grid_wp_get_grid_by_postid( $this->content->postid );
@@ -25,8 +45,12 @@ class grid_sidebar_box extends grid_box {
 		}
 	}
 	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure() {
-
 		$content = array(
 			array(
 				'key' => 'postid',
@@ -51,6 +75,15 @@ class grid_sidebar_box extends grid_box {
 		return $content;
 	}
 	
+	/**
+	* Implements search for sidebars
+	*
+	* @param integer $key
+	*
+	* @param string $querystr
+	*
+	* @return array
+	*/
 	public function performElementSearch( $key, $querystr ) {
 		if($key!='postid') {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
@@ -58,6 +91,7 @@ class grid_sidebar_box extends grid_box {
 		$results = array();
 		$sidebar_type = get_option( 'grid_sidebar_post_type', 'sidebar' );
 		$count = wp_count_posts( $sidebar_type );
+		// START of WordPress Loop
 		$query = new WP_Query( array( 'post_type' => $sidebar_type, 'posts_per_page' => $count->publish ) );
 		$i = 0;
 		while ( $query->have_posts() && $i < 15 ) {
@@ -70,8 +104,18 @@ class grid_sidebar_box extends grid_box {
 		}
 		wp_reset_postdata();
 		return $results;
+		// END of WordPress Loop
 	}
 	
+	/**
+	* Gets post title by id
+	*
+	* @param string $path
+	*
+	* @param integer $id
+	*
+	* @return string
+	*/
 	public function getElementValue( $path, $id ) {
 		if ( $path != 'postid' ) {
 			return 'WRONG PATH: '.$path;
