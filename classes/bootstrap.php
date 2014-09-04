@@ -1,5 +1,7 @@
 <?php
-
+/**
+* Initializes Grid boxes
+*/
 include 'grid_base.php';
 include 'grid_box.php';
 include 'grid_static_box.php';
