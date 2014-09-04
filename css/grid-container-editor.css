@@ -40,7 +40,9 @@ Dimensions
 .grid-container-editor-form button {
   font-family: inherit;
   font-size: 12px;
-  box-sizing: border-box; }
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box; }
 .grid-container-editor-form input {
   height: 27px;
   line-height: 27px;
@@ -63,8 +65,10 @@ Dimensions
   color: #262e38;
   background-color: #e5e3df;
   padding: 10px;
-  transition: all 0.1337s ease;
-  box-shadow: none; }
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease;
+  -webkit-box-shadow: none;
+          box-shadow: none; }
   .grid-container-editor-form button:hover,
   .grid-container-editor-form button:focus:hover {
     color: #3ac5d9; }
@@ -75,3 +79,5 @@ Dimensions
   padding: 0px 10px; }
   .grid-container-editor-form .grid-new-container-values > div {
     margin-bottom: 8px; }
+
+/*# sourceMappingURL=grid-container-editor.css.map */
