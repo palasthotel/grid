@@ -439,7 +439,14 @@ GRID = {
 	},
 	flash: function(){
 		GRID.gridview.$el.fadeIn(100).fadeOut(100).fadeIn(100);
+	},
+	startLoading: function(){
+		GRID.$root.find(".grid-loading-indicator").addClass("loading");
+	},
+	finishLoading: function(){
+		GRID.$root.find(".grid-loading-indicator").removeClass("loading");
 	}
+
 };
 
 jQuery(function(){GRID.init();});
