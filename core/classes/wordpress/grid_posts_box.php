@@ -1,7 +1,16 @@
 <?php
-
+/**
+* Posts-Box is considered a list
+* 
+* In the Grid selection menu, Posts-Box is named "List Of Contents".
+*/
 class grid_posts_box extends grid_list_box {
 	
+	/**
+	* Class contructor
+	*
+	* Initializes editor widgets for backend
+	*/
 	function __construct() {
 		$this->content = new Stdclass();
 		$this->content->viewmode = 'excerpt';
@@ -11,15 +20,28 @@ class grid_posts_box extends grid_list_box {
 		$this->content->post_type = 'post';
 	}
 	
+	/**
+	* Sets box type
+	*
+	* @return string
+	*/
 	public function type() {
 		return 'posts';
 	}
 	
+	/**
+	* Box renders its menu label and its content in here.
+	*
+	* @param boolean $editmode
+	*
+	* @return string
+	*/
 	public function build( $editmode ) {
 		if( $editmode ) {
 			return 'Liste von Inhalten';
 		} else {
 			$args = array();
+			// Checks if catergory is set
 			if ( isset( $this->content->category ) && $this->content->category != '' ) {
 				$args['cat'] = $this->content->category;
 			}
@@ -27,18 +49,21 @@ class grid_posts_box extends grid_list_box {
 			$args['offset'] = $this->content->offset;
 			$args['post_type'] = $this->content->post_type;
 			$output = '';
+			// START of WordPress Loop
 			$query = new WP_Query( $args );
 			$counter = 0;
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				ob_start();
 				$found = FALSE;
+				// Checks if WordPress has a template for post content ...
 				if ( $this->storage->templatesPath != NULL ) {
 					if ( file_exists( $this->storage->templatesPath.'/post_content.tpl.php' ) ) {
 						$found = TRUE;
 						include $this->storage->templatesPath.'/post_content.tpl.php';
 					}
 				}
+				// ... if not, uses Grid template for post content
 				if ( ! $found ) {
 					include dirname(__FILE__).'/../../templates/wordpress/post_content.tpl.php';
 				}
@@ -50,9 +75,15 @@ class grid_posts_box extends grid_list_box {
 			}
 			wp_reset_postdata();
 			return $output;
+			// END of WordPress Loop
 		}
 	}
-		
+	
+	/**
+	* Determines editor widgets used in backend
+	*
+	* @return array
+	*/
 	public function contentStructure() {
 		$post_types = array();
 		$input = get_post_types( array(), 'objects' );
@@ -90,6 +121,15 @@ class grid_posts_box extends grid_list_box {
 		);
 	}
 
+	/**
+	* Implements search for categories
+	*
+	* @param integer $key
+	*
+	* @param string $query
+	*
+	* @return array
+	*/
 	public function performElementSearch( $key, $query) {
 		if ( $key != 'category' ) {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
@@ -104,6 +144,15 @@ class grid_posts_box extends grid_list_box {
 		return $results;
 	}
 
+	/**
+	* Gets categories
+	*
+	* @param string $path
+	*
+	* @param integer $id
+	*
+	* @return string
+	*/
 	public function getElementValue( $path, $id ) {
 		if( $path != 'category' || $id == null || $id == "" ) {
 			return '';
