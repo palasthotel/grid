@@ -1235,7 +1235,7 @@ h3 {
 .grid-editor-autocomplete-with-links .cancel {
   position: absolute;
   cursor: pointer;
-  top: -3px;
+  top: 4px;
   display: none; }
 .grid-editor-widget-autocomplete input,
 .grid-editor-autocomplete-with-links input {
