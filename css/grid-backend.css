@@ -451,18 +451,25 @@ h3 {
 
 .grid-container-sorthandle {
   position: absolute;
-  top: 5px;
-  left: -4px;
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 40px;
   cursor: move; }
+  .grid-container-sorthandle .icon-drag {
+    position: absolute;
+    top: 9px; }
 
 .grid-container-options {
   position: absolute;
-  top: 5px;
+  top: 0px;
   right: 0px;
   height: 40px;
-  z-index: 80; }
+  z-index: 80;
+  padding-top: 12px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box; }
   .grid-container-options:hover {
     z-index: 81; }
   .grid-container-options .grid-container-options-icon {
@@ -475,7 +482,7 @@ h3 {
     color: white;
     width: 140px;
     right: 0px;
-    top: 30px;
+    top: 40px;
     margin: 0px;
     padding: 0px;
     display: none; }
@@ -587,8 +594,8 @@ h3 {
       .grid-editor-controls .grid-editor-control button [class^="icon-"],
       .grid-editor-controls .grid-editor-control button [class*=" icon-"] {
         position: absolute;
-        right: 6px;
-        top: 6px;
+        right: 11px;
+        top: 13px;
         font-size: 16px;
         font-family: 'Entypo'; }
       .grid-editor-controls .grid-editor-control button:hover {
@@ -636,7 +643,7 @@ h3 {
     .grid-editor-content legend .icon-arrow {
       position: absolute;
       left: 5px;
-      top: 10px;
+      top: 16px;
       -webkit-transition: all 0.1337s ease;
               transition: all 0.1337s ease; }
   .grid-editor-content input,
@@ -678,7 +685,7 @@ h3 {
 .grid-element-drag-icon {
   position: absolute;
   top: 50%;
-  margin-top: -15px;
+  margin-top: -10px;
   left: -6px;
   font-size: 120%; }
 
@@ -732,7 +739,7 @@ h3 {
     .grid-element-type-content .grid-box-type .icon-arrow {
       z-index: 90;
       position: absolute;
-      top: 16px;
+      top: 20px;
       left: -4px;
       font-size: 14px;
       -webkit-transition: all 0.3s ease;
@@ -1044,8 +1051,8 @@ h3 {
         .grid-toolbar .grid-tool-list li button [class^="icon-"],
         .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
           position: absolute;
-          right: 6px;
-          top: 6px;
+          right: 11px;
+          top: 13px;
           font-size: 16px;
           font-family: 'Entypo'; }
         .grid-toolbar .grid-tool-list li button:hover {
@@ -1111,7 +1118,7 @@ h3 {
   .grid-editor-url-builder .grid-editor-url-button:focus {
     position: absolute;
     right: 0px;
-    top: -2px;
+    top: 2px;
     width: 140px;
     color: #262e38;
     background-color: #e5e3df; }
@@ -1206,7 +1213,10 @@ h3 {
 .grid-editor-autocomplete-with-links .locked .cancel {
   display: block; }
 
-.grid-editor-widget-autocomplete input[type=checkbox] {
+.grid-editor-widget-checkbox input[type=checkbox] {
   -webkit-appearance: checkbox; }
+  .grid-editor-widget-checkbox input[type=checkbox]:before {
+    display: none;
+    margin-top: 0px; }
 
 /*# sourceMappingURL=grid-backend.css.map */
