@@ -97,7 +97,7 @@ class grid_posts_box extends grid_list_box {
 		$categories = get_categories();
 		$results = array();
 		foreach ( $categories as $category ) {
-			if ( $query == '' || strstr( $category->name, $query ) !== FALSE ) {
+			if ( $query == '' || strstr( strtolower($category->name) , strtolower($query) ) !== FALSE ) {
 				$results[] = array( 'key' => $category->term_id, 'value' => $category->name );
 			}
 		}
