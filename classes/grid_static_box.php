@@ -1,9 +1,14 @@
 <?php
 /**
+ * @author Palasthotel <rezeption@palasthotel.de>
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid
+ */
+ /**
 * Includes STATIC CONTENT meta type, aka grid_static_box, and grid_static_base_box.
 * grid_static_base_box extends grid_static_box
 */
-
 /** 
 * Meta type "STATIC CONTENT"
 *
