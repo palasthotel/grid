@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Abraham Williams (abraham@abrah.am) http://abrah.am
  *
