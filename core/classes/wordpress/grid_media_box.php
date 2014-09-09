@@ -76,7 +76,6 @@ class grid_media_box extends grid_static_base_box {
 				if ($value != '') {
 					$cs[] = array(
 							'key' => 'fileinfo',
-							'label' => 'test',
 							'type' => 'info',
 							'text' => $value,
 							);
