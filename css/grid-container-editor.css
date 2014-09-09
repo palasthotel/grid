@@ -53,9 +53,9 @@ Dimensions
 .grid-container-editor-form button {
   font-family: inherit;
   font-size: 12px;
-  box-sizing: border-box;
-}
-/* line 54, ../scss/grid-container-editor.scss */
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box; }
 .grid-container-editor-form input {
   height: 27px;
   line-height: 27px;
@@ -82,6 +82,7 @@ Dimensions
   color: #262e38;
   background-color: #e5e3df;
   padding: 10px;
+<<<<<<< HEAD
   transition: all 0.1337s ease;
   box-shadow: none;
 }
@@ -91,15 +92,32 @@ Dimensions
   color: #3ac5d9;
 }
 /* line 87, ../scss/grid-container-editor.scss */
+=======
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease;
+  -webkit-box-shadow: none;
+          box-shadow: none; }
+  .grid-container-editor-form button:hover,
+  .grid-container-editor-form button:focus:hover {
+    color: #3ac5d9; }
+>>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 .grid-container-editor-form label {
   display: inline;
   font-weight: normal;
 }
 /* line 91, ../scss/grid-container-editor.scss */
 .grid-container-editor-form .grid-new-container-values {
+<<<<<<< HEAD
   padding: 0px 10px;
 }
 /* line 93, ../scss/grid-container-editor.scss */
 .grid-container-editor-form .grid-new-container-values > div {
   margin-bottom: 8px;
 }
+=======
+  padding: 0px 10px; }
+  .grid-container-editor-form .grid-new-container-values > div {
+    margin-bottom: 8px; }
+
+/*# sourceMappingURL=grid-container-editor.css.map */
+>>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7

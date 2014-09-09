@@ -32,7 +32,11 @@ var GridAjax = function(method, params_array, settings){
 				settings.error_fn(jqXHR, textStatus, error);
 			}
    		},
+   		beforeSend: function(jqXHR, settings){
+   			GRID.startLoading();
+   		},
    		success: function(data, textStatus, jqXHR){
+   			GRID.finishLoading();
    // 			GRID.log("!--- success Method: "+method);
 			// GRID.log(data);
 			// GRID.log(textStatus);

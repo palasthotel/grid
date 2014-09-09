@@ -39,14 +39,14 @@
 @import "2_Module/_grid-toolbar.scss";
 @import "2_Module/_grid-wrapper.scss";
 @import "2_Module/_grid-gridmode.scss";
+@import "2_Module/_grid-loading-indicator.scss";
 
 /**
 **/
 
-
-@import "3_Editor-Widget/_grid-editor-url-builder";
-@import "3_Editor-Widget/_grid-editor-widget-textarea";
-@import "3_Editor-Widget/_grid-editor-widget-list";
-@import "3_Editor-Widget/_grid-editor-widget-listitem";
-@import "3_Editor-Widget/_grid-editor-widget-autocomplete";
-@import "3_Editor-Widget/_grid-editor-widget-checkbox";
+@import "3_Editor-Widget/grid-editor-url-builder";
+@import "3_Editor-Widget/grid-editor-widget-textarea";
+@import "3_Editor-Widget/grid-editor-widget-list";
+@import "3_Editor-Widget/grid-editor-widget-listitem";
+@import "3_Editor-Widget/grid-editor-widget-autocomplete";
+@import "3_Editor-Widget/grid-editor-widget-checkbox";
