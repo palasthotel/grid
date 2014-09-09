@@ -2,12 +2,9 @@
 /**
  * Plugin Name: Grid
  * Description: Helps layoing out landing pages
- * @version: 0.0
- * @author Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
+ * Version: 0.0
+ * Author: Palasthotel (in Person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
- * @copyright Copyright (c) 2014, Palasthotel
- * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
- * @package Palasthotel\Grid-WordPress
  */
 
 require( 'lib/grid.php' );
@@ -375,6 +372,10 @@ function grid_wp_admin_init() {
 	add_settings_field( 'grid_debug_mode', 'Turn debug mode on/off', 'grid_wp_debug_mode_html', 'grid_settings', 'grid_debug_mode' );
 	register_setting( 'grid_settings', 'grid_debug_mode' );
 
+	add_settings_section( 'grid_mediaselect_info', 'Mediaselect Info', 'grid_wp_mediaselect_info_section', 'grid_settings' );
+	add_settings_field( 'grid_mediaselect_info', 'Set an info text for media in the WordPress media-box', 'grid_wp_mediaselect_info_html', 'grid_settings', 'grid_mediaselect_info' );
+	register_setting( 'grid_settings', 'grid_mediaselect_info' );
+
 }
 add_action( 'admin_init', 'grid_wp_admin_init' );
 
@@ -498,6 +499,17 @@ function grid_wp_debug_mode_html() {
 	$value = get_option( 'grid_debug_mode', FALSE );
 ?>
 <input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
+<?php
+}
+
+function grid_wp_mediaselect_info_section(){
+	echo '';
+}
+
+function grid_wp_mediaselect_info_html() {
+	$value = get_option( 'grid_mediaselect_info', '' );
+?>
+<textarea id="grid_mediaselect_info" name="grid_mediaselect_info" rows="4" cols="50"><?php echo $value ?></textarea>
 <?php
 }
 
