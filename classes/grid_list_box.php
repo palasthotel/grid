@@ -1,9 +1,14 @@
 <?php
 /**
+ * @author Palasthotel <rezeption@palasthotel.de>
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid
+ */
+/**
 * Includes LISTS meta type, aka grid_abstract_list_box, and grid_list_box.
 * grid_list_box extends grid_abstract_list_box
 */
-
 /** 
 * Meta type "LISTS"
 *
