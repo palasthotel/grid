@@ -6,105 +6,25 @@ Dimensions
 ***************/
 /**
 **/
-/* line 2, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix:before,
 .grid-clearfix:after {
   content: "";
-  display: table;
-}
+  display: table; }
 
-/* line 6, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix:after {
-  clear: both;
-}
+  clear: both; }
 
-/* line 9, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix {
   zoom: 1;
-  /* For IE 6/7 (trigger hasLayout) */
-}
+  /* For IE 6/7 (trigger hasLayout) */ }
 
-/* line 15, ../scss/0_Base/_grid-base.scss */
 h3 {
   word-break: break-all;
-  font-size: 12px;
-}
+  font-size: 12px; }
 
-/* line 2, ../scss/0_Base/_grid-all-wrapper.scss */
 .grid-all-wrapper,
 .grid-editor-wrapper {
   font-family: "OpenSans", sans-serif;
-<<<<<<< HEAD
-  background-color: #f3f5f7;
-}
-/* line 9, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input,
-.grid-all-wrapper textarea,
-.grid-all-wrapper select,
-.grid-all-wrapper button,
-.grid-editor-wrapper input,
-.grid-editor-wrapper textarea,
-.grid-editor-wrapper select,
-.grid-editor-wrapper button {
-  font-family: inherit;
-  font-size: 12px;
-  box-sizing: border-box;
-}
-/* line 15, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input,
-.grid-editor-wrapper input {
-  height: 27px;
-  width: 100%;
-  line-height: 27px;
-  text-indent: 10px;
-  font-size: 1em;
-  border: solid 1px #eceff3;
-  margin-bottom: 5px;
-}
-/* line 24, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input:hover,
-.grid-editor-wrapper input:hover {
-  border-color: #b0bac2;
-}
-/* line 28, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper input[type=checkbox],
-.grid-editor-wrapper input[type=checkbox] {
-  width: auto;
-  height: auto;
-  display: inline;
-}
-/* line 34, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper button,
-.grid-all-wrapper button:focus,
-.grid-editor-wrapper button,
-.grid-editor-wrapper button:focus {
-  outline: none;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  color: #3f4853;
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 0.05em;
-  transition: all 0.1337s ease;
-  box-shadow: none;
-}
-/* line 47, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper button:hover,
-.grid-all-wrapper button:focus:hover,
-.grid-editor-wrapper button:hover,
-.grid-editor-wrapper button:focus:hover {
-  color: #3ac5d9;
-}
-/* line 51, ../scss/0_Base/_grid-all-wrapper.scss */
-.grid-all-wrapper img,
-.grid-editor-wrapper img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-}
-=======
   background-color: #f3f5f7; }
   .grid-all-wrapper input,
   .grid-all-wrapper textarea,
@@ -116,8 +36,7 @@ h3 {
   .grid-editor-wrapper button {
     font-family: inherit;
     font-size: 12px;
-    -moz-box-sizing: border-box;
-         box-sizing: border-box; }
+    box-sizing: border-box; }
   .grid-all-wrapper input,
   .grid-editor-wrapper input {
     height: 27px;
@@ -148,8 +67,7 @@ h3 {
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.05em;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease;
+    transition: all 0.1337s ease;
     box-shadow: none; }
     .grid-all-wrapper button:hover,
     .grid-all-wrapper button:focus:hover,
@@ -161,7 +79,6 @@ h3 {
     max-width: 100%;
     width: 100%;
     height: auto; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
 /**
  * Font Include
@@ -170,63 +87,35 @@ h3 {
  */
 /* ICON FONT */
 @font-face {
-<<<<<<< HEAD
-  font-family: 'Entypo';
-  src: url("../fonts/font-icons/entypo/entypo.eot");
-  src: url("../fonts/entypo/entypo.eot") format("embedded-opentype"), url("../fonts/entypo/entypo.woff") format("woff"), url("../fonts/entypo/entypo.ttf") format("truetype"), url("../fonts/entypo/entypo.svg") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'EntypoSocial';
-  src: url("../fonts/entypo/entypo-social.eot");
-  src: url("../fonts/entypo/entypo-social.eot") format("embedded-opentype"), url("../fonts/entypo/entypo-social.woff") format("woff"), url("../fonts/entypo/entypo-social.ttf") format("truetype"), url("../fonts/entypo/entypo-social.svg") format("svg");
-=======
   font-family: 'Grid';
   src: url("../fonts/grid-font/grid_font.eot");
   src: url("../fonts/grid-font/grid_font.eot") format("embedded-opentype"), url("../fonts/grid-font/grid_font.woff") format("woff"), url("../fonts/grid-font/grid_font.ttf") format("truetype"), url("../fonts/grid-font/grid_font.svg") format("svg");
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   font-weight: normal;
-  font-style: normal;
-}
-
+  font-style: normal; }
 /* TEXT FONT */
 @font-face {
   font-family: 'OpenSans';
   src: local("OpenSans"), local("Open Sans"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.eot");
   src: local("OpenSans"), local("Open Sans"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.woff") format("woff"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.ttf") format("truetype"), url("../fonts/open-sans-regular/OpenSans-Regular-webfont.svg#open_sansregular") format("svg");
   font-weight: normal;
-  font-style: normal;
-}
-
+  font-style: normal; }
 @font-face {
   font-family: 'OpenSans';
   src: local("OpenSans-Semibold"), local("Open Sans Semibold"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.eot");
   src: local("OpenSans-Semibold"), local("Open Sans Semibold"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.woff") format("woff"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.ttf") format("truetype"), url("../fonts/open-sans-semibold/OpenSans-Semibold-webfont.svg#open_sanssemibold") format("svg");
   font-weight: 600;
-  font-style: normal;
-}
-
+  font-style: normal; }
 @font-face {
   font-family: 'OpenSans';
   src: local("OpenSans-Bold"), local("Open Sans Bold"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.eot");
   src: local("OpenSans-Bold"), local("Open Sans Bold"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.woff") format("woff"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.ttf") format("truetype"), url("../fonts/open-sans-bold/OpenSans-Bold-webfont.svg#open_sansbold") format("svg");
   font-weight: bold;
-  font-style: normal;
-}
-
+  font-style: normal; }
 @font-face {
   font-family: 'OpenSans';
   src: local("OpenSans-Italic"), local("Open Sans Italic"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.eot");
   src: local("OpenSans-Italic"), local("Open Sans Italic"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.woff") format("woff"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.ttf") format("truetype"), url("../fonts/open-sans-italic/OpenSans-Italic-webfont.svg#open_sansitalic") format("svg");
   font-weight: normal;
-<<<<<<< HEAD
-  font-style: italic;
-}
-
-/* line 79, ../scss/0_Base/_grid-font.scss */
-=======
   font-style: italic; }
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
@@ -234,7 +123,6 @@ h3 {
   @font-face {
     font-family: 'grid-font';
     src: url("../fonts/grid_font/grid-font.svg") format("svg"); } }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "Grid";
   font-style: normal;
@@ -257,20 +145,8 @@ h3 {
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
   /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
-}
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
-<<<<<<< HEAD
-/* line 110, ../scss/0_Base/_grid-font.scss */
-.icon-ok:before {
-  content: '\2713';
-}
-
-/* line 111, ../scss/0_Base/_grid-font.scss */
-.icon-cancel:before {
-  content: '\274c';
-}
-=======
 .icon-link:before {
   content: '\e805'; }
 
@@ -279,24 +155,8 @@ h3 {
 
 .icon-ok:before {
   content: '\e801'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 112, ../scss/0_Base/_grid-font.scss */
 .icon-reuse:before {
-<<<<<<< HEAD
-  content: '\e73e';
-}
-
-/* line 113, ../scss/0_Base/_grid-font.scss */
-.icon-style:before {
-  content: '\e79a';
-}
-
-/* line 114, ../scss/0_Base/_grid-font.scss */
-.icon-link:before {
-  content: '\1f517';
-}
-=======
   content: '\e809'; }
 
 .icon-cancel:before {
@@ -304,159 +164,64 @@ h3 {
 
 .icon-style:before {
   content: '\e80d'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 115, ../scss/0_Base/_grid-font.scss */
 .icon-plus:before {
-<<<<<<< HEAD
-  content: '\2795';
-}
-=======
   content: '\e804'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 116, ../scss/0_Base/_grid-font.scss */
 .icon-minus:before {
-<<<<<<< HEAD
-  content: '\2796';
-}
-=======
   content: '\e803'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 117, ../scss/0_Base/_grid-font.scss */
 .icon-revisions:before {
-<<<<<<< HEAD
-  content: '\e771';
-}
-=======
   content: '\e80c'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 118, ../scss/0_Base/_grid-font.scss */
 .icon-revert:before {
-<<<<<<< HEAD
-  content: '\27f2';
-}
-=======
   content: '\e80b'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 119, ../scss/0_Base/_grid-font.scss */
 .icon-edit:before {
-<<<<<<< HEAD
-  content: '\270e';
-}
-=======
   content: '\e807'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 120, ../scss/0_Base/_grid-font.scss */
 .icon-trash:before {
-<<<<<<< HEAD
-  content: '\e729';
-}
-
-/* line 121, ../scss/0_Base/_grid-font.scss */
-.icon-preview:before {
-  content: '\e70a';
-}
-=======
   content: '\e808'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 122, ../scss/0_Base/_grid-font.scss */
 .icon-publish:before {
-<<<<<<< HEAD
-  content: '\1f4e3';
-}
-=======
   content: '\e80f'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 123, ../scss/0_Base/_grid-font.scss */
 .icon-elipse:before {
-<<<<<<< HEAD
-  content: '\23f6';
-}
-=======
   content: '\e80e'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 124, ../scss/0_Base/_grid-font.scss */
 .icon-arrow:before {
-<<<<<<< HEAD
-  content: '\25B8';
-}
-=======
   content: '\e80a'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 125, ../scss/0_Base/_grid-font.scss */
 .icon-drag:before {
   content: '\e80e';
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
+  transform: rotate(90deg); }
 
-/* line 133, ../scss/0_Base/_grid-font.scss */
 .icon-options:before {
-<<<<<<< HEAD
-  content: '\2699';
-}
-=======
   content: '\e800'; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
 /**
 **/
-/* line 1, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
 .container-drop-area-wrapper {
-<<<<<<< HEAD
-  position: relative;
-}
-/* line 3, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
-.container-drop-area-wrapper .container-drop-area {
-  box-sizing: border-box;
-  position: absolute;
-  height: 30px;
-  top: -25px;
-  width: 100%;
-  z-index: 60;
-  transition: all 0.3s ease;
-  background-color: #e5f7fa;
-  border: 3px dashed #3ac5d9;
-}
-/* line 13, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
-.container-drop-area-wrapper .container-drop-area.hover {
-  background-color: #3ac5d9;
-  height: 40px;
-  top: -30px;
-}
-=======
   position: relative; }
   .container-drop-area-wrapper .container-drop-area {
-    -moz-box-sizing: border-box;
-         box-sizing: border-box;
+    box-sizing: border-box;
     position: absolute;
     height: 30px;
     top: -25px;
     width: 100%;
     z-index: 60;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease;
+    transition: all 0.3s ease;
     background-color: #e5f7fa;
     border: 3px dashed #3ac5d9; }
     .container-drop-area-wrapper .container-drop-area.hover {
       background-color: #3ac5d9;
       height: 40px;
       top: -30px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 2, ../scss/2_Module/_grid-dragger-helper.scss */
 .dragger-helper {
   display: block;
   height: 50px;
@@ -472,37 +237,12 @@ h3 {
   						5px 5px 0 #ccc,
   						9px 9px 0 #fff,
   						10px 10px 0 #ccc,
-  						14px 14px 0 #fff);*/
-}
+  						14px 14px 0 #fff);*/ }
 
-/* line 1, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
 .grid-box-drop-area-wrapper {
-<<<<<<< HEAD
-  position: relative;
-}
-/* line 3, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
-.grid-box-drop-area-wrapper .grid-box-drop-area {
-  box-sizing: border-box;
-  position: absolute;
-  height: 20px;
-  top: -12px;
-  border: 2px dashed #3ac5d9;
-  background-color: #e5f7fa;
-  width: 100%;
-  z-index: 60;
-  transition: all 0.3s ease;
-}
-/* line 14, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
-.grid-box-drop-area-wrapper .grid-box-drop-area.hover {
-  background-color: #3ac5d9;
-  height: 25px;
-  top: -14px;
-}
-=======
   position: relative; }
   .grid-box-drop-area-wrapper .grid-box-drop-area {
-    -moz-box-sizing: border-box;
-         box-sizing: border-box;
+    box-sizing: border-box;
     position: absolute;
     height: 20px;
     top: -12px;
@@ -510,43 +250,28 @@ h3 {
     background-color: #e5f7fa;
     width: 100%;
     z-index: 60;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
+    transition: all 0.3s ease; }
     .grid-box-drop-area-wrapper .grid-box-drop-area.hover {
       background-color: #3ac5d9;
       height: 25px;
       top: -14px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
 /*********************
 * box
 *******************/
-/* line 6, ../scss/2_Module/_grid-box.scss */
 .grid-box {
   position: relative;
   padding: 12px 0;
   margin: 10px 0;
   min-height: 50px;
   background-color: white;
-<<<<<<< HEAD
   -webkit-box-shadow: inset 0 0 2px 0px #838688;
-  box-shadow: inset 0 0 2px 0px #838688;
-}
-/* line 18, ../scss/2_Module/_grid-box.scss */
-.grid-box .grid-box-content {
-  font-size: 11px;
-  padding: 0 10px;
-  word-break: break-all;
-}
-=======
   box-shadow: inset 0 0 2px 0px #838688; }
   .grid-box .grid-box-content {
     font-size: 11px;
     padding: 0 10px;
     word-break: break-all; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 26, ../scss/2_Module/_grid-box.scss */
 .grid-box-controls {
   color: white;
   height: 0;
@@ -560,69 +285,7 @@ h3 {
   background-color: rgba(63, 72, 83, 0.9);
   font-weight: bold;
   text-transform: uppercase;
-<<<<<<< HEAD
-  transition: opacity 0.2s ease;
-}
-/* line 27, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls.grid-box-movable {
-  cursor: move;
-}
-/* line 45, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-control-button {
-  cursor: pointer;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  width: 40px;
-  max-width: 250px;
-  transition: all 0.3s ease;
-}
-/* line 54, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-control-button:hover {
-  width: 100%;
-}
-/* line 57, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-control-button .grid-box-control-text {
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-/* line 61, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
-  opacity: 1;
-}
-/* line 65, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-control-wrapper {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  margin-top: -13px;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-left: 8px;
-}
-/* line 76, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-edit {
-  background-color: #3ac5d9;
-  top: 0px;
-  bottom: 50%;
-}
-/* line 81, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-delete {
-  top: 50%;
-  bottom: 0px;
-  background-color: #ed5032;
-}
-/* line 86, ../scss/2_Module/_grid-box.scss */
-.grid-box-controls .grid-box-drag {
-  position: absolute;
-  top: 35%;
-  left: 10px;
-}
-=======
-  -webkit-transition: opacity 0.2s ease;
-          transition: opacity 0.2s ease; }
+  transition: opacity 0.2s ease; }
   .grid-box-controls.grid-box-movable {
     cursor: move; }
   .grid-box-controls .grid-box-control-button {
@@ -633,14 +296,12 @@ h3 {
     right: 0px;
     width: 40px;
     max-width: 250px;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
+    transition: all 0.3s ease; }
     .grid-box-controls .grid-box-control-button:hover {
       width: 100%; }
     .grid-box-controls .grid-box-control-button .grid-box-control-text {
       opacity: 0;
-      -webkit-transition: all 0.3s ease;
-              transition: all 0.3s ease; }
+      transition: all 0.3s ease; }
     .grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
       opacity: 1; }
   .grid-box-controls .grid-box-control-wrapper {
@@ -664,152 +325,92 @@ h3 {
     position: absolute;
     top: 35%;
     left: 10px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 92, ../scss/2_Module/_grid-box.scss */
 .grid-box:hover .grid-box-controls {
   height: auto;
   overflow: visible;
   display: block;
-  opacity: 1;
-}
+  opacity: 1; }
 
-/* line 101, ../scss/2_Module/_grid-box.scss */
 .grid-box-type-content {
   margin: 0px;
-  border-bottom: 1px solid #f3f5f7;
-}
+  border-bottom: 1px solid #f3f5f7; }
 
-/* line 107, ../scss/2_Module/_grid-box.scss */
 .grid-box-type + dl .grid-box-type-search {
-  display: none;
-}
-/* line 111, ../scss/2_Module/_grid-box.scss */
+  display: none; }
 .grid-box-type.active + dl .grid-box-type-search {
-  display: block;
-}
+  display: block; }
 
-/* line 118, ../scss/2_Module/_grid-box.scss */
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-controls {
-  cursor: default;
-}
-/* line 121, ../scss/2_Module/_grid-box.scss */
+  cursor: default; }
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-delete {
-  display: none;
-}
-/* line 124, ../scss/2_Module/_grid-box.scss */
+  display: none; }
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-edit {
-  bottom: 0px;
-}
-/* line 127, ../scss/2_Module/_grid-box.scss */
+  bottom: 0px; }
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-drag {
-  display: none;
-}
+  display: none; }
 
-/* line 2, ../scss/2_Module/_grid-box-sort-placeholder.scss */
 .grid-box-sort-placeholder {
-  background-color: #3ac5d9;
-}
+  background-color: #3ac5d9; }
 
-/* line 3, ../scss/2_Module/_grid-boxes-wrapper.scss */
 .grid-boxes-wrapper {
   min-height: 60px;
-  position: relative;
-}
+  position: relative; }
 
-/* line 2, ../scss/2_Module/_grid-container-wrapper.scss */
 .grid-containers-wrapper {
-<<<<<<< HEAD
-  box-sizing: border-box;
-}
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
+  box-sizing: border-box; }
 
 /****************
  * container 
  ****************/
-/* line 6, ../scss/2_Module/_grid-container.scss */
 .grid-container {
-  margin: 0 0px 20px 0px;
-}
-/* line 13, ../scss/2_Module/_grid-container.scss */
-.grid-container .grid-container-sorthandle,
-.grid-container .grid-container-options-icon {
-  color: #b0bac2;
-}
-/* line 18, ../scss/2_Module/_grid-container.scss */
-.grid-container .grid-container-title {
-  color: #262e38;
-}
-/* line 21, ../scss/2_Module/_grid-container.scss */
-.grid-container .grid-container-title .grid-container-style {
-  font-weight: normal;
-  font-size: 11px;
-}
-/* line 29, ../scss/2_Module/_grid-container.scss */
-.grid-container .grid-container-controls {
-  background-color: white;
-  border: 1px solid rgba(176, 186, 194, 0.7);
-}
-/* line 34, ../scss/2_Module/_grid-container.scss */
-.grid-container .grid-container-content {
-  border-top: none;
-}
+  margin: 0 0px 20px 0px; }
+  .grid-container .grid-container-sorthandle,
+  .grid-container .grid-container-options-icon {
+    color: #b0bac2; }
+  .grid-container .grid-container-title {
+    color: #262e38; }
+    .grid-container .grid-container-title .grid-container-style {
+      font-weight: normal;
+      font-size: 11px; }
+  .grid-container .grid-container-controls {
+    background-color: white;
+    border: 1px solid rgba(176, 186, 194, 0.7); }
+  .grid-container .grid-container-content {
+    border-top: none; }
 
-/* line 41, ../scss/2_Module/_grid-container.scss */
 .grid-container-content {
   position: relative;
   background-color: white;
-  border: 1px solid rgba(176, 186, 194, 0.7);
-}
+  border: 1px solid rgba(176, 186, 194, 0.7); }
 
-/* line 47, ../scss/2_Module/_grid-container.scss */
 .grid-container-controls {
   position: relative;
   background-color: transparent;
   height: 40px;
   border: 1px solid transparent;
-  border-bottom: none;
-}
+  border-bottom: none; }
 
 /**********************************
  * container hover states
  **********************************/
-/* line 65, ../scss/2_Module/_grid-container.scss */
 .grid-container-title,
 .grid-container-sorthandle,
 .grid-container-options-icon {
   color: rgba(176, 186, 194, 0.3);
-<<<<<<< HEAD
-  transition: all 0.3s ease;
-}
-=======
-  -webkit-transition: all 0.3s ease;
-          transition: all 0.3s ease; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
+  transition: all 0.3s ease; }
 
-/* line 78, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover {
-  background-color: #3f4853;
-}
-/* line 80, ../scss/2_Module/_grid-container.scss */
-.grid-container-options-list-item:hover[role=trash] {
-  background-color: #ed5032;
-}
-/* line 83, ../scss/2_Module/_grid-container.scss */
-.grid-container-options-list-item:hover[role=edit] {
-  background-color: #3ac5d9;
-}
+  background-color: #3f4853; }
+  .grid-container-options-list-item:hover[role=trash] {
+    background-color: #ed5032; }
+  .grid-container-options-list-item:hover[role=edit] {
+    background-color: #3ac5d9; }
 
-/* line 89, ../scss/2_Module/_grid-container.scss */
 .grid-container-type-content {
   margin: 0px;
-  border-bottom: 1px solid #f3f5f7;
-}
+  border-bottom: 1px solid #f3f5f7; }
 
-/* line 95, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer {
   cursor: move;
   position: absolute;
@@ -819,106 +420,40 @@ h3 {
   bottom: 5px;
   right: 5px;
   background-color: rgba(63, 72, 83, 0.3);
-  z-index: 50;
-}
-/* line 105, ../scss/2_Module/_grid-container.scss */
-.grid-container-reused-layer .grid-container-reused-label {
-  position: absolute;
-  top: -3px;
-  left: 50%;
-  color: white;
-  text-transform: uppercase;
-}
+  z-index: 50; }
+  .grid-container-reused-layer .grid-container-reused-label {
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    color: white;
+    text-transform: uppercase; }
 
-/* line 115, ../scss/2_Module/_grid-container.scss */
 .grid-container-title {
   position: absolute;
   top: 9px;
   left: 20px;
   font-weight: bold;
-  font-size: 90%;
-}
+  font-size: 90%; }
 
-/* line 123, ../scss/2_Module/_grid-container.scss */
 .grid-container-sorthandle {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
   height: 40px;
-<<<<<<< HEAD
-  cursor: move;
-}
-=======
   cursor: move; }
   .grid-container-sorthandle .icon-drag {
     position: absolute;
     top: 9px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 132, ../scss/2_Module/_grid-container.scss */
 .grid-container-options {
   position: absolute;
   top: 0px;
   right: 0px;
   height: 40px;
   z-index: 80;
-<<<<<<< HEAD
-}
-/* line 139, ../scss/2_Module/_grid-container.scss */
-.grid-container-options:hover {
-  z-index: 81;
-}
-/* line 143, ../scss/2_Module/_grid-container.scss */
-.grid-container-options .grid-container-options-icon {
-  text-transform: uppercase;
-  font-weight: bold;
-}
-/* line 147, ../scss/2_Module/_grid-container.scss */
-.grid-container-options .grid-container-options-list {
-  position: absolute;
-  list-style: none;
-  background-color: #b0bac2;
-  color: white;
-  width: 140px;
-  right: 0px;
-  top: 30px;
-  margin: 0px;
-  padding: 0px;
-  display: none;
-}
-/* line 159, ../scss/2_Module/_grid-container.scss */
-.grid-container-options .grid-container-options-list .grid-container-options-list-item {
-  cursor: pointer;
-  padding: 5px;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-bottom: 0px;
-}
-/* line 166, ../scss/2_Module/_grid-container.scss */
-.grid-container-options .grid-container-options-list:before {
-  content: "";
-  border: 8px solid #b0bac2;
-  font-size: 0;
-  line-height: 0;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  top: -16px;
-  left: 47%;
-}
-/* line 183, ../scss/2_Module/_grid-container.scss */
-.grid-container-options:hover .grid-container-options-list {
-  display: block;
-}
-=======
   padding-top: 12px;
-  -moz-box-sizing: border-box;
-       box-sizing: border-box; }
+  box-sizing: border-box; }
   .grid-container-options:hover {
     z-index: 81; }
   .grid-container-options .grid-container-options-icon {
@@ -957,29 +492,21 @@ h3 {
       left: 47%; }
   .grid-container-options:hover .grid-container-options-list {
     display: block; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 189, ../scss/2_Module/_grid-container.scss */
 .grid-container-prolog,
 .grid-container-epilog {
-  padding: 7px 10px;
-}
-/* line 192, ../scss/2_Module/_grid-container.scss */
-.grid-container-prolog p,
-.grid-container-epilog p {
-  font-size: 11px;
-}
+  padding: 7px 10px; }
+  .grid-container-prolog p,
+  .grid-container-epilog p {
+    font-size: 11px; }
 
-/* line 16, ../scss/2_Module/_grid-container-sidebar.scss */
 .grid-wrapper .grid-container-type-s .grid-box .grid .sc-4 .grid-slot {
   position: relative;
   top: auto;
   left: auto;
   width: auto;
-  float: none;
-}
+  float: none; }
 
-/* line 27, ../scss/2_Module/_grid-container-sidebar.scss */
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid-slot {
   position: absolute;
   width: 32%;
@@ -988,21 +515,11 @@ h3 {
   left: 0px;
   padding-right: 4px;
   padding-left: 4px;
-<<<<<<< HEAD
   box-sizing: border-box;
-  z-index: 60;
-}
-/* line 38, ../scss/2_Module/_grid-container-sidebar.scss */
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
   z-index: 60; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s[data-type*=s-0] .grid-slot {
   left: auto;
-  right: 0px;
-}
-/* line 48, ../scss/2_Module/_grid-container-sidebar.scss */
+  right: 0px; }
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-container,
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-slot,
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-box,
@@ -1013,95 +530,20 @@ h3 {
   background-color: transparent;
   width: auto;
   position: relative;
-  z-index: inherit;
-}
+  z-index: inherit; }
 
-/* line 2, ../scss/2_Module/_grid-container-sort-placeholder.scss */
 .grid-container-sort-placeholder {
   height: 20px;
   margin-bottom: 15px;
-  background-color: #3ac5d9;
-}
+  background-color: #3ac5d9; }
 
-/* line 3, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls {
   list-style: none;
   position: fixed;
   z-index: 90;
   margin: 200px 0 0 0;
-<<<<<<< HEAD
   box-sizing: border-box;
   transition: all 0.1337s ease;
-  width: 100%;
-  height: 0px;
-}
-/* line 16, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls button {
-  background-color: black;
-  color: white;
-  padding: 10px;
-}
-/* line 24, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control {
-  width: 185px;
-  right: 160px;
-  position: relative;
-  margin: 0;
-  transition: all 0.1337s ease;
-}
-/* line 31, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control:hover {
-  right: 20px;
-}
-/* line 34, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control button {
-  text-align: right;
-  padding: 5px 48px 5px 5px;
-  margin: 0px;
-  font-size: 12px;
-  width: 100%;
-  height: 45px;
-  transition: all 0.1337s ease;
-  border: none;
-  background-color: #f3f5f7;
-}
-/* line 46, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control button [class^="icon-"],
-.grid-editor-controls .grid-editor-control button [class*=" icon-"] {
-  position: absolute;
-  right: 6px;
-  top: 6px;
-  font-size: 16px;
-  font-family: 'Entypo';
-}
-/* line 53, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control button:hover {
-  padding-right: 38px;
-}
-/* line 60, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control .grid-editor-save-button {
-  background-color: #46bd7b;
-  color: white;
-}
-/* line 65, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control .grid-editor-cancel-button {
-  background-color: #ed5032;
-  color: white;
-}
-/* line 69, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-controls .grid-editor-control .grid-editor-reuse-button {
-  background-color: #e5e3df;
-  color: #262e38;
-}
-
-/* line 82, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content {
-  box-sizing: border-box;
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
   width: 100%;
   height: 0px; }
   .grid-editor-controls button {
@@ -1113,8 +555,7 @@ h3 {
     right: 160px;
     position: relative;
     margin: 0;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease; }
+    transition: all 0.1337s ease; }
     .grid-editor-controls .grid-editor-control:hover {
       right: 20px; }
     .grid-editor-controls .grid-editor-control button {
@@ -1124,8 +565,7 @@ h3 {
       font-size: 12px;
       width: 100%;
       height: 45px;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease;
+      transition: all 0.1337s ease;
       border: none;
       background-color: #f3f5f7; }
       .grid-editor-controls .grid-editor-control button [class^="icon-"],
@@ -1148,76 +588,11 @@ h3 {
       color: #262e38; }
 
 .grid-editor-content {
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
+  box-sizing: border-box;
   padding: 15px 35px;
   margin: 20px 10%;
   padding-bottom: 100px;
   background-color: white;
-<<<<<<< HEAD
-  border: 1px solid #eceff3;
-}
-/* line 90, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content fieldset {
-  border: none;
-  border-bottom: 1px solid #eceff3;
-  padding: 0;
-  margin: -1px -35px 0px -35px;
-}
-/* line 96, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content fieldset .grid-editor-field-wrapper {
-  display: none;
-}
-/* line 101, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content legend {
-  padding: 15px 0px 15px 35px;
-  box-sizing: border-box;
-  width: 100%;
-  cursor: pointer;
-  position: relative;
-  font-size: 14px;
-  font-weight: bold;
-  border-top: 1px solid #cdd5df;
-  background-color: #eceae7;
-  transition: background-color 0.5s ease;
-}
-/* line 116, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content legend .icon-arrow {
-  position: absolute;
-  left: 5px;
-  top: 10px;
-  transition: all 0.1337s ease;
-}
-/* line 125, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content input,
-.grid-editor-content textarea {
-  border: 1px solid #eceff3;
-  width: 100%;
-}
-/* line 130, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content label {
-  padding: 10px 0;
-  font-weight: bold;
-  color: #8193a9;
-  display: block;
-}
-/* line 136, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-editor-header {
-  margin-bottom: 15px;
-}
-/* line 139, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-editor-title {
-  font-weight: bold;
-  font-size: 16px;
-  padding: 7px;
-  height: auto;
-}
-/* line 145, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-editor-footer {
-  margin-top: 15px;
-}
-=======
   border: 1px solid #eceff3; }
   .grid-editor-content fieldset {
     border: none;
@@ -1228,8 +603,7 @@ h3 {
       display: none; }
   .grid-editor-content legend {
     padding: 15px 0px 15px 35px;
-    -moz-box-sizing: border-box;
-         box-sizing: border-box;
+    box-sizing: border-box;
     width: 100%;
     cursor: pointer;
     position: relative;
@@ -1237,14 +611,12 @@ h3 {
     font-weight: bold;
     border-top: 1px solid #cdd5df;
     background-color: #eceae7;
-    -webkit-transition: background-color 0.5s ease;
-            transition: background-color 0.5s ease; }
+    transition: background-color 0.5s ease; }
     .grid-editor-content legend .icon-arrow {
       position: absolute;
       left: 5px;
       top: 16px;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease; }
+      transition: all 0.1337s ease; }
   .grid-editor-content input,
   .grid-editor-content textarea {
     border: 1px solid #eceff3;
@@ -1263,45 +635,33 @@ h3 {
     height: auto; }
   .grid-editor-content .grid-editor-footer {
     margin-top: 15px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 151, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active {
-  border-bottom: 2px solid #24a9bc;
-}
-/* line 155, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-active .grid-editor-field-wrapper {
-  display: block;
-  margin: 15px 35px;
-}
-/* line 160, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-active legend {
-  background-color: #3ac5d9;
-  border-bottom: 2px solid #24a9bc;
-  color: white;
-}
-/* line 165, ../scss/2_Module/_grid-editor.scss */
-.grid-editor-content .grid-active legend .icon-arrow {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  transform: rotate(90deg);
-  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
-  zoom: 1;
-}
+  border-bottom: 2px solid #24a9bc; }
+  .grid-editor-content .grid-active .grid-editor-field-wrapper {
+    display: block;
+    margin: 15px 35px; }
+  .grid-editor-content .grid-active legend {
+    background-color: #3ac5d9;
+    border-bottom: 2px solid #24a9bc;
+    color: white; }
+    .grid-editor-content .grid-active legend .icon-arrow {
+      -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
+      transform: rotate(90deg);
+      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
+      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
+      zoom: 1; }
 
-/* line 1, ../scss/2_Module/_grid-element-drag-icon.scss */
 .grid-element-drag-icon {
   position: absolute;
   top: 50%;
   margin-top: -10px;
   left: -6px;
-  font-size: 120%;
-}
+  font-size: 120%; }
 
-/* line 2, ../scss/2_Module/_grid-element-trash.scss */
 .grid-element-trash {
   position: absolute;
   bottom: 0px;
@@ -1312,39 +672,10 @@ h3 {
   overflow: hidden;
   background-color: #b0bac2;
   color: white;
-<<<<<<< HEAD
   box-sizing: border-box;
   vertical-align: baseline;
   z-index: 90;
-  transition: all 0.1337s ease;
-}
-/* line 16, ../scss/2_Module/_grid-element-trash.scss */
-.grid-element-trash > div {
-  padding-top: 25px;
-  padding-bottom: 100%;
-  height: 100%;
-  border: 3px dashed white;
-  border-bottom: none;
-  text-align: center;
-}
-/* line 24, ../scss/2_Module/_grid-element-trash.scss */
-.grid-element-trash.grid-active {
-  padding: 10px 10px 0 10px;
-  height: 50%;
-}
-/* line 28, ../scss/2_Module/_grid-element-trash.scss */
-.grid-element-trash.grid-hover {
-  background-color: #ed5032;
-}
-
-/* line 1, ../scss/2_Module/_grid-element-type-content.scss */
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
-  vertical-align: baseline;
-  z-index: 90;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease; }
+  transition: all 0.1337s ease; }
   .grid-element-trash > div {
     padding-top: 25px;
     padding-bottom: 100%;
@@ -1358,52 +689,10 @@ h3 {
   .grid-element-trash.grid-hover {
     background-color: #ed5032; }
 
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 .grid-element-type-content {
   min-height: 100px;
   padding: 15px 20px 0px 10px;
   overflow-y: scroll;
-<<<<<<< HEAD
-  background-color: white;
-}
-/* line 8, ../scss/2_Module/_grid-element-type-content.scss */
-.grid-element-type-content .grid-element-container-lists,
-.grid-element-type-content .grid-element-box-lists {
-  margin: 0px;
-  padding-bottom: 40px;
-}
-/* line 14, ../scss/2_Module/_grid-element-type-content.scss */
-.grid-element-type-content .grid-container-type,
-.grid-element-type-content .grid-box-type {
-  position: relative;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-  padding: 20px;
-}
-/* line 20, ../scss/2_Module/_grid-element-type-content.scss */
-.grid-element-type-content .grid-container-type .icon-arrow,
-.grid-element-type-content .grid-box-type .icon-arrow {
-  z-index: 90;
-  position: absolute;
-  top: 16px;
-  left: -4px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-/* line 30, ../scss/2_Module/_grid-element-type-content.scss */
-.grid-element-type-content .grid-container-type.active .icon-arrow,
-.grid-element-type-content .grid-box-type.active .icon-arrow {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  transform: rotate(90deg);
-  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
-  zoom: 1;
-}
-=======
   background-color: white; }
   .grid-element-type-content .grid-element-container-lists,
   .grid-element-type-content .grid-element-box-lists {
@@ -1423,195 +712,95 @@ h3 {
       top: 20px;
       left: -4px;
       font-size: 14px;
-      -webkit-transition: all 0.3s ease;
-              transition: all 0.3s ease; }
+      transition: all 0.3s ease; }
     .grid-element-type-content .grid-container-type.active .icon-arrow,
     .grid-element-type-content .grid-box-type.active .icon-arrow {
       -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
       transform: rotate(90deg);
       filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
       zoom: 1; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 2, ../scss/2_Module/_grid-element-type-select.scss */
 .grid-element-type-select .grid-element-type {
   text-align: center;
-<<<<<<< HEAD
   box-sizing: border-box;
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   display: inline-block;
   text-transform: uppercase;
   width: 50%;
   font-weight: bold;
   height: 45px;
   padding-top: 15px;
-<<<<<<< HEAD
   transition: all 0.1337s ease;
-=======
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   position: relative;
-  background-color: #f3f5f7;
-}
-/* line 15, ../scss/2_Module/_grid-element-type-select.scss */
-.grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
-  cursor: pointer;
-  color: white;
-  background-color: #3ac5d9;
-}
-/* line 19, ../scss/2_Module/_grid-element-type-select.scss */
-.grid-element-type-select .grid-element-type:hover.active:after, .grid-element-type-select .grid-element-type.active.active:after {
-  z-index: 90;
-  content: "";
-  border: 9px solid #3ac5d9;
-  font-size: 0;
-  line-height: 0;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  border-bottom-color: transparent;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  bottom: -18px;
-  left: 47%;
-}
+  background-color: #f3f5f7; }
+  .grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
+    cursor: pointer;
+    color: white;
+    background-color: #3ac5d9; }
+    .grid-element-type-select .grid-element-type:hover.active:after, .grid-element-type-select .grid-element-type.active.active:after {
+      z-index: 90;
+      content: "";
+      border: 9px solid #3ac5d9;
+      font-size: 0;
+      line-height: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+      border-left-color: transparent;
+      position: absolute;
+      bottom: -18px;
+      left: 47%; }
 
-/* line 1, ../scss/2_Module/_grid-new-container-slots.scss */
 .grid-new-container-slots {
   display: table;
   padding: 3px 0;
-  border: 1px solid rgba(176, 186, 194, 0.7);
-}
-/* line 9, ../scss/2_Module/_grid-new-container-slots.scss */
-.grid-new-container-slots .grid-slot {
-  height: 32px;
-  border-left: 4px solid white;
-}
+  border: 1px solid rgba(176, 186, 194, 0.7); }
+  .grid-new-container-slots .grid-slot {
+    height: 32px;
+    border-left: 4px solid white; }
 
-/* line 4, ../scss/2_Module/_grid-new-element.scss */
 .grid-new-element {
   cursor: move;
   position: relative;
   padding-left: 20px;
   margin-bottom: 8px;
-  color: #eceff3;
-}
-/* line 14, ../scss/2_Module/_grid-new-element.scss */
-.grid-new-element .grid-element-title {
-  color: #1e1e1e;
-  padding-left: 20px;
-  margin: 0px;
-  padding-top: 10px;
-}
-/* line 21, ../scss/2_Module/_grid-new-element.scss */
-.grid-new-element:hover {
-  color: #b0bac2;
-  border-color: #b0bac2;
-}
+  color: #eceff3; }
+  .grid-new-element .grid-element-title {
+    color: #1e1e1e;
+    padding-left: 20px;
+    margin: 0px;
+    padding-top: 10px; }
+  .grid-new-element:hover {
+    color: #b0bac2;
+    border-color: #b0bac2; }
 
-/* line 1, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions {
   list-style: none;
-<<<<<<< HEAD
   box-sizing: border-box;
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   display: block;
   overflow-x: scroll;
   margin-right: 260px;
-  padding: 0px 0px 15px 50px;
-}
-/* line 8, ../scss/2_Module/_grid-revisions.scss */
-.grid-revisions button {
-  margin: 0px;
-  padding: 0px;
-}
+  padding: 0px 0px 15px 50px; }
+  .grid-revisions button {
+    margin: 0px;
+    padding: 0px; }
 
-/* line 16, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions-list {
-  padding: 0px 15px 0px 0px;
-}
+  padding: 0px 15px 0px 0px; }
 
-/* line 20, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision {
   position: relative;
-<<<<<<< HEAD
   box-sizing: border-box;
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   display: inline-block;
   width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
-<<<<<<< HEAD
   -webkit-box-shadow: inset 0 0 2px 0 #aaaaaa;
-  box-shadow: inset 0 0 2px 0 #aaaaaa;
-}
-/* line 31, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision:last-child {
-  border-right: none;
-}
-/* line 35, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-draft {
-  background-color: #ed7b3d;
-  color: white;
-}
-/* line 38, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-draft button {
-  color: white;
-}
-/* line 40, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-draft button:hover {
-  color: #3f4853;
-}
-/* line 46, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-published {
-  background-color: #46bd7b;
-  color: white;
-}
-/* line 49, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-published button {
-  color: white;
-}
-/* line 51, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-published button:hover {
-  color: #3f4853;
-}
-/* line 57, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision:first-child:before {
-  z-index: 90;
-  content: "";
-  border: 8px solid #ed7b3d;
-  font-size: 0;
-  line-height: 0;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  margin-left: -8px;
-  transition: all 0.1337s ease;
-}
-/* line 76, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision.grid-revision-state-published:first-child:before {
-  border-top-color: #46bd7b;
-}
-=======
   box-shadow: inset 0 0 2px 0 #aaaaaa; }
   .grid-revision:last-child {
     border-right: none; }
@@ -1645,54 +834,35 @@ h3 {
     bottom: -16px;
     left: 50%;
     margin-left: -8px;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease; }
+    transition: all 0.1337s ease; }
   .grid-revision.grid-revision-state-published:first-child:before {
     border-top-color: #46bd7b; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 82, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description {
-  padding: 10px;
-}
-/* line 85, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision-description p {
-  margin: 0px;
-}
-/* line 89, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision-description .grid-revision-date {
-  font-weight: bold;
-}
+  padding: 10px; }
+  .grid-revision-description p {
+    margin: 0px; }
+  .grid-revision-description .grid-revision-date {
+    font-weight: bold; }
 
-/* line 95, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls {
   position: relative;
-  padding-bottom: 40px;
-}
-/* line 99, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision-controls .grid-revision-button {
-  height: 40px;
-  position: absolute;
-  bottom: 0px;
-}
-/* line 105, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision-controls .grid-revision-preview-button {
-  left: 0px;
-  width: 50%;
-}
-/* line 111, ../scss/2_Module/_grid-revisions.scss */
-.grid-revision-controls .grid-revision-delete-button,
-.grid-revision-controls .grid-revision-revert-button {
-  right: 0px;
-  width: 50%;
-}
+  padding-bottom: 40px; }
+  .grid-revision-controls .grid-revision-button {
+    height: 40px;
+    position: absolute;
+    bottom: 0px; }
+  .grid-revision-controls .grid-revision-preview-button {
+    left: 0px;
+    width: 50%; }
+  .grid-revision-controls .grid-revision-delete-button,
+  .grid-revision-controls .grid-revision-revert-button {
+    right: 0px;
+    width: 50%; }
 
-/* line 117, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-state-published .grid-revision-controls .grid-revision-preview-button {
-  width: 100%;
-}
+  width: 100%; }
 
-/* line 1, ../scss/2_Module/_grid-slot-style-changer.scss */
 .grid-slot-style-changer {
   text-transform: uppercase;
   position: relative;
@@ -1700,91 +870,47 @@ h3 {
   text-align: center;
   font-weight: bold;
   display: block;
-<<<<<<< HEAD
   transition: max-height 0.321s ease;
-=======
-  -webkit-transition: max-height 0.321s ease;
-          transition: max-height 0.321s ease;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   overflow: hidden;
-  max-height: 0;
-}
-/* line 19, ../scss/2_Module/_grid-slot-style-changer.scss */
-.grid-slot-style-changer .grid-style-changer-active {
-  padding: 6px 0px 4px 0px;
-  color: #b0bac2;
-}
-/* line 24, ../scss/2_Module/_grid-slot-style-changer.scss */
-.grid-slot-style-changer .grid-choose-style {
-  position: absolute;
-  left: 50%;
-  display: none;
-  padding: 0px;
-  margin: 0px;
-  margin-left: -75px;
-  list-style: none;
-  z-index: 80;
-  width: 150px;
-}
-/* line 35, ../scss/2_Module/_grid-slot-style-changer.scss */
-.grid-slot-style-changer .grid-choose-style li {
-  background-color: #b0bac2;
-  border-top: 1px solid #d0d8dd;
-}
-/* line 38, ../scss/2_Module/_grid-slot-style-changer.scss */
-.grid-slot-style-changer .grid-choose-style li:first-child {
-  border-top: none;
-}
-/* line 43, ../scss/2_Module/_grid-slot-style-changer.scss */
-.grid-slot-style-changer .grid-choose-style:before {
-  content: "";
-  border: 9px solid #b0bac2;
-  font-size: 0;
-  line-height: 0;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  top: -16px;
-  left: 47%;
-}
+  max-height: 0; }
+  .grid-slot-style-changer .grid-style-changer-active {
+    padding: 6px 0px 4px 0px;
+    color: #b0bac2; }
+  .grid-slot-style-changer .grid-choose-style {
+    position: absolute;
+    left: 50%;
+    display: none;
+    padding: 0px;
+    margin: 0px;
+    margin-left: -75px;
+    list-style: none;
+    z-index: 80;
+    width: 150px; }
+    .grid-slot-style-changer .grid-choose-style li {
+      background-color: #b0bac2;
+      border-top: 1px solid #d0d8dd; }
+      .grid-slot-style-changer .grid-choose-style li:first-child {
+        border-top: none; }
+    .grid-slot-style-changer .grid-choose-style:before {
+      content: "";
+      border: 9px solid #b0bac2;
+      font-size: 0;
+      line-height: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-left-color: transparent;
+      position: absolute;
+      top: -16px;
+      left: 47%; }
 
-/* line 62, ../scss/2_Module/_grid-slot-style-changer.scss */
 .grid-container-show-slot-styles .grid-slot-style-changer {
   max-height: 100px;
-  overflow: visible;
-}
+  overflow: visible; }
 
-/* line 69, ../scss/2_Module/_grid-slot-style-changer.scss */
 [data-reused=false] .grid-slot-style-changer:hover {
-<<<<<<< HEAD
-  z-index: 81;
-}
-/* line 72, ../scss/2_Module/_grid-slot-style-changer.scss */
-[data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
-  color: #3f4853;
-}
-/* line 77, ../scss/2_Module/_grid-slot-style-changer.scss */
-[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
-  color: white;
-  display: block;
-  padding-top: 2px;
-}
-/* line 82, ../scss/2_Module/_grid-slot-style-changer.scss */
-[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
-  padding: 10px 20px;
-  transition: all 0.1337s ease;
-  margin: 0px;
-}
-/* line 86, ../scss/2_Module/_grid-slot-style-changer.scss */
-[data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
-  cursor: pointer;
-  background-color: #3f4853;
-}
-=======
   z-index: 81; }
   [data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
     color: #3f4853; }
@@ -1794,168 +920,58 @@ h3 {
     padding-top: 2px; }
     [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
       padding: 10px 20px;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease;
+      transition: all 0.1337s ease;
       margin: 0px; }
       [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
         cursor: pointer;
         background-color: #3f4853; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 3, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   position: relative;
   min-height: 50px;
   padding-top: 20px;
   border-left: 4px solid white;
-<<<<<<< HEAD
   box-sizing: border-box;
-  background-color: #eaeaea;
-}
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
   background-color: #eaeaea; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 14, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   padding: 30px 7px 0 7px;
   padding: 0 5px;
-<<<<<<< HEAD
   box-sizing: border-box;
-  display: table-cell;
-}
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
   display: table-cell; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 22, ../scss/2_Module/_grid-slot.scss */
 .grid-slot:first-child {
-  border-left: none;
-}
+  border-left: none; }
 
 /**
  * Grid Slots Wrapper
  * @author Stephan Kroppenstedt <sk@palasthotel.de>
  * @created 15.04.2014 11:46
  */
-/* line 7, ../scss/2_Module/_grid-slots-wrapper.scss */
 .grid-slots-wrapper {
   display: table;
-  width: 100%;
-}
+  width: 100%; }
 
-/* line 1, ../scss/2_Module/_grid-tool-elements.scss */
 .grid-tool-elements {
   position: fixed;
-<<<<<<< HEAD
   box-sizing: border-box;
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
   right: 0px;
   width: 260px;
   border-left: 1px solid rgba(176, 186, 194, 0.7);
-  z-index: 90;
-}
+  z-index: 90; }
 
-/* line 2, ../scss/2_Module/_grid-element-box-list.scss */
 .grid-element-box-lists .grid-new-element {
   border: 1px solid #eceff3;
-  padding-bottom: 10px;
-}
-/* line 6, ../scss/2_Module/_grid-element-box-list.scss */
+  padding-bottom: 10px; }
 .grid-element-box-lists .grid-element-title {
-  padding-left: 0px;
-}
+  padding-left: 0px; }
 
-/* line 3, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar {
-<<<<<<< HEAD
   transition: all 0.1337s ease;
   border-top: 4px solid #ed7b3d;
   position: relative;
   background-color: white;
   box-sizing: border-box;
-  width: 100%;
-  height: 0px;
-}
-/* line 13, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar .grid-tool-list {
-  list-style: none;
-  position: fixed;
-  z-index: 90;
-  margin: 0px;
-  width: 40px;
-}
-/* line 19, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar .grid-tool-list li {
-  width: 135px;
-  right: 90px;
-  position: relative;
-  margin: 0;
-  transition: all 0.1337s ease;
-}
-/* line 25, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar .grid-tool-list li:hover {
-  right: 0px;
-}
-/* line 28, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar .grid-tool-list li button {
-  text-align: right;
-  padding: 5px 48px 5px 5px;
-  margin: 0px;
-  font-size: 12px;
-  width: 100%;
-  height: 45px;
-  transition: all 0.1337s ease;
-  border: none;
-  background-color: #f3f5f7;
-}
-/* line 40, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar .grid-tool-list li button [class^="icon-"],
-.grid-toolbar .grid-tool-list li button [class*=" icon-"] {
-  position: absolute;
-  right: 6px;
-  top: 6px;
-  font-size: 16px;
-  font-family: 'Entypo';
-}
-/* line 47, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar .grid-tool-list li button:hover {
-  padding-right: 38px;
-  color: white;
-  background-color: #3f4853;
-}
-/* line 57, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar li.grid-tool-publish button,
-.grid-toolbar li.grid-tool-publish button:hover {
-  background-color: #ed7b3d;
-  color: white;
-}
-/* line 62, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar[data-draft=false] {
-  border-top: 4px solid #46bd7b;
-}
-/* line 66, ../scss/2_Module/_grid-toolbar.scss */
-.grid-toolbar[data-draft=false] li.grid-tool-publish button,
-.grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
-  background-color: #46bd7b;
-}
-
-/* line 72, ../scss/2_Module/_grid-toolbar.scss */
-=======
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
-  border-top: 4px solid #ed7b3d;
-  position: relative;
-  background-color: white;
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
   width: 100%;
   height: 0px; }
   .grid-toolbar .grid-tool-list {
@@ -1969,8 +985,7 @@ h3 {
       right: 90px;
       position: relative;
       margin: 0;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease; }
+      transition: all 0.1337s ease; }
       .grid-toolbar .grid-tool-list li:hover {
         right: 0px; }
       .grid-toolbar .grid-tool-list li button {
@@ -1980,8 +995,7 @@ h3 {
         font-size: 12px;
         width: 100%;
         height: 45px;
-        -webkit-transition: all 0.1337s ease;
-                transition: all 0.1337s ease;
+        transition: all 0.1337s ease;
         border: none;
         background-color: #f3f5f7; }
         .grid-toolbar .grid-tool-list li button [class^="icon-"],
@@ -2005,32 +1019,17 @@ h3 {
     .grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
       background-color: #46bd7b; }
 
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 .grid-toolbar-list {
-  margin: 20px 20px;
-}
+  margin: 20px 20px; }
 
-/* line 4, ../scss/2_Module/_grid-wrapper.scss */
 .grid-wrapper {
   margin-top: 40px;
   margin-right: 260px;
-<<<<<<< HEAD
   box-sizing: border-box;
-  padding: 5px 10px 120px 55px;
-}
-/* line 11, ../scss/2_Module/_grid-wrapper.scss */
-.grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
-  margin: 0px;
-}
-=======
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
   padding: 5px 10px 120px 55px; }
   .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
     margin: 0px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 8, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-container .grid-tool-list,
 .gridmode-container .grid-element-type[data-type=container],
 .gridmode-container .grid-container-sorthandle,
@@ -2041,20 +1040,15 @@ h3 {
 .gridmode-box .grid-container-sorthandle,
 .gridmode-box .grid-container-options-list [role=reuse],
 .gridmode-box .grid-container-options-list [role=trash] {
-  display: none;
-}
+  display: none; }
 
-/* line 16, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-box .grid-toolbar,
 .gridmode-box .grid-container-controls,
 .gridmode-box .grid-box-delete {
-  display: none;
-}
-/* line 19, ../scss/2_Module/_grid-gridmode.scss */
+  display: none; }
 .gridmode-box .grid-box-edit {
   bottom: 0px;
-  width: 100%;
-}
+  width: 100%; }
 
 /**
 * Loader CSS.
@@ -2067,8 +1061,7 @@ h3 {
   height: 40px; }
   .grid-loading-indicator-wrapper .grid-loading-indicator {
     opacity: 0;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
+    transition: all 0.3s ease; }
   .grid-loading-indicator-wrapper .grid-loading-indicator.loading {
     opacity: 1; }
   .grid-loading-indicator-wrapper .grid-loading-indicator,
@@ -2118,55 +1111,10 @@ h3 {
     height: 2em; } }
 /**
 **/
-/* line 1, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
 .grid-editor-url-builder {
   position: relative;
   width: 140px;
-<<<<<<< HEAD
   transition: all 0.1337s ease;
-  font-size: 11px;
-}
-/* line 10, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
-.grid-editor-url-builder .grid-editor-url-input {
-  width: 100%;
-  padding-right: 130px;
-  opacity: 0;
-}
-/* line 16, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
-.grid-editor-url-builder .grid-editor-url-button,
-.grid-editor-url-builder .grid-editor-url-button:focus {
-  position: absolute;
-  right: 0px;
-  top: -2px;
-  width: 140px;
-  color: #262e38;
-  background-color: #e5e3df;
-}
-/* line 25, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
-.grid-editor-url-builder.grid-editor-url-show {
-  width: 100%;
-}
-/* line 27, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
-.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button {
-  background-color: transparent;
-}
-/* line 28, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
-.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
-  color: #ed5032;
-}
-/* line 34, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
-.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input {
-  opacity: 1;
-}
-
-/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-textarea.scss */
-.grid-editor-widget-textarea textarea {
-  width: 100%;
-  min-height: 200px;
-}
-=======
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
   font-size: 11px; }
   .grid-editor-url-builder .grid-editor-url-input {
     width: 100%;
@@ -2192,137 +1140,84 @@ h3 {
 .grid-editor-widget-textarea textarea {
   width: 10 0%;
   min-height: 200px; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
 
-/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-list.scss */
 .grid-editor-widget-list .widget-list-remove-item-button {
-  margin-left: -15px;
-}
+  margin-left: -15px; }
 
-/* line 1, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
 .grid-editor-widget-listitem {
   border-left: 4px solid #eceae7;
   padding-left: 10px;
-  margin-bottom: 15px;
-}
-/* line 5, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
-.grid-editor-widget-listitem:hover {
-  border-color: #3ac5d9;
-}
+  margin-bottom: 15px; }
+  .grid-editor-widget-listitem:hover {
+    border-color: #3ac5d9; }
 
-/* line 3, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .autocomplete-wrapper,
 .grid-editor-autocomplete-with-links .autocomplete-wrapper {
-  position: relative;
-}
-/* line 6, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
+  position: relative; }
 .grid-editor-widget-autocomplete .icon-cancel,
 .grid-editor-autocomplete-with-links .icon-cancel {
-  font-size: 140%;
-}
-/* line 9, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
+  font-size: 140%; }
 .grid-editor-widget-autocomplete .suggestion-list,
 .grid-editor-autocomplete-with-links .suggestion-list {
-  position: relative;
-}
-/* line 11, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete .suggestion-list li,
-.grid-editor-autocomplete-with-links .suggestion-list li {
-  padding: 8px 15px;
-  background-color: #e5e3df;
-  cursor: pointer;
-  margin-bottom: 0px;
-  border-bottom: 1px solid #bdc7d3;
-}
-/* line 17, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete .suggestion-list li:last-child,
-.grid-editor-autocomplete-with-links .suggestion-list li:last-child {
-  border-bottom: none;
-}
-/* line 20, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete .suggestion-list li:hover,
-.grid-editor-autocomplete-with-links .suggestion-list li:hover {
-  background-color: #3ac5d9;
-  color: white;
-}
-/* line 25, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete .suggestion-list:empty,
-.grid-editor-autocomplete-with-links .suggestion-list:empty {
-  display: none;
-}
-/* line 28, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete .suggestion-list:before,
-.grid-editor-autocomplete-with-links .suggestion-list:before {
-  content: "";
-  border: 8px solid #e5e3df;
-  font-size: 0;
-  line-height: 0;
-  height: 0;
-  padding: 0;
-  margin: 0;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  position: absolute;
-  top: -16px;
-  left: 10px;
-}
-/* line 44, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
+  position: relative; }
+  .grid-editor-widget-autocomplete .suggestion-list li,
+  .grid-editor-autocomplete-with-links .suggestion-list li {
+    padding: 8px 15px;
+    background-color: #e5e3df;
+    cursor: pointer;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #bdc7d3; }
+    .grid-editor-widget-autocomplete .suggestion-list li:last-child,
+    .grid-editor-autocomplete-with-links .suggestion-list li:last-child {
+      border-bottom: none; }
+    .grid-editor-widget-autocomplete .suggestion-list li:hover,
+    .grid-editor-autocomplete-with-links .suggestion-list li:hover {
+      background-color: #3ac5d9;
+      color: white; }
+  .grid-editor-widget-autocomplete .suggestion-list:empty,
+  .grid-editor-autocomplete-with-links .suggestion-list:empty {
+    display: none; }
+  .grid-editor-widget-autocomplete .suggestion-list:before,
+  .grid-editor-autocomplete-with-links .suggestion-list:before {
+    content: "";
+    border: 8px solid #e5e3df;
+    font-size: 0;
+    line-height: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    position: absolute;
+    top: -16px;
+    left: 10px; }
 .grid-editor-widget-autocomplete .links a,
 .grid-editor-autocomplete-with-links .links a {
-  margin-right: 15px;
-}
-/* line 46, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete .links a.full,
-.grid-editor-autocomplete-with-links .links a.full {
-  display: none;
-}
-/* line 50, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
+  margin-right: 15px; }
+  .grid-editor-widget-autocomplete .links a.full,
+  .grid-editor-autocomplete-with-links .links a.full {
+    display: none; }
 .grid-editor-widget-autocomplete .cancel,
 .grid-editor-autocomplete-with-links .cancel {
   position: absolute;
   cursor: pointer;
-<<<<<<< HEAD
-  top: -3px;
-  display: none;
-}
-/* line 56, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-.grid-editor-widget-autocomplete input,
-.grid-editor-autocomplete-with-links input {
-  padding-left: 0px;
-  transition: all 0.3s ease;
-}
-/* line 61, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
-=======
   top: 4px;
   display: none; }
 .grid-editor-widget-autocomplete input,
 .grid-editor-autocomplete-with-links input {
   padding-left: 0px;
-  -webkit-transition: all 0.3s ease;
-          transition: all 0.3s ease; }
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
+  transition: all 0.3s ease; }
 .grid-editor-widget-autocomplete .locked .links .full,
 .grid-editor-autocomplete-with-links .locked .links .full {
-  display: inline;
-}
-/* line 64, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
+  display: inline; }
 .grid-editor-widget-autocomplete .locked input,
 .grid-editor-autocomplete-with-links .locked input {
-  padding-left: 20px;
-}
-/* line 67, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
+  padding-left: 20px; }
 .grid-editor-widget-autocomplete .locked .cancel,
 .grid-editor-autocomplete-with-links .locked .cancel {
-  display: block;
-}
+  display: block; }
 
-<<<<<<< HEAD
-/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-checkbox.scss */
-.grid-editor-widget-checkbox input[type=checkbox] {
-  -webkit-appearance: border-box;
-}
-=======
 .grid-editor-widget-checkbox input[type=checkbox] {
   -webkit-appearance: checkbox; }
   .grid-editor-widget-checkbox input[type=checkbox]:before {
@@ -2330,4 +1225,3 @@ h3 {
     margin-top: 0px; }
 
 /*# sourceMappingURL=grid-backend.css.map */
->>>>>>> c5b3e8402cf71beca82e68335001766a40cea8a7
