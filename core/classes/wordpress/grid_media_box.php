@@ -1,10 +1,4 @@
-<?php 
-/**
- * @author Palasthotel <rezeption@palasthotel.de>
- * @copyright Copyright (c) 2014, Palasthotel
- * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
- * @package Palasthotel\Grid-WordPress
- */
+<?php
 /**
 * Media-Box is considered as static content
 */
@@ -21,6 +15,7 @@ class grid_media_box extends grid_static_base_box {
 		$this->content->fileid->id = '';
 		$this->content->fileid->size = '';
 		$this->content->url = '';
+		$this->content->fileinfo = ' ';
 	}
 	
 	/**
@@ -71,17 +66,27 @@ class grid_media_box extends grid_static_base_box {
 	* @return array
 	*/
 	public function contentStructure () {
-		return array(
-			array(
+		$value = get_option( 'grid_mediaselect_info', '' );
+		$cs = array();
+		$cs[] = array(
 				'key' => 'fileid',
 				'type' => 'wp-mediaselect',
 				'label' => t( 'Image' ),
-			),
-			array(
+				);
+				if ($value != '') {
+					$cs[] = array(
+							'key' => 'fileinfo',
+							'label' => 'test',
+							'type' => 'info',
+							'text' => $value,
+							);
+				}
+		$cs[] = array(
 				'key' => 'url',
 				'type' => 'text',
 				'label' => t( 'Hyperlink-URL (optional)' ),
-			),
-		);
+				);
+		
+		return $cs;
 	}
 }
