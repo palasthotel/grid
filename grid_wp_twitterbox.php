@@ -2,9 +2,12 @@
 /**
  * Plugin Name: Grid Twitterbox
  * Description: Adds a twitter box to grid
- * Version: 0.0
- * Author: Palasthotel (in Person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
+ * @version: 0.0
+ * @author Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid-WordPress
  */
 
 require_once 'grid_twitterbox/twitteroauth/twitteroauth.php';
