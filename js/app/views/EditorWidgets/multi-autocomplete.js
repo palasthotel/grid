@@ -1,5 +1,5 @@
-boxEditorControls['m-autocomplete']=GridBackbone.View.extend({
-    className: "grid-editor-widget-m-autocomplete",
+boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
+    className: "grid-editor-widget-multi-autocomplete",
     events:{
         "keyup .i-autocomplete":"keyup",
         "click .suggestion-list li":"listItemSelected"
@@ -23,7 +23,7 @@ boxEditorControls['m-autocomplete']=GridBackbone.View.extend({
 
         this.$el.html(html);
     
-        this.$el.on("click", ".icon-close", function(e){
+        this.$el.on("click", ".icon-cancel", function(e){
             var item = $(this).parent();
             item.empty();
             item.remove();
@@ -42,7 +42,7 @@ boxEditorControls['m-autocomplete']=GridBackbone.View.extend({
                 {
                     success_fn:function(data)
                     {
-                        self.$el.append("<div class='autocomplete-multiselect-item' data-key='"+key+"'><span>"+data.result+"</span><span class='icon icon-close'></span></div>");
+                        self.$el.append("<div class='autocomplete-multiselect-item' data-key='"+key+"'><span>"+data.result+"</span><span class='icon icon-cancel'></span></div>");
                     }
                 });
             });
@@ -102,8 +102,7 @@ boxEditorControls['m-autocomplete']=GridBackbone.View.extend({
                     })
                     .append(
                         $("<span></span>")
-                            .addClass("icon icon-close")
-                            .text(" X")
+                            .addClass("icon icon-cancel")
                             .click(function()
                             {
                                 var item = $(this).parent();
@@ -123,64 +122,3 @@ boxEditorControls['m-autocomplete']=GridBackbone.View.extend({
         this.selectItem(jQuery(e.target));
     }
 });
-
-
-/**
- * STYLESHEET FOR EDWARD
- * ================
- *
- * DELETE-ICON
- * 
-.icon-close {
-    display: block;
-    text-indent: -99999px;
-    background-repeat: no-repeat;
-    width: 16px;
-    height: 16px;
-    background-image: url("../images/icons_888888_256x240.png");
-    background-position: -80px -128px; 
-    float: right;
-    cursor: pointer;
-}
-
- * SUGGESTION-LIST
- *
-.suggestion-list {
-    position: absolute;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: block;
-    outline: none;  
-}
-
-.suggestion-list li {
-    position: relative;
-    margin: 0;
-    padding: 3px 1em 3px .4em;
-    cursor: pointer;
-    min-height: 0;
-}
-
-.suggestion-list li:hover {
-    border: 1px solid #999999;
-    background: #509BF8;
-    font-weight: normal;
-    color: #FFFFFF;
-}
-
- * AUTOCOMPLETE ITEM
- *
-.autocomplete-multiselect-item {
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 1px 3px;
-    margin-right: 2px;
-    margin-bottom: 3px;
-    color: #333;
-    background-color: #f6f6f6;
-}
-
- * 
- */
