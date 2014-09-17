@@ -42,7 +42,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
                 {
                     success_fn:function(data)
                     {
-                        self.$el.append("<div class='autocomplete-multiselect-item' data-key='"+key+"'><span>"+data.result+"</span><span class='icon icon-cancel'></span></div>");
+                        self.$el.find(".autocomplete-wrapper").append("<div class='autocomplete-multiselect-item' data-key='"+key+"'><span>"+data.result+"</span><span class='icon icon-cancel'></span></div>");
                     }
                 });
             });
