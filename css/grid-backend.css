@@ -1233,7 +1233,8 @@ h3 {
   margin: 0;
   display: block;
   outline: none;
-  background-color: white; }
+  background-color: white;
+  border: 1px solid #DBDBDB; }
 .grid-editor-widget-multi-autocomplete .suggestion-list li {
   position: relative;
   margin: 0;
