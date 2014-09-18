@@ -924,19 +924,28 @@ function grid_wp_get_mysqli() {
 	return new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
 }
 
-// function grid_enable_front_page_stacks( $query ){
-//     if('' == $query->query_vars['post_type'] && 0 != $query->query_vars['page_id'])
-//         $query->query_vars['post_type'] = array( 'page', 'landing_page' );
-// }
-// add_action( 'pre_get_posts', 'grid_enable_front_page_stacks' );
+add_action( 'admin_head-options-reading.php', 'grid_modify_front_pages_dropdown' );
+add_action( 'pre_get_posts', 'grid_enable_front_page_landing_page' );
 
-// add_filter( 'get_pages',  'grid_add_static_frontpage' );
-// function grid_add_static_frontpage( $pages )
-// {
-//      $my_cpt_pages = new WP_Query( array( 'post_type' => 'landing_page' ) );
-//      if ( $my_cpt_pages->post_count > 0 )
-//      {
-//          $pages = array_merge( $pages, $my_cpt_pages->posts );
-//      }
-//      return $pages;
-// }
+function grid_modify_front_pages_dropdown()
+{
+    // Filtering /wp-includes/post-templates.php#L780
+    add_filter( 'get_pages', 'grid_add_landing_page_to_pages_on_front' );
+}
+
+function grid_add_landing_page_to_pages_on_front( $r )
+{
+    $args = array(
+        'post_type' => 'landing_page'
+    );
+    $stacks = get_posts( $args );
+    $r = array_merge( $r, $stacks );
+
+    return $r;
+}
+
+function grid_enable_front_page_landing_page( $query )
+{
+    if( '' == $query->query_vars['post_type'] && 0 != $query->query_vars['page_id'] )
+        $query->query_vars['post_type'] = array( 'page', 'landing_page' );
+}
