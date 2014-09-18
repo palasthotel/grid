@@ -1,16 +1,15 @@
 <?php
 /**
  * Plugin Name: Grid
- * Description: Helps layoing out landing pages
- * @version 1.0
- * @author Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
+ * Description: Helps layouting pages with containerist.
+ * Version: 1.0
+ * Author: Palasthotel
+ * Author URI: http://www.palasthotel.de
+ * Requires at least: 3.7
+ * Tested up to: 4.0
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid-WordPress
- */
-/**
- *  Palasthotel 
- * 
  */
 
 require( 'lib/grid.php' );
@@ -70,7 +69,7 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 
 }
 
-function t($str) { return $str; }
+function t($str) { return __( $str, 'grid' ); }
 
 function db_query( $querystring ) {
 	global $wpdb;
@@ -174,26 +173,56 @@ function grid_wp_activate() {
 register_activation_hook( __FILE__, 'grid_wp_activate' );
 
 function grid_wp_init() {
-	$args = array(
-		'public' => true,
-		'label' => 'Landing Pages',
-		'labels' => array(
-			'singular_name' => 'Landing Page',
-		),
-		'supports' =>  array('title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions'),
-	);
-	register_post_type( 'landing_page', $args );
+
+  do_action( 'grid_register_post_type' ); 
 	
-	$args=array(
-		'public' => true,
-		'label' => 'Sidebars',
-		'labels' => array(
-			'singular_name' => 'Sidebar',
-		),
-	);
-	register_post_type( 'sidebar', $args );
+	$permalink = get_option( 'grid_permalinks', '' );
+	if($permalink == "") {
+  	$landing_page_permalink = _x( 'landing_page', 'slug', 'grid' );
+	} else {
+  	$landing_page_permalink = $permalink;
+	}
+  
+  register_post_type( 'landing_page',
+    apply_filters( 'grid_register_post_type_landing_page',
+      array(
+        'labels'  => array(
+            'name'          => __( 'Landing Pages', 'grid' ),
+            'singular_name' => __( 'Landing Page', 'grid' ),
+            // labels to be continued
+            ),
+        'description'       => __( 'This is where you can add new landing pages to your site.', 'grid' ),
+        'public'            => true,
+        'show_ui'           => true,
+        'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
+        'rewrite'           => $landing_page_permalink ? array( 'slug' => untrailingslashit( $landing_page_permalink ), 'with_front' => false, 'feeds' => true ) : false,
+        'supports' =>  array('title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions', 'page-attributes'),
+        'show_in_nav_menus' => true,
+      )
+    )
+  );
+  
+  register_post_type( 'sidebar',
+    apply_filters( 'grid_register_post_type_landing_page',
+      array(
+        'labels'  => array(
+            'name'          => __( 'Sidebars', 'grid' ),
+            'singular_name' => __( 'Sidebar', 'grid' ),
+            // labels to be continued
+            ),
+        'description'       => __( 'This is where you can add new sidebars to your site.', 'grid' ),
+        'public'            => true,
+        'show_ui'           => true,
+        'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
+        'show_in_nav_menus' => false,
+      )
+    )
+  );
 }
 add_action( 'init', 'grid_wp_init' );
+
+
+
 
 function grid_wp_admin_menu() {
 	add_submenu_page( 'options-general.php', 'Grid', 'Grid', 'manage_options', 'grid_settings', 'grid_wp_settings');
@@ -382,8 +411,13 @@ function grid_wp_admin_init() {
 	add_settings_field( 'grid_mediaselect_info', 'Set an info text for media in the WordPress media-box', 'grid_wp_mediaselect_info_html', 'grid_settings', 'grid_mediaselect_info' );
 	register_setting( 'grid_settings', 'grid_mediaselect_info' );
 
+  add_settings_section( 'grid_permalinks', 'Grid', 'grid_wp_permalinks_section', 'grid_settings' );
+	add_settings_field( 'grid_permalinks', 'Landing Page base', 'grid_wp_permalinks_html', 'grid_settings', 'grid_permalinks' );
+	register_setting( 'grid_settings', 'grid_permalinks' );
+	
 }
 add_action( 'admin_init', 'grid_wp_admin_init' );
+
 
 function grid_wp_default_styles_settings_section() {
 	echo 'Set which default styles should be applied.';
@@ -516,6 +550,17 @@ function grid_wp_mediaselect_info_html() {
 	$value = get_option( 'grid_mediaselect_info', '' );
 ?>
 <textarea id="grid_mediaselect_info" name="grid_mediaselect_info" rows="4" cols="50"><?php echo $value ?></textarea>
+<?php
+}
+
+function grid_wp_permalinks_section() {
+	echo '';
+}
+
+function grid_wp_permalinks_html() {
+	$value = get_option( 'grid_permalinks', '' );
+?>
+<input type="text" id="grid_permalinks" name="grid_permalinks" value="<?php echo $value ?>" />
 <?php
 }
 
