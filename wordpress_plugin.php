@@ -25,7 +25,7 @@ function grid_posts_where( $where, &$wp_query )
 {
 	global $wpdb;
     if ( $grid_title = $wp_query->get( 'grid_title' ) ) {
-        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( like_escape( $grid_title ) ) . '%\'';
+        $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $grid_title ) . '%\'';
     }
     return $where;
 }
@@ -946,6 +946,7 @@ function grid_add_landing_page_to_pages_on_front( $r )
 
 function grid_enable_front_page_landing_page( $query )
 {
-    if( '' == $query->query_vars['post_type'] && 0 != $query->query_vars['page_id'] )
-        $query->query_vars['post_type'] = array( 'page', 'landing_page' );
+  if( (!isset($query->query_vars['post_type']) || $query->query_vars['post_type'] == "" ) && $query->query_vars['page_id'] != 0 ) {
+    $query->query_vars['post_type'] = array( 'page', 'landing_page' );
+  }    
 }
