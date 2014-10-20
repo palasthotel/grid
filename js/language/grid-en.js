@@ -28,11 +28,11 @@ document.lang_values = {
 	"title-wp-media": "Choose an image",
 	// editor labels
 	"label-title": "Title:",
-	"label-title-url": "Title URL:",
+	"label-title-url": "Title URL (for internals links, please use a relative path starting with '/'):",
 	"label-prolog": "Prolog:",
 	"label-epilog": "Epilog:",
 	"label-readmore": "Readmore text:",
-	"label-readmore-url": "Readmore URL:",
+	"label-readmore-url": "Readmore URL (for internals links, please use a relative path starting with '/'):",
 	"label-style": "Style:",
 	"label-b-before": "Prolog",
 	"label-b-dynamic": "Specific",
