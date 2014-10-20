@@ -24,7 +24,7 @@ if ($this->firstcontentcontainer){
 }
 ?>
 
-<div class="<?php echo ($this->style)? $this->style." ":""; echo implode($this->classes," "); ?>">
+<div class="<?php echo ($this->style)? $this->style." ":""; echo implode($this->classes," "); ?> grid-container-type-<?php echo $this->type_id;?>">
 	<div class="grid-container-content">
 	<div class="grid-container-before">
 		<?php
