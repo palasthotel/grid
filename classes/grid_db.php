@@ -1138,7 +1138,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function fetchGridRevisions($gridid) {
 		if(strncmp("box:",$gridid,strlen("box:"))!=0 && strncmp("container:",$gridid,strlen("container:"))!=0)
 		{
-			$query = "SELECT revision,author,revision_date,published FROM ".$this->prefix."grid_grid WHERE id = $gridid ORDER BY revision DESC";
+			$query = "SELECT revision,author,revision_date,published FROM ".$this->prefix."grid_grid WHERE id = $gridid ORDER BY revision DESC LIMIT 20";
 			$result=$this->connection->query($query) or die($this->connection->error);
 			$revisions = array();
 			$was_draft = false;
