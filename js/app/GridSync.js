@@ -32,7 +32,11 @@ var GridAjax = function(method, params_array, settings){
 				settings.error_fn(jqXHR, textStatus, error);
 			}
    		},
+   		beforeSend: function(jqXHR, settings){
+   			GRID.startLoading();
+   		},
    		success: function(data, textStatus, jqXHR){
+   			GRID.finishLoading();
    // 			GRID.log("!--- success Method: "+method);
 			// GRID.log(data);
 			// GRID.log(textStatus);
@@ -94,6 +98,9 @@ var GridRequest = {
 									 grid.addContainer(new Container(container));
 								});
 								options.success();
+								if(options.reverted){
+									GRID.flash();
+								}
 							}
 						}
 					);
@@ -117,7 +124,7 @@ var GridRequest = {
 						success_fn: function(data){
 							GRID.log("setToRevision success");
 							GRID.log(data);
-							grid.fetch();
+							grid.fetch({reverted: true});
 						}
 					});
 					break;

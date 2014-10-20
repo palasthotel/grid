@@ -64,6 +64,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
     fetchValue:function(){
         var content=[];
         _.each(this.views,function(view){
+            if(view.removed) return;
             content.push(view.fetchValue());
         });
         return content;
@@ -72,6 +73,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
 
 boxEditorControls['listitem']=GridBackbone.View.extend({
     className: "grid-editor-widget-listitem",
+    removed: false,
     initialize:function(){
 
     },
@@ -95,6 +97,7 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
         });
         jQuery("<button class='widget-list-remove-item-button'><span class='icon-minus'></span>Remove item</button>").on('click', function(event) {
             self.remove();
+            self.removed = true;
         }).appendTo(this.$el);
         this.views=views;
         return this;

@@ -20,7 +20,7 @@
 		.icon-arrow {
 			z-index: $idx-toolbar;
 			position:absolute;
-			top:16px;
+			top:20px;
 			left:-4px;
 			font-size: 14px;
 			@include transition(all, .3s, ease);;

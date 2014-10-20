@@ -122,20 +122,25 @@
 
 .grid-container-sorthandle{
 	position: absolute;
-	top: 5px;
-	left: -4px;
+	top: 0px;
+	left: 0px;
 	width: 100%;
 	height: 40px;
 	cursor: move;
+	.icon-drag{
+		position: absolute;
+		top: 9px;
+	}
 }
 
 .grid-container-options{
 	position: absolute;
-	top: 5px;
+	top: 0px;
 	right: 0px;
 	height: 40px;
 	z-index: $idx-container-options;
-
+	padding-top: 12px;
+	box-sizing: border-box;
 	&:hover{
 		z-index: $idx-container-options-hover;
 	}
@@ -151,7 +156,7 @@
 		color: $color-container-options-list;
 		width:140px;
 		right: 0px;
-		top: 30px;
+		top: 40px;
 		margin: 0px;
 		padding: 0px;
 		display: none;

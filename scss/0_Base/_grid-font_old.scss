@@ -7,13 +7,25 @@
 
 /* ICON FONT */
 
+
+
+ @font-face {
+  font-family: 'Entypo';
+  src: url('../fonts/font-icons/entypo/entypo.eot');
+  src: url('../fonts/entypo/entypo.eot') format('embedded-opentype'),
+       url('../fonts/entypo/entypo.woff') format('woff'),
+       url('../fonts/entypo/entypo.ttf') format('truetype'),
+       url('../fonts/entypo/entypo.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 @font-face {
-  font-family: 'Grid';
-  src: url('../fonts/grid-font/grid_font.eot');
-  src: url('../fonts/grid-font/grid_font.eot') format('embedded-opentype'),
-       url('../fonts/grid-font/grid_font.woff') format('woff'),
-       url('../fonts/grid-font/grid_font.ttf') format('truetype'),
-       url('../fonts/grid-font/grid_font.svg') format('svg');
+  font-family: 'EntypoSocial';
+  src: url('../fonts/entypo/entypo-social.eot');
+  src: url('../fonts/entypo/entypo-social.eot') format('embedded-opentype'),
+       url('../fonts/entypo/entypo-social.woff') format('woff'),
+       url('../fonts/entypo/entypo-social.ttf') format('truetype'),
+       url('../fonts/entypo/entypo-social.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -61,18 +73,11 @@
     font-style: italic;
 }
 
-/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
-/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  @font-face {
-    font-family: 'grid-font';
-    src: url('../fonts/grid_font/grid-font.svg') format('svg');
-  }
-}
 
- 
+
+
  [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "Grid";
+  font-family: "Entypo";
   font-style: normal;
   font-weight: normal;
   speak: none;
@@ -80,7 +85,7 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  /*margin-right: .2em;*/
   text-align: center;
   /* opacity: .8; */
  
@@ -93,35 +98,36 @@
  
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
-  margin-left: .2em;
+  /*margin-left: .2em;*/
  
   /* you can be more comfortable with increased icons size */
-  /* font-size: 120%; */
+   font-size: 200%; 
  
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-link:before { content: '\e805'; }
-.icon-preview:before { content: '\e806'; }
-.icon-ok:before { content: '\e801'; }
-.icon-reuse:before { content: '\e809'; }
-.icon-cancel:before { content: '\e802'; }
-.icon-style:before { content: '\e80d'; }
-.icon-plus:before { content: '\e804'; }
-.icon-minus:before { content: '\e803'; }
-.icon-revisions:before { content: '\e80c'; }
-.icon-revert:before { content: '\e80b'; }
-.icon-edit:before { content: '\e807'; }
-.icon-trash:before { content: '\e808'; }
-.icon-publish:before { content: '\e80f'; }
-.icon-elipse:before{ content:'\e80e'; }
-.icon-arrow:before { content: '\e80a'; }
-.icon-drag:before { 
-  content: '\e80e'; 
--webkit-transform: rotate(90deg);
+.icon-ok:before { content: '\2713'; }
+.icon-cancel:before { content: '\274c'; }
+.icon-reuse:before { content: '\e73e'; }
+.icon-style:before { content: '\e79a'; }
+.icon-link:before { content: '\1f517'; }
+.icon-plus:before { content: '\2795'; }
+.icon-minus:before { content: '\2796'; }
+.icon-revisions:before { content: '\e771'; }
+.icon-revert:before { content: '\27f2'; }
+.icon-edit:before{ content:'\270e'; }
+.icon-trash:before { content: '\e729';}
+.icon-preview:before { content: '\e70a';}
+.icon-publish:before { content: '\1f4e3';}
+.icon-elipse:before{ content:'\23f6'; }
+.icon-arrow:before{ content:'\25B8'; }
+.icon-drag:before{ 
+  content:'\23f6';
+  -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
        -ms-transform: rotate(90deg);
         -o-transform: rotate(90deg);
-           transform: rotate(90deg); }
-.icon-options:before { content: '\e800'; }
+           transform: rotate(90deg); 
+}
+.icon-options:before{ content:'\2699'; }

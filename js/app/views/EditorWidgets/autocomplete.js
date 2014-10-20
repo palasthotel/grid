@@ -11,16 +11,16 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
     render:function(){
         var html="<label>"+this.model.structure.label+"</label>";
         var classes="autocomplete-wrapper form-autocomplete dynamic-value";
-        var disabled="";
+        var readonly="";
         var fetch=false;
         if(this.model.container[this.model.structure.key]!='' ||
             this.model.container[this.model.structure.key]===0)
         {
             classes+=" locked";            
-            disabled="disabled=disabled";
+            readonly="readonly=readonly";
             fetch=true;
         }
-        html+="<div class='"+classes+"'><input type=text class='form-text autocomplete i-autocomplete' "+disabled+"/>";
+        html+="<div class='"+classes+"'><input type=text class='form-text autocomplete i-autocomplete' "+readonly+"/>";
         html+="<div class=loading rotate'></div>";
         html+="<div class='cancel icon-cancel'></div>";
         html+="<ul class='suggestion-list'></ul>";
@@ -74,18 +74,18 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         this.$el.find(".autocomplete-wrapper").addClass("locked");
         this.$el.find("input.i-autocomplete")
             .val(value)
-            .attr("disabled","disabled")
+            .attr("readonly","readonly")
             .data("key",key);
         this.$el.find(".suggestion-list").empty();
     },
     listItemSelected:function(e){
-        this.selectItem(jQuery(e.srcElement));
+        this.selectItem(jQuery(e.target));
     },
     cancelSelection:function(e){
         this.$el.find(".autocomplete-wrapper").removeClass("locked");
         this.$el.find("input.i-autocomplete")
             .data("key","")
-            .removeAttr("disabled")
+            .removeAttr("readonly")
             .val("");
         this.old_search_string="";
     }

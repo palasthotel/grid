@@ -1,0 +1,49 @@
+.grid-editor-widget-multi-autocomplete{
+    .icon-cancel {
+        display: block;
+        background-repeat: no-repeat;
+        width: 16px;
+        height: 16px;
+        background-position: -80px -128px; 
+        float: right;
+        cursor: pointer;
+    }
+
+    .suggestion-list {
+        position: absolute;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: block;
+        outline: none;  
+        background-color: white;
+        border: 1px solid #DBDBDB;
+    }
+
+    .suggestion-list li {
+        position: relative;
+        margin: 0;
+        padding: 3px 1em 3px .4em;
+        cursor: pointer;
+        min-height: 0;
+    }
+
+    .suggestion-list li:hover {
+        border: 1px solid #999999;
+        background: #509BF8;
+        font-weight: normal;
+        color: #FFFFFF;
+    }
+
+
+    .autocomplete-multiselect-item {
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 1px 3px;
+        margin-right: 2px;
+        margin-bottom: 3px;
+        color: #333;
+        background-color: #f6f6f6;
+    }
+}
