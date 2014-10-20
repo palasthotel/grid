@@ -327,6 +327,8 @@ grid_container.reuse_containerid as container_reuseid,
 grid_container_style.style as container_style_label,
 grid_container.type as container_type_id,
 grid_container_type.type as container_type,
+grid_container_type.space_to_right as container_space_to_right,
+grid_container_type.space_to_left as container_space_to_left,
 grid_container2slot.slot_id as slot_id,
 grid_slot_style.slug as slot_style,
 grid_box.id as box_id,
@@ -384,6 +386,9 @@ where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_cont
 				$currentcontainer->style_label=$row['container_style_label'];
 				$currentcontainer->type=$row['container_type'];
 				$currentcontainer->type_id=$row['container_type_id'];
+				$currentcontainer->space_to_left=$row['container_space_to_left'];
+				$currentcontainer->space_to_right=$row['container_space_to_right'];
+
 				$currentcontainer->title=$row['container_title'];
 				$currentcontainer->titleurl=$row['container_titleurl'];
 				$currentcontainer->prolog=$row['container_prolog'];
