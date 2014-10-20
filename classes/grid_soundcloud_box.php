@@ -1,26 +1,45 @@
 <?php
-
+/**
+ * @author Palasthotel <rezeption@palasthotel.de>
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid
+ */
+/**
+* Soundcloud-Box is considered an abstract list
+*/
 class grid_soundcloud_box extends grid_static_base_box {
 
-    public function type()
-    {
+    /**
+    * Sets box type
+    *
+    * @return string
+    */
+    public function type() {
         return 'soundcloud';
     }
 
-    public function __construct()
-    {
+    /**
+    * Class contructor
+    *
+    * Initializes editor widgets for backend
+    */
+    public function __construct() {
         $this->content=new Stdclass();
         $this->content->url= "";
         $this->content->color = "";
     }
 
+    /**
+    * Box renders its menu label and its content in here.
+    *
+    * @return boolean
+    */
     public function build($editmode) {
-        if($editmode)
-        {
+        if($editmode) {
             return t("Soundcloud").": ".$this->content->url;
         }
-        else
-        {
+        else {
             // KM added support for IE9 and below
             $url = $this->content->url;
 
@@ -30,7 +49,7 @@ class grid_soundcloud_box extends grid_static_base_box {
 
             $iframe_maxheight = 200;
             $oembed_maxheight = 81;
-            // soundcloud playlist needs more vertical space
+            // Soundcloud playlist needs more vertical space
             if (strpos($url, '/sets/') !== false) {
               $iframe_maxheight = 300;
               $oembed_maxheight = 300;
@@ -47,14 +66,14 @@ class grid_soundcloud_box extends grid_static_base_box {
                 $request_url_oembed .=  "&color=" . $this->content->color;
             }
 
-            // first request with iframe format:
+            // First request with iframe format:
             $curl_iframe = curl_init($request_url_iframe);
             curl_setopt($curl_iframe, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl_iframe, CURLOPT_TIMEOUT, 30);
             $return_iframe = curl_exec($curl_iframe);
             curl_close($curl_iframe);
 
-            // second request without iframe format for ie9 and below
+            // Second request without iframe format for ie9 and below
             $curl_oembed = curl_init($request_url_oembed);
             curl_setopt($curl_oembed, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl_oembed, CURLOPT_TIMEOUT, 30);
@@ -82,6 +101,11 @@ EOT;
         }
     }
 
+    /**
+    * Determines editor widgets used in backend
+    *
+    * @return array
+    */
     public function contentStructure () {
         return array(
             array(

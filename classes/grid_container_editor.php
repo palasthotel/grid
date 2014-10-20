@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Palasthotel <rezeption@palasthotel.de>
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid
+ */
 
 class grid_container_editor
 {
@@ -73,7 +79,7 @@ class grid_container_editor
 		}
 ?>
 	<div class="notice">
-		<p>For now, you can only add new containers. Deletion and editing is not supported as it might invalidate existing grids.</p>
+		<p>For now, you can only add new container types. Deletion and editing is not supported as it might invalidate existing grids.</p>
 		<p>The relative size of sidebars is baked to 1/3 for now. We're handling the calculation for you, however remember to have at least 1/3 free for each sidebar when constructing new containers.</p>
 <?php
 		if($validationFailed)

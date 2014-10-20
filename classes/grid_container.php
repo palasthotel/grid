@@ -1,9 +1,16 @@
 <?php
+/**
+ * @author Palasthotel <rezeption@palasthotel.de>
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid
+ */
 
 class grid_container extends grid_base {
 	public $grid;
 	public $containerid;
 	public $type; // Type is one of c (container), s(sidebar), sc (container for sidebar editor), i(invisible)
+	public $type_id; // ID of the type as provided by database
 	public $dimension; // The dimension defines how many Slots a Container has, an how they are proportioned.
 	public $space_to_left;
 	public $space_to_right;

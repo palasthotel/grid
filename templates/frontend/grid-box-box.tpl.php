@@ -1,25 +1,33 @@
+<?php 
+/**
+ * @author Palasthotel <rezeption@palasthotel.de>
+ * @copyright Copyright (c) 2014, Palasthotel
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @package Palasthotel\Grid
+ */
+?>
 <div class="box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
-	<?
+	<?php
 	if ($this->title!=""){
 
 		if ($this->titleurl !=""){
 		?>
-			<h3 class="b-title"><a href="<?=$this->titleurl?>"><?=$this->title?></a></h3>
-		<?}else{?>
-			<h3 class="b-title"><?=$this->title?></h3>
-		<?}?>
-	<?}?>
+			<h3 class="b-title"><a href="<?php echo $this->titleurl?>"><?php echo $this->title?></a></h3>
+		<?php }else{?>
+			<h3 class="b-title"><?php echo $this->title?></h3>
+		<?php }?>
+	<?php }?>
 	<div class="b-prolog">
-		<?=$this->prolog?>
+		<?php echo $this->prolog?>
 	</div>
 	
-	<?=$content?>
+	<?php echo $content?>
 	<div class="b-epilog">
-		<?=$this->epilog?>
+		<?php echo $this->epilog?>
 	</div>
-  	<?
+  	<?php
 	if ($this->readmore!=""){?>
-	<a href="<?=$this->readmoreurl?>" class="b-readmore-link"><?=$this->readmore?></a>
-	<?}?>
+	<a href="<?php echo $this->readmoreurl?>" class="b-readmore-link"><?php echo $this->readmore?></a>
+	<?php }?>
 	
 </div>
