@@ -215,7 +215,7 @@ var GridRequest = {
 		GRID.log("Boxtypes->read");
 		new GridAjax(
 			"getMetaTypesAndSearchCriteria",
-			[],
+			[GRID.ID],
 			{ 
 				success_fn: function(data){ 
 					GRID.log("getMetaTypesAndSearchCriteria succes");
