@@ -229,7 +229,7 @@ var GridRequest = {
 		);
 	},
 	boxblueprints: function(boxblueprints,options){
-		var params = [options.type, options.searchString, options.criteria];
+		var params = [GRID.ID,options.type, options.searchString, options.criteria];
 		GRID.log(["blueprints", boxblueprints, options, params]);
 		new GridAjax("Search",params,{
 				success_fn: function(data){

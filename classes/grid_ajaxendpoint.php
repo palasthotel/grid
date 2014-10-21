@@ -436,7 +436,7 @@ class grid_ajaxendpoint {
 		return false;
 	}
 	
-	public function getMetaTypesAndSearchCriteria(){
+	public function getMetaTypesAndSearchCriteria($grid_id){
 		$boxes=$this->storage->getMetaTypes();
 		$result=array();
 		foreach($boxes as $box)
@@ -451,7 +451,7 @@ class grid_ajaxendpoint {
 		return $result;
 	}
 	
-	public function Search($metatype,$searchstring,$criteria)
+	public function Search($grid_id,$metatype,$searchstring,$criteria)
 	{
 		$class="grid_".$metatype."_box";
 		$obj=new $class();
