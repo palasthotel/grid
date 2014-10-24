@@ -351,7 +351,7 @@ class grid_ajaxendpoint {
 		return false;
 	}
 	
-	public function getReusableContainers()
+	public function getReusableContainers($grid_id)
 	{
 		$ids=$this->storage->getReuseContainerIds();
 		$result=array();
@@ -596,7 +596,7 @@ class grid_ajaxendpoint {
 		return "WRONG CONTAINER";
 	}
 	
-	public function getContainerTypes()
+	public function getContainerTypes($grid_id)
 	{
 		return $this->storage->fetchContainerTypes();
 	}

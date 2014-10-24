@@ -183,7 +183,7 @@ var GridRequest = {
 		GRID.log("Containertypes->read");
 		new GridAjax(
 			"getContainerTypes",
-			[],
+			[GRID.ID],
 			{ 
 				success_fn: function(data){ 
 					GRID.log("getContainerTypes succes");
@@ -199,7 +199,7 @@ var GridRequest = {
 	},
 	reusablecontainers: function(collection, options){
 		new GridAjax(
-			"getReusableContainers", [],
+			"getReusableContainers", [GRID.ID],
 			{
 				success_fn: function(data){
 					GRID.log(["reusablecontainers data", data]);
