@@ -959,6 +959,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		else
 		{
 			$query="update ".$this->prefix."grid_box set title='".$this->saveStr($box->title)."',
+			 type=".$type.",
 			 title_url='".$this->saveStr($box->titleurl)."',
 			 prolog='".$this->saveStr($box->prolog)."',
 			 epilog='".$this->saveStr($box->epilog)."',
