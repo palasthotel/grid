@@ -14,7 +14,7 @@ class grid_ajaxendpoint {
 		return $a+$b;
 	}
 	
-	private function encodeBox($box)
+	protected function encodeBox($box)
 	{
 		$bx=array();
 		foreach(get_object_vars($box) as $key=>$value)
