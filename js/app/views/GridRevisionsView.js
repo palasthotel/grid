@@ -40,7 +40,7 @@ var GridRevisionsView = GridBackbone.View.extend({
 		});
 		this.$list.html(ich.tpl_revisions({revisions:revisions,lang_values:document.lang_values}));
 		var list_width = this.$list.children().length * this.$list.children().first().outerWidth(true);
-		this.$list.css("width", list_width);
+		this.$list.css("width", list_width+10);
 		return this;
 	},
 	onPreview:function(e){

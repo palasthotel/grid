@@ -16,6 +16,10 @@
 		padding-left: 20px;
 		margin: 0px;
 		padding-top: 10px; 
+		&.grid-reusable-container-title{
+			padding-left: 0px;
+			padding-top: 0px;
+		}
 	}
 
 	&:hover {
@@ -23,6 +27,3 @@
 		border-color: $color-draggable-border-hover;
 	}
 }
-
-
-// border: 1px solid $color-draggable-border;

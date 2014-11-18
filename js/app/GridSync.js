@@ -157,7 +157,7 @@ var GridRequest = {
 		},
 		destroy: function(grid, options){
 			GRID.log("Grid->destroy");
-			// no need to. CMS creates and deletes rids
+			// no need to. CMS creates and deletes grids
 		}
 	},
 	revisions: function(revisions, options){

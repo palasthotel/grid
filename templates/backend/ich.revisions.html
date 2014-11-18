@@ -1,4 +1,5 @@
-{{#revisions}}<div class="grid-revision grid-revision-state-{{state}}" data-revision="{{revision}}" data-state="{{state}}">
+{{#revisions}}
+<div class="grid-revision grid-revision-state-{{state}}" data-revision="{{revision}}" data-state="{{state}}">
 	<div class="grid-revision-description">
 		<p class="grid-revision-date">{{readable_date}}</p>
 		<p class="grid-revision-editor">{{editor}}</p>
@@ -12,4 +13,5 @@
 			<button role="revert" class="grid-revision-button grid-revision-revert-button"><i class="icon-revert"></i>Revert</button>
 		{{/isDeprecated}}
 	</div>
-</div>{{/revisions}}
+</div>
+{{/revisions}}
