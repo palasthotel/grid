@@ -1156,15 +1156,23 @@ h3 {
   width: 10 0%;
   min-height: 200px; }
 
-.grid-editor-widget-list .widget-list-remove-item-button {
-  margin-left: -15px; }
+.grid-editor-widget-list > .grid-editor-widget-list-add {
+  background-color: #eceae7; }
 
 .grid-editor-widget-listitem {
   border-left: 4px solid #eceae7;
   padding-left: 10px;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  transition: all 0.1337s ease; }
   .grid-editor-widget-listitem:hover {
     border-color: #3ac5d9; }
+  .grid-editor-widget-listitem > .widget-list-remove-item-button {
+    margin-top: 10px;
+    margin-left: -14px;
+    background-color: #eceae7; }
+  .grid-editor-widget-listitem .widget-list-remove-item-button:hover {
+    background-color: #ed5032;
+    color: white; }
 
 .grid-editor-widget-autocomplete .autocomplete-wrapper,
 .grid-editor-autocomplete-with-links .autocomplete-wrapper {

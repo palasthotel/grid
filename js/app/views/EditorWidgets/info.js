@@ -1,5 +1,5 @@
 boxEditorControls['info']=GridBackbone.View.extend({
-    className: "grid-editor-widget-info",
+    className: "grid-editor-widget grid-editor-widget-info",
     initialize:function(){
 
     },
