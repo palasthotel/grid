@@ -159,6 +159,9 @@ h3 {
 .icon-reuse:before {
   content: '\e809'; }
 
+.icon-reuse:before {
+  content: '\e810'; }
+
 .icon-cancel:before {
   content: '\e802'; }
 
@@ -428,6 +431,9 @@ h3 {
   z-index: 50; }
   .grid-container-reused-layer .grid-container-reused-label {
     position: absolute;
+    width: 100%;
+    margin-left: -50%;
+    text-align: center;
     top: 10px;
     left: 50%;
     color: white;

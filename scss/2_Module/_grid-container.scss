@@ -104,6 +104,9 @@
 	z-index: $idx-container-reused;
 	.grid-container-reused-label{
 		position: absolute;
+		width: 100%;
+		margin-left: -50%;
+		text-align: center;
 		top: 10px;
 		left: 50%;
 		color: white;
