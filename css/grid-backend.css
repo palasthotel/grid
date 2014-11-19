@@ -804,7 +804,8 @@ h3 {
 .grid-revision {
   position: relative;
   box-sizing: border-box;
-  display: inline-block;
+  display: block;
+  float: left;
   width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
