@@ -62,7 +62,7 @@ class grid_update
 	{
 		try
 		{
-			$result=db_query("select value from {grid_schema} where propkey='schema_version'");
+			$result=db_query("select value from {grid_schema} where propkey='schema_version'",false);
 			foreach($result as $entry)
 			{
 				return $entry->value;
