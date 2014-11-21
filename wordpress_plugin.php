@@ -71,12 +71,15 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 
 function t($str) { return __( $str, 'grid' ); }
 
-function db_query( $querystring ) {
+function db_query( $querystring,$die=TRUE ) {
 	global $wpdb;
 	$querystring = str_replace( '{', $wpdb->prefix, $querystring );
 	$querystring = str_replace( '}', '', $querystring );
 	global $grid_connection;
-	$result=$grid_connection->query( $querystring ) or die( $querystring.' failed: '.$grid_connection->error );
+	if($die)
+		$result=$grid_connection->query( $querystring ) or die( $querystring.' failed: '.$grid_connection->error );
+	else
+		$result=$grid_connection->query( $querystring ) or throw new Exception($querystring.' failed: '.$grid_connection->error );
 	if ( is_object( $result ) ) {
 		$return = array();
 		while( $row = $result->fetch_object() ) {
