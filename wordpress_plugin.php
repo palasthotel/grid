@@ -414,7 +414,7 @@ function grid_wp_admin_init() {
 	add_settings_field( 'grid_mediaselect_info', 'Set an info text for media in the WordPress media-box', 'grid_wp_mediaselect_info_html', 'grid_settings', 'grid_mediaselect_info' );
 	register_setting( 'grid_settings', 'grid_mediaselect_info' );
 
-  add_settings_section( 'grid_permalinks', 'Grid', 'grid_wp_permalinks_section', 'grid_settings' );
+  add_settings_section( 'grid_permalinks', 'Permalinks', 'grid_wp_permalinks_section', 'grid_settings' );
 	add_settings_field( 'grid_permalinks', 'Landing Page base', 'grid_wp_permalinks_html', 'grid_settings', 'grid_permalinks' );
 	register_setting( 'grid_settings', 'grid_permalinks' );
 	
