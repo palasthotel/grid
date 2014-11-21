@@ -159,6 +159,9 @@ h3 {
 .icon-reuse:before {
   content: '\e809'; }
 
+.icon-reuse:before {
+  content: '\e810'; }
+
 .icon-cancel:before {
   content: '\e802'; }
 
@@ -317,6 +320,11 @@ h3 {
     background-color: #3ac5d9;
     top: 0px;
     bottom: 50%; }
+  .grid-box-controls .grid-box-reused {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-weight: normal; }
   .grid-box-controls .grid-box-delete {
     top: 50%;
     bottom: 0px;
@@ -419,11 +427,14 @@ h3 {
   left: 5px;
   bottom: 5px;
   right: 5px;
-  background-color: rgba(63, 72, 83, 0.3);
+  background-color: rgba(63, 72, 83, 0.7);
   z-index: 50; }
   .grid-container-reused-layer .grid-container-reused-label {
     position: absolute;
-    top: -3px;
+    width: 100%;
+    margin-left: -50%;
+    text-align: center;
+    top: 10px;
     left: 50%;
     color: white;
     text-transform: uppercase; }
@@ -775,6 +786,9 @@ h3 {
     padding-left: 20px;
     margin: 0px;
     padding-top: 10px; }
+    .grid-new-element .grid-element-title.grid-reusable-container-title {
+      padding-left: 0px;
+      padding-top: 0px; }
   .grid-new-element:hover {
     color: #b0bac2;
     border-color: #b0bac2; }
@@ -796,7 +810,8 @@ h3 {
 .grid-revision {
   position: relative;
   box-sizing: border-box;
-  display: inline-block;
+  display: block;
+  float: left;
   width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
@@ -1141,15 +1156,23 @@ h3 {
   width: 10 0%;
   min-height: 200px; }
 
-.grid-editor-widget-list .widget-list-remove-item-button {
-  margin-left: -15px; }
+.grid-editor-widget-list > .grid-editor-widget-list-add {
+  background-color: #eceae7; }
 
 .grid-editor-widget-listitem {
   border-left: 4px solid #eceae7;
   padding-left: 10px;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  transition: all 0.1337s ease; }
   .grid-editor-widget-listitem:hover {
     border-color: #3ac5d9; }
+  .grid-editor-widget-listitem > .widget-list-remove-item-button {
+    margin-top: 10px;
+    margin-left: -14px;
+    background-color: #eceae7; }
+  .grid-editor-widget-listitem .widget-list-remove-item-button:hover {
+    background-color: #ed5032;
+    color: white; }
 
 .grid-editor-widget-autocomplete .autocomplete-wrapper,
 .grid-editor-autocomplete-with-links .autocomplete-wrapper {

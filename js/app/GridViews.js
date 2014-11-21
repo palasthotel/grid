@@ -222,8 +222,13 @@ var BoxView = GridBackbone.View.extend({
 	},
 	render: function(){
         var json = this.model.toJSON();
-        this.$el.attr("data-id",json.id)
-                .attr("data-type",json.type);
+
+        this.$el
+        .attr("data-id",json.id)
+        .attr("data-type",json.type);
+        
+        this.$el.addClass("grid-box-"+json.type);
+
         if(json.type == "reference"){
             json.reference = true;
         }

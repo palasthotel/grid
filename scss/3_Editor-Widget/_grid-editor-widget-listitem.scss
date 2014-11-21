@@ -1,8 +1,18 @@
 .grid-editor-widget-listitem{
-	border-left: 4px solid lighten($color-light, 3%);;
+	border-left: 4px solid lighten($color-light, 3%);
 	padding-left: 10px;
 	margin-bottom: 15px;
+	@include transition();
 	&:hover{
-		border-color: $color-edit
+		border-color: $color-edit;
+	}
+	& > .widget-list-remove-item-button{
+		margin-top: 10px;
+		margin-left: -14px;
+		background-color: lighten($color-light, 3%);
+	}
+	.widget-list-remove-item-button:hover{
+		background-color: $color-warning;
+		color: white;
 	}
 }

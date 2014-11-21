@@ -1,5 +1,5 @@
 .grid-editor-widget-list{
-	.widget-list-remove-item-button{
-		margin-left: -15px;
+	& > .grid-editor-widget-list-add{
+		background-color: lighten($color-light, 3%);
 	}
 }

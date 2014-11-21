@@ -157,7 +157,7 @@ var GridRequest = {
 		},
 		destroy: function(grid, options){
 			GRID.log("Grid->destroy");
-			// no need to. CMS creates and deletes rids
+			// no need to. CMS creates and deletes grids
 		}
 	},
 	revisions: function(revisions, options){
@@ -183,7 +183,7 @@ var GridRequest = {
 		GRID.log("Containertypes->read");
 		new GridAjax(
 			"getContainerTypes",
-			[],
+			[GRID.ID],
 			{ 
 				success_fn: function(data){ 
 					GRID.log("getContainerTypes succes");
@@ -199,7 +199,7 @@ var GridRequest = {
 	},
 	reusablecontainers: function(collection, options){
 		new GridAjax(
-			"getReusableContainers", [],
+			"getReusableContainers", [GRID.ID],
 			{
 				success_fn: function(data){
 					GRID.log(["reusablecontainers data", data]);
@@ -215,7 +215,7 @@ var GridRequest = {
 		GRID.log("Boxtypes->read");
 		new GridAjax(
 			"getMetaTypesAndSearchCriteria",
-			[],
+			[GRID.ID],
 			{ 
 				success_fn: function(data){ 
 					GRID.log("getMetaTypesAndSearchCriteria succes");
@@ -229,7 +229,7 @@ var GridRequest = {
 		);
 	},
 	boxblueprints: function(boxblueprints,options){
-		var params = [options.type, options.searchString, options.criteria];
+		var params = [GRID.ID,options.type, options.searchString, options.criteria];
 		GRID.log(["blueprints", boxblueprints, options, params]);
 		new GridAjax("Search",params,{
 				success_fn: function(data){

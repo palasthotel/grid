@@ -1,5 +1,5 @@
 boxEditorControls['hidden']=GridBackbone.View.extend({
-	className: "grid-editor-widget-hidden",
+	className: "grid-editor-widget grid-editor-widget-hidden",
     initialize:function(){
 
     },

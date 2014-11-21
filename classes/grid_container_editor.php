@@ -29,7 +29,8 @@ class grid_container_editor
 			//save the new container
 			$support=$_POST['sidebar_support'];
 			$new_denominator=doubleval($_POST['denominator']);
-			$slots=explode(",", $_POST['slots']);
+			$slots = str_replace(" ", "", $_POST['slots']);
+			$slots=explode(",", $slots);
 			//before saving: validate the sidebar rule
 			$complete_slots=0;
 			foreach($slots as $slot)

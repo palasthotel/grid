@@ -14,7 +14,7 @@ class grid_ajaxendpoint {
 		return $a+$b;
 	}
 	
-	private function encodeBox($box)
+	protected function encodeBox($box)
 	{
 		$bx=array();
 		foreach(get_object_vars($box) as $key=>$value)
@@ -351,7 +351,7 @@ class grid_ajaxendpoint {
 		return false;
 	}
 	
-	public function getReusableContainers()
+	public function getReusableContainers($grid_id)
 	{
 		$ids=$this->storage->getReuseContainerIds();
 		$result=array();
@@ -436,7 +436,7 @@ class grid_ajaxendpoint {
 		return false;
 	}
 	
-	public function getMetaTypesAndSearchCriteria(){
+	public function getMetaTypesAndSearchCriteria($grid_id){
 		$boxes=$this->storage->getMetaTypes();
 		$result=array();
 		foreach($boxes as $box)
@@ -451,7 +451,7 @@ class grid_ajaxendpoint {
 		return $result;
 	}
 	
-	public function Search($metatype,$searchstring,$criteria)
+	public function Search($grid_id,$metatype,$searchstring,$criteria)
 	{
 		$class="grid_".$metatype."_box";
 		$obj=new $class();
@@ -596,7 +596,7 @@ class grid_ajaxendpoint {
 		return "WRONG CONTAINER";
 	}
 	
-	public function getContainerTypes()
+	public function getContainerTypes($grid_id)
 	{
 		return $this->storage->fetchContainerTypes();
 	}
