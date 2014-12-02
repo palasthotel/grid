@@ -1177,8 +1177,6 @@ h3 {
   padding-left: 10px;
   margin-bottom: 15px;
   transition: all 0.1337s ease; }
-  .grid-editor-widget-listitem > * {
-    box-sizing: border-box; }
   .grid-editor-widget-listitem:hover {
     border-color: #3ac5d9; }
   .grid-editor-widget-listitem > .widget-list-remove-item-button {
@@ -1197,7 +1195,7 @@ h3 {
       bottom: 0px; }
   .grid-editor-widget-listitem:hover .widget-list-sort-button {
     background-color: #eceae7; }
-  .grid-editor-widget-listitem:first-child .widget-list-up-down-item-button {
+  .grid-editor-widget-listitem:first-child .widget-list-move-up-item-button {
     display: none; }
   .grid-editor-widget-listitem:last-child .widget-list-move-down-item-button {
     display: none; }

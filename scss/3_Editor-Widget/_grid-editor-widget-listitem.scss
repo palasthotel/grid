@@ -4,9 +4,6 @@
 	padding-left: 10px;
 	margin-bottom: 15px;
 	@include transition();
-	> *{
-		box-sizing: border-box;
-	}
 	&:hover{
 		border-color: $color-edit;
 	}
@@ -31,7 +28,7 @@
 	&:hover .widget-list-sort-button{
 		background-color: lighten($color-light, 3%);
 	}
-	&:first-child .widget-list-up-down-item-button{
+	&:first-child .widget-list-move-up-item-button{
 		display: none;
 	}
 	&:last-child .widget-list-move-down-item-button{
