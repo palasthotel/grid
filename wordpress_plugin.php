@@ -372,7 +372,7 @@ function grid_wp_settings() {
 <h2>Grid Settings</h2>
 <form method="post" action="options.php">
 <?php
-settings_fields( 'grid_settings' );
+settings_fields( 'grid_settings' ); 
 do_settings_sections( 'grid_settings' );
 ?>
 <?php submit_button(); ?>
