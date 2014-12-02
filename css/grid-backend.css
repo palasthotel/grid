@@ -1172,19 +1172,35 @@ h3 {
   background-color: #eceae7; }
 
 .grid-editor-widget-listitem {
+  position: relative;
   border-left: 4px solid #eceae7;
   padding-left: 10px;
   margin-bottom: 15px;
   transition: all 0.1337s ease; }
+  .grid-editor-widget-listitem > * {
+    box-sizing: border-box; }
   .grid-editor-widget-listitem:hover {
     border-color: #3ac5d9; }
   .grid-editor-widget-listitem > .widget-list-remove-item-button {
     margin-top: 10px;
-    margin-left: -14px;
+    margin-left: -10px;
     background-color: #eceae7; }
   .grid-editor-widget-listitem .widget-list-remove-item-button:hover {
     background-color: #ed5032;
     color: white; }
+  .grid-editor-widget-listitem .widget-list-sort-button {
+    position: absolute;
+    top: 0px;
+    left: -35px; }
+    .grid-editor-widget-listitem .widget-list-sort-button.widget-list-move-down-item-button {
+      top: auto;
+      bottom: 0px; }
+  .grid-editor-widget-listitem:hover .widget-list-sort-button {
+    background-color: #eceae7; }
+  .grid-editor-widget-listitem:first-child .widget-list-up-down-item-button {
+    display: none; }
+  .grid-editor-widget-listitem:last-child .widget-list-move-down-item-button {
+    display: none; }
 
 .grid-editor-widget-autocomplete .autocomplete-wrapper,
 .grid-editor-autocomplete-with-links .autocomplete-wrapper {
