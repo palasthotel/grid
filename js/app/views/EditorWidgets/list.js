@@ -41,30 +41,45 @@ boxEditorControls['list']=GridBackbone.View.extend({
         this.views=views;
 
         this.$list.on("click", ".widget-list-sort-button", {self: this}, this.sortItem);
+        this.$list.on("click", ".widget-list-remove-item-button", {self: this}, this.onRemove);
 
         return this;
     },
     sortItem: function(e){
         var self = e.data.self;
         var $button= $(e.currentTarget);
-        var $this = $button.closest(".grid-editor-widget-listitem");;
+        var $this = $button.closest(".grid-editor-widget-listitem");
         var index = $this.index();
-        var list = self.model.container[self.model.structure.key];
-        var object = list[index];
+        var views = self.views
+        var view = views[index];
         var newPos = index;
         switch($button.attr("data-dir")){
             case "up":    
                 newPos = index-1;
                 if(newPos < 0) 
                     newPos = 0;
+                $this.insertBefore($this.prev());
                 break;
             case "down":
                 newPos = index+1;
+                $this.insertAfter($this.next());
                 break;
         }
+        views.splice(index,1);
+        views.splice(newPos,0,view);
+
+    },
+    onRemove: function(e){
+
+        var self = e.data.self;
+        var index = $(e.currentTarget).closest(".grid-editor-widget-listitem").index();
+        var list = self.model.container[self.model.structure.key];
         list.splice(index,1);
-        list.splice(newPos,0,object);
-        self.render();
+        self.views[index].removed = true;
+        self.views[index].remove();
+        self.views.splice(index,1);
+        console.log(["remove",e, self]);
+
     },
     onAdd: function(){
         var view = new boxEditorControls['listitem']({
@@ -119,10 +134,8 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
             views.push(view);
             self.$el.append(view.render().el);
         });
-        jQuery("<button class='widget-list-remove-item-button'><span class='icon-minus'></span>Remove item</button>").on('click', function(event) {
-            self.remove();
-            self.removed = true;
-        }).appendTo(this.$el);
+        jQuery("<button class='widget-list-remove-item-button'><span class='icon-minus'></span>Remove item</button>")
+        .appendTo(this.$el);
         jQuery("<button class='widget-list-move-up-item-button widget-list-sort-button' data-dir='up'><span class='icon-dir-up'></span></button>")
         .appendTo(this.$el);
         jQuery("<button class='widget-list-move-down-item-button widget-list-sort-button' data-dir='down'><span class='icon-dir-down'></span></button>")
