@@ -1,11 +1,11 @@
 
-
 boxEditorControls['list']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-list",
     initialize:function(){
 
     },
     render:function(){
+        this.$el.empty();
         jQuery("<label></label>")
                 .text(this.model.structure.label)
                     .appendTo(this.$el);
@@ -36,11 +36,35 @@ boxEditorControls['list']=GridBackbone.View.extend({
                 }
             });
             views.push(view);
-            self.$list.append(view.render().el);
+            self.$list.append(view.render().$el);
         });
         this.views=views;
 
+        this.$list.on("click", ".widget-list-sort-button", {self: this}, this.sortItem);
+
         return this;
+    },
+    sortItem: function(e){
+        var self = e.data.self;
+        var $button= $(e.currentTarget);
+        var $this = $button.closest(".grid-editor-widget-listitem");;
+        var index = $this.index();
+        var list = self.model.container[self.model.structure.key];
+        var object = list[index];
+        var newPos = index;
+        switch($button.attr("data-dir")){
+            case "up":    
+                newPos = index-1;
+                if(newPos < 0) 
+                    newPos = 0;
+                break;
+            case "down":
+                newPos = index+1;
+                break;
+        }
+        list.splice(index,1);
+        list.splice(newPos,0,object);
+        self.render();
     },
     onAdd: function(){
         var view = new boxEditorControls['listitem']({
@@ -99,6 +123,10 @@ boxEditorControls['listitem']=GridBackbone.View.extend({
             self.remove();
             self.removed = true;
         }).appendTo(this.$el);
+        jQuery("<button class='widget-list-move-up-item-button widget-list-sort-button' data-dir='up'><span class='icon-dir-up'></span></button>")
+        .appendTo(this.$el);
+        jQuery("<button class='widget-list-move-down-item-button widget-list-sort-button' data-dir='down'><span class='icon-dir-down'></span></button>")
+        .appendTo(this.$el);
         this.views=views;
         return this;
     },
