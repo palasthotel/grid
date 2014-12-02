@@ -71,12 +71,20 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 
 function t($str) { return __( $str, 'grid' ); }
 
-function db_query( $querystring ) {
+function db_query( $querystring,$die=TRUE ) {
 	global $wpdb;
 	$querystring = str_replace( '{', $wpdb->prefix, $querystring );
 	$querystring = str_replace( '}', '', $querystring );
 	global $grid_connection;
-	$result=$grid_connection->query( $querystring ) or die( $querystring.' failed: '.$grid_connection->error );
+	if($die)
+		$result=$grid_connection->query( $querystring ) or die( $querystring.' failed: '.$grid_connection->error );
+	else
+	{
+		$result=$grid_connection->query( $querystring );
+		if($result===FALSE) {
+			throw new Exception( $querystring.' failed: '.$grid_connection->error );
+		}
+	}
 	if ( is_object( $result ) ) {
 		$return = array();
 		while( $row = $result->fetch_object() ) {
@@ -411,7 +419,7 @@ function grid_wp_admin_init() {
 	add_settings_field( 'grid_mediaselect_info', 'Set an info text for media in the WordPress media-box', 'grid_wp_mediaselect_info_html', 'grid_settings', 'grid_mediaselect_info' );
 	register_setting( 'grid_settings', 'grid_mediaselect_info' );
 
-  add_settings_section( 'grid_permalinks', 'Permalinks', 'grid_wp_permalinks_section', 'grid_settings' );
+  add_settings_section( 'grid_permalinks', 'Grid', 'grid_wp_permalinks_section', 'grid_settings' );
 	add_settings_field( 'grid_permalinks', 'Landing Page base', 'grid_wp_permalinks_html', 'grid_settings', 'grid_permalinks' );
 	register_setting( 'grid_settings', 'grid_permalinks' );
 	
