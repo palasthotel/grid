@@ -51,7 +51,7 @@ boxEditorControls['file']=GridBackbone.View.extend({
     },
     getFormData: function(e, data){
 	    var self = e.data.self;
-	    var element_key = self.model.structure.key;
+	    var element_key = self.model.parentpath+self.model.structure.key;
 	    var box = self.model.box;
 	    data.formData = {
 	    		gridid : box.getGrid().get("id"), 
