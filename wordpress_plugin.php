@@ -675,7 +675,8 @@ function grid_wp_thegrid() {
 		wp_enqueue_script( 'grid_js_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
 		$post = get_post( $postid );
 		echo '<div class="wrap"><h2>'.$post->post_title.
-		' <a title="Return to the post-edit page" class="add-new-h2" href="/wp-admin/post.php?post='.$postid.'&action=edit" >Edit Post</a><a class="add-new-h2" href="'.get_permalink( $postid ).'">View Post</a></h2> </div>';
+		' <a title="Return to the post-edit page" class="add-new-h2" href="/wp-admin/post.php?post='.$postid.'&action=edit" >Edit Post</a><a class="add-new-h2" href="'.
+		get_permalink( $postid ).'">View Post</a></h2> </div>';
 		$html=$grid_lib->getEditorHTML(
 			$grid_id,
 			'grid',
