@@ -42,7 +42,11 @@ if ($this->firstcontentcontainer){
 	</div>
 
 	<div class="grid-slots-wrapper">
-	<?php echo implode("", $slots)?>
+	<?php 
+	if(is_array($slots)){
+		echo implode("", $slots);
+	}
+	?>
 	</div>
 
 	<div class="grid-container-after">
