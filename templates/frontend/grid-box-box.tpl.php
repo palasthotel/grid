@@ -12,9 +12,9 @@
 
 		if ($this->titleurl !=""){
 		?>
-			<h3 class="b-title"><a href="<?php echo $this->titleurl?>"><?php echo $this->title?></a></h3>
+			<h2 class="b-title"><a href="<?php echo $this->titleurl?>"><?php echo $this->title?></a></h2>
 		<?php }else{?>
-			<h3 class="b-title"><?php echo $this->title?></h3>
+			<h2 class="b-title"><?php echo $this->title?></h2>
 		<?php }?>
 	<?php }?>
 	<div class="b-prolog">
