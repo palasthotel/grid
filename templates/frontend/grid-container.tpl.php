@@ -43,7 +43,9 @@ if ($this->firstcontentcontainer){
 
 	<div class="grid-slots-wrapper">
 	<?php 
-	if(isset($slots) && is_array($slots)){
+	// important for reuse containers list
+	if(isset($slots) && is_array($slots))
+	{
 		echo implode("", $slots);
 	}
 	?>

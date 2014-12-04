@@ -98,8 +98,6 @@ class grid_library
 	{
 		$css=array();
 		$home=$this->getHome();
-		// $css[]=$home."css/font-icons/entypo.css";
-		// $css[]=$home."css/font-opensans/font.css";
 		$css[]=$home."css/grid-backend.css";
 		if($rtl)
 		{

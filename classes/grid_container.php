@@ -30,7 +30,11 @@ class grid_container extends grid_base {
 	public $sidebarleft = false;
 	public $slots;
 
-
+	public function __construct()
+	{
+		$this->slots =array();
+		$this->classes = array();
+	}
 		
 	public function render($editmode)
 	{
