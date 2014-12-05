@@ -1,8 +1,13 @@
-<?php header('Content-Type: application/javascript'); ?>
+<?php 
 /**
- * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.html or http://ckeditor.com/license
- */
+* @author Palasthotel <rezeption@palasthotel.de>
+* @copyright Copyright (c) 2014, Palasthotel
+* @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+* @package Palasthotel\Grid
+*/
+header('Content-Type: application/javascript'); 
+?>
+
  /*
  CKEDITOR.stylesSet.add( 'grid_styles',
 [
