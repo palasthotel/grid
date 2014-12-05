@@ -365,7 +365,9 @@ add_action( 'admin_bar_menu', 'grid_wp_admin_bar', 999 );
 function grid_wp_actions( $actions, $entity ) {
 	if( get_option( 'grid_'.get_post_type().'_enabled', FALSE ) == TRUE )
 	{
-		$actions['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">The Grid</a>';
+		$temp=array();
+		$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">The Grid</a>';
+		$actions=array_merge($temp,$actions);
 	}
 	return $actions;
 }
