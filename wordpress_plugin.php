@@ -69,7 +69,10 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 
 }
 
-function t($str) { return __( $str, 'grid' ); }
+if(!function_exists("t")){
+	function t($str) { return __( $str, 'grid' ); }
+}
+
 
 function db_query( $querystring,$die=TRUE ) {
 	global $wpdb;
@@ -126,7 +129,7 @@ function grid_wp_activate() {
 		);
 		$grid_connection = grid_wp_get_mysqli();
 		foreach ( $schema as $tablename => $data ) {
-			$query = 'create table '.$wpdb->prefix."$tablename (";
+			$query = 'create table if not exists '.$wpdb->prefix."$tablename (";
 			$first = TRUE;
 			foreach ( $data['fields'] as $fieldname => $fielddata ) {
 				if ( ! $first ) {
@@ -177,6 +180,10 @@ function grid_wp_activate() {
 		$grid_connection = grid_wp_get_mysqli();
 		$grid_lib->update();
 	}
+	// for initial content type registration
+	grid_wp_init();
+	global $wp_rewrite;
+	$wp_rewrite->flush_rules();
 }
 register_activation_hook( __FILE__, 'grid_wp_activate' );
 
@@ -186,9 +193,9 @@ function grid_wp_init() {
 	
 	$permalink = get_option( 'grid_permalinks', '' );
 	if($permalink == "") {
-  	$landing_page_permalink = _x( 'landing_page', 'slug', 'grid' );
+  		$landing_page_permalink = _x( 'landing_page', 'slug', 'grid' );
 	} else {
-  	$landing_page_permalink = $permalink;
+  		$landing_page_permalink = $permalink;
 	}
   
   register_post_type( 'landing_page',
