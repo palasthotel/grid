@@ -76,8 +76,8 @@ class grid_update
 	
 	public function update_1()
 	{
-		db_query("create table {grid_schema} (propkey varchar(255),value varchar(255));");
-		db_query("insert into {grid_schema} (propkey) values ('schema_version')");
+		db_query("create table if not exists {grid_schema} (propkey varchar(255),value varchar(255), PRIMARY KEY (`propkey`) );");
+		db_query("insert into {grid_schema} (propkey) values ('schema_version') ON DUPLICATE KEY UPDATE propkey = 'schema_version';");
 	}
 
 	public function update_2(){

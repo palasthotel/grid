@@ -250,6 +250,11 @@ var BoxView = GridBackbone.View.extend({
         }
         GRID.log(["render box", json]);
 
+        var SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+        while (SCRIPT_REGEX.test(json.html)) {
+            json.html = json.html.replace(SCRIPT_REGEX, "");
+        }
+
         this.$el.html(ich.tpl_box( json ));
         return this;
 	},
