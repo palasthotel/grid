@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Grid
  * Description: Helps layouting pages with containerist.
- * Version: 1.0
+ * Version: 1.1
  * Author: Palasthotel
  * Author URI: http://www.palasthotel.de
- * Requires at least: 3.7
+ * Requires at least: 3.6
  * Tested up to: 4.0
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
@@ -673,7 +673,7 @@ function grid_wp_thegrid() {
 		wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
 
-		$lang = WPLANG;
+		$lang = get_locale();
 		if ( empty( $lang ) ) {
 			$lang = 'en';
 		}
