@@ -599,10 +599,6 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$gridid=$_POST['gridid'];
 		$containerid=$_POST['container'];
-		if($gridid==-1)
-		{
-			$gridid="container:$containerid";
-		}
 		$slotid=$_POST['slot'];
 		$idx=$_POST['box'];
 		$file=$_FILES['file']['tmp_name'];
