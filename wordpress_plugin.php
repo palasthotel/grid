@@ -149,6 +149,9 @@ if(!function_exists("t")){
 	function t($str) { return __( $str, 'grid' ); }
 }
 
+function grid_query($querystring) {
+	return db_query($querystring,false);
+}
 
 function db_query( $querystring,$die=TRUE ) {
 	global $wpdb;
