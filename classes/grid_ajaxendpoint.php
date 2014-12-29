@@ -25,7 +25,7 @@ class grid_ajaxendpoint {
 			}
 		}
 		$bx['id']=$box->boxid;
-		$bx['html']=$box->build(true);
+		$bx['html']=$box->render(true);
 		$bx['type']=$box->type();
 		$bx['content']=$box->content;
 		$bx['contentstructure']=$box->contentStructure();

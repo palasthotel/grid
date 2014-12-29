@@ -122,7 +122,17 @@ class grid_box extends grid_base {
 		$this->classes[] = "grid-box-".$this->type();
 		if($this->storage->templatesPath!=NULL)
 		{
-			if(file_exists($this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php'))
+			if($editmode && file_exists($this->storage->templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php'))
+			{
+				$found=TRUE;
+				include $this->storage->templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php';
+			}
+			else if($editmode && file_exists($this->storage->templatesPath.'/grid-box-box-editmode.tpl.php'))
+			{
+				$found=TRUE;
+				include $this->storage->templatesPath.'/grid-box-box-editmode.tpl.php';
+			}
+			if(file_exists($this->storage->templatesPath.'/grid-box-box-editmode.tpl.php'))
 			{
 				$found=TRUE;
 				include $this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php';
@@ -135,7 +145,11 @@ class grid_box extends grid_base {
 		}
 		if(!$found)
 		{
-			if(file_exists(dirname(__FILE__).'/../templates/frontend/grid-box-'.$this->type().'.tpl.php'))
+			if($editmode && file_exists(dirname(__FILE__).'/../templates/frontend/grid-box-'.$this->type().'-editmode.tpl.php'))
+				include dirname(__FILE__).'/../templates/frontend/grid-box-'.$this->type().'-editmode.tpl.php';
+			else if($editmode)
+				include dirname(__FILE__).'/../templates/frontend/grid-box-box-editmode.tpl.php';
+			else if(file_exists(dirname(__FILE__).'/../templates/frontend/grid-box-'.$this->type().'.tpl.php'))
 				include dirname(__FILE__).'/../templates/frontend/grid-box-'.$this->type().'.tpl.php';
 			else
 				include dirname(__FILE__).'/../templates/frontend/grid-box-box.tpl.php';
