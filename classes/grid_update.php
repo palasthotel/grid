@@ -6,6 +6,14 @@
  * @package Palasthotel\Grid
  */
 
+if(!function_exists("grid_query"))
+{
+	function grid_query($querystring)
+	{
+		return db_query($querystring);
+	}
+}
+
 class grid_update
 {
 	public function performUpdates()
@@ -62,7 +70,7 @@ class grid_update
 	{
 		try
 		{
-			$result=db_query("select value from {grid_schema} where propkey='schema_version'",false);
+			$result=grid_query("select value from {grid_schema} where propkey='schema_version'");
 			foreach($result as $entry)
 			{
 				return $entry->value;
