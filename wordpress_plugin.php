@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Grid
  * Description: Helps layouting pages with containerist.
- * Version: 1.1
+ * Version: 1.2
  * Author: Palasthotel
  * Author URI: http://www.palasthotel.de
  * Requires at least: 3.6
@@ -67,91 +67,12 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 		return $privileges;
 	}
 
-	public function publishDraft($gridid)
-	{
-		$result=parent::publishDraft($gridid);
-		if($result)
-		{
-			$nid=grid_wp_get_postid_by_grid($gridid);
-			do_action('grid_published',$nid);
-		}
-		return $result;
-	}
-	public function getMetaTypesAndSearchCriteria($grid_id){
-		$result=parent::getMetaTypesAndSearchCriteria($grid_id);
-		$result=apply_filters('grid_metaboxes',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
-		return $result;
-	}
-	
-	public function Search($grid_id,$metatype,$searchstring,$criteria)
-	{
-		$result=parent::Search($grid_id,$metatype,$searchstring,$criteria);
-		$result=apply_filters('grid_boxes_search',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
-		return $result;
-	}
-	
-	public function getContainerTypes($grid_id)
-	{
-		$result=parent::getContainerTypes($grid_id);
-		$result=apply_filters('grid_containers',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
-		return $result;
-	}
-
-	public function getReusableContainers($grid_id)
-	{
-		$result=parent::getReusableContainers($grid_id);
-		$result=apply_filters('grid_reusable_containers',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
-		return $result;
-	}
-	
-	public function UpdateBox($gridid,$containerid,$slotid,$idx,$boxdata)
-	{
-		$result=parent::UpdateBox($gridid,$containerid,$slotid,$idx,$boxdata);
-		if($result!=FALSE)
-		{
-			$grid=$this->storage->loadGrid($gridid);
-			foreach($grid->container as $container)
-			{
-				if($container->containerid==$containerid)
-				{
-					foreach($container->slots as $slot)
-					{
-						if($slot->slotid==$slotid)
-						{
-							if(isset($slot->boxes[$idx]))
-							{
-								//we found a box.
-								$box=$slot->boxes[$idx];
-								$box=apply_filters('grid_persist_box',$box);
-								if(count($box)>0 && $box[0]!==NULL)
-								{
-									$box=$box[0];
-									$slot->boxes[$idx]=$box;
-									$box->persist();
-								}
-								else
-								{
-									$box=$slot->boxes[$idx];
-								}
-								return $this->encodeBox($box);
-							}
-							return FALSE;
-						}
-					}
-				}
-			}
-		}
-	}
-
 }
 
 if(!function_exists("t")){
 	function t($str) { return __( $str, 'grid' ); }
 }
 
-function grid_query($querystring) {
-	return db_query($querystring,false);
-}
 
 function db_query( $querystring,$die=TRUE ) {
 	global $wpdb;
@@ -752,7 +673,7 @@ function grid_wp_thegrid() {
 		wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
 
-		$lang = get_locale();
+		$lang = WPLANG;
 		if ( empty( $lang ) ) {
 			$lang = 'en';
 		}
@@ -938,16 +859,6 @@ function grid_wp_get_grid_by_postid( $postid ) {
 	$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
 	if ( count( $rows ) > 0 ) {
 		return $rows[0]->grid_id;
-	}
-	return FALSE;
-}
-
-function grid_wp_get_postid_by_grid($gridid) {
-	global $wpdb;
-	$rows=$wpdb->get_results('select nid from '.$wpdb->prefix.'grid_nodes where grid_id='.$gridid);
-	if(count($rows)>0)
-	{
-		return $rows[0]->nid;
 	}
 	return FALSE;
 }

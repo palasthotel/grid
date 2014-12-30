@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Grid Twitterbox
  * Description: Adds a twitter box to grid
- * @version: 0.0
+ * @version: 1.2
  * @author Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * @copyright Copyright (c) 2014, Palasthotel
