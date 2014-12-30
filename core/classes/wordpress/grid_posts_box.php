@@ -7,11 +7,11 @@
  */
 /**
 * Posts-Box is considered a list
-* 
+*
 * In the Grid selection menu, Posts-Box is named "List Of Contents".
 */
 class grid_posts_box extends grid_list_box {
-	
+
 	/**
 	* Class contructor
 	*
@@ -25,7 +25,7 @@ class grid_posts_box extends grid_list_box {
 		$this->content->category = '';
 		$this->content->post_type = 'post';
 	}
-	
+
 	/**
 	* Sets box type
 	*
@@ -34,7 +34,7 @@ class grid_posts_box extends grid_list_box {
 	public function type() {
 		return 'posts';
 	}
-	
+
 	/**
 	* Box renders its menu label and its content in here.
 	*
@@ -43,7 +43,7 @@ class grid_posts_box extends grid_list_box {
 	* @return string
 	*/
 	public function build( $editmode ) {
-		if( $editmode ) {
+		if ( $editmode ) {
 			return 'Liste von Inhalten';
 		} else {
 			$args = array();
@@ -61,21 +61,21 @@ class grid_posts_box extends grid_list_box {
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				ob_start();
-				$found = FALSE;
+				$found = false;
 				// Checks if WordPress has a template for post content ...
-				if ( $this->storage->templatesPath != NULL ) {
+				if ( $this->storage->templatesPath != null ) {
 					if ( file_exists( $this->storage->templatesPath.'/post_content.tpl.php' ) ) {
-						$found = TRUE;
+						$found = true;
 						include $this->storage->templatesPath.'/post_content.tpl.php';
 					}
 				}
 				// ... if not, uses Grid template for post content
 				if ( ! $found ) {
-					include dirname(__FILE__).'/../../templates/wordpress/post_content.tpl.php';
+					include dirname( __FILE__ ).'/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output .= ob_get_clean();
 				$counter ++;
-				if($counter == $this->content->posts_per_page){
+				if ( $counter == $this->content->posts_per_page ){
 					break;
 				}
 			}
@@ -84,7 +84,7 @@ class grid_posts_box extends grid_list_box {
 			// END of WordPress Loop
 		}
 	}
-	
+
 	/**
 	* Determines editor widgets used in backend
 	*
@@ -137,13 +137,13 @@ class grid_posts_box extends grid_list_box {
 	* @return array
 	*/
 	public function performElementSearch( $key, $query) {
-		if ( $key != 'category' ) {
+		if ( 'category' != $key ) {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
 		}
 		$categories = get_categories();
 		$results = array();
 		foreach ( $categories as $category ) {
-			if ( $query == '' || strstr( strtolower($category->name) , strtolower($query) ) !== FALSE ) {
+			if ( $query == '' || false !== strstr( strtolower( $category->name ) , strtolower( $query ) ) ) {
 				$results[] = array( 'key' => $category->term_id, 'value' => $category->name );
 			}
 		}
@@ -160,7 +160,7 @@ class grid_posts_box extends grid_list_box {
 	* @return string
 	*/
 	public function getElementValue( $path, $id ) {
-		if( $path != 'category' || $id == null || $id == "" ) {
+		if ( 'category' != $path || $id == null || $id == '' ) {
 			return '';
 		} else {
 			$thisCat = get_category( $id );

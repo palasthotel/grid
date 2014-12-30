@@ -58,7 +58,7 @@ Access Token:
 function grid_wp_twitterbox_callback() {
 	session_start();
 	$connection = new TwitterOAuth( get_option( 'grid_twitterbox_consumer_key', '' ), get_option( 'grid_twitterbox_consumer_secret', '' ), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret'] );
-	
+
 	/* Request access tokens from twitter */
 	$access_token = $connection->getAccessToken( $_REQUEST['oauth_verifier'] );
 	update_option( 'grid_twitterbox_accesstoken', $access_token );

@@ -7,46 +7,46 @@
  */
 
 class grid_twitter_box extends grid_static_base_box {
-	
+
 	public function __construct() {
 		$this->content = new Stdclass();
 		$this->content->limit = 5;
 		$this->content->user = '';
 		$this->content->retweet = 'timeline';
 	}
-	
+
 	public function type() {
 		return 'twitter';
 	}
-	
+
 	protected function prebuild() {
 		if ( $this->content->user == '' ) {
 			return '';
 		}
-		return NULL;
+		return null;
 	}
-	
+
 	protected function fetch( $connection ) {
-		if ( $this->content->retweet == 'retweets' ) {
+		if ( 'retweets' == $this->content->retweet ) {
 			$result = $connection->get( 'https://api.twitter.com:443/1.1/search/tweets.json?src=typd&q='.$this->content->user );
 			$result = $result->statuses;
 		} else {
 			$result = $connection->get( 'https://api.twitter.com:443/1.1/statuses/user_timeline.json', array( 'screen_name' => $this->content->user ) );
 		}
-		
+
 		return $result;
 	}
 
 	public function build( $editmode ) {
-		if( $editmode ) {
+		if ( $editmode ) {
 			return 'Twitter Box';
 		} else {
 			$prebuild = $this->prebuild();
-			if ( $prebuild != NULL ) {
+			if ( $prebuild != null ) {
 				return $prebuild;
 			} else {
 				$token = get_option( 'grid_twitterbox_accesstoken' );
-				if( ! isset( $token['oauth_token'] ) || ! isset( $token['oauth_token_secret'] ) ) {
+				if ( ! isset( $token['oauth_token'] ) || ! isset( $token['oauth_token_secret'] ) ) {
 					return '';
 				}
 				$connection = new TwitterOAuth( get_option( 'grid_twitterbox_consumer_key', '' ), get_option( 'grid_twitterbox_consumer_secret', '' ), $token['oauth_token'], $token['oauth_token_secret'] );
@@ -61,28 +61,28 @@ class grid_twitter_box extends grid_static_base_box {
 				} else {
 					require ( 'grid_twitterbox.tpl.php' );
 				}
-				$result=ob_get_clean();
+				$result = ob_get_clean();
 				return $result;
 			}
 		}
 	}
-	
+
 	public function contentStructure () {
 		return array(
 			array(
 				'key' => 'limit',
 				'type' => 'number',
-				'label' => 'Anzahl der Einträge'
+				'label' => 'Anzahl der Einträge',
 			),
 			array(
 				'key' => 'user',
 				'type' => 'text',
-				'label' => 'User'
+				'label' => 'User',
 			),
 			array(
 				'key' => 'retweet',
 				'type' => 'select',
-				'label' => t('Type'),
+				'label' => t( 'Type' ),
 				'selections' => array(
 					array(
 						'key' => 'timeline',
@@ -96,7 +96,7 @@ class grid_twitter_box extends grid_static_base_box {
 			),
 		);
 	}
-	
+
 	public function metaSearch( $criteria, $query ) {
 		if ( get_option( 'grid_twitterbox_consumer_key', '' ) == '' || get_option( 'grid_twitterbox_consumer_secret', '' ) == '' || get_option( 'grid_twitterbox_accesstoken', '' ) == '' ) {
 			return array();
@@ -107,7 +107,7 @@ class grid_twitter_box extends grid_static_base_box {
 }
 
 class grid_twitter_hashtag_box extends grid_twitter_box {
-	
+
 	public function __construct() {
 		$this->content = new Stdclass();
 		$this->content->limit = 5;
@@ -117,7 +117,7 @@ class grid_twitter_hashtag_box extends grid_twitter_box {
 	public function type() {
 		return 'twitter_hashtag';
 	}
-	
+
 	public function fetch( $connection ) {
 		$output = $connection->get( 'https://api.twitter.com:443/1.1/search/tweets.json', array( 'q' => $this->content->hashtag ) );
 		if ( isset( $output->statuses ) ) {
@@ -127,22 +127,22 @@ class grid_twitter_hashtag_box extends grid_twitter_box {
 		}
 		return $result;
 	}
-	
+
 	protected function prebuild() {
 		if ( $this->content->hashtag == '' ) {
 			return '';
 		}
-		return NULL;
+		return null;
 	}
-	
+
 	public function build( $editmode ) {
-		if( $editmode ) {
+		if ( $editmode ) {
 			return 'Twitter Hashtag Box';
 		} else {
 			return parent::build( $editmode );
 		}
 	}
-	
+
 	public function contentStructure () {
 		return array(
 			array(
