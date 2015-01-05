@@ -10,6 +10,7 @@
 */
 include 'grid_base.php';
 include 'grid_box.php';
+include 'grid_error_box.php';
 include 'grid_static_box.php';
 include 'grid_html_box.php';
 include 'grid_video_box.php';

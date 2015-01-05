@@ -6,11 +6,6 @@
  * @package Palasthotel\Grid
  */
 ?>
-<div class="grid-box-editmode">
-	<?php
-	if ($this->title!=""){
-		echo '<h2 class="b-title">'.$this->title.'</h2>';
-	}
-	echo "<div class='content'>".$content."</div>";
-	?>
+<div class="box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
+	<?php echo $content; ?>	
 </div>
