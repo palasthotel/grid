@@ -19,6 +19,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 		$this->content->show_faces  = 'true';
 		$this->content->show_header = 'true';
 		$this->content->datastream  = 'false';
+    $this->content->language = "de_DE";
 		$this->content->colorscheme = 'light';
 		$this->content->show_border = 'true';
 		$this->content->force_wall  = 'false';
@@ -34,6 +35,8 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			$show_faces = $this->content->show_faces;
 			$show_header = $this->content->show_header;
 			$datastream = $this->content->datastream;
+      if(!isset($this->content->language)) { $this->content->language = "de_DE"; }
+      $language = $this->content->language;
 			$colorscheme = $this->content->colorscheme;
 			$show_border = $this->content->show_border;
 			$force_wall = $this->content->force_wall;
@@ -57,7 +60,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			  var js = d.getElementsByTagName(s)[0];
 			  if (d.getElementById(id)) return;
 			  js = d.createElement(s); js.id = id;
-			  js.src = '//connect.facebook.net/de_DE/all.js#xfbml=1&appId=<?php echo $appid; ?>';
+			  js.src = '//connect.facebook.net/<?= $language; ?>/all.js#xfbml=1&appId=<?php echo $appid; ?>';
 			  d.head.insertBefore(js, document.head.childNodes[0])
 			}(document, 'script', 'facebook-jssdk'));
 			</script>
@@ -99,6 +102,22 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key' => 'height',
 				'label' => t( 'Height in pixel(optional, default 556 or 63 without stram and faces)' ),
 				'type' => 'number',
+			),
+			array(
+				'key' => 'language',
+				'label' => t('Language'),
+				'type' => 'select',
+				'selections'=>
+				array(
+					array(
+						"key" => "de_DE",
+						"text" => t("de_DE"),
+					),
+					array(
+						"key" => "en_US",
+						"text" => t("en_US"),
+					),
+				),
 			),
 			array(
 				'key' => 'colorscheme',
