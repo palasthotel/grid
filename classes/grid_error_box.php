@@ -15,7 +15,7 @@ class grid_error_box extends grid_box {
 	*
 	* Constructor initializes editor widgets.
 	*/
-	public function __construct($msg) {
+	public function __construct($msg = "") {
 		$this->content=new Stdclass();
 		$this->content->error_msg=$msg;
 	}
