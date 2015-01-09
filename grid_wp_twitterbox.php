@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Grid Twitterbox
  * Description: Adds a twitter box to grid
- * @version: 1.1
+ * @version: 1.2
  * @author Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * @copyright Copyright (c) 2014, Palasthotel
@@ -58,7 +58,7 @@ Access Token:
 function grid_wp_twitterbox_callback() {
 	session_start();
 	$connection = new TwitterOAuth( get_option( 'grid_twitterbox_consumer_key', '' ), get_option( 'grid_twitterbox_consumer_secret', '' ), $_SESSION['oauth_token'], $_SESSION['oauth_token_secret'] );
-	
+
 	/* Request access tokens from twitter */
 	$access_token = $connection->getAccessToken( $_REQUEST['oauth_verifier'] );
 	update_option( 'grid_twitterbox_accesstoken', $access_token );

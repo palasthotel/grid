@@ -7,18 +7,19 @@
  */
 
 class grid_fb_like_box_box extends grid_static_base_box {
-	
+
 	public function type() {
 		return 'fb_like_box';
 	}
 
 	public function __construct() {
 		$this->content = new Stdclass();
-		$this->content->fb_page     ='';
+		$this->content->fb_page     = '';
 		$this->content->appid       = '';
 		$this->content->show_faces  = 'true';
 		$this->content->show_header = 'true';
 		$this->content->datastream  = 'false';
+    $this->content->language = "de_DE";
 		$this->content->colorscheme = 'light';
 		$this->content->show_border = 'true';
 		$this->content->force_wall  = 'false';
@@ -30,17 +31,19 @@ class grid_fb_like_box_box extends grid_static_base_box {
 		} else {
 			$fb_page = $this->content->fb_page;
 			$appid = '';
-			if ( isset( $this->content->appid ) ) $appid = $this->content->appid;
+			if ( isset( $this->content->appid ) ) { $appid = $this->content->appid; }
 			$show_faces = $this->content->show_faces;
 			$show_header = $this->content->show_header;
 			$datastream = $this->content->datastream;
+      if(!isset($this->content->language)) { $this->content->language = "de_DE"; }
+      $language = $this->content->language;
 			$colorscheme = $this->content->colorscheme;
 			$show_border = $this->content->show_border;
 			$force_wall = $this->content->force_wall;
 
 			$fb_url = 'http://www.facebook.com/';
 			$fbs_url = 'https://www.facebook.com/';
-			if ( strpos( $fb_page, $fb_url ) === false && strpos( $fb_page, $fbs_url ) === false ) {
+			if ( false === strpos( $fb_page, $fb_url ) && false === strpos( $fb_page, $fbs_url ) ) {
 				$fb_page = $fb_url.$fb_page;
 			}
 
@@ -57,7 +60,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			  var js = d.getElementsByTagName(s)[0];
 			  if (d.getElementById(id)) return;
 			  js = d.createElement(s); js.id = id;
-			  js.src = '//connect.facebook.net/de_DE/all.js#xfbml=1&appId=<?php echo $appid; ?>';
+			  js.src = '//connect.facebook.net/<?= $language; ?>/all.js#xfbml=1&appId=<?php echo $appid; ?>';
 			  d.head.insertBefore(js, document.head.childNodes[0])
 			}(document, 'script', 'facebook-jssdk'));
 			</script>
@@ -77,18 +80,18 @@ class grid_fb_like_box_box extends grid_static_base_box {
 			return $output;
 		}
 	}
-	
+
 	public function contentStructure () {
 		return array(
 			array(
 				'key' => 'fb_page',
 				'label' => t( 'Facebook page' ),
-				'type' => 'text'
+				'type' => 'text',
 			),
 			array(
 				'key' => 'appid',
 				'label' => t( 'Facebook APP Id' ),
-				'type' => 'text'
+				'type' => 'text',
 			),
 			array(
 				'key' => 'width',
@@ -101,10 +104,26 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'type' => 'number',
 			),
 			array(
+				'key' => 'language',
+				'label' => t('Language'),
+				'type' => 'select',
+				'selections'=>
+				array(
+					array(
+						"key" => "de_DE",
+						"text" => t("de_DE"),
+					),
+					array(
+						"key" => "en_US",
+						"text" => t("en_US"),
+					),
+				),
+			),
+			array(
 				'key' => 'colorscheme',
 				'label' => t( 'Color scheme' ),
 				'type' => 'select',
-				'selections'=>
+				'selections' =>
 				array(
 					array(
 						'key' => 'light',
@@ -120,7 +139,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key' => 'show_faces',
 				'label' => t( 'Faces' ),
 				'type' => 'select',
-				'selections'=>
+				'selections' =>
 				array(
 					array(
 						'key' => 'true',
@@ -136,7 +155,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key' => 'show_header',
 				'label' => t( 'Box header' ),
 				'type' => 'select',
-				'selections'=>
+				'selections' =>
 				array(
 					array(
 						'key' => 'true',
@@ -152,7 +171,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key' => 'datastream',
 				'label' => t( 'Stream of latest posts' ),
 				'type' => 'select',
-				'selections'=>
+				'selections' =>
 				array(
 					array(
 						'key' => 'true',
@@ -168,7 +187,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key' => 'show_border',
 				'label' => t( 'Border of box' ),
 				'type' => 'select',
-				'selections'=>
+				'selections' =>
 				array(
 					array(
 						'key' => 'true',
@@ -184,7 +203,7 @@ class grid_fb_like_box_box extends grid_static_base_box {
 				'key' => 'force_wall',
 				'label' => t( 'Force "place" Pages' ),
 				'type' => 'select',
-				'selections'=>
+				'selections' =>
 				array(
 					array(
 						'key' => 'true',

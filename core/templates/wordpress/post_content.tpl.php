@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -7,12 +7,10 @@
  */
 ?>
 <h3><?php echo the_title(); ?></h3>
-<?php 
-if ( $this->content->viewmode == 'full' ) {
+<?php
+if ( 'full' == $this->content->viewmode ) {
 	echo the_content();
-} elseif ( $this->content->viewmode == 'excerpt' ) {
+} elseif ( 'excerpt' == $this->content->viewmode ) {
 	echo the_excerpt();
 }
 ?>
-
-

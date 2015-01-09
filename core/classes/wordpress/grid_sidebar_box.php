@@ -8,7 +8,7 @@
 /**
 * Sidebar-Box is considered a Grid-Box.
 * It needs no meta type because it's directly embedded into the sidebar container.
-*/  
+*/
 class grid_sidebar_box extends grid_box {
 
 	/**
@@ -19,7 +19,7 @@ class grid_sidebar_box extends grid_box {
 	public function type() {
 		return 'sidebar';
 	}
-	
+
 	/**
 	* Class contructor
 	*
@@ -29,7 +29,7 @@ class grid_sidebar_box extends grid_box {
 		$this->content = new Stdclass();
 		$this->content->postid = '';
 	}
-	
+
 	/**
 	* Box renders its menu label and its content in here.
 	*
@@ -40,8 +40,8 @@ class grid_sidebar_box extends grid_box {
 	public function build( $editmode ) {
 		if ( $this->content->postid != '' ) {
 			$gridid = grid_wp_get_grid_by_postid( $this->content->postid );
-			if ( $gridid !== FALSE ) {
-				$grid = $this->storage->loadGrid( $gridid, FALSE );
+			if ( $gridid !== false ) {
+				$grid = $this->storage->loadGrid( $gridid, false );
 				return $grid->render( $editmode );
 			} else {
 				return 'sidebar is lost.';
@@ -50,7 +50,7 @@ class grid_sidebar_box extends grid_box {
 			return 'Sidebar not found or none set';
 		}
 	}
-	
+
 	/**
 	* Determines editor widgets used in backend
 	*
@@ -73,14 +73,14 @@ class grid_sidebar_box extends grid_box {
 			),
 		);
 		if ( $this->content->postid != '' ) {
-			$node=get_post( $this->content->postid );
-			if ( $node != NULL ) {
+			$node = get_post( $this->content->postid );
+			if ( $node != null ) {
 				$content[0]['valuekey'] = $node->title;
 			}
 		}
 		return $content;
 	}
-	
+
 	/**
 	* Implements search for sidebars
 	*
@@ -91,7 +91,7 @@ class grid_sidebar_box extends grid_box {
 	* @return array
 	*/
 	public function performElementSearch( $key, $querystr ) {
-		if($key!='postid') {
+		if ( 'postid' != $key ) {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
 		}
 		$results = array();
@@ -104,15 +104,15 @@ class grid_sidebar_box extends grid_box {
 			$i++;
 			$query->the_post();
 			$post = get_post();
-			if ( is_numeric ( strpos ( mb_strtolower( $post->post_title, 'UTF-8' ), mb_strtolower( $querystr, 'UTF-8' ) ) ) ) {
-				$results[] = array( 'key' => $post->ID, 'value' => $post->post_title);
+			if ( is_numeric( strpos( mb_strtolower( $post->post_title, 'UTF-8' ), mb_strtolower( $querystr, 'UTF-8' ) ) ) ) {
+				$results[] = array( 'key' => $post->ID, 'value' => $post->post_title );
 			}
 		}
 		wp_reset_postdata();
 		return $results;
 		// END of WordPress Loop
 	}
-	
+
 	/**
 	* Gets post title by id
 	*
@@ -123,7 +123,7 @@ class grid_sidebar_box extends grid_box {
 	* @return string
 	*/
 	public function getElementValue( $path, $id ) {
-		if ( $path != 'postid' ) {
+		if ( 'postid' != $path ) {
 			return 'WRONG PATH: '.$path;
 		}
 		$post = get_post( $id );
