@@ -132,12 +132,12 @@ class grid_box extends grid_base {
 				$found=TRUE;
 				include $this->storage->templatesPath.'/grid-box-box-editmode.tpl.php';
 			}
-			if(file_exists($this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php'))
+			if(!$found && file_exists($this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php'))
 			{
 				$found=TRUE;
 				include $this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php';
 			}
-			else if(file_exists($this->storage->templatesPath.'/grid-box-box.tpl.php'))
+			else if(!$found && file_exists($this->storage->templatesPath.'/grid-box-box.tpl.php'))
 			{
 				$found=TRUE;
 				include $this->storage->templatesPath.'/grid-box-box.tpl.php';
