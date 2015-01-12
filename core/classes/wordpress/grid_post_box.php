@@ -108,6 +108,7 @@ class grid_post_box extends grid_box {
 			$query->the_post();
 			$post = get_post();
 			$box = new grid_post_box();
+			$box->storage = $this->storage;
 			$box->content = new StdClass();
 			$box->content->viewmode = 'excerpt';
 			$box->content->postid = $post->ID;
