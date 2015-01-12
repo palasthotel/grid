@@ -82,6 +82,7 @@ class grid_abstract_list_box extends grid_box {
 	    foreach($result as $class)
 	    {
 		    $instance=new $class();
+		    $instance->storage = $this->storage;
 		    $subresults=$instance->metaSearch($criteria,$search);
 		    foreach($subresults as $subresult)
 		    {
