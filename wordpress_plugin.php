@@ -583,7 +583,7 @@ function grid_wp_add_meta_boxes() {
 	$post_types = get_post_types( array(), 'objects' );
 	foreach ( $post_types as $key => $post_type ) {
 		if ( get_option( 'grid_'.$key.'_enabled', false ) ) {
-			add_meta_box( 'grid', __( 'Grid' ), 'grid_wp_meta_box', $key, 'side' );
+			add_meta_box( 'grid', __( 'Grid' ), 'grid_wp_meta_box', $key, 'side', 'high' );
 		}
 	}
 }
