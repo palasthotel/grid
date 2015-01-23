@@ -23,10 +23,12 @@ var ContainerType = GridBackbone.Model.extend({
     },
 });
 var BoxType = GridBackbone.Model.extend({
-    defaults:{
-        type: null,
-        criteria: null,
-        blueprints: null
+    defaults: function(){
+        return {
+            type: null,
+            criteria: null,
+            blueprints: null
+        }
     },
     getBlueprints: function(){
         if(!(this.blueprints instanceof GridBoxBlueprints)){
@@ -73,18 +75,20 @@ var Revision = GridBackbone.Model.extend({
 //
 // -----------------------------------------
 var Grid = GridBackbone.Model.extend({
-	defaults :{
-        id: -1,
-		// enable or disable debugging output
-		DEBUGGING: false,
-		// the server URL
-		SERVER: "/grid_ajax_endpoint",
-		// Pattern for preview URL
-		PREVIEW_URL: window.location.pathname+'/preview',
-		// 0 == false == unknown, 1 published, 2 draft
-		isDraft: true,
-        isSidebar: false
-	},
+	defaults: function(){
+        return {
+            id: -1,
+            // enable or disable debugging output
+            DEBUGGING: false,
+            // the server URL
+            SERVER: "/grid_ajax_endpoint",
+            // Pattern for preview URL
+            PREVIEW_URL: window.location.pathname+'/preview',
+            // 0 == false == unknown, 1 published, 2 draft
+            isDraft: true,
+            isSidebar: false,
+        }
+    },
 	getGridID: function(){
 		return GRID.ID;//this.get("id");
 	},
@@ -132,7 +136,7 @@ var Grid = GridBackbone.Model.extend({
     addReuseContainer: function(containertype, index){
         var self = this;
         GridRequest.grid.addReuseContainer(containertype, index, function(data){
-            self.addContainer(new Container(containertype.toJSON()), index);
+            self.addContainer(new Container(data.result), index);
         });
         return this;
     },
