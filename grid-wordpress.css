@@ -1,8 +1,14 @@
-body{
-	/*background-color: rgba(243,245,247,1);*/
-}
+
+
+/**
+ * override defaults for wordpress integration
+ */
 #new-grid-wrapper{
 	margin-left: -20px;
+	background-color: transparent;
+}
+#new-grid-editor-wrapper{
+	background-color: transparent;
 }
 
 /*
