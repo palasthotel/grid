@@ -668,6 +668,16 @@ function grid_wp_thegrid() {
 		foreach ( $css as $idx => $file ) {
 			wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
+
+		/**
+		 * additional fieldtypes css
+		 * @var array 	elements should be like key => url of css file
+		 */
+		$grid_fieldtypes_paths = apply_filters('grid_load_fieldtypes_css', array() );
+		foreach ( $grid_fieldtypes_paths as $key => $url ) {
+			wp_enqueue_style( 'grid_css_'.$key, $url );
+		}
+
 		wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
 
@@ -679,6 +689,16 @@ function grid_wp_thegrid() {
 		foreach ( $js as $idx => $file ) {
 			wp_enqueue_script( 'grid_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
+
+		/**
+		 * additional fieldtypes js
+		 * @var array 	elements should be like key => url of js file
+		 */
+		$grid_fieldtypes_paths = apply_filters('grid_load_fieldtypes_js', array());
+		foreach ( $grid_fieldtypes_paths as $key => $url ) {
+			wp_enqueue_script( 'grid_js_'.$key, $url );
+		}
+
 		wp_enqueue_script( 'grid_js_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
 		$post = get_post( $postid );
 		echo '<div class="wrap"><h2>'.$post->post_title.
