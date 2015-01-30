@@ -101,7 +101,7 @@ class grid_posts_box extends grid_list_box {
 				'key' => 'viewmode',
 				'type' => 'select',
 				'label' => t( 'Viewmode' ),
-				'selections' => array( array( 'key' => 'excerpt', 'text' => 'Anriss' ), array( 'key' => 'full', 'text' => 'Voll' ) ),
+				'selections' => array( array( 'key' => 'excerpt', 'text' => t('Excerpt' ) ) , array( 'key' => 'full', 'text' => t('Full') ) ),
 			),
 			array(
 				'key' => 'posts_per_page',

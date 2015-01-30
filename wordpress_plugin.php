@@ -1,14 +1,15 @@
 <?php
 /**
  * Plugin Name: Grid
+ * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.2
+ * Version: 1.3
  * Author: Palasthotel
  * Author URI: http://www.palasthotel.de
- * Requires at least: 3.6
- * Tested up to: 4.0
+ * Requires at least: 4.0
+ * Tested up to: 4.1
+ * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @copyright Copyright (c) 2014, Palasthotel
- * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid-WordPress
  */
 
@@ -616,7 +617,11 @@ function grid_wp_get_storage() {
 		$storage = new grid_db( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, $user->user_login, $wpdb->prefix );
 		$storage->ajaxEndpoint = new grid_wordpress_ajaxendpoint();
 		$storage->ajaxEndpoint->storage = $storage;
-		$storage->templatesPath = get_template_directory().'/grid/';
+
+		$templatesPaths = array();
+		$templatesPaths[] = get_template_directory().'/grid/';
+		$storage->templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
+		
 		$storage->containerstyle = get_site_option( 'grid_default_container_style', '__NONE__' );
 		if ( '__NONE__' == $storage->containerstyle ) {
 			$storage->containerstyle = null;
@@ -664,17 +669,13 @@ function grid_wp_thegrid() {
 		$grid_id = $rows[0]->grid_id;
 		global $grid_lib;
 
+		$fieldtypes = grid_get_additional_fieldtypes();
+
 		$css = $grid_lib->getEditorCSS( false );
 		foreach ( $css as $idx => $file ) {
 			wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
-
-		/**
-		 * additional fieldtypes css
-		 * @var array 	elements should be like key => url of css file
-		 */
-		$grid_fieldtypes_paths = apply_filters('grid_load_fieldtypes_css', array() );
-		foreach ( $grid_fieldtypes_paths as $key => $url ) {
+		foreach ( $fieldtypes["css"] as $key => $url ) {
 			wp_enqueue_style( 'grid_css_'.$key, $url );
 		}
 
@@ -689,13 +690,7 @@ function grid_wp_thegrid() {
 		foreach ( $js as $idx => $file ) {
 			wp_enqueue_script( 'grid_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
-
-		/**
-		 * additional fieldtypes js
-		 * @var array 	elements should be like key => url of js file
-		 */
-		$grid_fieldtypes_paths = apply_filters('grid_load_fieldtypes_js', array());
-		foreach ( $grid_fieldtypes_paths as $key => $url ) {
+		foreach ( $fieldtypes["js"] as $key => $url ) {
 			wp_enqueue_script( 'grid_js_'.$key, $url );
 		}
 
@@ -986,3 +981,12 @@ function grid_enable_front_page_landing_page( $query )
 		$query->query_vars['post_type'] = array( 'page', 'landing_page' );
 	}
 }
+
+/**
+ * returns additional fieldtype files
+ * @return  array js and css key are arrays of file paths
+ */
+function grid_get_additional_fieldtypes(){
+	return apply_filters('grid_fieldtypes', array( "js" => array(), "css"=> array() ) );
+}
+

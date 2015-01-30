@@ -1,12 +1,13 @@
 <?php
 /**
  * Plugin Name: Grid Twitterbox
+ * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Adds a twitter box to grid
- * @version: 1.2
- * @author Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
+ * Version: 1.3
+ * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
+ * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @copyright Copyright (c) 2014, Palasthotel
- * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid-WordPress
  */
 
