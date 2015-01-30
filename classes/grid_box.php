@@ -120,29 +120,17 @@ class grid_box extends grid_base {
 		ob_start();
 		$found=FALSE;
 		$this->classes[] = "grid-box-".$this->type();
-		if($this->storage->templatesPath!=NULL)
+		if(is_array($this->storage->templatesPaths))
 		{
-			if($editmode && file_exists($this->storage->templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php'))
-			{
-				$found=TRUE;
-				include $this->storage->templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php';
-			}
-			else if($editmode && file_exists($this->storage->templatesPath.'/grid-box-box-editmode.tpl.php'))
-			{
-				$found=TRUE;
-				include $this->storage->templatesPath.'/grid-box-box-editmode.tpl.php';
-			}
-			if(!$found && file_exists($this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php'))
-			{
-				$found=TRUE;
-				include $this->storage->templatesPath.'/grid-box-'.$this->type().'.tpl.php';
-			}
-			else if(!$found && file_exists($this->storage->templatesPath.'/grid-box-box.tpl.php'))
-			{
-				$found=TRUE;
-				include $this->storage->templatesPath.'/grid-box-box.tpl.php';
+			foreach ($this->storage->templatesPaths as $templatesPath) {
+				$found = $this->renderTemplate($templatesPath, $editmode);
+				if($found) break;
 			}
 		}
+		if(!$found)
+		{
+			$found = $this->renderTemplate($this->storage->templatesPath, $editmode);
+		}		
 		if(!$found)
 		{
 			if($editmode && file_exists(dirname(__FILE__).'/../templates/frontend/grid-box-'.$this->type().'-editmode.tpl.php'))
@@ -154,8 +142,44 @@ class grid_box extends grid_base {
 			else
 				include dirname(__FILE__).'/../templates/frontend/grid-box-box.tpl.php';
 		}
+
 		$output=ob_get_clean();
 		return $output;
+	}
+
+	/**
+	 * includes tempalte content
+	 * @param  String $templatesPath
+	 * @param  boolean $editmode       
+	 * @return boolean  found or not
+	 */
+	private function renderTemplate($templatesPath, $editmode){
+		$templatesPath = rtrim($templatesPath, "/");
+		$found=FALSE;
+		if($templatesPath!=NULL)
+		{
+			if($editmode && file_exists($templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php'))
+			{
+				$found=TRUE;
+				include $templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php';
+			}
+			else if($editmode && file_exists($templatesPath.'/grid-box-box-editmode.tpl.php'))
+			{
+				$found=TRUE;
+				include $templatesPath.'/grid-box-box-editmode.tpl.php';
+			}
+			if(!$found && file_exists($templatesPath.'/grid-box-'.$this->type().'.tpl.php'))
+			{
+				$found=TRUE;
+				include $templatesPath.'/grid-box-'.$this->type().'.tpl.php';
+			}
+			else if(!$found && file_exists($templatesPath.'/grid-box-box.tpl.php'))
+			{
+				$found=TRUE;
+				include $templatesPath.'/grid-box-box.tpl.php';
+			}
+		}
+		return $found;
 	}
 	
 	/**

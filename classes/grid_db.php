@@ -7,7 +7,8 @@
  */
 
 class grid_db {
-	public $templatesPath=NULL;
+	public $templatesPaths= NULL;
+	public $templatesPath = NULL;
 	public $ajaxEndpoint;
 	public $containerstyle=NULL;
 	public $slotstyle=NULL;
@@ -32,6 +33,7 @@ class grid_db {
 		$this->author=$author;
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 		$this->prefix=$prefix;
+		$this->templatesPaths = array();
 	}
 	
 	public function __destruct() {
