@@ -6,7 +6,7 @@
  * @package Palasthotel\Grid
  */
 ?>
-<div class="box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
+<div class="grid-box box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
 	<?php
 	if ($this->title!=""){
 
