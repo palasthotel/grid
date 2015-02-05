@@ -187,6 +187,30 @@ function grid_wp_activate() {
 }
 register_activation_hook( __FILE__, 'grid_wp_activate' );
 
+function grid_wp_uninstall() {
+	global $wpdb;
+	global $grid_connection;
+	global $grid_lib;
+	$grid_connection = grid_wp_get_mysqli();
+
+	delete_site_option('grid');
+	delete_site_option('grid_landing_page_enabled');
+	delete_site_option('grid_sidebar_enabled');
+	delete_site_option('grid_sidebar_post_type');
+	delete_site_option('grid_default_container');
+	$schema = $grid_lib->getDatabaseSchema();
+	$schema['grid_nodes']=array();
+	$grid_lib->uninstall();
+	foreach($schema as $tablename=>$data)
+	{
+		$query = 'drop table '.$wpdb->prefix.$tablename;
+		$grid_connection->query( $query );
+	}
+}
+register_uninstall_hook(__FILE,'grid_wp_uninstall');
+
+
+
 function grid_wp_init() {
 
 	do_action( 'grid_register_post_type' );
