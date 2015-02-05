@@ -143,16 +143,7 @@ class grid_box extends grid_base {
 			}
 			if(!$found)
 			{
-				if($editmode && file_exists(dirname(__FILE__).'/../templates/frontend/grid-box-'.$type.'-editmode.tpl.php'))
-				{
-					$found=true;
-					include dirname(__FILE__).'/../templates/frontend/grid-box-'.$type.'-editmode.tpl.php';
-				}
-				else if(!$editmode && file_exists(dirname(__FILE__).'/../templates/frontend/grid-box-'.$type.'.tpl.php'))
-				{
-					$found=true;
-					include(dirname(__FILE__).'/../templates/frontend/grid-box-'.$type.'.tpl.php');
-				}
+				$found=$this->renderTemplate(dirname(__FILE__).'/../templates/frontend',$editmode,$type);
 			}
 			if($found) break;
 		}
