@@ -40,7 +40,7 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 			$rows = $wpdb->get_results( 'select nid from '.$wpdb->prefix."grid_nodes where grid_id=$gridid" );
 			$post = get_post( $rows[0]->nid );
 			$type = $post->post_type;
-			if ( $type == get_site_option( 'grid_sidebar_post_type' ) ) {
+			if ( $type == get_option( 'grid_sidebar_post_type' ) ) {
 				$return['isSidebar'] = true;
 			} else {
 				$return['isSidebar'] = false;
@@ -105,7 +105,7 @@ function grid_wp_activate() {
 	global $grid_connection;
 	global $grid_lib;
 	$grid_connection = grid_wp_get_mysqli();
-	$options = get_site_option( 'grid', array() );
+	$options = get_option( 'grid', array() );
 	if ( ! isset( $options['installed'] ) ) {
 		$schema = $grid_lib->getDatabaseSchema();
 		$schema['grid_nodes'] = array(
@@ -172,11 +172,11 @@ function grid_wp_activate() {
 		$grid_lib->install();
 		$grid_connection->close();
 		$options['installed'] = true;
-		update_site_option( 'grid', $options );
-		update_site_option( 'grid_landing_page_enabled', true );
-		update_site_option( 'grid_sidebar_enabled', true );
-		update_site_option( 'grid_sidebar_post_type', 'sidebar' );
-		update_site_option( 'grid_default_container', 'c-1d1' );
+		update_option( 'grid', $options );
+		update_option( 'grid_landing_page_enabled', true );
+		update_option( 'grid_sidebar_enabled', true );
+		update_option( 'grid_sidebar_post_type', 'sidebar' );
+		update_option( 'grid_default_container', 'c-1d1' );
 	}
 	// for initial content type registration
 	grid_wp_init();
@@ -198,8 +198,8 @@ function grid_wp_update(){
 	$grid_connection->close();
 }
 
-function grid_wp_uninstall() {
-	
+function grid_wp_perform_uninstall()
+{
 	$posts=get_posts(array('post_type'=>'landing_page','posts_per_page'=>-1));
 	foreach($posts as $post) {
 		wp_delete_post($post->ID);
@@ -214,11 +214,11 @@ function grid_wp_uninstall() {
 	global $grid_lib;
 	$grid_connection = grid_wp_get_mysqli();
 
-	delete_site_option('grid');
-	delete_site_option('grid_landing_page_enabled');
-	delete_site_option('grid_sidebar_enabled');
-	delete_site_option('grid_sidebar_post_type');
-	delete_site_option('grid_default_container');
+	delete_option('grid');
+	delete_option('grid_landing_page_enabled');
+	delete_option('grid_sidebar_enabled');
+	delete_option('grid_sidebar_post_type');
+	delete_option('grid_default_container');
 	$schema = $grid_lib->getDatabaseSchema();
 	$schema['grid_nodes']=array();
 	$grid_lib->uninstall();
@@ -228,15 +228,40 @@ function grid_wp_uninstall() {
 		$grid_connection->query( $query );
 	}
 }
+
+function grid_wp_uninstall() {
+	if(is_multisite())
+	{
+		global $wpdb;
+		$blogids=$wpdb->get_col("SELECT blog_id FROM {$wpdb->blogs}");
+		foreach($blogids as $blog_id)
+		{
+			switch_to_blog($blog_id);
+			$grid=get_option('grid',array());
+			if(isset($grid['installed']))
+			{
+				grid_wp_perform_uninstall();
+			}
+		}
+	}
+	else
+	{		
+		grid_wp_perform_uninstall();
+	}
+}
 register_uninstall_hook(__FILE__,'grid_wp_uninstall');
 
 function grid_wp_init() {
 
-	grid_wp_update();
+	$options = get_option( 'grid', array() );
+	if(isset($options['installed']))
+	{
+		grid_wp_update();
+	}
 
 	do_action( 'grid_register_post_type' );
 
-	$permalink = get_site_option( 'grid_permalinks', '' );
+	$permalink = get_option( 'grid_permalinks', '' );
 	if ( '' == $permalink ) {
 		$landing_page_permalink = _x( 'landing_page', 'slug', 'grid' );
 	} else {
@@ -324,7 +349,7 @@ function grid_wp_get_privs() {
 			}
 		}
 	}
-	$privileges = get_site_option( 'grid_privileges', $defaults );
+	$privileges = get_option( 'grid_privileges', $defaults );
 	return $privileges;
 }
 
@@ -345,7 +370,7 @@ function grid_wp_privileges() {
 				}
 			}
 		}
-		update_site_option( 'grid_privileges', $privileges );
+		update_option( 'grid_privileges', $privileges );
 		wp_redirect( add_query_arg( array( 'page' => 'grid_privileges' ), admin_url( 'tools.php' ) ) );
 		return;
 	}
@@ -417,7 +442,7 @@ function grid_wp_admin_bar() {
 add_action( 'admin_bar_menu', 'grid_wp_admin_bar', 999 );
 
 function grid_wp_actions( $actions, $entity ) {
-	if ( true == get_site_option( 'grid_'.get_post_type().'_enabled', false ) ) {
+	if ( true == get_option( 'grid_'.get_post_type().'_enabled', false ) ) {
 		$temp = array();
 		$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">The Grid</a>';
 		$actions = array_merge( $temp, $actions );
@@ -489,7 +514,7 @@ function grid_wp_default_styles_settings_section() {
 function grid_wp_default_container_style_html() {
 	$storage = grid_wp_get_storage();
 	$types = $storage->fetchContainerStyles();
-	$setting = get_site_option( 'grid_default_container_style', '__NONE__' );
+	$setting = get_option( 'grid_default_container_style', '__NONE__' );
 ?>
 <select id="grid_default_container_style" name="grid_default_container_style">
 <option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' ) ?>>None</option>
@@ -507,7 +532,7 @@ function grid_wp_default_container_style_html() {
 function grid_wp_default_slot_style_html() {
 	$storage = grid_wp_get_storage();
 	$types = $storage->fetchSlotStyles();
-	$setting = get_site_option( 'grid_default_slot_style', '__NONE__' );
+	$setting = get_option( 'grid_default_slot_style', '__NONE__' );
 ?>
 <select id="grid_default_slot_style" name="grid_default_slot_style">
 <option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>>None</option>
@@ -525,7 +550,7 @@ function grid_wp_default_slot_style_html() {
 function grid_wp_default_box_style_html() {
 	$storage = grid_wp_get_storage();
 	$types = $storage->fetchBoxStyles();
-	$setting = get_site_option( 'grid_default_box_style', '__NONE__' );
+	$setting = get_option( 'grid_default_box_style', '__NONE__' );
 ?>
 <select id="grid_default_box_style" name="grid_default_box_style">
 <option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '');?>>None</option>
@@ -542,7 +567,7 @@ function grid_wp_default_box_style_html() {
 
 function grid_wp_post_type_html( $args ) {
 	$posttype = $args['type'];
-	$value = get_site_option( 'grid_'.$posttype.'_enabled', false );
+	$value = get_option( 'grid_'.$posttype.'_enabled', false );
 ?>
 <input type="checkbox" id="grid_<?php echo $posttype?>_enabled" name="grid_<?php echo $posttype?>_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> Enabled
 <?php
@@ -554,7 +579,7 @@ function grid_wp_post_type_settings_section() {
 
 function grid_wp_sidebar_html() {
 	$post_types = get_post_types( array(), 'objects' );
-	$setting = get_site_option( 'grid_sidebar_post_type', '__NONE__' );
+	$setting = get_option( 'grid_sidebar_post_type', '__NONE__' );
 ?>
 <select id="grid_sidebar_post_type" name="grid_sidebar_post_type">
 <option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>>Disable sidebar support</option>
@@ -584,7 +609,7 @@ function grid_wp_default_container_html() {
 		$type = $container['type'];
 		if ( 0 === strpos( $type, 'c-' ) ) {
 ?>
-<option value="<?php echo $type?>" <?php echo ( get_site_option( 'grid_default_container' ) == $type ? 'selected' : '');?> ><?php echo $type?></option>
+<option value="<?php echo $type?>" <?php echo ( get_option( 'grid_default_container' ) == $type ? 'selected' : '');?> ><?php echo $type?></option>
 <?php
 		}
 	}
@@ -599,7 +624,7 @@ function grid_wp_debug_mode_section() {
 
 function grid_wp_debug_mode_html() {
 
-	$value = get_site_option( 'grid_debug_mode', false );
+	$value = get_option( 'grid_debug_mode', false );
 ?>
 <input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
 <?php
@@ -610,7 +635,7 @@ function grid_wp_mediaselect_info_section(){
 }
 
 function grid_wp_mediaselect_info_html() {
-	$value = get_site_option( 'grid_mediaselect_info', '' );
+	$value = get_option( 'grid_mediaselect_info', '' );
 ?>
 <textarea id="grid_mediaselect_info" name="grid_mediaselect_info" rows="4" cols="50"><?php echo $value ?></textarea>
 <?php
@@ -621,7 +646,7 @@ function grid_wp_permalinks_section() {
 }
 
 function grid_wp_permalinks_html() {
-	$value = get_site_option( 'grid_permalinks', '' );
+	$value = get_option( 'grid_permalinks', '' );
 ?>
 <input type="text" id="grid_permalinks" name="grid_permalinks" value="<?php echo $value ?>" />
 <?php
@@ -630,7 +655,7 @@ function grid_wp_permalinks_html() {
 function grid_wp_add_meta_boxes() {
 	$post_types = get_post_types( array(), 'objects' );
 	foreach ( $post_types as $key => $post_type ) {
-		if ( get_site_option( 'grid_'.$key.'_enabled', false ) ) {
+		if ( get_option( 'grid_'.$key.'_enabled', false ) ) {
 			add_meta_box( 'grid', __( 'Grid' ), 'grid_wp_meta_box', $key, 'side', 'high' );
 		}
 	}
@@ -639,7 +664,7 @@ function grid_wp_add_meta_boxes() {
 add_action( 'add_meta_boxes', 'grid_wp_add_meta_boxes' );
 
 function grid_wp_meta_box( $post ) {
-	if ( get_site_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
+	if ( get_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
 		$url = add_query_arg( array( 'page' => 'grid', 'postid' => $post->ID ), admin_url( 'admin.php' ) );
 ?>
 <a href="<?php echo $url?>">Switch to the Grid</a>
@@ -669,15 +694,15 @@ function grid_wp_get_storage() {
 		$templatesPaths[] = get_template_directory().'/grid/';
 		$storage->templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
 		
-		$storage->containerstyle = get_site_option( 'grid_default_container_style', '__NONE__' );
+		$storage->containerstyle = get_option( 'grid_default_container_style', '__NONE__' );
 		if ( '__NONE__' == $storage->containerstyle ) {
 			$storage->containerstyle = null;
 		}
-		$storage->slotstyle = get_site_option( 'grid_default_slot_style', '__NONE__' );
+		$storage->slotstyle = get_option( 'grid_default_slot_style', '__NONE__' );
 		if ( '__NONE__' == $storage->slotstyle ) {
 			$storage->slotstyle = null;
 		}
-		$storage->boxstyle = get_site_option( 'grid_default_box_style', '__NONE__' );
+		$storage->boxstyle = get_option( 'grid_default_box_style', '__NONE__' );
 		if ( '__NONE__' == $storage->boxstyle ) {
 			$storage->boxstyle = null;
 		}
@@ -696,10 +721,10 @@ function grid_wp_thegrid() {
 		$id = $storage->createGrid();
 		$grid = $storage->loadGrid( $id );
 		$post = get_post( $postid );
-		if ( $post->post_type == get_site_option( 'grid_sidebar_post_type' ) ) {
+		if ( $post->post_type == get_option( 'grid_sidebar_post_type' ) ) {
 			$grid->insertContainer( 'sc-1d3', 0 );
-		} else if ( '__NONE__' != get_site_option( 'grid_default_container', '__NONE__' ) ) {
-			$grid->insertContainer( get_site_option( 'grid_default_container' ), 0 );
+		} else if ( '__NONE__' != get_option( 'grid_default_container', '__NONE__' ) ) {
+			$grid->insertContainer( get_option( 'grid_default_container' ), 0 );
 		}
 		$wpdb->query( 'insert into '.$wpdb->prefix."grid_nodes (nid,grid_id) values ($postid,$id)" );
 		wp_redirect( add_query_arg( array( 'page' => 'grid', 'postid' => $postid ), admin_url( 'admin.php' ) ) );
@@ -751,7 +776,7 @@ function grid_wp_thegrid() {
 			'grid',
 			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
 			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
-			get_site_option( 'grid_debug_mode', false ),
+			get_option( 'grid_debug_mode', false ),
 			add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
 			add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) )
 		);
@@ -814,7 +839,7 @@ function grid_wp_edit_reuse_box() {
 		$boxid,
 		add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
 		add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
-		get_site_option( 'grid_debug_mode', false ),
+		get_option( 'grid_debug_mode', false ),
 		''
 	);
 	echo $html;
@@ -887,7 +912,7 @@ function grid_wp_edit_reuse_container() {
 		$containerid,
 		add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
 		add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
-		get_site_option( 'grid_debug_mode', false ),
+		get_option( 'grid_debug_mode', false ),
 		''
 	);
 	echo $html;
@@ -926,7 +951,7 @@ function grid_wp_get_grid_by_postid( $postid ) {
 function grid_wp_load( $post ) {
 	global $wpdb;
 	$postid = $post->ID;
-	if ( get_site_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
+	if ( get_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
 		$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
 		if ( $wpdb->num_rows > 0 ) {
 			$grid_id = $rows[0]->grid_id;
