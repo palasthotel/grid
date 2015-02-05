@@ -188,6 +188,16 @@ function grid_wp_activate() {
 register_activation_hook( __FILE__, 'grid_wp_activate' );
 
 function grid_wp_uninstall() {
+	
+	$posts=get_posts(array('post_type'=>'landing_page','posts_per_page'=>-1));
+	foreach($posts as $post) {
+		wp_delete_post($post);
+	}
+	$posts=get_posts(array('post_type'=>'sidebar','posts_per_page'=>-1));
+	foreach($posts as $post) {
+		wp_delete_post($post);
+	}
+	
 	global $wpdb;
 	global $grid_connection;
 	global $grid_lib;
@@ -207,7 +217,7 @@ function grid_wp_uninstall() {
 		$grid_connection->query( $query );
 	}
 }
-register_uninstall_hook(__FILE,'grid_wp_uninstall');
+register_uninstall_hook(__FILE__,'grid_wp_uninstall');
 
 
 
