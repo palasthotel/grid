@@ -19,7 +19,7 @@ class base_update
 	/**
 	 * shema key for update shema identification
 	 */
-	public $shemakey = "";
+	public $schemakey = "";
 
 	public function performUpdates()
 	{
@@ -68,14 +68,14 @@ class base_update
 	{
 		//we assume that all updates have been applied during installation, so we're searching for the highest one and save that.
 		$schema=$this->getNeededSchemaVersion();
-		db_query("update {grid_schema} set value=".$schema." where propkey='schema_version".$this->shemakey."'");
+		db_query("update {grid_schema} set value=".$schema." where propkey='schema_version".$this->schemakey."'");
 	}
 	
 	public function getCurrentSchemaVersion()
 	{
 		try
 		{
-			$result=grid_query("select value from {grid_schema} where propkey='schema_version".$this->shemakey."'");
+			$result=grid_query("select value from {grid_schema} where propkey='schema_version".$this->schemakey."'");
 			foreach($result as $entry)
 			{
 				return $entry->value;
@@ -87,6 +87,11 @@ class base_update
 		}
 	}
 
+	public function install(){
+		db_query("insert into {grid_schema} (propkey) values ('schema_version') ON DUPLICATE KEY UPDATE propkey = 'schema_version';");
+		$this->markAsUpdated();
+	}
+
 }
 
 class grid_update extends base_update
@@ -95,7 +100,7 @@ class grid_update extends base_update
 	 * shema key for update shema identification 
 	 * Grid lib
 	 */
-	public $shemakey = "";
+	public $schemakey = "";
 
 	public function update_1()
 	{
