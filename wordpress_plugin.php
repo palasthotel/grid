@@ -191,11 +191,11 @@ function grid_wp_uninstall() {
 	
 	$posts=get_posts(array('post_type'=>'landing_page','posts_per_page'=>-1));
 	foreach($posts as $post) {
-		wp_delete_post($post);
+		wp_delete_post($post->ID);
 	}
 	$posts=get_posts(array('post_type'=>'sidebar','posts_per_page'=>-1));
 	foreach($posts as $post) {
-		wp_delete_post($post);
+		wp_delete_post($post->ID);
 	}
 	
 	global $wpdb;
