@@ -116,7 +116,6 @@ class grid_box extends grid_base {
 	* @return mixed
 	*/
 	public function render($editmode) {
-		$content=$this->build($editmode);
 		ob_start();
 		$found=FALSE;
 		$this->classes[] = "grid-box-".$this->type();
@@ -166,12 +165,14 @@ class grid_box extends grid_base {
 			if($editmode && file_exists($templatesPath.'/grid-box-'.$type.'-editmode.tpl.php'))
 			{
 				$found=TRUE;
-				include $templatesPath.'/grid-box-'.$this->type().'-editmode.tpl.php';
+				$content=$this->build($editmode);
+				include $templatesPath.'/grid-box-'.$type.'-editmode.tpl.php';
 			}
-			if(!$editmode && file_exists($templatesPath.'/grid-box-'.$this->type().'.tpl.php'))
+			if(!$editmode && file_exists($templatesPath.'/grid-box-'.$type.'.tpl.php'))
 			{
 				$found=TRUE;
-				include $templatesPath.'/grid-box-'.$this->type().'.tpl.php';
+				$content=$this->build($editmode);
+				include $templatesPath.'/grid-box-'.$type.'.tpl.php';
 			}
 		}
 		return $found;
