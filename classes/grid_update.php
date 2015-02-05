@@ -163,5 +163,10 @@ class grid_update
 					" WHERE type = 'I-0';");
 
 	}
+	
+	public function update_3() {
+		db_query("alter table {grid_grid2container} drop foreign key fk_grid_container");
+		db_query("alter table {grid_grid2container} add constraint {fk_grid_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
+	}
 
 }
