@@ -87,6 +87,11 @@ class base_update
 		}
 	}
 
+	public function install(){
+		db_query("insert into {grid_schema} (propkey) values ('schema_version') ON DUPLICATE KEY UPDATE propkey = 'schema_version';");
+		$this->markAsUpdated();
+	}
+
 }
 
 class grid_update extends base_update

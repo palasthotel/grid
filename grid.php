@@ -719,9 +719,7 @@ class grid_library
 		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3') ON DUPLICATE KEY UPDATE type=type;"); 
 		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-2d3-0',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
 		
-		
-		db_query("insert into {grid_schema} (propkey) values ('schema_version') ON DUPLICATE KEY UPDATE propkey=propkey;");
-		$this->getUpdater()->markAsUpdated();
+		$this->getUpdater()->install();
 	}
 	
 	public function uninstall()
