@@ -994,12 +994,11 @@ function grid_wp_ckeditor_config() {
 function grid_wp_get_mysqli() {
 	$host = DB_HOST;
 	$port = 3306;
-	if ( strpos( DB_HOST, ':' ) >= 0 ) {
+	if ( strpos( DB_HOST, ':' ) !== false ) {
 		$db_host = explode( ':', DB_HOST );
 		$host = $db_host[0];
-		if(count($db_host) == 2){
-			$port = $db_host[1];
-		}
+		$port = $db_host[1];
+		
 		
 	}
 	return new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
