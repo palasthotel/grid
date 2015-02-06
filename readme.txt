@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist
 Requires at least: 3.6
 Tested up to: 4.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -69,6 +69,21 @@ You can create your own plugin and use the `grid_load_classes` action to add new
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.3 = 
+* SQL injection security fix
+* UI language fix
+* install fix
+* facebook and twitter box separated to "grid social boxes" plugin
+* edit multisite support
+* autocomplete fieldtype performance optimization
+* plugin hook for templates added
+* plugin hook for EditorWidgets
+* template rendering optimized
+* "Switch to Grid" Button moved to editor sidebar
+* implemented uninstall hook
+* 
+
 
 = 1.2 =
 * added version info to the facebook and twitter subplugins
