@@ -169,12 +169,14 @@ function grid_wp_activate() {
 			}
 			$grid_connection->query( $query ) or die( $grid_connection->error.' '.$query );
 
-			require_once(dirname(__FILE__)."/grid-wordpress-update.inc");
-			$wp_update = new grid_wordpress_update();
-			$wp_update->install();
-
 		}
+		
 		$grid_lib->install();
+
+		require_once(dirname(__FILE__)."/grid-wordpress-update.inc");
+		$wp_update = new grid_wordpress_update();
+		$wp_update->install();
+
 		$grid_connection->close();
 		$options['installed'] = true;
 		update_site_option( 'grid', $options );
