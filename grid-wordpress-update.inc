@@ -9,11 +9,11 @@
 
 class grid_wordpress_update extends base_update
 {
-	public  $schemakey = "_wordpress";
+	public $schemakey = "_wordpress";
 
 	public function update_1()
 	{
-		db_query("insert into {grid_schema} (propkey) values ('schema_version".$this->shemakey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->shemakey."';");
+		db_query("insert into {grid_schema} (propkey) values ('schema_version".$this->schemakey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->schemakey."';");
 		
 		add_action('admin_notices', array($this, 'notice_1'));
 

@@ -168,6 +168,11 @@ function grid_wp_activate() {
 				$query .= 'ENGINE = '.$data['mysql_engine'];
 			}
 			$grid_connection->query( $query ) or die( $grid_connection->error.' '.$query );
+
+			require_once(dirname(__FILE__)."/grid-wordpress-update.inc");
+			$wp_update = new grid_wordpress_update();
+			$wp_update->install();
+
 		}
 		$grid_lib->install();
 		$grid_connection->close();
@@ -177,6 +182,7 @@ function grid_wp_activate() {
 		update_site_option( 'grid_sidebar_enabled', true );
 		update_site_option( 'grid_sidebar_post_type', 'sidebar' );
 		update_site_option( 'grid_default_container', 'c-1d1' );
+
 	}
 	// for initial content type registration
 	grid_wp_init();
