@@ -210,7 +210,11 @@ function grid_wp_init() {
 				'public'            => true,
 				'show_ui'           => true,
 				'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
-				'rewrite'           => $landing_page_permalink ? array( 'slug' => untrailingslashit( $landing_page_permalink ), 'with_front' => false, 'feeds' => true ) : false,
+				'rewrite'           => $landing_page_permalink ? array( 
+													'slug' => untrailingslashit( $landing_page_permalink ), 
+													'with_front' => false, 
+													'feeds' => true ) 
+													: false,
 				'supports' 			=> array( 'title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions', 'page-attributes' ),
 				'show_in_nav_menus' => true,
 			)
@@ -235,8 +239,6 @@ function grid_wp_init() {
 	);
 }
 add_action( 'init', 'grid_wp_init' );
-
-
 
 
 function grid_wp_admin_menu() {
