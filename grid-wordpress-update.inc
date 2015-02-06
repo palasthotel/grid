@@ -17,6 +17,7 @@ class grid_wordpress_update extends base_update
 		
 		add_action('admin_notices', array($this, 'notice_1'));
 	}
+	
 	public function notice_1(){
 		global $pagenow;
 		if ( $pagenow == 'plugins.php' ) 

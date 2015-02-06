@@ -198,6 +198,38 @@ function grid_wp_update(){
 	$grid_connection->close();
 }
 
+function grid_wp_uninstall() {
+	
+	$posts=get_posts(array('post_type'=>'landing_page','posts_per_page'=>-1));
+	foreach($posts as $post) {
+		wp_delete_post($post->ID);
+	}
+	$posts=get_posts(array('post_type'=>'sidebar','posts_per_page'=>-1));
+	foreach($posts as $post) {
+		wp_delete_post($post->ID);
+	}
+	
+	global $wpdb;
+	global $grid_connection;
+	global $grid_lib;
+	$grid_connection = grid_wp_get_mysqli();
+
+	delete_site_option('grid');
+	delete_site_option('grid_landing_page_enabled');
+	delete_site_option('grid_sidebar_enabled');
+	delete_site_option('grid_sidebar_post_type');
+	delete_site_option('grid_default_container');
+	$schema = $grid_lib->getDatabaseSchema();
+	$schema['grid_nodes']=array();
+	$grid_lib->uninstall();
+	foreach($schema as $tablename=>$data)
+	{
+		$query = 'drop table '.$wpdb->prefix.$tablename;
+		$grid_connection->query( $query );
+	}
+}
+register_uninstall_hook(__FILE__,'grid_wp_uninstall');
+
 function grid_wp_init() {
 
 	grid_wp_update();
@@ -657,7 +689,7 @@ function grid_wp_get_storage() {
 function grid_wp_thegrid() {
 	global $wpdb;
 	//	$storage=grid_wp_get_storage();
-	$postid = $_GET['postid'];
+	$postid = intval($_GET['postid']);
 	$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
 	if ( ! empty( $_POST ) ) {
 		$storage = grid_wp_get_storage();
@@ -772,7 +804,7 @@ function grid_wp_reuse_boxes() {
 }
 
 function grid_wp_edit_reuse_box() {
-	$boxid = $_GET['boxid'];
+	$boxid = intval($_GET['boxid']);
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
 	grid_wp_reuse_box_editor_prepare( $editor );
@@ -789,7 +821,7 @@ function grid_wp_edit_reuse_box() {
 }
 
 function grid_wp_delete_reuse_box() {
-	$boxid = $_GET['boxid'];
+	$boxid = intval($_GET['boxid']);
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
 	grid_wp_reuse_box_editor_prepare( $editor );
@@ -843,7 +875,7 @@ function grid_wp_reuse_containers() {
 }
 
 function grid_wp_edit_reuse_container() {
-	$containerid = $_GET['containerid'];
+	$containerid = intval($_GET['containerid']);
 
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
@@ -862,7 +894,7 @@ function grid_wp_edit_reuse_container() {
 }
 
 function grid_wp_delete_reuse_container() {
-	$containerid = $_GET['containerid'];
+	$containerid = intval($_GET['containerid']);
 
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
@@ -900,9 +932,9 @@ function grid_wp_load( $post ) {
 			$grid_id = $rows[0]->grid_id;
 			$storage = grid_wp_get_storage();
 			$grid = null;
-			if ( isset( $_GET['grid_preview'] ) && $_GET['grid_preview'] ) {
+			if ( isset( $_GET['grid_preview'] ) && intval($_GET['grid_preview']) ) {
 				if ( isset( $_GET['grid_revision'] ) ) {
-					$revision = $_GET['grid_revision'];
+					$revision = intval($_GET['grid_revision']);
 					$grid = $storage->loadGridByRevision( $grid_id, $revision );
 				} else {
 					$grid = $storage->loadGrid( $grid_id );
