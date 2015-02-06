@@ -14,8 +14,13 @@ if(!function_exists("grid_query"))
 	}
 }
 
-class grid_update
+class base_update
 {
+	/**
+	 * shema key for update shema identification
+	 */
+	public $shemakey = "";
+
 	public function performUpdates()
 	{
 		$current_schema=$this->getCurrentSchemaVersion();
@@ -63,14 +68,14 @@ class grid_update
 	{
 		//we assume that all updates have been applied during installation, so we're searching for the highest one and save that.
 		$schema=$this->getNeededSchemaVersion();
-		db_query("update {grid_schema} set value=".$schema." where propkey='schema_version'");
+		db_query("update {grid_schema} set value=".$schema." where propkey='schema_version".$this->shemakey."'");
 	}
 	
 	public function getCurrentSchemaVersion()
 	{
 		try
 		{
-			$result=grid_query("select value from {grid_schema} where propkey='schema_version'");
+			$result=grid_query("select value from {grid_schema} where propkey='schema_version".$this->shemakey."'");
 			foreach($result as $entry)
 			{
 				return $entry->value;
@@ -81,7 +86,17 @@ class grid_update
 			return 0;
 		}
 	}
-	
+
+}
+
+class grid_update extends base_update
+{
+	/**
+	 * shema key for update shema identification 
+	 * Grid lib
+	 */
+	public $shemakey = "";
+
 	public function update_1()
 	{
 		db_query("create table if not exists {grid_schema} (propkey varchar(255),value varchar(255), PRIMARY KEY (`propkey`) );");
@@ -163,5 +178,4 @@ class grid_update
 					" WHERE type = 'I-0';");
 
 	}
-
 }
