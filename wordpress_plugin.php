@@ -104,6 +104,7 @@ function grid_wp_activate() {
 	global $wpdb;
 	global $grid_connection;
 	global $grid_lib;
+	$grid_connection = grid_wp_get_mysqli();
 	$options = get_site_option( 'grid', array() );
 	if ( ! isset( $options['installed'] ) ) {
 		$schema = $grid_lib->getDatabaseSchema();
@@ -127,7 +128,7 @@ function grid_wp_activate() {
 			'primary key' => array( 'nid' ),
 			'mysql_engine' => 'InnoDB',
 		);
-		$grid_connection = grid_wp_get_mysqli();
+		
 		foreach ( $schema as $tablename => $data ) {
 			$query = 'create table if not exists '.$wpdb->prefix."$tablename (";
 			$first = true;
@@ -176,9 +177,6 @@ function grid_wp_activate() {
 		update_site_option( 'grid_sidebar_enabled', true );
 		update_site_option( 'grid_sidebar_post_type', 'sidebar' );
 		update_site_option( 'grid_default_container', 'c-1d1' );
-	} else {
-		$grid_connection = grid_wp_get_mysqli();
-		$grid_lib->update();
 	}
 	// for initial content type registration
 	grid_wp_init();
@@ -187,7 +185,22 @@ function grid_wp_activate() {
 }
 register_activation_hook( __FILE__, 'grid_wp_activate' );
 
+function grid_wp_update(){
+	global $grid_lib;
+	global $grid_connection;
+
+	$grid_connection = grid_wp_get_mysqli();
+	
+	$grid_lib->update();
+	require_once(dirname(__FILE__)."/grid-wordpress-update.inc");
+	$wp_update = new grid_wordpress_update();
+	$wp_update->performUpdates();
+	$grid_connection->close();
+}
+
 function grid_wp_init() {
+
+	grid_wp_update();
 
 	do_action( 'grid_register_post_type' );
 
