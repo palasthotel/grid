@@ -68,4 +68,29 @@
 			display:block;
 		}	
 	}
+	.loading{
+		position: absolute;
+		opacity: 0;
+		transition: 0.3s all;
+		border-radius: 10px;
+		height: 15px;
+		width: 15px;
+		animation: loading 1s infinite ease-in-out;
+		top: 8px;
+		right: 8px;
+		&.go{
+			opacity: 1;
+		}
+	}
+}
+
+@keyframes loading {
+  0%,
+  80%,
+  100% {
+	background-color: $color-edit;
+  }
+  40% {
+	background-color: $color-light;
+  }
 }

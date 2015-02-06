@@ -28,7 +28,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
             fetch=true;
         }
         html+="<div class='"+classes+"'><input type=text class='form-text autocomplete i-autocomplete' "+readonly+"/>";
-        html+="<div class=loading rotate'></div>";
+        html+="<div class='loading'></div>";
         html+="<div class='cancel icon-cancel'></div>";
         html+="<ul class='suggestion-list'></ul>";
         jQuery(this.$el).html(html);
@@ -50,7 +50,6 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
     fetchValue:function(){
         return this.$el.find("input.i-autocomplete").data("key");
     },
-
     keyup:function(e) {
         if(e.which==13)
         {
@@ -58,22 +57,29 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         }
         else
         {
-            if(this.$el.find("input.i-autocomplete").val()==this.old_search_string)return;
-            var self=this;
             var search=this.$el.find("input.i-autocomplete").val();
-            this.$el.find(".loading").show();
-            var box=this.model.box;
-            GridAjax("typeAheadSearch",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
-                success_fn:function(data){
-                    self.old_search_string=search;
-                    self.$el.find(".suggestion-list").empty();
-                    _.each(data.result,function(elem){
-                        self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
-                    });
-                    self.$el.find(".loading").hide();
-                }
-            });
+            this.$el.find(".loading").addClass("go");
+            clearTimeout(this.searching);
+            var self = this;
+            this.searching = setTimeout(function(){
+                self.doSearch(search);
+            }, 1000);
+            
         }
+    },
+    doSearch: function(search){
+        var self = this;
+        var box=this.model.box;
+        
+        GridAjax("typeAheadSearch",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
+            success_fn:function(data){
+                self.$el.find(".suggestion-list").empty();
+                _.each(data.result,function(elem){
+                    self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
+                });
+                self.$el.find(".loading").removeClass("go");
+            }
+        });
     },
     selectItem:function($item){
         var key=$item.data("key");
