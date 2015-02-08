@@ -748,13 +748,13 @@ function grid_wp_thegrid() {
 		$grid_id = $rows[0]->grid_id;
 		global $grid_lib;
 
-		$fieldtypes = grid_get_additional_fieldtypes();
+		$editor_widgets = grid_get_additional_editor_widgets();
 
 		$css = $grid_lib->getEditorCSS( false );
 		foreach ( $css as $idx => $file ) {
 			wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
-		foreach ( $fieldtypes["css"] as $key => $url ) {
+		foreach ( $editor_widgets["css"] as $key => $url ) {
 			wp_enqueue_style( 'grid_css_'.$key, $url );
 		}
 
@@ -769,7 +769,7 @@ function grid_wp_thegrid() {
 		foreach ( $js as $idx => $file ) {
 			wp_enqueue_script( 'grid_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
-		foreach ( $fieldtypes["js"] as $key => $url ) {
+		foreach ( $editor_widgets["js"] as $key => $url ) {
 			wp_enqueue_script( 'grid_js_'.$key, $url );
 		}
 
@@ -1064,10 +1064,10 @@ function grid_enable_front_page_landing_page( $query )
 }
 
 /**
- * returns additional fieldtype files
+ * returns additional editor widget files
  * @return  array js and css key are arrays of file paths
  */
-function grid_get_additional_fieldtypes(){
-	return apply_filters('grid_fieldtypes', array( "js" => array(), "css"=> array() ) );
+function grid_get_additional_editor_widgets(){
+	return apply_filters('grid_editor_widgets', array( "js" => array(), "css"=> array() ) );
 }
 
