@@ -11,6 +11,11 @@
 	if ($this->title!=""){
 		echo '<h2 class="b-title">'.$this->title.'</h2>';
 	}
-	echo "<div class='content'>".$content."</div>";
+	if(is_string($content)){
+		echo "<div class='content'>".$content."</div>";
+	} else {
+		echo "<div class='content'>".t("There is no working editmode template")."</div>";
+	}
+	
 	?>
 </div>

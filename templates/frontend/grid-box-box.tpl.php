@@ -21,7 +21,16 @@
 		<?php echo $this->prolog?>
 	</div>
 	
-	<?php echo $content?>
+	<?php 
+	if(is_string($content) ){
+		echo $content;
+	} else {
+		?>
+		<p>There is no working template for this Box.</p>
+		<?php
+	}
+	
+	?>
 	<div class="b-epilog">
 		<?php echo $this->epilog?>
 	</div>
