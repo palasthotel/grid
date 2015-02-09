@@ -699,7 +699,9 @@ function grid_wp_get_storage() {
 
 		$templatesPaths = array();
 		$templatesPaths[] = get_template_directory().'/grid/';
-		$storage->templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
+		$templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
+		$templatesPaths[] = dirname(__FILE__)."/core/templates/wordpress";
+		$storage->templatesPaths = $templatesPaths;
 		
 		$storage->containerstyle = get_option( 'grid_default_container_style', '__NONE__' );
 		if ( '__NONE__' == $storage->containerstyle ) {

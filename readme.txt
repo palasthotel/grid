@@ -52,7 +52,7 @@ Easy extendable with new boxes. Have a look at doc.the-grid.ws (english is comin
 
 = Table already exists error when I want to activate Grid. Why? = 
 
-This happens if grid was installed previously and could not be uninstalled correctly. You have to delete in the wp_options the option_name „grid“. Than try again to active Grid plugin.
+This happens if grid was installed previously and could not be uninstalled correctly. You have to delete in the wp_options the option_name „grid“. Then try again to active Grid plugin.
 
 = How do I use Grid landingpages? =
 
