@@ -106,10 +106,24 @@ class grid_container extends grid_base {
 				$slots[]=$slot->render($editmode, $this);
 			}
 			ob_start();
-			if($this->storage->templatesPath!=NULL && file_exists($this->storage->templatesPath."/grid-container.tpl.php"))
-				include $this->storage->templatesPath.'/grid-container.tpl.php';
-			else
+			$found = FALSE;
+			if( is_array( $this->storage->templatesPaths ) )
+			{
+				foreach ($this->storage->templatesPaths as $templatesPath) 
+				{
+					$template_path = rtrim($templatesPath."/grid-container.tpl.php", "/");
+					if( file_exists($template_path) ){
+						include $template_path;
+						$found = TRUE;
+						break;
+					}
+				}
+				
+			}
+			if(!$found)
+			{
 				include dirname(__FILE__).'/../templates/frontend/grid-container.tpl.php';
+			}
 			$output=ob_get_clean();
 			return $output;
 			

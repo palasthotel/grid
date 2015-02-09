@@ -29,7 +29,26 @@ class grid_grid extends grid_base {
 			$containerlist[]=$html;
 		}
 		ob_start();
-		include dirname(__FILE__).'/../templates/frontend/grid.tpl.php';
+
+
+		$found = FALSE;
+		if( is_array( $this->storage->templatesPaths) )
+		{
+			foreach ($this->storage->templatesPaths as $templatesPath) {
+				$template_path = rtrim($templatesPath.'/grid.tpl.php', "/");
+				if( file_exists($template_path) ){
+					include $template_path;
+					$found = TRUE;
+					break;
+				}				
+			}
+			
+		}
+		if(!$found)
+		{
+			include dirname(__FILE__).'/../templates/frontend/grid.tpl.php';
+		}
+		
 		$output=ob_get_clean();
 		return $output;
 	}
