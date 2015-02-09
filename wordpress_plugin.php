@@ -763,10 +763,7 @@ function grid_wp_thegrid() {
 		wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
 
-		$lang = WPLANG;
-		if ( empty( $lang ) ) {
-			$lang = 'en';
-		}
+		$lang = grid_get_lang();
 		$js = $grid_lib->getEditorJS( $lang, false );
 		foreach ( $js as $idx => $file ) {
 			wp_enqueue_script( 'grid_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
@@ -813,10 +810,7 @@ function grid_wp_reuse_box_editor_prepare( $editor ) {
 		wp_enqueue_style( 'grid_reusebox_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 	}
 	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-	$lang = 'en';
-	if ( defined(WPLANG) || empty( $lang ) ) {
-		$lang = WPLANG;
-	}
+	$lang = grid_get_lang();
 	$js = $editor->getJS( $lang, false );
 	foreach ( $js as $idx => $file ) {
 		wp_enqueue_script( 'grid_reusebox_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
@@ -875,10 +869,7 @@ function grid_wp_reuse_container_editor_prepare( $editor ) {
 		wp_enqueue_style( 'grid_reusecontainer_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 	}
 	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-	$lang = 'en';
-	if ( defined(WPLANG) || empty( $lang ) ) {
-		$lang = WPLANG;
-	}
+	$lang = grid_get_lang();
 	$js = $editor->getJS( $lang, false );
 	foreach ( $js as $idx => $file ) {
 		wp_enqueue_script( 'grid_reusecontainer_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
@@ -1071,5 +1062,17 @@ function grid_enable_front_page_landing_page( $query )
  */
 function grid_get_additional_editor_widgets(){
 	return apply_filters('grid_editor_widgets', array( "js" => array(), "css"=> array() ) );
+}
+
+function grid_get_lang(){
+	if( defined('WPLANG') )
+	{
+		$lang = WPLANG;
+	}
+	if(!empty($lang))
+	{
+		return $lang;
+	} 
+	return 'en';
 }
 
