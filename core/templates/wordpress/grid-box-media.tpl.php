@@ -21,10 +21,7 @@
 		<?php echo $this->prolog?>
 	</div>
 	
-
 	<?php echo $content->rendered_html;	?>
-
-
 
 	<div class="b-epilog">
 		<?php echo $this->epilog?>
