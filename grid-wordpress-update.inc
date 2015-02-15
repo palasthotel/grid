@@ -24,7 +24,7 @@ class grid_wordpress_update extends base_update
 		 * install button for plugin
 		 */
 		$action = 'install-plugin';
-		$slug = 'buddypress';
+		$slug = 'grid-social-boxes';
 		$url = wp_nonce_url(
 		    add_query_arg(
 		        array(
@@ -38,7 +38,7 @@ class grid_wordpress_update extends base_update
 
 		$button = "<a href='$url' class='install-now button'>Install</a>";
 		echo '<div class="update-nag">
-			<p>Grid Facebook Box and Twitter Box were moved to separate plugin <a href="#">Grid Social Boxes</a>.</p>
+			<p>Grid Facebook Box and Twitter Box were moved to a separate plugin <a href="https://wordpress.org/plugins/grid-social-boxes">Grid Social Boxes</a>.</p>
 			<p>'.$button.'</p>
 		</div>';
 	}
