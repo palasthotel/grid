@@ -2,7 +2,7 @@
 Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist
-Requires at least: 3.6
+Requires at least: 4.0
 Tested up to: 4.1
 Stable tag: 1.3
 License: GPLv3
@@ -47,6 +47,7 @@ Easy extendable with new boxes. Have a look at doc.the-grid.ws (english is comin
 1. Extract the Plugin to a `grid` Folder
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Build landing pages at `Landing Pages`, `Switch into the Grid` and on next screen `save changes`
+1. Look for more plugins on wordpress.org that can provide grid boxes
 
 == Frequently Asked Questions ==
 
@@ -60,7 +61,7 @@ Goto Settings->Grid and choose which post types should be able to use Grid. Than
 
 = How do I get new box types? =
 
-You can create your own plugin and use the `grid_load_classes` action to add new box classes. You can find a documentation at doc.the-grid.ws (english is coming soon)
+Have a look at wordpress.org for plugins that provide new grid boxes or you can create your own plugin and use the `grid_load_classes` action to add new box classes. You can find a documentation at doc.the-grid.ws
 
 == Screenshots ==
 
@@ -74,15 +75,14 @@ You can create your own plugin and use the `grid_load_classes` action to add new
 * SQL injection security fix
 * UI language fix
 * install fix
-* facebook and twitter box separated to "grid social boxes" plugin
-* edit multisite support
+* facebook and twitter box separated to "grid social boxes" [Grid Social Boxes](http://wordpress.org/plugins/grid-social-boxes/ "Facebook and Twitter for Grid") plugin
+* multisite support
 * autocomplete fieldtype performance optimization
 * plugin hook for templates added
-* plugin hook for EditorWidgets
+* plugin hook for editorwidgets
 * template rendering optimized
 * "Switch to Grid" Button moved to editor sidebar
 * implemented uninstall hook
-* 
 
 
 = 1.2 =
