@@ -782,6 +782,9 @@ function grid_wp_get_storage() {
 		$storage->ajaxEndpoint = new grid_wordpress_ajaxendpoint();
 		$storage->ajaxEndpoint->storage = $storage;
 
+		// for old versions
+		$storage->templatesPath = get_template_directory().'/grid/';
+
 		$templatesPaths = array();
 		$templatesPaths[] = get_template_directory().'/grid/';
 		$templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
