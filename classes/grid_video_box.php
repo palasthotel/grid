@@ -103,14 +103,20 @@ class grid_video_box extends grid_static_base_box
 				} else {
 					$url_related.="0";
 				}
-				$url=$result[PHP_URL_SCHEME]."://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
+				$scheme=$result['scheme'];
+				$url=$scheme."://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
 				$result=curl_exec($request);
+				if($result===FALSE)
+				{
+					die(var_dump(curl_error($request)));
+				}
 				curl_close($request);
 				$result=json_decode($result);
 				$html=$result->html;
+				$html=str_replace("src=\"http://", "src=\"".$scheme."://", $html);
 				// Prevents flash bug in Firefox (no playback on click)
 				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1'.$url_related.$url_show_info, $html);
 				$this->content->html=$html;
@@ -129,7 +135,8 @@ class grid_video_box extends grid_static_base_box
 					$url_related.="0";
 				}
 				$parts = explode("/", $this->content->url);
-				$url=$result[PHP_URL_SCHEME]."://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
+				$scheme=$result['scheme'];
+				$url=$result['scheme']."://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -137,6 +144,7 @@ class grid_video_box extends grid_static_base_box
 				curl_close($request);
 				$result=json_decode($result);
 				$html=$result->html;
+				$html=str_replace("src=\"http://", "src=\"".$scheme."://", $html);
 				// Prevents flash bug in Firefox (no playback on click)
 				$html=str_replace('feature=oembed', 'feature=oembed&wmode=transparent&html5=1'.$url_related.$url_show_info, $html);
 				$this->content->html=$html;
@@ -156,7 +164,7 @@ class grid_video_box extends grid_static_base_box
 					$url_need_portrait.="false";
 				}
 
-				$url=$result[PHP_URL_SCHEME]."://vimeo.com/api/oembed.json?url=".urlencode($this->content->url).$url_need_title.$url_need_byline.$url_need_portrait;
+				$url=$result['scheme']."://vimeo.com/api/oembed.json?url=".urlencode($this->content->url).$url_need_title.$url_need_byline.$url_need_portrait;
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request, CURLOPT_HEADER, FALSE);
