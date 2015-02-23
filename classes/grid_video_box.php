@@ -103,7 +103,7 @@ class grid_video_box extends grid_static_base_box
 				} else {
 					$url_related.="0";
 				}
-				$url="http://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
+				$url=$result[PHP_URL_SCHEME]."://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -129,7 +129,7 @@ class grid_video_box extends grid_static_base_box
 					$url_related.="0";
 				}
 				$parts = explode("/", $this->content->url);
-				$url="http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
+				$url=$result[PHP_URL_SCHEME]."://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request,CURLOPT_HEADER,FALSE);
@@ -156,7 +156,7 @@ class grid_video_box extends grid_static_base_box
 					$url_need_portrait.="false";
 				}
 
-				$url="http://vimeo.com/api/oembed.json?url=".urlencode($this->content->url).$url_need_title.$url_need_byline.$url_need_portrait;
+				$url=$result[PHP_URL_SCHEME]."://vimeo.com/api/oembed.json?url=".urlencode($this->content->url).$url_need_title.$url_need_byline.$url_need_portrait;
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
 				curl_setopt($request, CURLOPT_HEADER, FALSE);
