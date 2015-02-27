@@ -865,7 +865,7 @@ function grid_wp_thegrid() {
 
 		echo '<div class="wrap"><h2>'.$post->post_title.
 		' <a title="Return to the post-edit page" class="add-new-h2"'.
-		' href="'.admin_url().'post.php?post='.$postid.'&action=edit" >Edit Post</a'.
+		' href="'.admin_url("post.php?post=$postid&action=edit").'" >Edit Post</a'.
 		'><a class="add-new-h2" href="'.
 		get_permalink( $postid ).'">View Post</a></h2> </div>';
 
