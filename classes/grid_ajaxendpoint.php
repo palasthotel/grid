@@ -387,10 +387,10 @@ class grid_ajaxendpoint {
 		return $this->loadGrid($gridid);
 	}
 
-	public function getGridRevisions($gridid){
-		return $this->storage->fetchGridRevisions($gridid);
+	public function getGridRevisions($gridid,$page=0){
+		return $this->storage->fetchGridRevisions($gridid,$page);
 	}
-	// TODO: copy old revision to new draft
+
 	public function setToRevision($gridid, $revision){
 		$this->revertDraft($gridid);
 		$grid=$this->storage->loadGridByRevision($gridid,$revision);
