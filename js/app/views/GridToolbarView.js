@@ -11,10 +11,10 @@ var GridToolbarView = GridBackbone.View.extend({
     _toolBoxesView: null,
     _revisionsView: null,
     events:{
-        "click [role=publish]": "publish",
-        "click [role=preview]": "preview",
-        "click [role=revert]": "revert",
-        "click [role=revisions]": "revisions",
+        "click .grid-toolbar [role=publish]": "publish",
+        "click .grid-toolbar [role=preview]": "preview",
+        "click .grid-toolbar [role=revert]": "revert",
+        "click .grid-toolbar [role=revisions]": "revisions",
         "click .grid-element-type[data-type=box]:not(.active)": "showBoxTools",
         "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools"
     },
