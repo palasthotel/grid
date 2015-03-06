@@ -57,6 +57,7 @@ GRID = {
     styles_slot: null,
     styles_box: null,
     revisions: null,
+    async: null,
 	init: function(){
 
 		// initialize constants
@@ -71,6 +72,8 @@ GRID = {
 		this.getContainerStyles().fetch();
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
+
+		this.async = new GridAsync();
 
 
 		// load the grid + view

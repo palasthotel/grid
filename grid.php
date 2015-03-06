@@ -55,6 +55,7 @@ class grid_library
 		$scripts[]=$framework_dir."underscore.js";
 		$scripts[]=$framework_dir."GridBackbone.js";
 		$scripts[]=$framework_dir."GridICanHaz.js";
+		$scripts[]=$framework_dir."Socket.io.js";
 		$scripts[]=$home."js/ckeditor/ckeditor.js";
 		$scripts[]=$app_dir."GridViews.js";
 		$scripts[]=$app_dir."views/GridContainerEditorView.js";
@@ -75,6 +76,7 @@ class grid_library
 		$scripts[]=$app_dir."GridCollections.js";
 		$scripts[]=$app_dir."collections/GridBoxBlueprints.js";
 		$scripts[]=$app_dir."GridSync.js";
+		$scripts[]=$app_dir."GridAsync.js";
 		$scripts[]=$app_dir."Grid.js";
 		if(is_file($home."/js/language/grid-".$language.".js")){
 			$scripts[]=$home."/js/language/grid-".$language.".js";

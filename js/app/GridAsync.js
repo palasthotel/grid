@@ -10,7 +10,6 @@ GridAsync.prototype.on = function(e, f){
 GridAsync.prototype.onConnect = function(data){
 	console.log("connected");
 	console.log(data);
-	this.join();
 };
 
 GridAsync.prototype.join = function(){
