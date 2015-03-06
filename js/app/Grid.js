@@ -57,7 +57,6 @@ GRID = {
     styles_slot: null,
     styles_box: null,
     revisions: null,
-    async : null,
 	init: function(){
 
 		// initialize constants
@@ -73,8 +72,6 @@ GRID = {
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
 
-		// async connection to nodejs server
-		this.async = new GridAsync();
 
 		// load the grid + view
 		this.grid = new Grid({
