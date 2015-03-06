@@ -50,6 +50,14 @@
 					background-color: $color-link;
 				}
 			}
+			&.grid-tool-authors-count button{
+				.indicator-authors-count{
+					position: absolute;
+					right: 18px;
+					top: 10px;
+					font-size: 16px;
+				}
+			}
 		}
 	}
 
@@ -67,6 +75,7 @@
 			background-color: $color-ok;
 		}
 	}
+
 }
 
 .grid-toolbar-list{

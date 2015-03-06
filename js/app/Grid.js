@@ -58,6 +58,7 @@ GRID = {
     styles_box: null,
     revisions: null,
     async: null,
+    authors: null,
 	init: function(){
 
 		// initialize constants
@@ -74,6 +75,9 @@ GRID = {
 		this.getBoxStyles().fetch();
 
 		this.async = new GridAsync();
+		this.authors = new GridAuthors();
+		this.async.addObserver(this.authors);
+		this.async.init();
 
 
 		// load the grid + view

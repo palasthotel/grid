@@ -75,6 +75,7 @@ class grid_library
 		$scripts[]=$app_dir."models/GridRights.js";
 		$scripts[]=$app_dir."GridCollections.js";
 		$scripts[]=$app_dir."collections/GridBoxBlueprints.js";
+		$scripts[]=$app_dir."collections/GridAuthors.js";
 		$scripts[]=$app_dir."GridSync.js";
 		$scripts[]=$app_dir."GridAsync.js";
 		$scripts[]=$app_dir."Grid.js";
