@@ -154,7 +154,7 @@ class grid_library
 	 * preview_url: url to preview the current grid
 	 * preview_pattern: pattern for previews of certain 
 	 */
-	public function getEditorHTML($grid_id,$grid_mode,$pathToCKEditorConfig,$ajaxendpoint,$debug_mode,$preview_url,$preview_pattern)
+	public function getEditorHTML($grid_id,$grid_mode,$pathToCKEditorConfig,$ajaxendpoint,$debug_mode,$preview_url,$preview_pattern,$author="")
 	{
 		ob_start();
 		require("templates/backend/grid.tpl.php");
