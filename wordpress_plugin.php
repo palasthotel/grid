@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.3
+ * Version: 1.3.1
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -782,6 +782,9 @@ function grid_wp_get_storage() {
 		$storage->ajaxEndpoint = new grid_wordpress_ajaxendpoint();
 		$storage->ajaxEndpoint->storage = $storage;
 
+		// for old versions
+		$storage->templatesPath = get_template_directory().'/grid/';
+
 		$templatesPaths = array();
 		$templatesPaths[] = get_template_directory().'/grid/';
 		$templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
@@ -859,9 +862,13 @@ function grid_wp_thegrid() {
 
 		wp_enqueue_script( 'grid_js_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
 		$post = get_post( $postid );
+
 		echo '<div class="wrap"><h2>'.$post->post_title.
-		' <a title="Return to the post-edit page" class="add-new-h2" href="/wp-admin/post.php?post='.$postid.'&action=edit" >Edit Post</a><a class="add-new-h2" href="'.
+		' <a title="Return to the post-edit page" class="add-new-h2"'.
+		' href="'.admin_url("post.php?post=$postid&action=edit").'" >Edit Post</a'.
+		'><a class="add-new-h2" href="'.
 		get_permalink( $postid ).'">View Post</a></h2> </div>';
+
 		$html = $grid_lib->getEditorHTML(
 			$grid_id,
 			'grid',

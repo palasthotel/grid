@@ -1,3 +1,3 @@
 config.codekit
-lib
+*.sass-cache
 *.DS_Store
