@@ -123,7 +123,7 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 								//we found a box.
 								$box=$slot->boxes[$idx];
 								$box=apply_filters('grid_persist_box',$box);
-								if(count($box)>0 && $box[0]!==NULL)
+								if(is_array($box) && count($box)>0 && $box[0]!==NULL)
 								{
 									$box=$box[0];
 									$slot->boxes[$idx]=$box;
