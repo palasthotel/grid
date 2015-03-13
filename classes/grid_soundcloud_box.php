@@ -28,6 +28,7 @@ class grid_soundcloud_box extends grid_static_base_box {
         $this->content=new Stdclass();
         $this->content->url= "";
         $this->content->color = "";
+        $this->content->height = 200;
     }
 
     /**
@@ -49,10 +50,17 @@ class grid_soundcloud_box extends grid_static_base_box {
 
             $iframe_maxheight = 200;
             $oembed_maxheight = 81;
+            if(!empty($this->content->height)){
+                $iframe_maxheight = $this->content->height;
+            }
+
+            
             // Soundcloud playlist needs more vertical space
             if (strpos($url, '/sets/') !== false) {
-              $iframe_maxheight = 300;
-              $oembed_maxheight = 300;
+                if($iframe_maxheight < 300){
+                    $iframe_maxheight = 300;
+                }
+                $oembed_maxheight = 300;
             }
 
             $query_iframe = "&format=json&maxheight=$iframe_maxheight&auto_play=false&url=$url";
@@ -114,9 +122,14 @@ EOT;
                 'type'=>'text'
             ),
             array(
+                'key'=>'height',
+                'label'=>t('Height'),
+                'type'=>'number',
+            ),
+            array(
                 'key'=>'color',
                 'label'=>t('Hex Color #[...] (optional)'),
-                'type'=>'text'
+                'type'=>'text',
             ),
         );
     }
