@@ -39,11 +39,8 @@ class grid_html_box extends grid_static_base_box {
 	public function build($editmode) {
 		if($editmode && empty($this->content->html)) {
 			return t("Static HTML-Content");
-		} if ($editmode){
-			return $this->content->html;
 		}
-		else {
-			return do_shortcode($this->content->html);
+			return $this->content->html;
 		}
 	}
 	
