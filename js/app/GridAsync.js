@@ -51,14 +51,24 @@ GridAsync.prototype.connect = function(data){
 	console.log("connected");
 	this.join();
 };
-GridAsync.prototype.authors_list = function(authors){
-	this.notifyAll("authors_list",authors);
+/**
+ * authors list events
+ */
+GridAsync.prototype.authors_list = function(data){
+	this.notifyAll("authors_list",data);
 };
-GridAsync.prototype.authors_joined = function(author){
-	this.notifyAll("authors_joined",author);
+GridAsync.prototype.authors_joined = function(data){
+	this.notifyAll("authors_joined",data);
 };
-GridAsync.prototype.authors_left = function(author){
-	this.notifyAll("authors_left",author);
+GridAsync.prototype.authors_left = function(id){
+	this.notifyAll("authors_left",id);
 };
+/**
+ * locking events
+ */
+GridAsync.prototype.is_locked = function(data){
+	// data.locked && data.identifier locker
+};
+
 
 
