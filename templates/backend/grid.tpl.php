@@ -15,6 +15,7 @@ document.gridajax="<?php echo $ajaxendpoint;?>";
 document.previewurl="<?php echo $preview_url;?>";
 document.previewpattern="<?php echo $preview_pattern;?>";
 document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
+document.author="<?php echo $author; ?>";
 </script>
 <script id="tpl_toolbar" type="text/grid-icanhaz">
 <?php require('ich.toolbar.html'); ?>

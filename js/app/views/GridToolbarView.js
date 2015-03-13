@@ -20,6 +20,8 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     initialize: function() {
         this.listenTo(this.model, "change:isDraft", this.setState);
+        this.listenTo(GRID.authors, "add", this.onUpdateAuthors);
+        this.listenTo(GRID.authors, "remove", this.onUpdateAuthors);
         this.setState();
     },
     render: function() {
@@ -31,6 +33,7 @@ var GridToolbarView = GridBackbone.View.extend({
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
         this.$tab_box = this.$el.find(".grid-element-type[data-type=box]");
         this.$element_trash = this.$el.find(".grid-element-trash");
+        this.$authors_count = this.$el.find(".indicator-authors-count");
 
         if(GRID.mode == "grid"){
            this._revisionsView = new GridRevisionsView({collection:GRID.revisions}); 
@@ -52,6 +55,7 @@ var GridToolbarView = GridBackbone.View.extend({
         } else if(type == "box"){
             this.showBoxTools();
         }
+        this.onUpdateAuthors();
         
         return this;
     },
@@ -158,5 +162,13 @@ var GridToolbarView = GridBackbone.View.extend({
         var elements_top_offset = this.$el.offset().top;
         var tab_height = this.$tab_container.outerHeight();
         this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height));
-    }
+    },
+    onUpdateAuthors: function(){
+        if(GRID.authors.getCount() < 2){
+            this.$authors_count.parents("li").hide();
+        } else {
+            this.$authors_count.parents("li").show();
+            this.$authors_count.text(GRID.authors.getCount());
+        }        
+    },
 });
