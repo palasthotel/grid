@@ -22,6 +22,7 @@ var GridToolbarView = GridBackbone.View.extend({
         this.listenTo(this.model, "change:isDraft", this.setState);
         this.listenTo(GRID.authors, "add", this.onUpdateAuthors);
         this.listenTo(GRID.authors, "remove", this.onUpdateAuthors);
+        this.listenTo(GRID.authors, "reset", this.onUpdateAuthors);
         this.setState();
     },
     render: function() {

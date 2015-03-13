@@ -6,13 +6,23 @@
 */
 
 var GridAuthors = GridBackbone.Collection.extend({
+    model: GridAuthor,
     async_authors_list: function(data){
     	var self = this;
     	_.each(data, function(item){
     		self.add({id: item.identifier, name: item.author});
     	});
     },
+    resetLock: function(){
+        this.each(function(author){
+            author.set("has_lock", false);
+        });
+    },
+    setLock: function(id){
+        this.get(id).set("has_lock", true);
+    },
     getCount: function(){
+        // +1 is us self
         return this.length+1;
     },
     async_authors_joined: function(data){
