@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 1.3
+Stable tag: 1.3.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -71,6 +71,14 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.3.2 =
+ * Shortcodes are working with Static HTML Box
+ * Soundcloud box has new parameter for height
+ * Error on saving boxes fixed
+
+= 1.3.1 =
+* .gitignore problem with lib folder fixed
+
 = 1.3 = 
 * SQL injection security fix
 * UI language fix
@@ -84,7 +92,6 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 * "Switch to Grid" Button moved to editor sidebar
 * implemented uninstall hook
 
-
 = 1.2 =
 * added version info to the facebook and twitter subplugins
 
@@ -94,6 +101,15 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 = 1.0 =
 * First release
+
+== Upgrade Notice ==
+
+= 1.3.1 =
+Some boxes could not be saved. Now they can.
+
+= 1.3.1 =
+If you are using git in your project the lib folder was ignore previously.
+
 
 
 == Arbitrary section ==
