@@ -24,8 +24,8 @@ class grid_slot extends grid_base {
 		$boxes=array();
 		if(count($this->boxes)>0)
 		{
-			$this->boxes[0]->classes[]="box-first";
-			$this->boxes[count($this->boxes)-1]->classes[]="box-last";
+			$this->boxes[0]->classes[]="grid-box-first";
+			$this->boxes[count($this->boxes)-1]->classes[]="grid-box-last";
 		}
 
 		foreach($this->boxes as $box)
