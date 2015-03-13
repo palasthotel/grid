@@ -21,6 +21,9 @@ var GridAuthors = GridBackbone.Collection.extend({
     setLock: function(id){
         this.get(id).set("has_lock", true);
     },
+    haveLock: function(){
+        return (typeof this.findWhere({has_lock:true}) == "undefined");
+    },
     getCount: function(){
         // +1 is us self
         return this.length+1;

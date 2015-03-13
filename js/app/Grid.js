@@ -39,6 +39,8 @@ GRID = {
 	$root: null,
 	dom_root_editor: "#new-grid-editor-wrapper",
 	$root_editor: null,
+	dom_root_authors: "#grid-authors-wrapper",
+	$root_authors: null,
 	ID: null,
 	// enable or disable debugging output
 	DEBUGGING: false,
@@ -76,6 +78,7 @@ GRID = {
 
 		this.async = new GridAsync();
 		this.authors = new GridAuthors();
+		this.async.addObserver(this);
 		this.async.addObserver(this.authors);
 		this.async.init();
 
@@ -185,6 +188,7 @@ GRID = {
 		// root elements
 		this.$root = jQuery(this.dom_root);
 		this.$root_editor = jQuery(this.dom_root_editor);
+		this.$root_authors = jQuery(this.dom_root_authors);
 		// constants from CMS
 		this.mode = document.gridmode;
 		this.$root.addClass('gridmode-'+this.mode);
@@ -296,36 +300,51 @@ GRID = {
 	},
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } },
-
+	/**
+	 * change to box and container editor
+	 */
 	showEditor: function(callback) {
-		jQuery(GRID.$root).animate(
+		GRID.$root.animate(
 			{
 				width:0
 			},
 			220,
 			function(){
-				jQuery(GRID.$root).hide();
+				GRID.$root.hide();
 			}
 		);
 		setTimeout(function(){
-			jQuery(GRID.$root_editor).show();
-			jQuery(GRID.$root_editor).animate({width:"100%"},250,function(){
+			GRID.$root_editor.show();
+			GRID.$root_editor.animate({width:"100%"},250,function(){
 				callback();
 			});
 			window.scrollTo(0,0);
 		},50);
 	},
-
 	hideEditor: function(callback) {
-		jQuery(GRID.$root_editor).animate({width:"0%"},220, function(){jQuery(GRID.$root_editor).hide();});
+		GRID.$root_editor.animate({width:"0%"},220, function(){GRID.$root_editor.hide();});
 		setTimeout(function(){
-			jQuery(GRID.$root).show();
-			jQuery(GRID.$root).animate({width:"100%"},220,function(){
+			GRID.$root.show();
+			GRID.$root.animate({width:"100%"},220,function(){
 				callback();
 				GRID.onSidebarCalculation();
 			})
 			window.scrollTo(0,0);
 		},50);
+	},
+	/**
+	 * change to authors
+	 */
+	showAuthors: function(){
+		GRID.$root.hide();
+		GRID.$root_authors.empty();
+		var authors = new Authors();
+		GRID.$root_authors.append(authors.render().$el);
+		GRID.$root_authors.show();
+	},
+	hideAuthors: function() {
+		GRID.$root_authors.hide();
+		GRID.$root.show();
 	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
