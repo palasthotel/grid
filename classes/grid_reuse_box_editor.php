@@ -36,7 +36,7 @@ class grid_reuse_box_editor
 		{
 			$container=new grid_container();
 			$container->storage=$grid_db;
-			$container->type="C-12";
+			$container->type="c-1d1";
 			$container->stype="container";
 			$container->readmore=t("edit");
 			$container->readmoreurl=$editlinkfunction($box->boxid);
