@@ -17,9 +17,12 @@
 			<h2 class="b-title"><?php echo $this->title?></h2>
 		<?php }?>
 	<?php }?>
+	
+	<?php if($this->prolog != "") { ?>
 	<div class="b-prolog">
 		<?php echo $this->prolog?>
 	</div>
+	<?php } ?>
 	
 	<?php 
 	if(is_string($content) ){
@@ -29,11 +32,14 @@
 		<p>There is no working template for this Box.</p>
 		<?php
 	}
-	
 	?>
+	
+	<?php if($this->epilog != ""){ ?>
 	<div class="b-epilog">
 		<?php echo $this->epilog?>
 	</div>
+	<?php } ?>
+
   	<?php
 	if ($this->readmore!=""){?>
 	<a href="<?php echo $this->readmoreurl?>" class="b-readmore-link"><?php echo $this->readmore?></a>
