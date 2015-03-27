@@ -76,7 +76,7 @@ GRID = {
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
 
-		this.async = new GridAsync();
+		this.async = new GridAsync(window.location.host, window.location.pathname);
 		this.authors = new GridAuthors();
 		this.async.addObserver(this);
 		this.async.addObserver(this.authors);
@@ -121,6 +121,55 @@ GRID = {
 			}
         });
 
+		return this;
+	},
+	reload: function(){
+		this.grid.destroy();
+		this.grid = null;
+		if(this.gridView != null){
+			this.gridView.remove();
+		}
+		this.newGrid();
+	},
+	newGrid: function(){
+		// load the grid + view
+		this.grid = new Grid({
+        	id:this.ID,
+			SERVER: this.SERVER,
+			PREVIEW_URL: this.PREVIEW_URL,
+			DEBUGGING: this.DEBUGGING,
+			fn_success: function(data){
+				GRID.$root.empty();
+				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
+				
+				GRID.gridview = new GridView({model: GRID.getModel() });
+				// handle rights
+				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
+
+				GRID.$root.append( GRID.getView().render().el );
+				
+				jQuery(GRID.dom_root).mutate('height',function (element,info){
+				    GRID.onSidebarCalculation();
+				});
+
+				GRID.$root
+					.data("isSidebar",GRID.IS_SIDEBAR)
+					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
+
+				if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
+				GRID._initializeBoxSortable();
+				// load the revisions
+				GRID.revisions = new Revisions({grid: GRID.getModel() });
+		        GRID.revisions.fetch();
+		        // init toolbar
+				GRID.toolbar  = new GridToolbarView({
+					model: GRID.getModel()
+				});
+				GRID.$root.prepend(GRID.toolbar.render().el);
+				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
+				GRID.onSidebarCalculation();
+			}
+        });
 		return this;
 	},
 	getModel: function(){
@@ -175,6 +224,7 @@ GRID = {
     },
     // revisions
     setToRevision: function(revision){
+    	if(GRID.locked()) return;
         GridRequest.grid.update(GRID.grid, {action: "setToRevision", revision: revision});
     },
     // onRightsChange
@@ -288,7 +338,7 @@ GRID = {
 	},
 	// publishes the grid
 	publish: function(){ 
-		if( !GRID.getRights().get("publish") ){
+		if( !GRID.getRights().get("publish") || GRID.locked() ){
 			alert("Sorry you have no rights for that...");
 			return false;
 		}
@@ -296,6 +346,7 @@ GRID = {
 	},
 	// revert to old revision
 	revert: function(){	
+		if(GRID.locked()) return;
         GridRequest.grid.update(GRID.grid, {action: "revertDraft"});
 	},
 	// console logging just with DEBUGGING enabled
@@ -346,9 +397,20 @@ GRID = {
 		GRID.$root_authors.hide();
 		GRID.$root.show();
 	},
+	locked: function(){
+		return !GRID.authors.haveLock();
+	},
+	async_locking_is_locked: function(){
+		if(GRID.locked()){
+			GRID.$root.addClass("grid-is-locked");
+		} else if(GRID.$root.hasClass("grid-is-locked")){
+			GRID.reload();
+			GRID.$root.removeClass("grid-is-locked");
+		}		
+	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
-		if(!GRID.getRights().get("move-container")) return false;
+		if(!GRID.getRights().get("move-container") || GRID.locked()) return false;
 		var container_deleted;
 		container_deleted=false;
 		var container;
@@ -397,7 +459,7 @@ GRID = {
 	},
 	// initializes function to sort the containers
 	_initializeBoxSortable: function(){
-		if(!GRID.getRights().get("move-box")) return false;
+		if(!GRID.getRights().get("move-box") || GRID.locked() ) return false;
 		var old_box_index,
 		old_slot_id,
 		old_container_id,

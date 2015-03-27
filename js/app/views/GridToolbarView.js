@@ -63,7 +63,7 @@ var GridToolbarView = GridBackbone.View.extend({
         return this;
     },
     publish: function(){
-        if(!GRID.getRights().get("publish")){
+        if(!GRID.getRights().get("publish") || GRID.locked()){
             alert("You have no rights for that...");
             return false;
         }
@@ -83,7 +83,7 @@ var GridToolbarView = GridBackbone.View.extend({
         window.open(this.model.get("PREVIEW_URL"),"_blank");
     },
     revert: function(){
-        if(!GRID.getRights().get("revert")){
+        if(!GRID.getRights().get("revert") || GRID.locked() ){
             alert("You have no rights for that...");
             return false;
         }

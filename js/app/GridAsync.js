@@ -1,6 +1,6 @@
-function GridAsync(){
-	this.domain = window.location.host;
-	this.path = window.location.pathname;
+function GridAsync(domain, path){
+	this.domain = domain;
+	this.path = path;
 	this.author = document.author;
 	this.observers = [];
 
@@ -15,11 +15,11 @@ GridAsync.prototype.addObserver = function(observer){
 	this.observers.push(observer);
 };
 GridAsync.prototype.notifyAll = function(_event, data){
+	console.log("notify event "+_event);
 	_.each(this.observers, function(_observer, index, list){
-		console.log("nofiy observer "+index);
 		if(typeof _observer["async_"+_event] == "function")
 		{
-			console.log("nofiy event "+_event);
+			console.log(["observer", _observer]);
 			_observer["async_"+_event](data);
 		}
 		
@@ -29,8 +29,23 @@ GridAsync.prototype.notifyAll = function(_event, data){
 /**
  * Emitters
  */
-GridAsync.prototype.join = function(){
+/**
+ * authors
+ */
+GridAsync.prototype.authors_join = function(){
 	this.socket.emit("authors.join", {domain: this.domain, path: this.path, author: this.author});
+}
+/**
+ * locking
+ */
+GridAsync.prototype.locking_request_lock = function(){
+	this.socket.emit("locking.requestLock");
+}
+GridAsync.prototype.locking_handover = function(identifier){
+	this.socket.emit("locking.handover", identifier);
+}
+GridAsync.prototype.locking_deny_handover = function(identifier){
+	this.socket.emit("locking.denyHandover", identifier);
 }
 /**
  * Grid Async server events
@@ -53,7 +68,7 @@ GridAsync.prototype.on = function(e, f){
 }
 GridAsync.prototype.connect = function(data){
 	console.log("connected");
-	this.join();
+	this.authors_join();
 };
 GridAsync.prototype.disconnect = function(data){
 	console.log("disconnected");
@@ -79,7 +94,7 @@ GridAsync.prototype.locking_is_locked = function(data){
 	GRID.authors.resetLock();
 	if(data.isLocked){
 		GRID.authors.setLock(data.identifier);
-	}	
+	}
 	this.notifyAll("locking_is_locked");
 };
 

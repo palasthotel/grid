@@ -14,6 +14,7 @@ var Authors = GridBackbone.View.extend({
         this.listenTo(GRID.authors, "add", this.onAddAuthor);
         this.listenTo(GRID.authors, "remove", this.render);
         this.listenTo(GRID.authors, "reset", this.render);
+        this.listenTo(GRID.authors, "change", this.render);
     },
     render: function(){
         this.$el.empty();

@@ -1,0 +1,15 @@
+.grid-is-locked{
+	.grid-containers-wrapper{
+		position: relative;
+		&:before{
+			position: absolute;
+			content:"";
+			top: 0px;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+			background-color: rgba(255,255,255,0.7);
+			z-index: $idx-locked-overlay;
+		}
+	}
+}
