@@ -861,7 +861,11 @@ function grid_wp_thegrid() {
 		foreach ( $css as $idx => $file ) {
 			wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
-		foreach ( $editor_widgets["css"] as $key => $url ) {
+		/**
+		 * extend widgets css with editor css filters
+		 */
+		$editor_css = apply_filters('grid_editor_css', $editor_widgets["css"] );
+		foreach ( $editor_css as $key => $url ) {
 			wp_enqueue_style( 'grid_css_'.$key, $url );
 		}
 
