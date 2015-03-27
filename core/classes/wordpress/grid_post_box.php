@@ -34,10 +34,12 @@ class grid_post_box extends grid_box {
 			return 'Post is lost';
 		}
 		if ( $editmode ) {
-			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.')';
+			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.' - '.$post->post_status.')';
 		} else {
 			// START of WordPress Loop
-			$query = new WP_Query( array( 'p' => $this->content->postid, 'post_type' => array( 'post', 'page' ) ) );
+			$query = new WP_Query( array( 
+				'p' => $this->content->postid
+			) );
 			if ( $query->have_posts() ) {
 				$query->the_post();
 				ob_start();
@@ -52,6 +54,10 @@ class grid_post_box extends grid_box {
 					include dirname( __FILE__ ).'/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output = ob_get_clean();
+				/**
+				 * post publish flag to hide from frontend
+				 */
+				$this->content->publish = get_post_status();
 				wp_reset_postdata();
 				return $output;
 				// END of WordPress Loop
@@ -103,7 +109,10 @@ class grid_post_box extends grid_box {
 		}
 		$results = array();
 		// START of WordPress Loop
-		$query = new WP_Query( array( 'post_type' => array( 'post', 'page' ), 'grid_title' => $search ) );
+		$query = new WP_Query( array( 
+			'post_type' => array( 'post', 'page' ), 
+			'grid_title' => $search 
+		) );
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			$post = get_post();
@@ -112,6 +121,7 @@ class grid_post_box extends grid_box {
 			$box->content = new StdClass();
 			$box->content->viewmode = 'excerpt';
 			$box->content->postid = $post->ID;
+			$box->content->publish = $post->post_status;
 			$results[] = $box;
 		}
 		wp_reset_postdata();
@@ -136,6 +146,10 @@ class grid_post_box extends grid_box {
 				'key' => 'postid',
 				'type' => 'hidden',
 			),
+			array(
+				'key' => 'publish',
+				'type' => 'hidden',
+			)
 		);
 		return $params;
 	}
