@@ -13,6 +13,15 @@
 class grid_post_box extends grid_box {
 
 	/**
+	* Class contructor
+	*
+	* Initializes editor widgets for backend
+	*/
+	public function __construct() {
+		$this->content = new Stdclass();
+	}
+
+	/**
 	* Sets box type
 	*
 	* @return string
@@ -36,7 +45,6 @@ class grid_post_box extends grid_box {
 		if ( $editmode ) {
 			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.' - '.$post->post_status.')';
 		} else {
-			// START of WordPress Loop
 			$query = new WP_Query( array( 
 				'p' => $this->content->postid
 			) );
@@ -54,13 +62,13 @@ class grid_post_box extends grid_box {
 					include dirname( __FILE__ ).'/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output = ob_get_clean();
+				wp_reset_postdata();
 				/**
 				 * post publish flag to hide from frontend
 				 */
 				$this->content->publish = get_post_status();
-				wp_reset_postdata();
-				return $output;
-				// END of WordPress Loop
+				$this->content->output = $output;
+				return $this->content;
 			}
 		}
 	}
