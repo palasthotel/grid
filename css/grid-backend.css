@@ -1115,11 +1115,11 @@ h3 {
 * Loader CSS.
 */
 .grid-loading-indicator-wrapper {
-  position: absolute;
-  top: 200px;
-  left: 20px;
+  position: fixed;
+  top: 300px;
   width: 40px;
-  height: 40px; }
+  height: 40px;
+  padding-left: 20px; }
   .grid-loading-indicator-wrapper .grid-loading-indicator {
     opacity: 0;
     -webkit-transition: all 0.3s ease;
