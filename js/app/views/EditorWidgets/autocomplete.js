@@ -10,7 +10,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
     events:{
         "keyup .i-autocomplete":"keyup",
         "click .suggestion-list li":"listItemSelected",
-        "click .cancel":"cancelSelection"
+        "click .cancel":"cancelSelection",
     },
     initialize:function(){
 
@@ -20,8 +20,10 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         var classes="autocomplete-wrapper form-autocomplete dynamic-value";
         var readonly="";
         var fetch=false;
-        if(this.model.container[this.model.structure.key]!='' ||
-            this.model.container[this.model.structure.key]===0)
+        console.log(this.model.container[this.model.structure.key]);
+        if(typeof this.model.container[this.model.structure.key] != "undefined" &&
+            (this.model.container[this.model.structure.key]!='' ||
+            this.model.container[this.model.structure.key]===0))
         {
             classes+=" locked";            
             readonly="readonly=readonly";
