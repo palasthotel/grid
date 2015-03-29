@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -70,6 +70,12 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.3.3 =
+ * Post Types Landing Page and Sidebar can be disabled in Grid settings
+ * Autocomplete false locking fix
+ * New editor CSS filter
+ * unpublished posts fix in post grid box
 
 = 1.3.2 =
  * Shortcodes are working with Static HTML Box
