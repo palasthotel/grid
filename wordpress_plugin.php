@@ -369,53 +369,60 @@ function grid_wp_init() {
 	}
 
 	do_action( 'grid_register_post_type' );
+	// TODO register grid post types if enabled
+	if(get_option("grid_landing_page_enabled", false)){	
+		$permalink = get_option( 'grid_permalinks', '' );
+		if ( '' == $permalink ) {
+			$landing_page_permalink = _x( 'landing_page', 'slug', 'grid' );
+		} else {
+			$landing_page_permalink = $permalink;
+		}
 
-	$permalink = get_option( 'grid_permalinks', '' );
-	if ( '' == $permalink ) {
-		$landing_page_permalink = _x( 'landing_page', 'slug', 'grid' );
-	} else {
-		$landing_page_permalink = $permalink;
+		register_post_type( 'landing_page',
+			apply_filters( 'grid_register_post_type_landing_page',
+				array(
+					'labels'  => array(
+					    'name'          => __( 'Landing Pages', 'grid' ),
+					    'singular_name' => __( 'Landing Page', 'grid' ),
+					    // labels to be continued
+					    ),
+					'menu_icon'			=>  plugins_url( 'images/post-type-icon.png', __FILE__),
+					'description'       => __( 'This is where you can add new landing pages to your site.', 'grid' ),
+					'public'            => true,
+					'show_ui'           => true,
+					'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
+					'rewrite'           => $landing_page_permalink ? array( 
+														'slug' => untrailingslashit( $landing_page_permalink ), 
+														'with_front' => false, 
+														'feeds' => true ) 
+														: false,
+					'supports' 			=> array( 'title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions', 'page-attributes' ),
+					'show_in_nav_menus' => true,
+				)
+			)
+		);
 	}
+	// TODO enable sidebar post type if enabled
+	if(get_option("grid_sidebar_enabled", false)){
 
-	register_post_type( 'landing_page',
-		apply_filters( 'grid_register_post_type_landing_page',
-			array(
-				'labels'  => array(
-				    'name'          => __( 'Landing Pages', 'grid' ),
-				    'singular_name' => __( 'Landing Page', 'grid' ),
-				    // labels to be continued
-				    ),
-				'description'       => __( 'This is where you can add new landing pages to your site.', 'grid' ),
-				'public'            => true,
-				'show_ui'           => true,
-				'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
-				'rewrite'           => $landing_page_permalink ? array( 
-													'slug' => untrailingslashit( $landing_page_permalink ), 
-													'with_front' => false, 
-													'feeds' => true ) 
-													: false,
-				'supports' 			=> array( 'title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions', 'page-attributes' ),
-				'show_in_nav_menus' => true,
+		register_post_type( 'sidebar',
+			apply_filters( 'grid_register_post_type_landing_page',
+				array(
+					'labels'  => array(
+						'name'          => __( 'Sidebars', 'grid' ),
+						'singular_name' => __( 'Sidebar', 'grid' ),
+						// labels to be continued
+					),
+					'menu_icon'			=>  plugins_url( 'images/post-type-icon.png', __FILE__),
+					'description'       => __( 'This is where you can add new sidebars to your site.', 'grid' ),
+					'public'            => true,
+					'show_ui'           => true,
+					'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
+					'show_in_nav_menus' => false,
+				)
 			)
-		)
-	);
-
-	register_post_type( 'sidebar',
-		apply_filters( 'grid_register_post_type_landing_page',
-			array(
-				'labels'  => array(
-					'name'          => __( 'Sidebars', 'grid' ),
-					'singular_name' => __( 'Sidebar', 'grid' ),
-					// labels to be continued
-				),
-				'description'       => __( 'This is where you can add new sidebars to your site.', 'grid' ),
-				'public'            => true,
-				'show_ui'           => true,
-				'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
-				'show_in_nav_menus' => false,
-			)
-		)
-	);
+		);
+	}
 }
 add_action( 'init', 'grid_wp_init' );
 
@@ -586,12 +593,24 @@ function grid_wp_admin_init() {
 	register_setting( 'grid_settings', 'grid_default_slot_style' );
 	add_settings_field( 'grid_default_box_style', 'Box Style', 'grid_wp_default_box_style_html', 'grid_settings', 'grid_default_styles' );
 	register_setting( 'grid_settings', 'grid_default_box_style' );
+	/**
+	 * enabled post types for grid
+	 */
 	add_settings_section( 'grid_post_types', 'Post Types', 'grid_wp_post_type_settings_section', 'grid_settings' );
-	$post_types = get_post_types( array(), 'objects' );
+	$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
 	foreach ( $post_types as $key => $post_type ) {
+		// ignore landing_page and sidebar because we check them seperately
+		if($key == 'landing_page' || $key == "sidebar") continue;
 		add_settings_field( 'grid_'.$key.'_enabled', $post_type->labels->name, 'grid_wp_post_type_html', 'grid_settings', 'grid_post_types', array( 'type' => $key ) );
 		register_setting( 'grid_settings', 'grid_'.$key.'_enabled' );
 	}
+	/**
+	 * check manually because disabling this will unregister post types
+	 */
+	add_settings_field( 'grid_landing_page_enabled', "Landing Pages", 'grid_wp_post_type_html', 'grid_settings', 'grid_post_types', array( 'type' => 'landing_page') );
+	register_setting( 'grid_settings', 'grid_landing_page_enabled' );
+	add_settings_field( 'grid_sidebar_enabled', "Sidebars", 'grid_wp_post_type_html', 'grid_settings', 'grid_post_types', array( 'type' => 'sidebar') );
+	register_setting( 'grid_settings', 'grid_sidebar_enabled' );
 
 	add_settings_field( 'grid_sidebar_post_type', 'Which post type to use as sidebar content', 'grid_wp_sidebar_html', 'grid_settings', 'grid_post_types' );
 	register_setting( 'grid_settings', 'grid_sidebar_post_type' );
@@ -678,7 +697,7 @@ function grid_wp_post_type_html( $args ) {
 	$posttype = $args['type'];
 	$value = get_option( 'grid_'.$posttype.'_enabled', false );
 ?>
-<input type="checkbox" id="grid_<?php echo $posttype?>_enabled" name="grid_<?php echo $posttype?>_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> Enabled
+<input type="checkbox" id="grid_<?php echo $posttype?>_enabled" name="grid_<?php echo $posttype?>_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
 <?php
 }
 
@@ -687,7 +706,7 @@ function grid_wp_post_type_settings_section() {
 }
 
 function grid_wp_sidebar_html() {
-	$post_types = get_post_types( array(), 'objects' );
+	$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
 	$setting = get_option( 'grid_sidebar_post_type', '__NONE__' );
 ?>
 <select id="grid_sidebar_post_type" name="grid_sidebar_post_type">
