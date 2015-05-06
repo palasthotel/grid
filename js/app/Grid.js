@@ -62,7 +62,16 @@ GRID = {
 		// initialize constants
 		this._initConstants();
 		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
-
+		/**
+		 * loading indicator before grid is ready
+		 * 
+		 */
+		var $loading = jQuery("<div class='grid-loading-indicator-wrapper grid-loading-indicator-init'>"
+							+"<div class='grid-loading-indicator-text'>Loading Grid</div>"
+							+"<div class='grid-loading-indicator loading'></div>"
+							+"</div>");
+		this.$root.append($loading);
+		
 		// load all model classes for grid works
 		this.getRights().fetch();
 		this.getBoxTypes().fetch();
@@ -80,6 +89,7 @@ GRID = {
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
+				$loading.remove();
 				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 				
 				GRID.gridview = new GridView({model: GRID.getModel() });

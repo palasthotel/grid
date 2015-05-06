@@ -1082,6 +1082,9 @@ h3 {
 .grid-toolbar-list {
   margin: 20px 20px; }
 
+#new-grid-wrapper {
+  position: relative; }
+
 .grid-wrapper {
   margin-top: 40px;
   margin-right: 260px;
@@ -1120,6 +1123,17 @@ h3 {
   width: 40px;
   height: 40px;
   padding-left: 20px; }
+  .grid-loading-indicator-wrapper.grid-loading-indicator-init {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    margin-left: -40px;
+    padding-left: 0px; }
+    .grid-loading-indicator-wrapper.grid-loading-indicator-init .grid-loading-indicator-text {
+      position: absolute;
+      top: -2px;
+      left: 20px;
+      width: 100px; }
   .grid-loading-indicator-wrapper .grid-loading-indicator {
     opacity: 0;
     -webkit-transition: all 0.3s ease;
@@ -1155,8 +1169,8 @@ h3 {
 
 @-webkit-keyframes gridloading {
   0%,
-  80%,
-  100% {
+	80%,
+	100% {
     box-shadow: 0 0 #3F4853;
     height: 1em; }
   40% {
@@ -1165,8 +1179,8 @@ h3 {
 
 @keyframes gridloading {
   0%,
-  80%,
-  100% {
+	80%,
+	100% {
     box-shadow: 0 0 #3F4853;
     height: 1em; }
   40% {
