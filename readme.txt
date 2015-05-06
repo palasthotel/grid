@@ -72,6 +72,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 == Changelog ==
 
 = 1.3.4 =
+ * initial loading indicator
  * mysqli warning on connection
 
 = 1.3.3 =
