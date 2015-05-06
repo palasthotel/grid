@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -969,6 +969,7 @@ function grid_wp_edit_reuse_box() {
 	$editor = $grid_lib->getReuseBoxEditor();
 	grid_wp_reuse_box_editor_prepare( $editor );
 	$storage = grid_wp_get_storage();
+	grid_wp_load_js();
 	$html = $editor->runEditor(
 		$storage,
 		$boxid,
