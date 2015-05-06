@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -71,6 +71,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.3.4 =
+ * mysqli warning on connection
+
 = 1.3.3 =
  * Post Types Landing Page and Sidebar can be disabled in Grid settings
  * Autocomplete false locking fix
@@ -109,6 +112,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 * First release
 
 == Upgrade Notice ==
+
+= 1.3.4 = 
+Grid works with custom ports on php strict level now
 
 = 1.3.1 =
 Some boxes could not be saved. Now they can.

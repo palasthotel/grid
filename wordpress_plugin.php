@@ -1154,9 +1154,7 @@ function grid_wp_get_mysqli() {
 	if ( strpos( DB_HOST, ':' ) !== false ) {
 		$db_host = explode( ':', DB_HOST );
 		$host = $db_host[0];
-		$port = $db_host[1];
-		
-		
+		$port = intval($db_host[1]);
 	}
 	return new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
 }
