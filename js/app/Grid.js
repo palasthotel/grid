@@ -68,7 +68,7 @@ GRID = {
 		 */
 		var $loading = jQuery("<div class='grid-loading-indicator-wrapper grid-loading-indicator-init'>"
 							+"<div class='grid-loading-indicator-text'>Loading Grid</div>"
-							+"<div class='grid-loading-indicator loading'></div>"
+							+"<div class='grid-loading-indicator grid-loading-temp loading'></div>"
 							+"</div>");
 		this.$root.append($loading);
 		
@@ -81,7 +81,6 @@ GRID = {
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
 
-
 		// load the grid + view
 		this.grid = new Grid({
         	id:this.ID,
@@ -89,7 +88,7 @@ GRID = {
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
-				$loading.remove();
+				
 				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 				
 				GRID.gridview = new GridView({model: GRID.getModel() });
@@ -97,6 +96,7 @@ GRID = {
 				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
 
 				GRID.$root.append( GRID.getView().render().el );
+				$loading.remove();
 				
 				jQuery(GRID.dom_root).mutate('height',function (element,info){
 				    GRID.onSidebarCalculation();
@@ -457,10 +457,10 @@ GRID = {
 		GRID.gridview.$el.fadeIn(100).fadeOut(100).fadeIn(100);
 	},
 	startLoading: function(){
-		GRID.$root.find(".grid-loading-indicator").addClass("loading");
+		GRID.$root.find(".grid-loading-indicator:not(.grid-loading-temp)").addClass("loading");
 	},
 	finishLoading: function(){
-		GRID.$root.find(".grid-loading-indicator").removeClass("loading");
+		GRID.$root.find(".grid-loading-indicator:not(.grid-loading-temp)").removeClass("loading");
 	}
 
 };
