@@ -126,7 +126,8 @@ Some boxes could not be saved. Now they can.
 = 1.3.1 =
 If you are using git in your project the lib folder was ignore previously.
 
-
+= 1.3.2 =
+Fixes an sql error which occurs when editing reusable boxes or containers.
 
 == Arbitrary section ==
 

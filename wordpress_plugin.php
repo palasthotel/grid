@@ -96,21 +96,58 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 	}
 	public function getMetaTypesAndSearchCriteria($grid_id){
 		$result=parent::getMetaTypesAndSearchCriteria($grid_id);
-		$result=apply_filters('grid_metaboxes',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
+		$post_id=NULL;
+		if(strncmp("container:",$gridId,strlen("container:"))==0)
+		{
+			$post_id=NULL;
+		}
+		else if(strncmp("box:",$gridId,strlen("box:"))==0)
+		{
+			$post_id=NULL;
+		}
+		else
+		{
+			$post_id=grid_wp_get_postid_by_grid($grid_id);
+		}
+		$result=apply_filters('grid_metaboxes',$result,$grid_id,$post_id);
 		return $result;
 	}
 	
 	public function Search($grid_id,$metatype,$searchstring,$criteria)
 	{
 		$result=parent::Search($grid_id,$metatype,$searchstring,$criteria);
-		$result=apply_filters('grid_boxes_search',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
+		if(strncmp("container:",$gridId,strlen("container:"))==0)
+		{
+			$post_id=NULL;
+		}
+		else if(strncmp("box:",$gridId,strlen("box:"))==0)
+		{
+			$post_id=NULL;
+		}
+		else
+		{
+			$post_id=grid_wp_get_postid_by_grid($grid_id);
+		}
+		$result=apply_filters('grid_boxes_search',$result,$grid_id,$post_id);
 		return $result;
 	}
 	
 	public function getContainerTypes($grid_id)
 	{
 		$result=parent::getContainerTypes($grid_id);
-		$result=apply_filters('grid_containers',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
+		if(strncmp("container:",$gridId,strlen("container:"))==0)
+		{
+			$post_id=NULL;
+		}
+		else if(strncmp("box:",$gridId,strlen("box:"))==0)
+		{
+			$post_id=NULL;
+		}
+		else
+		{
+			$post_id=grid_wp_get_postid_by_grid($grid_id);
+		}
+		$result=apply_filters('grid_containers',$result,$grid_id,$post_id);
 		return $result;
 	}
 
