@@ -66,11 +66,9 @@ GRID = {
 		 * loading indicator before grid is ready
 		 * 
 		 */
-		var $loading = jQuery("<div class='grid-loading-indicator-wrapper grid-loading-indicator-init'>"
-							+"<div class='grid-loading-indicator-text'>Loading Grid</div>"
-							+"<div class='grid-loading-indicator grid-loading-temp loading'></div>"
-							+"</div>");
-		this.$root.append($loading);
+		GRID.$loading = ich.tpl_loading();
+		this.$root.append(GRID.$loading);
+		GRID.$loading.addClass("grid-init-loading");
 		
 		// load all model classes for grid works
 		this.getRights().fetch();
@@ -96,7 +94,6 @@ GRID = {
 				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
 
 				GRID.$root.append( GRID.getView().render().el );
-				$loading.remove();
 				
 				jQuery(GRID.dom_root).mutate('height',function (element,info){
 				    GRID.onSidebarCalculation();
@@ -118,6 +115,7 @@ GRID = {
 				GRID.$root.prepend(GRID.toolbar.render().el);
 				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
 				GRID.onSidebarCalculation();
+				GRID.$loading.removeClass("grid-init-loading");
 			}
         });
 
@@ -457,10 +455,10 @@ GRID = {
 		GRID.gridview.$el.fadeIn(100).fadeOut(100).fadeIn(100);
 	},
 	startLoading: function(){
-		GRID.$root.find(".grid-loading-indicator:not(.grid-loading-temp)").addClass("loading");
+		GRID.$loading.addClass("loading");
 	},
 	finishLoading: function(){
-		GRID.$root.find(".grid-loading-indicator:not(.grid-loading-temp)").removeClass("loading");
+		GRID.$loading.removeClass("loading");
 	}
 
 };

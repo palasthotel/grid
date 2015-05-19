@@ -1,33 +1,31 @@
 /**
 * Loader CSS.
 */
+.grid-loading{
+	position: absolute;
+	left: 55px;
+	top:0px;
+	width: 100%;
+	bottom:100%;
+	overflow: hidden;
+	z-index: 80;
+	background-color: rgba(255,255,255,0.6);
+	opacity: 0;
+	@include transition(all, .6s, ease);
+}
 .grid-loading-indicator-wrapper{
 	position: fixed;
 	top: 300px;
 	width: 40px;
 	height: 40px;
-	padding-left: 20px;
+	left: 50%;
+	margin-left: -40px;
 
-	&.grid-loading-indicator-init{
+	.grid-loading-indicator-text{
 		position: absolute;
-		top: 30px;
-		left: 50%;
-		margin-left: -40px;
-		padding-left: 0px;
-		.grid-loading-indicator-text{
-			position: absolute;
-			top: -2px;
-			left: 20px;
-			width: 100px;
-		}
-	}
-
-	.grid-loading-indicator{
-		opacity: 0;
-		@include transition(all, .3s, ease);
-	}
-	.grid-loading-indicator.loading{
-		opacity: 1;
+		top: -2px;
+		left: 20px;
+		width: 100px;
 	}
 
 	.grid-loading-indicator,
@@ -58,6 +56,15 @@
 		left: 0.6em;
 		-webkit-animation-delay: -0.32s;
 		animation-delay: -0.32s;
+	}
+}
+
+.loading,
+.grid-init-loading{
+	&.grid-loading,
+	.grid-loading{
+		opacity: 1;
+		bottom: 0%;
 	}
 }
 

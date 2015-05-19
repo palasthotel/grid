@@ -1117,29 +1117,31 @@ h3 {
 /**
 * Loader CSS.
 */
+.grid-loading {
+  position: absolute;
+  left: 55px;
+  top: 0px;
+  width: 100%;
+  bottom: 100%;
+  overflow: hidden;
+  z-index: 80;
+  background-color: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  -webkit-transition: all 0.6s ease;
+          transition: all 0.6s ease; }
+
 .grid-loading-indicator-wrapper {
   position: fixed;
   top: 300px;
   width: 40px;
   height: 40px;
-  padding-left: 20px; }
-  .grid-loading-indicator-wrapper.grid-loading-indicator-init {
+  left: 50%;
+  margin-left: -40px; }
+  .grid-loading-indicator-wrapper .grid-loading-indicator-text {
     position: absolute;
-    top: 30px;
-    left: 50%;
-    margin-left: -40px;
-    padding-left: 0px; }
-    .grid-loading-indicator-wrapper.grid-loading-indicator-init .grid-loading-indicator-text {
-      position: absolute;
-      top: -2px;
-      left: 20px;
-      width: 100px; }
-  .grid-loading-indicator-wrapper .grid-loading-indicator {
-    opacity: 0;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
-  .grid-loading-indicator-wrapper .grid-loading-indicator.loading {
-    opacity: 1; }
+    top: -2px;
+    left: 20px;
+    width: 100px; }
   .grid-loading-indicator-wrapper .grid-loading-indicator,
   .grid-loading-indicator-wrapper .grid-loading-indicator:before,
   .grid-loading-indicator-wrapper .grid-loading-indicator:after {
@@ -1166,6 +1168,13 @@ h3 {
     left: 0.6em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s; }
+
+.loading.grid-loading,
+.loading .grid-loading,
+.grid-init-loading.grid-loading,
+.grid-init-loading .grid-loading {
+  opacity: 1;
+  bottom: 0%; }
 
 @-webkit-keyframes gridloading {
   0%,
