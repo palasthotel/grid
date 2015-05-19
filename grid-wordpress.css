@@ -10,6 +10,9 @@
 #new-grid-editor-wrapper{
 	background-color: transparent;
 }
+#adminmenuback{
+	z-index: 99;
+}
 
 /*
 * Privileges page
