@@ -169,14 +169,20 @@ var GridRequest = {
 	},
 	revisions: function(revisions, options){
 		GRID.log("revisions->read");
+		var page = (typeof options.page != typeof undefined)? options.page: 0;
+		revisions.nextpage = -1;
 		new GridAjax(
 			"getGridRevisions",
-			[revisions.getGridID()],
+			[revisions.getGridID(), page],
 			{ 
 				success_fn: function(data){ 
 					GRID.log("getGridRevisions succes");
-					GRID.log(data);
-					revisions.reset();
+					if(data.result.length > 0){
+						revisions.nextpage = page+1;
+					} 					
+					if(page == 0){
+						revisions.reset();
+					}
 					_.each(data.result, function(revision){
 						revisions.add( new Revision(revision) );						
 					});

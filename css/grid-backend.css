@@ -1119,8 +1119,7 @@ h3 {
 */
 .grid-loading {
   position: absolute;
-  left: 55px;
-  top: 0px;
+  top: 4px;
   width: 100%;
   bottom: 100%;
   overflow: hidden;

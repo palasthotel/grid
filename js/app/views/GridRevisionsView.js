@@ -17,6 +17,7 @@ var GridRevisionsView = GridBackbone.View.extend({
 		this.listenTo(this.collection, 'add',this.render);
 		this.$list = jQuery("<div class='grid-revisions-list'></ul>");
 		this.$el.append(this.$list);
+		this.interval = setInterval(this.onRevisionsScroll.bind(this),1000);
 	},
 	render:function(){
 		var revisions=this.collection.toJSON();
@@ -49,7 +50,17 @@ var GridRevisionsView = GridBackbone.View.extend({
 		var child_count = this.$list.children().length;
 		var list_width = child_count * this.$list.children().last().outerWidth(true);
 		this.$list.css("width", list_width);
+
 		return this;
+	},
+	onRevisionsScroll: function(){
+		if(this.collection.nextpage == -1) return;
+		if(!this.$el.is(":visible")) return;
+		var diff = this.$list.outerWidth(true)-Math.abs(this.$list.position().left);
+		diff = diff - this.$el.outerWidth(true);
+		if(diff < 300 ){
+			this.collection.fetch({page:this.collection.nextpage});
+		}
 	},
 	onPreview:function(e){
 		var $revision = jQuery(e.target).parents(".grid-revision");
