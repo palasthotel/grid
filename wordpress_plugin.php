@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -97,11 +97,11 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 	public function getMetaTypesAndSearchCriteria($grid_id){
 		$result=parent::getMetaTypesAndSearchCriteria($grid_id);
 		$post_id=NULL;
-		if(strncmp("container:",$gridId,strlen("container:"))==0)
+		if(strncmp("container:",$grid_id,strlen("container:"))==0)
 		{
 			$post_id=NULL;
 		}
-		else if(strncmp("box:",$gridId,strlen("box:"))==0)
+		else if(strncmp("box:",$grid_id,strlen("box:"))==0)
 		{
 			$post_id=NULL;
 		}
@@ -116,11 +116,11 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 	public function Search($grid_id,$metatype,$searchstring,$criteria)
 	{
 		$result=parent::Search($grid_id,$metatype,$searchstring,$criteria);
-		if(strncmp("container:",$gridId,strlen("container:"))==0)
+		if(strncmp("container:",$grid_id,strlen("container:"))==0)
 		{
 			$post_id=NULL;
 		}
-		else if(strncmp("box:",$gridId,strlen("box:"))==0)
+		else if(strncmp("box:",$grid_id,strlen("box:"))==0)
 		{
 			$post_id=NULL;
 		}
@@ -135,11 +135,11 @@ class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
 	public function getContainerTypes($grid_id)
 	{
 		$result=parent::getContainerTypes($grid_id);
-		if(strncmp("container:",$gridId,strlen("container:"))==0)
+		if(strncmp("container:",$grid_id,strlen("container:"))==0)
 		{
 			$post_id=NULL;
 		}
-		else if(strncmp("box:",$gridId,strlen("box:"))==0)
+		else if(strncmp("box:",$grid_id,strlen("box:"))==0)
 		{
 			$post_id=NULL;
 		}
