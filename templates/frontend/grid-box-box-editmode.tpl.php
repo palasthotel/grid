@@ -8,9 +8,6 @@
 ?>
 <div class="grid-box-editmode">
 	<?php
-	if ($this->title!=""){
-		echo '<h2 class="b-title">'.$this->title.'</h2>';
-	}
 	if(is_string($content)){
 		echo "<div class='content'>".$content."</div>";
 	} else {
