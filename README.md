@@ -39,3 +39,7 @@ This library does not work on it's own - it needs some help from outside.
 ## License
 
 GPL v3 - see license.txt
+
+## Documentation
+
+Currently there is only [a German documentation available](http://doc.the-grid.ws/). It includes both documentations for users and developers.
