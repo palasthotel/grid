@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist
 Requires at least: 4.0
 Tested up to: 4.2.2
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -70,6 +70,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.3.8 =
+ * Polylang support
 
 = 1.3.7 =
  * container and box loading fix
