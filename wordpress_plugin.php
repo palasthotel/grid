@@ -931,7 +931,7 @@ function grid_wp_thegrid() {
 		$lang = grid_get_lang();
 		$js = $grid_lib->getEditorJS( $lang, false );
 		foreach ( $js as $idx => $file ) {
-			wp_enqueue_script( 'grid_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
+			wp_enqueue_script( 'grid_lib_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
 		foreach ( $editor_widgets["js"] as $key => $url ) {
 			wp_enqueue_script( 'grid_js_'.$key, $url );
