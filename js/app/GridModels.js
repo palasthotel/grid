@@ -161,7 +161,12 @@ var Grid = GridBackbone.Model.extend({
     },
     // handles all Server communication
     sync: function(method, model, options){
-    	GridRequest.grid[method](model, options);
+        if(typeof GridRequest.grid[method] == "function"){
+            GridRequest.grid[method](model, options);
+        } else {
+            GRID.log("grid sync metod not defined "+method);
+        }
+    	
     }
 });
 

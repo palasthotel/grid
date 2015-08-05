@@ -1,0 +1,12 @@
+.grid-authors-wrapper{
+	min-height: 300px;
+	display: none;
+	.authors-list{
+		max-width: 300px;
+		margin: 0px auto;
+		padding: 15px;
+		background-color: white;
+		border: 4px solid #efefef;
+		list-style: none;
+	}
+}

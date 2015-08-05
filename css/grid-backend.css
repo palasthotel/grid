@@ -979,6 +979,29 @@ h3 {
   display: table;
   width: 100%; }
 
+.grid-authors-wrapper {
+  min-height: 300px;
+  display: none; }
+  .grid-authors-wrapper .authors-list {
+    max-width: 300px;
+    margin: 0px auto;
+    padding: 15px;
+    background-color: white;
+    border: 4px solid #efefef;
+    list-style: none; }
+
+.grid-is-locked .grid-containers-wrapper {
+  position: relative; }
+  .grid-is-locked .grid-containers-wrapper:before {
+    position: absolute;
+    content: "";
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 82; }
+
 .grid-tool-elements {
   position: fixed;
   box-sizing: border-box;

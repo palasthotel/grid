@@ -6,19 +6,32 @@
 */
 
 var GridAuthors = GridBackbone.Collection.extend({
-    async_authors_list: function(authors){
+    model: GridAuthor,
+    async_authors_list: function(data){
     	var self = this;
-    	_.each(authors, function(author){
-    		self.add({name: author});
+    	_.each(data, function(item){
+    		self.add({id: item.identifier, name: item.author});
     	});
     },
+    resetLock: function(){
+        this.each(function(author){
+            author.set("has_lock", false);
+        });
+    },
+    setLock: function(id){
+        this.get(id).set("has_lock", true);
+    },
+    haveLock: function(){
+        return (typeof this.findWhere({has_lock:true}) == "undefined");
+    },
     getCount: function(){
+        // +1 is us self
         return this.length+1;
     },
-    async_authors_joined: function(author){
-        this.add({name: author});
+    async_authors_joined: function(data){
+        this.add({id:data.identifier, name: data.author});
     },
-    async_authors_left: function(author){
-        this.remove(this.findWhere({name: author}));
+    async_authors_left: function(data){
+        this.remove(this.get(data));
     },
 });

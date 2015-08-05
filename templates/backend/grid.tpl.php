@@ -56,6 +56,13 @@ document.author="<?php echo $author; ?>";
 <script id="tpl_revisions" type="text/grid-icanhaz">
 <?php require('ich.revisions.html');?>
 </script>
+<script id="tpl_authors" type="text/grid-icanhaz">
+<?php require('ich.authors.html');?>
+</script>
+<script id="tpl_author" type="text/grid-icanhaz">
+<?php require('ich.author.html');?>
+</script>
 
 <div id="new-grid-wrapper" class="grid-all-wrapper"></div>
 <div id="new-grid-editor-wrapper" class="grid-editor-wrapper"></div>
+<div id="grid-authors-wrapper" class="grid-authors-wrapper"></div>

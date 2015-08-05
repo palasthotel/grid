@@ -15,13 +15,16 @@ var GridToolbarView = GridBackbone.View.extend({
         "click .grid-toolbar [role=preview]": "preview",
         "click .grid-toolbar [role=revert]": "revert",
         "click .grid-toolbar [role=revisions]": "revisions",
+        "click .grid-toolbar [role=authors]": "onAuthors",
         "click .grid-element-type[data-type=box]:not(.active)": "showBoxTools",
-        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools"
+        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools",
     },
     initialize: function() {
         this.listenTo(this.model, "change:isDraft", this.setState);
         this.listenTo(GRID.authors, "add", this.onUpdateAuthors);
         this.listenTo(GRID.authors, "remove", this.onUpdateAuthors);
+        this.listenTo(GRID.authors, "reset", this.onUpdateAuthors);
+        console.log("init toolbar");
         this.setState();
     },
     render: function() {
@@ -60,7 +63,7 @@ var GridToolbarView = GridBackbone.View.extend({
         return this;
     },
     publish: function(){
-        if(!GRID.getRights().get("publish")){
+        if(!GRID.getRights().get("publish") || GRID.locked()){
             alert("You have no rights for that...");
             return false;
         }
@@ -80,7 +83,7 @@ var GridToolbarView = GridBackbone.View.extend({
         window.open(this.model.get("PREVIEW_URL"),"_blank");
     },
     revert: function(){
-        if(!GRID.getRights().get("revert")){
+        if(!GRID.getRights().get("revert") || GRID.locked() ){
             alert("You have no rights for that...");
             return false;
         }
@@ -163,6 +166,9 @@ var GridToolbarView = GridBackbone.View.extend({
         var tab_height = this.$tab_container.outerHeight();
         this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height));
     },
+    /**
+     * authors button
+     */
     onUpdateAuthors: function(){
         if(GRID.authors.getCount() < 2){
             this.$authors_count.parents("li").hide();
@@ -170,5 +176,8 @@ var GridToolbarView = GridBackbone.View.extend({
             this.$authors_count.parents("li").show();
             this.$authors_count.text(GRID.authors.getCount());
         }        
+    },
+    onAuthors: function(e){
+        GRID.showAuthors();
     },
 });
