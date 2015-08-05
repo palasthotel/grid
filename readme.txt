@@ -1,7 +1,7 @@
 === Grid ===
 Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
-Tags: landingpage, editor, admin, page, containerist
+Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.2.2
 Stable tag: 1.3.8
