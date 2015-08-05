@@ -63,6 +63,6 @@ document.author="<?php echo $author; ?>";
 <?php require('ich.author.html');?>
 </script>
 
+<div id="grid-authors-wrapper" class="grid-authors-wrapper"></div>
 <div id="new-grid-wrapper" class="grid-all-wrapper"></div>
 <div id="new-grid-editor-wrapper" class="grid-editor-wrapper"></div>
-<div id="grid-authors-wrapper" class="grid-authors-wrapper"></div>

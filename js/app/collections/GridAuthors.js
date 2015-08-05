@@ -34,4 +34,8 @@ var GridAuthors = GridBackbone.Collection.extend({
     async_authors_left: function(data){
         this.remove(this.get(data));
     },
+    async_disconnect: function(){
+        this.reset();
+        this.resetLock();
+    }
 });

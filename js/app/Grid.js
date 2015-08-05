@@ -387,7 +387,6 @@ GRID = {
 	 * change to authors
 	 */
 	showAuthors: function(){
-		GRID.$root.hide();
 		GRID.$root_authors.empty();
 		var authors = new Authors();
 		GRID.$root_authors.append(authors.render().$el);
@@ -395,7 +394,6 @@ GRID = {
 	},
 	hideAuthors: function() {
 		GRID.$root_authors.hide();
-		GRID.$root.show();
 	},
 	locked: function(){
 		return !GRID.authors.haveLock();
@@ -407,6 +405,9 @@ GRID = {
 			GRID.reload();
 			GRID.$root.removeClass("grid-is-locked");
 		}		
+	},
+	async_disconnect: function(){
+		this.async_locking_is_locked();
 	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){

@@ -980,10 +980,11 @@ h3 {
   width: 100%; }
 
 .grid-authors-wrapper {
-  min-height: 300px;
-  display: none; }
+  position: fixed;
+  width: 260px;
+  display: none;
+  right: 0px; }
   .grid-authors-wrapper .authors-list {
-    max-width: 300px;
     margin: 0px auto;
     padding: 15px;
     background-color: white;
@@ -995,12 +996,17 @@ h3 {
   .grid-is-locked .grid-containers-wrapper:before {
     position: absolute;
     content: "";
-    top: 0px;
+    top: -45px;
     left: 0px;
     bottom: 0px;
     right: 0px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.6);
     z-index: 82; }
+.grid-is-locked .grid-tool-elements,
+.grid-is-locked .grid-tool-publish,
+.grid-is-locked .grid-tool-revert,
+.grid-is-locked .grid-tool-revisions {
+  display: none; }
 
 .grid-tool-elements {
   position: fixed;

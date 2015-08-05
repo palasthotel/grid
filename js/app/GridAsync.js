@@ -67,12 +67,12 @@ GridAsync.prototype.on = function(e, f){
 	});	
 }
 GridAsync.prototype.connect = function(data){
-	console.log("connected");
 	this.authors_join();
 };
 GridAsync.prototype.disconnect = function(data){
 	console.log("disconnected");
-	GRID.authors.reset();
+	this.notifyAll("disconnect");
+	this.notifyAll("locking_is_locked");
 };
 /**
  * authors events
@@ -90,7 +90,6 @@ GridAsync.prototype.authors_left = function(id){
  * locking events
  */
 GridAsync.prototype.locking_is_locked = function(data){
-	// data.locked && data.identifier locker
 	GRID.authors.resetLock();
 	if(data.isLocked){
 		GRID.authors.setLock(data.identifier);
