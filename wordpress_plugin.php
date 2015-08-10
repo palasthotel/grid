@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.3.8
+ * Version: 1.3.9
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -907,38 +907,12 @@ function grid_wp_thegrid() {
 </form>
 <?php
 	} else {
-
-		$grid_id = $rows[0]->grid_id;
 		global $grid_lib;
-
-		$editor_widgets = grid_get_additional_editor_widgets();
-
-		$css = $grid_lib->getEditorCSS( false );
-		foreach ( $css as $idx => $file ) {
-			wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
-		}
-		/**
-		 * extend widgets css with editor css filters
-		 */
-		$editor_css = apply_filters('grid_editor_css', $editor_widgets["css"] );
-		foreach ( $editor_css as $key => $url ) {
-			wp_enqueue_style( 'grid_css_'.$key, $url );
-		}
-
-		wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-		wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
-
-		$lang = grid_get_lang();
-		$js = $grid_lib->getEditorJS( $lang, false );
-		foreach ( $js as $idx => $file ) {
-			wp_enqueue_script( 'grid_lib_js_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
-		}
-		foreach ( $editor_widgets["js"] as $key => $url ) {
-			wp_enqueue_script( 'grid_js_'.$key, $url );
-		}
-
-		wp_enqueue_script( 'grid_js_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
+		$grid_id = $rows[0]->grid_id;
+		
 		$post = get_post( $postid );
+
+		grid_enqueue_editor_files();
 
 		echo '<div class="wrap"><h2>'.$post->post_title.
 		' <a title="Return to the post-edit page" class="add-new-h2"'.
@@ -955,7 +929,10 @@ function grid_wp_thegrid() {
 			add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
 			add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) )
 		);
+
+		
 		grid_wp_load_js();
+		
 		echo $html;
 	}
 }
@@ -972,26 +949,11 @@ function grid_wp_load_js() {
 	}
 }
 
-function grid_wp_reuse_box_editor_prepare( $editor ) {
-
-	$css = $editor->getCSS( false );
-	foreach ( $css as $idx => $file ) {
-		wp_enqueue_style( 'grid_reusebox_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
-	}
-	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-	$lang = grid_get_lang();
-	$js = $editor->getJS( $lang, false );
-	foreach ( $js as $idx => $file ) {
-		wp_enqueue_script( 'grid_reusebox_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
-	}
-	wp_enqueue_script( 'grid_reusebox_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
-}
-
 function grid_wp_reuse_boxes() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
-	grid_wp_reuse_box_editor_prepare( $editor );
+	grid_enqueue_editor_files();
 	$html = $editor->run( $storage, function( $id ) {
 				return add_query_arg( array( 'page' => 'grid_edit_reuse_box', 'boxid' => $id ), admin_url( 'admin.php' ) );
 			}, function( $id ) {
@@ -1004,7 +966,7 @@ function grid_wp_edit_reuse_box() {
 	$boxid = intval($_GET['boxid']);
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
-	grid_wp_reuse_box_editor_prepare( $editor );
+	grid_enqueue_editor_files();
 	$storage = grid_wp_get_storage();
 	grid_wp_load_js();
 	$html = $editor->runEditor(
@@ -1022,7 +984,7 @@ function grid_wp_delete_reuse_box() {
 	$boxid = intval($_GET['boxid']);
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
-	grid_wp_reuse_box_editor_prepare( $editor );
+	grid_enqueue_editor_files();
 	$storage = grid_wp_get_storage();
 	$html = $editor->runDelete( $storage, $boxid );
 	if ( true === $html ) {
@@ -1032,26 +994,11 @@ function grid_wp_delete_reuse_box() {
 	echo $html;
 }
 
-function grid_wp_reuse_container_editor_prepare( $editor ) {
-
-	$css = $editor->getCSS( false );
-	foreach ( $css as $idx => $file ) {
-		wp_enqueue_style( 'grid_reusecontainer_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
-	}
-	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-	$lang = grid_get_lang();
-	$js = $editor->getJS( $lang, false );
-	foreach ( $js as $idx => $file ) {
-		wp_enqueue_script( 'grid_reusecontainer_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
-	}
-	wp_enqueue_script( 'grid_reusecontainer_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
-}
-
 function grid_wp_containers() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getContainerEditor();
-	grid_wp_reuse_container_editor_prepare( $editor );
+	grid_enqueue_editor_files();
 	$html = $editor->run( $storage );
 	echo $html;
 }
@@ -1060,7 +1007,7 @@ function grid_wp_reuse_containers() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getReuseContainerEditor();
-	grid_wp_reuse_container_editor_prepare( $editor );
+	grid_enqueue_editor_files();
 	$html = $editor->run( $storage, function( $id ) {
 				return add_query_arg( array( 'page' => 'grid_edit_reuse_container', 'containerid' => $id ), admin_url( 'admin.php' ) );
 			}, function( $id ) {
@@ -1230,6 +1177,39 @@ function grid_enable_front_page_landing_page( $query )
  */
 function grid_get_additional_editor_widgets(){
 	return apply_filters('grid_editor_widgets', array( "js" => array(), "css"=> array() ) );
+}
+/**
+ * enqueue js and css files for editor
+ */
+function grid_enqueue_editor_files(){
+	global $grid_lib;
+	$editor_widgets = grid_get_additional_editor_widgets();
+
+	$css = $grid_lib->getEditorCSS( false );
+	foreach ( $css as $idx => $file ) {
+		wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
+	}
+	/**
+	 * extend widgets css with editor css filters
+	 */
+	$editor_css = apply_filters('grid_editor_css', $editor_widgets["css"] );
+	foreach ( $editor_css as $key => $url ) {
+		wp_enqueue_style( 'grid_css_'.$key, $url );
+	}
+
+	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
+	wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
+
+	$lang = grid_get_lang();
+	$js = $grid_lib->getEditorJS( $lang, false );
+	foreach ( $js as $idx => $file ) {
+		wp_enqueue_script( 'grid_js_lib_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
+	}
+	foreach ( $editor_widgets["js"] as $key => $url ) {
+		wp_enqueue_script( 'grid_js_'.$key, $url );
+	}
+
+	wp_enqueue_script( 'grid_js_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
 }
 
 function grid_get_lang(){
