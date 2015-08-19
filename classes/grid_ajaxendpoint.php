@@ -7,6 +7,7 @@
  */
 
 class grid_ajaxendpoint {
+	/** @var grid_db $storage */
 	public $storage;
 
 	//only a test method to check that our ajax management works
