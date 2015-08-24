@@ -40,8 +40,7 @@ Dimensions
 .grid-container-editor-form button {
   font-family: inherit;
   font-size: 12px;
-  -moz-box-sizing: border-box;
-       box-sizing: border-box; }
+  box-sizing: border-box; }
 .grid-container-editor-form input {
   height: 27px;
   line-height: 27px;
@@ -77,5 +76,3 @@ Dimensions
   padding: 0px 10px; }
   .grid-container-editor-form .grid-new-container-values > div {
     margin-bottom: 8px; }
-
-/*# sourceMappingURL=grid-container-editor.css.map */
