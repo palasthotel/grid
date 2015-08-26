@@ -73,7 +73,7 @@ var GridToolbarView = GridBackbone.View.extend({
         }
     },
     preview: function(){
-        window.open(this.model.get("PREVIEW_URL"),"_blank");
+        window.open(this.model.get("PREVIEW_URL"),"grid_preview");
     },
     revert: function(){
         if(!GRID.getRights().get("revert")){
