@@ -455,10 +455,17 @@ GRID = {
 		GRID.gridview.$el.fadeIn(100).fadeOut(100).fadeIn(100);
 	},
 	startLoading: function(){
+		clearTimeout(GRID.loading_hide_timeout);
+		GRID.$loading.show();
 		GRID.$loading.addClass("loading");
+
 	},
 	finishLoading: function(){
 		GRID.$loading.removeClass("loading");
+		clearTimeout(GRID.loading_hide_timeout);
+		GRID.loading_hide_timeout = setTimeout(function(){
+			GRID.$loading.hide();
+		},1200);
 	}
 
 };

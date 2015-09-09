@@ -22,6 +22,7 @@ var GridAjax = function(method, params_array, settings){
 		type: 'POST',
 		dataType: 'json',
 		error: function(jqXHR, textStatus, error){
+			GRID.finishLoading();
    // 			GRID.log("!--- error Method: "+method);
 			// GRID.log(jqXHR);
 			// GRID.log(textStatus);
