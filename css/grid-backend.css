@@ -67,8 +67,7 @@ h3 {
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.05em;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease;
+    transition: all 0.1337s ease;
     box-shadow: none; }
     .grid-all-wrapper button:hover,
     .grid-all-wrapper button:focus:hover,
@@ -211,7 +210,9 @@ h3 {
 .icon-drag:before {
   content: '\e80e';
   -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
   transform: rotate(90deg); }
 
 .icon-options:before {
@@ -228,8 +229,7 @@ h3 {
     top: -25px;
     width: 100%;
     z-index: 60;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease;
+    transition: all 0.3s ease;
     background-color: #e5f7fa;
     border: 3px dashed #3ac5d9; }
     .container-drop-area-wrapper .container-drop-area.hover {
@@ -265,12 +265,15 @@ h3 {
     background-color: #e5f7fa;
     width: 100%;
     z-index: 60;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
+    transition: all 0.3s ease; }
     .grid-box-drop-area-wrapper .grid-box-drop-area.hover {
       background-color: #3ac5d9;
       height: 25px;
       top: -14px; }
+  .grid-box + .grid-box-drop-area-wrapper {
+    margin-top: 10px; }
+    .grid-box + .grid-box-drop-area-wrapper:last-child {
+      margin-top: 0; }
 
 /*********************
 * box
@@ -280,6 +283,7 @@ h3 {
   padding: 12px 0;
   min-height: 50px;
   background-color: white;
+  -webkit-box-shadow: inset 0 0 2px 0px #838688;
   box-shadow: inset 0 0 2px 0px #838688; }
   .grid-box .grid-box-content {
     font-size: 11px;
@@ -302,8 +306,7 @@ h3 {
   background-color: rgba(63, 72, 83, 0.9);
   font-weight: bold;
   text-transform: uppercase;
-  -webkit-transition: opacity 0.2s ease;
-          transition: opacity 0.2s ease; }
+  transition: opacity 0.2s ease; }
   .grid-box-controls.grid-box-movable {
     cursor: move; }
   .grid-box-controls .grid-box-control-button {
@@ -314,14 +317,12 @@ h3 {
     right: 0px;
     width: 40px;
     max-width: 250px;
-    -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease; }
+    transition: all 0.3s ease; }
     .grid-box-controls .grid-box-control-button:hover {
       width: 100%; }
     .grid-box-controls .grid-box-control-button .grid-box-control-text {
       opacity: 0;
-      -webkit-transition: all 0.3s ease;
-              transition: all 0.3s ease; }
+      transition: all 0.3s ease; }
     .grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
       opacity: 1; }
   .grid-box-controls .grid-box-control-wrapper {
@@ -424,8 +425,7 @@ h3 {
 .grid-container-sorthandle,
 .grid-container-options-icon {
   color: rgba(176, 186, 194, 0.3);
-  -webkit-transition: all 0.3s ease;
-          transition: all 0.3s ease; }
+  transition: all 0.3s ease; }
 
 .grid-container-options-list-item:hover {
   background-color: #3f4853; }
@@ -573,8 +573,7 @@ h3 {
   z-index: 90;
   margin: 200px 0 0 0;
   box-sizing: border-box;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
   width: 100%;
   height: 0px; }
   .grid-editor-controls button {
@@ -586,8 +585,7 @@ h3 {
     right: 160px;
     position: relative;
     margin: 0;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease; }
+    transition: all 0.1337s ease; }
     .grid-editor-controls .grid-editor-control:hover {
       right: 20px; }
     .grid-editor-controls .grid-editor-control button {
@@ -597,8 +595,7 @@ h3 {
       font-size: 12px;
       width: 100%;
       height: 45px;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease;
+      transition: all 0.1337s ease;
       border: none;
       background-color: #f3f5f7; }
       .grid-editor-controls .grid-editor-control button [class^="icon-"],
@@ -644,14 +641,12 @@ h3 {
     font-weight: bold;
     border-top: 1px solid #cdd5df;
     background-color: #eceae7;
-    -webkit-transition: background-color 0.5s ease;
-            transition: background-color 0.5s ease; }
+    transition: background-color 0.5s ease; }
     .grid-editor-content .grid-boxeditor-legend .icon-arrow {
       position: absolute;
       left: 5px;
       top: 16px;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease; }
+      transition: all 0.1337s ease; }
   .grid-editor-content input,
   .grid-editor-content textarea {
     border: 1px solid #eceff3;
@@ -683,7 +678,9 @@ h3 {
     color: white; }
     .grid-editor-content .grid-active .grid-boxeditor-legend .icon-arrow {
       -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
       transform: rotate(90deg);
       filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
@@ -709,8 +706,7 @@ h3 {
   box-sizing: border-box;
   vertical-align: baseline;
   z-index: 90;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease; }
+  transition: all 0.1337s ease; }
   .grid-element-trash > div {
     padding-top: 25px;
     padding-bottom: 100%;
@@ -747,12 +743,13 @@ h3 {
       top: 20px;
       left: -4px;
       font-size: 14px;
-      -webkit-transition: all 0.3s ease;
-              transition: all 0.3s ease; }
+      transition: all 0.3s ease; }
     .grid-element-type-content .grid-container-type.active .icon-arrow,
     .grid-element-type-content .grid-box-type.active .icon-arrow {
       -webkit-transform: rotate(90deg);
+      -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
+      -o-transform: rotate(90deg);
       transform: rotate(90deg);
       filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
@@ -767,8 +764,7 @@ h3 {
   font-weight: bold;
   height: 45px;
   padding-top: 15px;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
   position: relative;
   background-color: #f3f5f7; }
   .grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
@@ -839,6 +835,7 @@ h3 {
   width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
+  -webkit-box-shadow: inset 0 0 2px 0 #aaaaaa;
   box-shadow: inset 0 0 2px 0 #aaaaaa; }
   .grid-revision:last-child {
     border-right: none; }
@@ -872,8 +869,7 @@ h3 {
     bottom: -16px;
     left: 50%;
     margin-left: -8px;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease; }
+    transition: all 0.1337s ease; }
   .grid-revision.grid-revision-state-published:first-child:before {
     border-top-color: #46bd7b; }
 
@@ -909,8 +905,7 @@ h3 {
   text-align: center;
   font-weight: bold;
   display: block;
-  -webkit-transition: max-height 0.321s ease;
-          transition: max-height 0.321s ease;
+  transition: max-height 0.321s ease;
   overflow: hidden;
   max-height: 0; }
   .grid-slot-style-changer .grid-style-changer-active {
@@ -960,8 +955,7 @@ h3 {
     padding-top: 2px; }
     [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
       padding: 10px 20px;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease;
+      transition: all 0.1337s ease;
       margin: 0px; }
       [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
         cursor: pointer;
@@ -1008,8 +1002,7 @@ h3 {
   padding-left: 0px; }
 
 .grid-toolbar {
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
   border-top: 4px solid #ed7b3d;
   position: relative;
   background-color: white;
@@ -1027,8 +1020,7 @@ h3 {
       right: 90px;
       position: relative;
       margin: 0;
-      -webkit-transition: all 0.1337s ease;
-              transition: all 0.1337s ease; }
+      transition: all 0.1337s ease; }
       .grid-toolbar .grid-tool-list li:hover {
         right: 0px; }
       .grid-toolbar .grid-tool-list li button {
@@ -1038,8 +1030,7 @@ h3 {
         font-size: 12px;
         width: 100%;
         height: 45px;
-        -webkit-transition: all 0.1337s ease;
-                transition: all 0.1337s ease;
+        transition: all 0.1337s ease;
         border: none;
         background-color: #f3f5f7; }
         .grid-toolbar .grid-tool-list li button [class^="icon-"],
@@ -1109,8 +1100,7 @@ h3 {
   z-index: 85;
   background-color: rgba(255, 255, 255, 0.6);
   opacity: 0;
-  -webkit-transition: all 0.6s ease;
-          transition: all 0.6s ease; }
+  transition: all 0.6s ease; }
 
 .grid-loading-indicator-wrapper {
   position: fixed;
@@ -1128,8 +1118,7 @@ h3 {
   .grid-loading-indicator-wrapper .grid-loading-indicator:before,
   .grid-loading-indicator-wrapper .grid-loading-indicator:after {
     background: #3F4853;
-    -webkit-animation: gridloading 1s infinite ease-in-out;
-            animation: gridloading 1s infinite ease-in-out;
+    animation: gridloading 1s infinite ease-in-out;
     width: 0.4em;
     height: 1.5em; }
   .grid-loading-indicator-wrapper .grid-loading-indicator:before,
@@ -1144,8 +1133,7 @@ h3 {
     /*margin: 8em auto;*/
     position: relative;
     font-size: 11px;
-    -webkit-animation-delay: -0.16s;
-            animation-delay: -0.16s; }
+    animation-delay: -0.16s; }
   .grid-loading-indicator-wrapper .grid-loading-indicator:after {
     left: 0.6em;
     -webkit-animation-delay: -0.32s;
@@ -1157,16 +1145,6 @@ h3 {
 .grid-init-loading .grid-loading {
   opacity: 1;
   bottom: 0%; }
-
-@-webkit-keyframes gridloading {
-  0%,
-	80%,
-	100% {
-    box-shadow: 0 0 #3F4853;
-    height: 1em; }
-  40% {
-    box-shadow: 0 -1em #3F4853;
-    height: 2em; } }
 
 @keyframes gridloading {
   0%,
@@ -1182,8 +1160,7 @@ h3 {
 .grid-editor-url-builder {
   position: relative;
   width: 140px;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease;
+  transition: all 0.1337s ease;
   font-size: 11px; }
   .grid-editor-url-builder .grid-editor-url-input {
     width: 100%;
@@ -1218,8 +1195,7 @@ h3 {
   border-left: 4px solid #eceae7;
   padding-left: 10px;
   margin-bottom: 15px;
-  -webkit-transition: all 0.1337s ease;
-          transition: all 0.1337s ease; }
+  transition: all 0.1337s ease; }
   .grid-editor-widget-listitem:hover {
     border-color: #3ac5d9; }
   .grid-editor-widget-listitem > .widget-list-remove-item-button {
@@ -1299,8 +1275,7 @@ h3 {
 .grid-editor-widget-autocomplete input,
 .grid-editor-autocomplete-with-links input {
   padding-left: 0px;
-  -webkit-transition: all 0.3s ease;
-          transition: all 0.3s ease; }
+  transition: all 0.3s ease; }
 .grid-editor-widget-autocomplete .locked .links .full,
 .grid-editor-autocomplete-with-links .locked .links .full {
   display: inline; }
@@ -1314,26 +1289,16 @@ h3 {
 .grid-editor-autocomplete-with-links .loading {
   position: absolute;
   opacity: 0;
-  -webkit-transition: 0.3s all;
-          transition: 0.3s all;
+  transition: 0.3s all;
   border-radius: 10px;
   height: 15px;
   width: 15px;
-  -webkit-animation: loading 1s infinite ease-in-out;
-          animation: loading 1s infinite ease-in-out;
+  animation: loading 1s infinite ease-in-out;
   top: 8px;
   right: 8px; }
   .grid-editor-widget-autocomplete .loading.go,
   .grid-editor-autocomplete-with-links .loading.go {
     opacity: 1; }
-
-@-webkit-keyframes loading {
-  0%,
-  80%,
-  100% {
-    background-color: #3ac5d9; }
-  40% {
-    background-color: #e5e3df; } }
 
 @keyframes loading {
   0%,
