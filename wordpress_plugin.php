@@ -3,11 +3,11 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.4
+ * Version: 1.4.1
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
- * Tested up to: 4.2.2
+ * Tested up to: 4.3.1
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @copyright Copyright (c) 2014, Palasthotel
  * @package Palasthotel\Grid-WordPress
@@ -912,7 +912,7 @@ function grid_wp_thegrid() {
 		
 		$post = get_post( $postid );
 
-		grid_enqueue_editor_files();
+		grid_enqueue_editor_files($editor);
 
 		echo '<div class="wrap"><h2>'.$post->post_title.
 		' <a title="Return to the post-edit page" class="add-new-h2"'.
@@ -953,7 +953,7 @@ function grid_wp_reuse_boxes() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
-	grid_enqueue_editor_files();
+	grid_enqueue_editor_files($editor);
 	$html = $editor->run( $storage, function( $id ) {
 				return add_query_arg( array( 'page' => 'grid_edit_reuse_box', 'boxid' => $id ), admin_url( 'admin.php' ) );
 			}, function( $id ) {
@@ -966,7 +966,7 @@ function grid_wp_edit_reuse_box() {
 	$boxid = intval($_GET['boxid']);
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
-	grid_enqueue_editor_files();
+	grid_enqueue_editor_files($editor);
 	$storage = grid_wp_get_storage();
 	grid_wp_load_js();
 	$html = $editor->runEditor(
@@ -984,7 +984,7 @@ function grid_wp_delete_reuse_box() {
 	$boxid = intval($_GET['boxid']);
 	global $grid_lib;
 	$editor = $grid_lib->getReuseBoxEditor();
-	grid_enqueue_editor_files();
+	grid_enqueue_editor_files($editor);
 	$storage = grid_wp_get_storage();
 	$html = $editor->runDelete( $storage, $boxid );
 	if ( true === $html ) {
@@ -998,7 +998,7 @@ function grid_wp_containers() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getContainerEditor();
-	grid_enqueue_editor_files();
+	grid_enqueue_editor_files($editor);
 	$html = $editor->run( $storage );
 	echo $html;
 }
@@ -1007,7 +1007,7 @@ function grid_wp_reuse_containers() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getReuseContainerEditor();
-	grid_enqueue_editor_files();
+	grid_enqueue_editor_files($editor);
 	$html = $editor->run( $storage, function( $id ) {
 				return add_query_arg( array( 'page' => 'grid_edit_reuse_container', 'containerid' => $id ), admin_url( 'admin.php' ) );
 			}, function( $id ) {
@@ -1022,7 +1022,7 @@ function grid_wp_edit_reuse_container() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getReuseContainerEditor();
-	grid_wp_reuse_container_editor_prepare( $editor );
+	grid_enqueue_editor_files( $editor );
 	grid_wp_load_js();
 	$html = $editor->runEditor(
 		$storage,
@@ -1041,7 +1041,7 @@ function grid_wp_delete_reuse_container() {
 	$storage = grid_wp_get_storage();
 	global $grid_lib;
 	$editor = $grid_lib->getReuseContainerEditor();
-	grid_wp_reuse_container_editor_prepare( $editor );
+	grid_enqueue_editor_files( $editor );
 	$html = $editor->runDelete( $storage, $containerid );
 	if ( true === $html ) {
 		wp_redirect( add_query_arg( array( 'page' => 'grid_reuse_containers' ), admin_url( 'tools.php' ) ) );
@@ -1181,35 +1181,62 @@ function grid_get_additional_editor_widgets(){
 /**
  * enqueue js and css files for editor
  */
-function grid_enqueue_editor_files(){
+function grid_enqueue_editor_files($editor = null){
 	global $grid_lib;
-	$editor_widgets = grid_get_additional_editor_widgets();
-
-	$css = $grid_lib->getEditorCSS( false );
-	foreach ( $css as $idx => $file ) {
-		wp_enqueue_style( 'grid_css_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
+	/**
+	 * get editor or default
+	 */
+	$css = array();
+	if(null != $editor ){
+		$css = $editor->getCSS( false );
+	} else {
+		$css = $grid_lib->getEditorCSS( false );
 	}
 	/**
-	 * extend widgets css with editor css filters
+	 * enqueue the css array
 	 */
-	$editor_css = apply_filters('grid_editor_css', $editor_widgets["css"] );
-	foreach ( $editor_css as $key => $url ) {
-		wp_enqueue_style( 'grid_css_'.$key, $url );
+	foreach ( $css as $idx => $file ) {
+		wp_enqueue_style( 'grid_css_lib_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
 	}
+	wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'grid-wordpress.css', __FILE__ ) );
+	wp_enqueue_style( 'grid_wordpress_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
 
-	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-	wp_enqueue_style( 'grid_wp_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
-
+	/**
+	 * get editor or default
+	 */
 	$lang = grid_get_lang();
-	$js = $grid_lib->getEditorJS( $lang, false );
+	$js = array();
+	if(null != $editor){
+		$js = $editor->getJS( $lang, false );
+	} else {
+		$js = $grid_lib->getEditorJS($lang, false);
+	}
+	/**
+	 * enqueue the js array
+	 */
 	foreach ( $js as $idx => $file ) {
 		wp_enqueue_script( 'grid_js_lib_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
 	}
+	wp_enqueue_script( 'grid_wordpress_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
+
+	/**
+	 * get additional widgets arrays (css | js)
+	 */
+	$editor_widgets = grid_get_additional_editor_widgets();
+	/**
+	 * extend widgets css with editor css filter
+	 */
+	foreach ( $editor_widgets["css"] as $key => $url ) {
+		wp_enqueue_style( 'grid_css_'.$key, $url );
+	}
+	/**
+	 * extend widgets js
+	 */
 	foreach ( $editor_widgets["js"] as $key => $url ) {
 		wp_enqueue_script( 'grid_js_'.$key, $url );
 	}
 
-	wp_enqueue_script( 'grid_js_wp_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
+	
 }
 
 function grid_get_lang(){
