@@ -26,7 +26,7 @@ class grid_sidebar_box extends grid_box {
 	* Initializes editor widgets for backend
 	*/
 	public function __construct() {
-		$this->content = new Stdclass();
+		parent::__construct();
 		$this->content->postid = '';
 	}
 
@@ -57,7 +57,8 @@ class grid_sidebar_box extends grid_box {
 	* @return array
 	*/
 	public function contentStructure() {
-		$content = array(
+		$cs = parent::contentStructure();
+		$content = array_merge($cs, array(
 			array(
 				'key' => 'postid',
 				'label' => 'Sidebar',
@@ -71,7 +72,7 @@ class grid_sidebar_box extends grid_box {
 				'key' => 'html',
 				'type' => 'hidden',
 			),
-		);
+		));
 		if ( $this->content->postid != '' ) {
 			$node = get_post( $this->content->postid );
 			if ( $node != null ) {

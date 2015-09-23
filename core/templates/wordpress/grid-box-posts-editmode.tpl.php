@@ -8,7 +8,15 @@
 ?>
 
 <div class="grid-box-editmode">
+	List of contents
 	<?php
-	echo "<div class='content'>".$content->rendered_html."</div>";
+	$fields = array("viewmode","posts_per_page","offset","category","post_type");
+	if(null != $this->grid){
+		foreach ($fields as $field) {
+			if(!empty($content->{$field})){
+				echo "<br/>".$field.": ".$content->{$field};
+			}
+		}
+	}
 	?>
 </div>

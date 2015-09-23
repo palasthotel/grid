@@ -18,7 +18,7 @@ class grid_post_box extends grid_box {
 	* Initializes editor widgets for backend
 	*/
 	public function __construct() {
-		$this->content = new Stdclass();
+		parent::__construct();
 	}
 
 	/**
@@ -112,12 +112,8 @@ class grid_post_box extends grid_box {
 	* @return array
 	*/
 	public function metaSearch( $criteria, $search ) {
-		if ( $search == '' ) {
-			return array();
-		}
 		$results = array();
-		// START of WordPress Loop
-		$query = new WP_Query( array( 
+		$query = new WP_Query( array(
 			'post_type' => array( 'post', 'page' ), 
 			'grid_title' => $search 
 		) );
@@ -143,12 +139,16 @@ class grid_post_box extends grid_box {
 	* @return array
 	*/
 	public function contentStructure () {
-		$params = array(
+		$cs = parent::contentStructure();
+		return array_merge($cs, array(
 			array(
 				'key' => 'viewmode',
 				'type' => 'select',
 				'label' => t('Viewmode'),
-				'selections' => array( array( 'key' => 'excerpt', 'text' => t('Excerpt') ), array( 'key' => 'full', 'text' => t('Full') ) ),
+				'selections' => array(
+					array( 'key' => 'excerpt', 'text' => t('Excerpt') ),
+					array( 'key' => 'full', 'text' => t('Full') )
+				),
 			),
 			array(
 				'key' => 'postid',
@@ -158,7 +158,6 @@ class grid_post_box extends grid_box {
 				'key' => 'publish',
 				'type' => 'hidden',
 			)
-		);
-		return $params;
+		));
 	}
 }

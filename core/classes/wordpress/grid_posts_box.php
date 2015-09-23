@@ -18,7 +18,7 @@ class grid_posts_box extends grid_list_box {
 	* Initializes editor widgets for backend
 	*/
 	function __construct() {
-		$this->content = new Stdclass();
+		parent::__construct();
 		$this->content->viewmode = 'excerpt';
 		$this->content->posts_per_page = 5;
 		$this->content->offset = 0;
@@ -44,7 +44,7 @@ class grid_posts_box extends grid_list_box {
 	*/
 	public function build( $editmode ) {
 		if ( $editmode ) {
-			return 'Liste von Inhalten';
+			return $this->content;
 		} else {
 			$args = array();
 			// Checks if catergory is set
@@ -91,12 +91,13 @@ class grid_posts_box extends grid_list_box {
 	* @return array
 	*/
 	public function contentStructure() {
+		$cs = parent::contentStructure();
 		$post_types = array();
 		$input = get_post_types( array(), 'objects' );
 		foreach ( $input as $post_type => $info ) {
 			$post_types[] = array( 'key' => $post_type, 'text' => $info->labels->name );
 		}
-		return array(
+		return array_merge($cs, array(
 			array(
 				'key' => 'viewmode',
 				'type' => 'select',
@@ -124,7 +125,7 @@ class grid_posts_box extends grid_list_box {
 				'type' => 'select',
 				'selections' => $post_types,
 			),
-		);
+		));
 	}
 
 	/**

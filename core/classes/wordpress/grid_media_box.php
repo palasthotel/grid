@@ -16,7 +16,7 @@ class grid_media_box extends grid_static_base_box {
 	* Initializes editor widgets for backend
 	*/
 	public function __construct() {
-		$this->content = new StdClass();
+		parent::__construct();
 		$this->content->fileid = new StdClass();
 		$this->content->fileid->id = '';
 		$this->content->fileid->size = '';
@@ -49,17 +49,22 @@ class grid_media_box extends grid_static_base_box {
 			$a_pre = '';
 			$a_post = '';
 			if ( isset( $this->content->url ) && $this->content->url != '' ) {
-				$a_pre = '<a href="'.$this->content->url.'">';
-				$a_post = '</a>';
+				if(!$editmode){
+					$a_pre = '<a href="'.$this->content->url.'">';
+					$a_post = '</a>';
+				} else{
+					$a_post.= '<br/>'.$this->content->url;
+				}
+
 			}
 			if ( $editmode ) {
 				$metadata = wp_get_attachment_metadata( $this->content->fileid->id );
 				if ( is_array( $metadata ) && isset( $metadata['file'] ) ) {
 					$this->content->image_meta_file = $metadata['file'];
-					$a_post .= ' ('.$metadata['file'].')';
+					$a_post .= '<br/> ('.$metadata['file'].')';
 				} else {
 					$a_post .= json_encode( $this->content->image_url );
-					$a_post .= ' ('.$this->content->fileid->id.')';
+					$a_post .= '<br/> ('.$this->content->fileid->id.')';
 				}
 			}
 			$img_tag = wp_get_attachment_image( $this->content->fileid->id, $this->content->fileid->size );
@@ -81,25 +86,24 @@ class grid_media_box extends grid_static_base_box {
 	*/
 	public function contentStructure () {
 		$value = get_option( 'grid_mediaselect_info', '' );
-		$cs = array();
+		$cs = parent::contentStructure();
 		$cs[] = array(
-				'key' => 'fileid',
-				'type' => 'wp-mediaselect',
-				'label' => t( 'Image' ),
-				);
+			'key' => 'fileid',
+			'type' => 'wp-mediaselect',
+			'label' => t( 'Image' ),
+		);
 		if ( $value != '' ) {
 			$cs[] = array(
-					'key' => 'fileinfo',
-					'type' => 'info',
-					'text' => $value,
-					);
+				'key' => 'fileinfo',
+				'type' => 'info',
+				'text' => $value,
+			);
 		}
 		$cs[] = array(
-				'key' => 'url',
-				'type' => 'text',
-				'label' => t( 'Hyperlink-URL (optional)' ),
-				);
-
-				return $cs;
+			'key' => 'url',
+			'type' => 'text',
+			'label' => t( 'Hyperlink-URL (optional)' ),
+		);
+		return $cs;
 	}
 }

@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -912,7 +912,7 @@ function grid_wp_thegrid() {
 		
 		$post = get_post( $postid );
 
-		grid_enqueue_editor_files($editor);
+		grid_enqueue_editor_files();
 
 		echo '<div class="wrap"><h2>'.$post->post_title.
 		' <a title="Return to the post-edit page" class="add-new-h2"'.

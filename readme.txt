@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.3.1
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -70,6 +70,13 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.4.2 =
+ * Empty reuse container title bug
+ * Default templates update
+ * Grid box inheritance
+ * Latest contents on empty contents search
+ * Grid jumping on dragging new box fix
 
 = 1.4.1 =
  * js and css enqueue fixes
