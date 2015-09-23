@@ -25,7 +25,7 @@ class grid_soundcloud_box extends grid_static_base_box {
     * Initializes editor widgets for backend
     */
     public function __construct() {
-        $this->content=new Stdclass();
+        parent::__construct();
         $this->content->url= "";
         $this->content->color = "";
         $this->content->height = 200;
@@ -115,7 +115,8 @@ EOT;
     * @return array
     */
     public function contentStructure () {
-        return array(
+        $cs = parent::contentStructure();
+        return array_merge($cs, array(
             array(
                 'key'=>'url',
                 'label'=>t('URL'),
@@ -131,7 +132,7 @@ EOT;
                 'label'=>t('Hex Color #[...] (optional)'),
                 'type'=>'text',
             ),
-        );
+        ));
     }
 
 }

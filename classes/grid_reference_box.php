@@ -18,7 +18,7 @@ class grid_reference_box extends grid_box {
 	* Initializes editor widgets for backend
 	*/
 	public function __construct() {
-		$this->content=new Stdclass();
+		parent::__construct();
 		$this->content->boxid=-1;
 	}
 	

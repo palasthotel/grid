@@ -83,15 +83,6 @@ class grid_static_box extends grid_box {
 	    return $return;
 
 	}
-	
-	/**
-	* Determines editor widgets used in backend
-	*
-	* @return array
-	*/
-	public function contentStructure () {
-		return array();
-	}
 
 }
 
@@ -147,12 +138,4 @@ class grid_static_base_box extends grid_static_box {
 
 	}
 	
-	/**
-	* Determines editor widgets used in backend
-	*
-	* @return void
-	*/
-	public function contentStructure() {
-
-	}
 }
