@@ -38,6 +38,7 @@ class grid_reference_box extends grid_box {
 	*/
 	public function build($editmode) {
 		$box=$this->storage->loadReuseBox($this->content->boxid);
+		$box->grid = $this->grid;
 		return $box->build($editmode);
 	}
 	
@@ -49,6 +50,7 @@ class grid_reference_box extends grid_box {
 	public function render($editmode) {
 		$box=$this->storage->loadReuseBox($this->content->boxid);
 		$box->classes=$this->classes;
+		$box->grid = $this->grid;
 		return $box->render($editmode);
 	}
 	

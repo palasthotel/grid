@@ -7,11 +7,18 @@
  */
 ?>
 <div class="grid-box-editmode">
+	Video
 	<?php
-	if(is_string($content)){
-		echo "<div class='content'>".$content."</div>";
-	} else {
-		echo "<div class='content'>".t("There is no working editmode template")."</div>";
+	/**
+	 * if part of grid render details
+	 */
+	$fields = array("url","title","related");
+	if(null != $this->grid){
+		foreach ($fields as $field) {
+			if(!empty($content->{$field})){
+				echo "<br/>".$field.": ".$content->{$field};
+			}
+		}
 	}
 	?>
 </div>

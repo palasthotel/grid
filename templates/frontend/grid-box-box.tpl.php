@@ -29,7 +29,7 @@
 		echo $content;
 	} else {
 		?>
-		<p>There is no working template for this Box.</p>
+		<p><?php echo t("There is no working template for this Box."); ?></p>
 		<?php
 	}
 	?>

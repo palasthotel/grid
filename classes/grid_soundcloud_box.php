@@ -38,7 +38,7 @@ class grid_soundcloud_box extends grid_static_base_box {
     */
     public function build($editmode) {
         if($editmode) {
-            return t("Soundcloud").": ".$this->content->url;
+            return $this->content;
         }
         else {
             // KM added support for IE9 and below
