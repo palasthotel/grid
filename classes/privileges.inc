@@ -19,8 +19,6 @@ class privileges
 		add_submenu_page( 'tools.php', 'grid privileges', 'Grid Privileges', 'edit_users', 'grid_privileges', array( $this, 'privileges') );
 	}
 
-
-
 	function privileges() {
 		global $wp_roles;
 		global $grid_plugin;

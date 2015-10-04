@@ -1,0 +1,67 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: edward
+ * Date: 04.10.15
+ * Time: 21:02
+ */
+
+namespace grid_plugin;
+
+
+class reuse_box
+{
+	function __construct(){
+		add_action( 'admin_menu', 'admin_menu' );
+	}
+	function admin_menu(){
+		add_submenu_page( 'tools.php', 'Reusable grid boxes', 'Reusable grid boxes', 'edit_posts', 'grid_reuse_boxes', array( $this, 'render_reuse_boxes' ) );
+		add_submenu_page( null,'edit reuse box', 'edit reuse box', 'edit_posts', 'grid_edit_reuse_box', array( $this, 'edit_reuse_box' ) );
+		add_submenu_page( null, 'delete reuse box', 'delete reuse box', 'edit_posts', 'grid_delete_reuse_box', array( $this, 'delete_reuse_box' ) );
+	}
+
+	function render_reuse_boxes() {
+		$storage = grid_wp_get_storage();
+		global $grid_lib;
+		$editor = $grid_lib->getReuseBoxEditor();
+		grid_enqueue_editor_files($editor);
+		$html = $editor->run( $storage, function( $id ) {
+			return add_query_arg( array( 'page' => 'grid_edit_reuse_box', 'boxid' => $id ), admin_url( 'admin.php' ) );
+		}, function( $id ) {
+			return add_query_arg( array( 'noheader' => true, 'page' => 'grid_delete_reuse_box', 'boxid' => $id ), admin_url( 'admin.php' ) );
+		});
+		echo $html;
+	}
+
+	function edit_reuse_box() {
+		$boxid = intval($_GET['boxid']);
+		global $grid_lib;
+		$editor = $grid_lib->getReuseBoxEditor();
+		grid_enqueue_editor_files($editor);
+		$storage = grid_wp_get_storage();
+		grid_wp_load_js();
+		$html = $editor->runEditor(
+			$storage,
+			$boxid,
+			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
+			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
+			get_option( 'grid_debug_mode', false ),
+			''
+		);
+		echo $html;
+	}
+
+	function delete_reuse_box() {
+		$boxid = intval($_GET['boxid']);
+		global $grid_lib;
+		$editor = $grid_lib->getReuseBoxEditor();
+		grid_enqueue_editor_files($editor);
+		$storage = grid_wp_get_storage();
+		$html = $editor->runDelete( $storage, $boxid );
+		if ( true === $html ) {
+			wp_redirect( add_query_arg( array( 'page' => 'grid_reuse_boxes' ), admin_url( 'tools.php' ) ) );
+			return;
+		}
+		echo $html;
+	}
+}

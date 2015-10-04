@@ -1,7 +1,8 @@
 <?php
 
+namespace grid_plugin;
 
-class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
+class ajaxendpoint extends \grid_ajaxendpoint {
 
 	public function loadGrid( $gridid )
 	{

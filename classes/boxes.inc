@@ -24,7 +24,7 @@ class boxes
 		require( $dir.'/../core/classes/wordpress/grid_wp_html_box.php' );
 		add_filter('grid_boxes_search', array( $this, 'grid_boxes_search' ), 10, 3);
 
-		add_filter( 'posts_where', 'posts_where', 10, 2 );
+		add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );
 	}
 
 	/**
