@@ -21,15 +21,11 @@ if ( ! defined( 'WPINC' ) ) {
 class grid_plugin {
 	function __construct(){
 
-		require( 'core/classes/wordpress/grid_sidebar_box.php' );
-		require( 'core/classes/wordpress/grid_post_box.php' );
-		require( 'core/classes/wordpress/grid_media_box.php' );
-		require( 'core/classes/wordpress/grid_posts_box.php' );
-
 		/**
-		 * override html box
+		 * do stuff for wordpress spezific boxes
 		 */
-		require( 'core/classes/wordpress/grid_wp_html_box.php' );
+		require('classes/boxes.inc');
+		new \grid_plugin\boxes();
 
 		/**
 		 * wp ajax endpoint
@@ -102,44 +98,22 @@ $grid_lib = new grid_library();
 global $grid_plugin;
 $grid_plugin = new grid_plugin();
 
-
-
-add_filter( 'posts_where', 'grid_posts_where', 10, 2 );
-function grid_posts_where( $where, &$wp_query )
-{
-	global $wpdb;
-	if ( $grid_title = $wp_query->get( 'grid_title' ) ) {
-		$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $grid_title ) . '%\'';
-	}
-	return $where;
-}
-
 /**
- * filter grid boxes on meta search
- * @param $result
- * @param $grid_id
- * @param $post_id
- * @return mixed
+ * drupal t function
+ *
  */
-add_filter('grid_boxes_search', 'grid_wp_boxes_search' , 10, 3);
-function grid_wp_boxes_search($result, $grid_id, $post_id){
-	for ($i=0; $i < count($result) ; $i++) {
-		if($result[$i]["type"] == "html") array_splice($result,$i,1);
-	}
-	return $result;
-}
-
-
-
+// TODO: use grid translate function
 if ( ! function_exists( 't' ) ) {
 	function t($str) { return __( $str, 'grid' ); }
 }
-
-function grid_wp_get_postid_by_grid($gridid) {
-	global $grid_plugin;
-	return $grid_plugin->get_postid_by_grid($gridid);
-}
-
+/**
+ * Drupal db_query function
+ * @param $querystring
+ * @param bool|true $die
+ * @return array
+ * @throws Exception
+ */
+// TODO: implement grid query function
 function db_query( $querystring, $die = true ) {
 	global $wpdb;
 	$querystring = str_replace( '{', $wpdb->prefix, $querystring );
@@ -162,6 +136,16 @@ function db_query( $querystring, $die = true ) {
 		return $return;
 	}
 	return $result;
+}
+
+/**
+ * get postid by grid id
+ * @param $gridid
+ * @return mixed
+ */
+function grid_wp_get_postid_by_grid($gridid) {
+	global $grid_plugin;
+	return $grid_plugin->get_postid_by_grid($gridid);
 }
 
 

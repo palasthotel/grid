@@ -12,16 +12,19 @@ namespace grid_plugin;
 class boxes
 {
 	function __construct(){
-		require( 'core/classes/wordpress/grid_sidebar_box.php' );
-		require( 'core/classes/wordpress/grid_post_box.php' );
-		require( 'core/classes/wordpress/grid_media_box.php' );
-		require( 'core/classes/wordpress/grid_posts_box.php' );
+		$dir = dirname(__FILE__);
+		require( $dir.'/../core/classes/wordpress/grid_sidebar_box.php' );
+		require( $dir.'/../core/classes/wordpress/grid_post_box.php' );
+		require( $dir.'/../core/classes/wordpress/grid_media_box.php' );
+		require( $dir.'/../core/classes/wordpress/grid_posts_box.php' );
 
 		/**
 		 * override html box
 		 */
-		require( 'core/classes/wordpress/grid_wp_html_box.php' );
+		require( $dir.'/../core/classes/wordpress/grid_wp_html_box.php' );
 		add_filter('grid_boxes_search', array( $this, 'grid_boxes_search' ), 10, 3);
+
+		add_filter( 'posts_where', 'posts_where', 10, 2 );
 	}
 
 	/**
@@ -36,5 +39,19 @@ class boxes
 			if($result[$i]["type"] == "html") array_splice($result,$i,1);
 		}
 		return $result;
+	}
+
+	/**
+	 * @param $where
+	 * @param $wp_query
+	 * @return string
+	 */
+	function posts_where( $where, &$wp_query )
+	{
+		global $wpdb;
+		if ( $grid_title = $wp_query->get( 'grid_title' ) ) {
+			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $grid_title ) . '%\'';
+		}
+		return $where;
 	}
 }
