@@ -1,6 +1,8 @@
 <?php
 
+
 class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
+
 	public function loadGrid( $gridid )
 	{
 		global $wpdb;

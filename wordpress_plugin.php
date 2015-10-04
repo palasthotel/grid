@@ -13,65 +13,95 @@
  * @package Palasthotel\Grid-WordPress
  */
 
-
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 class grid_plugin {
 	function __construct(){
-		/**
-		 * init grid library for global use
-		 */
-		require( 'lib/grid.php' );
-		global $grid_lib;
-		$grid_lib = new grid_library();
 
-		/**
-		 * add wordpress specific boxes
-		 */
 		require( 'core/classes/wordpress/grid_sidebar_box.php' );
 		require( 'core/classes/wordpress/grid_post_box.php' );
 		require( 'core/classes/wordpress/grid_media_box.php' );
 		require( 'core/classes/wordpress/grid_posts_box.php' );
 
+		/**
+		 * override html box
+		 */
+		require( 'core/classes/wordpress/grid_wp_html_box.php' );
+
+		/**
+		 * wp ajax endpoint
+		 */
 		$this->get_ajax_endpoint();
 
 		/**
 		 *  Grid settings pages
 		 */
-		require( 'classes/grid_settings.inc' );
-		new \Grid\Settings($grid_lib);
+		require( 'classes/settings.inc' );
+		new \grid_plugin\settings();
 
 		/**
-		 *
+		 *  gird container factory
 		 */
+		require('classes/container_factory.inc');
+		new \grid_plugin\container_factory();
 
+		/**
+		 *  gird privileges
+		 */
+		require('classes/privileges.inc');
+		new \grid_plugin\privileges();
+
+		/**
+		 * Styles
+		 */
+		require('classes/styles.inc');
+		new \grid_plugin\styles();
 	}
 
+	/**
+	 * register wp grid endpoint
+	 */
 	function get_ajax_endpoint(){
 		/**
 		 * grid ajax endpoint once
 		 */
-		require_once( 'classes/grid_wordpress_ajaxendpoint.inc' );
+		require_once('classes/ajaxendpoint.inc');
+//		return new grid_wordpress_ajaxendpoint();
 	}
+
+	/**
+	 * returns postid of grid
+	 * @param $gridid
+	 * @return mixed
+	 */
+	function get_postid_by_grid($gridid) {
+		global $wpdb;
+		$rows=$wpdb->get_results('select nid from '.$wpdb->prefix.'grid_nodes where grid_id='.$gridid);
+		if(count($rows)>0)
+		{
+			return $rows[0]->nid;
+		}
+		return FALSE;
+	}
+
 }
+
+/**
+ * init grid library for global use
+ */
+require( 'lib/grid.php' );
+global $grid_lib;
+$grid_lib = new grid_library();
 
 /**
  * init grid
  */
-new grid_plugin();
+global $grid_plugin;
+$grid_plugin = new grid_plugin();
 
-
-
-/**
- * override html box
- */
-require( 'core/classes/wordpress/grid_wp_html_box.php' );
-add_filter('grid_boxes_search', 'grid_wp_boxes_search', 10, 3);
-function grid_wp_boxes_search($result, $grid_id, $post_id){
-	for ($i=0; $i < count($result) ; $i++) { 
-		if($result[$i]["type"] == "html") array_splice($result,$i,1);
-	}
-	return $result;
-}
 
 
 add_filter( 'posts_where', 'grid_posts_where', 10, 2 );
@@ -84,6 +114,21 @@ function grid_posts_where( $where, &$wp_query )
 	return $where;
 }
 
+/**
+ * filter grid boxes on meta search
+ * @param $result
+ * @param $grid_id
+ * @param $post_id
+ * @return mixed
+ */
+add_filter('grid_boxes_search', 'grid_wp_boxes_search' , 10, 3);
+function grid_wp_boxes_search($result, $grid_id, $post_id){
+	for ($i=0; $i < count($result) ; $i++) {
+		if($result[$i]["type"] == "html") array_splice($result,$i,1);
+	}
+	return $result;
+}
+
 
 
 if ( ! function_exists( 't' ) ) {
@@ -91,13 +136,8 @@ if ( ! function_exists( 't' ) ) {
 }
 
 function grid_wp_get_postid_by_grid($gridid) {
-	global $wpdb;
-	$rows=$wpdb->get_results('select nid from '.$wpdb->prefix.'grid_nodes where grid_id='.$gridid);
-	if(count($rows)>0)
-	{
-		return $rows[0]->nid;
-	}
-	return FALSE;
+	global $grid_plugin;
+	return $grid_plugin->get_postid_by_grid($gridid);
 }
 
 function db_query( $querystring, $die = true ) {
@@ -366,9 +406,8 @@ function grid_wp_admin_menu() {
 	add_submenu_page( null, 'edit reuse container', 'edit reuse container', 'edit_posts', 'grid_edit_reuse_container', 'grid_wp_edit_reuse_container' );
 	add_submenu_page( null, 'delete reuse container', 'delete reuse container', 'edit_posts', 'grid_delete_reuse_container', 'grid_wp_delete_reuse_container' );
 
-	add_submenu_page( 'tools.php', 'grid styles', 'Grid Styles', 'edit_posts', 'grid_styles', 'grid_wp_styles' );
-	add_submenu_page( 'tools.php', 'grid privileges', 'Grid Privileges', 'edit_users', 'grid_privileges', 'grid_wp_privileges' );
-	add_submenu_page( 'tools.php', 'grid containers', 'Grid Containers', 'edit_posts', 'grid_containers', 'grid_wp_containers' );
+
+
 }
 add_action( 'admin_menu', 'grid_wp_admin_menu' );
 
@@ -391,80 +430,6 @@ function grid_wp_get_privs() {
 	}
 	$privileges = get_option( 'grid_privileges', $defaults );
 	return $privileges;
-}
-
-function grid_wp_privileges() {
-	global $wp_roles;
-	$names = $wp_roles->get_names();
-	$ajaxendpoint = new grid_ajaxendpoint();
-	$rights = $ajaxendpoint->Rights();
-
-	if ( ! empty( $_POST ) ) {
-		$privileges = $_POST['privileges'];
-		foreach ( $privileges as $role => $privs ) {
-			foreach ( $privs as $key ) {
-				if ( 'on' == $privileges[ $role ][ $key ] ) {
-					$privileges[ $role ][ $key ] = true;
-				} else {
-					$privileges[ $role ][ $key ] = false;
-				}
-			}
-		}
-		update_option( 'grid_privileges', $privileges );
-		wp_redirect( add_query_arg( array( 'page' => 'grid_privileges' ), admin_url( 'tools.php' ) ) );
-		return;
-	}
-	$privileges = grid_wp_get_privs();
-	wp_enqueue_style( 'grid_css_wordpress', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-
-?>
-<form method="post" action="<?php echo add_query_arg( array( 'noheader' => true, 'page' => 'grid_privileges' ), admin_url( 'tools.php' ) );?>">
-<table cellspacing="0" cellpadding="0" class="grid-privileges-editor">
-	<tr>
-		<th>Role</th>
-<?php
-	foreach ( $rights as $right ) {
-?>
-		<th><?php echo $right; ?></th>
-<?php
-	}
-?>
-	</tr>
-<?php
-	foreach ( $names as $key => $name ) {
-?>
-	<tr>
-		<td><?php echo $name ?></td>
-<?php
-		foreach ( $rights as $right ) {
-			$checked = '';
-			if ( $privileges[ $key ][ $right ] ) {
-				$checked = 'checked';
-			}
-?>
-		<td><input title="<?php echo $name.' can '.$right; ?>" type="checkbox" name="privileges[<?php echo $key;?>][<?php echo $right; ?>]" <?php echo $checked ?>></td>
-<?php
-		}
-?>
-	</tr>
-<?php
-	}
-?>
-</table>
-<input class="button" type="submit">
-</form>
-<?php
-}
-
-function grid_wp_styles() {
-	global $grid_connection;
-	$grid_connection = grid_wp_get_mysqli();
-	$storage = grid_wp_get_storage();
-	global $grid_lib;
-	$editor = $grid_lib->getStyleEditor();
-	$html = $editor->run( $storage );
-	echo $html;
-	$grid_connection->close();
 }
 
 
@@ -670,14 +635,7 @@ function grid_wp_delete_reuse_box() {
 	echo $html;
 }
 
-function grid_wp_containers() {
-	$storage = grid_wp_get_storage();
-	global $grid_lib;
-	$editor = $grid_lib->getContainerEditor();
-	grid_enqueue_editor_files($editor);
-	$html = $editor->run( $storage );
-	echo $html;
-}
+
 
 function grid_wp_reuse_containers() {
 	$storage = grid_wp_get_storage();
