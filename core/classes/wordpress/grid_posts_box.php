@@ -141,7 +141,9 @@ class grid_posts_box extends grid_list_box {
 		if ( 'category' != $key ) {
 			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
 		}
-		$categories = get_categories();
+		$categories = get_categories(array(
+			'hide_empty' => 0,
+		));
 		$results = array();
 		foreach ( $categories as $category ) {
 			if ( $query == '' || false !== strstr( strtolower( $category->name ) , strtolower( $query ) ) ) {
