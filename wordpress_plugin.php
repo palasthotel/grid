@@ -13,17 +13,53 @@
  * @package Palasthotel\Grid-WordPress
  */
 
-require( 'lib/grid.php' );
-global $grid_lib;
-$grid_lib = new grid_library();
+
+
+class grid_plugin {
+	function __construct(){
+		/**
+		 * init grid library for global use
+		 */
+		require( 'lib/grid.php' );
+		global $grid_lib;
+		$grid_lib = new grid_library();
+
+		/**
+		 * add wordpress specific boxes
+		 */
+		require( 'core/classes/wordpress/grid_sidebar_box.php' );
+		require( 'core/classes/wordpress/grid_post_box.php' );
+		require( 'core/classes/wordpress/grid_media_box.php' );
+		require( 'core/classes/wordpress/grid_posts_box.php' );
+
+		$this->get_ajax_endpoint();
+
+		/**
+		 *  Grid settings pages
+		 */
+		require( 'classes/grid_settings.inc' );
+		new \Grid\Settings($grid_lib);
+
+		/**
+		 *
+		 */
+
+	}
+
+	function get_ajax_endpoint(){
+		/**
+		 * grid ajax endpoint once
+		 */
+		require_once( 'classes/grid_wordpress_ajaxendpoint.inc' );
+	}
+}
 
 /**
- * add wordpress specific boxes
+ * init grid
  */
-require( 'core/classes/wordpress/grid_sidebar_box.php' );
-require( 'core/classes/wordpress/grid_post_box.php' );
-require( 'core/classes/wordpress/grid_media_box.php' );
-require( 'core/classes/wordpress/grid_posts_box.php' );
+new grid_plugin();
+
+
 
 /**
  * override html box
@@ -48,156 +84,7 @@ function grid_posts_where( $where, &$wp_query )
 	return $where;
 }
 
-class grid_wordpress_ajaxendpoint extends grid_ajaxendpoint {
-	public function loadGrid( $gridid )
-	{
-		global $wpdb;
-		$return = parent::loadGrid( $gridid );
-		if ( 0 != strncmp( 'box:', $gridid, strlen( 'box:' ) ) && 0 != strncmp( 'container:', $gridid, strlen( 'container:' ) ) ) {
-			$rows = $wpdb->get_results( 'select nid from '.$wpdb->prefix."grid_nodes where grid_id=$gridid" );
-			$post = get_post( $rows[0]->nid );
-			$type = $post->post_type;
-			if ( $type == get_option( 'grid_sidebar_post_type' ) ) {
-				$return['isSidebar'] = true;
-			} else {
-				$return['isSidebar'] = false;
-			}
-		}
-		return $return;
-	}
 
-	public function Rights()
-	{
-		$privs = grid_wp_get_privs();
-		$privileges = array();
-		foreach ( $privs as $role => $privs ) {
-			if ( current_user_can( $role ) ) {
-				foreach ( $privs as $key => $val ) {
-					if ( $val ) {
-						if ( ! in_array( $key, $privileges ) ) {
-							$privileges[] = $key;
-						}
-					}
-				}
-			}
-		}
-		return $privileges;
-	}
-
-	public function publishDraft($gridid)
-	{
-		$result=parent::publishDraft($gridid);
-		if($result)
-		{
-			$nid=grid_wp_get_postid_by_grid($gridid);
-			do_action('grid_published',$nid);
-		}
-		return $result;
-	}
-	public function getMetaTypesAndSearchCriteria($grid_id){
-		$result=parent::getMetaTypesAndSearchCriteria($grid_id);
-		$post_id=NULL;
-		if(strncmp("container:",$grid_id,strlen("container:"))==0)
-		{
-			$post_id=NULL;
-		}
-		else if(strncmp("box:",$grid_id,strlen("box:"))==0)
-		{
-			$post_id=NULL;
-		}
-		else
-		{
-			$post_id=grid_wp_get_postid_by_grid($grid_id);
-		}
-		$result=apply_filters('grid_metaboxes',$result,$grid_id,$post_id);
-		return $result;
-	}
-	
-	public function Search($grid_id,$metatype,$searchstring,$criteria)
-	{
-		$result=parent::Search($grid_id,$metatype,$searchstring,$criteria);
-		if(strncmp("container:",$grid_id,strlen("container:"))==0)
-		{
-			$post_id=NULL;
-		}
-		else if(strncmp("box:",$grid_id,strlen("box:"))==0)
-		{
-			$post_id=NULL;
-		}
-		else
-		{
-			$post_id=grid_wp_get_postid_by_grid($grid_id);
-		}
-		$result=apply_filters('grid_boxes_search',$result,$grid_id,$post_id);
-		return $result;
-	}
-	
-	public function getContainerTypes($grid_id)
-	{
-		$result=parent::getContainerTypes($grid_id);
-		if(strncmp("container:",$grid_id,strlen("container:"))==0)
-		{
-			$post_id=NULL;
-		}
-		else if(strncmp("box:",$grid_id,strlen("box:"))==0)
-		{
-			$post_id=NULL;
-		}
-		else
-		{
-			$post_id=grid_wp_get_postid_by_grid($grid_id);
-		}
-		$result=apply_filters('grid_containers',$result,$grid_id,$post_id);
-		return $result;
-	}
-
-	public function getReusableContainers($grid_id)
-	{
-		$result=parent::getReusableContainers($grid_id);
-		$result=apply_filters('grid_reusable_containers',$result,$grid_id,grid_wp_get_postid_by_grid($grid_id));
-		return $result;
-	}
-	
-	public function UpdateBox($gridid,$containerid,$slotid,$idx,$boxdata)
-	{
-		$result=parent::UpdateBox($gridid,$containerid,$slotid,$idx,$boxdata);
-		if($result!=FALSE)
-		{
-			$grid=$this->storage->loadGrid($gridid);
-			foreach($grid->container as $container)
-			{
-				if($container->containerid==$containerid)
-				{
-					foreach($container->slots as $slot)
-					{
-						if($slot->slotid==$slotid)
-						{
-							if(isset($slot->boxes[$idx]))
-							{
-								//we found a box.
-								$box=$slot->boxes[$idx];
-								$box=apply_filters('grid_persist_box',$box);
-								if(is_array($box) && count($box)>0 && $box[0]!==NULL)
-								{
-									$box=$box[0];
-									$slot->boxes[$idx]=$box;
-									$box->persist();
-								}
-								else
-								{
-									$box=$slot->boxes[$idx];
-								}
-								return $this->encodeBox($box);
-							}
-							return FALSE;
-						}
-					}
-				}
-			}
-		}
-	}
-
-}
 
 if ( ! function_exists( 't' ) ) {
 	function t($str) { return __( $str, 'grid' ); }
@@ -465,7 +352,7 @@ add_action( 'init', 'grid_wp_init' );
 
 
 function grid_wp_admin_menu() {
-	add_submenu_page( 'options-general.php', 'Grid', 'Grid', 'manage_options', 'grid_settings', 'grid_wp_settings' );
+
 	add_submenu_page( null, 'The Grid', 'The Grid', 'edit_posts', 'grid', 'grid_wp_thegrid' );
 	add_submenu_page( null, 'Grid AJAX', 'The Grid AJAX', 'edit_posts', 'grid_ajax', 'grid_wp_ajax' );
 	add_submenu_page( null, 'Grid CKEditor Config', 'Grid CKEditor Config', 'edit_posts', 'grid_ckeditor_config', 'grid_wp_ckeditor_config' );
@@ -602,220 +489,9 @@ function grid_wp_actions( $actions, $entity ) {
 	}
 	return $actions;
 }
-
 add_filter( 'post_row_actions', 'grid_wp_actions', 10, 2 );
 add_filter( 'page_row_actions', 'grid_wp_actions', 10, 2 );
 
-function grid_wp_settings() {
-?>
-<div class="wrap">
-<?php screen_icon(); ?>
-<h2>Grid Settings</h2>
-<form method="post" action="options.php">
-<?php
-settings_fields( 'grid_settings' );
-do_settings_sections( 'grid_settings' );
-?>
-<?php submit_button(); ?>
-</form>
-</div>
-<?php
-}
-
-function grid_wp_admin_init() {
-	add_settings_section( 'grid_default_styles', 'Default Styles', 'grid_wp_default_styles_settings_section', 'grid_settings' );
-	add_settings_field( 'grid_default_container_style', 'Container Style', 'grid_wp_default_container_style_html', 'grid_settings', 'grid_default_styles' );
-	register_setting( 'grid_settings', 'grid_default_container_style' );
-	add_settings_field( 'grid_default_slot_style', 'Slot Style', 'grid_wp_default_slot_style_html', 'grid_settings', 'grid_default_styles' );
-	register_setting( 'grid_settings', 'grid_default_slot_style' );
-	add_settings_field( 'grid_default_box_style', 'Box Style', 'grid_wp_default_box_style_html', 'grid_settings', 'grid_default_styles' );
-	register_setting( 'grid_settings', 'grid_default_box_style' );
-	/**
-	 * enabled post types for grid
-	 */
-	add_settings_section( 'grid_post_types', 'Post Types', 'grid_wp_post_type_settings_section', 'grid_settings' );
-	$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
-	foreach ( $post_types as $key => $post_type ) {
-		// ignore landing_page and sidebar because we check them seperately
-		if($key == 'landing_page' || $key == "sidebar") continue;
-		add_settings_field( 'grid_'.$key.'_enabled', $post_type->labels->name, 'grid_wp_post_type_html', 'grid_settings', 'grid_post_types', array( 'type' => $key ) );
-		register_setting( 'grid_settings', 'grid_'.$key.'_enabled' );
-	}
-	/**
-	 * check manually because disabling this will unregister post types
-	 */
-	add_settings_field( 'grid_landing_page_enabled', "Landing Pages", 'grid_wp_post_type_html', 'grid_settings', 'grid_post_types', array( 'type' => 'landing_page') );
-	register_setting( 'grid_settings', 'grid_landing_page_enabled' );
-	add_settings_field( 'grid_sidebar_enabled', "Sidebars", 'grid_wp_post_type_html', 'grid_settings', 'grid_post_types', array( 'type' => 'sidebar') );
-	register_setting( 'grid_settings', 'grid_sidebar_enabled' );
-
-	add_settings_field( 'grid_sidebar_post_type', 'Which post type to use as sidebar content', 'grid_wp_sidebar_html', 'grid_settings', 'grid_post_types' );
-	register_setting( 'grid_settings', 'grid_sidebar_post_type' );
-
-	add_settings_section( 'grid_default_container', 'New Grids', 'grid_wp_default_container_section', 'grid_settings' );
-	add_settings_field( 'grid_default_container', 'Which container should be placed automatically', 'grid_wp_default_container_html', 'grid_settings', 'grid_default_container' );
-	register_setting( 'grid_settings', 'grid_default_container' );
-
-	add_settings_section( 'grid_debug_mode', 'Debug Mode', 'grid_wp_debug_mode_section', 'grid_settings' );
-	add_settings_field( 'grid_debug_mode', 'Turn debug mode on/off', 'grid_wp_debug_mode_html', 'grid_settings', 'grid_debug_mode' );
-	register_setting( 'grid_settings', 'grid_debug_mode' );
-
-	add_settings_section( 'grid_mediaselect_info', 'Mediaselect Info', 'grid_wp_mediaselect_info_section', 'grid_settings' );
-	add_settings_field( 'grid_mediaselect_info', 'Set an info text for media in the WordPress media-box', 'grid_wp_mediaselect_info_html', 'grid_settings', 'grid_mediaselect_info' );
-	register_setting( 'grid_settings', 'grid_mediaselect_info' );
-
-	add_settings_section( 'grid_permalinks', 'Grid', 'grid_wp_permalinks_section', 'grid_settings' );
-	add_settings_field( 'grid_permalinks', 'Landing Page base', 'grid_wp_permalinks_html', 'grid_settings', 'grid_permalinks' );
-	register_setting( 'grid_settings', 'grid_permalinks' );
-
-}
-add_action( 'admin_init', 'grid_wp_admin_init' );
-
-
-function grid_wp_default_styles_settings_section() {
-	echo 'Set which default styles should be applied.';
-}
-
-function grid_wp_default_container_style_html() {
-	$storage = grid_wp_get_storage();
-	$types = $storage->fetchContainerStyles();
-	$setting = get_option( 'grid_default_container_style', '__NONE__' );
-?>
-<select id="grid_default_container_style" name="grid_default_container_style">
-<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' ) ?>>None</option>
-<?php
-	foreach ( $types as $idx => $elem ) {
-?>
-<option value="<?php echo $elem['slug'];?>" <?php echo ( $elem['slug'] == $setting ? 'selected' : '' );?>><?php echo $elem['title'];?></option>
-<?php
-	}
-?>
-</select>
-<?php
-}
-
-function grid_wp_default_slot_style_html() {
-	$storage = grid_wp_get_storage();
-	$types = $storage->fetchSlotStyles();
-	$setting = get_option( 'grid_default_slot_style', '__NONE__' );
-?>
-<select id="grid_default_slot_style" name="grid_default_slot_style">
-<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>>None</option>
-<?php
-	foreach ( $types as $idx => $elem ) {
-?>
-<option value="<?php echo $elem['slug'];?>" <?php echo ( $elem['slug'] == $setting ? 'selected' : '' );?>><?php echo $elem['title'];?></option>
-<?php
-	}
-?>
-</select>
-<?php
-}
-
-function grid_wp_default_box_style_html() {
-	$storage = grid_wp_get_storage();
-	$types = $storage->fetchBoxStyles();
-	$setting = get_option( 'grid_default_box_style', '__NONE__' );
-?>
-<select id="grid_default_box_style" name="grid_default_box_style">
-<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '');?>>None</option>
-<?php
-	foreach ( $types as $idx => $elem ) {
-?>
-<option value="<?php echo $elem['slug'];?>" <?php echo ( $elem['slug'] == $setting ? 'selected' : '' );?>><?php echo $elem['title'];?></option>
-<?php
-	}
-?>
-</select>
-<?php
-}
-
-function grid_wp_post_type_html( $args ) {
-	$posttype = $args['type'];
-	$value = get_option( 'grid_'.$posttype.'_enabled', false );
-?>
-<input type="checkbox" id="grid_<?php echo $posttype?>_enabled" name="grid_<?php echo $posttype?>_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
-<?php
-}
-
-function grid_wp_post_type_settings_section() {
-	echo 'Which post types should have grid support?';
-}
-
-function grid_wp_sidebar_html() {
-	$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
-	$setting = get_option( 'grid_sidebar_post_type', '__NONE__' );
-?>
-<select id="grid_sidebar_post_type" name="grid_sidebar_post_type">
-<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>>Disable sidebar support</option>
-<?php
-	foreach ( $post_types as $key => $post_type ) {
-?>
-<option value="<?php echo $key?>" <?php echo ( $key == $setting ? 'selected' : '' );?>><?php echo $post_type->labels->name?></option>
-<?php
-	}
-?>
-</select>
-<?php
-}
-
-function grid_wp_default_container_section() {
-	echo '';
-}
-
-function grid_wp_default_container_html() {
-	$storage = grid_wp_get_storage();
-	$containers = $storage->fetchContainerTypes();
-?>
-<select id="grid_default_container" name="grid_default_container">
-<option value="__NONE__">Empty</option>
-<?php
-	foreach ( $containers as $container ) {
-		$type = $container['type'];
-		if ( 0 === strpos( $type, 'c-' ) ) {
-?>
-<option value="<?php echo $type?>" <?php echo ( get_option( 'grid_default_container' ) == $type ? 'selected' : '');?> ><?php echo $type?></option>
-<?php
-		}
-	}
-?>
-</select>
-<?php
-}
-
-function grid_wp_debug_mode_section() {
-	echo '';
-}
-
-function grid_wp_debug_mode_html() {
-
-	$value = get_option( 'grid_debug_mode', false );
-?>
-<input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
-<?php
-}
-
-function grid_wp_mediaselect_info_section(){
-	echo '';
-}
-
-function grid_wp_mediaselect_info_html() {
-	$value = get_option( 'grid_mediaselect_info', '' );
-?>
-<textarea id="grid_mediaselect_info" name="grid_mediaselect_info" rows="4" cols="50"><?php echo $value ?></textarea>
-<?php
-}
-
-function grid_wp_permalinks_section() {
-	echo '';
-}
-
-function grid_wp_permalinks_html() {
-	$value = get_option( 'grid_permalinks', '' );
-?>
-<input type="text" id="grid_permalinks" name="grid_permalinks" value="<?php echo $value ?>" />
-<?php
-}
 
 function grid_wp_add_meta_boxes() {
 	$post_types = get_post_types( array(), 'objects' );
