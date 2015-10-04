@@ -251,6 +251,65 @@ class grid_plugin {
 	}
 
 	/**
+	 * enqueue editor files
+	 */
+	function enqueue_editor_files($editor = null){
+		global $grid_lib;
+		/**
+		 * get editor or default
+		 */
+		$css = array();
+		if(null != $editor ){
+			$css = $editor->getCSS( false );
+		} else {
+			$css = $grid_lib->getEditorCSS( false );
+		}
+		/**
+		 * enqueue the css array
+		 */
+		foreach ( $css as $idx => $file ) {
+			wp_enqueue_style( 'grid_css_lib_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
+		}
+		wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'grid-wordpress.css', __FILE__ ) );
+		wp_enqueue_style( 'grid_wordpress_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
+
+		/**
+		 * get editor or default
+		 */
+		$lang = grid_get_lang();
+		$js = array();
+		if(null != $editor){
+			$js = $editor->getJS( $lang, false );
+		} else {
+			$js = $grid_lib->getEditorJS($lang, false);
+		}
+		/**
+		 * enqueue the js array
+		 */
+		foreach ( $js as $idx => $file ) {
+			wp_enqueue_script( 'grid_js_lib_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
+		}
+		wp_enqueue_script( 'grid_wordpress_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
+
+		/**
+		 * get additional widgets arrays (css | js)
+		 */
+		$editor_widgets = grid_get_additional_editor_widgets();
+		/**
+		 * extend widgets css with editor css filter
+		 */
+		foreach ( $editor_widgets["css"] as $key => $url ) {
+			wp_enqueue_style( 'grid_css_'.$key, $url );
+		}
+		/**
+		 * extend widgets js
+		 */
+		foreach ( $editor_widgets["js"] as $key => $url ) {
+			wp_enqueue_script( 'grid_js_'.$key, $url );
+		}
+	}
+
+	/**
 	 * update plugin
 	 */
 	function update(){
@@ -265,7 +324,35 @@ class grid_plugin {
 		$wp_update->performUpdates();
 		$grid_connection->close();
 	}
+	/**
+	 * get language
+	 */
+	function get_lang(){
+		if( defined('WPLANG') )
+		{
+			$lang = WPLANG;
+		}
+		if(!empty($lang))
+		{
+			return $lang;
+		}
+		return 'en';
+	}
 
+	/**
+	 * get connection to database
+	 * @return mysqli
+	 */
+	function get_db_connection(){
+		$host = DB_HOST;
+		$port = 3306;
+		if ( strpos( DB_HOST, ':' ) !== false ) {
+			$db_host = explode( ':', DB_HOST );
+			$host = $db_host[0];
+			$port = intval($db_host[1]);
+		}
+		return new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
+	}
 }
 
 /**
@@ -400,54 +487,16 @@ function grid_wp_load_js() {
 	}
 }
 
-function grid_wp_load( $post ) {
-	global $wpdb;
-	$postid = $post->ID;
-	if ( get_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
-		$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
-		if ( $wpdb->num_rows > 0 ) {
-			$grid_id = $rows[0]->grid_id;
-			$storage = grid_wp_get_storage();
-			$grid = null;
-			if ( isset( $_GET['grid_preview'] ) && intval($_GET['grid_preview']) ) {
-				if ( isset( $_GET['grid_revision'] ) ) {
-					$revision = intval($_GET['grid_revision']);
-					$grid = $storage->loadGridByRevision( $grid_id, $revision );
-				} else {
-					$grid = $storage->loadGrid( $grid_id );
-				}
-			} else {
-				$grid = $storage->loadGrid( $grid_id, false );
-			}
-			$post->grid = $grid;
-		}
-	}
-}
-add_action( 'the_post', 'grid_wp_load' );
 
-function grid_wp_render( $content ) {
-	$post = get_post();
-
-	if ( isset( $post->grid ) ) {
-		return $content.$post->grid->render( false );
-	}
-	else {
-		return $content;
-	}
-}
-add_filter( 'the_content', 'grid_wp_render' );
-
-
-
+/**
+ * get db connection
+ * deprecated use
+ * global $grid_plugin->get_db_connection
+ * @return mysqli
+ */
 function grid_wp_get_mysqli() {
-	$host = DB_HOST;
-	$port = 3306;
-	if ( strpos( DB_HOST, ':' ) !== false ) {
-		$db_host = explode( ':', DB_HOST );
-		$host = $db_host[0];
-		$port = intval($db_host[1]);
-	}
-	return new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
+	global $grid_plugin;
+	return $grid_plugin->get_db_connection();
 }
 
 add_action( 'admin_head-options-reading.php', 'grid_modify_front_pages_dropdown' );
@@ -488,72 +537,18 @@ function grid_get_additional_editor_widgets(){
  * enqueue js and css files for editor
  */
 function grid_enqueue_editor_files($editor = null){
-	global $grid_lib;
-	/**
-	 * get editor or default
-	 */
-	$css = array();
-	if(null != $editor ){
-		$css = $editor->getCSS( false );
-	} else {
-		$css = $grid_lib->getEditorCSS( false );
-	}
-	/**
-	 * enqueue the css array
-	 */
-	foreach ( $css as $idx => $file ) {
-		wp_enqueue_style( 'grid_css_lib_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
-	}
-	wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'grid-wordpress.css', __FILE__ ) );
-	wp_enqueue_style( 'grid_wordpress_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
-
-	/**
-	 * get editor or default
-	 */
-	$lang = grid_get_lang();
-	$js = array();
-	if(null != $editor){
-		$js = $editor->getJS( $lang, false );
-	} else {
-		$js = $grid_lib->getEditorJS($lang, false);
-	}
-	/**
-	 * enqueue the js array
-	 */
-	foreach ( $js as $idx => $file ) {
-		wp_enqueue_script( 'grid_js_lib_'.$idx, plugins_url( 'lib/'.$file, __FILE__ ) );
-	}
-	wp_enqueue_script( 'grid_wordpress_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
-
-	/**
-	 * get additional widgets arrays (css | js)
-	 */
-	$editor_widgets = grid_get_additional_editor_widgets();
-	/**
-	 * extend widgets css with editor css filter
-	 */
-	foreach ( $editor_widgets["css"] as $key => $url ) {
-		wp_enqueue_style( 'grid_css_'.$key, $url );
-	}
-	/**
-	 * extend widgets js
-	 */
-	foreach ( $editor_widgets["js"] as $key => $url ) {
-		wp_enqueue_script( 'grid_js_'.$key, $url );
-	}
-
-	
+	global $grid_plugin;
+	$grid_plugin->enqueue_editor_files($editor);
 }
 
+/**
+ * get language
+ * deprecated use
+ * global $grid_plugin->get_lang
+ * @return string
+ */
 function grid_get_lang(){
-	if( defined('WPLANG') )
-	{
-		$lang = WPLANG;
-	}
-	if(!empty($lang))
-	{
-		return $lang;
-	} 
-	return 'en';
+	global $grid_plugin;
+	return $grid_plugin->get_lang();
 }
 
