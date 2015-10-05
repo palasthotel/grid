@@ -113,8 +113,16 @@ class grid_post_box extends grid_box {
 	*/
 	public function metaSearch( $criteria, $search ) {
 		$results = array();
+
+		$post_types = get_post_types( array(), 'objects' );
+		$types = array();
+		foreach( $post_types as $post_type => $info ){
+			if(get_option('grid_'.$post_type.'_search_enabled')){
+				$types[] = $post_type;
+			}
+		}
 		$query = new WP_Query( array(
-			'post_type' => array( 'post', 'page' ), 
+			'post_type' => $types,
 			'grid_title' => $search 
 		) );
 		while ( $query->have_posts() ) {

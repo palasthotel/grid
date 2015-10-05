@@ -91,8 +91,19 @@ function grid_wp_activate() {
 		$grid_connection->close();
 		$options['installed'] = true;
 		update_option( 'grid', $options );
+		/**
+		 * default post types for grids
+		 */
 		update_option( 'grid_landing_page_enabled', true );
 		update_option( 'grid_sidebar_enabled', true );
+		/**
+		 * default searchable post types in grid
+		 */
+		update_option( 'grid_post_search_enabled', true );
+		update_option( 'grid_page_search_enabled', true );
+		/**
+		 * othter defaults
+		 */
 		update_option( 'grid_sidebar_post_type', 'sidebar' );
 		update_option( 'grid_default_container', 'c-1d1' );
 	}

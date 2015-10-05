@@ -111,6 +111,17 @@ class settings
 		register_setting( 'grid_settings', 'grid_sidebar_enabled' );
 
 		/**
+		 * post types for search
+		 */
+		add_settings_section( 'grid_post_types_search', 'Post Types for content search', array( $this, 'post_type_search_settings_section' ), 'grid_settings' );
+		$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
+		foreach ( $post_types as $key => $post_type ) {
+			add_settings_field( 'grid_'.$key.'_search_enabled', $post_type->labels->name, array( $this, 'post_type_search_html' ), 'grid_settings', 'grid_post_types_search', array( 'type' => $key ) );
+			register_setting( 'grid_settings', 'grid_'.$key.'_search_enabled' );
+		}
+
+
+		/**
 		 * sidebar post type
 		 */
 		add_settings_field( 'grid_sidebar_post_type', 'Which post type to use as sidebar content', array( $this, 'sidebar_html' ), 'grid_settings', 'grid_post_types' );
@@ -213,6 +224,18 @@ class settings
 
 	function post_type_settings_section() {
 		echo 'Which post types should have grid support?';
+	}
+
+	function post_type_search_html( $args ) {
+		$posttype = $args['type'];
+		$value = get_option( 'grid_'.$posttype.'_search_enabled', false );
+		?>
+		<input type="checkbox" id="grid_<?php echo $posttype?>_search_enabled" name="grid_<?php echo $posttype?>_search_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
+		<?php
+	}
+
+	function post_type_search_settings_section() {
+		echo 'Which post types should be found in grid content search?';
 	}
 
 	function sidebar_html() {
