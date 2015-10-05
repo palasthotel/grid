@@ -3,7 +3,7 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.3.1
+Tested up to: 4.3.2
 Stable tag: 1.4.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
@@ -72,7 +72,10 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 == Changelog ==
 
 = 1.4.4 =
+ * Imagepreview in grid box editor
  * Posts box shows empty categories
+ * Settings for post search on grid
+ * refactoring to object orientation
 
 = 1.4.3 =
  * Added lost template files 
