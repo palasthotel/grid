@@ -1350,3 +1350,8 @@ h3 {
   .grid-editor-widget-checkbox input[type=checkbox]:before {
     display: none;
     margin-top: 0px; }
+
+.grid-editor-widget-wp-mediaselect .wp-mediaselect-image-wrapper .wp-mediaselect-image-preview {
+  max-width: 100%;
+  width: auto;
+  height: auto; }
