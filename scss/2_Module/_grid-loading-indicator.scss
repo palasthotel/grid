@@ -10,7 +10,7 @@
 	z-index: $idx-loading;
 	background-color: rgba(255,255,255,0.6);
 	opacity: 0;
-	@include transition(all, .6s, ease);
+	@include transition(all, .3s, ease);
 }
 .grid-loading-indicator-wrapper{
 	position: fixed;
