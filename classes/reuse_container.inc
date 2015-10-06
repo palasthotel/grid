@@ -12,7 +12,7 @@ namespace grid_plugin;
 class reuse_container
 {
 	function __construct(){
-		add_action( 'admin_menu', 'admin_menu' );
+		add_action( 'admin_menu', array($this, 'admin_menu' ) );
 	}
 	function admin_menu(){
 		add_submenu_page( 'tools.php', 'reusable grid container', 'Reusable grid container', 'edit_posts', 'grid_reuse_containers', array( $this, 'reuse_containers' ) );

@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.4.5
+ * Version: 1.4.6
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -74,6 +74,18 @@ class grid_plugin {
 		 */
 		require('classes/container_factory.inc');
 		new \grid_plugin\container_factory();
+
+		/**
+		 *  gird container reuse
+		 */
+		require('classes/reuse_container.inc');
+		new \grid_plugin\reuse_container();
+
+		/**
+		 *  gird box reuse
+		 */
+		require('classes/reuse_box.inc');
+		new \grid_plugin\reuse_box();
 
 		/**
 		 *  gird privileges
