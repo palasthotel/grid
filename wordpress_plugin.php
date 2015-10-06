@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.4.4
+ * Version: 1.4.5
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -45,6 +45,12 @@ class grid_plugin {
 		 */
 		require('classes/the_grid.inc');
 		new \grid_plugin\the_grid();
+
+		/**
+		 * Styles
+		 */
+		require('classes/post.inc');
+		new \grid_plugin\post();
 
 		/**
 		 * meta boxes
