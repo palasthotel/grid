@@ -10,13 +10,22 @@
 <div class="grid-box-editmode">
 	List of contents
 	<?php
-	$fields = array("viewmode","posts_per_page","offset","category","post_type");
 	if(null != $this->grid){
-		foreach ($fields as $field) {
-			if(!empty($content->{$field})){
-				echo "<br/>".$field.": ".$content->{$field};
+		foreach($content as $field => $value){
+			if( '' != $value && strpos($field,"tax_") === 0 )
+			{
+				$taxonomy = $this->getTaxonomyNameByKey($field);
+				$term = get_term($value,$taxonomy);
+				if(!is_wp_error($term) && '' != $term->name ){
+					echo "<br/>$taxonomy: ".$term->name;
+				}
+			}
+			else if(!empty($value))
+			{
+				echo "<br/>".$field.": ".$value;
 			}
 		}
 	}
+
 	?>
 </div>

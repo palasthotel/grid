@@ -22,7 +22,6 @@ class grid_posts_box extends grid_list_box {
 		$this->content->viewmode = 'excerpt';
 		$this->content->posts_per_page = 5;
 		$this->content->offset = 0;
-		$this->content->category = '';
 		$this->content->post_type = 'post';
 	}
 
@@ -48,13 +47,44 @@ class grid_posts_box extends grid_list_box {
 		} else {
 			$args = array();
 			// Checks if catergory is set
+			/**
+			 * generate taxonomy
+			 */
+			$tax_query = array();
+			foreach($this->content as $field => $value){
+				if(''== $value || strpos($field,"tax_") !== 0) continue;
+				$tax_query[] = array(
+					'taxonomy' => $this->getTaxonomyNameByKey($field),
+					'terms' => $value,
+				);
+			}
+			/**
+			 * add relation if more than one term was selected
+			 */
+			if(count($tax_query)>1){
+				$tax_query["relation"] = "OR";
+			}
+			/**
+			 * add to args if there are tax_query items
+			 */
+			if(count($tax_query)>0){
+				$args['tax_query'] = $tax_query;
+			}
+
+			// START legacy support for category
 			if ( isset( $this->content->category ) && $this->content->category != '' ) {
 				$args['cat'] = $this->content->category;
 			}
+			// ENDE legacy support for category
+
+			/**
+			 * add other stuff to args
+			 */
 			$args['posts_per_page'] = $this->content->posts_per_page;
 			$args['offset'] = $this->content->offset;
 			$args['post_type'] = $this->content->post_type;
 			$output = '';
+			var_dump($args);
 			// START of WordPress Loop
 			$query = new WP_Query( $args );
 			$counter = 0;
@@ -92,61 +122,120 @@ class grid_posts_box extends grid_list_box {
 	*/
 	public function contentStructure() {
 		$cs = parent::contentStructure();
+
+		/**
+		 * select viewmode
+		 */
+		$cs[] = array(
+			'key' => 'viewmode',
+			'type' => 'select',
+			'label' => t( 'Viewmode' ),
+			'selections' => array(
+				array( 'key' => 'excerpt', 'text' => t('Excerpt' ) ) ,
+				array( 'key' => 'full', 'text' => t('Full') )
+			),
+		);
+
+		/**
+		 * posts per page
+		 */
+		$cs[] = array(
+			'key' => 'posts_per_page',
+			'label' => t( 'Posts per page' ),
+			'type' => 'number',
+		);
+
+		/**
+		 * offset
+		 */
+		$cs[] = array(
+			'key' => 'offset',
+			'label' => t( 'Offset' ),
+			'type' => 'number',
+		);
+
+		/**
+		 * taxonomies
+		 */
+		$taxonomies = get_taxonomies(array(
+			'public'=>true,
+		), 'object');
+		foreach($taxonomies as $tax){
+			/**
+			 * post format is a special case so ignore
+			 */
+			if('post_format'==$tax->name) continue;
+			/**
+			 * add taxonomy to content structure
+			 */
+			$cs[] = array(
+				'key' => $this->getTaxonomyKey($tax),
+				'label' => $tax->label,
+				'type' => 'autocomplete',
+			);
+		}
+
+
+		/**
+		 * post type select
+		 */
 		$post_types = array();
 		$input = get_post_types( array(), 'objects' );
 		foreach ( $input as $post_type => $info ) {
 			$post_types[] = array( 'key' => $post_type, 'text' => $info->labels->name );
 		}
-		return array_merge($cs, array(
-			array(
-				'key' => 'viewmode',
-				'type' => 'select',
-				'label' => t( 'Viewmode' ),
-				'selections' => array( array( 'key' => 'excerpt', 'text' => t('Excerpt' ) ) , array( 'key' => 'full', 'text' => t('Full') ) ),
-			),
-			array(
-				'key' => 'posts_per_page',
-				'label' => t( 'Posts per page' ),
-				'type' => 'number',
-			),
-			array(
-				'key' => 'offset',
-				'label' => t( 'Offset' ),
-				'type' => 'number',
-			),
-			array(
-				'key' => 'category',
-				'label' => t( 'Category' ),
-				'type' => 'autocomplete',
-			),
-			array(
-				'key' => 'post_type',
-				'label' => t( 'Post type' ),
-				'type' => 'select',
-				'selections' => $post_types,
-			),
-		));
+		$cs[] = array(
+			'key' => 'post_type',
+			'label' => t( 'Post type' ),
+			'type' => 'select',
+			'selections' => $post_types,
+		);
+
+		return $cs;
+	}
+
+	/**
+	 * content structure key for taxonomy
+	 * @param $taxonomy
+	 * @return string
+	 */
+	public function getTaxonomyKey($taxonomy){
+		return 'tax_'.$taxonomy->name;
+	}
+
+	/**
+	 * taxonomyname from constent structure key
+	 * @param $key
+	 * @return mixed
+	 */
+	public function getTaxonomyNameByKey($key){
+		return str_replace("tax_","", $key);
 	}
 
 	/**
 	* Implements search for categories
 	*
-	* @param integer $key
+	* @param string $path
 	*
 	* @param string $query
 	*
 	* @return array
 	*/
-	public function performElementSearch( $key, $query) {
-		if ( 'category' != $key ) {
-			return array( array( 'key' => -1, 'value' => 'invalid key' ) );
+	public function performElementSearch( $path, $query) {
+		$taxonomy = $this->getTaxonomyNameByKey($path);
+		if(!taxonomy_exists($taxonomy)){
+			return array( array( 'key' => -1, 'value' => 'invalid key:'.$path ) );
 		}
-		$categories = get_categories(array(
-			'hide_empty' => 0,
+		$categories = get_terms($taxonomy, array(
+			'hide_empty' => false,
 		));
 		$results = array();
 		foreach ( $categories as $category ) {
-			if ( $query == '' || false !== strstr( strtolower( $category->name ) , strtolower( $query ) ) ) {
+			if (
+				$query == ''
+				|| false !== strstr( strtolower( $category->name ) , strtolower( $query ) )
+				|| false !== strstr( strtolower( $category->label ) , strtolower( $query ) )
+			) {
 				$results[] = array( 'key' => $category->term_id, 'value' => $category->name );
 			}
 		}
@@ -163,11 +252,12 @@ class grid_posts_box extends grid_list_box {
 	* @return string
 	*/
 	public function getElementValue( $path, $id ) {
-		if ( 'category' != $path || $id == null || $id == '' ) {
-			return '';
+		$taxonomy = $this->getTaxonomyNameByKey($path);
+		if( !taxonomy_exists($taxonomy) || $id == null || $id == '' ){
+			return t('Taxonomy does not exist') . ': ' . $taxonomy;
 		} else {
-			$thisCat = get_category( $id );
-			return $thisCat->name;
+			$term = get_term( $id, $taxonomy );
+			return $term->name;
 		}
 	}
 }
