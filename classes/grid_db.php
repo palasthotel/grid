@@ -175,6 +175,7 @@ class grid_db {
 		if(!class_exists($class))
 		{
 			$box = new grid_error_box("class not found ".$class);
+			$box->boxid=$row['box_id'];
 			$box->storage=$this;
 		} else {
 			$box=new $class();

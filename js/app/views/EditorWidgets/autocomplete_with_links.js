@@ -68,22 +68,37 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         }
         else
         {
-            if(this.$el.find("input.i-autocomplete").val()==this.old_search_string)return;
-            var self=this;
             var search=this.$el.find("input.i-autocomplete").val();
+            if(search==this.old_search_string)return;
+            var self=this;
+            
             this.$el.find(".loading").show();
-            var box=this.model.box;
-            GridAjax("typeAheadSearch",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
-                success_fn:function(data){
-                    self.old_search_string=search;
-                    self.$el.find(".suggestion-list").empty();
-                    _.each(data.result,function(elem){
-                        self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
-                    });
-                    self.$el.find(".loading").hide();
-                }
-            });
+
+            clearTimeout(this.searching);
+            var self = this;
+            this.searching = setTimeout(function(){
+                self.doSearch(search);
+            }, 1000);
+            
+            
         }
+    },
+    doSearch: function(search){
+        var self = this;
+        var box=this.model.box;
+        console.log("doSearch "+search);
+        GridAjax("typeAheadSearch",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
+            success_fn:function(data){
+                console.log("result");
+                console.log(data);
+                self.old_search_string=search;
+                self.$el.find(".suggestion-list").empty();
+                _.each(data.result,function(elem){
+                    self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
+                });
+                self.$el.find(".loading").hide();
+            }
+        });
     },
     selectItem:function($item){
         var key=$item.data("key");

@@ -66,7 +66,14 @@ GRID = {
 		// initialize constants
 		this._initConstants();
 		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
-
+		/**
+		 * loading indicator before grid is ready
+		 * 
+		 */
+		GRID.$loading = ich.tpl_loading();
+		this.$root.append(GRID.$loading);
+		GRID.$loading.addClass("grid-init-loading");
+		
 		// load all model classes for grid works
 		this.getRights().fetch();
 		this.getBoxTypes().fetch();
@@ -76,12 +83,15 @@ GRID = {
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
 
+		/**
+		 * init async websocket magic
+		 * @type {GridAsync}
+		 */
 		this.async = new GridAsync(window.location.host, window.location.pathname);
 		this.authors = new GridAuthors();
 		this.async.addObserver(this);
 		this.async.addObserver(this.authors);
 		this.async.init();
-
 
 		// load the grid + view
 		this.grid = new Grid({
@@ -90,6 +100,7 @@ GRID = {
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
 			fn_success: function(data){
+				
 				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 				
 				GRID.gridview = new GridView({model: GRID.getModel() });
@@ -118,6 +129,7 @@ GRID = {
 				GRID.$root.prepend(GRID.toolbar.render().el);
 				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
 				GRID.onSidebarCalculation();
+				GRID.$loading.removeClass("grid-init-loading");
 			}
         });
 
@@ -536,10 +548,17 @@ GRID = {
 		GRID.gridview.$el.fadeIn(100).fadeOut(100).fadeIn(100);
 	},
 	startLoading: function(){
-		GRID.$root.find(".grid-loading-indicator").addClass("loading");
+		clearTimeout(GRID.loading_hide_timeout);
+		GRID.$loading.show();
+		GRID.$loading.addClass("loading");
+
 	},
 	finishLoading: function(){
-		GRID.$root.find(".grid-loading-indicator").removeClass("loading");
+		GRID.$loading.removeClass("loading");
+		clearTimeout(GRID.loading_hide_timeout);
+		GRID.loading_hide_timeout = setTimeout(function(){
+			GRID.$loading.hide();
+		},1200);
 	}
 
 };

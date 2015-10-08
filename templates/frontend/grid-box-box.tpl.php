@@ -6,37 +6,43 @@
  * @package Palasthotel\Grid
  */
 ?>
-<div class="grid-box box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
+<div class="grid-box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
 	<?php
 	if ($this->title!=""){
 
 		if ($this->titleurl !=""){
 		?>
-			<h2 class="b-title"><a href="<?php echo $this->titleurl?>"><?php echo $this->title?></a></h2>
+			<h2 class="grid-box-title b-title"><a href="<?php echo $this->titleurl?>"><?php echo $this->title?></a></h2>
 		<?php }else{?>
-			<h2 class="b-title"><?php echo $this->title?></h2>
+			<h2 class="grid-box-title b-title"><?php echo $this->title?></h2>
 		<?php }?>
 	<?php }?>
-	<div class="b-prolog">
+	
+	<?php if($this->prolog != "") { ?>
+	<div class="grid-box-prolog b-prolog">
 		<?php echo $this->prolog?>
 	</div>
+	<?php } ?>
 	
 	<?php 
 	if(is_string($content) ){
 		echo $content;
 	} else {
 		?>
-		<p>There is no working template for this Box.</p>
+		<p><?php echo t("There is no working template for this Box."); ?></p>
 		<?php
 	}
-	
 	?>
-	<div class="b-epilog">
+	
+	<?php if($this->epilog != ""){ ?>
+	<div class="grid-box-epilog b-epilog">
 		<?php echo $this->epilog?>
 	</div>
+	<?php } ?>
+
   	<?php
 	if ($this->readmore!=""){?>
-	<a href="<?php echo $this->readmoreurl?>" class="b-readmore-link"><?php echo $this->readmore?></a>
+	<a href="<?php echo $this->readmoreurl?>" class="grid-box-readmore-link b-readmore-link"><?php echo $this->readmore?></a>
 	<?php }?>
 	
 </div>

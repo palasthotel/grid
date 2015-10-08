@@ -37,7 +37,7 @@ class grid_reuse_container_editor
 			$edit=new grid_container();
 			$edit->grid=$grid;
 			$edit->storage=$grid_db;
-			$edit->type="C-12";
+			$edit->type="c-1d1";
 			$edit->readmore="edit";
 			$edit->slots=array();
 			$edit->prolog=$container->reusetitle;

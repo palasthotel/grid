@@ -80,7 +80,7 @@ var GridToolbarView = GridBackbone.View.extend({
         }
     },
     preview: function(){
-        window.open(this.model.get("PREVIEW_URL"),"_blank");
+        window.open(this.model.get("PREVIEW_URL"),"grid_preview");
     },
     revert: function(){
         if(!GRID.getRights().get("revert") || GRID.locked() ){
@@ -165,6 +165,7 @@ var GridToolbarView = GridBackbone.View.extend({
         var elements_top_offset = this.$el.offset().top;
         var tab_height = this.$tab_container.outerHeight();
         this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height));
+
     },
     /**
      * authors button
@@ -181,3 +182,4 @@ var GridToolbarView = GridBackbone.View.extend({
         GRID.showAuthors();
     },
 });
+
