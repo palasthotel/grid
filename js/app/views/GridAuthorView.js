@@ -9,9 +9,11 @@ var Author = GridBackbone.View.extend({
     tagName: "li",
     className: "grid-author",
     events: {
-        "click .lock-sender": "onSendLock",
+        "click .author-lock-sender": "onClickSendLock",
+        "click .author-lock-requester": "onClickRequestLock",
     },
     initialize: function(){
+        this.listenTo(this.model, "request_lock", this.onRequestLock);
     },
     render: function(){
         var json = this.model.toJSON();
@@ -20,8 +22,15 @@ var Author = GridBackbone.View.extend({
         this.$el.append(ich.tpl_author(json));
         return this;
     },
-    onSendLock: function(){
+    onClickSendLock: function(){
         console.log("send lock to"+this.model.get("id"));
         GRID.async.locking_handover(this.model.get("id"));
     },
+    onClickRequestLock: function(){
+        GRID.async.locking_request_lock();
+    },
+	onRequestLock: function(){
+        console.log("LOCK REQUESTED!");
+    },
+
 });

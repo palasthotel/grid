@@ -1,4 +1,24 @@
 @charset "UTF-8";
+@-webkit-keyframes bounce-x {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0); }
+  40% {
+    -webkit-transform: translateX(30px);
+            transform: translateX(30px); }
+  60% {
+    -webkit-transform: translateX(15px);
+            transform: translateX(15px); } }
+@keyframes bounce-x {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0); }
+  40% {
+    -webkit-transform: translateX(30px);
+            transform: translateX(30px); }
+  60% {
+    -webkit-transform: translateX(15px);
+            transform: translateX(15px); } }
 /* **************
 Dimensions
 ****************/
@@ -365,6 +385,33 @@ h3 {
 
 .icon-options:before {
   content: '\e800'; }
+
+.grid-author {
+  position: relative;
+  padding: 15px; }
+  .grid-author + .grid-author {
+    border-top: 1px solid #f3f5f7; }
+  .grid-author .author-lock-icon {
+    position: absolute;
+    left: -10px; }
+  .grid-author .author-action-btn {
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    bottom: 0px;
+    right: -15px;
+    width: 0px;
+    background-color: #3f4853;
+    font-weight: bold;
+    padding: 15px 0 0 15px;
+    -webkit-transition: all 0.1337s ease;
+            transition: all 0.1337s ease; }
+  .grid-author:hover .author-action-btn {
+    width: 135px;
+    color: white;
+    cursor: pointer; }
 
 .grid-authors-wrapper {
   position: fixed;
@@ -984,7 +1031,8 @@ h3 {
   -webkit-transition: all 0.1337s ease;
           transition: all 0.1337s ease;
   position: relative;
-  background-color: #f3f5f7; }
+  background-color: #3f4853;
+  color: white; }
   .grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
     cursor: pointer;
     color: white;
@@ -1388,7 +1436,7 @@ h3 {
           padding-right: 38px;
           color: white;
           background-color: #3f4853; }
-      .grid-toolbar .grid-tool-list li.grid-tool-authors-count button .indicator-authors-count {
+      .grid-toolbar .grid-tool-list li.grid-tool-authors button .indicator-authors-count {
         position: absolute;
         right: 18px;
         top: 10px;
@@ -1402,6 +1450,18 @@ h3 {
     .grid-toolbar[data-draft=false] li.grid-tool-publish button,
     .grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
       background-color: #46bd7b; }
+  .grid-toolbar.async-request-lock .grid-tool-authors {
+    -webkit-animation-name: bounce-x;
+            animation-name: bounce-x;
+    -webkit-animation-duration: 1.3s;
+            animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite; }
+    .grid-toolbar.async-request-lock .grid-tool-authors:hover {
+      -webkit-animation: 0;
+              animation: 0; }
+    .grid-toolbar.async-request-lock .grid-tool-authors button {
+      background-color: #d4dce3; }
 
 .grid-toolbar-list {
   margin: 20px 20px; }

@@ -7,9 +7,6 @@
 
 var Authors = GridBackbone.View.extend({
     className: "grid-authors",
-    events: {
-        "click .grid-back": "onBack",
-    },
     initialize: function(){
         this.listenTo(GRID.authors, "add", this.onAddAuthor);
         this.listenTo(GRID.authors, "remove", this.render);
@@ -35,8 +32,4 @@ var Authors = GridBackbone.View.extend({
         var author = new Author({model: author});
         this.$list.append(author.render().$el);
     },
-    onBack: function(){
-        GRID.hideAuthors();
-        this.remove();
-    }
 });

@@ -30,6 +30,8 @@ var GridToolbarView = GridBackbone.View.extend({
     render: function() {
 
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
+
+        this.$toolbar = this.$el.find(".grid-toolbar");
         
         this.$tool_elements = this.$el.find(".grid-tool-elements");
         this.$tool_element_content = this.$el.find(".grid-element-type-content");
@@ -182,6 +184,13 @@ var GridToolbarView = GridBackbone.View.extend({
     },
     onClickAuthors: function(e){
         GRID.toggleAuthors();
+        this.$toolbar.removeClass("async-request-lock");
     },
+    /**
+     * when user requests lock event
+     */
+    async_request_lock: function(){
+        this.$toolbar.addClass("async-request-lock");
+    }
 });
 

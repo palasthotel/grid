@@ -14,6 +14,9 @@ GridAsync.prototype.init = function(){
 GridAsync.prototype.addObserver = function(observer){
 	this.observers.push(observer);
 };
+GridAsync.prototype.removeObserver = function(observer){
+	this.observers = _.without(this.observers,observer);
+};
 GridAsync.prototype.notifyAll = function(_event, data){
 	console.log("notify event "+_event);
 	_.each(this.observers, function(_observer, index, list){
@@ -58,6 +61,7 @@ GridAsync.prototype.initEvents = function(){
 	this.on("authors.left", "authors_left");
 	// locking
 	this.on("locking.isLocked", "locking_is_locked");
+	this.on("locking.lockRequested", "locking_lock_requested");
 }
 GridAsync.prototype.on = function(e, f){
 	var self = this;
@@ -94,6 +98,13 @@ GridAsync.prototype.locking_is_locked = function(data){
 		GRID.authors.setLock(data.identifier);
 	}
 	this.notifyAll("locking_is_locked");
+};
+GridAsync.prototype.locking_lock_requested = function(data){
+	var author = GRID.authors.get(data.identifier);
+	if( author instanceof GridAuthor){
+		author.trigger("request_lock");
+	}
+	this.notifyAll("request_lock");
 };
 
 

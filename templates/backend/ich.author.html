@@ -1,1 +1,12 @@
-<div>{{name}} {{#has_lock}}<button class="lock-requester">request lock</button>{{/has_lock}} {{#have_lock}}<button class="lock-sender">send lock</button>{{/have_lock}}</div>
+{{#has_lock}}<span class="author-lock-icon icon-lock-open"></span>{{/has_lock}}
+{{^has_lock}}<span class="author-lock-icon icon-lock"></span>{{/has_lock}}
+
+<div class="author-name">{{name}}</div>
+
+{{#has_lock}}
+<div class="author-action-btn author-lock-requester"><nobr>Request control</nobr></div>
+{{/has_lock}}
+
+{{#have_lock}}
+<div class="author-action-btn author-lock-sender">Give control</div>
+{{/have_lock}}

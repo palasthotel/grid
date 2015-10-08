@@ -50,7 +50,7 @@
 					background-color: $color-link;
 				}
 			}
-			&.grid-tool-authors-count button{
+			&.grid-tool-authors button{
 				.indicator-authors-count{
 					position: absolute;
 					right: 18px;
@@ -76,6 +76,21 @@
 		}
 	}
 
+	// async lock request
+	&.async-request-lock{
+		.grid-tool-authors{
+
+			animation-name:bounce-x;
+			animation-duration: 1.3s;
+			animation-iteration-count: infinite;
+			&:hover{
+				animation: 0;
+			}
+			button{
+				background-color: darken($color-grid-bg,10%);
+			}
+		}
+	}
 }
 
 .grid-toolbar-list{

@@ -99,48 +99,7 @@ GRID = {
 			SERVER: this.SERVER,
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
-			fn_success: function(data){
-				
-				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
-				
-				GRID.gridview = new GridView({model: GRID.getModel() });
-				// handle rights
-				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
-
-				GRID.$root.append( GRID.getView().render().el );
-				
-				jQuery(GRID.dom_root).mutate('height',function (element,info){
-				    GRID.onSidebarCalculation();
-				});
-
-				GRID.$root
-					.data("isSidebar",GRID.IS_SIDEBAR)
-					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
-
-				if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
-				GRID._initializeBoxSortable();
-				// load the revisions
-				GRID.revisions = new Revisions({grid: GRID.getModel() });
-		        GRID.revisions.fetch();
-		        // init toolbar
-				GRID.toolbar  = new GridToolbarView({
-					model: GRID.getModel()
-				});
-				GRID.$root.prepend(GRID.toolbar.render().el);
-
-				GRID.onSidebarCalculation();
-				GRID.$loading.removeClass("grid-init-loading");
-
-				/**
-				 * init async connection on grid loading done
-				 */
-				GRID.async.init();
-
-				/**
-				 * listen to changes of window size
-				 */
-				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
-			}
+			fn_success: GRID.new_grid_success
         });
 
 		return this;
@@ -161,40 +120,55 @@ GRID = {
 			SERVER: this.SERVER,
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
-			fn_success: function(data){
-				GRID.$root.empty();
-				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
-				
-				GRID.gridview = new GridView({model: GRID.getModel() });
-				// handle rights
-				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
-
-				GRID.$root.append( GRID.getView().render().el );
-				
-				jQuery(GRID.dom_root).mutate('height',function (element,info){
-				    GRID.onSidebarCalculation();
-				});
-
-				GRID.$root
-					.data("isSidebar",GRID.IS_SIDEBAR)
-					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
-
-				if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
-				GRID._initializeBoxSortable();
-				// load the revisions
-				GRID.revisions = new Revisions({grid: GRID.getModel() });
-		        GRID.revisions.fetch();
-		        // init toolbar
-				GRID.toolbar  = new GridToolbarView({
-					model: GRID.getModel()
-				});
-				GRID.$root.prepend(GRID.toolbar.render().el);
-				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
-				GRID.onSidebarCalculation();
-			}
+			fn_success: GRID.new_grid_success
         });
 		return this;
 	},
+
+	new_grid_success: function(data){
+		GRID.$root.empty();
+		GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
+
+		GRID.gridview = new GridView({model: GRID.getModel() });
+		// handle rights
+		GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
+
+		GRID.$root.append( GRID.getView().render().el );
+
+		jQuery(GRID.dom_root).mutate('height',function (element,info){
+			GRID.onSidebarCalculation();
+		});
+
+		GRID.$root
+			.data("isSidebar",GRID.IS_SIDEBAR)
+			.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
+
+		if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
+		GRID._initializeBoxSortable();
+		// load the revisions
+		GRID.revisions = new Revisions({grid: GRID.getModel() });
+		GRID.revisions.fetch();
+		// init toolbar
+		GRID.toolbar  = new GridToolbarView({
+			model: GRID.getModel()
+		});
+		GRID.async.addObserver(GRID.toolbar);
+		GRID.$root.prepend(GRID.toolbar.render().el);
+
+		GRID.onSidebarCalculation();
+		GRID.$loading.removeClass("grid-init-loading");
+
+		/**
+		 * init async connection on grid loading done
+		 */
+		GRID.async.init();
+
+		/**
+		 * listen to changes of window size
+		 */
+		jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
+	},
+
 	getModel: function(){
 		return this.grid;
 	},
