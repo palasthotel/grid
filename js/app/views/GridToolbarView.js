@@ -15,7 +15,7 @@ var GridToolbarView = GridBackbone.View.extend({
         "click .grid-toolbar [role=preview]": "preview",
         "click .grid-toolbar [role=revert]": "revert",
         "click .grid-toolbar [role=revisions]": "revisions",
-        "click .grid-toolbar [role=authors]": "onAuthors",
+        "click .grid-toolbar [role=authors]": "onClickAuthors",
         "click .grid-element-type[data-type=box]:not(.active)": "showBoxTools",
         "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools",
     },
@@ -176,10 +176,10 @@ var GridToolbarView = GridBackbone.View.extend({
         } else {
             this.$authors_count.parents("li").show();
             this.$authors_count.text(GRID.authors.getCount());
-        }        
+        }
     },
-    onAuthors: function(e){
-        GRID.showAuthors();
+    onClickAuthors: function(e){
+        GRID.toggleAuthors();
     },
 });
 

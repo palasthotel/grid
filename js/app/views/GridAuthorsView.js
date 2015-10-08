@@ -6,7 +6,7 @@
 */
 
 var Authors = GridBackbone.View.extend({
-    className: "grid-box-authors",
+    className: "grid-authors",
     events: {
         "click .grid-back": "onBack",
     },

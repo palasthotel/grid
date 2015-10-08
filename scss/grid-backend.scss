@@ -1,58 +1,8 @@
-@import "no-output/no-output";
-@import "no-output/mixins";
+@import "no-output/*";
 
-/**
-**/
+@import "0_Base/*";
 
-@import "0_Base/grid-base";
-@import "0_Base/grid-all-wrapper";
+@import "2_Module/*";
 
-@import "0_Base/_grid-font.scss";
-
-/**
-**/
-
-@import "2_Module/_grid-container-drop-area-wrapper.scss";
-@import "2_Module/_grid-dragger-helper.scss";
-@import "2_Module/_grid-box-drop-area-wrapper.scss";
-@import "2_Module/_grid-box.scss";
-@import "2_Module/_grid-box-sort-placeholder.scss";
-@import "2_Module/_grid-boxes-wrapper.scss";
-@import "2_Module/_grid-container-wrapper.scss";
-@import "2_Module/_grid-container.scss";
-@import "2_Module/_grid-container-sidebar.scss";
-@import "2_Module/_grid-container-sort-placeholder.scss";
-@import "2_Module/_grid-editor.scss";
-@import "2_Module/_grid-element-drag-icon.scss";
-@import "2_Module/_grid-element-trash.scss";
-@import "2_Module/_grid-element-type-content.scss";
-@import "2_Module/_grid-element-type-select.scss";
-@import "2_Module/_grid-new-container-slots.scss";
-@import "2_Module/_grid-new-element.scss";
-@import "2_Module/_grid-revisions.scss";
-@import "2_Module/_grid-slot-style-changer.scss";
-@import "2_Module/_grid-slot.scss";
-@import "2_Module/_grid-slots-wrapper.scss";
-
-@import "2_Module/_grid-async-authors.scss";
-@import "2_Module/_grid-async-locking.scss";
-
-@import "2_Module/_grid-tool-elements.scss";
-@import "2_Module/_grid-element-box-list.scss";
-@import "2_Module/_grid-toolbar.scss";
-@import "2_Module/_grid-wrapper.scss";
-@import "2_Module/_grid-gridmode.scss";
-@import "2_Module/_grid-loading-indicator.scss";
-
-/**
-**/
-
-@import "3_Editor-Widget/grid-editor-url-builder";
-@import "3_Editor-Widget/grid-editor-widget-textarea";
-@import "3_Editor-Widget/grid-editor-widget-list";
-@import "3_Editor-Widget/grid-editor-widget-listitem";
-@import "3_Editor-Widget/grid-editor-widget-autocomplete";
-@import "3_Editor-Widget/grid-editor-widget-multi-autocomplete";
-@import "3_Editor-Widget/grid-editor-widget-checkbox";
-@import "3_Editor-Widget/grid-editor-widget-wp-mediaselect";
+@import "3_Editor-Widget/*";
 

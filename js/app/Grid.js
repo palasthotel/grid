@@ -398,14 +398,23 @@ GRID = {
 	/**
 	 * change to authors
 	 */
-	showAuthors: function(){
-		GRID.$root_authors.empty();
-		var authors = new Authors();
-		GRID.$root_authors.append(authors.render().$el);
-		GRID.$root_authors.show();
+	toggleAuthors: function(){
+		if(!$.trim(GRID.$root_authors.html())){
+			console.log("empty authors so init");
+			GRID.$root_authors.empty();
+			var authors = new Authors();
+			GRID.$root_authors.append(authors.render().$el);
+		}
+		GRID.$root.toggleClass("is-active-authors");
+		GRID.$root_authors.toggleClass("is-active");
 	},
-	hideAuthors: function() {
-		GRID.$root_authors.hide();
+	showAuthors: function(){
+		this.hideAuthors();
+		this.toggleAuthors();
+	},
+	hideAuthors: function(){
+		GRID.$root.removeClass("is-active-authors");
+		GRID.$root_authors.removeClass("is-active");
 	},
 	locked: function(){
 		return !GRID.authors.haveLock();
@@ -413,9 +422,11 @@ GRID = {
 	async_locking_is_locked: function(){
 		if(GRID.locked()){
 			GRID.$root.addClass("grid-is-locked");
+			GRID.showAuthors();
 		} else if(GRID.$root.hasClass("grid-is-locked")){
 			GRID.reload();
 			GRID.$root.removeClass("grid-is-locked");
+			this.hideAuthors();
 		}		
 	},
 	async_disconnect: function(){
