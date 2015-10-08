@@ -22,7 +22,6 @@ GridAsync.prototype.notifyAll = function(_event, data){
 			console.log(["observer", _observer]);
 			_observer["async_"+_event](data);
 		}
-		
 	});
 };
 
