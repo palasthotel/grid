@@ -1,8 +1,10 @@
 .grid-authors-wrapper{
-	min-height: 300px;
+	position: fixed;
+	width: 260px;
 	display: none;
+	right: 0px;
 	.authors-list{
-		max-width: 300px;
+
 		margin: 0px auto;
 		padding: 15px;
 		background-color: white;
