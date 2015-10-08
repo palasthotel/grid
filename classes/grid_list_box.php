@@ -91,15 +91,6 @@ class grid_abstract_list_box extends grid_box {
 	    }
 	    return $return;
 	}
-	
-	/**
-	* Determines editor widgets used in backend
-	*
-	* @return array
-	*/
-	public function contentStructure () {
-		return array();
-	}
 
 }
 
@@ -154,12 +145,4 @@ class grid_list_box extends grid_abstract_list_box {
 		return array();
 	}
 	
-	/**
-	* Determines editor widgets used in backend
-	*
-	* @return array
-	*/
-	public function contentStructure() {
-		return array();
-	}
 }

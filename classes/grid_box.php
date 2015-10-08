@@ -89,6 +89,13 @@ class grid_box extends grid_base {
 	public $content;
 
 	/**
+	* Class constructor
+	*/
+	public function __construct() {
+		$this->content=new Stdclass();
+	}
+
+	/**
 	* Sets box type.
 	*
 	* @return string

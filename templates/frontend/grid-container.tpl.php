@@ -36,9 +36,13 @@ if ($this->firstcontentcontainer){
 				<h2 class="grid-container-title"><?php echo $this->title?></h2>
 			<?php }?>
 		<?php }?>
+
+		<?php if($this->prolog != "") { ?>
 		<div class="grid-container-prolog">
 		  	<?php echo $this->prolog?>
 		</div>
+		<?php } ?>
+
 	</div>
 
 	<div class="grid-slots-wrapper">
@@ -52,12 +56,17 @@ if ($this->firstcontentcontainer){
 	</div>
 
 	<div class="grid-container-after">
+
+		<?php if($this->epilog != ""){ ?>
 		<div class="grid-container-epilog">
 			<?php echo $this->epilog?>
 		</div>
+		<?php } ?>
+
 		<?php if ($this->readmore!=""){?>
 		<a href="<?php echo $this->readmoreurl?>" class="grid-container-readmore-link"><?php echo $this->readmore?></a>
 		<?php }?>
+		
 	</div>
 	</div>
 

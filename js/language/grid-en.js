@@ -35,7 +35,7 @@ document.lang_values = {
 	"label-readmore-url": "Readmore URL (for internals links, please use a relative path starting with '/'):",
 	"label-style": "Style:",
 	"label-b-before": "Prolog",
-	"label-b-dynamic": "Specific",
+	"label-b-dynamic": "Spezific",
 	"label-b-after": "Epilog",
 	// errors: something went wrong
 	"err_publish": "Could not publish...",

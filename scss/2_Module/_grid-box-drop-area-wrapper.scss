@@ -17,5 +17,10 @@
 			top: -14px;
 		}
 	}
+  	.grid-box + &{
+	  margin-top: 10px;
+		&:last-child{
+			margin-top: 0;
+		}
+	}
 }
-

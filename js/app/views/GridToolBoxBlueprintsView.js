@@ -19,7 +19,9 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
         this.model.searchBoxes();
         this.delegateEvents();
         if(this.model.get("criteria").length > 0){
-            this.$el.append('<div class="grid-box-blueprints-search"><input placeholder="Which do you need?" type="text" value="" /></div>');
+            var $_search = jQuery('<div class="grid-box-blueprints-search"><input placeholder="Which do you need?" type="text" value="" /></div>');
+            this.$el.append($_search);
+            this.searchString({target:$_search.find("input")});
         }
         this.$blueprintslist = jQuery("<div class='grid-box-blueprints-list'></div>");
         this.$el.append(this.$blueprintslist);
@@ -38,8 +40,8 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
         return this;
     },
     searchString:function(event){
+
         var input=jQuery(event.target).val();
-        if(input.length>0 && input.length<2)return;
         var self=this;
         if(this.timer)
             clearTimeout(this.timer);

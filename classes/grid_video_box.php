@@ -42,7 +42,7 @@ class grid_video_box extends grid_static_base_box
 	*/
 	public function build($editmode) {
 		if($editmode) {
-			return t("Video-box");
+			return $this->content;
 		}
 		else {
 			return $this->content->html;

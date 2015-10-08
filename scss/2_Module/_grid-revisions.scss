@@ -56,7 +56,7 @@
 	}
 
 	&:first-child:before{
-		z-index: $idx-toolbar;
+		z-index: $idx-revisions;
 		content:"";
 		border: 8px solid $color-revision-draft;
 		font-size:0;

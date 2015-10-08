@@ -25,7 +25,7 @@ class grid_html_box extends grid_static_base_box {
 	* Constructor initializes editor widgets.
 	*/
 	public function __construct() {
-		$this->content=new Stdclass();
+		parent::__construct();
 		$this->content->html='';
 	}
 
@@ -39,8 +39,7 @@ class grid_html_box extends grid_static_base_box {
 	public function build($editmode) {
 		if($editmode && empty($this->content->html)) {
 			return t("Static HTML-Content");
-		}
-		else {
+		} else {
 			return $this->content->html;
 		}
 	}
@@ -51,13 +50,14 @@ class grid_html_box extends grid_static_base_box {
 	* @return array
 	*/
 	public function contentStructure () {
-		return array(
+		$cs = parent::contentStructure();
+		return array_merge($cs, array(
 			array(
 				'key'=>'html',
 				'label'=>t('Text'),
 				'type'=>'html'
 			),
-		);
+		));
 	}
 
 }
