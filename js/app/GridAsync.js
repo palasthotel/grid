@@ -44,6 +44,9 @@ GridAsync.prototype.locking_request_lock = function(){
 	this.socket.emit("locking.requestLock");
 }
 GridAsync.prototype.locking_handover = function(identifier){
+	GRID.authors.each(function(author){
+		author.set("request_lock", false);
+	});
 	this.socket.emit("locking.handover", identifier);
 }
 GridAsync.prototype.locking_deny_handover = function(identifier){
@@ -102,7 +105,7 @@ GridAsync.prototype.locking_is_locked = function(data){
 GridAsync.prototype.locking_lock_requested = function(data){
 	var author = GRID.authors.get(data.identifier);
 	if( author instanceof GridAuthor){
-		author.trigger("request_lock");
+		author.set("request_lock",true);
 	}
 	this.notifyAll("request_lock");
 };

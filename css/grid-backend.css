@@ -19,6 +19,26 @@
   60% {
     -webkit-transform: translateX(15px);
             transform: translateX(15px); } }
+@-webkit-keyframes bounce-y-small {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
+  40% {
+    -webkit-transform: translateY(-15px);
+            transform: translateY(-15px); }
+  60% {
+    -webkit-transform: translateY(-7px);
+            transform: translateY(-7px); } }
+@keyframes bounce-y-small {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
+  40% {
+    -webkit-transform: translateY(-15px);
+            transform: translateY(-15px); }
+  60% {
+    -webkit-transform: translateY(-7px);
+            transform: translateY(-7px); } }
 /* **************
 Dimensions
 ****************/
@@ -393,7 +413,7 @@ h3 {
     border-top: 1px solid #f3f5f7; }
   .grid-author .author-lock-icon {
     position: absolute;
-    left: -10px; }
+    left: -5px; }
   .grid-author .author-action-btn {
     -moz-box-sizing: border-box;
          box-sizing: border-box;
@@ -412,6 +432,13 @@ h3 {
     width: 135px;
     color: white;
     cursor: pointer; }
+  .grid-author.async-request-lock .author-lock-icon {
+    -webkit-animation-name: bounce-y-small;
+            animation-name: bounce-y-small;
+    -webkit-animation-duration: 1.3s;
+            animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite; }
 
 .grid-authors-wrapper {
   position: fixed;

@@ -6,7 +6,7 @@
 	}
 	.author-lock-icon{
 		position: absolute;
-		left:-10px;
+		left:-5px;
 	}
 	.author-action-btn{
 		box-sizing: border-box;
@@ -26,6 +26,13 @@
 			width: 135px;
 			color: white;
 			cursor:pointer;
+		}
+	}
+	&.async-request-lock{
+		.author-lock-icon{
+			animation-name:bounce-y-small;
+			animation-duration: 1.3s;
+			animation-iteration-count: infinite;
 		}
 	}
 }

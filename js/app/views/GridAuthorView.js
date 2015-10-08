@@ -13,13 +13,14 @@ var Author = GridBackbone.View.extend({
         "click .author-lock-requester": "onClickRequestLock",
     },
     initialize: function(){
-        this.listenTo(this.model, "request_lock", this.onRequestLock);
+        this.listenTo(this.model, "change:request_lock", this.onRequestLock);
     },
     render: function(){
         var json = this.model.toJSON();
         json.have_lock = GRID.authors.haveLock();
         this.$el.empty();
         this.$el.append(ich.tpl_author(json));
+	    this.onRequestLock();
         return this;
     },
     onClickSendLock: function(){
@@ -30,7 +31,12 @@ var Author = GridBackbone.View.extend({
         GRID.async.locking_request_lock();
     },
 	onRequestLock: function(){
-        console.log("LOCK REQUESTED!");
+		console.log("GridAuthorView request lock");
+		if(this.model.get("request_lock")){
+			this.$el.addClass('async-request-lock');
+		} else {
+			this.$el.removeClass('async-request-lock');
+		}
     },
 
 });
