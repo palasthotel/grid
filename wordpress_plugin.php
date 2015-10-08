@@ -50,7 +50,7 @@ class grid_plugin {
 		 * Styles
 		 */
 		require('classes/post.inc');
-		new \grid_plugin\post();
+		$this->post = new \grid_plugin\post();
 
 		/**
 		 * meta boxes
@@ -171,6 +171,14 @@ class grid_plugin {
 				)
 			);
 		}
+	}
+
+	/**
+	 * loads grid manually
+	 * @param $post
+	 */
+	function grid_load($post){
+		$this->post->grid_load($post);
 	}
 
 	/**
@@ -448,6 +456,17 @@ function grid_wp_get_postid_by_grid($gridid) {
 function grid_wp_get_grid_by_postid( $postid ) {
 	global $grid_plugin;
 	return $grid_plugin->get_grid_by_postid($postid);
+}
+
+/**
+ * loads grid by post
+ * deprecated use
+ * global $grid_plugin->grid_load
+ * @param $post
+ */
+function grid_wp_load($post){
+	global $grid_plugin;
+	$grid_plugin->grid_load($post);
 }
 
 /**
