@@ -1,9 +1,13 @@
+@charset "UTF-8";
 /* **************
 Dimensions
 ****************/
 /**************
 * index stack
 ***************/
+/**
+* transitions
+*/
 .grid-all-wrapper,
 .grid-editor-wrapper {
   font-family: "OpenSans", sans-serif;
@@ -147,6 +151,152 @@ h3 {
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
+/**
+* like they come from fontello
+*/
+.icon-cog:before {
+  content: '\e800'; }
+
+/* '' */
+.icon-check:before {
+  content: '\e801'; }
+
+/* '' */
+.icon-cancel:before {
+  content: '\e802'; }
+
+/* '' */
+.icon-minus:before {
+  content: '\e803'; }
+
+/* '' */
+.icon-plus:before {
+  content: '\e804'; }
+
+/* '' */
+.icon-link:before {
+  content: '\e805'; }
+
+/* '' */
+.icon-eye:before {
+  content: '\e806'; }
+
+/* '' */
+.icon-pencil:before {
+  content: '\e807'; }
+
+/* '' */
+.icon-trash:before {
+  content: '\e808'; }
+
+/* '' */
+.icon-shareable:before {
+  content: '\e809'; }
+
+/* '' */
+.icon-right-dir:before {
+  content: '\e80a'; }
+
+/* '' */
+.icon-ccw:before {
+  content: '\e80b'; }
+
+/* '' */
+.icon-back-in-time:before {
+  content: '\e80c'; }
+
+/* '' */
+.icon-brush:before {
+  content: '\e80d'; }
+
+/* '' */
+.icon-dot-3:before {
+  content: '\e80e'; }
+
+/* '' */
+.icon-megaphone:before {
+  content: '\e80f'; }
+
+/* '' */
+.icon-recycle:before {
+  content: '\e810'; }
+
+/* '' */
+.icon-flow-tree:before {
+  content: '\e811'; }
+
+/* '' */
+.icon-lock-open-alt:before {
+  content: '\e812'; }
+
+/* '' */
+.icon-lock:before {
+  content: '\e813'; }
+
+/* '' */
+.icon-lock-open:before {
+  content: '\e814'; }
+
+/* '' */
+.icon-clock:before {
+  content: '\e815'; }
+
+/* '' */
+.icon-picture:before {
+  content: '\e816'; }
+
+/* '' */
+.icon-grid-2x2:before {
+  content: '\e817'; }
+
+/* '' */
+.icon-grid-3x3:before {
+  content: '\e818'; }
+
+/* '' */
+.icon-list-numbered:before {
+  content: '\e819'; }
+
+/* '' */
+.icon-list-bullet:before {
+  content: '\e81a'; }
+
+/* '' */
+.icon-chat:before {
+  content: '\e81b'; }
+
+/* '' */
+.icon-plus-squared:before {
+  content: '\e81c'; }
+
+/* '' */
+.icon-minus-squared:before {
+  content: '\e81d'; }
+
+/* '' */
+.icon-cancel-squared:before {
+  content: '\e81e'; }
+
+/* '' */
+.icon-beaker:before {
+  content: '\e81f'; }
+
+/* '' */
+.icon-filter:before {
+  content: '\e820'; }
+
+/* '' */
+.icon-hourglass:before {
+  content: '\e821'; }
+
+/* '' */
+.icon-github-circled:before {
+  content: '\e822'; }
+
+/* '' */
+/**
+* rename to function names
+*/
 .icon-link:before {
   content: '\e805'; }
 
@@ -220,9 +370,9 @@ h3 {
   position: fixed;
   width: 260px;
   z-index: 91;
-  right: -500px;
-  -webkit-transition: all 0.3s;
-          transition: all 0.3s; }
+  right: -300px;
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease; }
   .grid-authors-wrapper.is-active {
     right: 0px; }
   .grid-authors-wrapper .grid-authors {
@@ -238,8 +388,6 @@ h3 {
     text-transform: uppercase;
     font-weight: bold;
     height: 45px;
-    -webkit-transition: all 0.1337s ease;
-            transition: all 0.1337s ease;
     position: relative;
     color: white;
     background-color: #3ac5d9; }
@@ -1188,8 +1336,8 @@ h3 {
   width: 260px;
   border-left: 1px solid rgba(176, 186, 194, 0.7);
   z-index: 90;
-  -webkit-transition: all 0.3s;
-          transition: all 0.3s; }
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease; }
   .is-active-authors .grid-tool-elements {
     right: -500px; }
 

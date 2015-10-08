@@ -4,8 +4,10 @@
 
 	z-index: $idx-authors-toolbar;
 
-	right: -500px;
-	transition: all 0.3s;
+	right: -300px;
+
+	@include transition();
+
 	&.is-active{
 		right: 0px;
 	}
@@ -23,7 +25,6 @@
 		text-transform: uppercase;
 		font-weight: bold;
 		height: $dim-tool-element-tab-height;
-		@include transition();
 		position:relative;
 		color: white;
 		background-color: $color-tool-elementtype-active;

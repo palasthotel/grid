@@ -5,7 +5,7 @@
 	width: $dim-tool-elements-width;
 	border-left: 1px solid $color-container-border;
 	z-index: $idx-toolbar;
-	transition: all 0.3s;
+	@include transition();
 	.is-active-authors &{
 		right: -500px;
 	}

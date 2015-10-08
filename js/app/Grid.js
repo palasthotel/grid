@@ -91,7 +91,7 @@ GRID = {
 		this.authors = new GridAuthors();
 		this.async.addObserver(this);
 		this.async.addObserver(this.authors);
-		this.async.init();
+
 
 		// load the grid + view
 		this.grid = new Grid({
@@ -127,9 +127,19 @@ GRID = {
 					model: GRID.getModel()
 				});
 				GRID.$root.prepend(GRID.toolbar.render().el);
-				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
+
 				GRID.onSidebarCalculation();
 				GRID.$loading.removeClass("grid-init-loading");
+
+				/**
+				 * init async connection on grid loading done
+				 */
+				GRID.async.init();
+
+				/**
+				 * listen to changes of window size
+				 */
+				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
 			}
         });
 
@@ -138,6 +148,7 @@ GRID = {
 	reload: function(){
 		this.grid.destroy();
 		this.grid = null;
+		this.$root_authors.empty();
 		if(this.gridView != null){
 			this.gridView.remove();
 		}
@@ -404,9 +415,12 @@ GRID = {
 			GRID.$root_authors.empty();
 			var authors = new Authors();
 			GRID.$root_authors.append(authors.render().$el);
+			authors.listenTo( GRID.toolbar,'toolbar_resize', authors.onResize);
 		}
+
 		GRID.$root.toggleClass("is-active-authors");
 		GRID.$root_authors.toggleClass("is-active");
+		GRID.toolbar.onResize();
 	},
 	showAuthors: function(){
 		this.hideAuthors();

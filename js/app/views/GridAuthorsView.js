@@ -26,6 +26,11 @@ var Authors = GridBackbone.View.extend({
         });
         return this;
     },
+    onResize: function(height){
+        console.log("resize triggered "+height);
+        this.$list.css("height", height+"px");
+
+    },
     onAddAuthor: function(author){
         var author = new Author({model: author});
         this.$list.append(author.render().$el);
