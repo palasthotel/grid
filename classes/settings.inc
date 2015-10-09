@@ -16,23 +16,7 @@ class settings
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-		add_filter( 'post_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
-		add_filter( 'page_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
-	}
 
-	/**
-	 * add the grid action to post types
-	 * @param $actions
-	 * @param $entity
-	 * @return array
-	 */
-	function grid_wp_actions( $actions, $entity ) {
-		if ( true == get_option( 'grid_'.get_post_type().'_enabled', false ) ) {
-			$temp = array();
-			$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">The Grid</a>';
-			$actions = array_merge( $temp, $actions );
-		}
-		return $actions;
 	}
 
 	/**

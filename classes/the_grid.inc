@@ -16,6 +16,24 @@ class the_grid
 
 		add_action( 'wp_ajax_gridfrontendCSS', array($this, 'container_slots_css') );
 		add_action( 'wp_ajax_nopriv_gridfrontendCSS', array( $this, 'container_slots_css' ) );
+
+		add_filter( 'post_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
+		add_filter( 'page_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
+	}
+
+	/**
+	 * add the grid action to post types
+	 * @param $actions
+	 * @param $entity
+	 * @return array
+	 */
+	function grid_wp_actions( $actions, $entity ) {
+		if ( true == get_option( 'grid_'.get_post_type().'_enabled', false ) ) {
+			$temp = array();
+			$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">The Grid</a>';
+			$actions = array_merge( $temp, $actions );
+		}
+		return $actions;
 	}
 
 	function admin_menu(){
