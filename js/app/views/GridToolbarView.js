@@ -181,6 +181,14 @@ var GridToolbarView = GridBackbone.View.extend({
             this.$authors_count.parents("li").show();
             this.$authors_count.text(GRID.authors.getCount());
         }
+        this.$toolbar.removeClass("async-request-lock");
+        var self = this;
+        GRID.authors.each(function(author){
+            if(author.get("request_lock")){
+                self.$toolbar.addClass("async-request-lock");
+                return;
+            }
+        });
     },
     onClickAuthors: function(e){
         GRID.toggleAuthors();
@@ -191,6 +199,6 @@ var GridToolbarView = GridBackbone.View.extend({
      */
     async_request_lock: function(){
         this.$toolbar.addClass("async-request-lock");
-    }
+    },
 });
 
