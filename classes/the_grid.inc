@@ -64,6 +64,9 @@ class the_grid
 				'><a class="add-new-h2" href="'.
 				get_permalink( $postid ).'">View Post</a></h2> </div>';
 
+			global $current_user;
+			get_currentuserinfo();
+
 			$html = $grid_lib->getEditorHTML(
 				$grid_id,
 				'grid',
@@ -71,7 +74,8 @@ class the_grid
 				add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
 				get_option( 'grid_debug_mode', false ),
 				add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
-				add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) )
+				add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) ),
+				$current_user->display_name
 			);
 
 
