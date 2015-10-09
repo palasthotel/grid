@@ -24,7 +24,7 @@ class privileges
 		global $grid_plugin;
 		$names = $wp_roles->get_names();
 
-		$ajaxendpoint = new \grid_wordpress_ajaxendpoint();
+		$ajaxendpoint = new ajaxendpoint();
 		$rights = $ajaxendpoint->Rights();
 
 		if ( ! empty( $_POST ) ) {
