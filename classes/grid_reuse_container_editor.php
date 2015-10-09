@@ -30,10 +30,14 @@ class grid_reuse_container_editor
 		$grid->container=array();
 		foreach($containerIds as $id)
 		{
+			/**
+			 * load container from reuse container
+			 */
 			$container=$grid_db->loadReuseContainer($id);
 			$container->grid=$grid;
-			$grid->container[]=$container;
-			
+			$container->classes[] = "grid-container-factory-preview";
+
+
 			$edit=new grid_container();
 			$edit->grid=$grid;
 			$edit->storage=$grid_db;
@@ -42,11 +46,19 @@ class grid_reuse_container_editor
 			$edit->slots=array();
 			$edit->prolog=$container->reusetitle;
 			$edit->readmoreurl=$editorlinkfunction($id);
+			$edit->classes[] = "grid-container-factory-edit";
 			if(!in_array($id, $usedIds))
 			{
 				$edit->epilog="<a href=\"".$deletelinkfunction($id)."\">delete</a>";
 			}
+
+			/**
+			 * place to grid
+			 * 1. reuse container with edit and container title
+			 * 2. the original container to preview contents
+			 */
 			$grid->container[]=$edit;
+			$grid->container[]=$container;
 		}
 		return $grid->render(TRUE);
 	}

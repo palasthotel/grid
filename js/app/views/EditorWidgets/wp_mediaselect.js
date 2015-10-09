@@ -106,27 +106,42 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	get_json_from_input: function(){
 		var json = null;
 		if(this.$input.val() != "object"){
-			json = JSON.parse(this.$input.val());
+            console.log(json);
+            try{
+                json = JSON.parse(this.$input.val());
+            } catch(e){
+                json = null;
+            }
 		} else {
 			json =this.$input.val();
 		}
 		return json;
 	},
 	buildImagePreview: function(){
+
 		var json = this.get_json_from_input();
-		if(typeof json.sizes == typeof {}
-	    &&	typeof json.sizes.thumbnail == typeof {}
-		&& typeof json.sizes.thumbnail.url == typeof ""
-		){
-			var $img = $("<img/>");
-			$img
-				.addClass("wp-mediaselect-image-preview")
-				.attr("src", json.sizes.thumbnail.url)
-				.attr("width", json.sizes.thumbnail.width)
-				.attr("height",json.sizes.thumbnail.height);
-			this.$img_wrapper.empty();
-			this.$img_wrapper.append($img);
-		}
+
+		console.log(json);
+
+        if( json == null
+	        || json == ''
+			|| typeof json != typeof {}
+			|| typeof json.sizes != typeof {}
+			|| typeof json.sizes.thumbnail != typeof {}
+			|| typeof json.sizes.thumbnail.url != typeof ""
+        ) {
+            return;
+        }
+
+        var $img = $("<img/>");
+        $img
+            .addClass("wp-mediaselect-image-preview")
+            .attr("src", json.sizes.thumbnail.url)
+            .attr("width", json.sizes.thumbnail.width)
+            .attr("height",json.sizes.thumbnail.height);
+        this.$img_wrapper.empty();
+        this.$img_wrapper.append($img);
+
 
 	},
     buildImageSizeSelect: function(){
@@ -137,10 +152,15 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         } 
         var json = this.get_json_from_input();
         
-        if(typeof json.sizes != "object"){
+        if( json == null
+			|| json == ''
+			|| typeof json != typeof {}
+			|| typeof json.sizes != typeof {} )
+        {
             this.$select_image_size.hide();
             return;
         }
+
         this.$select_image_size.empty();
         jQuery.each(json.sizes, function(index, size) {
              var selected = "";
@@ -157,6 +177,12 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         }
     },
     fetchValue:function(){
-        return JSON.parse(this.$input.val());
+	    var value = "";
+	    try{
+		    value = JSON.parse(this.$input.val());
+	    } catch(e){
+		    GRID.log("empty image box");
+	    }
+        return value;
     }
 });
