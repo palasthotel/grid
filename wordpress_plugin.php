@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid/
  * Description: Helps layouting pages with containerist.
- * Version: 1.4.7
+ * Version: 1.4.8
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -470,15 +470,9 @@ function grid_wp_load($post){
 }
 
 /**
- * activate grid
+ * get grid privileges
+ * @return mixed
  */
-require( 'grid_activate.php' );
-/**
- * deactivate/uninstall grid
- */
-require( 'grid_uninstall.php' );
-
-
 function grid_wp_get_privs() {
 	global $wp_roles;
 	$names = $wp_roles->get_names();
@@ -589,3 +583,165 @@ function grid_get_lang(){
 	return $grid_plugin->get_lang();
 }
 
+/**
+ * triggered on activate grid plugin
+ */
+function grid_wp_activate() {
+	static $secondCall = false;
+	global $wpdb;
+	global $grid_connection;
+	global $grid_lib;
+	$grid_connection = grid_wp_get_mysqli();
+	$options = get_option( 'grid', array() );
+	if ( ! isset( $options['installed'] ) ) {
+		$schema = $grid_lib->getDatabaseSchema();
+		$schema['grid_nodes'] = array(
+			'description' => t( 'references nodes' ),
+			'fields' => array(
+				'nid' => array(
+					'description' => t( 'node id' ),
+					'type' => 'int',
+					'unsigned' => true,
+					'not null' => true,
+				),
+				'grid_id' => array(
+					'description' => t( 'grid id' ),
+					'type' => 'int',
+					'size' => 'normal',
+					'unsigned' => true,
+					'not null' => true,
+				),
+			),
+			'primary key' => array( 'nid' ),
+			'mysql_engine' => 'InnoDB',
+		);
+
+		foreach ( $schema as $tablename => $data ) {
+			$query = 'create table if not exists '.$wpdb->prefix."$tablename (";
+			$first = true;
+			foreach ( $data['fields'] as $fieldname => $fielddata ) {
+				if ( ! $first ) {
+					$query .= ',';
+				} else {
+					$first = false;
+				}
+				$query .= "$fieldname ";
+				if ( 'int' == $fielddata['type'] ) {
+					$query .= 'int ';
+				} elseif ( 'text' == $fielddata['type'] ) {
+					$query .= 'text ';
+				} elseif ( 'serial' == $fielddata['type'] ) {
+					$query .= 'int ';
+				} elseif ( 'varchar' == $fielddata['type'] ) {
+					$query .= 'varchar('.$fielddata['length'].') ';
+				} else {
+					die( 'unknown type '.$fielddata['type'] );
+				}
+				if ( isset( $fielddata['unsigned'] ) && $fielddata['unsigned'] ) {
+					$query .= ' unsigned';
+				}
+				if ( isset($fielddata['not null']) && $fielddata['not null'] ) {
+					$query .= ' not null';
+				}
+				if ( 'serial' == $fielddata['type'] ) {
+					$query .= ' auto_increment';
+				}
+			}
+			if ( isset( $data['primary key'] ) ) {
+				$query .= ',constraint primary key ('.implode( ',', $data['primary key'] ).')';
+			}
+			$query .= ') ';
+			if ( isset( $data['mysql_engine'] ) ) {
+				$query .= 'ENGINE = '.$data['mysql_engine'];
+			}
+			$grid_connection->query( $query ) or die( $grid_connection->error.' '.$query );
+
+		}
+
+		$grid_lib->install();
+
+		require_once(dirname(__FILE__)."/grid-wordpress-update.inc");
+		$wp_update = new grid_wordpress_update();
+		$wp_update->install();
+
+		$grid_connection->close();
+		$options['installed'] = true;
+		update_option( 'grid', $options );
+		/**
+		 * default post types for grids
+		 */
+		update_option( 'grid_landing_page_enabled', true );
+		update_option( 'grid_sidebar_enabled', true );
+		/**
+		 * default searchable post types in grid
+		 */
+		update_option( 'grid_post_search_enabled', true );
+		update_option( 'grid_page_search_enabled', true );
+		/**
+		 * othter defaults
+		 */
+		update_option( 'grid_sidebar_post_type', 'sidebar' );
+		update_option( 'grid_default_container', 'c-1d1' );
+	}
+	// for initial content type registration
+	global $grid_plugin;
+	$grid_plugin->init();
+	global $wp_rewrite;
+	$wp_rewrite->flush_rules();
+}
+register_activation_hook( __FILE__, 'grid_wp_activate' );
+
+/**
+ * plugin deleted by admin interface do this
+ */
+function grid_wp_perform_uninstall()
+{
+	$posts=get_posts(array('post_type'=>'landing_page','posts_per_page'=>-1));
+	foreach($posts as $post) {
+		wp_delete_post($post->ID);
+	}
+	$posts=get_posts(array('post_type'=>'sidebar','posts_per_page'=>-1));
+	foreach($posts as $post) {
+		wp_delete_post($post->ID);
+	}
+
+	global $wpdb;
+	global $grid_connection;
+	global $grid_lib;
+	$grid_connection = grid_wp_get_mysqli();
+
+	delete_option('grid');
+	delete_option('grid_landing_page_enabled');
+	delete_option('grid_sidebar_enabled');
+	delete_option('grid_sidebar_post_type');
+	delete_option('grid_default_container');
+	$schema = $grid_lib->getDatabaseSchema();
+	$schema['grid_nodes']=array();
+	$grid_lib->uninstall();
+	foreach($schema as $tablename=>$data)
+	{
+		$query = 'drop table '.$wpdb->prefix.$tablename;
+		$grid_connection->query( $query );
+	}
+}
+function grid_wp_uninstall() {
+	if(is_multisite())
+	{
+		global $wpdb;
+		$blogids=$wpdb->get_col("SELECT blog_id FROM {$wpdb->blogs}");
+		foreach($blogids as $blog_id)
+		{
+			switch_to_blog($blog_id);
+			$grid=get_option('grid',array());
+			if(isset($grid['installed']))
+			{
+				grid_wp_perform_uninstall();
+			}
+		}
+	}
+	else
+	{
+		grid_wp_perform_uninstall();
+	}
+}
+register_uninstall_hook(__FILE__,'grid_wp_uninstall');
