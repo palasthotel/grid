@@ -1,7 +1,11 @@
 {{#containers}}
 <div class="grid-new-element " data-type="{{type}}" data-reusable="{{reused}}" data-id="{{id}}">
 	<i class="icon-drag grid-element-drag-icon"></i>
-    {{#reused}}<p class="grid-element-title grid-reusable-container-title">{{reusetitle}}</p>{{/reused}}
+    {{#reused}}
+    <div class="grid-new-container-slots grid-reuseable-container">
+        <p class="grid-element-title grid-reusable-container-title">{{reusetitle}}</p>
+    </div>
+    {{/reused}}
     {{^reused}}
     <div class="grid-new-container-slots grid-container-{{type}} grid-container-left-space-{{space_to_left}} grid-container-right-space-{{space_to_right}}">
         {{#slots}}

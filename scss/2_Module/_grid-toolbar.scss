@@ -34,7 +34,7 @@
 				height: 45px;
 				@include transition();
 				border: none;
-				background-color: $color-grid-bg;
+				background-color: transparent;
 
 				[class^="icon-"], 
 				[class*=" icon-"]{
