@@ -57,8 +57,8 @@ class grid_reuse_container_editor
 			 * 1. reuse container with edit and container title
 			 * 2. the original container to preview contents
 			 */
-			$grid->container[]=$edit;
 			$grid->container[]=$container;
+			$grid->container[]=$edit;
 		}
 		return $grid->render(TRUE);
 	}
