@@ -64,8 +64,15 @@ class the_grid
 				'><a class="add-new-h2" href="'.
 				get_permalink( $postid ).'">View Post</a></h2> </div>';
 
+			/**
+			 * async parameters
+			 */
 			global $current_user;
 			get_currentuserinfo();
+			$async_service="http://async.the-grid.ws";
+			$async_domain= get_home_url();
+			$async_author=$current_user->display_name;
+			$async_path="grid-post-id-".$postid;
 
 			$html = $grid_lib->getEditorHTML(
 				$grid_id,
@@ -75,7 +82,10 @@ class the_grid
 				get_option( 'grid_debug_mode', false ),
 				add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
 				add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) ),
-				$current_user->display_name
+				$async_service,
+				$async_domain,
+				$async_author,
+				$async_path
 			);
 
 
