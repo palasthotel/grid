@@ -1,12 +1,12 @@
-function GridAsync(domain, path){
-	this.domain = domain;
-	this.path = path;
-	this.author = document.author;
+function GridAsync(){
+	this.domain = document.grid.async.domain;
+	this.path = document.grid.async.path;
+	this.author = document.grid.async.author;
 	this.observers = [];
 
 }
 GridAsync.prototype.init = function(){
-	this.socket = io('http://grid-dev.palasthotel.de:61000');
+	this.socket = io(document.grid.async.service);
 	this.initEvents();
 }
 
@@ -27,7 +27,34 @@ GridAsync.prototype.notifyAll = function(_event, data){
 		}
 	});
 };
-
+/**
+ * Grid Async server events
+ */
+GridAsync.prototype.initEvents = function(){
+	this.on("connect", "connect");
+	this.on("disconnect", "disconnect");
+	// authors
+	this.on("authors.list", "authors_list");
+	this.on("authors.joined", "authors_joined");
+	this.on("authors.left", "authors_left");
+	// locking
+	this.on("locking.isLocked", "locking_is_locked");
+	this.on("locking.lockRequested", "locking_lock_requested");
+}
+GridAsync.prototype.on = function(e, f){
+	var self = this;
+	this.socket.on(e, function(data){
+		self[f](data);
+	});
+}
+GridAsync.prototype.connect = function(data){
+	this.authors_join();
+};
+GridAsync.prototype.disconnect = function(data){
+	console.log("disconnected");
+	this.notifyAll("disconnect");
+	this.notifyAll("locking_is_locked");
+};
 /**
  * Emitters
  */
@@ -52,34 +79,7 @@ GridAsync.prototype.locking_handover = function(identifier){
 GridAsync.prototype.locking_deny_handover = function(identifier){
 	this.socket.emit("locking.denyHandover", identifier);
 }
-/**
- * Grid Async server events
- */
-GridAsync.prototype.initEvents = function(){
-	this.on("connect", "connect");
-	this.on("disconnect", "disconnect");
-	// autors
-	this.on("authors.list", "authors_list");
-	this.on("authors.joined", "authors_joined");
-	this.on("authors.left", "authors_left");
-	// locking
-	this.on("locking.isLocked", "locking_is_locked");
-	this.on("locking.lockRequested", "locking_lock_requested");
-}
-GridAsync.prototype.on = function(e, f){
-	var self = this;
-	this.socket.on(e, function(data){ 
-		self[f](data);
-	});	
-}
-GridAsync.prototype.connect = function(data){
-	this.authors_join();
-};
-GridAsync.prototype.disconnect = function(data){
-	console.log("disconnected");
-	this.notifyAll("disconnect");
-	this.notifyAll("locking_is_locked");
-};
+
 /**
  * authors events
  */

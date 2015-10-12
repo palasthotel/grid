@@ -15,7 +15,12 @@ document.gridajax="<?php echo $ajaxendpoint;?>";
 document.previewurl="<?php echo $preview_url;?>";
 document.previewpattern="<?php echo $preview_pattern;?>";
 document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
-document.author="<?php echo $author; ?>";
+document.grid = {};
+document.grid.async = {};
+document.grid.async.service = "<?php echo $async_service; ?>";
+document.grid.async.domain = "<?php echo $async_domain; ?>";
+document.grid.async.author = "<?php echo $async_author; ?>";
+document.grid.async.path = "<?php echo $async_path; ?>";
 </script>
 <script id="tpl_toolbar" type="text/grid-icanhaz">
 <?php require('ich.toolbar.html'); ?>

@@ -87,7 +87,7 @@ GRID = {
 		 * init async websocket magic
 		 * @type {GridAsync}
 		 */
-		this.async = new GridAsync(window.location.host, window.location.pathname);
+		this.async = new GridAsync();
 		this.authors = new GridAuthors();
 		this.async.addObserver(this);
 		this.async.addObserver(this.authors);
