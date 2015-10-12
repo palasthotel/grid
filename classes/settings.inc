@@ -142,6 +142,17 @@ class settings
 		register_setting( 'grid_settings', 'grid_debug_mode' );
 
 		/**
+		 * async settings
+		 */
+		add_settings_section( 'grid_async_service', 'Async', array( $this, 'async_section' ), 'grid_settings' );
+
+		add_settings_field( 'grid_async', 'Enable', array( $this, 'async_enable_html' ), 'grid_settings', 'grid_async_service' );
+		register_setting( 'grid_settings', 'grid_async' );
+
+		add_settings_field( 'grid_async_url', 'Service url (leave empty to use default url)', array( $this, 'async_url_html' ), 'grid_settings', 'grid_async_service' );
+		register_setting( 'grid_settings', 'grid_async_url' );
+
+		/**
 		 * mediaselect info
 		 */
 		add_settings_section( 'grid_mediaselect_info', 'Mediaselect Info', array( $this, 'mediaselect_info_section' ), 'grid_settings' );
@@ -218,7 +229,7 @@ class settings
 		$posttype = $args['type'];
 		$value = get_option( 'grid_'.$posttype.'_enabled', false );
 		?>
-		<input type="checkbox" id="grid_<?php echo $posttype?>_enabled" name="grid_<?php echo $posttype?>_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
+		<input type="checkbox" id="grid_<?php echo $posttype?>_enabled" name="grid_<?php echo $posttype?>_enabled" <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
 		<?php
 	}
 
@@ -230,7 +241,7 @@ class settings
 		$posttype = $args['type'];
 		$value = get_option( 'grid_'.$posttype.'_search_enabled', false );
 		?>
-		<input type="checkbox" id="grid_<?php echo $posttype?>_search_enabled" name="grid_<?php echo $posttype?>_search_enabled" type=checkbox <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
+		<input type="checkbox" id="grid_<?php echo $posttype?>_search_enabled" name="grid_<?php echo $posttype?>_search_enabled" <?php echo ( $value ? 'checked' : '' )?>> <?php echo ($value ? "Enabled": "Disabled") ?>
 		<?php
 	}
 
@@ -287,7 +298,27 @@ class settings
 
 		$value = get_option( 'grid_debug_mode', false );
 		?>
-		<input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" type=checkbox <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
+		<input type="checkbox" id="grid_debug_mode" name="grid_debug_mode" <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
+		<?php
+	}
+
+	function async_section() {
+		echo '';
+	}
+
+	function async_enable_html() {
+
+		$value = get_option( 'grid_async', true );
+		?>
+		<input type="checkbox" id="grid_async" name="grid_async" <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
+		<?php
+	}
+
+	function async_url_html() {
+
+		$value = get_option( 'grid_async_url', '' );
+		?>
+		<input type="text" id="grid_async_url" name="grid_async_url" value="<?php echo $value; ?>" />
 		<?php
 	}
 

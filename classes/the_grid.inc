@@ -67,12 +67,24 @@ class the_grid
 			/**
 			 * async parameters
 			 */
-			global $current_user;
-			get_currentuserinfo();
-			$async_service="http://async.the-grid.ws";
-			$async_domain= get_home_url();
-			$async_author=$current_user->display_name;
-			$async_path="grid-post-id-".$postid;
+			$async_service='';
+			$async_domain='';
+			$async_author='';
+			$async_path='';
+			if(get_option('grid_async',true))
+			{
+				global $current_user;
+				get_currentuserinfo();
+				$async_service = get_option("grid_async_url",'');
+				if(''==$async_service)
+				{
+					$async_service="http://async.the-grid.ws";
+				}
+				$async_domain= get_home_url();
+				$async_author=$current_user->display_name;
+				$async_path="grid-post-id-".$postid;
+			}
+
 
 			$html = $grid_lib->getEditorHTML(
 				$grid_id,
