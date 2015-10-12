@@ -84,7 +84,7 @@ class grid_posts_box extends grid_list_box {
 			$args['offset'] = $this->content->offset;
 			$args['post_type'] = $this->content->post_type;
 			$output = '';
-			var_dump($args);
+
 			// START of WordPress Loop
 			$query = new WP_Query( $args );
 			$counter = 0;
