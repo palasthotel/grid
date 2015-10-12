@@ -24,14 +24,12 @@ var Author = GridBackbone.View.extend({
         return this;
     },
     onClickSendLock: function(){
-        console.log("send lock to"+this.model.get("id"));
         GRID.async.locking_handover(this.model.get("id"));
     },
     onClickRequestLock: function(){
         GRID.async.locking_request_lock();
     },
 	onRequestLock: function(){
-		console.log("GridAuthorView request lock");
 		if(this.model.get("request_lock")){
 			this.$el.addClass('async-request-lock');
 		} else {

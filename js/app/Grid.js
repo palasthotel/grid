@@ -385,7 +385,6 @@ GRID = {
 	 */
 	toggleAuthors: function(){
 		if(!$.trim(GRID.$root_authors.html())){
-			console.log("empty authors so init");
 			GRID.$root_authors.empty();
 			var authors = new Authors();
 			GRID.$root_authors.append(authors.render().$el);
