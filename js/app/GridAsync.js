@@ -6,8 +6,10 @@ function GridAsync(){
 
 }
 GridAsync.prototype.init = function(){
-	this.socket = io(document.grid.async.service);
-	this.initEvents();
+	if(document.grid.async.service != ''){
+		this.socket = io(document.grid.async.service);
+		this.initEvents();
+	}cd
 }
 
 
