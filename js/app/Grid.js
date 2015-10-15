@@ -384,7 +384,7 @@ GRID = {
 	 * change to authors
 	 */
 	toggleAuthors: function(){
-		if(!$.trim(GRID.$root_authors.html())){
+		if(GRID.$root_authors.html()==""){
 			GRID.$root_authors.empty();
 			var authors = new Authors();
 			GRID.$root_authors.append(authors.render().$el);
