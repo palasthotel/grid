@@ -24,7 +24,6 @@ var GridToolbarView = GridBackbone.View.extend({
         this.listenTo(GRID.authors, "add", this.onUpdateAuthors);
         this.listenTo(GRID.authors, "remove", this.onUpdateAuthors);
         this.listenTo(GRID.authors, "reset", this.onUpdateAuthors);
-        console.log("init toolbar");
         this.setState();
     },
     render: function() {
@@ -168,7 +167,6 @@ var GridToolbarView = GridBackbone.View.extend({
         var tab_height = this.$tab_container.outerHeight();
         var height = window_height-elements_top_offset-tab_height;
         this.$tool_element_content.css("height", height);
-        console.log("trigger resize "+height);
         this.trigger('toolbar_resize',height);
     },
     /**

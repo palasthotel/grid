@@ -20,11 +20,9 @@ GridAsync.prototype.removeObserver = function(observer){
 	this.observers = _.without(this.observers,observer);
 };
 GridAsync.prototype.notifyAll = function(_event, data){
-	console.log("notify event "+_event);
 	_.each(this.observers, function(_observer, index, list){
 		if(typeof _observer["async_"+_event] == "function")
 		{
-			console.log(["observer", _observer]);
 			_observer["async_"+_event](data);
 		}
 	});
@@ -53,7 +51,6 @@ GridAsync.prototype.connect = function(data){
 	this.authors_join();
 };
 GridAsync.prototype.disconnect = function(data){
-	console.log("disconnected");
 	this.notifyAll("disconnect");
 	this.notifyAll("locking_is_locked");
 };
