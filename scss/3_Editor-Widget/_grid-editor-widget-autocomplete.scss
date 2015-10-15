@@ -8,6 +8,8 @@
 	}
 	.suggestion-list{
 		position: relative;
+		list-style: none;
+		margin-left: 0;
 		li{
 			padding: 8px 15px;
 			background-color: $color-light;

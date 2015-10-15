@@ -39,6 +39,8 @@ GRID = {
 	$root: null,
 	dom_root_editor: "#new-grid-editor-wrapper",
 	$root_editor: null,
+	dom_root_authors: "#grid-authors-wrapper",
+	$root_authors: null,
 	ID: null,
 	// enable or disable debugging output
 	DEBUGGING: false,
@@ -57,6 +59,8 @@ GRID = {
     styles_slot: null,
     styles_box: null,
     revisions: null,
+    async: null,
+    authors: null,
 	init: function(){
 
 		// initialize constants
@@ -79,48 +83,92 @@ GRID = {
 		this.getSlotStyles().fetch();
 		this.getBoxStyles().fetch();
 
+		/**
+		 * init async websocket magic
+		 * @type {GridAsync}
+		 */
+		this.async = new GridAsync();
+		this.authors = new GridAuthors();
+		this.async.addObserver(this);
+		this.async.addObserver(this.authors);
+
+
 		// load the grid + view
 		this.grid = new Grid({
         	id:this.ID,
 			SERVER: this.SERVER,
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,
-			fn_success: function(data){
-				
-				GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
-				
-				GRID.gridview = new GridView({model: GRID.getModel() });
-				// handle rights
-				GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
-
-				GRID.$root.append( GRID.getView().render().el );
-				
-				jQuery(GRID.dom_root).mutate('height',function (element,info){
-				    GRID.onSidebarCalculation();
-				});
-
-				GRID.$root
-					.data("isSidebar",GRID.IS_SIDEBAR)
-					.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
-
-				if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
-				GRID._initializeBoxSortable();
-				// load the revisions
-				GRID.revisions = new Revisions({grid: GRID.getModel() });
-		        GRID.revisions.fetch();
-		        // init toolbar
-				GRID.toolbar  = new GridToolbarView({
-					model: GRID.getModel()
-				});
-				GRID.$root.prepend(GRID.toolbar.render().el);
-				jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
-				GRID.onSidebarCalculation();
-				GRID.$loading.removeClass("grid-init-loading");
-			}
+			fn_success: GRID.new_grid_success
         });
 
 		return this;
 	},
+	reload: function(){
+		this.grid.destroy();
+		this.grid = null;
+		this.$root_authors.empty();
+		if(this.gridView != null){
+			this.gridView.remove();
+		}
+		this.newGrid();
+	},
+	newGrid: function(){
+		// load the grid + view
+		this.grid = new Grid({
+        	id:this.ID,
+			SERVER: this.SERVER,
+			PREVIEW_URL: this.PREVIEW_URL,
+			DEBUGGING: this.DEBUGGING,
+			fn_success: GRID.new_grid_success
+        });
+		return this;
+	},
+
+	new_grid_success: function(data){
+		GRID.$root.empty();
+		GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
+
+		GRID.gridview = new GridView({model: GRID.getModel() });
+		// handle rights
+		GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
+
+		GRID.$root.append( GRID.getView().render().el );
+
+		jQuery(GRID.dom_root).mutate('height',function (element,info){
+			GRID.onSidebarCalculation();
+		});
+
+		GRID.$root
+			.data("isSidebar",GRID.IS_SIDEBAR)
+			.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
+
+		if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
+		GRID._initializeBoxSortable();
+		// load the revisions
+		GRID.revisions = new Revisions({grid: GRID.getModel() });
+		GRID.revisions.fetch();
+		// init toolbar
+		GRID.toolbar  = new GridToolbarView({
+			model: GRID.getModel()
+		});
+		GRID.async.addObserver(GRID.toolbar);
+		GRID.$root.prepend(GRID.toolbar.render().el);
+
+		GRID.onSidebarCalculation();
+		GRID.$loading.removeClass("grid-init-loading");
+
+		/**
+		 * init async connection on grid loading done
+		 */
+		GRID.async.init();
+
+		/**
+		 * listen to changes of window size
+		 */
+		jQuery(window).resize(function(){ GRID.toolbar.onResize() }).trigger("resize");
+	},
+
 	getModel: function(){
 		return this.grid;
 	},
@@ -173,6 +221,7 @@ GRID = {
     },
     // revisions
     setToRevision: function(revision){
+    	if(GRID.locked()) return;
         GridRequest.grid.update(GRID.grid, {action: "setToRevision", revision: revision});
     },
     // onRightsChange
@@ -186,6 +235,7 @@ GRID = {
 		// root elements
 		this.$root = jQuery(this.dom_root);
 		this.$root_editor = jQuery(this.dom_root_editor);
+		this.$root_authors = jQuery(this.dom_root_authors);
 		// constants from CMS
 		this.mode = document.gridmode;
 		this.$root.addClass('gridmode-'+this.mode);
@@ -285,7 +335,7 @@ GRID = {
 	},
 	// publishes the grid
 	publish: function(){ 
-		if( !GRID.getRights().get("publish") ){
+		if( !GRID.getRights().get("publish") || GRID.locked() ){
 			alert("Sorry you have no rights for that...");
 			return false;
 		}
@@ -293,44 +343,85 @@ GRID = {
 	},
 	// revert to old revision
 	revert: function(){	
+		if(GRID.locked()) return;
         GridRequest.grid.update(GRID.grid, {action: "revertDraft"});
 	},
 	// console logging just with DEBUGGING enabled
 	log: function(string){ if(this.DEBUGGING){ console.log(string); } },
-
+	/**
+	 * change to box and container editor
+	 */
 	showEditor: function(callback) {
-		jQuery(GRID.$root).animate(
+		GRID.$root.animate(
 			{
 				width:0
 			},
 			220,
 			function(){
-				jQuery(GRID.$root).hide();
+				GRID.$root.hide();
 			}
 		);
 		setTimeout(function(){
-			jQuery(GRID.$root_editor).show();
-			jQuery(GRID.$root_editor).animate({width:"100%"},250,function(){
+			GRID.$root_editor.show();
+			GRID.$root_editor.animate({width:"100%"},250,function(){
 				callback();
 			});
 			window.scrollTo(0,0);
 		},50);
 	},
-
 	hideEditor: function(callback) {
-		jQuery(GRID.$root_editor).animate({width:"0%"},220, function(){jQuery(GRID.$root_editor).hide();});
+		GRID.$root_editor.animate({width:"0%"},220, function(){GRID.$root_editor.hide();});
 		setTimeout(function(){
-			jQuery(GRID.$root).show();
-			jQuery(GRID.$root).animate({width:"100%"},220,function(){
+			GRID.$root.show();
+			GRID.$root.animate({width:"100%"},220,function(){
 				callback();
 				GRID.onSidebarCalculation();
 			})
 			window.scrollTo(0,0);
 		},50);
 	},
+	/**
+	 * change to authors
+	 */
+	toggleAuthors: function(){
+		if(GRID.$root_authors.html()==""){
+			GRID.$root_authors.empty();
+			var authors = new Authors();
+			GRID.$root_authors.append(authors.render().$el);
+			authors.listenTo( GRID.toolbar,'toolbar_resize', authors.onResize);
+		}
+
+		GRID.$root.toggleClass("is-active-authors");
+		GRID.$root_authors.toggleClass("is-active");
+		GRID.toolbar.onResize();
+	},
+	showAuthors: function(){
+		this.hideAuthors();
+		this.toggleAuthors();
+	},
+	hideAuthors: function(){
+		GRID.$root.removeClass("is-active-authors");
+		GRID.$root_authors.removeClass("is-active");
+	},
+	locked: function(){
+		return !GRID.authors.haveLock();
+	},
+	async_locking_is_locked: function(){
+		if(GRID.locked()){
+			GRID.$root.addClass("grid-is-locked");
+			GRID.showAuthors();
+		} else if(GRID.$root.hasClass("grid-is-locked")){
+			GRID.reload();
+			GRID.$root.removeClass("grid-is-locked");
+			this.hideAuthors();
+		}		
+	},
+	async_disconnect: function(){
+		this.async_locking_is_locked();
+	},
 	// initializes function to sort the containers
 	_initializeContainerSortable: function(){
-		if(!GRID.getRights().get("move-container")) return false;
+		if(!GRID.getRights().get("move-container") || GRID.locked()) return false;
 		var container_deleted;
 		container_deleted=false;
 		var container;
@@ -379,7 +470,7 @@ GRID = {
 	},
 	// initializes function to sort the containers
 	_initializeBoxSortable: function(){
-		if(!GRID.getRights().get("move-box")) return false;
+		if(!GRID.getRights().get("move-box") || GRID.locked() ) return false;
 		var old_box_index,
 		old_slot_id,
 		old_container_id,

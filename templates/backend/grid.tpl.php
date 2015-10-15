@@ -15,6 +15,12 @@ document.gridajax="<?php echo $ajaxendpoint;?>";
 document.previewurl="<?php echo $preview_url;?>";
 document.previewpattern="<?php echo $preview_pattern;?>";
 document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
+document.grid = {};
+document.grid.async = {};
+document.grid.async.service = "<?php echo $async_service; ?>";
+document.grid.async.domain = "<?php echo $async_domain; ?>";
+document.grid.async.author = "<?php echo $async_author; ?>";
+document.grid.async.path = "<?php echo $async_path; ?>";
 </script>
 <script id="tpl_toolbar" type="text/grid-icanhaz">
 <?php require('ich.toolbar.html'); ?>
@@ -55,9 +61,16 @@ document.grid_debug_mode=<?php echo json_encode($debug_mode); ?>;
 <script id="tpl_revisions" type="text/grid-icanhaz">
 <?php require('ich.revisions.html');?>
 </script>
+<script id="tpl_authors" type="text/grid-icanhaz">
+<?php require('ich.authors.html');?>
+</script>
+<script id="tpl_author" type="text/grid-icanhaz">
+<?php require('ich.author.html');?>
+</script>
 <script id="tpl_loading" type="text/grid-icanhaz">
 <?php require('ich.loading.html');?>
 </script>
 
+<div id="grid-authors-wrapper" class="grid-authors-wrapper"></div>
 <div id="new-grid-wrapper" class="grid-all-wrapper"></div>
 <div id="new-grid-editor-wrapper" class="grid-editor-wrapper"></div>

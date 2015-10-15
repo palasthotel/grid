@@ -10,7 +10,8 @@
 		padding-top: 15px;
 		@include transition();
 		position:relative;
-		background-color: $color-tool-elementtype;
+		background-color: $color-link;
+		color:white;
 		&:hover,
 		&.active{
 			cursor:pointer;

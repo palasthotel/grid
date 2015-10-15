@@ -110,6 +110,50 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
+/**
+* like they come from fontello
+*/
+
+.icon-cog:before { content: '\e800'; } /* '' */
+.icon-check:before { content: '\e801'; } /* '' */
+.icon-cancel:before { content: '\e802'; } /* '' */
+.icon-minus:before { content: '\e803'; } /* '' */
+.icon-plus:before { content: '\e804'; } /* '' */
+.icon-link:before { content: '\e805'; } /* '' */
+.icon-eye:before { content: '\e806'; } /* '' */
+.icon-pencil:before { content: '\e807'; } /* '' */
+.icon-trash:before { content: '\e808'; } /* '' */
+.icon-shareable:before { content: '\e809'; } /* '' */
+.icon-right-dir:before { content: '\e80a'; } /* '' */
+.icon-ccw:before { content: '\e80b'; } /* '' */
+.icon-back-in-time:before { content: '\e80c'; } /* '' */
+.icon-brush:before { content: '\e80d'; } /* '' */
+.icon-dot-3:before { content: '\e80e'; } /* '' */
+.icon-megaphone:before { content: '\e80f'; } /* '' */
+.icon-recycle:before { content: '\e810'; } /* '' */
+.icon-flow-tree:before { content: '\e811'; } /* '' */
+.icon-lock-open-alt:before { content: '\e812'; } /* '' */
+.icon-lock:before { content: '\e813'; } /* '' */
+.icon-lock-open:before { content: '\e814'; } /* '' */
+.icon-clock:before { content: '\e815'; } /* '' */
+.icon-picture:before { content: '\e816'; } /* '' */
+.icon-grid-2x2:before { content: '\e817'; } /* '' */
+.icon-grid-3x3:before { content: '\e818'; } /* '' */
+.icon-list-numbered:before { content: '\e819'; } /* '' */
+.icon-list-bullet:before { content: '\e81a'; } /* '' */
+.icon-chat:before { content: '\e81b'; } /* '' */
+.icon-plus-squared:before { content: '\e81c'; } /* '' */
+.icon-minus-squared:before { content: '\e81d'; } /* '' */
+.icon-cancel-squared:before { content: '\e81e'; } /* '' */
+.icon-beaker:before { content: '\e81f'; } /* '' */
+.icon-filter:before { content: '\e820'; } /* '' */
+.icon-hourglass:before { content: '\e821'; } /* '' */
+.icon-github-circled:before { content: '\e822'; } /* '' */
+
+/**
+* rename to function names
+*/
+
 .icon-link:before { content: '\e805'; }
 .icon-preview:before { content: '\e806'; }
 .icon-ok:before { content: '\e801'; }
@@ -141,4 +185,3 @@
         -o-transform: rotate(90deg);
            transform: rotate(90deg); }
 .icon-options:before { content: '\e800'; }
-

@@ -34,7 +34,7 @@
 				height: 45px;
 				@include transition();
 				border: none;
-				background-color: $color-grid-bg;
+				background-color: transparent;
 
 				[class^="icon-"], 
 				[class*=" icon-"]{
@@ -48,6 +48,14 @@
 					padding-right: 38px;
 					color: white;
 					background-color: $color-link;
+				}
+			}
+			&.grid-tool-authors button{
+				.indicator-authors-count{
+					position: absolute;
+					right: 18px;
+					top: 10px;
+					font-size: 16px;
 				}
 			}
 		}
@@ -65,6 +73,22 @@
 		li.grid-tool-publish button,
 		li.grid-tool-publish button:hover{
 			background-color: $color-ok;
+		}
+	}
+
+	// async lock request
+	&.async-request-lock{
+		.grid-tool-authors{
+
+			animation-name:bounce-x;
+			animation-duration: 1.3s;
+			animation-iteration-count: infinite;
+			&:hover{
+				animation: 0;
+			}
+			button{
+				background-color: darken($color-grid-bg,10%);
+			}
 		}
 	}
 }

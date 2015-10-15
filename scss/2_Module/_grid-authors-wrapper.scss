@@ -1,0 +1,52 @@
+.grid-authors-wrapper{
+	position: fixed;
+	width: 260px;
+
+	z-index: $idx-authors-toolbar;
+
+	right: -300px;
+
+	@include transition();
+
+	&.is-active{
+		right: 0px;
+	}
+
+	.grid-authors{
+		padding-top: 4px;
+	}
+	.authors-header{
+		background-color: $color-container-border;
+		width: 100%;
+		padding: 15px;
+		text-align: center;
+		box-sizing: border-box;
+		display: inline-block;
+		text-transform: uppercase;
+		font-weight: bold;
+		height: $dim-tool-element-tab-height;
+		position:relative;
+		color: white;
+		background-color: $color-tool-elementtype-active;
+		&:after{
+			content:"";
+			border: 9px solid $color-tool-elementtype-active;
+			font-size:0;line-height:0;height:0;padding:0;margin:0;
+			border-bottom-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			bottom:-18px;
+			left:47%;
+		}
+
+	}
+	.authors-list{
+		overflow-y: scroll;
+		margin: 0px auto;
+		padding: 15px;
+		background-color: white;
+		border: 1px solid $color-container-border;
+		list-style: none;
+	}
+}

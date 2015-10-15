@@ -55,6 +55,7 @@ class grid_library
 		$scripts[]=$framework_dir."underscore.js";
 		$scripts[]=$framework_dir."GridBackbone.js";
 		$scripts[]=$framework_dir."GridICanHaz.js";
+		$scripts[]=$framework_dir."Socket.io.js";
 		$scripts[]=$home."js/ckeditor/ckeditor.js";
 		$scripts[]=$app_dir."GridViews.js";
 		$scripts[]=$app_dir."views/GridContainerEditorView.js";
@@ -69,12 +70,17 @@ class grid_library
 		$scripts[]=$app_dir."views/GridToolBoxTypesView.js";
 		$scripts[]=$app_dir."views/GridToolBoxBlueprintsView.js";
 		$scripts[]=$app_dir."views/GridSlotStyleChangerView.js";
+		$scripts[]=$app_dir."views/GridAuthorsView.js";
+		$scripts[]=$app_dir."views/GridAuthorView.js";
 		$scripts[]=$app_dir."GridModels.js";
 		$scripts[]=$app_dir."models/GridBoxBlueprint.js";
 		$scripts[]=$app_dir."models/GridRights.js";
+		$scripts[]=$app_dir."models/GridAuthor.js";
 		$scripts[]=$app_dir."GridCollections.js";
 		$scripts[]=$app_dir."collections/GridBoxBlueprints.js";
+		$scripts[]=$app_dir."collections/GridAuthors.js";
 		$scripts[]=$app_dir."GridSync.js";
+		$scripts[]=$app_dir."GridAsync.js";
 		$scripts[]=$app_dir."Grid.js";
 		if(is_file($home."/js/language/grid-".$language.".js")){
 			$scripts[]=$home."/js/language/grid-".$language.".js";
@@ -152,7 +158,7 @@ class grid_library
 	 * preview_url: url to preview the current grid
 	 * preview_pattern: pattern for previews of certain 
 	 */
-	public function getEditorHTML($grid_id,$grid_mode,$pathToCKEditorConfig,$ajaxendpoint,$debug_mode,$preview_url,$preview_pattern)
+	public function getEditorHTML($grid_id,$grid_mode,$pathToCKEditorConfig,$ajaxendpoint,$debug_mode,$preview_url,$preview_pattern,$async_service="",$async_domain="",$async_author="",$async_path="")
 	{
 		ob_start();
 		require("templates/backend/grid.tpl.php");

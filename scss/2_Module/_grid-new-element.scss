@@ -19,11 +19,19 @@
 		&.grid-reusable-container-title{
 			padding-left: 0px;
 			padding-top: 0px;
+			min-height: 20px;
 		}
 	}
 
 	&:hover {
 		color: $color-draggable-border-hover;
-		border-color: $color-draggable-border-hover;
+		.grid-new-container-slots,
+		.grid-new-box{
+			border-color: $color-draggable-border-hover;
+		}
+	}
+	.grid-reuseable-container{
+		display: block;
+		padding: 5px 10px;
 	}
 }

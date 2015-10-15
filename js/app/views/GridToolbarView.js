@@ -15,22 +15,29 @@ var GridToolbarView = GridBackbone.View.extend({
         "click .grid-toolbar [role=preview]": "preview",
         "click .grid-toolbar [role=revert]": "revert",
         "click .grid-toolbar [role=revisions]": "revisions",
+        "click .grid-toolbar [role=authors]": "onClickAuthors",
         "click .grid-element-type[data-type=box]:not(.active)": "showBoxTools",
-        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools"
+        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools",
     },
     initialize: function() {
         this.listenTo(this.model, "change:isDraft", this.setState);
+        this.listenTo(GRID.authors, "add", this.onUpdateAuthors);
+        this.listenTo(GRID.authors, "remove", this.onUpdateAuthors);
+        this.listenTo(GRID.authors, "reset", this.onUpdateAuthors);
         this.setState();
     },
     render: function() {
 
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
+
+        this.$toolbar = this.$el.find(".grid-toolbar");
         
         this.$tool_elements = this.$el.find(".grid-tool-elements");
         this.$tool_element_content = this.$el.find(".grid-element-type-content");
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
         this.$tab_box = this.$el.find(".grid-element-type[data-type=box]");
         this.$element_trash = this.$el.find(".grid-element-trash");
+        this.$authors_count = this.$el.find(".indicator-authors-count");
 
         if(GRID.mode == "grid"){
            this._revisionsView = new GridRevisionsView({collection:GRID.revisions}); 
@@ -52,11 +59,12 @@ var GridToolbarView = GridBackbone.View.extend({
         } else if(type == "box"){
             this.showBoxTools();
         }
+        this.onUpdateAuthors();
         
         return this;
     },
     publish: function(){
-        if(!GRID.getRights().get("publish")){
+        if(!GRID.getRights().get("publish") || GRID.locked()){
             alert("You have no rights for that...");
             return false;
         }
@@ -76,7 +84,7 @@ var GridToolbarView = GridBackbone.View.extend({
         window.open(this.model.get("PREVIEW_URL"),"grid_preview");
     },
     revert: function(){
-        if(!GRID.getRights().get("revert")){
+        if(!GRID.getRights().get("revert") || GRID.locked() ){
             alert("You have no rights for that...");
             return false;
         }
@@ -157,6 +165,38 @@ var GridToolbarView = GridBackbone.View.extend({
         var window_height = jQuery(window).height();
         var elements_top_offset = this.$el.offset().top;
         var tab_height = this.$tab_container.outerHeight();
-        this.$tool_element_content.css("height", (window_height-elements_top_offset-tab_height));
-    }
+        var height = window_height-elements_top_offset-tab_height;
+        this.$tool_element_content.css("height", height);
+        this.trigger('toolbar_resize',height);
+    },
+    /**
+     * authors button
+     */
+    onUpdateAuthors: function(){
+        if(GRID.authors.getCount() < 2){
+            this.$authors_count.parents("li").hide();
+        } else {
+            this.$authors_count.parents("li").show();
+            this.$authors_count.text(GRID.authors.getCount());
+        }
+        this.$toolbar.removeClass("async-request-lock");
+        var self = this;
+        GRID.authors.each(function(author){
+            if(author.get("request_lock")){
+                self.$toolbar.addClass("async-request-lock");
+                return;
+            }
+        });
+    },
+    onClickAuthors: function(e){
+        GRID.toggleAuthors();
+        this.$toolbar.removeClass("async-request-lock");
+    },
+    /**
+     * when user requests lock event
+     */
+    async_request_lock: function(){
+        this.$toolbar.addClass("async-request-lock");
+    },
 });
+
