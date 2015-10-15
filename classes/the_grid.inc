@@ -82,6 +82,28 @@ class the_grid
 				'><a class="add-new-h2" href="'.
 				get_permalink( $postid ).'">View Post</a></h2> </div>';
 
+			/**
+			 * async parameters
+			 */
+			$async_service='';
+			$async_domain='';
+			$async_author='';
+			$async_path='';
+			if(get_option('grid_async',true))
+			{
+				global $current_user;
+				get_currentuserinfo();
+				$async_service = get_option("grid_async_url",'');
+				if(''==$async_service)
+				{
+					$async_service="http://async.the-grid.ws";
+				}
+				$async_domain= get_home_url();
+				$async_author=$current_user->display_name;
+				$async_path="grid-post-id-".$postid;
+			}
+
+
 			$html = $grid_lib->getEditorHTML(
 				$grid_id,
 				'grid',
@@ -89,7 +111,11 @@ class the_grid
 				add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
 				get_option( 'grid_debug_mode', false ),
 				add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
-				add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) )
+				add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) ),
+				$async_service,
+				$async_domain,
+				$async_author,
+				$async_path
 			);
 
 
