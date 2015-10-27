@@ -128,11 +128,14 @@ class the_grid
 	function ckeditor_config() {
 		$styles = array();
 		$formats = array();
+		$ckeditor_plugins = array();
 
 		$styles = apply_filters( 'grid_styles', $styles );
 		$formats = apply_filters( 'grid_formats', $formats );
+		$ckeditor_plugins = apply_filters('grid_ckeditor_plugins', $ckeditor_plugins);
+
 		global $grid_lib;
-		echo $grid_lib->getCKEditorConfig( $styles, $formats );
+		echo $grid_lib->getCKEditorConfig( $styles, $formats, $ckeditor_plugins );
 		die();
 	}
 
