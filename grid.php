@@ -12,12 +12,12 @@ class grid_library
 	{
 		require_once("classes/bootstrap.php");
 	}
-	
+
 	private function getHome()
 	{
 		return dirname(__FILE__)."/";
 	}
-	
+
 	public function getFrontendCSS($absolute=FALSE)
 	{
 		$home=$this->getHome();
@@ -27,23 +27,23 @@ class grid_library
 		$path=substr($path, strlen($home));
 		return $path;
 	}
-	
+
 	//Gets an array of JS files to include on editor view (if absolute is true, absolute paths are returned.
 	public function getEditorJS($language="en",$absolute=FALSE)
 	{
 		$home=$this->getHome();
 		$editorfields=glob($home."js/app/views/EditorWidgets/*.js");
-		
+
 		$editorwidgets=array();
 		foreach($editorfields as $idx=>$file)
 		{
 			$path=$file;
 			$editorwidgets[]=$path;
 		}
-		
+
 		$framework_dir=$home."js/frameworks/";
 		$app_dir=$home."js/app/";
-		
+
 		$scripts=array();
 		$scripts[]=$framework_dir."jquery-1.8.3.min.js";
 		$scripts[]=$framework_dir."jquery-ui-1.10.2.custom.js";
@@ -86,7 +86,7 @@ class grid_library
 			$scripts[]=$home."/js/language/grid-".$language.".js";
 		}
 		$scripts[]=$home."/js/language/grid-en.js";
-		
+
 		if($absolute)
 		{
 			return $scripts;
@@ -98,7 +98,7 @@ class grid_library
 		}
 		return $return;
 	}
-	
+
 	//Gets an array of CSS files to include on editor view
 	public function getEditorCSS($rtl=FALSE,$absolute=FALSE)
 	{
@@ -136,9 +136,9 @@ class grid_library
 		if(count($calc) < 2) return null;
 		return ($calc[0]/$calc[1])*100;
 	}
-	
+
 	//renders the CKEditor configuration
-	public function getCKEditorConfig($styles,$formats)
+	public function getCKEditorConfig($styles,$formats, $ckeditor_plugins = array())
 	{
 		ob_start();
 		require($this->getHome()."js/grid_htmlbox_ckeditor_config.js.php");
@@ -146,7 +146,7 @@ class grid_library
 		ob_end_clean();
 		return $str;
 	}
-	
+
 	/*
 	 * Returns the Editor HTML. 
 	 * params:
@@ -166,7 +166,7 @@ class grid_library
 		ob_end_clean();
 		return $str;
 	}
-	
+
 	public function getDatabaseSchema()
 	{
 		return array(
@@ -690,7 +690,7 @@ class grid_library
 			),
 		);
 	}
-	
+
 	public function install()
 	{
 		db_query("alter table {grid_box} add constraint {fk_box_type} foreign key (type) references {grid_box_type} (id) on update cascade on delete cascade");
@@ -704,30 +704,30 @@ class grid_library
 		db_query("alter table {grid_slot} add constraint {fk_slot_style} foreign key (style) references {grid_slot_style} (id) on update cascade on delete cascade");
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
 		db_query("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
-		
+
 		db_query("insert into {grid_container_type} (type,numslots) values ('i-0',0) ON DUPLICATE KEY UPDATE type=type;");
 
-		db_query("insert into {grid_container_type} (type, numslots) values ('c-1d1',1) ON DUPLICATE KEY UPDATE type=type;"); 
-		
-		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d3',3) ON DUPLICATE KEY UPDATE type=type;"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d3',2) ON DUPLICATE KEY UPDATE type=type;"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-2d3',2) ON DUPLICATE KEY UPDATE type=type;"); 
-		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d6-1d6',6) ON DUPLICATE KEY UPDATE type=type;"); 
+		db_query("insert into {grid_container_type} (type, numslots) values ('c-1d1',1) ON DUPLICATE KEY UPDATE type=type;");
+
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d3',3) ON DUPLICATE KEY UPDATE type=type;");
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d3',2) ON DUPLICATE KEY UPDATE type=type;");
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d3-2d3',2) ON DUPLICATE KEY UPDATE type=type;");
+		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d6-1d6',6) ON DUPLICATE KEY UPDATE type=type;");
 		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d4-1d4-1d4-1d4',4) ON DUPLICATE KEY UPDATE type=type;");
 		db_query("insert into {grid_container_type} (type,numslots) values ('c-1d2-1d2',2) ON DUPLICATE KEY UPDATE type=type;");
 
-		db_query("insert into {grid_container_type} (type,numslots, space_to_right) values ('s-1d3-0',1,'2d3') ON DUPLICATE KEY UPDATE type=type;"); 
+		db_query("insert into {grid_container_type} (type,numslots, space_to_right) values ('s-1d3-0',1,'2d3') ON DUPLICATE KEY UPDATE type=type;");
 		db_query("insert into {grid_container_type} (type,numslots, space_to_left) values ('s-0-1d3',1,'2d3') ON DUPLICATE KEY UPDATE type=type;");
-		db_query("insert into {grid_container_type} (type,numslots) values ('sc-1d3',1) ON DUPLICATE KEY UPDATE type=type;"); 
+		db_query("insert into {grid_container_type} (type,numslots) values ('sc-1d3',1) ON DUPLICATE KEY UPDATE type=type;");
 
-		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-1d3-1d3',2,'1d3') ON DUPLICATE KEY UPDATE type=type;"); 
-		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-1d3-1d3-0',2,'1d3') ON DUPLICATE KEY UPDATE type=type;"); 
-		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3') ON DUPLICATE KEY UPDATE type=type;"); 
+		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-1d3-1d3',2,'1d3') ON DUPLICATE KEY UPDATE type=type;");
+		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-1d3-1d3-0',2,'1d3') ON DUPLICATE KEY UPDATE type=type;");
+		db_query("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
 		db_query("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-2d3-0',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
-		
+
 		$this->getUpdater()->install();
 	}
-	
+
 	public function uninstall()
 	{
 		db_query("alter table {grid_box} drop foreign key {fk_box_type}");
@@ -742,37 +742,37 @@ class grid_library
 		db_query("alter table {grid_slot2box} drop foreign key {fk_slot_slot}");
 		db_query("alter table {grid_slot2box} drop foreign key {fk_slot_box}");
 	}
-	
+
 	public function getStyleEditor()
 	{
 		require_once("classes/grid_style_editor.php");
 		return new grid_style_editor();
 	}
-	
+
 	public function getReuseContainerEditor()
 	{
 		require_once("classes/grid_reuse_container_editor.php");
 		return new grid_reuse_container_editor();
 	}
-	
+
 	public function getReuseBoxEditor()
 	{
 		require_once("classes/grid_reuse_box_editor.php");
 		return new grid_reuse_box_editor();
 	}
-	
+
 	public function getContainerEditor()
 	{
 		require_once("classes/grid_container_editor.php");
 		return new grid_container_editor();
 	}
-	
+
 	private function getUpdater()
 	{
 		require_once("classes/grid_update.php");
-		return new grid_update();		
+		return new grid_update();
 	}
-	
+
 	public function update()
 	{
 		$update=$this->getUpdater();
