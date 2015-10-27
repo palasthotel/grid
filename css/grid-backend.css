@@ -858,14 +858,14 @@ h3 {
   padding-bottom: 100px;
   background-color: white;
   border: 1px solid #eceff3; }
-  .grid-editor-content .grid-boxeditor-fieldset {
+  .grid-editor-content .grid-editor-fieldset {
     border: none;
     border-bottom: 1px solid #eceff3;
     padding: 0;
     margin: -1px -35px 0px -35px; }
-    .grid-editor-content .grid-boxeditor-fieldset .grid-editor-field-wrapper {
+    .grid-editor-content .grid-editor-fieldset .grid-editor-field-wrapper {
       display: none; }
-  .grid-editor-content .grid-boxeditor-legend {
+  .grid-editor-content .grid-editor-legend {
     padding: 15px 0px 15px 35px;
     box-sizing: border-box;
     width: 100%;
@@ -876,7 +876,7 @@ h3 {
     border-top: 1px solid #cdd5df;
     background-color: #eceae7;
     transition: background-color 0.5s ease; }
-    .grid-editor-content .grid-boxeditor-legend .icon-arrow {
+    .grid-editor-content .grid-editor-legend .icon-arrow {
       position: absolute;
       left: 5px;
       top: 16px;
@@ -885,7 +885,7 @@ h3 {
   .grid-editor-content textarea {
     border: 1px solid #eceff3;
     width: 100%; }
-  .grid-editor-content .grid-boxeditor-label,
+  .grid-editor-content .grid-editor-label,
   .grid-editor-content label {
     padding: 10px 0;
     font-weight: bold;
@@ -906,11 +906,11 @@ h3 {
   .grid-editor-content .grid-active .grid-editor-field-wrapper {
     display: block;
     margin: 15px 35px; }
-  .grid-editor-content .grid-active .grid-boxeditor-legend {
+  .grid-editor-content .grid-active .grid-editor-legend {
     background-color: #3ac5d9;
     border-bottom: 2px solid #24a9bc;
     color: white; }
-    .grid-editor-content .grid-active .grid-boxeditor-legend .icon-arrow {
+    .grid-editor-content .grid-active .grid-editor-legend .icon-arrow {
       -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
