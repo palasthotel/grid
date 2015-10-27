@@ -10,18 +10,22 @@ Dimensions
 /*
 * Containers table
 */
+/* line 9, ../scss/grid-container-editor.scss */
 .grid-container-editor-table {
   margin-top: 10px;
   border: 1px solid #e1e1e2;
   margin-bottom: 10px;
   width: 100%; }
+  /* line 15, ../scss/grid-container-editor.scss */
   .grid-container-editor-table th, .grid-container-editor-table td {
     text-align: left;
     padding: 20px 10px 20px 10px;
     min-width: 150px;
     border: none; }
+    /* line 20, ../scss/grid-container-editor.scss */
     .grid-container-editor-table th:last-child, .grid-container-editor-table td:last-child {
       border-right: none; }
+  /* line 24, ../scss/grid-container-editor.scss */
   .grid-container-editor-table th {
     border: none;
     border-bottom: 1px solid #E1E1E2;
@@ -29,14 +33,17 @@ Dimensions
     padding-bottom: 10px;
     background-color: white;
     font-weight: bold; }
+  /* line 33, ../scss/grid-container-editor.scss */
   .grid-container-editor-table tr {
     background-color: #fff; }
+  /* line 36, ../scss/grid-container-editor.scss */
   .grid-container-editor-table tr:nth-child(2n) {
     background-color: #f9f9f9; }
 
 /**
 * New container form
 */
+/* line 47, ../scss/grid-container-editor.scss */
 .grid-container-editor-form input,
 .grid-container-editor-form textarea,
 .grid-container-editor-form select,
@@ -45,6 +52,7 @@ Dimensions
   font-size: 12px;
   -moz-box-sizing: border-box;
        box-sizing: border-box; }
+/* line 56, ../scss/grid-container-editor.scss */
 .grid-container-editor-form input {
   height: 27px;
   line-height: 27px;
@@ -52,8 +60,10 @@ Dimensions
   font-size: 1em;
   border: solid 1px #eceff3;
   margin-bottom: 5px; }
+  /* line 64, ../scss/grid-container-editor.scss */
   .grid-container-editor-form input:hover {
     border-color: #b0bac2; }
+/* line 68, ../scss/grid-container-editor.scss */
 .grid-container-editor-form button,
 .grid-container-editor-form button:focus {
   outline: none;
@@ -70,14 +80,18 @@ Dimensions
   -webkit-transition: all 0.1337s ease;
           transition: all 0.1337s ease;
   box-shadow: none; }
+  /* line 85, ../scss/grid-container-editor.scss */
   .grid-container-editor-form button:hover,
   .grid-container-editor-form button:focus:hover {
     color: #3ac5d9; }
+/* line 89, ../scss/grid-container-editor.scss */
 .grid-container-editor-form label {
   display: inline;
   font-weight: normal; }
+/* line 93, ../scss/grid-container-editor.scss */
 .grid-container-editor-form .grid-new-container-values {
   padding: 0px 10px; }
+  /* line 95, ../scss/grid-container-editor.scss */
   .grid-container-editor-form .grid-new-container-values > div {
     margin-bottom: 8px; }
 

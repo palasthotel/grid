@@ -1,18 +1,44 @@
 @charset "UTF-8";
+@-webkit-keyframes bounce-x {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0); }
+  40% {
+    -webkit-transform: translateX(30px);
+            transform: translateX(30px); }
+  60% {
+    -webkit-transform: translateX(15px);
+            transform: translateX(15px); } }
 @keyframes bounce-x {
   0%, 20%, 50%, 80%, 100% {
-    transform: translateX(0); }
+    -webkit-transform: translateX(0);
+            transform: translateX(0); }
   40% {
-    transform: translateX(30px); }
+    -webkit-transform: translateX(30px);
+            transform: translateX(30px); }
   60% {
-    transform: translateX(15px); } }
+    -webkit-transform: translateX(15px);
+            transform: translateX(15px); } }
+@-webkit-keyframes bounce-y-small {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
+  40% {
+    -webkit-transform: translateY(-15px);
+            transform: translateY(-15px); }
+  60% {
+    -webkit-transform: translateY(-7px);
+            transform: translateY(-7px); } }
 @keyframes bounce-y-small {
   0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0); }
+    -webkit-transform: translateY(0);
+            transform: translateY(0); }
   40% {
-    transform: translateY(-15px); }
+    -webkit-transform: translateY(-15px);
+            transform: translateY(-15px); }
   60% {
-    transform: translateY(-7px); } }
+    -webkit-transform: translateY(-7px);
+            transform: translateY(-7px); } }
 /* **************
 Dimensions
 ****************/
@@ -22,10 +48,12 @@ Dimensions
 /**
 * transitions
 */
+/* line 1, ../scss/0_Base/_grid-all-wrapper.scss */
 .grid-all-wrapper,
 .grid-editor-wrapper {
   font-family: "OpenSans", sans-serif;
   background-color: #f3f5f7; }
+  /* line 6, ../scss/0_Base/_grid-all-wrapper.scss */
   .grid-all-wrapper input,
   .grid-all-wrapper textarea,
   .grid-all-wrapper select,
@@ -36,7 +64,9 @@ Dimensions
   .grid-editor-wrapper button {
     font-family: inherit;
     font-size: 12px;
-    box-sizing: border-box; }
+    -moz-box-sizing: border-box;
+         box-sizing: border-box; }
+  /* line 15, ../scss/0_Base/_grid-all-wrapper.scss */
   .grid-all-wrapper input,
   .grid-editor-wrapper input {
     height: 27px;
@@ -46,14 +76,17 @@ Dimensions
     font-size: 1em;
     border: solid 1px #eceff3;
     margin-bottom: 5px; }
+    /* line 24, ../scss/0_Base/_grid-all-wrapper.scss */
     .grid-all-wrapper input:hover,
     .grid-editor-wrapper input:hover {
       border-color: #b0bac2; }
+  /* line 28, ../scss/0_Base/_grid-all-wrapper.scss */
   .grid-all-wrapper input[type=checkbox],
   .grid-editor-wrapper input[type=checkbox] {
     width: auto;
     height: auto;
     display: inline; }
+  /* line 33, ../scss/0_Base/_grid-all-wrapper.scss */
   .grid-all-wrapper button,
   .grid-all-wrapper button:focus,
   .grid-editor-wrapper button,
@@ -67,31 +100,38 @@ Dimensions
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.05em;
-    transition: all 0.1337s ease;
+    -webkit-transition: all 0.1337s ease;
+            transition: all 0.1337s ease;
     box-shadow: none; }
+    /* line 47, ../scss/0_Base/_grid-all-wrapper.scss */
     .grid-all-wrapper button:hover,
     .grid-all-wrapper button:focus:hover,
     .grid-editor-wrapper button:hover,
     .grid-editor-wrapper button:focus:hover {
       color: #3ac5d9; }
+  /* line 51, ../scss/0_Base/_grid-all-wrapper.scss */
   .grid-all-wrapper img,
   .grid-editor-wrapper img {
     max-width: 100%;
     width: 100%;
     height: auto; }
 
+/* line 1, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix:before,
 .grid-clearfix:after {
   content: "";
   display: table; }
 
+/* line 6, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix:after {
   clear: both; }
 
+/* line 9, ../scss/0_Base/_grid-base.scss */
 .grid-clearfix {
   zoom: 1;
   /* For IE 6/7 (trigger hasLayout) */ }
 
+/* line 15, ../scss/0_Base/_grid-base.scss */
 h3 {
   word-break: break-all;
   font-size: 12px; }
@@ -139,6 +179,7 @@ h3 {
   @font-face {
     font-family: 'grid-font';
     src: url("../fonts/grid_font/grid-font.svg") format("svg"); } }
+/* line 82, ../scss/0_Base/_grid-font.scss */
 [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "Grid";
   font-style: normal;
@@ -166,142 +207,177 @@ h3 {
 /**
 * like they come from fontello
 */
+/* line 117, ../scss/0_Base/_grid-font.scss */
 .icon-cog:before {
   content: '\e800'; }
 
 /* '' */
+/* line 118, ../scss/0_Base/_grid-font.scss */
 .icon-check:before {
   content: '\e801'; }
 
 /* '' */
+/* line 119, ../scss/0_Base/_grid-font.scss */
 .icon-cancel:before {
   content: '\e802'; }
 
 /* '' */
+/* line 120, ../scss/0_Base/_grid-font.scss */
 .icon-minus:before {
   content: '\e803'; }
 
 /* '' */
+/* line 121, ../scss/0_Base/_grid-font.scss */
 .icon-plus:before {
   content: '\e804'; }
 
 /* '' */
+/* line 122, ../scss/0_Base/_grid-font.scss */
 .icon-link:before {
   content: '\e805'; }
 
 /* '' */
+/* line 123, ../scss/0_Base/_grid-font.scss */
 .icon-eye:before {
   content: '\e806'; }
 
 /* '' */
+/* line 124, ../scss/0_Base/_grid-font.scss */
 .icon-pencil:before {
   content: '\e807'; }
 
 /* '' */
+/* line 125, ../scss/0_Base/_grid-font.scss */
 .icon-trash:before {
   content: '\e808'; }
 
 /* '' */
+/* line 126, ../scss/0_Base/_grid-font.scss */
 .icon-shareable:before {
   content: '\e809'; }
 
 /* '' */
+/* line 127, ../scss/0_Base/_grid-font.scss */
 .icon-right-dir:before {
   content: '\e80a'; }
 
 /* '' */
+/* line 128, ../scss/0_Base/_grid-font.scss */
 .icon-ccw:before {
   content: '\e80b'; }
 
 /* '' */
+/* line 129, ../scss/0_Base/_grid-font.scss */
 .icon-back-in-time:before {
   content: '\e80c'; }
 
 /* '' */
+/* line 130, ../scss/0_Base/_grid-font.scss */
 .icon-brush:before {
   content: '\e80d'; }
 
 /* '' */
+/* line 131, ../scss/0_Base/_grid-font.scss */
 .icon-dot-3:before {
   content: '\e80e'; }
 
 /* '' */
+/* line 132, ../scss/0_Base/_grid-font.scss */
 .icon-megaphone:before {
   content: '\e80f'; }
 
 /* '' */
+/* line 133, ../scss/0_Base/_grid-font.scss */
 .icon-recycle:before {
   content: '\e810'; }
 
 /* '' */
+/* line 134, ../scss/0_Base/_grid-font.scss */
 .icon-flow-tree:before {
   content: '\e811'; }
 
 /* '' */
+/* line 135, ../scss/0_Base/_grid-font.scss */
 .icon-lock-open-alt:before {
   content: '\e812'; }
 
 /* '' */
+/* line 136, ../scss/0_Base/_grid-font.scss */
 .icon-lock:before {
   content: '\e813'; }
 
 /* '' */
+/* line 137, ../scss/0_Base/_grid-font.scss */
 .icon-lock-open:before {
   content: '\e814'; }
 
 /* '' */
+/* line 138, ../scss/0_Base/_grid-font.scss */
 .icon-clock:before {
   content: '\e815'; }
 
 /* '' */
+/* line 139, ../scss/0_Base/_grid-font.scss */
 .icon-picture:before {
   content: '\e816'; }
 
 /* '' */
+/* line 140, ../scss/0_Base/_grid-font.scss */
 .icon-grid-2x2:before {
   content: '\e817'; }
 
 /* '' */
+/* line 141, ../scss/0_Base/_grid-font.scss */
 .icon-grid-3x3:before {
   content: '\e818'; }
 
 /* '' */
+/* line 142, ../scss/0_Base/_grid-font.scss */
 .icon-list-numbered:before {
   content: '\e819'; }
 
 /* '' */
+/* line 143, ../scss/0_Base/_grid-font.scss */
 .icon-list-bullet:before {
   content: '\e81a'; }
 
 /* '' */
+/* line 144, ../scss/0_Base/_grid-font.scss */
 .icon-chat:before {
   content: '\e81b'; }
 
 /* '' */
+/* line 145, ../scss/0_Base/_grid-font.scss */
 .icon-plus-squared:before {
   content: '\e81c'; }
 
 /* '' */
+/* line 146, ../scss/0_Base/_grid-font.scss */
 .icon-minus-squared:before {
   content: '\e81d'; }
 
 /* '' */
+/* line 147, ../scss/0_Base/_grid-font.scss */
 .icon-cancel-squared:before {
   content: '\e81e'; }
 
 /* '' */
+/* line 148, ../scss/0_Base/_grid-font.scss */
 .icon-beaker:before {
   content: '\e81f'; }
 
 /* '' */
+/* line 149, ../scss/0_Base/_grid-font.scss */
 .icon-filter:before {
   content: '\e820'; }
 
 /* '' */
+/* line 150, ../scss/0_Base/_grid-font.scss */
 .icon-hourglass:before {
   content: '\e821'; }
 
 /* '' */
+/* line 151, ../scss/0_Base/_grid-font.scss */
 .icon-github-circled:before {
   content: '\e822'; }
 
@@ -309,87 +385,112 @@ h3 {
 /**
 * rename to function names
 */
+/* line 157, ../scss/0_Base/_grid-font.scss */
 .icon-link:before {
   content: '\e805'; }
 
+/* line 158, ../scss/0_Base/_grid-font.scss */
 .icon-preview:before {
   content: '\e806'; }
 
+/* line 159, ../scss/0_Base/_grid-font.scss */
 .icon-ok:before {
   content: '\e801'; }
 
+/* line 160, ../scss/0_Base/_grid-font.scss */
 .icon-reuse:before {
   content: '\e809'; }
 
+/* line 161, ../scss/0_Base/_grid-font.scss */
 .icon-reuse:before {
   content: '\e810'; }
 
+/* line 162, ../scss/0_Base/_grid-font.scss */
 .icon-cancel:before {
   content: '\e802'; }
 
+/* line 163, ../scss/0_Base/_grid-font.scss */
 .icon-style:before {
   content: '\e80d'; }
 
+/* line 164, ../scss/0_Base/_grid-font.scss */
 .icon-plus:before {
   content: '\e804'; }
 
+/* line 165, ../scss/0_Base/_grid-font.scss */
 .icon-minus:before {
   content: '\e803'; }
 
+/* line 166, ../scss/0_Base/_grid-font.scss */
 .icon-revisions:before {
   content: '\e80c'; }
 
+/* line 167, ../scss/0_Base/_grid-font.scss */
 .icon-revert:before {
   content: '\e80b'; }
 
+/* line 168, ../scss/0_Base/_grid-font.scss */
 .icon-edit:before {
   content: '\e807'; }
 
+/* line 169, ../scss/0_Base/_grid-font.scss */
 .icon-trash:before {
   content: '\e808'; }
 
+/* line 170, ../scss/0_Base/_grid-font.scss */
 .icon-publish:before {
   content: '\e80f'; }
 
+/* line 171, ../scss/0_Base/_grid-font.scss */
 .icon-elipse:before {
   content: '\e80e'; }
 
+/* line 172, ../scss/0_Base/_grid-font.scss */
 .icon-arrow:before {
   content: '\e80a'; }
 
+/* line 175, ../scss/0_Base/_grid-font.scss */
 .icon-dir-right:before {
   content: '\e80a'; }
 
+/* line 176, ../scss/0_Base/_grid-font.scss */
 .icon-dir-left:before {
   content: '\e814'; }
 
+/* line 177, ../scss/0_Base/_grid-font.scss */
 .icon-dir-up:before {
   content: '\e813'; }
 
+/* line 178, ../scss/0_Base/_grid-font.scss */
 .icon-dir-down:before {
   content: '\e812'; }
 
+/* line 180, ../scss/0_Base/_grid-font.scss */
 .icon-drag:before {
   content: '\e80e';
   -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
   transform: rotate(90deg); }
 
+/* line 187, ../scss/0_Base/_grid-font.scss */
 .icon-options:before {
   content: '\e800'; }
 
+/* line 1, ../scss/2_Module/_grid-author.scss */
 .grid-author {
   position: relative;
   padding: 15px; }
+  /* line 4, ../scss/2_Module/_grid-author.scss */
   .grid-author + .grid-author {
     border-top: 1px solid #f3f5f7; }
+  /* line 7, ../scss/2_Module/_grid-author.scss */
   .grid-author .author-lock-icon {
     position: absolute;
     left: -5px; }
+  /* line 11, ../scss/2_Module/_grid-author.scss */
   .grid-author .author-action-btn {
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     position: absolute;
     overflow: hidden;
     top: 0px;
@@ -399,32 +500,44 @@ h3 {
     background-color: #3f4853;
     font-weight: bold;
     padding: 15px 0 0 15px;
-    transition: all 0.1337s ease; }
+    -webkit-transition: all 0.1337s ease;
+            transition: all 0.1337s ease; }
+  /* line 25, ../scss/2_Module/_grid-author.scss */
   .grid-author:hover .author-action-btn {
     width: 135px;
     color: white;
     cursor: pointer; }
+  /* line 32, ../scss/2_Module/_grid-author.scss */
   .grid-author.async-request-lock .author-lock-icon {
-    animation-name: bounce-y-small;
-    animation-duration: 1.3s;
-    animation-iteration-count: infinite; }
+    -webkit-animation-name: bounce-y-small;
+            animation-name: bounce-y-small;
+    -webkit-animation-duration: 1.3s;
+            animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite; }
 
+/* line 1, ../scss/2_Module/_grid-authors-wrapper.scss */
 .grid-authors-wrapper {
   position: fixed;
   width: 260px;
   z-index: 91;
   right: -300px;
-  transition: all 0.1337s ease; }
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease; }
+  /* line 11, ../scss/2_Module/_grid-authors-wrapper.scss */
   .grid-authors-wrapper.is-active {
     right: 0px; }
+  /* line 15, ../scss/2_Module/_grid-authors-wrapper.scss */
   .grid-authors-wrapper .grid-authors {
     padding-top: 4px; }
+  /* line 18, ../scss/2_Module/_grid-authors-wrapper.scss */
   .grid-authors-wrapper .authors-header {
     background-color: rgba(176, 186, 194, 0.7);
     width: 100%;
     padding: 15px;
     text-align: center;
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     display: inline-block;
     text-transform: uppercase;
     font-weight: bold;
@@ -432,6 +545,7 @@ h3 {
     position: relative;
     color: white;
     background-color: #3ac5d9; }
+    /* line 31, ../scss/2_Module/_grid-authors-wrapper.scss */
     .grid-authors-wrapper .authors-header:after {
       content: "";
       border: 9px solid #3ac5d9;
@@ -446,6 +560,7 @@ h3 {
       position: absolute;
       bottom: -18px;
       left: 47%; }
+  /* line 44, ../scss/2_Module/_grid-authors-wrapper.scss */
   .grid-authors-wrapper .authors-list {
     overflow-y: scroll;
     margin: 0px auto;
@@ -454,10 +569,13 @@ h3 {
     border: 1px solid rgba(176, 186, 194, 0.7);
     list-style: none; }
 
+/* line 1, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
 .grid-box-drop-area-wrapper {
   position: relative; }
+  /* line 3, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
   .grid-box-drop-area-wrapper .grid-box-drop-area {
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     position: absolute;
     height: 20px;
     top: -12px;
@@ -465,37 +583,45 @@ h3 {
     background-color: #e5f7fa;
     width: 100%;
     z-index: 60;
-    transition: all 0.3s ease; }
+    -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease; }
+    /* line 14, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
     .grid-box-drop-area-wrapper .grid-box-drop-area.hover {
       background-color: #3ac5d9;
       height: 25px;
       top: -14px; }
+  /* line 20, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
   .grid-box + .grid-box-drop-area-wrapper {
     margin-top: 10px; }
+    /* line 22, ../scss/2_Module/_grid-box-drop-area-wrapper.scss */
     .grid-box + .grid-box-drop-area-wrapper:last-child {
       margin-top: 0; }
 
+/* line 2, ../scss/2_Module/_grid-box-sort-placeholder.scss */
 .grid-box-sort-placeholder {
   background-color: #3ac5d9; }
 
 /*********************
 * box
 *******************/
+/* line 6, ../scss/2_Module/_grid-box.scss */
 .grid-box {
   position: relative;
   padding: 12px 0;
   min-height: 50px;
   background-color: white;
-  -webkit-box-shadow: inset 0 0 2px 0px #838688;
   box-shadow: inset 0 0 2px 0px #838688; }
+  /* line 17, ../scss/2_Module/_grid-box.scss */
   .grid-box .grid-box-content {
     font-size: 11px;
     padding: 0 10px;
     word-break: break-all; }
 
+/* line 23, ../scss/2_Module/_grid-box.scss */
 .grid-box + .grid-box {
   margin-top: 10px; }
 
+/* line 28, ../scss/2_Module/_grid-box.scss */
 .grid-box-controls {
   color: white;
   height: 0;
@@ -509,9 +635,12 @@ h3 {
   background-color: rgba(63, 72, 83, 0.9);
   font-weight: bold;
   text-transform: uppercase;
-  transition: opacity 0.2s ease; }
+  -webkit-transition: opacity 0.2s ease;
+          transition: opacity 0.2s ease; }
+  /* line 29, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls.grid-box-movable {
     cursor: move; }
+  /* line 47, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls .grid-box-control-button {
     cursor: pointer;
     position: absolute;
@@ -520,14 +649,20 @@ h3 {
     right: 0px;
     width: 40px;
     max-width: 250px;
-    transition: all 0.3s ease; }
+    -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease; }
+    /* line 56, ../scss/2_Module/_grid-box.scss */
     .grid-box-controls .grid-box-control-button:hover {
       width: 100%; }
+    /* line 59, ../scss/2_Module/_grid-box.scss */
     .grid-box-controls .grid-box-control-button .grid-box-control-text {
       opacity: 0;
-      transition: all 0.3s ease; }
+      -webkit-transition: all 0.3s ease;
+              transition: all 0.3s ease; }
+    /* line 63, ../scss/2_Module/_grid-box.scss */
     .grid-box-controls .grid-box-control-button:hover .grid-box-control-text {
       opacity: 1; }
+  /* line 67, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls .grid-box-control-wrapper {
     position: absolute;
     left: 0;
@@ -537,70 +672,89 @@ h3 {
     white-space: nowrap;
     overflow: hidden;
     padding-left: 8px; }
+  /* line 78, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls .grid-box-edit {
     background-color: #3ac5d9;
     top: 0px;
     bottom: 50%; }
+  /* line 83, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls .grid-box-reused {
     position: absolute;
     top: 10px;
     right: 14px;
     font-weight: normal; }
+  /* line 89, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls .grid-box-delete {
     top: 50%;
     bottom: 0px;
     background-color: #ed5032; }
+  /* line 94, ../scss/2_Module/_grid-box.scss */
   .grid-box-controls .grid-box-drag {
     position: absolute;
     top: 35%;
     left: 10px; }
 
+/* line 100, ../scss/2_Module/_grid-box.scss */
 .grid-box:hover .grid-box-controls {
   height: auto;
   overflow: visible;
   display: block;
   opacity: 1; }
 
+/* line 109, ../scss/2_Module/_grid-box.scss */
 .grid-box-type-content {
   margin: 0px;
   border-bottom: 1px solid #f3f5f7; }
 
+/* line 115, ../scss/2_Module/_grid-box.scss */
 .grid-box-type + dl .grid-box-type-search {
   display: none; }
+/* line 119, ../scss/2_Module/_grid-box.scss */
 .grid-box-type.active + dl .grid-box-type-search {
   display: block; }
 
+/* line 126, ../scss/2_Module/_grid-box.scss */
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-controls {
   cursor: default; }
+/* line 129, ../scss/2_Module/_grid-box.scss */
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-delete {
   display: none; }
+/* line 132, ../scss/2_Module/_grid-box.scss */
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-edit {
   bottom: 0px; }
+/* line 135, ../scss/2_Module/_grid-box.scss */
 .grid-container-type-s *:not(.grid) .grid-box .grid-box-drag {
   display: none; }
 
+/* line 3, ../scss/2_Module/_grid-boxes-wrapper.scss */
 .grid-boxes-wrapper {
   min-height: 60px;
   position: relative;
   padding: 10px 0; }
 
+/* line 1, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
 .container-drop-area-wrapper {
   position: relative; }
+  /* line 3, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
   .container-drop-area-wrapper .container-drop-area {
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     position: absolute;
     height: 30px;
     top: -25px;
     width: 100%;
     z-index: 60;
-    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
     background-color: #e5f7fa;
     border: 3px dashed #3ac5d9; }
+    /* line 13, ../scss/2_Module/_grid-container-drop-area-wrapper.scss */
     .container-drop-area-wrapper .container-drop-area.hover {
       background-color: #3ac5d9;
       height: 40px;
       top: -30px; }
 
+/* line 16, ../scss/2_Module/_grid-container-sidebar.scss */
 .grid-wrapper .grid-container-type-s .grid-box .grid .sc-4 .grid-slot {
   position: relative;
   top: auto;
@@ -608,6 +762,7 @@ h3 {
   width: auto;
   float: none; }
 
+/* line 27, ../scss/2_Module/_grid-container-sidebar.scss */
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid-slot {
   position: absolute;
   width: 32%;
@@ -616,11 +771,14 @@ h3 {
   left: 0px;
   padding-right: 4px;
   padding-left: 4px;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   z-index: 60; }
+/* line 38, ../scss/2_Module/_grid-container-sidebar.scss */
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s[data-type*=s-0] .grid-slot {
   left: auto;
   right: 0px; }
+/* line 45, ../scss/2_Module/_grid-container-sidebar.scss */
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-container,
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-slot,
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-box,
@@ -633,38 +791,49 @@ h3 {
   position: relative;
   z-index: inherit; }
 
+/* line 2, ../scss/2_Module/_grid-container-sort-placeholder.scss */
 .grid-container-sort-placeholder {
   height: 20px;
   margin-bottom: 15px;
   background-color: #3ac5d9; }
 
+/* line 2, ../scss/2_Module/_grid-container-wrapper.scss */
 .grid-containers-wrapper {
-  box-sizing: border-box; }
+  -moz-box-sizing: border-box;
+       box-sizing: border-box; }
 
 /****************
  * container 
  ****************/
+/* line 6, ../scss/2_Module/_grid-container.scss */
 .grid-container {
   margin: 0 0px 20px 0px; }
+  /* line 12, ../scss/2_Module/_grid-container.scss */
   .grid-container .grid-container-sorthandle,
   .grid-container .grid-container-options-icon {
     color: #b0bac2; }
+  /* line 18, ../scss/2_Module/_grid-container.scss */
   .grid-container .grid-container-title {
     color: #262e38; }
+    /* line 21, ../scss/2_Module/_grid-container.scss */
     .grid-container .grid-container-title .grid-container-style {
       font-weight: normal;
       font-size: 11px; }
+  /* line 29, ../scss/2_Module/_grid-container.scss */
   .grid-container .grid-container-controls {
     background-color: white;
     border: 1px solid rgba(176, 186, 194, 0.7); }
+  /* line 34, ../scss/2_Module/_grid-container.scss */
   .grid-container .grid-container-content {
     border-top: none; }
 
+/* line 41, ../scss/2_Module/_grid-container.scss */
 .grid-container-content {
   position: relative;
   background-color: white;
   border: 1px solid rgba(176, 186, 194, 0.7); }
 
+/* line 47, ../scss/2_Module/_grid-container.scss */
 .grid-container-controls {
   position: relative;
   background-color: transparent;
@@ -675,23 +844,30 @@ h3 {
 /**********************************
  * container hover states
  **********************************/
+/* line 63, ../scss/2_Module/_grid-container.scss */
 .grid-container-title,
 .grid-container-sorthandle,
 .grid-container-options-icon {
   color: rgba(176, 186, 194, 0.3);
-  transition: all 0.3s ease; }
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
 
+/* line 78, ../scss/2_Module/_grid-container.scss */
 .grid-container-options-list-item:hover {
   background-color: #3f4853; }
+  /* line 80, ../scss/2_Module/_grid-container.scss */
   .grid-container-options-list-item:hover[role=trash] {
     background-color: #ed5032; }
+  /* line 83, ../scss/2_Module/_grid-container.scss */
   .grid-container-options-list-item:hover[role=edit] {
     background-color: #3ac5d9; }
 
+/* line 89, ../scss/2_Module/_grid-container.scss */
 .grid-container-type-content {
   margin: 0px;
   border-bottom: 1px solid #f3f5f7; }
 
+/* line 95, ../scss/2_Module/_grid-container.scss */
 .grid-container-reused-layer {
   cursor: move;
   position: absolute;
@@ -702,6 +878,7 @@ h3 {
   right: 5px;
   background-color: rgba(63, 72, 83, 0.7);
   z-index: 50; }
+  /* line 105, ../scss/2_Module/_grid-container.scss */
   .grid-container-reused-layer .grid-container-reused-label {
     position: absolute;
     width: 100%;
@@ -712,6 +889,7 @@ h3 {
     color: white;
     text-transform: uppercase; }
 
+/* line 118, ../scss/2_Module/_grid-container.scss */
 .grid-container-title {
   position: absolute;
   top: 9px;
@@ -719,6 +897,7 @@ h3 {
   font-weight: bold;
   font-size: 90%; }
 
+/* line 126, ../scss/2_Module/_grid-container.scss */
 .grid-container-sorthandle {
   position: absolute;
   top: 0px;
@@ -726,10 +905,12 @@ h3 {
   width: 100%;
   height: 40px;
   cursor: move; }
+  /* line 133, ../scss/2_Module/_grid-container.scss */
   .grid-container-sorthandle .icon-drag {
     position: absolute;
     top: 9px; }
 
+/* line 139, ../scss/2_Module/_grid-container.scss */
 .grid-container-options {
   position: absolute;
   top: 0px;
@@ -737,12 +918,16 @@ h3 {
   height: 40px;
   z-index: 80;
   padding-top: 12px;
-  box-sizing: border-box; }
+  -moz-box-sizing: border-box;
+       box-sizing: border-box; }
+  /* line 147, ../scss/2_Module/_grid-container.scss */
   .grid-container-options:hover {
     z-index: 81; }
+  /* line 151, ../scss/2_Module/_grid-container.scss */
   .grid-container-options .grid-container-options-icon {
     text-transform: uppercase;
     font-weight: bold; }
+  /* line 155, ../scss/2_Module/_grid-container.scss */
   .grid-container-options .grid-container-options-list {
     position: absolute;
     list-style: none;
@@ -754,12 +939,14 @@ h3 {
     margin: 0px;
     padding: 0px;
     display: none; }
+    /* line 167, ../scss/2_Module/_grid-container.scss */
     .grid-container-options .grid-container-options-list .grid-container-options-list-item {
       cursor: pointer;
       padding: 5px;
       text-transform: uppercase;
       font-weight: bold;
       margin-bottom: 0px; }
+    /* line 174, ../scss/2_Module/_grid-container.scss */
     .grid-container-options .grid-container-options-list:before {
       content: "";
       border: 8px solid #b0bac2;
@@ -774,16 +961,20 @@ h3 {
       position: absolute;
       top: -16px;
       left: 47%; }
+  /* line 191, ../scss/2_Module/_grid-container.scss */
   .grid-container-options:hover .grid-container-options-list {
     display: block; }
 
+/* line 196, ../scss/2_Module/_grid-container.scss */
 .grid-container-prolog,
 .grid-container-epilog {
   padding: 7px 10px; }
+  /* line 200, ../scss/2_Module/_grid-container.scss */
   .grid-container-prolog p,
   .grid-container-epilog p {
     font-size: 11px; }
 
+/* line 2, ../scss/2_Module/_grid-dragger-helper.scss */
 .dragger-helper {
   display: block;
   height: 50px;
@@ -801,27 +992,35 @@ h3 {
   						10px 10px 0 #ccc,
   						14px 14px 0 #fff);*/ }
 
+/* line 3, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-controls {
   list-style: none;
   position: fixed;
   z-index: 90;
   margin: 200px 0 0 0;
-  box-sizing: border-box;
-  transition: all 0.1337s ease;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease;
   width: 100%;
   height: 0px; }
+  /* line 16, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-controls button {
     background-color: black;
     color: white;
     padding: 10px; }
+  /* line 24, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-controls .grid-editor-control {
     width: 185px;
     right: 160px;
     position: relative;
     margin: 0;
-    transition: all 0.1337s ease; }
+    -webkit-transition: all 0.1337s ease;
+            transition: all 0.1337s ease; }
+    /* line 31, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-controls .grid-editor-control:hover {
       right: 20px; }
+    /* line 34, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-controls .grid-editor-control button {
       text-align: right;
       padding: 5px 48px 5px 5px;
@@ -829,9 +1028,11 @@ h3 {
       font-size: 12px;
       width: 100%;
       height: 45px;
-      transition: all 0.1337s ease;
+      -webkit-transition: all 0.1337s ease;
+              transition: all 0.1337s ease;
       border: none;
       background-color: #f3f5f7; }
+      /* line 45, ../scss/2_Module/_grid-editor.scss */
       .grid-editor-controls .grid-editor-control button [class^="icon-"],
       .grid-editor-controls .grid-editor-control button [class*=" icon-"] {
         position: absolute;
@@ -839,35 +1040,45 @@ h3 {
         top: 13px;
         font-size: 16px;
         font-family: 'Entypo'; }
+      /* line 53, ../scss/2_Module/_grid-editor.scss */
       .grid-editor-controls .grid-editor-control button:hover {
         padding-right: 38px; }
+    /* line 60, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-controls .grid-editor-control .grid-editor-save-button {
       background-color: #46bd7b;
       color: white; }
+    /* line 65, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-controls .grid-editor-control .grid-editor-cancel-button {
       background-color: #ed5032;
       color: white; }
+    /* line 69, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-controls .grid-editor-control .grid-editor-reuse-button {
       background-color: #e5e3df;
       color: #262e38; }
 
+/* line 82, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content {
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   padding: 15px 35px;
   margin: 20px 10%;
   padding-bottom: 100px;
   background-color: white;
   border: 1px solid #eceff3; }
+  /* line 90, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-boxeditor-fieldset {
     border: none;
     border-bottom: 1px solid #eceff3;
     padding: 0;
     margin: -1px -35px 0px -35px; }
+    /* line 96, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-content .grid-boxeditor-fieldset .grid-editor-field-wrapper {
       display: none; }
+  /* line 101, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-boxeditor-legend {
     padding: 15px 0px 15px 35px;
-    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
     width: 100%;
     cursor: pointer;
     position: relative;
@@ -875,60 +1086,74 @@ h3 {
     font-weight: bold;
     border-top: 1px solid #cdd5df;
     background-color: #eceae7;
-    transition: background-color 0.5s ease; }
+    -webkit-transition: background-color 0.5s ease;
+            transition: background-color 0.5s ease; }
+    /* line 116, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-content .grid-boxeditor-legend .icon-arrow {
       position: absolute;
       left: 5px;
       top: 16px;
-      transition: all 0.1337s ease; }
+      -webkit-transition: all 0.1337s ease;
+              transition: all 0.1337s ease; }
+  /* line 124, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content input,
   .grid-editor-content textarea {
     border: 1px solid #eceff3;
     width: 100%; }
+  /* line 130, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-boxeditor-label,
   .grid-editor-content label {
     padding: 10px 0;
     font-weight: bold;
     color: #8193a9;
     display: block; }
+  /* line 137, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-editor-header {
     margin-bottom: 15px; }
+  /* line 140, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-editor-title {
     font-weight: bold;
     font-size: 16px;
     padding: 7px;
     height: auto; }
+  /* line 146, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-editor-footer {
     margin-top: 15px; }
 
+/* line 152, ../scss/2_Module/_grid-editor.scss */
 .grid-editor-content .grid-active {
   border-bottom: 2px solid #24a9bc; }
+  /* line 156, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-active .grid-editor-field-wrapper {
     display: block;
     margin: 15px 35px; }
+  /* line 161, ../scss/2_Module/_grid-editor.scss */
   .grid-editor-content .grid-active .grid-boxeditor-legend {
     background-color: #3ac5d9;
     border-bottom: 2px solid #24a9bc;
     color: white; }
+    /* line 166, ../scss/2_Module/_grid-editor.scss */
     .grid-editor-content .grid-active .grid-boxeditor-legend .icon-arrow {
       -webkit-transform: rotate(90deg);
-      -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
-      -o-transform: rotate(90deg);
       transform: rotate(90deg);
       filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
       zoom: 1; }
 
+/* line 2, ../scss/2_Module/_grid-element-box-list.scss */
 .grid-element-box-lists .grid-new-element {
   padding-left: 20px; }
+  /* line 4, ../scss/2_Module/_grid-element-box-list.scss */
   .grid-element-box-lists .grid-new-element .grid-new-box {
     border: 1px solid #eceff3;
     padding-bottom: 10px;
     padding-left: 10px; }
+  /* line 10, ../scss/2_Module/_grid-element-box-list.scss */
   .grid-element-box-lists .grid-new-element .grid-element-title {
     padding-left: 0px; }
 
+/* line 1, ../scss/2_Module/_grid-element-drag-icon.scss */
 .grid-element-drag-icon {
   position: absolute;
   top: 50%;
@@ -936,6 +1161,7 @@ h3 {
   left: -6px;
   font-size: 120%; }
 
+/* line 2, ../scss/2_Module/_grid-element-trash.scss */
 .grid-element-trash {
   position: absolute;
   bottom: 0px;
@@ -946,10 +1172,13 @@ h3 {
   overflow: hidden;
   background-color: #b0bac2;
   color: white;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   vertical-align: baseline;
   z-index: 90;
-  transition: all 0.1337s ease; }
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease; }
+  /* line 16, ../scss/2_Module/_grid-element-trash.scss */
   .grid-element-trash > div {
     padding-top: 25px;
     padding-bottom: 100%;
@@ -957,21 +1186,26 @@ h3 {
     border: 3px dashed white;
     border-bottom: none;
     text-align: center; }
+  /* line 24, ../scss/2_Module/_grid-element-trash.scss */
   .grid-element-trash.grid-active {
     padding: 10px 10px 0 10px;
     height: 50%; }
+  /* line 28, ../scss/2_Module/_grid-element-trash.scss */
   .grid-element-trash.grid-hover {
     background-color: #ed5032; }
 
+/* line 1, ../scss/2_Module/_grid-element-type-content.scss */
 .grid-element-type-content {
   min-height: 100px;
   padding: 15px 20px 0px 10px;
   overflow-y: scroll;
   background-color: white; }
+  /* line 7, ../scss/2_Module/_grid-element-type-content.scss */
   .grid-element-type-content .grid-element-container-lists,
   .grid-element-type-content .grid-element-box-lists {
     margin: 0px;
     padding-bottom: 40px; }
+  /* line 13, ../scss/2_Module/_grid-element-type-content.scss */
   .grid-element-type-content .grid-container-type,
   .grid-element-type-content .grid-box-type {
     position: relative;
@@ -979,6 +1213,7 @@ h3 {
     text-transform: uppercase;
     cursor: pointer;
     padding: 20px; }
+    /* line 20, ../scss/2_Module/_grid-element-type-content.scss */
     .grid-element-type-content .grid-container-type .icon-arrow,
     .grid-element-type-content .grid-box-type .icon-arrow {
       z-index: 90;
@@ -986,35 +1221,40 @@ h3 {
       top: 20px;
       left: -4px;
       font-size: 14px;
-      transition: all 0.3s ease; }
+      -webkit-transition: all 0.3s ease;
+              transition: all 0.3s ease; }
+    /* line 29, ../scss/2_Module/_grid-element-type-content.scss */
     .grid-element-type-content .grid-container-type.active .icon-arrow,
     .grid-element-type-content .grid-box-type.active .icon-arrow {
       -webkit-transform: rotate(90deg);
-      -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
-      -o-transform: rotate(90deg);
       transform: rotate(90deg);
       filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
       -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
       zoom: 1; }
 
+/* line 2, ../scss/2_Module/_grid-element-type-select.scss */
 .grid-element-type-select .grid-element-type {
   text-align: center;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   display: inline-block;
   text-transform: uppercase;
   width: 50%;
   font-weight: bold;
   height: 45px;
   padding-top: 15px;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease;
   position: relative;
   background-color: #3f4853;
   color: white; }
+  /* line 15, ../scss/2_Module/_grid-element-type-select.scss */
   .grid-element-type-select .grid-element-type:hover, .grid-element-type-select .grid-element-type.active {
     cursor: pointer;
     color: white;
     background-color: #3ac5d9; }
+    /* line 20, ../scss/2_Module/_grid-element-type-select.scss */
     .grid-element-type-select .grid-element-type:hover.active:after, .grid-element-type-select .grid-element-type.active.active:after {
       z-index: 90;
       content: "";
@@ -1031,6 +1271,7 @@ h3 {
       bottom: -18px;
       left: 47%; }
 
+/* line 4, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-container .grid-tool-list,
 .gridmode-container .grid-element-type[data-type=container],
 .gridmode-container .grid-container-sorthandle,
@@ -1043,16 +1284,20 @@ h3 {
 .gridmode-box .grid-container-options-list [role=trash] {
   display: none; }
 
+/* line 14, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-box .grid-toolbar,
 .gridmode-box .grid-container-controls,
 .gridmode-box .grid-box-delete {
   display: none; }
+/* line 19, ../scss/2_Module/_grid-gridmode.scss */
 .gridmode-box .grid-box-edit {
   bottom: 0px;
   width: 100%; }
 
+/* line 2, ../scss/2_Module/_grid-is-locked.scss */
 .grid-is-locked .grid-containers-wrapper {
   position: relative; }
+  /* line 4, ../scss/2_Module/_grid-is-locked.scss */
   .grid-is-locked .grid-containers-wrapper:before {
     position: absolute;
     content: "";
@@ -1062,6 +1307,7 @@ h3 {
     right: 0px;
     background-color: rgba(255, 255, 255, 0.6);
     z-index: 82; }
+/* line 15, ../scss/2_Module/_grid-is-locked.scss */
 .grid-is-locked .grid-tool-elements,
 .grid-is-locked .grid-tool-publish,
 .grid-is-locked .grid-tool-revert,
@@ -1071,6 +1317,7 @@ h3 {
 /**
 * Loader CSS.
 */
+/* line 4, ../scss/2_Module/_grid-loading-indicator.scss */
 .grid-loading {
   position: absolute;
   top: 4px;
@@ -1080,8 +1327,10 @@ h3 {
   z-index: 85;
   background-color: rgba(255, 255, 255, 0.6);
   opacity: 0;
-  transition: all 0.3s ease; }
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
 
+/* line 15, ../scss/2_Module/_grid-loading-indicator.scss */
 .grid-loading-indicator-wrapper {
   position: fixed;
   top: 300px;
@@ -1089,42 +1338,61 @@ h3 {
   height: 40px;
   left: 40%;
   margin-left: -40px; }
+  /* line 24, ../scss/2_Module/_grid-loading-indicator.scss */
   .grid-loading-indicator-wrapper .grid-loading-indicator-text {
     position: absolute;
     top: -2px;
     left: 20px;
     width: 100px; }
+  /* line 31, ../scss/2_Module/_grid-loading-indicator.scss */
   .grid-loading-indicator-wrapper .grid-loading-indicator,
   .grid-loading-indicator-wrapper .grid-loading-indicator:before,
   .grid-loading-indicator-wrapper .grid-loading-indicator:after {
     background: #3F4853;
-    animation: gridloading 1s infinite ease-in-out;
+    -webkit-animation: gridloading 1s infinite ease-in-out;
+            animation: gridloading 1s infinite ease-in-out;
     width: 0.4em;
     height: 1.5em; }
+  /* line 39, ../scss/2_Module/_grid-loading-indicator.scss */
   .grid-loading-indicator-wrapper .grid-loading-indicator:before,
   .grid-loading-indicator-wrapper .grid-loading-indicator:after {
     position: absolute;
     top: 0;
     content: ''; }
+  /* line 45, ../scss/2_Module/_grid-loading-indicator.scss */
   .grid-loading-indicator-wrapper .grid-loading-indicator:before {
     left: -0.6em; }
+  /* line 48, ../scss/2_Module/_grid-loading-indicator.scss */
   .grid-loading-indicator-wrapper .grid-loading-indicator {
     text-indent: -9999em;
     /*margin: 8em auto;*/
     position: relative;
     font-size: 11px;
-    animation-delay: -0.16s; }
+    -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s; }
+  /* line 55, ../scss/2_Module/_grid-loading-indicator.scss */
   .grid-loading-indicator-wrapper .grid-loading-indicator:after {
     left: 0.6em;
     -webkit-animation-delay: -0.32s;
     animation-delay: -0.32s; }
 
+/* line 64, ../scss/2_Module/_grid-loading-indicator.scss */
 .loading.grid-loading,
 .loading .grid-loading,
 .grid-init-loading.grid-loading,
 .grid-init-loading .grid-loading {
   opacity: 1;
   bottom: 0%; }
+
+@-webkit-keyframes gridloading {
+  0%,
+	80%,
+	100% {
+    box-shadow: 0 0 #3F4853;
+    height: 1em; }
+  40% {
+    box-shadow: 0 -1em #3F4853;
+    height: 2em; } }
 
 @keyframes gridloading {
   0%,
@@ -1135,78 +1403,99 @@ h3 {
   40% {
     box-shadow: 0 -1em #3F4853;
     height: 2em; } }
+/* line 1, ../scss/2_Module/_grid-new-container-slots.scss */
 .grid-new-container-slots {
   display: table;
   padding: 3px 0;
   border: 1px solid #eceff3; }
+  /* line 9, ../scss/2_Module/_grid-new-container-slots.scss */
   .grid-new-container-slots .grid-slot {
     height: 32px;
     border-left: 4px solid white; }
 
+/* line 4, ../scss/2_Module/_grid-new-element.scss */
 .grid-new-element {
   cursor: move;
   position: relative;
   padding-left: 20px;
   margin-bottom: 8px;
   color: #eceff3; }
+  /* line 14, ../scss/2_Module/_grid-new-element.scss */
   .grid-new-element .grid-element-title {
     color: #1e1e1e;
     padding-left: 20px;
     margin: 0px;
     padding-top: 10px; }
+    /* line 19, ../scss/2_Module/_grid-new-element.scss */
     .grid-new-element .grid-element-title.grid-reusable-container-title {
       padding-left: 0px;
       padding-top: 0px;
       min-height: 20px; }
+  /* line 26, ../scss/2_Module/_grid-new-element.scss */
   .grid-new-element:hover {
     color: #b0bac2; }
+    /* line 28, ../scss/2_Module/_grid-new-element.scss */
     .grid-new-element:hover .grid-new-container-slots,
     .grid-new-element:hover .grid-new-box {
       border-color: #b0bac2; }
+  /* line 33, ../scss/2_Module/_grid-new-element.scss */
   .grid-new-element .grid-reuseable-container {
     display: block;
     padding: 5px 10px; }
 
+/* line 1, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions {
   list-style: none;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   display: block;
   overflow-x: scroll;
   margin-right: 260px;
   padding: 0px 0px 15px 50px; }
+  /* line 8, ../scss/2_Module/_grid-revisions.scss */
   .grid-revisions button {
     margin: 0px;
     padding: 0px; }
 
+/* line 16, ../scss/2_Module/_grid-revisions.scss */
 .grid-revisions-list {
   padding: 0px 15px 0px 0px; }
 
+/* line 20, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision {
   position: relative;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   display: block;
   float: left;
   width: 220px;
   border-right: 5px solid #f3f5f7;
   background-color: white;
-  -webkit-box-shadow: inset 0 0 2px 0 #aaaaaa;
   box-shadow: inset 0 0 2px 0 #aaaaaa; }
+  /* line 32, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision:last-child {
     border-right: none; }
+  /* line 36, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision.grid-revision-state-draft {
     background-color: #ed7b3d;
     color: white; }
+    /* line 39, ../scss/2_Module/_grid-revisions.scss */
     .grid-revision.grid-revision-state-draft button {
       color: white; }
+      /* line 41, ../scss/2_Module/_grid-revisions.scss */
       .grid-revision.grid-revision-state-draft button:hover {
         color: #3f4853; }
+  /* line 47, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision.grid-revision-state-published {
     background-color: #46bd7b;
     color: white; }
+    /* line 50, ../scss/2_Module/_grid-revisions.scss */
     .grid-revision.grid-revision-state-published button {
       color: white; }
+      /* line 52, ../scss/2_Module/_grid-revisions.scss */
       .grid-revision.grid-revision-state-published button:hover {
         color: #3f4853; }
+  /* line 58, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision:first-child:before {
     z-index: 81;
     content: "";
@@ -1223,35 +1512,46 @@ h3 {
     bottom: -16px;
     left: 50%;
     margin-left: -8px;
-    transition: all 0.1337s ease; }
+    -webkit-transition: all 0.1337s ease;
+            transition: all 0.1337s ease; }
+  /* line 77, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision.grid-revision-state-published:first-child:before {
     border-top-color: #46bd7b; }
 
+/* line 83, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-description {
   padding: 10px; }
+  /* line 86, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision-description p {
     margin: 0px; }
+  /* line 90, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision-description .grid-revision-date {
     font-weight: bold; }
 
+/* line 96, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-controls {
   position: relative;
   padding-bottom: 40px; }
+  /* line 100, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision-controls .grid-revision-button {
     height: 40px;
     position: absolute;
     bottom: 0px; }
+  /* line 106, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision-controls .grid-revision-preview-button {
     left: 0px;
     width: 50%; }
+  /* line 111, ../scss/2_Module/_grid-revisions.scss */
   .grid-revision-controls .grid-revision-delete-button,
   .grid-revision-controls .grid-revision-revert-button {
     right: 0px;
     width: 50%; }
 
+/* line 118, ../scss/2_Module/_grid-revisions.scss */
 .grid-revision-state-published .grid-revision-controls .grid-revision-preview-button {
   width: 100%; }
 
+/* line 1, ../scss/2_Module/_grid-slot-style-changer.scss */
 .grid-slot-style-changer {
   text-transform: uppercase;
   position: relative;
@@ -1259,12 +1559,15 @@ h3 {
   text-align: center;
   font-weight: bold;
   display: block;
-  transition: max-height 0.321s ease;
+  -webkit-transition: max-height 0.321s ease;
+          transition: max-height 0.321s ease;
   overflow: hidden;
   max-height: 0; }
+  /* line 19, ../scss/2_Module/_grid-slot-style-changer.scss */
   .grid-slot-style-changer .grid-style-changer-active {
     padding: 6px 0px 4px 0px;
     color: #b0bac2; }
+  /* line 24, ../scss/2_Module/_grid-slot-style-changer.scss */
   .grid-slot-style-changer .grid-choose-style {
     position: absolute;
     left: 50%;
@@ -1275,11 +1578,14 @@ h3 {
     list-style: none;
     z-index: 80;
     width: 150px; }
+    /* line 35, ../scss/2_Module/_grid-slot-style-changer.scss */
     .grid-slot-style-changer .grid-choose-style li {
       background-color: #b0bac2;
       border-top: 1px solid #d0d8dd; }
+      /* line 38, ../scss/2_Module/_grid-slot-style-changer.scss */
       .grid-slot-style-changer .grid-choose-style li:first-child {
         border-top: none; }
+    /* line 43, ../scss/2_Module/_grid-slot-style-changer.scss */
     .grid-slot-style-changer .grid-choose-style:before {
       content: "";
       border: 9px solid #b0bac2;
@@ -1295,40 +1601,52 @@ h3 {
       top: -16px;
       left: 47%; }
 
+/* line 62, ../scss/2_Module/_grid-slot-style-changer.scss */
 .grid-container-show-slot-styles .grid-slot-style-changer {
   max-height: 100px;
   overflow: visible; }
 
+/* line 69, ../scss/2_Module/_grid-slot-style-changer.scss */
 [data-reused=false] .grid-slot-style-changer:hover {
   z-index: 81; }
+  /* line 72, ../scss/2_Module/_grid-slot-style-changer.scss */
   [data-reused=false] .grid-slot-style-changer:hover:hover .grid-style-changer-active {
     color: #3f4853; }
+  /* line 77, ../scss/2_Module/_grid-slot-style-changer.scss */
   [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style {
     color: white;
     display: block;
     padding-top: 2px; }
+    /* line 82, ../scss/2_Module/_grid-slot-style-changer.scss */
     [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li {
       padding: 10px 20px;
-      transition: all 0.1337s ease;
+      -webkit-transition: all 0.1337s ease;
+              transition: all 0.1337s ease;
       margin: 0px; }
+      /* line 86, ../scss/2_Module/_grid-slot-style-changer.scss */
       [data-reused=false] .grid-slot-style-changer:hover .grid-choose-style li:hover {
         cursor: pointer;
         background-color: #3f4853; }
 
+/* line 3, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   position: relative;
   min-height: 50px;
   padding-top: 20px;
   border-left: 4px solid white;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   background-color: #eaeaea; }
 
+/* line 14, ../scss/2_Module/_grid-slot.scss */
 .grid-slot {
   padding: 30px 7px 0 7px;
   padding: 0 5px;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   display: table-cell; }
 
+/* line 22, ../scss/2_Module/_grid-slot.scss */
 .grid-slot:first-child {
   border-left: none; }
 
@@ -1337,43 +1655,56 @@ h3 {
  * @author Stephan Kroppenstedt <sk@palasthotel.de>
  * @created 15.04.2014 11:46
  */
+/* line 7, ../scss/2_Module/_grid-slots-wrapper.scss */
 .grid-slots-wrapper {
   display: table;
   width: 100%; }
 
+/* line 1, ../scss/2_Module/_grid-tool-elements.scss */
 .grid-tool-elements {
   position: fixed;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   right: 0px;
   width: 260px;
   border-left: 1px solid rgba(176, 186, 194, 0.7);
   z-index: 90;
-  transition: all 0.1337s ease; }
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease; }
+  /* line 9, ../scss/2_Module/_grid-tool-elements.scss */
   .is-active-authors .grid-tool-elements {
     right: -500px; }
 
+/* line 3, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar {
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease;
   border-top: 4px solid #ed7b3d;
   position: relative;
   background-color: white;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   width: 100%;
   height: 0px; }
+  /* line 13, ../scss/2_Module/_grid-toolbar.scss */
   .grid-toolbar .grid-tool-list {
     list-style: none;
     position: fixed;
     z-index: 90;
     margin: 0px;
     width: 40px; }
+    /* line 19, ../scss/2_Module/_grid-toolbar.scss */
     .grid-toolbar .grid-tool-list li {
       width: 135px;
       right: 90px;
       position: relative;
       margin: 0;
-      transition: all 0.1337s ease; }
+      -webkit-transition: all 0.1337s ease;
+              transition: all 0.1337s ease; }
+      /* line 25, ../scss/2_Module/_grid-toolbar.scss */
       .grid-toolbar .grid-tool-list li:hover {
         right: 0px; }
+      /* line 28, ../scss/2_Module/_grid-toolbar.scss */
       .grid-toolbar .grid-tool-list li button {
         text-align: right;
         padding: 5px 48px 5px 5px;
@@ -1381,9 +1712,11 @@ h3 {
         font-size: 12px;
         width: 100%;
         height: 45px;
-        transition: all 0.1337s ease;
+        -webkit-transition: all 0.1337s ease;
+                transition: all 0.1337s ease;
         border: none;
         background-color: transparent; }
+        /* line 39, ../scss/2_Module/_grid-toolbar.scss */
         .grid-toolbar .grid-tool-list li button [class^="icon-"],
         .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
           position: absolute;
@@ -1391,56 +1724,77 @@ h3 {
           top: 13px;
           font-size: 16px;
           font-family: 'Entypo'; }
+        /* line 47, ../scss/2_Module/_grid-toolbar.scss */
         .grid-toolbar .grid-tool-list li button:hover {
           padding-right: 38px;
           color: white;
           background-color: #3f4853; }
+      /* line 54, ../scss/2_Module/_grid-toolbar.scss */
       .grid-toolbar .grid-tool-list li.grid-tool-authors button .indicator-authors-count {
         position: absolute;
         right: 18px;
         top: 10px;
         font-size: 16px; }
+  /* line 64, ../scss/2_Module/_grid-toolbar.scss */
   .grid-toolbar li.grid-tool-publish button,
   .grid-toolbar li.grid-tool-publish button:hover {
     background-color: #ed7b3d;
     color: white; }
+  /* line 70, ../scss/2_Module/_grid-toolbar.scss */
   .grid-toolbar[data-draft=false] {
     border-top: 4px solid #46bd7b; }
+    /* line 73, ../scss/2_Module/_grid-toolbar.scss */
     .grid-toolbar[data-draft=false] li.grid-tool-publish button,
     .grid-toolbar[data-draft=false] li.grid-tool-publish button:hover {
       background-color: #46bd7b; }
+  /* line 81, ../scss/2_Module/_grid-toolbar.scss */
   .grid-toolbar.async-request-lock .grid-tool-authors {
-    animation-name: bounce-x;
-    animation-duration: 1.3s;
-    animation-iteration-count: infinite; }
+    -webkit-animation-name: bounce-x;
+            animation-name: bounce-x;
+    -webkit-animation-duration: 1.3s;
+            animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite; }
+    /* line 86, ../scss/2_Module/_grid-toolbar.scss */
     .grid-toolbar.async-request-lock .grid-tool-authors:hover {
-      animation: 0; }
+      -webkit-animation: 0;
+              animation: 0; }
+    /* line 89, ../scss/2_Module/_grid-toolbar.scss */
     .grid-toolbar.async-request-lock .grid-tool-authors button {
       background-color: #d4dce3; }
 
+/* line 96, ../scss/2_Module/_grid-toolbar.scss */
 .grid-toolbar-list {
   margin: 20px 20px; }
 
+/* line 3, ../scss/2_Module/_grid-wrapper.scss */
 #new-grid-wrapper {
   position: relative; }
 
+/* line 6, ../scss/2_Module/_grid-wrapper.scss */
 .grid-wrapper {
   margin-top: 40px;
   margin-right: 260px;
-  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
   padding: 5px 10px 120px 55px; }
+  /* line 13, ../scss/2_Module/_grid-wrapper.scss */
   .grid-wrapper h1, .grid-wrapper h2, .grid-wrapper h3, .grid-wrapper h4, .grid-wrapper h5, .grid-wrapper h6, .grid-wrapper p {
     margin: 0px; }
 
+/* line 1, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
 .grid-editor-url-builder {
   position: relative;
   width: 140px;
-  transition: all 0.1337s ease;
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease;
   font-size: 11px; }
+  /* line 10, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
   .grid-editor-url-builder .grid-editor-url-input {
     width: 100%;
     padding-right: 130px;
     opacity: 0; }
+  /* line 15, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
   .grid-editor-url-builder .grid-editor-url-button,
   .grid-editor-url-builder .grid-editor-url-button:focus {
     position: absolute;
@@ -1449,26 +1803,34 @@ h3 {
     width: 140px;
     color: #262e38;
     background-color: #e5e3df; }
+  /* line 25, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
   .grid-editor-url-builder.grid-editor-url-show {
     width: 100%; }
+    /* line 27, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
     .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button {
       background-color: transparent; }
+      /* line 28, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
       .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover {
         color: #ed5032; }
+    /* line 34, ../scss/3_Editor-Widget/_grid-editor-url-builder.scss */
     .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input {
       opacity: 1; }
 
+/* line 3, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .autocomplete-wrapper,
 .grid-editor-autocomplete-with-links .autocomplete-wrapper {
   position: relative; }
+/* line 6, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .icon-cancel,
 .grid-editor-autocomplete-with-links .icon-cancel {
   font-size: 140%; }
+/* line 9, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .suggestion-list,
 .grid-editor-autocomplete-with-links .suggestion-list {
   position: relative;
   list-style: none;
   margin-left: 0; }
+  /* line 13, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
   .grid-editor-widget-autocomplete .suggestion-list li,
   .grid-editor-autocomplete-with-links .suggestion-list li {
     padding: 8px 15px;
@@ -1476,16 +1838,20 @@ h3 {
     cursor: pointer;
     margin-bottom: 0px;
     border-bottom: 1px solid #bdc7d3; }
+    /* line 19, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
     .grid-editor-widget-autocomplete .suggestion-list li:last-child,
     .grid-editor-autocomplete-with-links .suggestion-list li:last-child {
       border-bottom: none; }
+    /* line 22, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
     .grid-editor-widget-autocomplete .suggestion-list li:hover,
     .grid-editor-autocomplete-with-links .suggestion-list li:hover {
       background-color: #3ac5d9;
       color: white; }
+  /* line 27, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
   .grid-editor-widget-autocomplete .suggestion-list:empty,
   .grid-editor-autocomplete-with-links .suggestion-list:empty {
     display: none; }
+  /* line 30, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
   .grid-editor-widget-autocomplete .suggestion-list:before,
   .grid-editor-autocomplete-with-links .suggestion-list:before {
     content: "";
@@ -1501,45 +1867,65 @@ h3 {
     position: absolute;
     top: -16px;
     left: 10px; }
+/* line 46, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .links a,
 .grid-editor-autocomplete-with-links .links a {
   margin-right: 15px; }
+  /* line 48, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
   .grid-editor-widget-autocomplete .links a.full,
   .grid-editor-autocomplete-with-links .links a.full {
     display: none; }
+/* line 52, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .cancel,
 .grid-editor-autocomplete-with-links .cancel {
   position: absolute;
   cursor: pointer;
   top: 4px;
   display: none; }
+/* line 58, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete input,
 .grid-editor-autocomplete-with-links input {
   padding-left: 0px;
-  transition: all 0.3s ease; }
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
+/* line 63, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .locked .links .full,
 .grid-editor-autocomplete-with-links .locked .links .full {
   display: inline; }
+/* line 66, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .locked input,
 .grid-editor-autocomplete-with-links .locked input {
   padding-left: 20px; }
+/* line 69, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .locked .cancel,
 .grid-editor-autocomplete-with-links .locked .cancel {
   display: block; }
+/* line 73, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
 .grid-editor-widget-autocomplete .loading,
 .grid-editor-autocomplete-with-links .loading {
   position: absolute;
   opacity: 0;
-  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+          transition: 0.3s all;
   border-radius: 10px;
   height: 15px;
   width: 15px;
-  animation: loading 1s infinite ease-in-out;
+  -webkit-animation: loading 1s infinite ease-in-out;
+          animation: loading 1s infinite ease-in-out;
   top: 8px;
   right: 8px; }
+  /* line 83, ../scss/3_Editor-Widget/_grid-editor-widget-autocomplete.scss */
   .grid-editor-widget-autocomplete .loading.go,
   .grid-editor-autocomplete-with-links .loading.go {
     opacity: 1; }
+
+@-webkit-keyframes loading {
+  0%,
+  80%,
+  100% {
+    background-color: #3ac5d9; }
+  40% {
+    background-color: #e5e3df; } }
 
 @keyframes loading {
   0%,
@@ -1548,44 +1934,58 @@ h3 {
     background-color: #3ac5d9; }
   40% {
     background-color: #e5e3df; } }
+/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-checkbox.scss */
 .grid-editor-widget-checkbox input[type=checkbox] {
   -webkit-appearance: checkbox; }
+  /* line 4, ../scss/3_Editor-Widget/_grid-editor-widget-checkbox.scss */
   .grid-editor-widget-checkbox input[type=checkbox]:before {
     display: none;
     margin-top: 0px; }
 
+/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-list.scss */
 .grid-editor-widget-list > .grid-editor-widget-list-add {
   background-color: #eceae7; }
 
+/* line 1, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
 .grid-editor-widget-listitem {
   position: relative;
   border-left: 4px solid #eceae7;
   padding-left: 10px;
   margin-bottom: 15px;
-  transition: all 0.1337s ease; }
+  -webkit-transition: all 0.1337s ease;
+          transition: all 0.1337s ease; }
+  /* line 7, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem:hover {
     border-color: #3ac5d9; }
+  /* line 10, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem > .widget-list-remove-item-button {
     margin-top: 10px;
     margin-left: -10px;
     background-color: #eceae7; }
+  /* line 15, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem .widget-list-remove-item-button:hover {
     background-color: #ed5032;
     color: white; }
+  /* line 19, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem .widget-list-sort-button {
     position: absolute;
     top: 0px;
     left: -35px; }
+    /* line 23, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
     .grid-editor-widget-listitem .widget-list-sort-button.widget-list-move-down-item-button {
       top: auto;
       bottom: 0px; }
+  /* line 28, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem:hover .widget-list-sort-button {
     background-color: #eceae7; }
+  /* line 31, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem:first-child .widget-list-move-up-item-button {
     display: none; }
+  /* line 34, ../scss/3_Editor-Widget/_grid-editor-widget-listitem.scss */
   .grid-editor-widget-listitem:last-child .widget-list-move-down-item-button {
     display: none; }
 
+/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-multi-autocomplete.scss */
 .grid-editor-widget-multi-autocomplete .icon-cancel {
   display: block;
   background-repeat: no-repeat;
@@ -1594,6 +1994,7 @@ h3 {
   background-position: -80px -128px;
   float: right;
   cursor: pointer; }
+/* line 12, ../scss/3_Editor-Widget/_grid-editor-widget-multi-autocomplete.scss */
 .grid-editor-widget-multi-autocomplete .suggestion-list {
   position: absolute;
   list-style: none;
@@ -1603,17 +2004,20 @@ h3 {
   outline: none;
   background-color: white;
   border: 1px solid #DBDBDB; }
+/* line 23, ../scss/3_Editor-Widget/_grid-editor-widget-multi-autocomplete.scss */
 .grid-editor-widget-multi-autocomplete .suggestion-list li {
   position: relative;
   margin: 0;
   padding: 3px 1em 3px .4em;
   cursor: pointer;
   min-height: 0; }
+/* line 31, ../scss/3_Editor-Widget/_grid-editor-widget-multi-autocomplete.scss */
 .grid-editor-widget-multi-autocomplete .suggestion-list li:hover {
   border: 1px solid #999999;
   background: #509BF8;
   font-weight: normal;
   color: #FFFFFF; }
+/* line 39, ../scss/3_Editor-Widget/_grid-editor-widget-multi-autocomplete.scss */
 .grid-editor-widget-multi-autocomplete .autocomplete-multiselect-item {
   display: inline-block;
   border: 1px solid #ccc;
@@ -1624,11 +2028,15 @@ h3 {
   color: #333;
   background-color: #f6f6f6; }
 
+/* line 2, ../scss/3_Editor-Widget/_grid-editor-widget-textarea.scss */
 .grid-editor-widget-textarea textarea {
   width: 10 0%;
   min-height: 200px; }
 
+/* line 3, ../scss/3_Editor-Widget/_grid-editor-widget-wp-mediaselect.scss */
 .grid-editor-widget-wp-mediaselect .wp-mediaselect-image-wrapper .wp-mediaselect-image-preview {
   max-width: 100%;
   width: auto;
   height: auto; }
+
+/*# sourceMappingURL=grid-backend.css.map */
