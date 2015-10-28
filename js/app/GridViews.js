@@ -232,7 +232,8 @@ var BoxView = GridBackbone.View.extend({
 
         this.$el
         .attr("data-id",json.id)
-        .attr("data-type",json.type);
+        .attr("data-type",json.type)
+        .attr("data-style", json.style);
         
         this.$el.addClass("grid-box-"+json.type);
 
