@@ -83,35 +83,8 @@ class grid_posts_box extends grid_list_box {
 			$args['posts_per_page'] = $this->content->posts_per_page;
 			$args['offset'] = $this->content->offset;
 			$args['post_type'] = $this->content->post_type;
-			$output = '';
 
-			// START of WordPress Loop
-			$query = new WP_Query( $args );
-			$counter = 0;
-			while ( $query->have_posts() ) {
-				$query->the_post();
-				ob_start();
-				$found = false;
-				// Checks if WordPress has a template for post content ...
-				if ( $this->storage->templatesPath != null ) {
-					if ( file_exists( $this->storage->templatesPath.'/post_content.tpl.php' ) ) {
-						$found = true;
-						include $this->storage->templatesPath.'/post_content.tpl.php';
-					}
-				}
-				// ... if not, uses Grid template for post content
-				if ( ! $found ) {
-					include dirname( __FILE__ ).'/../../templates/wordpress/post_content.tpl.php';
-				}
-				$output .= ob_get_clean();
-				$counter ++;
-				if ( $counter == $this->content->posts_per_page ){
-					break;
-				}
-			}
-			wp_reset_postdata();
-			return $output;
-			// END of WordPress Loop
+			return $args;
 		}
 	}
 
@@ -184,6 +157,7 @@ class grid_posts_box extends grid_list_box {
 		foreach ( $input as $post_type => $info ) {
 			$post_types[] = array( 'key' => $post_type, 'text' => $info->labels->name );
 		}
+		$post_types[] = array( 'key' => 'any', 'text' => 'Any post type' );
 		$cs[] = array(
 			'key' => 'post_type',
 			'label' => t( 'Post type' ),
