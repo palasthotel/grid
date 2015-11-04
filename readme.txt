@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.4
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -18,24 +18,24 @@ What is Grid?
 * Grid is build of a grid containing Containers and Boxes
 * Grid is a CMS-neutral Library and this is the Wordpress plugin that implements it
 
-## Types of Boxes
+Types of Boxes
 
-### Static Boxes
+- Static Boxes -
 
 * Free-HTML-Box
 * Medialibrary-Box
 * Video-Box
 
-### List-Boxes
+- List-Boxes -
 
 * Ordered and filtered Lists of Contents
 * Number of Items as well as criteria for sorting and filtering are configurable
 
-### Content-Boxes
+- Content-Boxes -
 
 * Single Posts of any kind as Teasers
 
-### Reuseable Boxes
+- Reuseable Boxes -
 
 * All Boxes may be reused across several Landingpages
 
@@ -74,6 +74,13 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.5.3 =
+ * Posts WP_Query moved to template
+
+= 1.5.2 =
+ * CKEditor plugins support
+ * CSS fix
 
 = 1.5.2 =
  * CKEditor plugins support
