@@ -51,6 +51,10 @@ Easy extendable with new boxes. Have a look at doc.the-grid.ws (english is comin
 
 == Frequently Asked Questions ==
 
+= How do the async features like author control work? Does Grid talk to an external service? =
+
+Generally speaking, yes! But you can easily turn it off in grid settings. And there will be no talking to any external server anymore. Alternatively you can host your own grid async service on your own server. Note that our service will not use or save any personal data at any time. It only uses data to keep the function going.
+
 = Table already exists error when I want to activate Grid. Why? = 
 
 This happens if grid was installed previously and could not be uninstalled correctly. You have to delete in the wp_options the option_name „grid“. Then try again to active Grid plugin.
