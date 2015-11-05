@@ -8,9 +8,9 @@
 ?>
 <h3><?php echo the_title(); ?></h3>
 <?php
-if ( 'full' == $this->content->viewmode ) {
+if ( isset($this->content->viewmode) && 'full' == $this->content->viewmode ) {
 	echo the_content();
-} elseif ( 'excerpt' == $this->content->viewmode ) {
+} else {
 	echo the_excerpt();
 }
 ?>
