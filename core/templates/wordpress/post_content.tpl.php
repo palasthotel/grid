@@ -6,11 +6,11 @@
  * @package Palasthotel\Grid-WordPress
  */
 ?>
-<h3><?php echo the_title(); ?></h3>
+<h3><?php the_title(); ?></h3>
 <?php
-if ( isset($this->content->viewmode) && 'full' == $this->content->viewmode ) {
-	echo the_content();
-} else {
-	echo the_excerpt();
+if ( 'full' == $this->content->viewmode ) {
+	the_content();
+} elseif ( 'excerpt' == $this->content->viewmode ) {
+	the_excerpt();
 }
 ?>
