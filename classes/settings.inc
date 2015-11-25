@@ -292,7 +292,7 @@ class settings
 
 	function async_enable_html() {
 
-		$value = get_option( 'grid_async', true );
+		$value = get_option( 'grid_async', false );
 		?>
 		<input type="checkbox" id="grid_async" name="grid_async" <?php echo ( $value ? 'checked' : '' );?>> <?php echo ( $value ? 'Enabled' : 'Disabled' )?>
 		<?php

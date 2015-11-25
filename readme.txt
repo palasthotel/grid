@@ -77,6 +77,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 = 1.5.3 =
  * Posts WP_Query moved to template
+ * Async features disabled by default
 
 = 1.5.2 =
  * CKEditor plugins support
