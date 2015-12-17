@@ -46,7 +46,8 @@ class grid_post_box extends grid_box {
 			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.' - '.$post->post_status.')';
 		} else {
 			$query = new WP_Query( array( 
-				'p' => $this->content->postid
+				'p' => $this->content->postid,
+				'post_type' => 'any',
 			) );
 			if ( $query->have_posts() ) {
 				$query->the_post();
