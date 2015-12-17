@@ -249,13 +249,13 @@ GRID = {
 			this.SERVER = document.gridajax;
 		}
 		this.PREVIEW_URL = this.PREVIEW_URL.replace("//","/");
-		if( typeof document.previewurl != "undefined" && 
+		if( typeof document.previewurl != typeof undefined &&
 			document.previewurl != null && 
 			document.previewurl != ""){
 			this.PREVIEW_URL = document.previewurl;
 		}
 		var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
-		if( typeof document.previewpattern != "undefined" && 
+		if( typeof document.previewpattern != typeof undefined &&
 			document.previewpattern != null && 
 			document.previewpattern != ""){
 			PREVIEW_PATTERN = document.previewpattern;
