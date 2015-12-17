@@ -75,6 +75,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.5.4 =
+ * Post Box render Bugfix
+
 = 1.5.3 =
  * Posts WP_Query moved to template
  * Async features disabled by default
