@@ -169,20 +169,31 @@ class grid_box extends grid_base {
 		$found=FALSE;
 		if($templatesPath!=NULL)
 		{
-			if($editmode && file_exists($templatesPath.'/grid-box-'.$type.'-editmode.tpl.php'))
+			$editmode_file = $templatesPath.'/grid-box-'.$type.'-editmode.tpl.php';
+			$file = $templatesPath.'/grid-box-'.$type.'.tpl.php';
+			if($editmode && file_exists($editmode_file) )
 			{
 				$found=TRUE;
 				$content=$this->build($editmode);
-				include $templatesPath.'/grid-box-'.$type.'-editmode.tpl.php';
+				$this->renderContent($content, $editmode_file);
 			}
-			if(!$editmode && file_exists($templatesPath.'/grid-box-'.$type.'.tpl.php'))
+			if(!$editmode && file_exists($file))
 			{
 				$found=TRUE;
 				$content=$this->build($editmode);
-				include $templatesPath.'/grid-box-'.$type.'.tpl.php';
+				$this->renderContent($content, $file);
 			}
 		}
 		return $found;
+	}
+
+	/**
+	 * renders content in template file
+	 * @param $content
+	 * @param $file_path
+	 */
+	private function renderContent($content, $file_path){
+		include $file_path;
 	}
 	
 	/**
