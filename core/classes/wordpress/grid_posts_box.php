@@ -157,7 +157,7 @@ class grid_posts_box extends grid_list_box {
 			array('key' => 'excerpt', 'text' => t('Excerpt') ),
 			array('key' => 'full', 'text' => t('Full') ),
 		);
-		$viewmodes = apply_filters('grid_posts_box_viewmodes',$viewmodes);
+		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
 		if(count($viewmodes) > 0){
 			$cs[] = array(
 				'key' => 'viewmode',

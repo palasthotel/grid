@@ -149,16 +149,8 @@ class grid_post_box extends grid_box {
 	*/
 	public function contentStructure () {
 		$cs = parent::contentStructure();
-		return array_merge($cs, array(
-			array(
-				'key' => 'viewmode',
-				'type' => 'select',
-				'label' => t('Viewmode'),
-				'selections' => array(
-					array( 'key' => 'excerpt', 'text' => t('Excerpt') ),
-					array( 'key' => 'full', 'text' => t('Full') )
-				),
-			),
+
+		$cs = array_merge($cs, array(
 			array(
 				'key' => 'postid',
 				'type' => 'hidden',
@@ -168,5 +160,21 @@ class grid_post_box extends grid_box {
 				'type' => 'hidden',
 			)
 		));
+
+		$viewmodes = array(
+			array('key' => 'excerpt', 'text' => t('Excerpt') ),
+			array('key' => 'full', 'text' => t('Full') ),
+		);
+		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
+		if(count($viewmodes) > 0){
+			$cs[] = array(
+				'key' => 'viewmode',
+				'type' => 'select',
+				'label' => t('Viewmode'),
+				'selections' => $viewmodes,
+			);
+		}
+
+		return $cs;
 	}
 }
