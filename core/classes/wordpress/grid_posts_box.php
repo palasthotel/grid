@@ -152,15 +152,20 @@ class grid_posts_box extends grid_list_box {
 			'selections' => $post_types,
 		);
 
-		$cs[] = array(
-			'key' => 'viewmode',
-			'type' => 'select',
-			'label' => t('Viewmode'),
-			'selections' => array(
-				array('key' => 'excerpt', 'text' => t('Excerpt') ),
-				array('key' => 'full', 'text' => t('Full') ),
-			),
+
+		$viewmodes = array(
+			array('key' => 'excerpt', 'text' => t('Excerpt') ),
+			array('key' => 'full', 'text' => t('Full') ),
 		);
+		$viewmodes = apply_filters('grid_posts_box_viewmodes',$viewmodes);
+		if(count($viewmodes) > 0){
+			$cs[] = array(
+				'key' => 'viewmode',
+				'type' => 'select',
+				'label' => t('Viewmode'),
+				'selections' => $viewmodes,
+			);
+		}
 
 		return $cs;
 	}
