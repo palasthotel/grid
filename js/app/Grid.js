@@ -127,6 +127,7 @@ GRID = {
 
 	new_grid_success: function(data){
 		GRID.$root.empty();
+		GRID.$root.append(GRID.$loading);
 		GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 
 		GRID.gridview = new GridView({model: GRID.getModel() });
