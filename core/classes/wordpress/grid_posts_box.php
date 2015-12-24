@@ -152,6 +152,16 @@ class grid_posts_box extends grid_list_box {
 			'selections' => $post_types,
 		);
 
+		$cs[] = array(
+			'key' => 'viewmode',
+			'type' => 'select',
+			'label' => t('Viewmode'),
+			'selections' => array(
+				array('key' => 'excerpt', 'text' => t('Excerpt') ),
+				array('key' => 'full', 'text' => t('Full') ),
+			),
+		);
+
 		return $cs;
 	}
 
