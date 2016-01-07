@@ -607,9 +607,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function handleUpload()
 	{
 		$gridid=$_POST['gridid'];
-		$containerid=$_POST['container'];
-		$slotid=$_POST['slot'];
-		$idx=$_POST['box'];
+		if(preg_match("/(container:|box:|)\\d*/uisx", $searchText)!==1) {
+			return FALSE;
+		}
+		$containerid=intval($_POST['container']);
+		$slotid=intval($_POST['slot']);
+		$idx=intval($_POST['box']);
 		$file=$_FILES['file']['tmp_name'];
 		$original_filename=$_FILES['file']['name'];
 		$key=$_POST['key'];
