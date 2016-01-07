@@ -607,7 +607,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function handleUpload()
 	{
 		$gridid=$_POST['gridid'];
-		if(preg_match("/(container:|box:|)\\d*/uisx", $searchText)!==1) {
+		if(preg_match("/(container:|box:|)\\d*/uisx", $gridid)!==1) {
 			return FALSE;
 		}
 		$containerid=intval($_POST['container']);
