@@ -23,6 +23,7 @@ class grid_posts_box extends grid_list_box {
 		$this->content->posts_per_page = 5;
 		$this->content->offset = 0;
 		$this->content->post_type = 'post';
+		$this->content->relation = 'OR';
 	}
 
 	/**
@@ -63,6 +64,9 @@ class grid_posts_box extends grid_list_box {
 			 */
 			if(count($tax_query)>1){
 				$tax_query["relation"] = "OR";
+				if(!empty($this->content->relation)){
+					$tax_query["relation"] = $this->content->relation;
+				}
 			}
 			/**
 			 * add to args if there are tax_query items
@@ -135,6 +139,18 @@ class grid_posts_box extends grid_list_box {
 			);
 		}
 
+		/**
+		 * relation type
+		 */
+		$cs[] = array(
+			'key' => 'relation',
+			'label' => 'Term relation type',
+			'type' => 'select',
+			'selections' => array(
+				array('key' => 'OR', 'text' => 'OR: all post with one or more of these terms'),
+				array('key' => 'AND', 'text' => 'AND: all posts that have all of these terms'),
+			),
+		);
 
 		/**
 		 * post type select
