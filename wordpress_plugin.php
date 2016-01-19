@@ -37,25 +37,25 @@ class grid_plugin {
 		/**
 		 * do stuff for wordpress spezific boxes
 		 */
-		require('classes/boxes.inc');
+		require($this->dir .'/classes/boxes.inc');
 		new \grid_plugin\boxes();
 
 		/**
 		 * the grid itself!
 		 */
-		require('classes/the_grid.inc');
+		require($this->dir .'/classes/the_grid.inc');
 		new \grid_plugin\the_grid();
 
 		/**
 		 * Styles
 		 */
-		require('classes/post.inc');
+		require($this->dir .'/classes/post.inc');
 		$this->post = new \grid_plugin\post();
 
 		/**
 		 * meta boxes
 		 */
-		require( 'classes/meta_boxes.inc' );
+		require( $this->dir .'/classes/meta_boxes.inc' );
 		new \grid_plugin\meta_boxes();
 
 		/**
@@ -66,37 +66,37 @@ class grid_plugin {
 		/**
 		 *  Grid settings pages
 		 */
-		require( 'classes/settings.inc' );
+		require( $this->dir .'/classes/settings.inc' );
 		new \grid_plugin\settings();
 
 		/**
 		 *  gird container factory
 		 */
-		require('classes/container_factory.inc');
+		require( $this->dir .'/classes/container_factory.inc');
 		new \grid_plugin\container_factory();
 
 		/**
 		 *  gird container reuse
 		 */
-		require('classes/reuse_container.inc');
+		require( $this->dir .'/classes/reuse_container.inc');
 		new \grid_plugin\reuse_container();
 
 		/**
 		 *  gird box reuse
 		 */
-		require('classes/reuse_box.inc');
+		require( $this->dir .'/classes/reuse_box.inc');
 		new \grid_plugin\reuse_box();
 
 		/**
 		 *  gird privileges
 		 */
-		require('classes/privileges.inc');
+		require( $this->dir .'/classes/privileges.inc');
 		new \grid_plugin\privileges();
 
 		/**
 		 * Styles
 		 */
-		require('classes/styles.inc');
+		require( $this->dir .'/classes/styles.inc');
 		new \grid_plugin\styles();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_head' ) );
@@ -199,7 +199,7 @@ class grid_plugin {
 		/**
 		 * grid ajax endpoint once
 		 */
-		require_once('classes/ajaxendpoint.inc');
+		require_once( $this->dir .'/classes/ajaxendpoint.inc');
 		return new \grid_plugin\ajaxendpoint();
 	}
 
@@ -345,7 +345,7 @@ class grid_plugin {
 		$grid_connection = grid_wp_get_mysqli();
 
 		$grid_lib->update();
-		require_once(dirname(__FILE__)."/grid-wordpress-update.inc");
+		require_once($this->dir .'/grid-wordpress-update.inc');
 		$wp_update = new grid_wordpress_update();
 		$wp_update->performUpdates();
 		$grid_connection->close();
@@ -384,7 +384,7 @@ class grid_plugin {
 /**
  * init grid library for global use
  */
-require( 'lib/grid.php' );
+require( dirname(__FILE__).'/lib/grid.php' );
 global $grid_lib;
 $grid_lib = new grid_library();
 
