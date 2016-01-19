@@ -10,7 +10,7 @@ class grid_library
 {
 	public function __construct()
 	{
-		require_once("classes/bootstrap.php");
+		require_once(dirname(__FILE__)."/classes/bootstrap.php");
 	}
 
 	private function getHome()
@@ -161,7 +161,7 @@ class grid_library
 	public function getEditorHTML($grid_id,$grid_mode,$pathToCKEditorConfig,$ajaxendpoint,$debug_mode,$preview_url,$preview_pattern,$async_service="",$async_domain="",$async_author="",$async_path="")
 	{
 		ob_start();
-		require("templates/backend/grid.tpl.php");
+		require( dirname(__FILE__)."/templates/backend/grid.tpl.php" );
 		$str=ob_get_contents();
 		ob_end_clean();
 		return $str;
@@ -745,31 +745,31 @@ class grid_library
 
 	public function getStyleEditor()
 	{
-		require_once("classes/grid_style_editor.php");
+		require_once(dirname(__FILE__)."/classes/grid_style_editor.php");
 		return new grid_style_editor();
 	}
 
 	public function getReuseContainerEditor()
 	{
-		require_once("classes/grid_reuse_container_editor.php");
+		require_once(dirname(__FILE__)."/classes/grid_reuse_container_editor.php");
 		return new grid_reuse_container_editor();
 	}
 
 	public function getReuseBoxEditor()
 	{
-		require_once("classes/grid_reuse_box_editor.php");
+		require_once(dirname(__FILE__)."/classes/grid_reuse_box_editor.php");
 		return new grid_reuse_box_editor();
 	}
 
 	public function getContainerEditor()
 	{
-		require_once("classes/grid_container_editor.php");
+		require_once(dirname(__FILE__)."/classes/grid_container_editor.php");
 		return new grid_container_editor();
 	}
 
 	private function getUpdater()
 	{
-		require_once("classes/grid_update.php");
+		require_once(dirname(__FILE__)."/classes/grid_update.php");
 		return new grid_update();
 	}
 

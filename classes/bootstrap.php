@@ -8,18 +8,18 @@
 /**
 * Initializes Grid boxes
 */
-include 'grid_base.php';
-include 'grid_box.php';
-include 'grid_error_box.php';
-include 'grid_static_box.php';
-include 'grid_html_box.php';
-include 'grid_video_box.php';
-include 'grid_soundcloud_box.php';
-include 'grid_list_box.php';
-include 'grid_reference_box.php';
-include 'grid_grid.php';
-include 'grid_slot.php';
-include 'grid_container.php';
-include 'grid_db.php';
-include 'grid_ajaxendpoint.php';
+include dirname(__FILE__).'/grid_base.php';
+include dirname(__FILE__).'/grid_box.php';
+include dirname(__FILE__).'/grid_error_box.php';
+include dirname(__FILE__).'/grid_static_box.php';
+include dirname(__FILE__).'/grid_html_box.php';
+include dirname(__FILE__).'/grid_video_box.php';
+include dirname(__FILE__).'/grid_soundcloud_box.php';
+include dirname(__FILE__).'/grid_list_box.php';
+include dirname(__FILE__).'/grid_reference_box.php';
+include dirname(__FILE__).'/grid_grid.php';
+include dirname(__FILE__).'/grid_slot.php';
+include dirname(__FILE__).'/grid_container.php';
+include dirname(__FILE__).'/grid_db.php';
+include dirname(__FILE__).'/grid_ajaxendpoint.php';
 
