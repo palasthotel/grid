@@ -20,7 +20,7 @@
 					echo "<br/>$taxonomy: ".$term->name;
 				}
 			}
-			else if(!empty($value))
+			else if(!empty($value) && is_string($value))
 			{
 				echo "<br/>".$field.": ".$value;
 			}

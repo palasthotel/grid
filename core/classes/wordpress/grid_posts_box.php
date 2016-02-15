@@ -19,7 +19,14 @@ class grid_posts_box extends grid_list_box {
 	*/
 	function __construct() {
 		parent::__construct();
-		$this->content->viewmode = 'excerpt';
+
+		$viewmodes = $this->getViewmodes();
+		if(count($viewmodes)>0 && !empty($viewmodes[0]) && !empty($viewmodes[0]['key'])){
+			$this->content->viewmode = $viewmodes[0]['key'];
+		} else {
+			$this->content->viewmode = 'excerpt';
+		}
+
 		$this->content->posts_per_page = 5;
 		$this->content->offset = 0;
 		$this->content->post_type = 'post';
@@ -100,6 +107,16 @@ class grid_posts_box extends grid_list_box {
 	public function contentStructure() {
 		$cs = parent::contentStructure();
 
+		$viewmodes = $this->getViewmodes();
+		if(count($viewmodes) > 0){
+			$cs[] = array(
+				'key' => 'viewmode',
+				'type' => 'select',
+				'label' => t('Viewmode'),
+				'selections' => $viewmodes,
+			);
+		}
+
 		/**
 		 * posts per page
 		 */
@@ -169,21 +186,16 @@ class grid_posts_box extends grid_list_box {
 		);
 
 
+
+		return $cs;
+	}
+
+	public function getViewmodes(){
 		$viewmodes = array(
 			array('key' => 'excerpt', 'text' => t('Excerpt') ),
 			array('key' => 'full', 'text' => t('Full') ),
 		);
-		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
-		if(count($viewmodes) > 0){
-			$cs[] = array(
-				'key' => 'viewmode',
-				'type' => 'select',
-				'label' => t('Viewmode'),
-				'selections' => $viewmodes,
-			);
-		}
-
-		return $cs;
+		return apply_filters('grid_post_viewmodes',$viewmodes);
 	}
 
 	/**
