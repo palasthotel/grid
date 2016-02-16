@@ -144,6 +144,13 @@ class settings
 		register_setting( 'grid_settings', 'grid_mediaselect_info' );
 
 		/**
+		* mediaselect types
+		*/
+		add_settings_section( 'grid_mediaselect_types', 'Mediaselect Types', array( $this, 'mediaselect_types_section' ), 'grid_settings' );
+		add_settings_field( 'grid_mediaselect_types', 'Choose types for media-box', array( $this, 'mediaselect_types_html' ), 'grid_settings', 'grid_mediaselect_types' );
+		register_setting( 'grid_settings', 'grid_mediaselect_types' );
+
+		/**
 		 * permalinks
 		 */
 		add_settings_section( 'grid_permalinks', 'Grid', array( $this, 'permalinks_section' ), 'grid_settings' );
@@ -314,6 +321,21 @@ class settings
 		$value = get_option( 'grid_mediaselect_info', '' );
 		?>
 		<textarea id="grid_mediaselect_info" name="grid_mediaselect_info" rows="4" cols="50"><?php echo $value ?></textarea>
+		<?php
+	}
+
+	function mediaselect_types_section(){
+		echo '';
+	}
+
+	function mediaselect_types_html() {
+		$value = get_option( 'grid_mediaselect_types', 'image' );
+		?>
+		<p>
+		<select id="grid_mediaselect_types" name="grid_mediaselect_types">
+			<option value="image" <?php echo ($value == "image")? "selected": ""; ?> >Images</option>
+			<option value="*" <?php echo ($value == "*")? "selected": ""; ?> >All</option>
+		</select></p>
 		<?php
 	}
 

@@ -3,8 +3,8 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.4
-Stable tag: 1.5.8
+Tested up to: 4.4.2
+Stable tag: 1.5.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -74,6 +74,10 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.5.9 =
+ * Posts box fix
+ * Media type select for media-box in grid settings
 
 = 1.5.8 =
  * Include paths problems fix

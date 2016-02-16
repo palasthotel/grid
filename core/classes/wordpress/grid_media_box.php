@@ -91,6 +91,7 @@ class grid_media_box extends grid_static_base_box {
 			'key' => 'fileid',
 			'type' => 'wp-mediaselect',
 			'label' => t( 'Image' ),
+			'media_type' => get_option( 'grid_mediaselect_types', 'image' ),
 		);
 		if ( $value != '' ) {
 			$cs[] = array(
