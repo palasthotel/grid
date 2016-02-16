@@ -19,6 +19,14 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         this.$el.append("<label>"+element.label+"</label>");
 
 	    /**
+	     * media type filter
+	     */
+	    this.media_type = "*";
+	    if(typeof element.media_type != typeof undefined){
+		    this.media_type = element.media_type;
+	    }
+
+	    /**
 	     * show preview of image
 	     */
 	    this.$img_wrapper = $("<div></div>");
@@ -28,7 +36,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	    /**
 	     * upload button
 	     */
-        this.$upload_btn = jQuery("<button class='upload_image_button'>Upload</button>");
+        this.$upload_btn = jQuery("<button class='upload_image_button'>Media</button>");
         this.$el.append(this.$upload_btn);
 
 	    /**
@@ -66,8 +74,8 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         var frame = wp.media({
             //title : lang_values['title-wp-media'],
             multiple : false,
-            library : { type : 'image'},
-            button : { text : "upload image" },
+            library : { type : this.media_type},
+            button : { text : "Insert" },
         });
         frame.on('open',function() {
             var selection = frame.state().get('selection');
