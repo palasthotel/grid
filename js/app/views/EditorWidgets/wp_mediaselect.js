@@ -36,7 +36,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	    /**
 	     * upload button
 	     */
-        this.$upload_btn = jQuery("<button class='upload_image_button'>Media</button>");
+        this.$upload_btn = jQuery("<button class='button upload_image_button'>Media</button>");
         this.$el.append(this.$upload_btn);
 
 	    /**
