@@ -7,6 +7,11 @@ function GridAsync(){
 	this.author = document.grid.async.author;
 	this.observers = [];
 
+	this.browser_identifier=window.localStorage.getItem("grid_browser_identifier");
+	if(this.browser_identifier==null) {
+		this.browser_identifier=Math.random().toString(36).substring(7);
+		window.localStorage.setItem("grid_browser_identifier",this.browser_identifier);
+	}
 
 	/**
 	 * init function
@@ -42,6 +47,7 @@ function GridAsync(){
 		this.on("authors.list", "authors_list");
 		this.on("authors.joined", "authors_joined");
 		this.on("authors.left", "authors_left");
+		this.on("authors.multiplehits","authors_multihit");
 		// locking
 		this.on("locking.isLocked", "locking_is_locked");
 		this.on("locking.lockRequested", "locking_lock_requested");
@@ -65,7 +71,7 @@ function GridAsync(){
 	 * authors
 	 */
 	this.authors_join = function(){
-		this.socket.emit("authors.join", {domain: this.domain, path: this.path, author: this.author});
+		this.socket.emit("authors.join", {domain: this.domain, path: this.path, author: this.author, identity:this.browser_identifier});
 	}
 	/**
 	 * locking
@@ -94,6 +100,9 @@ function GridAsync(){
 	this.authors_left = function(id){
 		this.notifyAll("authors_left",id);
 	};
+	this.authors_multihit = function(count) {
+		alert("You have opened this grid on "+count+" browser windows. As parallel editing is not allowed you're locked out here.");
+	}
 	/**
 	 * locking events
 	 */
@@ -116,10 +125,7 @@ function GridAsync(){
 	 */
 	var _ping_timeout = null;
 	this.ping_send = function(){
-		_ping_timeout = setTimeout(function(){
-			console.log("ping");
-			self.socket.emit('ping.received');
-		},1000);
+		self.socket.emit('ping.received');
 	};
 
 }

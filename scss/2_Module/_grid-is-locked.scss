@@ -8,7 +8,7 @@
 			left: 0px;
 			bottom: 0px;
 			right: 0px;
-			background-color: rgba(255,255,255,0.6);
+			background-color: rgba(0,0,0,0.6);
 			z-index: $idx-locked-overlay;
 		}
 	}
@@ -18,4 +18,20 @@
 	.grid-tool-revisions{
 		display: none;
 	}
+
+	.grid-lock-message {
+		display:block;
+		font-weight:bold;
+	}
+}
+
+.grid-lock-message {
+	display: none;
+	text-align: center;
+	color:#fff;
+	position: absolute;
+	top: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	z-index: 99;
 }
