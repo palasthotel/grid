@@ -91,15 +91,15 @@ class the_grid
 			$async_path='';
 			if(get_option('grid_async',true))
 			{
-				global $current_user;
-				get_currentuserinfo();
+				/** @var \WP_User $user */
+				$user=wp_get_current_user();
 				$async_service = get_option("grid_async_url",'');
 				if(''==$async_service)
 				{
 					$async_service="http://async.the-grid.ws";
 				}
 				$async_domain= get_home_url();
-				$async_author=$current_user->display_name;
+				$async_author=$user->display_name;
 				$async_path="grid-post-id-".$postid;
 			}
 
