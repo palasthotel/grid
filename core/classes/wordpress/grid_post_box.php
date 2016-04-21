@@ -53,10 +53,14 @@ class grid_post_box extends grid_box {
 				$query->the_post();
 				ob_start();
 				$found = false;
-				if ( $this->storage->templatesPath != null ) {
-					if ( file_exists( $this->storage->templatesPath.'/post_content.tpl.php' ) ) {
-						$found = true;
-						include $this->storage->templatesPath.'/post_content.tpl.php';
+				if(is_array($this->storage->templatesPaths))
+				{
+					foreach($this->storage->templatesPaths as $templatesPath) {
+						if(file_exists($templatesPath.'/post_content.tpl.php')) {
+							$found=true;
+							include $templatesPath.'/post_content.tpl.php';
+						}
+						if($found) break;
 					}
 				}
 				if ( ! $found ) {
