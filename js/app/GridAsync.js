@@ -13,6 +13,28 @@ function GridAsync(){
 		window.localStorage.setItem("grid_browser_identifier",this.browser_identifier);
 	}
 
+	this.idle_time=0;
+
+	this._onIdleInterval = function() {
+		self.idle_time++;
+		if(self.idle_time>=10*60 && GRID.authors.length>0 && GRID.authors.haveLock()) {
+			location.reload(true);
+		}
+	}
+	var idle_interval=setInterval(function(){
+		self._onIdleInterval();
+	},1000);
+
+	this._onActivity = function() {
+		self.idle_time=0;
+	}
+	$('body').on('mousemove',function(){
+		self._onActivity();
+	});
+	$('body').on('keypress',function(){
+		self._onActivity();
+	});
+
 	/**
 	 * init function
 	 */
