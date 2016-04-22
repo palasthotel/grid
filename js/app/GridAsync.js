@@ -13,12 +13,19 @@ function GridAsync(){
 		window.localStorage.setItem("grid_browser_identifier",this.browser_identifier);
 	}
 
-	this.idle_time=0;
+	this.last_time = new Date().getTime();
 
 	this._onIdleInterval = function() {
-		self.idle_time++;
-		if(self.idle_time>=10*60 && GRID.authors.length>0 && GRID.authors.haveLock()) {
-			location.reload(true);
+		var time = new Date().getTime();
+		/**
+		 * time difference minus one second
+		 * to eliminate throttle if browser is inactive
+		 */
+		var diff = (time - self.last_time);
+		console.log(Math.ceil(diff/1000) + " Auhtors: "+GRID.authors.length+" Have lock: "+GRID.authors.haveLock());
+		if(diff>=5*60*1000 && GRID.authors.length>0 && GRID.authors.haveLock()) {
+			console.log("RELOAD");
+			window.location.reload(true);
 		}
 	}
 	var idle_interval=setInterval(function(){
@@ -26,7 +33,7 @@ function GridAsync(){
 	},1000);
 
 	this._onActivity = function() {
-		self.idle_time=0;
+		self.last_time = new Date().getTime();
 	}
 	$('body').on('mousemove',function(){
 		self._onActivity();
