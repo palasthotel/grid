@@ -33,9 +33,9 @@
 		// Checks if WordPress has a template for post content ...
 		if ( $this->storage->templatesPath != null ) {
 			$template_path = trailingslashit($this->storage->templatesPath);
-			if ( file_exists( $template_path.'/post_content.tpl.php' ) ) {
+			if ( file_exists( $template_path.'post_content.tpl.php' ) ) {
 				$found = true;
-				include $template_path.'/post_content.tpl.php';
+				include $template_path.'post_content.tpl.php';
 			}
 		}
 		// ... if not, uses Grid template for post content
