@@ -32,9 +32,10 @@
 		$found = false;
 		// Checks if WordPress has a template for post content ...
 		if ( $this->storage->templatesPath != null ) {
-			if ( file_exists( $this->storage->templatesPath.'/post_content.tpl.php' ) ) {
+			$template_path = trailingslashit($this->storage->templatesPath);
+			if ( file_exists( $template_path.'/post_content.tpl.php' ) ) {
 				$found = true;
-				include $this->storage->templatesPath.'/post_content.tpl.php';
+				include $template_path.'/post_content.tpl.php';
 			}
 		}
 		// ... if not, uses Grid template for post content
@@ -54,7 +55,7 @@
 
 	<?php
 	if ($this->readmore!=""){?>
-		<a href="<?php echo $this->readmoreurl?>" class="grid-box-readmore-link"><?php echo $this->readmore?></a>
+		<a href="<?php echo $this->readmoreurl; ?>" class="grid-box-readmore-link"><?php echo $this->readmore; ?></a>
 	<?php }?>
 
 </div>
