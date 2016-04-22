@@ -51,13 +51,23 @@ class post
 	 */
 	function grid_render( $content ) {
 		$post = get_post();
-
 		if ( isset( $post->grid ) ) {
-			return $content.$post->grid->render( false );
+			/**
+			 * default position is on bottom of content
+			 */
+			$position = "bottom";
+			$position = apply_filters("grid_the_content", $position);
+			if($position == "top"){
+				return $post->grid->render( false ).$content;
+			} else if($position == "bottom"){
+				return $content.$post->grid->render( false );
+			}
 		}
-		else {
-			return $content;
-		}
+		/**
+		 * if nothing matched don't render grid on content
+		 */
+		return $content;
+
 	}
 
 }
