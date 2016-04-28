@@ -21,6 +21,7 @@ var GridAjax = function(method, params_array, settings){
 		async: true,
 		type: 'POST',
 		dataType: 'json',
+		contentType: "application/json; charset=utf-8",
 		error: function(jqXHR, textStatus, error){
 			GRID.finishLoading();
    // 			GRID.log("!--- error Method: "+method);
@@ -457,8 +458,9 @@ var GridRequest = {
 					break;
 				default:
 					//update attributes
-					GRID.log("attributes");
 					var attributes = _.clone(box.attributes);
+					GRID.log("attributes");
+					GRID.log(attributes);
 					delete(attributes.classes);
 					delete(attributes.contentstructure);
 					delete(attributes.parent);

@@ -25,7 +25,9 @@ var BoxEditor = GridBackbone.View.extend({
             else
                 elem.selected="";
         });
-        isSidebarBox = (this.model.get("type") == "sidebar")? true: false;
+
+        var isSidebarBox = (this.model.get("type") == "sidebar");
+
         this.$el.html(ich.tpl_boxeditor({
             'lang_values':document.lang_values,
             'box':this.model.toJSON(),
@@ -38,7 +40,6 @@ var BoxEditor = GridBackbone.View.extend({
         var contentstructure=this.model.get("contentstructure");
         var fieldcontainer=this.$el.find(".grid-dynamic-fields .grid-editor-field-wrapper");
         var views=[];
-        var self=this;
         _.each(contentstructure,function(elem){
             var type=elem.type;
             var view=new boxEditorControls[type](
