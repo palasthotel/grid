@@ -22,9 +22,7 @@ function GridAsync(){
 		 * to eliminate throttle if browser is inactive
 		 */
 		var diff = (time - self.last_time);
-		console.log(Math.ceil(diff/1000) + " Auhtors: "+GRID.authors.length+" Have lock: "+GRID.authors.haveLock());
 		if(diff>=5*60*1000 && GRID.authors.length>0 && GRID.authors.haveLock()) {
-			console.log("RELOAD");
 			window.location.reload(true);
 		}
 	}
