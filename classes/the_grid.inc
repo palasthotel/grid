@@ -65,7 +65,7 @@ class the_grid
 			?>
 			<form method="post" action="<?php echo add_query_arg( array( 'noheader' => true, 'page' => 'grid', 'postid' => $postid ), admin_url( 'admin.php' ) );?>">
 				<p>There is no grid. Boot one?</p>
-				<?php echo submit_button(); ?>
+				<?php echo submit_button('boot new grid'); ?>
 			</form>
 			<?php
 		} else {
