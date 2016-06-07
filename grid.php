@@ -146,19 +146,24 @@ class grid_library
 		ob_end_clean();
 		return $str;
 	}
-
-	/*
-	 * Returns the Editor HTML. 
-	 * params:
-	 * grid_id: id of the grid to edit
-	 * grid_mode: grid or box or container.
-	 * pathToCKEditorConfig: url which returns the output of renderCKEditorConfig
-	 * ajaxendpoint: url which connects to the ajax endpoint class
-	 * debug mode: true or false
-	 * preview_url: url to preview the current grid
-	 * preview_pattern: pattern for previews of certain 
+	
+	/**
+	 * Returns the Editor HTML.
+	 * @param $grid_id id of the grid to edit
+	 * @param $grid_mode grid or box or container.
+	 * @param $pathToCKEditorConfig url which returns the output of renderCKEditorConfig
+	 * @param $ajaxendpoint url which connects to the ajax endpoint class
+	 * @param $debug_mode true or false
+	 * @param $preview_url url to preview the current grid
+	 * @param $preview_pattern pattern for previews of certain
+	 * @param string $async_service
+	 * @param string $async_domain
+	 * @param string $async_author
+	 * @param string $async_path
+	 * @param int $timeout for author grid lock in seconds (default is 5 minutes)
+	 * @return string
 	 */
-	public function getEditorHTML($grid_id,$grid_mode,$pathToCKEditorConfig,$ajaxendpoint,$debug_mode,$preview_url,$preview_pattern,$async_service="",$async_domain="",$async_author="",$async_path="")
+	public function getEditorHTML($grid_id, $grid_mode, $pathToCKEditorConfig, $ajaxendpoint, $debug_mode, $preview_url, $preview_pattern, $async_service="", $async_domain="", $async_author="", $async_path="", $async_timeout = 5*60)
 	{
 		ob_start();
 		require( dirname(__FILE__)."/templates/backend/grid.tpl.php" );

@@ -5,6 +5,7 @@ function GridAsync(){
 	this.domain = document.grid.async.domain;
 	this.path = document.grid.async.path;
 	this.author = document.grid.async.author;
+	this.timeout = document.grid.async.timeout;
 	this.observers = [];
 
 	this.browser_identifier=window.localStorage.getItem("grid_browser_identifier");
@@ -17,12 +18,9 @@ function GridAsync(){
 
 	this._onIdleInterval = function() {
 		var time = new Date().getTime();
-		/**
-		 * time difference minus one second
-		 * to eliminate throttle if browser is inactive
-		 */
 		var diff = (time - self.last_time);
-		if(diff>=5*60*1000 && GRID.authors.length>0 && GRID.authors.haveLock()) {
+		console.log("diff "+diff+" vs "+this.timeout*1000);
+		if(diff>= this.timeout*1000 && GRID.authors.length>0 && GRID.authors.haveLock()) {
 			window.location.reload(true);
 		}
 	}

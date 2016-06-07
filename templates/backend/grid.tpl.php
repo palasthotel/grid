@@ -21,6 +21,7 @@ document.grid.async.service = "<?php echo $async_service; ?>";
 document.grid.async.domain = "<?php echo $async_domain; ?>";
 document.grid.async.author = "<?php echo $async_author; ?>";
 document.grid.async.path = "<?php echo $async_path; ?>";
+document.grid.async.timeout = <?php echo $async_timeout; ?>;
 </script>
 <script id="tpl_toolbar" type="text/grid-icanhaz">
 <?php require('ich.toolbar.html'); ?>
