@@ -10,13 +10,19 @@
 */
 include dirname(__FILE__).'/grid_base.php';
 include dirname(__FILE__).'/grid_box.php';
+
 include dirname(__FILE__).'/grid_error_box.php';
+
 include dirname(__FILE__).'/grid_static_box.php';
 include dirname(__FILE__).'/grid_html_box.php';
 include dirname(__FILE__).'/grid_video_box.php';
 include dirname(__FILE__).'/grid_soundcloud_box.php';
+
 include dirname(__FILE__).'/grid_list_box.php';
+include dirname(__FILE__).'/grid_rss_box.php';
+
 include dirname(__FILE__).'/grid_reference_box.php';
+
 include dirname(__FILE__).'/grid_grid.php';
 include dirname(__FILE__).'/grid_slot.php';
 include dirname(__FILE__).'/grid_container.php';
