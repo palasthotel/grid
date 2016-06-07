@@ -25,6 +25,9 @@ class boxes
 		add_filter('grid_boxes_search', array( $this, 'grid_boxes_search' ), 10, 3);
 
 		add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );
+	  
+		$dirs = wp_upload_dir();
+		\grid_rss_box::$CACHE_DIR = $dirs["basedir"]."/grid_rss_cache/";
 	}
 
 	/**
