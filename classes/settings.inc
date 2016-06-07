@@ -136,6 +136,9 @@ class settings
 		add_settings_field( 'grid_async_url', 'Service url (leave empty to use default url)', array( $this, 'async_url_html' ), 'grid_settings', 'grid_async_service' );
 		register_setting( 'grid_settings', 'grid_async_url' );
 
+		add_settings_field( 'grid_async_timeout', 'After how many seconds an author loses the lock on a grid when not active?', array( $this, 'async_timeout_html' ), 'grid_settings', 'grid_async_service' );
+		register_setting( 'grid_settings', 'grid_async_timeout' );
+
 		/**
 		 * mediaselect info
 		 */
@@ -312,6 +315,13 @@ class settings
 		<input type="text" id="grid_async_url" name="grid_async_url" value="<?php echo $value; ?>" />
 		<?php
 	}
+
+  	function async_timeout_html() {
+	  $value = get_option( 'grid_async_timeout', 5*60 );
+	  ?>
+	  <input type="number" id="grid_async_timeout" name="grid_async_timeout" value="<?php echo $value; ?>" />
+	  <?php
+  	}
 
 	function mediaselect_info_section(){
 		echo '';

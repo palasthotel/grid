@@ -78,6 +78,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 = 1.6.1 =
  * RSS box in core
  * Plaintext box in core
+ * Async timeout setting
 
 = 1.6 =
  * Async features are working

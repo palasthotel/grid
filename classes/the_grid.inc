@@ -89,6 +89,7 @@ class the_grid
 			$async_domain='';
 			$async_author='';
 			$async_path='';
+			$async_timeout = 60*5;
 			if(get_option('grid_async',true))
 			{
 				/** @var \WP_User $user */
@@ -101,6 +102,8 @@ class the_grid
 				$async_domain= get_home_url();
 				$async_author=$user->display_name;
 				$async_path="grid-post-id-".$postid;
+
+				$async_timeout = get_option("grid_async_timeout",5*60);
 			}
 
 
@@ -115,7 +118,8 @@ class the_grid
 				$async_service,
 				$async_domain,
 				$async_author,
-				$async_path
+				$async_path,
+			  	$async_timeout
 			);
 
 
