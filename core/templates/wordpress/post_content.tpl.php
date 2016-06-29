@@ -12,5 +12,7 @@ if ( 'full' == $this->content->viewmode ) {
 	the_content();
 } elseif ( 'excerpt' == $this->content->viewmode ) {
 	the_excerpt();
+} else {
+  ?><p>Unsupported Viewmode: <?php echo $this->content->viewmode; ?></p><?php
 }
 ?>
