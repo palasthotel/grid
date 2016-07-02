@@ -7,7 +7,6 @@ export default class Slot extends React.Component{
 		super(props);
 	}
 	render(){
-		const classname = "grid-slot";
 		const boxes = this.props.boxes.map((box)=>{
 			return(
 			  <Box
@@ -18,9 +17,20 @@ export default class Slot extends React.Component{
 		});
 		return(
 		  <div className="grid-slot grid-slot-1d3">
-			  <div class="grid-slot-style-changer style-changer">
-			  </div>
-			  <div class="grid-boxes-wrapper boxes-wrapper">{boxes}</div>
+			  <StyleChanger />
+			  <div className="grid-boxes-wrapper boxes-wrapper">{boxes}</div>
+		  </div>
+		)
+	}
+}
+
+class StyleChanger extends React.Component{
+	constructor(props){
+		super(props);
+	}
+	render(){
+		return (
+		  <div className="grid-slot-style-changer style-changer">
 		  </div>
 		)
 	}
