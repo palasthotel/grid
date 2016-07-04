@@ -1,25 +1,60 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Slot from './slot';
+import React, { Component, PropTypes } from 'react';
+import { ItemTypes } from '../constants';
+import { DragSource } from 'react-dnd';
 
-export default class Container extends React.Component{
+
+const containerSource = {
+	beginDrag(props){
+		console.log("begin drag");
+		return {
+			id: props.id,
+			index: props.index
+		};
+	},
+	endDrag(props, monitor) {
+		console.log("end drop");
+		const item = monitor.getItem();
+		const dropResult = monitor.getDropResult();
+
+		if (dropResult) {
+			// window.alert( // eslint-disable-line no-alert
+			//   `You dropped ${item.name} into ${dropResult.name}!`
+			// );
+		}
+	}
+};
+
+function collect(connect, monitor) {
+	return {
+		connectDragSource: connect.dragSource(),
+		connectDragPreview: connect.dragPreview(),
+		isDragging: monitor.isDragging()
+	}
+}
+
+class Container extends Component{
 	constructor(props){
 		super(props);
+		this.state = {active: false};
 	}
 	render(){
-		const class_name = "grid-container "+this.props.type;
-		const slots = this.props.slots.map((slot, index)=>{
-			return(
-				<Slot
-					key={index}
-					{...slot}
-				/>
-			)
-		});
-		return(
-			<div className={class_name} >
+		const class_name = "grid-container grid-contaner-"+this.props.type;
+		const { connectDragSource, connectDragPreview, isDragging } = this.props;
+		return connectDragPreview(
+			<div className={class_name}
+			     style={{
+				opacity: isDragging ? 0.5 : 1,
+		        cursor: 'move',
+		        }}
+			>
 				<div className="grid-container-controls">
 					<span className="grid-container-title">{this.props.title}</span>
+					{connectDragSource(
+					  <span
+					    className="grid-container-sorthandle hide-grid-container-editor ui-sortable-handle">
+						  <i className="icon-drag" />
+					  </span>
+					)}
 					<div className="grid-container-options">
 						<span className="grid-container-options-icon">Options <i className="icon-options" /></span>
 						<ul className="grid-container-options-list">
@@ -34,8 +69,9 @@ export default class Container extends React.Component{
 					<div className="grid-container-before">
 						<div className="grid-container-prolog">PROLOG</div>
 					</div>
-					<div className="grid-slots-wrapper"> {slots} </div>
-						<div className="grid-container-after">
+					<div className="grid-slots-wrapper">{this.props.children}</div>
+
+					<div className="grid-container-after">
 						<div className="grid-container-epilog">EPILOG</div>
 					</div>
 				</div>
@@ -43,3 +79,12 @@ export default class Container extends React.Component{
 		)
 	}
 }
+
+Container.propTypes = {
+	connectDragSource: PropTypes.func.isRequired,
+	connectDragPreview: PropTypes.func.isRequired,
+	isDragging: PropTypes.bool.isRequired,
+	id: PropTypes.any.isRequired
+};
+
+export default DragSource(ItemTypes.CONTAINER, containerSource, collect)(Container);

@@ -7,18 +7,10 @@ export default class Slot extends React.Component{
 		super(props);
 	}
 	render(){
-		const boxes = this.props.boxes.map((box)=>{
-			return(
-			  <Box
-				key={box.id}
-				{...box}
-			  />
-			)
-		});
 		return(
 		  <div className="grid-slot grid-slot-1d3">
 			  <StyleChanger />
-			  <div className="grid-boxes-wrapper boxes-wrapper">{boxes}</div>
+			  <div className="grid-boxes-wrapper boxes-wrapper">{this.props.children}</div>
 		  </div>
 		)
 	}

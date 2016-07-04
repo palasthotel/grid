@@ -2,7 +2,7 @@
   "name": "grid-lib",
   "version": "1.0.0",
   "scripts": {
-    "watch": "webpack ./src/app.js ./bundle/app.js --progress --colors --watch --module-bind 'js=babel-loader'"
+    "watch": "webpack --progress --colors --watch"
   },
   "dependencies": {
     "babel-core": "^6.10.4",
