@@ -1,6 +1,6 @@
 export const ItemTypes = {
 	CONTAINER: 'container',
-	NEWCONTAINER: 'newcontainer',
+	NEW_CONTAINER: 'new_container',
 	BOX: 'box',
-	NEWBOX: 'newbox'
+	NEW_BOX: 'new_box'
 };

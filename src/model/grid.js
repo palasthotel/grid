@@ -2,32 +2,14 @@ import Backbone from 'backbone-collection';
 import Container from './container';
 
 export default Backbone.Model.extend({
-	defaults: function(){
-		return {
-			id: -1,
-			// enable or disable debugging output
-			DEBUGGING: false,
-			// the server URL
-			SERVER: "/grid_ajax_endpoint",
-			// Pattern for preview URL
-			PREVIEW_URL: window.location.pathname+'/preview',
-			// 0 == false == unknown, 1 published, 2 draft
-			isDraft: true,
-			isSidebar: false,
-		}
-	},
-	getGridID: function(){
-		return this.get("id");
-	},
-	// invokes when the model is created
 	initialize: function (spec) {
 		// Grid object needs an ID
 		if (!spec || !spec.id ) {
 			throw "InvalidConstructArgs";
 		}
-		this.fetch({
-			success: spec.fn_success
-		});
+	},
+	getGridID: function(){
+		return this.get("id");
 	},
 	createContainer: function(type, index, reused){
 		var self = this;
