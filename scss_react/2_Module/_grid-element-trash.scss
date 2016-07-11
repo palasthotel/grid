@@ -1,0 +1,31 @@
+
+.grid-element-trash {
+	position: absolute;
+	bottom:0px;
+	left: 0px;
+	right: 0px;
+	text-transform: uppercase;
+	height: 0px;
+	overflow: hidden;
+	background-color: $color-tool-element-trash-bg;
+	color: white;
+	box-sizing: border-box;
+	vertical-align: baseline; 
+	z-index: $idx-toolbar;
+	@include transition();
+	& > div{
+		padding-top: 25px;
+		padding-bottom: 100%;
+		height: 100%;
+		border: 3px dashed white;
+		border-bottom: none;
+		text-align: center;
+	}
+	&.grid-active{
+		padding: 10px 10px 0 10px;
+		height: 50%;
+	}
+	&.grid-hover{
+		background-color: $color-warning;
+	}
+}

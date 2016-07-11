@@ -1,0 +1,56 @@
+.grid-all-wrapper,
+.grid-editor-wrapper { 
+	font-family: "OpenSans", sans-serif;
+	// font-family: sans-serif;
+	background-color: $color-grid-bg;
+	input,
+	textarea,
+	select,
+	button {
+		font-family: inherit;
+		font-size: 12px;
+		box-sizing: border-box;
+	}
+
+	input {
+		height:27px; 
+		width: 100%;
+		line-height:27px;
+		text-indent:10px; 
+		font-size:1em;
+		border:solid 1px $color-input-border;
+		margin-bottom: 5px;
+
+		&:hover {
+			border-color: $color-input-border-hover;
+		}
+	}
+	input[type=checkbox] {
+		width: auto;
+		height: auto;
+		display:inline;
+	}
+	button,
+	button:focus {
+		outline: none;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+		color: $color-link;
+		font-size: 13px;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 0.05em;
+		
+		@include transition();
+		box-shadow: none;
+		&:hover{
+			color: $color-edit;
+		}
+	}
+	img{
+		max-width: 100%;
+		width:100%;
+		height: auto;
+	}
+}

@@ -1,0 +1,24 @@
+
+.gridmode-container,
+.gridmode-box{
+	.grid-tool-list,
+	.grid-element-type[data-type=container],
+	.grid-container-sorthandle,
+	.grid-container-options-list [role=reuse],
+	.grid-container-options-list [role=trash]{
+		display:none;
+	}
+}
+
+.gridmode-box{
+	.grid-toolbar,
+	.grid-container-controls,
+	.grid-box-delete{
+		display: none;
+	}
+	.grid-box-edit{
+		bottom: 0px;
+		width: 100%;
+	}
+	
+}

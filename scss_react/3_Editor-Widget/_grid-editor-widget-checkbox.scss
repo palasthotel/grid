@@ -1,0 +1,9 @@
+.grid-editor-widget-checkbox{
+	input[type=checkbox]{
+		-webkit-appearance: checkbox;
+		&:before{
+			display: none;
+			margin-top: 0px;
+		}
+	}
+}

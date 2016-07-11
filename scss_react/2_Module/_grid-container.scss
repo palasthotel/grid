@@ -1,0 +1,203 @@
+/****************
+ * container 
+ ****************/
+
+// container dimensions
+.grid-container {
+	
+	margin: 0 0px 20px 0px;
+	
+
+		
+	.grid-container-sorthandle,
+	.grid-container-options-icon {
+		color: $color-container-controls;
+		
+	}
+
+	.grid-container-title {
+		color: $color-dark;
+
+		.grid-container-style {
+			font-weight: normal;
+			font-size: 11px;
+		}
+	}
+
+
+
+	.grid-container-controls {
+		background-color: $color-container-bg;
+		border: 1px solid $color-container-border;
+	}
+
+	.grid-container-content {
+		border-top: none;
+	}
+			
+	
+}
+
+.grid-container-content{
+	position: relative;
+	background-color: $color-container-bg;
+	border: 1px solid $color-container-border;
+}
+
+.grid-container-controls{
+	position: relative;
+	background-color: transparent;
+	height: 40px;
+	border: 1px solid transparent;
+	border-bottom: none;
+}
+
+
+/**********************************
+ * container hover states
+ **********************************/
+
+
+
+// text color for hover states of controls
+.grid-container-title,
+.grid-container-sorthandle,
+.grid-container-options-icon {
+	color: $color-container-controls-nohover;
+	@include transition(all, .3s, ease);
+}
+
+
+
+
+// options list hover
+
+
+
+// options list item hover
+.grid-container-options-list-item:hover{
+	background-color: $color-container-options-list-bg-hover;
+	&[role=trash]{
+		background-color: $color-warning;
+	}
+	&[role=edit]{
+		background-color: $color-edit;
+	}
+}
+
+// new containers
+.grid-container-type-content {
+	margin:0px;
+	border-bottom: 1px solid $color-grid-bg;
+}
+
+
+.grid-container-reused-layer{
+	cursor: move;
+	position: absolute;
+	z-index: $idx-container;
+	top: 5px;
+	left: 5px;
+	bottom: 5px;
+	right: 5px;
+	background-color: $color-container-reused-bg;
+	z-index: $idx-container-reused;
+	.grid-container-reused-label{
+		position: absolute;
+		width: 100%;
+		margin-left: -50%;
+		text-align: center;
+		top: 10px;
+		left: 50%;
+		color: white;
+		text-transform: uppercase;
+	}
+}
+
+
+.grid-container-title{
+	position: absolute;
+	top: 9px;
+	left: 20px;
+	font-weight: bold;
+	font-size: 90%;
+}
+
+.grid-container-sorthandle{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 40px;
+	cursor: move;
+	.icon-drag{
+		position: absolute;
+		top: 9px;
+	}
+}
+
+.grid-container-options{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	height: 40px;
+	z-index: $idx-container-options;
+	padding-top: 12px;
+	box-sizing: border-box;
+	&:hover{
+		z-index: $idx-container-options-hover;
+	}
+
+	.grid-container-options-icon{
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+	.grid-container-options-list{
+		position: absolute;
+		list-style: none;
+		background-color: $color-container-options-list-bg;
+		color: $color-container-options-list;
+		width:140px;
+		right: 0px;
+		top: 40px;
+		margin: 0px;
+		padding: 0px;
+		display: none;
+
+		.grid-container-options-list-item{
+			cursor:pointer;
+			padding: 5px;
+			text-transform: uppercase;
+			font-weight: bold;
+			margin-bottom: 0px;
+		}
+		&:before{
+			content:"";
+			border: 8px solid $color-slot-style-changer-styles-bg;
+			font-size:0;
+			line-height:0;
+			height:0;
+			padding:0;
+			margin:0;
+			border-top-color:    transparent;
+			border-right-color:  transparent;
+			border-left-color:   transparent;
+			position:absolute;
+			top:-16px;
+			left:47%;
+		}
+	}
+
+	&:hover .grid-container-options-list{
+		display: block;
+	}
+}
+
+.grid-container-prolog,
+.grid-container-epilog{
+	padding: 7px 10px;
+	
+	p {
+		font-size: 11px;
+	}
+}

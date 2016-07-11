@@ -1,0 +1,37 @@
+.grid-is-locked{
+	.grid-containers-wrapper{
+		position: relative;
+		&:before{
+			position: absolute;
+			content:"";
+			top: -45px;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+			background-color: rgba(0,0,0,0.6);
+			z-index: $idx-locked-overlay;
+		}
+	}
+	.grid-tool-elements,
+	.grid-tool-publish,
+	.grid-tool-revert,
+	.grid-tool-revisions{
+		display: none;
+	}
+
+	.grid-lock-message {
+		display:block;
+		font-weight:bold;
+	}
+}
+
+.grid-lock-message {
+	display: none;
+	text-align: center;
+	color:#fff;
+	position: absolute;
+	top: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	z-index: 99;
+}

@@ -1,0 +1,121 @@
+.grid-revisions{
+	list-style: none;
+	box-sizing: border-box;
+	display: block;
+	overflow-x: scroll;
+	margin-right: $dim-tool-elements-width;
+	padding: 0px 0px 15px 50px;
+	button{
+		margin: 0px;
+		padding: 0px;
+	} 
+
+	
+}
+
+.grid-revisions-list{
+	padding: 0px 15px 0px 0px;
+}
+
+.grid-revision{
+	position: relative;
+	box-sizing: border-box;
+	display: block;
+	float:left;
+	width: 220px;
+	border-right: 5px solid $color-revision-border;
+	background-color: $color-revision-bg;
+
+	-webkit-box-shadow:inset 0 0 2px 0 rgb(170, 170, 170);
+			box-shadow:inset 0 0 2px 0 rgb(170, 170, 170);
+
+	&:last-child{
+		border-right: none;
+	}
+
+	&.grid-revision-state-draft{
+		background-color: $color-revision-draft;
+		color: white;
+		button{
+			color: white;
+			&:hover{
+				color: $color-link;
+			}
+		}
+	}
+
+	&.grid-revision-state-published{
+		background-color: $color-revision-published;
+		color: white;
+		button{
+			color:white;
+			&:hover{
+				color: $color-link;
+			}
+		}
+	}
+
+	&:first-child:before{
+		z-index: $idx-revisions;
+		content:"";
+		border: 8px solid $color-revision-draft;
+		font-size:0;
+		line-height:0;
+		height:0;
+		padding:0;
+		margin:0;
+		border-left-color:    transparent;
+		border-right-color:  transparent;
+		border-bottom-color:   transparent;
+		position:absolute;
+		bottom:-16px;
+		left:50%;
+		margin-left: -8px;
+		@include transition();
+	}
+
+	&.grid-revision-state-published:first-child:before{
+		border-top-color: $color-revision-published;
+	}
+}
+
+// Description section 
+.grid-revision-description {
+	padding: 10px;
+
+	p {
+		margin: 0px;
+	}
+
+	.grid-revision-date {
+		font-weight: bold;
+	}
+}
+
+// controls section
+.grid-revision-controls {
+	position: relative;
+	padding-bottom: 40px;
+
+	.grid-revision-button {
+		height: 40px;
+		position: absolute;
+		bottom: 0px;
+	}
+
+	.grid-revision-preview-button {
+		left: 0px;
+		width: 50%;
+	}
+
+	.grid-revision-delete-button,
+	.grid-revision-revert-button {
+		right: 0px;
+		width: 50%;
+	}
+}
+.grid-revision-state-published .grid-revision-controls {
+	.grid-revision-preview-button {
+		width: 100%;
+	}
+}

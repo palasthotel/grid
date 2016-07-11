@@ -1,0 +1,37 @@
+.grid-editor-widget-listitem{
+	position: relative;
+	border-left: 4px solid lighten($color-light, 3%);
+	padding-left: 10px;
+	margin-bottom: 15px;
+	@include transition();
+	&:hover{
+		border-color: $color-edit;
+	}
+	& > .widget-list-remove-item-button{
+		margin-top: 10px;
+		margin-left: -10px;
+		background-color: lighten($color-light, 3%);
+	}
+	.widget-list-remove-item-button:hover{
+		background-color: $color-warning;
+		color: white;
+	}
+	.widget-list-sort-button{
+		position: absolute;
+		top: 0px;
+		left: -35px;
+		&.widget-list-move-down-item-button{
+			top: auto;
+			bottom: 0px;
+		}
+	}
+	&:hover .widget-list-sort-button{
+		background-color: lighten($color-light, 3%);
+	}
+	&:first-child .widget-list-move-up-item-button{
+		display: none;
+	}
+	&:last-child .widget-list-move-down-item-button{
+		display: none;
+	}
+}

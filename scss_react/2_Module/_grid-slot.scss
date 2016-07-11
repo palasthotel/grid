@@ -1,0 +1,26 @@
+
+// slot dimensions
+.grid-slot {
+	position: relative;
+	min-height: 50px;
+	padding-top: 20px;
+
+	border-left: 4px solid white;
+	box-sizing: border-box;
+
+	background-color: $color-grid-slot;
+}
+
+.grid-slot {
+	padding: 30px 7px 0 7px;
+	padding: 0 5px;
+	box-sizing: border-box;
+	display: table-cell;
+}
+
+
+.grid-slot:first-child {
+	border-left: none;
+}
+
+

@@ -1,0 +1,58 @@
+.grid-wrapper .grid-container-type-s {
+	// width: 100%;
+	// padding:0px;
+	// background-color: transparent;
+	// border:none;
+	// .grid-box{
+	// 	border:none;
+	// 	background-color: white;
+	// }
+	
+	
+}
+
+// new file ? what name? tell me...
+.grid-wrapper .grid-container-type-s .grid-box .grid .sc-4{
+	.grid-slot{
+		position: relative;
+		top: auto;
+		left: auto;
+		width: auto;
+		float: none;
+	}
+}
+
+.grid-wrapper .grid-containers-wrapper .grid-container-type-s{
+	
+	.grid-slot{
+		position: absolute;
+		width: 32%;
+		bottom: 0px;
+		padding-bottom: 4px;
+		left: 0px;
+		padding-right: 4px;
+		padding-left: 4px;
+		box-sizing: border-box;
+		z-index: $idx-container;
+	}
+	&[data-type*=s-0] .grid-slot{
+		// sidebar to right
+		left: auto;
+		right: 0px;
+	}
+	
+	.grid{
+		.grid-container,
+		.grid-slot,
+		.grid-box,
+		.grid-container-content{
+			padding: 0px;
+			margin: 0px;
+			border:none;
+			background-color: transparent;
+			width: auto;
+			position: relative;
+			z-index: inherit;
+		}
+	}
+}

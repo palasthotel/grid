@@ -1,0 +1,38 @@
+.grid-editor-url-builder {
+	position: relative;
+	width: 140px;
+	@include transition();
+
+
+	font-size: 11px;
+
+
+	.grid-editor-url-input{
+		width: 100%;
+		padding-right: 130px;
+		opacity: 0;
+	}
+	.grid-editor-url-button,
+	.grid-editor-url-button:focus {
+		position: absolute;
+		right: 0px;
+		top: 2px;
+		width: 140px;
+		color: $color-editor-reuse;
+		background-color: $color-editor-reuse-bg;
+	}
+
+	&.grid-editor-url-show {
+		width: 100%;
+		.grid-editor-url-button{
+			&:hover{
+				color: $color-warning;
+			}
+			
+			background-color: transparent;
+		}
+		.grid-editor-url-input{
+			opacity: 1;
+		}
+	}
+}
