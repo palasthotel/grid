@@ -116,7 +116,9 @@ export default class Grid extends Component{
 				key={container.id}
 				{...container}
 				index={i}
-			  >{this.renderSlots(container.slots)}</Container>
+			  >
+				  {this.renderSlots(container.slots)}
+			  </Container>
 			));
 
 			/**

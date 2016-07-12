@@ -61,6 +61,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
+	 * grid dummy
+	 * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
+	 */
+	var grid = __webpack_require__(337);
+	var revisions = __webpack_require__(338);
+	var container_types = __webpack_require__(339);
+	var box_types = __webpack_require__(340);
+	
+	/**
 	 * append app to grid app root
 	 */
 	_reactDom2.default.render(_react2.default.createElement(_app2.default, {
@@ -30522,6 +30531,462 @@
 	
 	module.exports = exports['default'];
 
+/***/ },
+/* 337 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+		"id": 1,
+		"isDraft": true,
+		"container": [{
+			"reusetitle": null,
+			"type": "c-1d3-1d3-1d3",
+			"type_id": "3",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": "1",
+			"slots": [{
+				"id": "1",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "8",
+					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
+					"type": "plaintext",
+					"content": {
+						"plain": ""
+					},
+					"contentstructure": [{
+						"key": "plain",
+						"type": "textarea",
+						"label": "Plaintext"
+					}]
+				}]
+			}, {
+				"id": "2",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "9",
+					"html": "<div class=\"grid-box-editmode\">\n\tStatic HTML-Content<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": ""
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}, {
+				"id": "3",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "10",
+					"html": "<div class=\"grid-box-editmode\">\n  RSS Feed\n<\/div>",
+					"type": "rss",
+					"content": {
+						"url": "",
+						"numItems": 15
+					},
+					"contentstructure": [{
+						"key": "url",
+						"label": "RSS-URL",
+						"type": "text"
+					}, {
+						"key": "numItems",
+						"label": "Number of items to show",
+						"type": "number"
+					}]
+				}]
+			}]
+		}, {
+			"reusetitle": null,
+			"type": "c-1d2-1d2",
+			"type_id": "8",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": "2",
+			"slots": [{
+				"id": "4",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "Mein HTML",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "6",
+					"html": "<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": "<p>HTML TEST<\/p>\n"
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}, {
+					"style": null,
+					"classes": [],
+					"title": "Mein HTML",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "6",
+					"html": "<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": "<p>HTML TEST<\/p>\n"
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}, {
+					"style": null,
+					"classes": [],
+					"title": "Mein HTML",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "6",
+					"html": "<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": "<p>HTML TEST<\/p>\n"
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}, {
+				"id": "5",
+				"style": null,
+				"boxes": []
+			}]
+		}, {
+			"reusetitle": null,
+			"type": "c-1d3-1d3-1d3",
+			"type_id": "3",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": "5",
+			"slots": [{
+				"id": "1",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "8",
+					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
+					"type": "plaintext",
+					"content": {
+						"plain": ""
+					},
+					"contentstructure": [{
+						"key": "plain",
+						"type": "textarea",
+						"label": "Plaintext"
+					}]
+				}]
+			}, {
+				"id": "2",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "9",
+					"html": "<div class=\"grid-box-editmode\">\n\tStatic HTML-Content<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": ""
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}, {
+				"id": "4",
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": "10",
+					"html": "<div class=\"grid-box-editmode\">\n  RSS Feed\n<\/div>",
+					"type": "rss",
+					"content": {
+						"url": "",
+						"numItems": 15
+					},
+					"contentstructure": [{
+						"key": "url",
+						"label": "RSS-URL",
+						"type": "text"
+					}, {
+						"key": "numItems",
+						"label": "Number of items to show",
+						"type": "number"
+					}]
+				}]
+			}]
+		}],
+		"isSidebar": false
+	};
+
+/***/ },
+/* 338 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = [{
+		"revision": "1",
+		"published": "0",
+		"state": "draft",
+		"editor": "palasthotel",
+		"date": "1467184323"
+	}, {
+		"revision": "0",
+		"published": "1",
+		"state": "published",
+		"editor": "palasthotel",
+		"date": "1464962293"
+	}];
+
+/***/ },
+/* 339 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = [{
+		"type": "i-0",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "0"
+	}, {
+		"type": "c-1d3-1d3-1d3",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "3"
+	}, {
+		"type": "c-2d3-1d3",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "2"
+	}, {
+		"type": "c-1d3-2d3",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "2"
+	}, {
+		"type": "c-1d6-1d6-1d6-1d6-1d6-1d6",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "6"
+	}, {
+		"type": "c-1d4-1d4-1d4-1d4",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "4"
+	}, {
+		"type": "c-1d2-1d2",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "2"
+	}, {
+		"type": "s-1d3-0",
+		"space_to_left": null,
+		"space_to_right": "2d3",
+		"numslots": "1"
+	}, {
+		"type": "s-0-1d3",
+		"space_to_left": "2d3",
+		"space_to_right": null,
+		"numslots": "1"
+	}, {
+		"type": "sc-1d3",
+		"space_to_left": null,
+		"space_to_right": null,
+		"numslots": "1"
+	}, {
+		"type": "c-0-1d3-1d3",
+		"space_to_left": "1d3",
+		"space_to_right": null,
+		"numslots": "2"
+	}, {
+		"type": "c-1d3-1d3-0",
+		"space_to_left": null,
+		"space_to_right": "1d3",
+		"numslots": "2"
+	}, {
+		"type": "c-0-2d3",
+		"space_to_left": "1d3",
+		"space_to_right": null,
+		"numslots": "1"
+	}, {
+		"type": "c-2d3-0",
+		"space_to_left": null,
+		"space_to_right": "1d3",
+		"numslots": "1"
+	}];
+
+/***/ },
+/* 340 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = [{
+		"type": "static",
+		"title": "Static content",
+		"criteria": []
+	}, {
+		"type": "abstract_list",
+		"title": "Lists",
+		"criteria": []
+	}, {
+		"type": "reference",
+		"title": "Reusable boxes",
+		"criteria": []
+	}, {
+		"type": "post",
+		"title": "Contents",
+		"criteria": ["title"]
+	}];
+
 /***/ }
 /******/ ]);
-//# sourceMappingURL=index.map
+//# sourceMappingURL=demo_grid.map

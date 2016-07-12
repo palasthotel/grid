@@ -14,23 +14,21 @@ class App extends React.Component{
 	render(){
 		return (
 		  <div id="new-grid-wrapper">
-
-			<div className="grid-toolbar">
-			  <Buttons />
-			  <Elements
-				  container_types={this.props.container_types}
-				  box_types={this.props.box_types}
-			  />
-			  <Revisions
-				  list={this.props.revisions}
-			  />
-			</div>
-			  <Grid
-				  id={this.props.grid.id}
-				  container={this.props.grid.container}
-				  draft={this.props.grid.isDraft}
-			  />
-
+            <div className="grid-toolbar">
+                <Buttons />
+                <Elements
+                    container_types={this.props.container_types}
+                    box_types={this.props.box_types}
+                />
+            <Revisions
+                list={this.props.revisions}
+            />
+            </div>
+            <Grid
+                id={this.props.grid.id}
+                container={this.props.grid.container}
+                draft={this.props.grid.isDraft}
+            />
 		  </div>
 		);
 	}

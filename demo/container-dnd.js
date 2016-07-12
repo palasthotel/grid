@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './view/app';
+
+import App from '../src/view/app';
 
 /**
  * grid dummy
  * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
  */
-var grid = require('./demo/grid');
-var revisions = require('./demo/revisions');
-var container_types = require('./demo/container_types');
-var box_types = require('./demo/box_types');
+var grid = require('./dummy-data/grid');
+var revisions = require('./dummy-data/revisions');
+var container_types = require('./dummy-data/container_types');
+var box_types = require('./dummy-data/box_types');
 
-console.log(grid);
 /**
  * append app to grid app root
  */

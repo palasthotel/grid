@@ -26,6 +26,7 @@ class ContainerDrop extends Component {
 	}
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
+
 		const color = (isOver)? 'red': 'transparent';
 		const display = (canDrop)? 'block': 'none';
 
