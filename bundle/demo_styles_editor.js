@@ -60,30 +60,21 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var container_styles = [{ "title": "container-style1", "slug": "c-slug1" }, { "title": "container-style2", "slug": "c-slug2" }];
-	var slot_styles = [{ "title": "slot-style1", "slug": "s-slug1" }, { "title": "slot-style2", "slug": "s-slug2" }];
-	var box_styles = [{ "title": "box-style1", "slug": "b-slug1" }, { "title": "box-style2", "slug": "b-slug2" }];
+	var container_styles = [{ "style": "container-style1", "slug": "c-slug1", name: "Container Style 1" }, { "style": "container-style2", "slug": "c-slug2", name: "Container Style 2" }];
+	var slot_styles = [{ "style": "slot-style1", "slug": "s-slug1", name: "Slot Style 1" }, { "style": "slot-style2", "slug": "s-slug2", name: "Slot Style 1" }];
+	var box_styles = [{ "style": "box-style1", "slug": "b-slug1", name: "Box Style 1" }, { "style": "box-style2", "slug": "b-slug2", name: "Box Style 2" }];
 	
 	var styles = {
-	    container: {
-	        name: "Container Styles",
-	        styles: container_styles
-	    },
-	    slot: {
-	        name: "Slot Styles",
-	        styles: slot_styles
-	    },
-	    box: {
-	        name: "Box Styles",
-	        styles: box_styles
-	    }
+	  container: container_styles,
+	  slot: slot_styles,
+	  box: box_styles
 	};
 	
 	/**
 	 * append app to grid app root
 	 */
 	_reactDom2.default.render(_react2.default.createElement(_stylesEditor2.default, {
-	    styles: styles
+	  styles: styles
 	}), document.getElementById("styles-editor"));
 
 /***/ },
@@ -21291,7 +21282,7 @@
 /* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -21317,15 +21308,133 @@
 	    function StyleEditor(props) {
 	        _classCallCheck(this, StyleEditor);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(StyleEditor).call(this, props));
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StyleEditor).call(this, props));
+	
+	        _this.state = {
+	            name: _this.props.style.name,
+	            slug: _this.props.style.slug,
+	            style: _this.props.style.style,
+	            deleted: false,
+	            saved: _this.props.saved
+	        };
+	
+	        return _this;
 	    }
 	
 	    _createClass(StyleEditor, [{
-	        key: "render",
+	        key: 'onChangeName',
+	        value: function onChangeName(e) {
+	            var name = e.target.value;
+	            var slug = this.slugify(name);
+	            this.setState({ name: name, slug: slug });
+	        }
+	    }, {
+	        key: 'slugify',
+	        value: function slugify(value) {
+	            return value.toLowerCase().replace(/\s+/g, '-') // Replace spaces with -
+	            .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+	            .replace(/\-\-+/g, '-') // Replace multiple - with single -
+	            .replace(/^-+/, '') // Trim - from start of text
+	            .replace(/-+$/, ''); // Trim - from end of text
+	        }
+	    }, {
+	        key: 'onChangeClasses',
+	        value: function onChangeClasses(e) {
+	            var classes = e.target.value;
+	            if (!classes.match(/^[a-zA-Z0-9 _-]*$/)) return;
+	            this.setState({ style: classes });
+	        }
+	    }, {
+	        key: 'onDelete',
+	        value: function onDelete() {
+	            console.log("Delete");
+	            this.setState({ deleted: true });
+	        }
+	    }, {
+	        key: 'onSave',
+	        value: function onSave() {
+	            this.props.save(this.state);
+	        }
+	    }, {
+	        key: 'onUndoDelete',
+	        value: function onUndoDelete() {
+	            this.setState({ deleted: false });
+	        }
+	    }, {
+	        key: 'renderDeleted',
+	        value: function renderDeleted() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'style-deleted' },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'The style "',
+	                    this.state.name,
+	                    '" was deleted.',
+	                    _react2.default.createElement(
+	                        'span',
+	                        {
+	                            className: 'style-undo button',
+	                            onClick: this.onUndoDelete.bind(this)
+	                        },
+	                        'Undo'
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement("div", {
-	                className: "style-editor"
-	            });
+	            if (this.state.deleted) {
+	                return this.renderDeleted();
+	            }
+	            return _react2.default.createElement(
+	                'div',
+	                {
+	                    className: 'style-editor'
+	                },
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: 'style-name'
+	                    },
+	                    _react2.default.createElement('input', {
+	                        value: this.state.name,
+	                        onChange: this.onChangeName.bind(this)
+	                    }),
+	                    _react2.default.createElement(
+	                        'span',
+	                        { className: 'style-slug' },
+	                        'Slug: ',
+	                        this.state.slug
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'style-classes' },
+	                    _react2.default.createElement('input', {
+	                        value: this.state.style,
+	                        onChange: this.onChangeClasses.bind(this)
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: 'style-delete button',
+	                        onClick: this.onDelete.bind(this)
+	                    },
+	                    'Delete'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    {
+	                        className: 'style-save button',
+	                        onClick: this.onSave.bind(this)
+	                    },
+	                    'Save'
+	                )
+	            );
 	        }
 	    }]);
 	
@@ -21342,73 +21451,90 @@
 	
 	        var first = Object.keys(props.styles)[0];
 	        _this2.state = {
-	            show: first
+	            show: first,
+	            styles: props.styles
+	        };
+	        _this2.type_names = {
+	            container: "Container Styles",
+	            slot: "Slot Styles",
+	            box: "Box Styles"
 	        };
 	
 	        return _this2;
 	    }
 	
 	    _createClass(StylesEditor, [{
-	        key: "renderTabs",
+	        key: 'renderTabs',
 	        value: function renderTabs() {
 	            var _this3 = this;
 	
-	            console.log(this.props.styles);
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                {
-	                    className: "style-type-tabs"
+	                    className: 'style-type-tabs'
 	                },
-	                Object.keys(this.props.styles).map(function (key) {
-	                    return _this3.renderTab(_this3.props.styles[key], key);
+	                Object.keys(this.state.styles).map(function (key) {
+	                    return _this3.renderTab(_this3.state.styles[key], key);
 	                })
 	            );
 	        }
 	    }, {
-	        key: "renderTab",
+	        key: 'renderTab',
 	        value: function renderTab(values, type) {
-	            var name = values.name;
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                {
 	                    key: type,
-	                    className: "style-type-tab",
+	                    className: 'style-type-tab ' + (type == this.state.show ? "active" : ""),
 	                    onClick: this.onClickType.bind(this, type)
 	                },
-	                name
+	                this.type_names[type]
 	            );
 	        }
 	    }, {
-	        key: "onClickType",
+	        key: 'onClickType',
 	        value: function onClickType(type) {
 	            if (this.state.show == type) return;
 	            this.setState({ show: type });
 	        }
 	    }, {
-	        key: "renderStyleEditorItems",
+	        key: 'saveStyle',
+	        value: function saveStyle(index, style) {
+	            this.state.styles[this.state.show][index] = style;
+	            this.setState({ styles: this.state.styles });
+	        }
+	    }, {
+	        key: 'renderStyleEditorItems',
 	        value: function renderStyleEditorItems() {
-	            var elements = this.props.styles[this.state.show].styles;
+	            var _this4 = this;
+	
+	            var elements = this.state.styles[this.state.show];
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                null,
-	                elements.map(function (style) {
-	                    return style.slug;
+	                elements.map(function (style, index) {
+	                    return _react2.default.createElement(StyleEditor, {
+	                        key: style.slug,
+	                        style: style,
+	                        saved: true,
+	                        save: _this4.saveStyle.bind(_this4, index)
+	                    });
 	                })
 	            );
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
+	                'div',
 	                {
-	                    className: "styles-editor"
+	                    className: 'styles-editor'
 	                },
 	                this.renderTabs(),
 	                _react2.default.createElement(
-	                    "div",
+	                    'div',
 	                    {
-	                        className: "styles-list"
+	                        className: 'styles-list'
 	                    },
 	                    this.renderStyleEditorItems()
 	                )

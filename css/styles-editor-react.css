@@ -1,2 +1,30 @@
 #styles-editor { font-family: "OpenSans", sans-serif; }
+
+#styles-editor * { box-sizing: border-box; }
+
+#styles-editor .style-type-tabs { border-bottom: 1px solid #0A246A; margin-bottom: 10px; }
+
+#styles-editor .style-type-tab { display: inline-block; padding: 15px; cursor: pointer; background-color: transparent; -webkit-transition: 0.3s all; transition: 0.3s all; }
+
+#styles-editor .style-type-tab.active, #styles-editor .style-type-tab:hover { background-color: #0A246A; color: white; }
+
+#styles-editor .style-editor { padding: 15px; }
+
+#styles-editor .style-editor:nth-child(even) { background-color: #efefef; }
+
+#styles-editor .style-editor input { margin: 5px 0; padding: 5px; min-width: 250px; }
+
+#styles-editor .style-editor .style-classes input { width: 100%; }
+
+#styles-editor .style-editor .style-slug { color: #5e5e5e; margin-left: 10px; }
+
+#styles-editor .style-editor .style-delete { cursor: pointer; }
+
+#styles-editor .style-editor .style-delete:hover { background-color: #e54747; }
+
+#styles-editor .style-editor .style-undo { margin-left: 5px; }
+
+#styles-editor .button { display: inline-block; border: 1px solid #333; padding: 5px; cursor: pointer; }
+
+#styles-editor .button:hover { color: white; background-color: #0A246A; }
 /*# sourceMappingURL=styles-editor-react.css.map */

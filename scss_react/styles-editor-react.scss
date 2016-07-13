@@ -1,3 +1,66 @@
 #styles-editor{
+  *{
+    box-sizing: border-box;
+  }
   font-family: "OpenSans", sans-serif;
+  .style-type-tabs{
+    border-bottom: 1px solid #0A246A;
+    margin-bottom: 10px;
+  }
+  .style-type-tab{
+    display: inline-block;
+    padding: 15px;
+    cursor:pointer;
+    background-color: transparent;
+    transition: 0.3s all;
+    &.active,
+    &:hover{
+      background-color: #0A246A;
+      color:white;
+    }
+  }
+  .styles-list{
+
+  }
+  .style-editor{
+    padding: 15px;
+    &:nth-child(even){
+      background-color: #efefef;
+    }
+    input{
+      margin: 5px 0;
+      padding: 5px;
+      min-width: 250px;
+    }
+    .style-classes{
+      input{
+        width: 100%;
+      }
+    }
+    .style-slug{
+      color: #5e5e5e;
+      margin-left: 10px;
+    }
+    .style-delete{
+      cursor: pointer;
+      &:hover{
+        background-color: #e54747;
+      }
+    }
+    .style-undo{
+      margin-left: 5px;
+    }
+
+  }
+
+  .button{
+    display:inline-block;
+    border: 1px solid #333;
+    padding: 5px;
+    cursor:pointer;
+    &:hover{
+      color:white;
+      background-color: #0A246A;
+    }
+  }
 }
