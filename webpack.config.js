@@ -3,7 +3,8 @@ module.exports = {
 	entry: {
 		index: './src/index.js',
 		demo_grid: './demo/grid.js',
-		demo_container_dnd: './demo/container-dnd.js'
+		demo_container_dnd: './demo/container-dnd.js',
+		demo_styles_editor: './demo/styles-editor.js'
 	},
 	output: {
 		path: './bundle',
