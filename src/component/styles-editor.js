@@ -10,7 +10,7 @@ class StyleEditor extends Component{
             <div
                 className="style-editor"
             >
-                
+
             </div>
         );
     }
@@ -20,26 +20,27 @@ class StyleEditor extends Component{
 export default class StylesEditor extends Component{
     constructor(props){
         super(props);
+        let first = Object.keys(props.styles)[0];
         this.state = {
-            show: "container",
+            show: first,
         };
 
     }
-    renderTab(type, values){
-        let name = "Unknown";
-        switch (type){
-            case "container":
-                name = "Container Styles";
-                break;
-            case "slot":
-                name = "Slot Styles";
-                break;
-            case "box":
-                name = "Box Styles";
-                break;
-        }
+    renderTabs(){
+        console.log(this.props.styles);
         return (
             <div
+                className="style-type-tabs"
+            >
+                {Object.keys(this.props.styles).map((key)=> this.renderTab(this.props.styles[key], key) )}
+            </div>
+        );
+    }
+    renderTab(values, type){
+        let name = values.name;
+        return (
+            <div
+                key={type}
                 className="style-type-tab"
                 onClick={this.onClickType.bind(this,type)}
                 >
@@ -51,17 +52,24 @@ export default class StylesEditor extends Component{
         if(this.state.show == type) return;
         this.setState({show: type});
     }
+    renderStyleEditorItems(){
+        const elements = this.props.styles[this.state.show].styles;
+        return (
+            <div>
+                {elements.map((style)=> style.slug)}
+            </div>
+        )
+    }
     render(){
         return (
             <div
                 className="styles-editor"
             >
+                {this.renderTabs()}
                 <div
-                    className="style-type-tabs"
-                >
-                    {this.renderTab("container", this.props.container)}
-                    {this.renderTab("slot", this.props.slot)}
-                    {this.renderTab("box", this.props.box)}
+                    className="styles-list"
+                    >
+                    {this.renderStyleEditorItems()}
                 </div>
             </div>
         );

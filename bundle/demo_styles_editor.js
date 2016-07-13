@@ -64,13 +64,26 @@
 	var slot_styles = [{ "title": "slot-style1", "slug": "s-slug1" }, { "title": "slot-style2", "slug": "s-slug2" }];
 	var box_styles = [{ "title": "box-style1", "slug": "b-slug1" }, { "title": "box-style2", "slug": "b-slug2" }];
 	
+	var styles = {
+	    container: {
+	        name: "Container Styles",
+	        styles: container_styles
+	    },
+	    slot: {
+	        name: "Slot Styles",
+	        styles: slot_styles
+	    },
+	    box: {
+	        name: "Box Styles",
+	        styles: box_styles
+	    }
+	};
+	
 	/**
 	 * append app to grid app root
 	 */
 	_reactDom2.default.render(_react2.default.createElement(_stylesEditor2.default, {
-	  container: container_styles,
-	  slot: slot_styles,
-	  box: box_styles
+	    styles: styles
 	}), document.getElementById("styles-editor"));
 
 /***/ },
@@ -21327,31 +21340,38 @@
 	
 	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(StylesEditor).call(this, props));
 	
+	        var first = Object.keys(props.styles)[0];
 	        _this2.state = {
-	            show: "container"
+	            show: first
 	        };
 	
 	        return _this2;
 	    }
 	
 	    _createClass(StylesEditor, [{
-	        key: "renderTab",
-	        value: function renderTab(type, values) {
-	            var name = "Unknown";
-	            switch (type) {
-	                case "container":
-	                    name = "Container Styles";
-	                    break;
-	                case "slot":
-	                    name = "Slot Styles";
-	                    break;
-	                case "box":
-	                    name = "Box Styles";
-	                    break;
-	            }
+	        key: "renderTabs",
+	        value: function renderTabs() {
+	            var _this3 = this;
+	
+	            console.log(this.props.styles);
 	            return _react2.default.createElement(
 	                "div",
 	                {
+	                    className: "style-type-tabs"
+	                },
+	                Object.keys(this.props.styles).map(function (key) {
+	                    return _this3.renderTab(_this3.props.styles[key], key);
+	                })
+	            );
+	        }
+	    }, {
+	        key: "renderTab",
+	        value: function renderTab(values, type) {
+	            var name = values.name;
+	            return _react2.default.createElement(
+	                "div",
+	                {
+	                    key: type,
 	                    className: "style-type-tab",
 	                    onClick: this.onClickType.bind(this, type)
 	                },
@@ -21365,6 +21385,18 @@
 	            this.setState({ show: type });
 	        }
 	    }, {
+	        key: "renderStyleEditorItems",
+	        value: function renderStyleEditorItems() {
+	            var elements = this.props.styles[this.state.show].styles;
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                elements.map(function (style) {
+	                    return style.slug;
+	                })
+	            );
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -21372,14 +21404,13 @@
 	                {
 	                    className: "styles-editor"
 	                },
+	                this.renderTabs(),
 	                _react2.default.createElement(
 	                    "div",
 	                    {
-	                        className: "style-type-tabs"
+	                        className: "styles-list"
 	                    },
-	                    this.renderTab("container", this.props.container),
-	                    this.renderTab("slot", this.props.slot),
-	                    this.renderTab("box", this.props.box)
+	                    this.renderStyleEditorItems()
 	                )
 	            );
 	        }
