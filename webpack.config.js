@@ -1,9 +1,11 @@
 
 module.exports = {
 	entry: {
-		index: './src/index.js',
-		demogrid: './src/demo-grid.js',
-		democontainers: './src/demo-containers.js',
+		the_grid: './src/the-grid.js',
+		demo_grid: './demo/grid.js',
+		demo_container_dnd: './demo/container-dnd.js',
+		demo_styles_editor: './demo/styles-editor.js',
+		demo_containers: './src/demo-containers.js'
 	},
 	output: {
 		path: './bundle',

@@ -7,7 +7,7 @@ import Revisions from './toolbar/revisions';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-class App extends React.Component{
+class TheGrid extends React.Component{
 	constructor(props) {
 		super(props);
 	}

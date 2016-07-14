@@ -1,0 +1,36 @@
+/** old colors */
+.undo-panel { background-color: black; color: white; fill: currentColor; border-radius: 2px; padding: 0 15px; }
+
+.undo-panel .button-undo { color: #536DFE; }
+
+/** imports sub style-editor scss files in style-editor scss */
+#styles-editor { font-family: "OpenSans", sans-serif; }
+
+#styles-editor, #styles-editor * { box-sizing: border-box; }
+
+#styles-editor .styles-list { border: 1px solid black; }
+
+#styles-editor button { -webkit-transition: 0.3s all; transition: 0.3s all; display: inline-block; padding: 5px; cursor: pointer; background-color: black; color: white; border: 1px solid black; border-radius: 2px; fill: currentColor; }
+
+#styles-editor button:hover { color: black; background-color: white; }
+
+#styles-editor .style-add { margin: 15px; }
+
+.styles-editor-single-edit { padding: 15px; }
+
+.styles-editor-single-edit input { margin: 5px 0; padding: 5px; min-width: 250px; }
+
+.styles-editor-single-edit .style-classes input { width: 100%; }
+
+.styles-editor-single-edit .style-slug { color: #5e5e5e; margin-left: 10px; }
+
+.styles-editor-single-edit .style-delete { cursor: pointer; background-color: #ed5032; border-color: #ed5032; color: white; }
+
+.styles-editor-single-edit .style-delete:hover { color: #ed5032; border-color: #ed5032; }
+
+.styles-editor-single-edit + .styles-editor-single-edit { border-top: 1px solid black; }
+
+.styles-editor-type-tab { display: inline-block; padding: 15px; cursor: pointer; background-color: transparent; -webkit-transition: 0.3s all; transition: 0.3s all; }
+
+.styles-editor-type-tab.active, .styles-editor-type-tab:hover { background-color: black; color: white; }
+/*# sourceMappingURL=styles-editor-react.css.map */

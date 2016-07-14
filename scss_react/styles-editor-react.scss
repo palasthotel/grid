@@ -1,0 +1,13 @@
+@import "styleguide/colors";
+@import "styleguide/font";
+
+@import "helpers/button";
+
+@import "namespaced/undo-panel";
+
+/**
+ * imports sub style-editor scss files in style-editor scss
+ */
+@import "namespaced/style-editor/styles-editor";
+
+

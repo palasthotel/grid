@@ -37,20 +37,28 @@ class Container extends Component{
 		super(props);
 		this.state = {active: false};
 	}
+    componentDidMount(){
+        this.props.connectDragPreview(
+            <h1>Container is dragged</h1>
+        );
+    }
 	render(){
 		const class_name = "grid-container grid-contaner-"+this.props.type;
-		const { connectDragSource, connectDragPreview, isDragging } = this.props;
-		return connectDragPreview(
+		const { connectDragSource, isDragging } = this.props;
+        // if(isDragging) return null;
+		return (
 			<div className={class_name}
 			     style={{
 				opacity: isDragging ? 0.5 : 1,
-		        cursor: 'move',
 		        }}
 			>
 				<div className="grid-container-controls">
 					<span className="grid-container-title">{this.props.title}</span>
 					{connectDragSource(
 					  <span
+                          style={{
+                          cursor: "move"
+                          }}
 					    className="grid-container-sorthandle hide-grid-container-editor ui-sortable-handle">
 						  <i className="icon-drag" />
 					  </span>
