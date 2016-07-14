@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "container-factory.css",
+	"sources": [
+		"../../grid-wordpress/lib/scss_react/container-factory.scss"
+	],
+	"mappings": "",
+	"names": []
+}

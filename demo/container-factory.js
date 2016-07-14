@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
  * grid dummy
  * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
  */
-var container_types = require('./demo/container_types');
+var container_types = require('./dummy-data/container_types');
 
 class ContainerEditor extends React.Component{
 	constructor(props){
@@ -155,5 +155,5 @@ ReactDOM.render(
 			container_types={container_types}
         />
 	</div>,
-  document.getElementById("grid-containers-app")
+  document.getElementById("container-factory")
 );

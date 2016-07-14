@@ -33,4 +33,4 @@
 .styles-editor-type-tab { display: inline-block; padding: 15px; cursor: pointer; background-color: transparent; -webkit-transition: 0.3s all; transition: 0.3s all; }
 
 .styles-editor-type-tab.active, .styles-editor-type-tab:hover { background-color: black; color: white; }
-/*# sourceMappingURL=styles-editor-react.css.map */
+/*# sourceMappingURL=styles-editor.css.map */

@@ -5,7 +5,7 @@ module.exports = {
 		demo_grid: './demo/grid.js',
 		demo_container_dnd: './demo/container-dnd.js',
 		demo_styles_editor: './demo/styles-editor.js',
-		demo_containers: './src/demo-containers.js'
+		demo_container_factory: './demo/container-factory.js'
 	},
 	output: {
 		path: './bundle',
