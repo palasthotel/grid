@@ -1,0 +1,11 @@
+
+@import "helpers/mixins";
+@import "helpers/animations";
+@import "helpers/clearfix";
+
+@import "styleguide/font";
+@import "styleguide/colors";
+
+#grid-app{
+  font-family: $font__type;
+}

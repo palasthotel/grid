@@ -1,0 +1,32 @@
+.styles-editor-single-edit{
+  padding: 15px;
+
+  input{
+    margin: 5px 0;
+    padding: 5px;
+    min-width: 250px;
+  }
+  .style-classes{
+    input{
+      width: 100%;
+    }
+  }
+  .style-slug{
+    color: #5e5e5e;
+    margin-left: 10px;
+  }
+  .style-delete{
+    cursor: pointer;
+    background-color: $color__warning;;
+    border-color: $color__warning;;
+    color:white;
+    &:hover{
+      color: $color__warning;
+      border-color:$color__warning;
+    }
+  }
+
+}
+.styles-editor-single-edit + .styles-editor-single-edit{
+  border-top: 1px solid $color__darkest;
+}

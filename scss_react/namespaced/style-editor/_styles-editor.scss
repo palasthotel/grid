@@ -1,0 +1,35 @@
+#styles-editor{
+  font-family: $font__type;
+
+  &,*{
+    box-sizing: border-box;
+  }
+
+  .styles-list{
+    border: 1px solid $color__darkest;
+  }
+
+  button{
+    @include buttonify();
+    display:inline-block;
+    padding: 5px;
+    cursor:pointer;
+    background-color: $color__darkest;
+    color:$color__lightest;
+    border: 1px solid $color__darkest;
+    border-radius: 2px;
+    fill: currentColor;
+    &:hover{
+      color:$color__darkest;
+      background-color: $color__lightest;
+    }
+  }
+
+
+  .style-add{
+    margin: 15px;
+  }
+}
+
+@import "styles-editor-single-edit";
+@import "styles-editor-type-tab";

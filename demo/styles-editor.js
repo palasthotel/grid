@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StylesEditor from '../src/component/styles-editor.js';
+import StylesEditor from '../src/component/styles-editor/styles-editor.js';
 
 const container_styles = [{"style":"container-style1","slug":"c-slug1",name:"Container Style 1"},{"style":"container-style2","slug":"c-slug2",name:"Container Style 2"}];
 const slot_styles = [{"style":"slot-style1","slug":"s-slug1",name:"Slot Style 1"},{"style":"slot-style2","slug":"s-slug2",name:"Slot Style 1"}];

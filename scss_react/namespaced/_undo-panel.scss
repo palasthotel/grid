@@ -1,0 +1,11 @@
+
+.undo-panel{
+  background-color: $color__darkest;
+  color: white;
+  fill: currentColor;
+  border-radius: 2px;
+  padding: 0 15px;
+  .button-undo{
+    color: #536DFE;
+  }
+}

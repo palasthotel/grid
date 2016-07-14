@@ -1,7 +1,7 @@
 
 module.exports = {
 	entry: {
-		index: './src/index.js',
+		the_grid: './src/the-grid.js',
 		demo_grid: './demo/grid.js',
 		demo_container_dnd: './demo/container-dnd.js',
 		demo_styles_editor: './demo/styles-editor.js'

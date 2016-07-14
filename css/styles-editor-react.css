@@ -1,30 +1,36 @@
+/** old colors */
+.undo-panel { background-color: black; color: white; fill: currentColor; border-radius: 2px; padding: 0 15px; }
+
+.undo-panel .button-undo { color: #536DFE; }
+
+/** imports sub style-editor scss files in style-editor scss */
 #styles-editor { font-family: "OpenSans", sans-serif; }
 
-#styles-editor * { box-sizing: border-box; }
+#styles-editor, #styles-editor * { box-sizing: border-box; }
 
-#styles-editor .style-type-tabs { border-bottom: 1px solid #0A246A; margin-bottom: 10px; }
+#styles-editor .styles-list { border: 1px solid black; }
 
-#styles-editor .style-type-tab { display: inline-block; padding: 15px; cursor: pointer; background-color: transparent; -webkit-transition: 0.3s all; transition: 0.3s all; }
+#styles-editor button { -webkit-transition: 0.3s all; transition: 0.3s all; display: inline-block; padding: 5px; cursor: pointer; background-color: black; color: white; border: 1px solid black; border-radius: 2px; fill: currentColor; }
 
-#styles-editor .style-type-tab.active, #styles-editor .style-type-tab:hover { background-color: #0A246A; color: white; }
+#styles-editor button:hover { color: black; background-color: white; }
 
-#styles-editor .style-editor { padding: 15px; }
+#styles-editor .style-add { margin: 15px; }
 
-#styles-editor .style-editor:nth-child(even) { background-color: #efefef; }
+.styles-editor-single-edit { padding: 15px; }
 
-#styles-editor .style-editor input { margin: 5px 0; padding: 5px; min-width: 250px; }
+.styles-editor-single-edit input { margin: 5px 0; padding: 5px; min-width: 250px; }
 
-#styles-editor .style-editor .style-classes input { width: 100%; }
+.styles-editor-single-edit .style-classes input { width: 100%; }
 
-#styles-editor .style-editor .style-slug { color: #5e5e5e; margin-left: 10px; }
+.styles-editor-single-edit .style-slug { color: #5e5e5e; margin-left: 10px; }
 
-#styles-editor .style-editor .style-delete { cursor: pointer; }
+.styles-editor-single-edit .style-delete { cursor: pointer; background-color: #ed5032; border-color: #ed5032; color: white; }
 
-#styles-editor .style-editor .style-delete:hover { background-color: #e54747; }
+.styles-editor-single-edit .style-delete:hover { color: #ed5032; border-color: #ed5032; }
 
-#styles-editor .style-editor .style-undo { margin-left: 5px; }
+.styles-editor-single-edit + .styles-editor-single-edit { border-top: 1px solid black; }
 
-#styles-editor .button { display: inline-block; border: 1px solid #333; padding: 5px; cursor: pointer; }
+.styles-editor-type-tab { display: inline-block; padding: 15px; cursor: pointer; background-color: transparent; -webkit-transition: 0.3s all; transition: 0.3s all; }
 
-#styles-editor .button:hover { color: white; background-color: #0A246A; }
+.styles-editor-type-tab.active, .styles-editor-type-tab:hover { background-color: black; color: white; }
 /*# sourceMappingURL=styles-editor-react.css.map */
