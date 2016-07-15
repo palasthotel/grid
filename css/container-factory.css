@@ -1,0 +1,38 @@
+/** old colors */
+@-webkit-keyframes bounce-x { 0%, 20%, 50%, 80%, 100% { -webkit-transform: translateX(0); transform: translateX(0); }
+  40% { -webkit-transform: translateX(30px); transform: translateX(30px); }
+  60% { -webkit-transform: translateX(15px); transform: translateX(15px); } }
+@keyframes bounce-x { 0%, 20%, 50%, 80%, 100% { -webkit-transform: translateX(0); transform: translateX(0); }
+  40% { -webkit-transform: translateX(30px); transform: translateX(30px); }
+  60% { -webkit-transform: translateX(15px); transform: translateX(15px); } }
+
+@-webkit-keyframes bounce-y-small { 0%, 20%, 50%, 80%, 100% { -webkit-transform: translateY(0); transform: translateY(0); }
+  40% { -webkit-transform: translateY(-15px); transform: translateY(-15px); }
+  60% { -webkit-transform: translateY(-7px); transform: translateY(-7px); } }
+
+@keyframes bounce-y-small { 0%, 20%, 50%, 80%, 100% { -webkit-transform: translateY(0); transform: translateY(0); }
+  40% { -webkit-transform: translateY(-15px); transform: translateY(-15px); }
+  60% { -webkit-transform: translateY(-7px); transform: translateY(-7px); } }
+
+.clearfix:after, .container-factory-slots-preview:after, .container-factory-type:after { content: ""; display: table; clear: both; }
+
+#container-factory { font-family: "OpenSans", sans-serif; max-width: 1000px; margin: 0px auto; }
+
+#container-factory, #container-factory * { box-sizing: border-box; }
+
+#container-factory input { margin: 5px 0; padding: 5px; }
+
+.container-factory { margin-bottom: 30px; }
+
+.container-factory input { width: 100%; }
+
+.container-factory-slot, .container-factory-type .container-factory-type-slot { padding: 15px; border: 1px solid black; }
+
+.container-factory-slot + .container-factory-slot, .container-factory-type .container-factory-type-slot + .container-factory-slot, .container-factory-type .container-factory-slot + .container-factory-type-slot, .container-factory-type .container-factory-type-slot + .container-factory-type-slot { border-left: none; }
+
+.container-factory-slots-preview .container-factory-slot, .container-factory-slots-preview .container-factory-type .container-factory-type-slot, .container-factory-type .container-factory-slots-preview .container-factory-type-slot { float: left; }
+
+.container-factory-type { margin-bottom: 15px; }
+
+.container-factory-type .container-factory-type-slot { float: left; }
+/*# sourceMappingURL=container-factory.css.map */

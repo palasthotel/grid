@@ -46,10 +46,6 @@
 
 	'use strict';
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -58,13 +54,15 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _containerFactory = __webpack_require__(350);
+	
+	var _containerFactory2 = _interopRequireDefault(_containerFactory);
+	
+	var _containerTypes = __webpack_require__(349);
+	
+	var _containerTypes2 = _interopRequireDefault(_containerTypes);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	/**
 	 * grid dummy
@@ -72,221 +70,16 @@
 	 */
 	var container_types = __webpack_require__(339);
 	
-	var ContainerEditor = function (_React$Component) {
-		_inherits(ContainerEditor, _React$Component);
-	
-		function ContainerEditor(props) {
-			_classCallCheck(this, ContainerEditor);
-	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerEditor).call(this, props));
-	
-			_this.state = {
-				slots: 1,
-				dimensions: [1],
-				sidebar: {
-					left: false,
-					right: false
-				}
-			};
-			return _this;
-		}
-	
-		_createClass(ContainerEditor, [{
-			key: 'renderSlot',
-			value: function renderSlot(index, denominator) {
-				console.log("Render slot " + index);
-				var slots = this.state.slots;
-				var dim = this.state.dimensions[index];
-				var width = dim / denominator * 100;
-				var styles = {
-					width: width + "%"
-				};
-				return _react2.default.createElement(
-					'div',
-					{
-						style: styles,
-						key: index,
-						className: 'grid-slot' },
-					_react2.default.createElement('input', {
-						onChange: this.onChangeSlot.bind(this, index),
-						value: this.state.dimensions[index],
-						type: 'number'
-					})
-				);
-			}
-		}, {
-			key: 'renderSlots',
-			value: function renderSlots() {
-				var denominator = 0;
-				for (var i = 0; i < this.state.slots; i++) {
-					denominator += this.state.dimensions[i];
-				}
-				console.log("Has slots " + this.state.slots);
-				console.log("Denominator " + denominator);
-				var slots = [];
-				for (var _i = 0; _i < this.state.slots; _i++) {
-					slots.push(this.renderSlot(_i, denominator));
-				}
-				return slots;
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'grid-container-editor' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-container-num-slots' },
-						_react2.default.createElement('input', {
-							ref: 'num_slots',
-							value: this.state.slots,
-							type: 'number',
-							onChange: this.onChangeSlots.bind(this)
-						})
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-container' },
-						this.renderSlots()
-					)
-				);
-			}
-		}, {
-			key: 'onChangeSlots',
-			value: function onChangeSlots(e) {
-				if (e.target.value == "") return;
-				var new_dim = [];
-				var slots = parseInt(e.target.value);
-				for (var i = 0; i <= slots; i++) {
-					if (_typeof(this.state.dimensions[i]) !== ( true ? 'undefined' : _typeof(undefined))) {
-						new_dim.push(this.state.dimensions[i]);
-					} else {
-						new_dim.push(1);
-					}
-				}
-				this.setState({
-					slots: slots,
-					dimensions: new_dim
-				});
-			}
-		}, {
-			key: 'onChangeSlot',
-			value: function onChangeSlot(index, e) {
-				if (e.target.value == "") {
-					this.state.dimensions[index] = 1;
-					this.setState({
-						dimensions: this.state.dimensions
-					});
-					return;
-				}
-				var dim = parseInt(e.target.value);
-				if (dim < 1) return;
-				this.state.dimensions[index] = parseInt(e.target.value);
-				this.setState({
-					dimensions: this.state.dimensions
-				});
-			}
-		}]);
-	
-		return ContainerEditor;
-	}(_react2.default.Component);
-	
-	var ContainerType = function (_React$Component2) {
-		_inherits(ContainerType, _React$Component2);
-	
-		function ContainerType() {
-			_classCallCheck(this, ContainerType);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerType).apply(this, arguments));
-		}
-	
-		_createClass(ContainerType, [{
-			key: 'getDenominator',
-			value: function getDenominator() {
-				var slots = this.props.type.split("-");
-				var denom = 0;
-				for (var i = 1; i < slots.length; i++) {
-					denom += parseInt(slots[i]);
-				}
-				return denom;
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ key: container.type, className: 'grid-container' },
-					_react2.default.createElement(
-						'p',
-						null,
-						container.type
-					)
-				);
-			}
-		}]);
-	
-		return ContainerType;
-	}(_react2.default.Component);
-	
-	var ContainerTypes = function (_React$Component3) {
-		_inherits(ContainerTypes, _React$Component3);
-	
-		function ContainerTypes(props) {
-			_classCallCheck(this, ContainerTypes);
-	
-			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerTypes).call(this, props));
-	
-			_this3.state = {
-				trashed: props.trashed
-			};
-			return _this3;
-		}
-	
-		_createClass(ContainerTypes, [{
-			key: 'renderContainer',
-			value: function renderContainer(container) {
-				if (!container.type.startsWith("c-") && !container.type.startsWith('s-')) return;
-				return _react2.default.createElement(
-					'div',
-					{ key: container.type, className: 'grid-container' },
-					_react2.default.createElement(
-						'p',
-						null,
-						container.type
-					)
-				);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this4 = this;
-	
-				return _react2.default.createElement(
-					'div',
-					{ className: 'grid-containers' },
-					this.props.container_types.map(function (container) {
-						return _this4.renderContainer(container);
-					})
-				);
-			}
-		}]);
-	
-		return ContainerTypes;
-	}(_react2.default.Component);
-	
 	/**
 	 * append app to grid app root
 	 */
-	
-	
 	_reactDom2.default.render(_react2.default.createElement(
-		'div',
-		{ className: 'grid-container-factory' },
-		_react2.default.createElement(ContainerEditor, null),
-		_react2.default.createElement(ContainerTypes, {
-			container_types: container_types
-		})
+	  'div',
+	  { className: 'grid-container-factory' },
+	  _react2.default.createElement(_containerFactory2.default, null),
+	  _react2.default.createElement(_containerTypes2.default, {
+	    container_types: container_types
+	  })
 	), document.getElementById("container-factory"));
 
 /***/ },
@@ -21565,6 +21358,525 @@
 		"space_to_right": "1d3",
 		"numslots": "1"
 	}];
+
+/***/ },
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.ContainerType = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _containerType = __webpack_require__(351);
+	
+	var _containerType2 = _interopRequireDefault(_containerType);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ContainerTypes = function (_React$Component) {
+		_inherits(ContainerTypes, _React$Component);
+	
+		function ContainerTypes() {
+			_classCallCheck(this, ContainerTypes);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerTypes).apply(this, arguments));
+		}
+	
+		_createClass(ContainerTypes, [{
+			key: 'renderContainer',
+	
+	
+			/**
+	   * ---------------------
+	   * lifecycle
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * rendering
+	   * ---------------------
+	   */
+			value: function renderContainer(container) {
+				if (!container.type.startsWith("c-") && !container.type.startsWith('s-')) return;
+				return _react2.default.createElement(ContainerType, {
+					key: container.type,
+					container: container,
+					trashed: false
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container-factory-types' },
+					this.props.container_types.map(function (container) {
+						return _this2.renderContainer(container);
+					})
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return ContainerTypes;
+	}(_react2.default.Component);
+	
+	exports.default = ContainerTypes;
+	
+	var ContainerType = exports.ContainerType = function (_React$Component2) {
+		_inherits(ContainerType, _React$Component2);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function ContainerType(props) {
+			_classCallCheck(this, ContainerType);
+	
+			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerType).call(this, props));
+	
+			_this3.state = {
+				trashed: props.trashed
+			};
+			return _this3;
+		}
+	
+		/**
+	  * ---------------------
+	  * rendering
+	  * ---------------------
+	  */
+	
+	
+		_createClass(ContainerType, [{
+			key: 'renderSlot',
+			value: function renderSlot(slot, index) {
+				var style = {
+					width: _containerType2.default.getSlotWidth(slot) + "%"
+				};
+				return _react2.default.createElement(
+					'div',
+					{
+						key: index,
+						style: style,
+						className: 'container-factory-type-slot'
+					},
+					slot
+				);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var sizes = _containerType2.default.getSlotSizes(this.props.container.type);
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'container-factory-type'
+					},
+					sizes.map(this.renderSlot.bind(this))
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return ContainerType;
+	}(_react2.default.Component);
+
+/***/ },
+/* 350 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ContainerFactory = function (_Component) {
+		_inherits(ContainerFactory, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function ContainerFactory(props) {
+			_classCallCheck(this, ContainerFactory);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerFactory).call(this, props));
+	
+			_this.state = {
+				slots: 1,
+				dimensions: [1],
+				sidebar: {
+					left: false,
+					right: false
+				}
+			};
+			return _this;
+		}
+	
+		/**
+	  * ---------------------
+	  * rendering
+	  * ---------------------
+	  */
+	
+		_createClass(ContainerFactory, [{
+			key: "renderSlot",
+			value: function renderSlot(index, denominator) {
+				var dim = this.state.dimensions[index];
+				var width = dim / denominator * 100;
+				var styles = {
+					width: width + "%"
+				};
+				return _react2.default.createElement(
+					"div",
+					{
+						style: styles,
+						key: index,
+						className: "container-factory-slot" },
+					dim,
+					"d",
+					denominator,
+					_react2.default.createElement("br", null),
+					_react2.default.createElement(
+						"button",
+						{ onClick: this.onPlus.bind(this, index) },
+						"+"
+					),
+					" / ",
+					_react2.default.createElement(
+						"button",
+						{ onClick: this.onMinus.bind(this, index) },
+						"-"
+					)
+				);
+			}
+		}, {
+			key: "renderSlots",
+			value: function renderSlots() {
+				var denominator = 0;
+				for (var i = 0; i < this.state.slots; i++) {
+					denominator += this.state.dimensions[i];
+				}
+				var slots = [];
+				for (var _i = 0; _i < this.state.slots; _i++) {
+					slots.push(this.renderSlot(_i, denominator));
+				}
+				return slots;
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ className: "container-factory" },
+					_react2.default.createElement(
+						"div",
+						{ className: "container-factory-num-slots" },
+						_react2.default.createElement(
+							"button",
+							{ onClick: this.onMoreSlots.bind(this) },
+							"+"
+						),
+						this.state.slots,
+						_react2.default.createElement(
+							"button",
+							{ onClick: this.onLessSlots.bind(this) },
+							"-"
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "container-factory-slots-preview" },
+						this.renderSlots()
+					),
+					_react2.default.createElement(
+						"button",
+						{
+							onClick: this.onSaveContainer.bind(this)
+						},
+						"Save Container"
+					)
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+		}, {
+			key: "onChangeSlots",
+			value: function onChangeSlots(slots) {
+				var new_dim = [];
+				for (var i = 0; i <= slots; i++) {
+					if (_typeof(this.state.dimensions[i]) !== ( true ? "undefined" : _typeof(undefined))) {
+						new_dim.push(this.state.dimensions[i]);
+					} else {
+						new_dim.push(1);
+					}
+				}
+				this.setState({
+					slots: slots,
+					dimensions: new_dim
+				});
+			}
+		}, {
+			key: "onMoreSlots",
+			value: function onMoreSlots() {
+				var slots = this.state.slots;
+				slots++;
+				if (slots > 12) return;
+				this.onChangeSlots(slots);
+			}
+		}, {
+			key: "onLessSlots",
+			value: function onLessSlots() {
+				var slots = this.state.slots;
+				slots--;
+				if (slots < 1) return;
+				this.onChangeSlots(slots);
+			}
+			// onChangeSlot(index, e){
+			// 	if(e.target.value == ""){
+			// 		this.state.dimensions[index] = 1;
+			// 		this.setState({
+			// 			dimensions: this.state.dimensions
+			// 		});
+			// 		return;
+			// 	}
+			// 	const dim = parseInt(e.target.value);
+			// 	if(dim < 1) return;
+			// 	this.state.dimensions[index] = parseInt(e.target.value);
+			// 	this.setState({
+			// 		dimensions: this.state.dimensions
+			// 	});
+			// }
+	
+		}, {
+			key: "onMinus",
+			value: function onMinus(index) {
+				var dim = this.state.dimensions[index];
+				if (dim > 1) this.state.dimensions[index]--;
+				this.setState({ dimensions: this.state.dimensions });
+			}
+		}, {
+			key: "onPlus",
+			value: function onPlus(index) {
+				this.state.dimensions[index]++;
+				this.setState({ dimensions: this.state.dimensions });
+			}
+		}, {
+			key: "onSaveContainer",
+			value: function onSaveContainer() {
+				console.log("save");
+			}
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return ContainerFactory;
+	}(_react.Component);
+	
+	exports.default = ContainerFactory;
+
+/***/ },
+/* 351 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * container types
+	 * @type {{SIDEBAR_LEFT: string, SIDEBAR_RIGHT: string, CONTAINER: string, INVISIBLE: string, UNKNOWN:string}}
+	 */
+	var TYPES = exports.TYPES = {
+		SIDEBAR_LEFT: "sidebar_left",
+		SIDEBAR_RIGHT: "sidebar_right",
+		CONTAINER: "container",
+		INVISIBLE: "invisible",
+		UNKNOWN: "unknown"
+	};
+	
+	/**
+	 * helper functions for container types
+	 */
+	
+	var ContainerTypeHelper = function () {
+		function ContainerTypeHelper() {
+			_classCallCheck(this, ContainerTypeHelper);
+		}
+	
+		_createClass(ContainerTypeHelper, null, [{
+			key: "isSidebar",
+	
+	
+			/**
+	   * check if container type is sidebar
+	   * @param container_type
+	   * @returns {boolean}
+	   */
+			value: function isSidebar(container_type) {
+				return container_type.startsWith("s-");
+			}
+	
+			/**
+	   * extracts slot sizes array from container type
+	   * @returns {array}
+	   * @param container_type
+	   */
+	
+		}, {
+			key: "getSlotSizes",
+			value: function getSlotSizes(container_type) {
+				return container_type.split("-").splice(1);
+			}
+	
+			/**
+	   * calculates with of a divider slot size on percent
+	   * @returns {float}
+	   * @param slot_size
+	   */
+	
+		}, {
+			key: "getSlotWidth",
+			value: function getSlotWidth(slot_size) {
+				var parts = slot_size.split("d");
+				return parts[0] / parts[1] * 100;
+			}
+	
+			/**
+	   * get denominator for container type
+	   * @param container_type
+	   * @returns {number}
+	   */
+	
+		}, {
+			key: "getDenominator",
+			value: function getDenominator(container_type) {
+				var slots = container_type.split("-");
+				var denom = 0;
+				for (var i = 1; i < slots.length; i++) {
+					denom += parseInt(slots[i]);
+				}
+				return denom;
+			}
+	
+			/**
+	   * returns a static container type
+	   * @param container_type
+	   * @returns {TYPES}
+	   */
+	
+		}, {
+			key: "getType",
+			value: function getType(container_type) {
+				if (container_type.startsWith("c-")) {
+					return TYPES.CONTAINER;
+				}
+				if (container_type.startsWith("i-")) {
+					return TYPES.INVISIBLE;
+				}
+				if (container_type.startsWith("s-0")) {
+					return TYPES.SIDEBAR_RIGHT;
+				}
+				if (container_type.startsWith("s-")) {
+					return TYPES.SIDEBAR_LEFT;
+				}
+				return TYPES.UNKNOWN;
+			}
+		}]);
+	
+		return ContainerTypeHelper;
+	}();
+	
+	exports.default = ContainerTypeHelper;
 
 /***/ }
 /******/ ]);

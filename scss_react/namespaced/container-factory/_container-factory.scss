@@ -1,0 +1,25 @@
+
+#container-factory{
+	font-family: $font__type;
+	&,*{
+		box-sizing: border-box;
+	}
+	
+	max-width: 1000px;
+	margin: 0px auto;
+	
+	input{
+		margin: 5px 0;
+		padding: 5px;
+	}
+}
+
+.container-factory{
+	margin-bottom: 30px;
+	input{
+		width: 100%;
+	}
+	.container-factory-num-slots{
+		
+	}
+}

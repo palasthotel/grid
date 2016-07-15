@@ -1,0 +1,7 @@
+.container-factory-slot{
+	padding:15px;
+	border:1px solid $color__darkest;
+	& + &{
+		border-left: none;
+	}
+}

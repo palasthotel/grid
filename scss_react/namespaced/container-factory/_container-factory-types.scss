@@ -1,0 +1,18 @@
+.container-factory-types{
+	
+}
+
+.container-factory-type{
+	
+	@extend .clearfix;
+	
+	margin-bottom: 15px;
+	
+	.container-factory-type-slot{
+		
+		float:left;
+		
+		@extend .container-factory-slot;
+		
+	}
+}

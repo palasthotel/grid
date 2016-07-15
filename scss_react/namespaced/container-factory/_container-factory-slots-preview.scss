@@ -1,0 +1,9 @@
+
+.container-factory-slots-preview{
+	@extend .clearfix;
+	//margin-left: -5px;
+	//margin-right: -5px;
+	.container-factory-slot{
+		float:left;
+	}
+}
