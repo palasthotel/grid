@@ -23,7 +23,17 @@ class post
 	function grid_load( $post ) {
 		global $wpdb;
 		$postid = $post->ID;
+		
 		if ( get_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
+			
+			/**
+			 * don't load grid if it is disabled
+			 */
+			if(get_post_meta($post->ID, PositionInPost::META_KEY,true) == PositionInPost::POSITION_NONE) return false;
+			
+			/**
+			 * look for grid id
+			 */
 			$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
 			if ( $wpdb->num_rows > 0 ) {
 				$grid_id = $rows[0]->grid_id;
@@ -52,15 +62,24 @@ class post
 	function grid_render( $content ) {
 		$post = get_post();
 		if ( isset( $post->grid ) ) {
-			/**
-			 * default position is on bottom of content
-			 */
-			$position = "bottom";
-			$position = apply_filters("grid_the_content", $position);
-			if($position == "top"){
-				return $post->grid->render( false ).$content;
-			} else if($position == "bottom"){
-				return $content.$post->grid->render( false );
+			$position = get_post_meta($post->ID, PositionInPost::META_KEY, true);
+			switch ($position){
+				/**
+				 * render grid only
+				 */
+				case PositionInPost::POSITION_ONLY:
+					return $post->grid->render( false );
+				/**
+				 * top position
+				 */
+				case PositionInPost::POSITION_TOP:
+					return $post->grid->render( false ).$content;
+				/**
+				 * default ist bottom
+				 */
+				case PositionInPost::POSITION_BOTTOM:
+				default:
+					return $content.$post->grid->render( false );
 			}
 		}
 		/**
