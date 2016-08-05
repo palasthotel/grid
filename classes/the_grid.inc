@@ -30,7 +30,7 @@ class the_grid
 	function grid_wp_actions( $actions, $entity ) {
 		if ( true == get_option( 'grid_'.get_post_type().'_enabled', false ) ) {
 			$temp = array();
-			$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">The Grid</a>';
+			$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">'.__('Edit Grid', 'grid').'</a>';
 			$actions = array_merge( $temp, $actions );
 		}
 		return $actions;
@@ -47,8 +47,23 @@ class the_grid
 		global $wpdb;
 		//	$storage=grid_wp_get_storage();
 		$postid = intval($_GET['postid']);
+		
+		/**
+		 * if there is no post id. we cannot do anytihng
+		 */
+		if( 0=== $postid ){
+			?>
+			<p><?php _e('Ups! I cannot find a Grid without an Post ID.', 'grid'); ?></p>
+			<?php
+			return;
+		}
+		
+		/**
+		 * look for grid id
+		 */
 		$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
-		if ( ! empty( $_POST ) ) {
+		
+		if ( 0 == count( $rows ) ) {
 			$storage = grid_wp_get_storage();
 			$id = $storage->createGrid();
 			$grid = $storage->loadGrid( $id );
@@ -59,74 +74,68 @@ class the_grid
 				$grid->insertContainer( get_option( 'grid_default_container' ), 0 );
 			}
 			$wpdb->query( 'insert into '.$wpdb->prefix."grid_nodes (nid,grid_id) values ($postid,$id)" );
-			wp_redirect( add_query_arg( array( 'page' => 'grid', 'postid' => $postid ), admin_url( 'admin.php' ) ) );
-		}
-		if ( 0 == count( $rows ) ) {
-			?>
-			<form method="post" action="<?php echo add_query_arg( array( 'noheader' => true, 'page' => 'grid', 'postid' => $postid ), admin_url( 'admin.php' ) );?>">
-				<p>There is no grid. Boot one?</p>
-				<?php echo submit_button( __( 'boot new grid', 'grid' ) ); ?>
-			</form>
-			<?php
-		} else {
-			global $grid_lib;
+			$grid_id = $id;
+		} else{
 			$grid_id = $rows[0]->grid_id;
-
-			$post = get_post( $postid );
-
-			grid_enqueue_editor_files();
-
-			echo '<div class="wrap"><h2>'.$post->post_title.
-				' <a title="Return to the post-edit page" class="add-new-h2"'.
-				' href="'.admin_url("post.php?post=$postid&action=edit").'" >Edit Post</a'.
-				'><a class="add-new-h2" href="'.
-				get_permalink( $postid ).'">View Post</a></h2> </div>';
-
-			/**
-			 * async parameters
-			 */
-			$async_service='';
-			$async_domain='';
-			$async_author='';
-			$async_path='';
-			$async_timeout = 60*5;
-			if(get_option('grid_async',true))
-			{
-				/** @var \WP_User $user */
-				$user=wp_get_current_user();
-				$async_service = get_option("grid_async_url",'');
-				if(''==$async_service)
-				{
-					$async_service="http://async.the-grid.ws";
-				}
-				$async_domain= get_home_url();
-				$async_author=$user->display_name;
-				$async_path="grid-post-id-".$postid;
-
-				$async_timeout = get_option("grid_async_timeout",5*60);
-			}
-
-
-			$html = $grid_lib->getEditorHTML(
-				$grid_id,
-				'grid',
-				add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
-				add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
-				get_option( 'grid_debug_mode', false ),
-				add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
-				add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) ),
-				$async_service,
-				$async_domain,
-				$async_author,
-				$async_path,
-			  	$async_timeout
-			);
-
-
-			grid_wp_load_js();
-
-			echo $html;
 		}
+		
+		global $grid_lib;
+		
+
+		$post = get_post( $postid );
+
+		grid_enqueue_editor_files();
+
+		echo '<div class="wrap"><h2>'.$post->post_title.
+			' <a title="Return to the post-edit page" class="add-new-h2"'.
+			' href="'.admin_url("post.php?post=$postid&action=edit").'" >Edit Post</a'.
+			'><a class="add-new-h2" href="'.
+			get_permalink( $postid ).'">View Post</a></h2> </div>';
+
+		/**
+		 * async parameters
+		 */
+		$async_service='';
+		$async_domain='';
+		$async_author='';
+		$async_path='';
+		$async_timeout = 60*5;
+		if(get_option('grid_async',true))
+		{
+			/** @var \WP_User $user */
+			$user=wp_get_current_user();
+			$async_service = get_option("grid_async_url",'');
+			if(''==$async_service)
+			{
+				$async_service="http://async.the-grid.ws";
+			}
+			$async_domain= get_home_url();
+			$async_author=$user->display_name;
+			$async_path="grid-post-id-".$postid;
+
+			$async_timeout = get_option("grid_async_timeout",5*60);
+		}
+
+
+		$html = $grid_lib->getEditorHTML(
+			$grid_id,
+			'grid',
+			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
+			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),
+			get_option( 'grid_debug_mode', false ),
+			add_query_arg( array( 'grid_preview' => true ), get_permalink( $postid ) ),
+			add_query_arg( array( 'grid_preview' => true, 'grid_revision' => '{REV}' ), get_permalink( $postid ) ),
+			$async_service,
+			$async_domain,
+			$async_author,
+			$async_path,
+		    $async_timeout
+		);
+
+
+		grid_wp_load_js();
+
+		echo $html;
 	}
 
 	function ckeditor_config() {

@@ -21,6 +21,9 @@ if ( ! defined( 'WPINC' ) ) {
 class grid_plugin {
 	public $dir;
 	public $url;
+	
+	
+	
 	/**
 	 * construct grid plugin
 	 */
@@ -30,6 +33,12 @@ class grid_plugin {
 		 */
 		$this->dir = plugin_dir_path(__FILE__);
 		$this->url = plugin_dir_url(__FILE__);
+		
+		/**
+		 * load constants
+		 */
+		require($this->dir .'/constants/position_in_post.php');
+		
 		
 		/**
 		 * load translations
@@ -504,7 +513,7 @@ function grid_wp_get_privs() {
 /**
  * deprecated function
  * use global $grid_plugin->get_storage()
- * @return grid_storage
+ * @return grid_db grid_storage
  */
 function grid_wp_get_storage() {
 	global $grid_plugin;
