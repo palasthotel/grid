@@ -75,6 +75,11 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.6.2 =
+ * Selectable Grid position to Post content
+ * Disable Grid in single Post
+ * Localization
+
 = 1.6.1 =
  * RSS box in core
  * Plaintext box in core

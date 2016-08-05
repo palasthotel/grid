@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Grid\n"
+"POT-Creation-Date: 2016-08-05 19:56+0200\n"
+"PO-Revision-Date: 2016-08-05 20:03+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: wordpress_plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: classes/ajaxendpoint.inc\n"
+"X-Poedit-SearchPath-2: classes/boxes.inc\n"
+"X-Poedit-SearchPath-3: classes/container_factory.inc\n"
+"X-Poedit-SearchPath-4: classes/meta_boxes.inc\n"
+"X-Poedit-SearchPath-5: classes/post.inc\n"
+"X-Poedit-SearchPath-6: classes/privileges.inc\n"
+"X-Poedit-SearchPath-7: classes/reuse_box.inc\n"
+"X-Poedit-SearchPath-8: classes/reuse_container.inc\n"
+"X-Poedit-SearchPath-9: classes/settings.inc\n"
+"X-Poedit-SearchPath-10: classes/styles.inc\n"
+"X-Poedit-SearchPath-11: classes/the_grid.inc\n"
+"X-Poedit-SearchPath-12: core/classes/wordpress/grid_media_box.php\n"
+"X-Poedit-SearchPath-13: core/classes/wordpress/grid_post_box.php\n"
+"X-Poedit-SearchPath-14: core/classes/wordpress/grid_posts_box.php\n"
+"X-Poedit-SearchPath-15: core/classes/wordpress/grid_sidebar_box.php\n"
+"X-Poedit-SearchPath-16: core/classes/wordpress/grid_wp_html_box.php\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: core/classes/wordpress/grid_posts_box.php:180
+msgid "Any post type"
+msgstr "Jeder Post Typ"
+
+#: wordpress_plugin.php:138
+msgctxt "slug"
+msgid "landing_page"
+msgstr "uebersichtsseite"
+
+#: wordpress_plugin.php:147 classes/settings.inc:92
+msgid "Landing Pages"
+msgstr "Übersichtsseiten"
+
+#: wordpress_plugin.php:148
+msgid "Landing Page"
+msgstr "Übersichtsseite"
+
+#: wordpress_plugin.php:152
+msgid "This is where you can add new landing pages to your site."
+msgstr "Hier kannst du neue Übersichtsseiten erstellen."
+
+#: wordpress_plugin.php:174 classes/settings.inc:94
+msgid "Sidebars"
+msgstr "Seitenleisten"
+
+#: wordpress_plugin.php:175
+msgid "Sidebar"
+msgstr "Seitenleiste"
+
+#: wordpress_plugin.php:179
+msgid "This is where you can add new sidebars to your site."
+msgstr "Hier kannst du neue Seitenleisten erstellen."
+
+#. Plugin Name of the plugin/theme
+#: classes/meta_boxes.inc:23 classes/settings.inc:159
+msgid "Grid"
+msgstr "Grid"
+
+#: classes/meta_boxes.inc:39
+msgid "Save post before you can use grid."
+msgstr "Du musst speichern damit Grid verfügbar ist."
+
+#: classes/meta_boxes.inc:45
+msgid "Switch to the Grid"
+msgstr "Zum Grid"
+
+#: classes/meta_boxes.inc:57 classes/meta_boxes.inc:61
+msgid "Position of grid"
+msgstr "Position des Grid"
+
+#: classes/meta_boxes.inc:66
+msgid "Append to content"
+msgstr "Nach dem Inhalt"
+
+#: classes/meta_boxes.inc:67
+msgid "Prepend to content"
+msgstr "Vor dem Inhalt"
+
+#: classes/meta_boxes.inc:68
+msgid "Grid only, no content"
+msgstr "Nur das Grid"
+
+#: classes/meta_boxes.inc:69
+msgid "Disable grid rendering"
+msgstr "Grid nicht rendern"
+
+#: classes/settings.inc:51
+msgid "Grid Settings"
+msgstr "Grid Einstellungen"
+
+#: classes/settings.inc:70
+msgid "Default Styles"
+msgstr "Standard Styles"
+
+#: classes/settings.inc:71
+msgid "Container Style"
+msgstr "Container Style"
+
+#: classes/settings.inc:73
+msgid "Slot Style"
+msgstr "Slot Style"
+
+#: classes/settings.inc:75
+msgid "Box Style"
+msgstr "Box Style"
+
+#: classes/settings.inc:81
+msgid "Post Types"
+msgstr "Post Typen"
+
+#: classes/settings.inc:100
+msgid "Post Types for content search"
+msgstr "Post-Typen für die Inhaltssuche"
+
+#: classes/settings.inc:111
+msgid "Which post type to use as sidebar content"
+msgstr "Welche Post Type soll für Seitenleisten verwendet werden?"
+
+#: classes/settings.inc:117
+msgid "New Grids"
+msgstr "Neue Grids"
+
+#: classes/settings.inc:118
+msgid "Which container should be placed automatically"
+msgstr ""
+"Welcher Container Typ soll automatisch beim Anlegen eines neuen Grid "
+"hinzugefügt werden?"
+
+#: classes/settings.inc:124
+msgid "Debug Mode"
+msgstr "Entwickler Modus"
+
+#: classes/settings.inc:125
+msgid "Turn debug mode on/off"
+msgstr "Schalte Entwickermodus ein/aus"
+
+#: classes/settings.inc:131
+msgid "Async"
+msgstr "Async"
+
+#: classes/settings.inc:133
+msgctxt "grid_async"
+msgid "Enable"
+msgstr "Einschalten"
+
+#: classes/settings.inc:136
+msgid "Service url (leave empty to use default url)"
+msgstr "Service URL"
+
+#: classes/settings.inc:139
+msgid ""
+"After how many seconds an author loses the lock on a grid when not active?"
+msgstr ""
+"Nach wie vielen Sekunden Inaktivität soll ein Autor den Zugriff an einen "
+"anderen Autor verlieren?"
+
+#: classes/settings.inc:145
+msgid "Mediaselect Info"
+msgstr "Medienauswahlinformationen"
+
+#: classes/settings.inc:146
+msgid "Set an info text for media in the WordPress media-box"
+msgstr "Infotext für die Medien Grid-Box"
+
+#: classes/settings.inc:152
+msgid "Mediaselect Types"
+msgstr "Medienauswahl Typen"
+
+#: classes/settings.inc:153
+msgid "Choose types for media-box"
+msgstr "Wähle die Dateitypen für die Medien Grid-Box"
+
+#: classes/settings.inc:160
+msgid "Landing Page base"
+msgstr "Übersichtsseiten URL Basis"
+
+#: classes/settings.inc:165
+msgid "Set which default styles should be applied."
+msgstr "Definiere die Standard Styles."
+
+#: classes/settings.inc:174 classes/settings.inc:192 classes/settings.inc:210
+msgctxt "grid_styles"
+msgid "None"
+msgstr "Keinen"
+
+#: classes/settings.inc:231
+msgid "Which post types should have grid support?"
+msgstr "Welche Post Typen sollen Grid Support haben?"
+
+#: classes/settings.inc:243
+msgid "Which post types should be found in grid content search?"
+msgstr "Welche Post Typen sollen in der Grid Inhaltssuche gefunden werden?"
+
+#: classes/settings.inc:272
+msgctxt "default_container"
+msgid "Empty"
+msgstr "Leer"
+
+#: classes/the_grid.inc:33
+msgid "Edit Grid"
+msgstr "Grid bearbeiten"
+
+#: classes/the_grid.inc:56
+msgid "Ups! I cannot find a Grid without an Post ID."
+msgstr "Ups! Ich konnte für die Post ID kein Grid finden."
+
+#: classes/the_grid.inc:91
+msgid "Edit Post"
+msgstr "Beitrag bearbeiten"
+
+#: classes/the_grid.inc:93
+msgid "View Post"
+msgstr "Beitrag ansehen"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/palasthotel/grid-wordpress"
+msgstr "https://github.com/palasthotel/grid-wordpress"
+
+#. Description of the plugin/theme
+msgid "Helps layouting pages with containerist."
+msgstr "Hilft beim Containeristen erstellen von Übersichtsseiten."
+
+#. Author of the plugin/theme
+msgid ""
+"Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, "
+"Edward Bock, Enno Welbers)"
+msgstr ""
+"Palasthotel <rezeption@palasthotel.de> (in Person: Benjamin Birkenhake, "
+"Edward Bock, Enno Welbers)"
+
+#. Author URI of the plugin/theme
+msgid "http://www.palasthotel.de"
+msgstr "http://www.palasthotel.de"
