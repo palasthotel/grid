@@ -48,7 +48,7 @@ class settings
 		?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
-			<h2>Grid Settings</h2>
+			<h2><?php _e('Grid Settings', 'grid'); ?></h2>
 			<form method="post" action="options.php">
 				<?php
 				settings_fields( 'grid_settings' );
@@ -171,7 +171,7 @@ class settings
 		$setting = get_option( 'grid_default_container_style', '__NONE__' );
 		?>
 		<select id="grid_default_container_style" name="grid_default_container_style">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' ) ?>>None</option>
+			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' ) ?>><?php _e('None', 'grid'); ?></option>
 			<?php
 			foreach ( $types as $idx => $elem ) {
 				?>
@@ -189,7 +189,7 @@ class settings
 		$setting = get_option( 'grid_default_slot_style', '__NONE__' );
 		?>
 		<select id="grid_default_slot_style" name="grid_default_slot_style">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>>None</option>
+			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>><?php _e('None', 'grid'); ?></option>
 			<?php
 			foreach ( $types as $idx => $elem ) {
 				?>
@@ -207,7 +207,7 @@ class settings
 		$setting = get_option( 'grid_default_box_style', '__NONE__' );
 		?>
 		<select id="grid_default_box_style" name="grid_default_box_style">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '');?>>None</option>
+			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '');?>><?php _e('None', 'grid'); ?></option>
 			<?php
 			foreach ( $types as $idx => $elem ) {
 				?>
@@ -228,7 +228,7 @@ class settings
 	}
 
 	function post_type_settings_section() {
-		echo 'Which post types should have grid support?';
+		echo __('Which post types should have grid support?', 'grid');
 	}
 
 	function post_type_search_html( $args ) {
@@ -240,7 +240,7 @@ class settings
 	}
 
 	function post_type_search_settings_section() {
-		echo 'Which post types should be found in grid content search?';
+		echo __('Which post types should be found in grid content search?', 'grid');
 	}
 
 	function sidebar_html() {
@@ -269,7 +269,7 @@ class settings
 		$containers = $storage->fetchContainerTypes();
 		?>
 		<select id="grid_default_container" name="grid_default_container">
-			<option value="__NONE__">Empty</option>
+			<option value="__NONE__"><?php _ex('Empty', 'default_container', 'grid'); ?></option>
 			<?php
 			foreach ( $containers as $container ) {
 				$type = $container['type'];

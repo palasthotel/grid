@@ -26,7 +26,8 @@ class meta_boxes
 		if ( get_option( 'grid_'.$post->post_type.'_enabled', false ) ) {
 			$url = add_query_arg( array( 'page' => 'grid', 'postid' => $post->ID ), admin_url( 'admin.php' ) );
 			?>
-			<a class="button" href="<?php echo $url?>">Switch to the Grid</a>
+			<a class="button" href="<?php echo $url?>"><?php __('Switch to the Grid', 'grid'); ?></a>
+			
 			<?php
 			do_action('grid_post_edit_meta_box');
 		} else {

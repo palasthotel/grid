@@ -30,6 +30,11 @@ class grid_plugin {
 		 */
 		$this->dir = plugin_dir_path(__FILE__);
 		$this->url = plugin_dir_url(__FILE__);
+		
+		/**
+		 * load translations
+		 */
+		load_plugin_textdomain( 'grid', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		global $grid_loaded;
 		$grid_loaded = false;
