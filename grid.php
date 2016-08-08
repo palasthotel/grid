@@ -163,7 +163,7 @@ class grid_library
 	 * @param int $timeout for author grid lock in seconds (default is 5 minutes)
 	 * @return string
 	 */
-	public function getEditorHTML($grid_id, $grid_mode, $pathToCKEditorConfig, $ajaxendpoint, $debug_mode, $preview_url, $preview_pattern, $async_service="", $async_domain="", $async_author="", $async_path="", $async_timeout = 5*60)
+	public function getEditorHTML($grid_id, $grid_mode, $pathToCKEditorConfig, $ajaxendpoint, $debug_mode, $preview_url, $preview_pattern, $async_service="", $async_domain="", $async_author="", $async_path="", $async_timeout = 300)
 	{
 		ob_start();
 		require( dirname(__FILE__)."/templates/backend/grid.tpl.php" );
