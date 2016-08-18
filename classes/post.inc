@@ -13,7 +13,7 @@ class post
 {
 	function __construct(){
 		add_action( 'the_post', array( $this, 'grid_load' ) );
-		add_filter( 'the_content', array( $this, 'grid_render') );
+		add_filter( 'the_content', array( $this, 'grid_render'), 99 );
 	}
 
 	/**
@@ -61,6 +61,9 @@ class post
 	 */
 	function grid_render( $content ) {
 		$post = get_post();
+		
+		$content = $this->get_the_content_wrapper($content);
+		
 		if ( isset( $post->grid ) ) {
 			$position = get_post_meta($post->ID, PositionInPost::META_KEY, true);
 			switch ($position){
@@ -82,11 +85,27 @@ class post
 					return $content.$post->grid->render( false );
 			}
 		}
+		
 		/**
 		 * if nothing matched don't render grid on content
 		 */
 		return $content;
 
+	}
+	
+	/**
+	 * @param $content
+	 *
+	 * @return mixed
+	 */
+	function get_the_content_wrapper($content){
+		if($content == "") return $content;
+		$content_wrapper_class = array("grid-the-content");
+		$content_wrapper_class = apply_filters("grid_the_content_wrapper_class", $content_wrapper_class);
+		if(!is_array($content_wrapper_class) || count($content_wrapper_class) < 1){
+			return $content;
+		}
+		return "<div class='".implode(" ",$content_wrapper_class)."'>".$content."</div>";
 	}
 
 }
