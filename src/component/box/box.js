@@ -46,7 +46,10 @@ class Box extends Component{
 			title = <h3>{this.props.title}</h3>
 		}
 		return connectDragPreview(
-			<div className={class_name}>
+			<div className={class_name}
+			style={{
+				display: isDragging? "none": "block",
+			}}>
 				<div className="grid-box-content">
 					{title}
 					<div className="prolog">{this.props.prolog}</div>

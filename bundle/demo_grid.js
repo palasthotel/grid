@@ -30382,7 +30382,10 @@
 				}
 				return connectDragPreview(_react2.default.createElement(
 					'div',
-					{ className: class_name },
+					{ className: class_name,
+						style: {
+							display: isDragging ? "none" : "block"
+						} },
 					_react2.default.createElement(
 						'div',
 						{ className: 'grid-box-content' },
