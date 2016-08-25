@@ -14,7 +14,7 @@ module.exports = {
 			"classes":[
 
 			],
-			"title":"",
+			"title":"Erster Container",
 			"titleurl":"",
 			"readmore":"",
 			"readmoreurl":"",
@@ -150,7 +150,7 @@ module.exports = {
 			"classes":[
 
 			],
-			"title":"",
+			"title":"Container zwei",
 			"titleurl":"",
 			"readmore":"",
 			"readmoreurl":"",
@@ -275,7 +275,7 @@ module.exports = {
 			"classes":[
 
 			],
-			"title":"",
+			"title":"Container 3",
 			"titleurl":"",
 			"readmore":"",
 			"readmoreurl":"",

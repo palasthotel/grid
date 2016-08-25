@@ -54,11 +54,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _containerFactory = __webpack_require__(350);
+	var _containerFactory = __webpack_require__(341);
 	
 	var _containerFactory2 = _interopRequireDefault(_containerFactory);
 	
-	var _containerTypes = __webpack_require__(349);
+	var _containerTypes = __webpack_require__(342);
 	
 	var _containerTypes2 = _interopRequireDefault(_containerTypes);
 	
@@ -21361,182 +21361,7 @@
 
 /***/ },
 /* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.ContainerType = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _containerType = __webpack_require__(351);
-	
-	var _containerType2 = _interopRequireDefault(_containerType);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ContainerTypes = function (_React$Component) {
-		_inherits(ContainerTypes, _React$Component);
-	
-		function ContainerTypes() {
-			_classCallCheck(this, ContainerTypes);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerTypes).apply(this, arguments));
-		}
-	
-		_createClass(ContainerTypes, [{
-			key: 'renderContainer',
-	
-	
-			/**
-	   * ---------------------
-	   * lifecycle
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * rendering
-	   * ---------------------
-	   */
-			value: function renderContainer(container) {
-				if (!container.type.startsWith("c-") && !container.type.startsWith('s-')) return;
-				return _react2.default.createElement(ContainerType, {
-					key: container.type,
-					container: container,
-					trashed: false
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-	
-				return _react2.default.createElement(
-					'div',
-					{ className: 'container-factory-types' },
-					this.props.container_types.map(function (container) {
-						return _this2.renderContainer(container);
-					})
-				);
-			}
-	
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
-		}]);
-	
-		return ContainerTypes;
-	}(_react2.default.Component);
-	
-	exports.default = ContainerTypes;
-	
-	var ContainerType = exports.ContainerType = function (_React$Component2) {
-		_inherits(ContainerType, _React$Component2);
-	
-		/**
-	  * ---------------------
-	  * lifecycle
-	  * ---------------------
-	  */
-	
-		function ContainerType(props) {
-			_classCallCheck(this, ContainerType);
-	
-			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerType).call(this, props));
-	
-			_this3.state = {
-				trashed: props.trashed
-			};
-			return _this3;
-		}
-	
-		/**
-	  * ---------------------
-	  * rendering
-	  * ---------------------
-	  */
-	
-	
-		_createClass(ContainerType, [{
-			key: 'renderSlot',
-			value: function renderSlot(slot, index) {
-				var style = {
-					width: _containerType2.default.getSlotWidth(slot) + "%"
-				};
-				return _react2.default.createElement(
-					'div',
-					{
-						key: index,
-						style: style,
-						className: 'container-factory-type-slot'
-					},
-					slot
-				);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var sizes = _containerType2.default.getSlotSizes(this.props.container.type);
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'container-factory-type'
-					},
-					sizes.map(this.renderSlot.bind(this))
-				);
-			}
-	
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
-		}]);
-	
-		return ContainerType;
-	}(_react2.default.Component);
-
-/***/ },
-/* 350 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21759,7 +21584,174 @@
 	exports.default = ContainerFactory;
 
 /***/ },
-/* 351 */
+/* 342 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.ContainerType = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _containerType = __webpack_require__(343);
+	
+	var _containerType2 = _interopRequireDefault(_containerType);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ContainerTypes = function (_React$Component) {
+		_inherits(ContainerTypes, _React$Component);
+	
+		function ContainerTypes() {
+			_classCallCheck(this, ContainerTypes);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerTypes).apply(this, arguments));
+		}
+	
+		_createClass(ContainerTypes, [{
+			key: 'renderContainer',
+	
+	
+			/**
+	   * ---------------------
+	   * lifecycle
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * rendering
+	   * ---------------------
+	   */
+			value: function renderContainer(container) {
+				if (!container.type.startsWith("c-") && !container.type.startsWith('s-')) return;
+				return _react2.default.createElement(ContainerType, {
+					key: container.type,
+					container: container,
+					trashed: false
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container-factory-types' },
+					this.props.container_types.map(function (container) {
+						return _this2.renderContainer(container);
+					})
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return ContainerTypes;
+	}(_react2.default.Component);
+	
+	exports.default = ContainerTypes;
+	
+	var ContainerType = exports.ContainerType = function (_React$Component2) {
+		_inherits(ContainerType, _React$Component2);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function ContainerType(props) {
+			_classCallCheck(this, ContainerType);
+	
+			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerType).call(this, props));
+	
+			_this3.state = {
+				trashed: props.trashed
+			};
+			return _this3;
+		}
+	
+		/**
+	  * ---------------------
+	  * rendering
+	  * ---------------------
+	  */
+	
+	
+		_createClass(ContainerType, [{
+			key: 'renderSlot',
+			value: function renderSlot(slot, index) {
+				var style = {
+					width: _containerType2.default.getSlotWidth(slot) + "%"
+				};
+				return _react2.default.createElement(
+					'div',
+					{
+						key: index,
+						style: style,
+						className: 'container-factory-type-slot'
+					},
+					slot
+				);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var sizes = _containerType2.default.getSlotSizes(this.props.container.type);
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'container-factory-type'
+					},
+					sizes.map(this.renderSlot.bind(this))
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return ContainerType;
+	}(_react2.default.Component);
+
+/***/ },
+/* 343 */
 /***/ function(module, exports) {
 
 	"use strict";

@@ -1,25 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../src/view/app';
+import Grid from '../src/component/grid.js';
+
+/**
+ * drag and drop context
+ */
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 /**
  * grid dummy
- * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
  */
-var grid = require('./dummy-data/grid');
-var revisions = require('./dummy-data/revisions');
-var container_types = require('./dummy-data/container_types');
-var box_types = require('./dummy-data/box_types');
+const container = require('./dummy-data/grid').container;
 
 /**
- * append app to grid app root
+ * add drag and drop context to grid. Normally TheGrid holds context.
+ * @type {__ReactDnd.ContextComponentClass<P>}
+ */
+const DNDGrid = DragDropContext(HTML5Backend)(Grid);
+
+/**
+ * render to demo dom
  */
 ReactDOM.render(
-  <App
-    grid={grid}
-    revisions={revisions}
-    container_types={container_types}
-    box_types={box_types}
+  <DNDGrid
+    container={container}
 	/>,
-  document.getElementById("grid-app")
+  document.getElementById("grid-demo")
 );
