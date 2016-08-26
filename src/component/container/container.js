@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
-import { ItemTypes } from '../../constants';
 
+import { ItemTypes, Events } from '../../constants.js';
 import ContainerDragPreview from '../../helper/container-drag-preview.js';
 
 
@@ -35,35 +35,32 @@ function collect(connect, monitor) {
 }
 
 class Container extends Component{
+	/**
+	 * ---------------------
+	 * lifecycle
+	 * ---------------------
+	 */
 	constructor(props){
 		super(props);
 		this.state = {active: false};
 	}
 	componentDidMount(){
-		console.log("did mount");
-		const { connectDragPreview } = this.props;
-		
-		let result = ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
-		
-		result.img.onload = () => connectDragPreview(result.img);
-		
-		result.img.src = result.src;
-		
+		this.props.events.on(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
 	}
-	domReady(element){
-		this.state.dom = element;
-		
-	}
+	/**
+	 * ---------------------
+	 * rendering
+	 * ---------------------
+	 */
 	render(){
 		const class_name = "grid-container grid-contaner-"+this.props.type;
-		const { connectDragSource, connectDragPreview, isDragging } = this.props;
-		// if(isDragging) return null;
+		const { connectDragSource, isDragging } = this.props;
 		return (
 			<div className={class_name}
 			     style={{
 				     display: isDragging ? "none" : "block",
 			     }}
-			     ref={this.domReady.bind(this)}
+			     ref={ (element) => this.state.dom = element }
 			>
 				
 				<div className="grid-container-controls">
@@ -80,10 +77,18 @@ class Container extends Component{
 					<div className="grid-container-options">
 						<span className="grid-container-options-icon">Options <i className="icon-options" /></span>
 						<ul className="grid-container-options-list">
-							<li className="grid-container-options-list-item" role="edit"><i className="icon-edit" /> Edit</li>
-							<li className="grid-container-options-list-item" role="reuse"><i className="icon-reuse" /> Reuse</li>
-							<li className="grid-container-options-list-item" role="toggleslotstyles"><i className="icon-style" /> Slot-styles</li>
-							<li className="grid-container-options-list-item" role="trash"><i className="icon-trash" /> Delete</li>
+							<li className="grid-container-options-list-item" role="edit">
+								<i className="icon-edit" /> Edit
+							</li>
+							<li className="grid-container-options-list-item" role="reuse">
+								<i className="icon-reuse" /> Reuse
+							</li>
+							<li className="grid-container-options-list-item" role="toggleslotstyles">
+								<i className="icon-style" /> Slot-styles
+							</li>
+							<li className="grid-container-options-list-item" role="trash">
+								<i className="icon-trash" /> Delete
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -101,6 +106,27 @@ class Container extends Component{
 				</div>
 			</div>
 		)
+	}
+	
+	/**
+	 * ---------------------
+	 * events
+	 * ---------------------
+	 */
+	onGridResize(size){
+		this.buildDragPreview(size);
+	}
+	
+	/**
+	 * ---------------------
+	 * other functions
+	 * ---------------------
+	 */
+	buildDragPreview(size){
+		const { connectDragPreview } = this.props;
+		let result = ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
+		result.img.onload = () => connectDragPreview(result.img);
+		result.img.src = result.src;
 	}
 }
 

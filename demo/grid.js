@@ -8,6 +8,10 @@ import Grid from '../src/component/grid.js';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import {EventEmitter} from 'events';
+const events = new EventEmitter();
+events.setMaxListeners(0);
+
 /**
  * grid dummy
  */
@@ -25,6 +29,7 @@ const DNDGrid = DragDropContext(HTML5Backend)(Grid);
 ReactDOM.render(
   <DNDGrid
     container={container}
+    events={events}
 	/>,
   document.getElementById("grid-demo")
 );

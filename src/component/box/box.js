@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes } from '../../constants.js';
+import { ItemTypes, Events } from '../../constants.js';
 
 const boxSource = {
 	beginDrag(props){
@@ -33,17 +33,36 @@ function collect(connect, monitor) {
 }
 
 class Box extends Component{
+	/**
+	 * ---------------------
+	 * lifecycle
+	 * ---------------------
+	 */
 	constructor(props){
 		super(props);
 	}
+	/**
+	 * ---------------------
+	 * rendering
+	 * ---------------------
+	 */
 	render(){
 		const { connectDragSource, connectDragPreview, isDragging } = this.props;
 		const class_name = "grid-box ";
 		let title = "";
 		if(this.props.titleurl){
-			title = <h3>{this.props.titleurl}<a href={this.props.titleurl} className="box-title">{this.props.title}</a></h3>
+			title = <h3>
+				{this.props.titleurl}
+				<a
+					href={this.props.titleurl}
+				    className="box-title">
+					{this.props.title}
+					</a>
+			</h3>
 		} else {
-			title = <h3>{this.props.title}</h3>
+			title = <h3>
+				{this.props.title}
+				</h3>
 		}
 		return connectDragPreview(
 			<div className={class_name}
@@ -78,6 +97,17 @@ class Box extends Component{
 			</div>
 		)
 	}
+	/**
+	 * ---------------------
+	 * events
+	 * ---------------------
+	 */
+	
+	/**
+	 * ---------------------
+	 * other functions
+	 * ---------------------
+	 */
 }
 
 Box.propTypes = {

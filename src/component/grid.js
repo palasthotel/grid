@@ -1,14 +1,22 @@
+"use strict";
+
 import React, { Component, PropTypes } from 'react';
 
 import Container from './container/container.js';
 import ContainerDrop from './container/container-drop.js';
 import Slot from './slot/slot';
-
 import BoxDrop from './box/box-drop.js';
 import Box from './box/box.js';
 
+import { Events } from '../constants.js';
+
 export default class Grid extends Component{
 	
+	/**
+	 * ---------------------
+	 * lifecycle
+	 * ---------------------
+	 */
 	constructor(props){
 		super(props);
 		
@@ -33,8 +41,20 @@ export default class Grid extends Component{
 			},
 			loading: false
 		};
-		
 	}
+	componentDidMount(){
+		window.addEventListener('resize', this.onResize.bind(this));
+		this.onResize();
+	}
+	componentWillUnmount(){
+		window.removeEventListener('resize', this.onResize);
+	}
+	
+	/**
+	 * ---------------------
+	 * rendering
+	 * ---------------------
+	 */
 	
 	/**
 	 * render boxes
@@ -56,14 +76,6 @@ export default class Grid extends Component{
 			
 		}
 		return $boxes;
-	}
-	onBoxDrop(box, slot, container){
-		console.log("dropped on container ");
-		console.log(container);
-		console.log("dropped on slot ");
-		console.log(slot);
-		console.log("box dropped ");
-		console.log(box);
 	}
 	renderBoxDrop(index){
 		const drop_key = "box-drop-"+index;
@@ -119,6 +131,7 @@ export default class Grid extends Component{
 					key={container.id}
 					{...container}
 					index={i}
+				    events={this.props.events}
 				>
 					{this.renderSlots(container.slots)}
 				</Container>
@@ -133,10 +146,6 @@ export default class Grid extends Component{
 		}
 		return $containers;
 	}
-	
-	onContainerDrop(index){
-		console.log("dropped on index "+index);
-	}
 	renderContainerDrop(index){
 		const drop_key = "container-drop_"+index;
 		return(
@@ -147,7 +156,6 @@ export default class Grid extends Component{
 			/>
 		);
 	}
-	
 	/**
 	 * render the whole grid
 	 * @returns {XML}
@@ -155,11 +163,44 @@ export default class Grid extends Component{
 	render(){
 		return (
 			<div className="grid-wrapper">
-				<div className="grid-containers-wrapper">
+				<div
+					className="grid-containers-wrapper"
+					ref={(element)=> this.state.dom = element}
+				>
 					{this.renderContainers(this.props.container)}
 				</div>
 			</div>
 		);
+	}
+	
+	/**
+	 * ---------------------
+	 * events
+	 * ---------------------
+	 */
+	onResize(){
+		console.log("grid width",this.getWidth());
+		this.props.events.emit(Events.GRID_RESIZE.key, this.getWidth());
+	}
+	onContainerDrop(index){
+		console.log("dropped on index "+index);
+	}
+	onBoxDrop(box, slot, container){
+		console.log("dropped on container ");
+		console.log(container);
+		console.log("dropped on slot ");
+		console.log(slot);
+		console.log("box dropped ");
+		console.log(box);
+	}
+	
+	/**
+	 * ---------------------
+	 * other functions
+	 * ---------------------
+	 */
+	getWidth(){
+		return this.state.dom.clientWidth;
 	}
 }
 
@@ -167,6 +208,7 @@ Grid.propTypes = {
 	container: PropTypes.arrayOf(
 		PropTypes.object.isRequired
 	).isRequired,
+	events: PropTypes.object.isRequired,
 };
 
 

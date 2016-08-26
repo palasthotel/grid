@@ -1,9 +1,19 @@
-import React from 'react';
+import {Component} from 'react';
 
-export default class Slot extends React.Component{
+export default class Slot extends Component{
+	/**
+	 * ---------------------
+	 * lifecycle
+	 * ---------------------
+	 */
 	constructor(props){
 		super(props);
 	}
+	/**
+	 * ---------------------
+	 * rendering
+	 * ---------------------
+	 */
 	render(){
 		return(
 			<div className="grid-slot grid-slot-1d3">
@@ -12,16 +22,48 @@ export default class Slot extends React.Component{
 			</div>
 		)
 	}
+	/**
+	 * ---------------------
+	 * events
+	 * ---------------------
+	 */
+	
+	/**
+	 * ---------------------
+	 * other functions
+	 * ---------------------
+	 */
 }
 
-class StyleChanger extends React.Component{
+class StyleChanger extends Component{
+	/**
+	 * ---------------------
+	 * lifecycle
+	 * ---------------------
+	 */
 	constructor(props){
 		super(props);
 	}
+	/**
+	 * ---------------------
+	 * rendering
+	 * ---------------------
+	 */
 	render(){
 		return (
 			<div className="grid-slot-style-changer style-changer">
 			</div>
 		)
 	}
+	/**
+	 * ---------------------
+	 * events
+	 * ---------------------
+	 */
+	
+	/**
+	 * ---------------------
+	 * other functions
+	 * ---------------------
+	 */
 }
