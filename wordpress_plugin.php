@@ -668,6 +668,12 @@ function grid_wp_activate() {
 			if ( isset( $data['mysql_engine'] ) ) {
 				$query .= 'ENGINE = '.$data['mysql_engine'];
 			}
+			if ( isset( $data['mysql_character_set'] ) ) {
+				if(isset( $data['mysql_engine'] ) ) {
+					$query.=' , ';
+				}
+				$query .= 'CHARACTER SET '.$data['mysql_character_set'];
+			}
 			$grid_connection->query( $query ) or die( $grid_connection->error.' '.$query );
 
 		}
