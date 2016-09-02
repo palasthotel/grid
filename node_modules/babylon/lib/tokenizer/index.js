@@ -203,9 +203,8 @@ var Tokenizer = function () {
       if (!this.isLookahead) {
         this.state.tokens.push(comment);
         this.state.comments.push(comment);
+        this.addComment(comment);
       }
-
-      this.addComment(comment);
     }
   }, {
     key: "skipBlockComment",
@@ -360,7 +359,7 @@ var Tokenizer = function () {
       var width = 1;
       var next = this.input.charCodeAt(this.state.pos + 1);
 
-      if (next === 42 && this.hasPlugin("exponentiationOperator")) {
+      if (next === 42) {
         // '*'
         width++;
         next = this.input.charCodeAt(this.state.pos + 2);
@@ -623,12 +622,12 @@ var Tokenizer = function () {
         if (code >= 97) {
           val = code - 97 + 10; // a
         } else if (code >= 65) {
-            val = code - 65 + 10; // A
-          } else if (code >= 48 && code <= 57) {
-              val = code - 48; // 0-9
-            } else {
-                val = Infinity;
-              }
+          val = code - 65 + 10; // A
+        } else if (code >= 48 && code <= 57) {
+          val = code - 48; // 0-9
+        } else {
+          val = Infinity;
+        }
         if (val >= radix) break;
         ++this.state.pos;
         total = total * radix + val;

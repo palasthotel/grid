@@ -54,21 +54,63 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _app = __webpack_require__(172);
+	var _events = __webpack_require__(351);
 	
-	var _app2 = _interopRequireDefault(_app);
+	var _theGrid = __webpack_require__(359);
+	
+	var _theGrid2 = _interopRequireDefault(_theGrid);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
-	 * append app to grid app root
+	 *
+	 * @type {
+	 *  {
+	 *  id: null,
+	 *  events: *,
+	 *  toobar_buttons: Array,
+	 *  toolbar_buttons_editor: Array,
+	 *  overlays: Array,
+	 *  overlays_editor: Array
+	 *  }}
 	 */
-	_reactDom2.default.render(_react2.default.createElement(_app2.default, {
-	  grid: grid,
-	  revisions: revisions,
-	  container_types: container_types,
-	  box_types: box_types
-	}), document.getElementById("grid-app"));
+	var GRID = window.GRID = {
+		id: null,
+		events: new _events.EventEmitter(),
+		toobar_buttons: [],
+		toolbar_buttons_editor: [],
+		overlays: [],
+		overlays_editor: []
+	};
+	
+	GRID.events.setMaxListeners(0);
+	
+	/**
+	 * wait for dom to be ready so all plugins etc are loaded
+	 */
+	document.addEventListener("DOMContentLoaded", function (event) {
+		/**
+	  * Toolbar button components
+	  */
+		var tb = window.grid_toolbar_buttons;
+		var etb = window.grid_toolbar_buttons_editor;
+	
+		/**
+	  * grid overlays
+	  */
+		var gov = window.grid_overlays;
+		var eov = window.grid_overlays_editor;
+	
+		/**
+	  * append app to grid app root
+	  */
+		_reactDom2.default.render(_react2.default.createElement(_theGrid2.default, {
+			grid: grid,
+			revisions: revisions,
+			container_types: container_types,
+			box_types: box_types
+		}), document.getElementById("grid-app"));
+	});
 
 /***/ },
 /* 1 */
@@ -21381,522 +21423,9 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _grid = __webpack_require__(173);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _elements = __webpack_require__(303);
-	
-	var _elements2 = _interopRequireDefault(_elements);
-	
-	var _buttons = __webpack_require__(304);
-	
-	var _buttons2 = _interopRequireDefault(_buttons);
-	
-	var _revisions = __webpack_require__(305);
-	
-	var _revisions2 = _interopRequireDefault(_revisions);
-	
-	var _reactDnd = __webpack_require__(176);
-	
-	var _reactDndHtml5Backend = __webpack_require__(306);
-	
-	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var App = function (_React$Component) {
-	    _inherits(App, _React$Component);
-	
-	    function App(props) {
-	        _classCallCheck(this, App);
-	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
-	    }
-	
-	    _createClass(App, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { id: 'new-grid-wrapper' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'grid-toolbar' },
-	                    _react2.default.createElement(_buttons2.default, null),
-	                    _react2.default.createElement(_elements2.default, {
-	                        container_types: this.props.container_types,
-	                        box_types: this.props.box_types
-	                    }),
-	                    _react2.default.createElement(_revisions2.default, {
-	                        list: this.props.revisions
-	                    })
-	                ),
-	                _react2.default.createElement(_grid2.default, {
-	                    id: this.props.grid.id,
-	                    container: this.props.grid.container,
-	                    draft: this.props.grid.isDraft
-	                })
-	            );
-	        }
-	    }]);
-	
-	    return App;
-	}(_react2.default.Component);
-	
-	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(App);
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _container = __webpack_require__(174);
-	
-	var _container2 = _interopRequireDefault(_container);
-	
-	var _containerDrop = __webpack_require__(299);
-	
-	var _containerDrop2 = _interopRequireDefault(_containerDrop);
-	
-	var _slot = __webpack_require__(300);
-	
-	var _slot2 = _interopRequireDefault(_slot);
-	
-	var _boxDrop = __webpack_require__(302);
-	
-	var _boxDrop2 = _interopRequireDefault(_boxDrop);
-	
-	var _box = __webpack_require__(301);
-	
-	var _box2 = _interopRequireDefault(_box);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Grid = function (_Component) {
-		_inherits(Grid, _Component);
-	
-		function Grid(props) {
-			_classCallCheck(this, Grid);
-	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Grid).call(this, props));
-	
-			_this.state = {
-				container: {
-					dragging: false,
-					from: null,
-					to: null
-				},
-				box: {
-					dragging: false,
-					from: {
-						container: null,
-						slot: null,
-						index: null
-					},
-					to: {
-						container: null,
-						slot: null,
-						index: null
-					}
-				},
-				loading: false
-			};
-	
-			return _this;
-		}
-	
-		/**
-	  * render boxes
-	  * @param boxes
-	  * @returns {Array}
-	  */
-	
-	
-		_createClass(Grid, [{
-			key: 'renderBoxes',
-			value: function renderBoxes(boxes) {
-				var $boxes = [];
-				for (var i = 0; i < boxes.length; i++) {
-					var box = boxes[i];
-					$boxes.push(this.renderBoxDrop(i));
-					$boxes.push(_react2.default.createElement(_box2.default, _extends({
-						key: i,
-						index: i
-					}, box)));
-					if (i == boxes.length - 1) $boxes.push(this.renderBoxDrop(++i));
-				}
-				return $boxes;
-			}
-		}, {
-			key: 'onBoxDrop',
-			value: function onBoxDrop(box, slot, container) {
-				console.log("dropped on container ");
-				console.log(container);
-				console.log("dropped on slot ");
-				console.log(slot);
-				console.log("box dropped ");
-				console.log(box);
-			}
-		}, {
-			key: 'renderBoxDrop',
-			value: function renderBoxDrop(index) {
-				var drop_key = "box-drop-" + index;
-				return _react2.default.createElement(_boxDrop2.default, {
-					key: drop_key,
-					index: index,
-					onDrop: this.onBoxDrop.bind(this, index)
-				});
-			}
-	
-			/**
-	   * render slots
-	   * @param slots
-	   * @returns {*}
-	   */
-	
-		}, {
-			key: 'renderSlots',
-			value: function renderSlots(slots) {
-				var _this2 = this;
-	
-				return slots.map(function (slot, index) {
-					return _react2.default.createElement(
-						_slot2.default,
-						_extends({
-							key: index
-						}, slot),
-						_this2.renderBoxes(slot.boxes)
-					);
-				});
-			}
-	
-			/**
-	   * render containers
-	   * @param containers
-	   * @returns {Array}
-	   */
-	
-		}, {
-			key: 'renderContainers',
-			value: function renderContainers(containers) {
-				var $containers = [];
-				var drop_key = "";
-	
-				for (var i = 0; i < containers.length; i++) {
-					var container = containers[i];
-	
-					/**
-	     * render drop area for containers
-	     * @type {string}
-	     */
-					drop_key = "container-drop_" + i;
-					$containers.push(this.renderContainerDrop(i));
-	
-					/**
-	     * render container
-	     */
-					$containers.push(_react2.default.createElement(
-						_container2.default,
-						_extends({
-							key: container.id
-						}, container, {
-							index: i
-						}),
-						this.renderSlots(container.slots)
-					));
-	
-					/**
-	     * render last drop area for containers
-	     */
-					if (i == this.props.container.length - 1) {
-						$containers.push(this.renderContainerDrop(++i));
-					}
-				}
-				return $containers;
-			}
-		}, {
-			key: 'onContainerDrop',
-			value: function onContainerDrop(index) {
-				console.log("dropped on index " + index);
-			}
-		}, {
-			key: 'renderContainerDrop',
-			value: function renderContainerDrop(index) {
-				var drop_key = "container-drop_" + index;
-				return _react2.default.createElement(_containerDrop2.default, {
-					key: drop_key,
-					index: index,
-					onDrop: this.onContainerDrop.bind(this, index)
-				});
-			}
-	
-			/**
-	   * render the whole grid
-	   * @returns {XML}
-	   */
-	
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'grid-wrapper' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-containers-wrapper' },
-						this.renderContainers(this.props.container)
-					)
-				);
-			}
-		}]);
-	
-		return Grid;
-	}(_react.Component);
-	
-	exports.default = Grid;
-	
-	
-	Grid.propTypes = {
-		id: _react.PropTypes.number.isRequired,
-		container: _react.PropTypes.arrayOf(_react.PropTypes.object.isRequired).isRequired,
-		draft: _react.PropTypes.bool.isRequired
-	};
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(175);
-	
-	var _reactDnd = __webpack_require__(176);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var containerSource = {
-		beginDrag: function beginDrag(props) {
-			console.log("begin drag");
-			return {
-				id: props.id,
-				index: props.index
-			};
-		},
-		endDrag: function endDrag(props, monitor) {
-			console.log("end drop");
-			var item = monitor.getItem();
-			var dropResult = monitor.getDropResult();
-	
-			if (dropResult) {
-				// window.alert( // eslint-disable-line no-alert
-				//   `You dropped ${item.name} into ${dropResult.name}!`
-				// );
-			}
-		}
-	};
-	
-	function collect(connect, monitor) {
-		return {
-			connectDragSource: connect.dragSource(),
-			connectDragPreview: connect.dragPreview(),
-			isDragging: monitor.isDragging()
-		};
-	}
-	
-	var Container = function (_Component) {
-		_inherits(Container, _Component);
-	
-		function Container(props) {
-			_classCallCheck(this, Container);
-	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Container).call(this, props));
-	
-			_this.state = { active: false };
-			return _this;
-		}
-	
-		_createClass(Container, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				this.props.connectDragPreview(_react2.default.createElement(
-					'h1',
-					null,
-					'Container is dragged'
-				));
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var class_name = "grid-container grid-contaner-" + this.props.type;
-				var _props = this.props;
-				var connectDragSource = _props.connectDragSource;
-				var isDragging = _props.isDragging;
-				// if(isDragging) return null;
-	
-				return _react2.default.createElement(
-					'div',
-					{ className: class_name,
-						style: {
-							opacity: isDragging ? 0.5 : 1
-						}
-					},
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-container-controls' },
-						_react2.default.createElement(
-							'span',
-							{ className: 'grid-container-title' },
-							this.props.title
-						),
-						connectDragSource(_react2.default.createElement(
-							'span',
-							{
-								style: {
-									cursor: "move"
-								},
-								className: 'grid-container-sorthandle hide-grid-container-editor ui-sortable-handle' },
-							_react2.default.createElement('i', { className: 'icon-drag' })
-						)),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-container-options' },
-							_react2.default.createElement(
-								'span',
-								{ className: 'grid-container-options-icon' },
-								'Options ',
-								_react2.default.createElement('i', { className: 'icon-options' })
-							),
-							_react2.default.createElement(
-								'ul',
-								{ className: 'grid-container-options-list' },
-								_react2.default.createElement(
-									'li',
-									{ className: 'grid-container-options-list-item', role: 'edit' },
-									_react2.default.createElement('i', { className: 'icon-edit' }),
-									' Edit'
-								),
-								_react2.default.createElement(
-									'li',
-									{ className: 'grid-container-options-list-item', role: 'reuse' },
-									_react2.default.createElement('i', { className: 'icon-reuse' }),
-									' Reuse'
-								),
-								_react2.default.createElement(
-									'li',
-									{ className: 'grid-container-options-list-item', role: 'toggleslotstyles' },
-									_react2.default.createElement('i', { className: 'icon-style' }),
-									' Slot-styles'
-								),
-								_react2.default.createElement(
-									'li',
-									{ className: 'grid-container-options-list-item', role: 'trash' },
-									_react2.default.createElement('i', { className: 'icon-trash' }),
-									' Delete'
-								)
-							)
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-container-content' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-container-before' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'grid-container-prolog' },
-								'PROLOG'
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-slots-wrapper' },
-							this.props.children
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-container-after' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'grid-container-epilog' },
-								'EPILOG'
-							)
-						)
-					)
-				);
-			}
-		}]);
-	
-		return Container;
-	}(_react.Component);
-	
-	Container.propTypes = {
-		connectDragSource: _react.PropTypes.func.isRequired,
-		connectDragPreview: _react.PropTypes.func.isRequired,
-		isDragging: _react.PropTypes.bool.isRequired,
-		id: _react.PropTypes.any.isRequired
-	};
-	
-	exports.default = (0, _reactDnd.DragSource)(_constants.ItemTypes.CONTAINER, containerSource, collect)(Container);
-
-/***/ },
+/* 172 */,
+/* 173 */,
+/* 174 */,
 /* 175 */
 /***/ function(module, exports) {
 
@@ -28093,870 +27622,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 299 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(175);
-	
-	var _reactDnd = __webpack_require__(176);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var containerTarget = {
-		drop: function drop(props, monitor) {
-			console.log("drop");
-			props.onDrop(monitor.getItem());
-		}
-	};
-	
-	function collect(connect, monitor) {
-		return {
-			connectDropTarget: connect.dropTarget(),
-			isOver: monitor.isOver(),
-			canDrop: monitor.canDrop()
-		};
-	}
-	
-	var ContainerDrop = function (_Component) {
-		_inherits(ContainerDrop, _Component);
-	
-		function ContainerDrop() {
-			_classCallCheck(this, ContainerDrop);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerDrop).apply(this, arguments));
-		}
-	
-		_createClass(ContainerDrop, [{
-			key: 'onDrop',
-			value: function onDrop() {
-				console.log("onDrop");
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _props = this.props;
-				var connectDropTarget = _props.connectDropTarget;
-				var isOver = _props.isOver;
-				var canDrop = _props.canDrop;
-	
-	
-				var color = isOver ? 'red' : 'transparent';
-				var display = canDrop ? 'block' : 'none';
-	
-				return connectDropTarget(_react2.default.createElement(
-					'div',
-					{ className: 'container-drop-area-wrapper', style: {
-							backgroundColor: color,
-							display: display
-						} },
-					_react2.default.createElement('div', { className: 'container-drop-area' })
-				));
-			}
-		}]);
-	
-		return ContainerDrop;
-	}(_react.Component);
-	
-	ContainerDrop.propTypes = {
-		index: _react.PropTypes.number.isRequired,
-		isOver: _react.PropTypes.bool.isRequired,
-		onDrop: _react.PropTypes.func.isRequired
-	};
-	
-	exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);
-
-/***/ },
-/* 300 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(34);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _box = __webpack_require__(301);
-	
-	var _box2 = _interopRequireDefault(_box);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Slot = function (_React$Component) {
-		_inherits(Slot, _React$Component);
-	
-		function Slot(props) {
-			_classCallCheck(this, Slot);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Slot).call(this, props));
-		}
-	
-		_createClass(Slot, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'grid-slot grid-slot-1d3' },
-					_react2.default.createElement(StyleChanger, null),
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-boxes-wrapper boxes-wrapper' },
-						this.props.children
-					)
-				);
-			}
-		}]);
-	
-		return Slot;
-	}(_react2.default.Component);
-	
-	exports.default = Slot;
-	
-	var StyleChanger = function (_React$Component2) {
-		_inherits(StyleChanger, _React$Component2);
-	
-		function StyleChanger(props) {
-			_classCallCheck(this, StyleChanger);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(StyleChanger).call(this, props));
-		}
-	
-		_createClass(StyleChanger, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement('div', { className: 'grid-slot-style-changer style-changer' });
-			}
-		}]);
-	
-		return StyleChanger;
-	}(_react2.default.Component);
-
-/***/ },
-/* 301 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(175);
-	
-	var _reactDnd = __webpack_require__(176);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var boxSource = {
-		beginDrag: function beginDrag(props) {
-			console.log("begin drag");
-			return {
-				id: props.id,
-				index: props.index
-			};
-		},
-		endDrag: function endDrag(props, monitor) {
-			console.log("end drop");
-			var item = monitor.getItem();
-			var dropResult = monitor.getDropResult();
-	
-			if (dropResult) {
-				// window.alert( // eslint-disable-line no-alert
-				//   `You dropped ${item.name} into ${dropResult.name}!`
-				// );
-			}
-		}
-	};
-	
-	function collect(connect, monitor) {
-		return {
-			connectDragSource: connect.dragSource(),
-			connectDragPreview: connect.dragPreview(),
-			isDragging: monitor.isDragging()
-		};
-	}
-	
-	var Box = function (_Component) {
-		_inherits(Box, _Component);
-	
-		function Box(props) {
-			_classCallCheck(this, Box);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Box).call(this, props));
-		}
-	
-		_createClass(Box, [{
-			key: 'render',
-			value: function render() {
-				var _props = this.props;
-				var connectDragSource = _props.connectDragSource;
-				var connectDragPreview = _props.connectDragPreview;
-				var isDragging = _props.isDragging;
-	
-				var class_name = "grid-box ";
-				var title = "";
-				if (this.props.titleurl) {
-					title = _react2.default.createElement(
-						'h3',
-						null,
-						this.props.titleurl,
-						_react2.default.createElement(
-							'a',
-							{ href: this.props.titleurl, className: 'box-title' },
-							this.props.title
-						)
-					);
-				} else {
-					title = _react2.default.createElement(
-						'h3',
-						null,
-						this.props.title
-					);
-				}
-				return connectDragPreview(_react2.default.createElement(
-					'div',
-					{ className: class_name },
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-box-content' },
-						title,
-						_react2.default.createElement(
-							'div',
-							{ className: 'prolog' },
-							this.props.prolog
-						),
-						_react2.default.createElement('div', { className: 'content', dangerouslySetInnerHTML: { __html: this.props.html } }),
-						_react2.default.createElement(
-							'div',
-							{ className: 'epilog' },
-							this.props.epilog
-						),
-						_react2.default.createElement(
-							'p',
-							{ className: 'readmore' },
-							_react2.default.createElement(
-								'a',
-								{ href: this.props.readmoreurl },
-								this.props.readmore
-							)
-						)
-					),
-					connectDragSource(_react2.default.createElement(
-						'div',
-						{ className: 'grid-box-controls grid-box-movable' },
-						_react2.default.createElement('i', { className: 'grid-box-drag icon-drag' }),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-box-control-button grid-box-edit' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'grid-box-control-wrapper' },
-								_react2.default.createElement('i', { className: 'icon-edit' }),
-								_react2.default.createElement(
-									'span',
-									{ className: 'grid-box-control-text' },
-									'Edit'
-								)
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-box-reused' },
-							'Reused box ',
-							_react2.default.createElement('i', { className: 'icon-reuse' })
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-box-control-button grid-box-delete' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'grid-box-control-wrapper' },
-								_react2.default.createElement('i', { className: 'icon-trash' }),
-								_react2.default.createElement(
-									'span',
-									{ className: 'grid-box-control-text' },
-									'Delete'
-								)
-							)
-						)
-					))
-				));
-			}
-		}]);
-	
-		return Box;
-	}(_react.Component);
-	
-	Box.propTypes = {
-		connectDragSource: _react.PropTypes.func.isRequired,
-		connectDragPreview: _react.PropTypes.func.isRequired,
-		isDragging: _react.PropTypes.bool.isRequired,
-		id: _react.PropTypes.any.isRequired
-	};
-	
-	exports.default = (0, _reactDnd.DragSource)(_constants.ItemTypes.BOX, boxSource, collect)(Box);
-
-/***/ },
-/* 302 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(175);
-	
-	var _reactDnd = __webpack_require__(176);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var boxTarget = {
-		drop: function drop(props, monitor) {
-			console.log("drop");
-			props.onDrop(monitor.getItem());
-		}
-	};
-	
-	function collect(connect, monitor) {
-		return {
-			connectDropTarget: connect.dropTarget(),
-			isOver: monitor.isOver(),
-			canDrop: monitor.canDrop()
-		};
-	}
-	
-	var BoxDrop = function (_Component) {
-		_inherits(BoxDrop, _Component);
-	
-		function BoxDrop() {
-			_classCallCheck(this, BoxDrop);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(BoxDrop).apply(this, arguments));
-		}
-	
-		_createClass(BoxDrop, [{
-			key: 'render',
-			value: function render() {
-				var _props = this.props;
-				var connectDropTarget = _props.connectDropTarget;
-				var isOver = _props.isOver;
-				var canDrop = _props.canDrop;
-	
-	
-				var color = isOver ? 'red' : 'transparent';
-				var display = canDrop ? 'block' : 'none';
-	
-				return connectDropTarget(_react2.default.createElement(
-					'div',
-					{
-						className: 'grid-box-drop-area-wrapper'
-					},
-					_react2.default.createElement('div', {
-						className: 'grid-box-drop-area',
-						style: {
-							backgroundColor: color,
-							display: display
-						}
-					})
-				));
-			}
-		}]);
-	
-		return BoxDrop;
-	}(_react.Component);
-	
-	BoxDrop.propTypes = {
-		index: _react.PropTypes.number.isRequired,
-		isOver: _react.PropTypes.bool.isRequired,
-		onDrop: _react.PropTypes.func.isRequired
-	};
-	
-	exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.BOX, boxTarget, collect)(BoxDrop);
-
-/***/ },
-/* 303 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxBlueprint = function (_Component) {
-		_inherits(BoxBlueprint, _Component);
-	
-		function BoxBlueprint(props) {
-			_classCallCheck(this, BoxBlueprint);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(BoxBlueprint).call(this, props));
-		}
-	
-		_createClass(BoxBlueprint, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "grid-new-element grid-box-dragger grid-new-box " + this.props.type + " ui-draggable" },
-					_react2.default.createElement("i", { className: "icon-drag grid-element-drag-icon" }),
-					_react2.default.createElement(
-						"div",
-						{ className: "grid-new-box" },
-						_react2.default.createElement("div", { className: "grid-element-title", dangerouslySetInnerHTML: { __html: this.props.html } })
-					)
-				);
-			}
-		}]);
-	
-		return BoxBlueprint;
-	}(_react.Component);
-	
-	var ContainerBlueprint = function (_Component2) {
-		_inherits(ContainerBlueprint, _Component2);
-	
-		function ContainerBlueprint(props) {
-			_classCallCheck(this, ContainerBlueprint);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerBlueprint).call(this, props));
-		}
-	
-		_createClass(ContainerBlueprint, [{
-			key: "renderSlot",
-			value: function renderSlot(slot, index) {
-				console.log([slot, index]);
-				return _react2.default.createElement("div", { key: index, className: "grid-slot grid-slot-" + slot });
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				var content = "";
-				if (this.props.reused) {
-					content = _react2.default.createElement(
-						"div",
-						{ className: "grid-new-container-slots grid-reuseable-container" },
-						_react2.default.createElement(
-							"p",
-							{ className: "grid-element-title grid-reusable-container-title" },
-							this.props.reusetitle
-						)
-					);
-				} else {
-					var classes = "grid-new-container-slots" + " grid-container-" + this.props.type + " grid-container-left-space-" + this.props.space_to_left + " grid-container-right-space-" + this.props.space_to_right;
-					var slots = this.props.type.split("-").slice(1);
-					content = _react2.default.createElement(
-						"div",
-						{
-							className: classes,
-							style: {
-								width: '100%'
-							} },
-						slots.map(this.renderSlot.bind(this))
-					);
-				}
-				return _react2.default.createElement(
-					"div",
-					{ className: "grid-new-element " },
-					_react2.default.createElement("i", { className: "icon-drag grid-element-drag-icon" }),
-					content
-				);
-			}
-		}]);
-	
-		return ContainerBlueprint;
-	}(_react.Component);
-	
-	var Elements = function (_Component3) {
-		_inherits(Elements, _Component3);
-	
-		function Elements(props) {
-			_classCallCheck(this, Elements);
-	
-			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Elements).call(this, props));
-	
-			_this3.state = {
-				type: "containers"
-			};
-			return _this3;
-		}
-	
-		_createClass(Elements, [{
-			key: "renderContainer",
-			value: function renderContainer(obj) {
-				return _react2.default.createElement(ContainerBlueprint, _extends({
-					key: obj.type
-				}, obj));
-			}
-		}, {
-			key: "renderBox",
-			value: function renderBox(obj) {
-				return _react2.default.createElement(BoxBlueprint, _extends({
-					key: obj.type
-				}, obj));
-			}
-		}, {
-			key: "onTypeChange",
-			value: function onTypeChange(type) {
-				this.setState({ type: type });
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				var $contents = null;
-				if (this.state.type == "containers") {
-					$contents = this.props.container_types.map(this.renderContainer.bind(this));
-				} else {
-					$contents = this.props.container_types.map(this.renderBox.bind(this));
-				}
-				return _react2.default.createElement(
-					"div",
-					{ className: "grid-tool-elements" },
-					_react2.default.createElement(
-						"div",
-						{ className: "grid-element-type-select" },
-						_react2.default.createElement(
-							"div",
-							{
-								onClick: this.onTypeChange.bind(this, "containers"),
-								className: "grid-element-type " + (this.state.type == "containers" ? "active" : "")
-							},
-							"Container"
-						),
-						_react2.default.createElement(
-							"div",
-							{
-								onClick: this.onTypeChange.bind(this, "boxes"),
-								className: "grid-element-type " + (this.state.type != "containers" ? "active" : "")
-							},
-							"Box"
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "grid-element-type-content" },
-						$contents
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "grid-element-trash" },
-						_react2.default.createElement(
-							"div",
-							null,
-							"Delete",
-							_react2.default.createElement("span", { className: "icon-trash" })
-						)
-					)
-				);
-			}
-		}]);
-	
-		return Elements;
-	}(_react.Component);
-	
-	exports.default = Elements;
-
-/***/ },
-/* 304 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Buttons = function (_Component) {
-		_inherits(Buttons, _Component);
-	
-		function Buttons(props) {
-			_classCallCheck(this, Buttons);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Buttons).call(this, props));
-		}
-	
-		_createClass(Buttons, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"ul",
-					{ className: "grid-tool-list grid-toolbar-state", role: "data" },
-					_react2.default.createElement(
-						"li",
-						{ className: "grid-tool grid-tool-publish" },
-						_react2.default.createElement(
-							"button",
-							{ role: "publish" },
-							_react2.default.createElement("span", { className: "icon-publish" }),
-							"Publish"
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						{ className: "grid-tool grid-tool-preview" },
-						_react2.default.createElement(
-							"button",
-							{ role: "preview" },
-							_react2.default.createElement("span", { className: "icon-preview" }),
-							"Preview"
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						{ className: "grid-tool grid-tool-revert" },
-						_react2.default.createElement(
-							"button",
-							{ role: "revert" },
-							_react2.default.createElement("span", { className: "icon-revert" }),
-							"Revert"
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						{ className: "grid-tool grid-tool-revisions" },
-						_react2.default.createElement(
-							"button",
-							{ role: "revisions" },
-							_react2.default.createElement("span", { className: "icon-revisions" }),
-							"Revisions"
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						{ className: "grid-tool grid-tool-authors" },
-						_react2.default.createElement(
-							"button",
-							{ role: "authors" },
-							_react2.default.createElement("span", { className: "indicator-authors-count" }),
-							"Authors"
-						)
-					)
-				);
-			}
-		}]);
-	
-		return Buttons;
-	}(_react.Component);
-	
-	exports.default = Buttons;
-
-/***/ },
-/* 305 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Revision = function (_Component) {
-		_inherits(Revision, _Component);
-	
-		function Revision() {
-			_classCallCheck(this, Revision);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Revision).apply(this, arguments));
-		}
-	
-		_createClass(Revision, [{
-			key: "render",
-			value: function render() {
-				var draft = "";
-				if (this.props.isDraft) {
-					draft = _react2.default.createElement(
-						"button",
-						{ role: "delete", "class": "grid-revision-button grid-revision-delete-button" },
-						_react2.default.createElement("i", { "class": "icon-trash" }),
-						"Delete"
-					);
-				}
-				var dep = "";
-				if (this.props.isDeprecated) {
-					dep = _react2.default.createElement(
-						"button",
-						{ role: "revert", "class": "grid-revision-button grid-revision-revert-button" },
-						_react2.default.createElement("i", { "class": "icon-revert" }),
-						"Revert"
-					);
-				}
-				return _react2.default.createElement(
-					"div",
-					{ className: "grid-revision grid-revision-state-" + this.props.state },
-					_react2.default.createElement(
-						"div",
-						{ className: "grid-revision-description" },
-						_react2.default.createElement(
-							"p",
-							{ className: "grid-revision-date" },
-							this.props.readable_date
-						),
-						_react2.default.createElement(
-							"p",
-							{ className: "grid-revision-editor" },
-							this.props.editor
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "grid-revision-controls" },
-						_react2.default.createElement(
-							"button",
-							{ role: "preview", className: "grid-revision-button grid-revision-preview-button" },
-							_react2.default.createElement("i", { className: "icon-preview" }),
-							"Preview"
-						),
-						draft,
-						dep
-					)
-				);
-			}
-		}]);
-	
-		return Revision;
-	}(_react.Component);
-	
-	var Revisions = function (_Component2) {
-		_inherits(Revisions, _Component2);
-	
-		function Revisions(props) {
-			_classCallCheck(this, Revisions);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Revisions).call(this, props));
-		}
-	
-		_createClass(Revisions, [{
-			key: "renderRevision",
-			value: function renderRevision(revision) {
-				return _react2.default.createElement(Revision, _extends({
-					key: revision.revision
-				}, revision));
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "grid-revisions" },
-					this.props.list.map(this.renderRevision.bind(this))
-				);
-			}
-		}]);
-	
-		return Revisions;
-	}(_react.Component);
-	
-	exports.default = Revisions;
-	
-	
-	Revisions.propTypes = {
-		list: _react.PropTypes.array.isRequired
-	};
-
-/***/ },
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
 /* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30836,6 +29508,1502 @@
 	}
 	
 	module.exports = exports['default'];
+
+/***/ },
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _container = __webpack_require__(345);
+	
+	var _container2 = _interopRequireDefault(_container);
+	
+	var _containerDrop = __webpack_require__(347);
+	
+	var _containerDrop2 = _interopRequireDefault(_containerDrop);
+	
+	var _slot = __webpack_require__(348);
+	
+	var _slot2 = _interopRequireDefault(_slot);
+	
+	var _boxDrop = __webpack_require__(349);
+	
+	var _boxDrop2 = _interopRequireDefault(_boxDrop);
+	
+	var _box = __webpack_require__(350);
+	
+	var _box2 = _interopRequireDefault(_box);
+	
+	var _constants = __webpack_require__(175);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Grid = function (_Component) {
+		_inherits(Grid, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function Grid(props) {
+			_classCallCheck(this, Grid);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Grid).call(this, props));
+	
+			_this.state = {
+				container: {
+					dragging: false,
+					from: null,
+					to: null
+				},
+				box: {
+					dragging: false,
+					from: {
+						container: null,
+						slot: null,
+						index: null
+					},
+					to: {
+						container: null,
+						slot: null,
+						index: null
+					}
+				},
+				loading: false
+			};
+			return _this;
+		}
+	
+		_createClass(Grid, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				window.addEventListener('resize', this.onResize.bind(this));
+				this.onResize();
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				window.removeEventListener('resize', this.onResize);
+			}
+	
+			/**
+	   * ---------------------
+	   * rendering
+	   * ---------------------
+	   */
+	
+			/**
+	   * render boxes
+	   * @param boxes
+	   * @returns {Array}
+	   */
+	
+		}, {
+			key: 'renderBoxes',
+			value: function renderBoxes(boxes) {
+				var $boxes = [];
+				for (var i = 0; i < boxes.length; i++) {
+					var box = boxes[i];
+					$boxes.push(this.renderBoxDrop(i));
+					$boxes.push(_react2.default.createElement(_box2.default, _extends({
+						key: i,
+						index: i
+					}, box)));
+					if (i == boxes.length - 1) $boxes.push(this.renderBoxDrop(++i));
+				}
+				return $boxes;
+			}
+		}, {
+			key: 'renderBoxDrop',
+			value: function renderBoxDrop(index) {
+				var drop_key = "box-drop-" + index;
+				return _react2.default.createElement(_boxDrop2.default, {
+					key: drop_key,
+					index: index,
+					onDrop: this.onBoxDrop.bind(this, index)
+				});
+			}
+	
+			/**
+	   * render slots
+	   * @param slots
+	   * @returns {*}
+	   */
+	
+		}, {
+			key: 'renderSlots',
+			value: function renderSlots(slots) {
+				var _this2 = this;
+	
+				return slots.map(function (slot, index) {
+					return _react2.default.createElement(
+						_slot2.default,
+						_extends({
+							key: index
+						}, slot),
+						_this2.renderBoxes(slot.boxes)
+					);
+				});
+			}
+	
+			/**
+	   * render containers
+	   * @param containers
+	   * @returns {Array}
+	   */
+	
+		}, {
+			key: 'renderContainers',
+			value: function renderContainers(containers) {
+				var $containers = [];
+				var drop_key = "";
+	
+				for (var i = 0; i < containers.length; i++) {
+					var container = containers[i];
+	
+					/**
+	     * render drop area for containers
+	     * @type {string}
+	     */
+					drop_key = "container-drop_" + i;
+					$containers.push(this.renderContainerDrop(i));
+	
+					/**
+	     * render container
+	     */
+					$containers.push(_react2.default.createElement(
+						_container2.default,
+						_extends({
+							key: container.id
+						}, container, {
+							index: i,
+							events: this.props.events
+						}),
+						this.renderSlots(container.slots)
+					));
+	
+					/**
+	     * render last drop area for containers
+	     */
+					if (i == this.props.container.length - 1) {
+						$containers.push(this.renderContainerDrop(++i));
+					}
+				}
+				return $containers;
+			}
+		}, {
+			key: 'renderContainerDrop',
+			value: function renderContainerDrop(index) {
+				var drop_key = "container-drop_" + index;
+				return _react2.default.createElement(_containerDrop2.default, {
+					key: drop_key,
+					index: index,
+					onDrop: this.onContainerDrop.bind(this, index)
+				});
+			}
+			/**
+	   * render the whole grid
+	   * @returns {XML}
+	   */
+	
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this3 = this;
+	
+				return _react2.default.createElement(
+					'div',
+					{ className: 'grid-wrapper' },
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-containers-wrapper',
+							ref: function ref(element) {
+								return _this3.state.dom = element;
+							}
+						},
+						this.renderContainers(this.props.container)
+					)
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+		}, {
+			key: 'onResize',
+			value: function onResize() {
+				console.log("grid width", this.getWidth());
+				this.props.events.emit(_constants.Events.GRID_RESIZE.key, this.getWidth());
+			}
+		}, {
+			key: 'onContainerDrop',
+			value: function onContainerDrop(index) {
+				console.log("dropped on index " + index);
+			}
+		}, {
+			key: 'onBoxDrop',
+			value: function onBoxDrop(box, slot, container) {
+				console.log("dropped on container ");
+				console.log(container);
+				console.log("dropped on slot ");
+				console.log(slot);
+				console.log("box dropped ");
+				console.log(box);
+			}
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}, {
+			key: 'getWidth',
+			value: function getWidth() {
+				return this.state.dom.clientWidth;
+			}
+		}]);
+	
+		return Grid;
+	}(_react.Component);
+	
+	exports.default = Grid;
+	
+	
+	Grid.propTypes = {
+		container: _react.PropTypes.arrayOf(_react.PropTypes.object.isRequired).isRequired,
+		events: _react.PropTypes.object.isRequired
+	};
+
+/***/ },
+/* 345 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDnd = __webpack_require__(176);
+	
+	var _constants = __webpack_require__(175);
+	
+	var _containerDragPreview = __webpack_require__(346);
+	
+	var _containerDragPreview2 = _interopRequireDefault(_containerDragPreview);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var containerSource = {
+		beginDrag: function beginDrag(props) {
+			console.log("begin drag");
+			return {
+				id: props.id,
+				index: props.index,
+				title: props.title
+			};
+		},
+		endDrag: function endDrag(props, monitor) {
+			var item = monitor.getItem();
+			var dropResult = monitor.getDropResult();
+			console.log("dropped", item, dropResult);
+			if (dropResult) {
+				// window.alert( // eslint-disable-line no-alert
+				//   `You dropped ${item.name} into ${dropResult.name}!`
+				// );
+			}
+		}
+	};
+	
+	function collect(connect, monitor) {
+		return {
+			connectDragSource: connect.dragSource(),
+			connectDragPreview: connect.dragPreview(),
+			isDragging: monitor.isDragging()
+		};
+	}
+	
+	var Container = function (_Component) {
+		_inherits(Container, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function Container(props) {
+			_classCallCheck(this, Container);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Container).call(this, props));
+	
+			_this.state = { active: false };
+			return _this;
+		}
+	
+		_createClass(Container, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.props.events.on(_constants.Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+			}
+			/**
+	   * ---------------------
+	   * rendering
+	   * ---------------------
+	   */
+	
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				var class_name = "grid-container grid-contaner-" + this.props.type;
+				var _props = this.props;
+				var connectDragSource = _props.connectDragSource;
+				var isDragging = _props.isDragging;
+	
+				return _react2.default.createElement(
+					'div',
+					{ className: class_name,
+						style: {
+							display: isDragging ? "none" : "block"
+						},
+						ref: function ref(element) {
+							return _this2.state.dom = element;
+						}
+					},
+					_react2.default.createElement(
+						'div',
+						{ className: 'grid-container-controls' },
+						_react2.default.createElement(
+							'span',
+							{ className: 'grid-container-title' },
+							'test',
+							this.props.title
+						),
+						connectDragSource(_react2.default.createElement(
+							'span',
+							{
+								style: {
+									cursor: "move"
+								},
+								className: 'grid-container-sorthandle hide-grid-container-editor ui-sortable-handle' },
+							_react2.default.createElement('i', { className: 'icon-drag' })
+						)),
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-container-options' },
+							_react2.default.createElement(
+								'span',
+								{ className: 'grid-container-options-icon' },
+								'Options ',
+								_react2.default.createElement('i', { className: 'icon-options' })
+							),
+							_react2.default.createElement(
+								'ul',
+								{ className: 'grid-container-options-list' },
+								_react2.default.createElement(
+									'li',
+									{ className: 'grid-container-options-list-item', role: 'edit' },
+									_react2.default.createElement('i', { className: 'icon-edit' }),
+									' Edit'
+								),
+								_react2.default.createElement(
+									'li',
+									{ className: 'grid-container-options-list-item', role: 'reuse' },
+									_react2.default.createElement('i', { className: 'icon-reuse' }),
+									' Reuse'
+								),
+								_react2.default.createElement(
+									'li',
+									{ className: 'grid-container-options-list-item', role: 'toggleslotstyles' },
+									_react2.default.createElement('i', { className: 'icon-style' }),
+									' Slot-styles'
+								),
+								_react2.default.createElement(
+									'li',
+									{ className: 'grid-container-options-list-item', role: 'trash' },
+									_react2.default.createElement('i', { className: 'icon-trash' }),
+									' Delete'
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'grid-container-content' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-container-before' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'grid-container-prolog' },
+								'PROLOG'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-slots-wrapper' },
+							this.props.children
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-container-after' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'grid-container-epilog' },
+								'EPILOG'
+							)
+						)
+					)
+				);
+			}
+	
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+		}, {
+			key: 'onGridResize',
+			value: function onGridResize(size) {
+				this.buildDragPreview(size);
+			}
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}, {
+			key: 'buildDragPreview',
+			value: function buildDragPreview(size) {
+				var connectDragPreview = this.props.connectDragPreview;
+	
+				var result = _containerDragPreview2.default.create(this.state.dom.clientWidth, this.props.slots.length);
+				result.img.onload = function () {
+					return connectDragPreview(result.img);
+				};
+				result.img.src = result.src;
+			}
+		}]);
+	
+		return Container;
+	}(_react.Component);
+	
+	Container.propTypes = {
+		connectDragSource: _react.PropTypes.func.isRequired,
+		connectDragPreview: _react.PropTypes.func.isRequired,
+		isDragging: _react.PropTypes.bool.isRequired,
+		id: _react.PropTypes.any.isRequired
+	};
+	
+	exports.default = (0, _reactDnd.DragSource)(_constants.ItemTypes.CONTAINER, containerSource, collect)(Container);
+
+/***/ },
+/* 346 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ContainerDragPreview = function () {
+		function ContainerDragPreview() {
+			_classCallCheck(this, ContainerDragPreview);
+		}
+	
+		_createClass(ContainerDragPreview, null, [{
+			key: "height",
+			value: function height() {
+				return 40;
+			}
+		}, {
+			key: "padding",
+			value: function padding() {
+				return 2;
+			}
+		}, {
+			key: "create",
+			value: function create(width, slots) {
+				console.log("create", width, slots);
+				var img = new Image();
+				var c = document.createElement('canvas');
+				c.height = this.height();
+				c.width = width;
+	
+				var ctx = c.getContext('2d');
+	
+				var slot = width / slots;
+				for (var i = 0; i < slots; i++) {
+					var x = slot * i;
+					if (x > 0) x += 2;
+					ctx.rect(x + this.padding(), 0, slot - this.padding(), this.height());
+					ctx.fillStyle = "#333333";
+					ctx.fill();
+				}
+	
+				return {
+					img: img,
+					src: c.toDataURL()
+				};
+			}
+		}]);
+	
+		return ContainerDragPreview;
+	}();
+	
+	exports.default = ContainerDragPreview;
+
+/***/ },
+/* 347 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDnd = __webpack_require__(176);
+	
+	var _constants = __webpack_require__(175);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var containerTarget = {
+		drop: function drop(props, monitor) {
+			console.log("drop");
+			props.onDrop(monitor.getItem());
+			return { dropped: true };
+		}
+	};
+	
+	function collect(connect, monitor) {
+		return {
+			connectDropTarget: connect.dropTarget(),
+			isOver: monitor.isOver(),
+			canDrop: monitor.canDrop()
+		};
+	}
+	
+	var ContainerDrop = function (_Component) {
+		_inherits(ContainerDrop, _Component);
+	
+		function ContainerDrop() {
+			_classCallCheck(this, ContainerDrop);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerDrop).apply(this, arguments));
+		}
+	
+		_createClass(ContainerDrop, [{
+			key: 'onDrop',
+			value: function onDrop() {
+				console.log("onDrop");
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var connectDropTarget = _props.connectDropTarget;
+				var isOver = _props.isOver;
+				var canDrop = _props.canDrop;
+	
+	
+				var color = isOver ? 'red' : 'transparent';
+				var display = canDrop ? 'block' : 'none';
+	
+				return connectDropTarget(_react2.default.createElement(
+					'div',
+					{ className: 'container-drop-area-wrapper', style: {
+							display: display
+						} },
+					_react2.default.createElement('div', { className: 'container-drop-area', style: {
+							backgroundColor: color
+						} })
+				));
+			}
+		}]);
+	
+		return ContainerDrop;
+	}(_react.Component);
+	
+	ContainerDrop.propTypes = {
+		index: _react.PropTypes.number.isRequired,
+		isOver: _react.PropTypes.bool.isRequired,
+		onDrop: _react.PropTypes.func.isRequired
+	};
+	
+	exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);
+
+/***/ },
+/* 348 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Slot = function (_Component) {
+		_inherits(Slot, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function Slot(props) {
+			_classCallCheck(this, Slot);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Slot).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * rendering
+	  * ---------------------
+	  */
+	
+	
+		_createClass(Slot, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "grid-slot grid-slot-1d3"
+					},
+					_react2.default.createElement(StyleChanger, null),
+					_react2.default.createElement(
+						"div",
+						{ className: "grid-boxes-wrapper boxes-wrapper" },
+						this.props.children
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return Slot;
+	}(_react.Component);
+	
+	exports.default = Slot;
+	
+	var StyleChanger = function (_Component2) {
+		_inherits(StyleChanger, _Component2);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function StyleChanger(props) {
+			_classCallCheck(this, StyleChanger);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(StyleChanger).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * rendering
+	  * ---------------------
+	  */
+	
+	
+		_createClass(StyleChanger, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement("div", { className: "grid-slot-style-changer style-changer" });
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+
+		}]);
+
+		return StyleChanger;
+	}(_react.Component);
+
+/***/ },
+/* 349 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDnd = __webpack_require__(176);
+	
+	var _constants = __webpack_require__(175);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var boxTarget = {
+		drop: function drop(props, monitor) {
+			console.log("drop");
+			props.onDrop(monitor.getItem());
+		}
+	};
+	
+	function collect(connect, monitor) {
+		return {
+			connectDropTarget: connect.dropTarget(),
+			isOver: monitor.isOver(),
+			canDrop: monitor.canDrop()
+		};
+	}
+	
+	var BoxDrop = function (_Component) {
+		_inherits(BoxDrop, _Component);
+	
+		function BoxDrop() {
+			_classCallCheck(this, BoxDrop);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(BoxDrop).apply(this, arguments));
+		}
+	
+		_createClass(BoxDrop, [{
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var connectDropTarget = _props.connectDropTarget;
+				var isOver = _props.isOver;
+				var canDrop = _props.canDrop;
+	
+	
+				var color = isOver ? 'red' : 'transparent';
+				var display = canDrop ? 'block' : 'none';
+	
+				return connectDropTarget(_react2.default.createElement(
+					'div',
+					{
+						className: 'grid-box-drop-area-wrapper'
+					},
+					_react2.default.createElement('div', {
+						className: 'grid-box-drop-area',
+						style: {
+							backgroundColor: color,
+							display: display
+						}
+					})
+				));
+			}
+		}]);
+	
+		return BoxDrop;
+	}(_react.Component);
+	
+	BoxDrop.propTypes = {
+		index: _react.PropTypes.number.isRequired,
+		isOver: _react.PropTypes.bool.isRequired,
+		onDrop: _react.PropTypes.func.isRequired
+	};
+	
+	exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.BOX, boxTarget, collect)(BoxDrop);
+
+/***/ },
+/* 350 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDnd = __webpack_require__(176);
+	
+	var _constants = __webpack_require__(175);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var boxSource = {
+		beginDrag: function beginDrag(props) {
+			console.log("begin drag");
+			return {
+				id: props.id,
+				index: props.index
+			};
+		},
+		endDrag: function endDrag(props, monitor) {
+			console.log("end drop");
+			var item = monitor.getItem();
+			var dropResult = monitor.getDropResult();
+	
+			if (dropResult) {
+				// window.alert( // eslint-disable-line no-alert
+				//   `You dropped ${item.name} into ${dropResult.name}!`
+				// );
+			}
+		}
+	};
+	
+	function collect(connect, monitor) {
+		return {
+			connectDragSource: connect.dragSource(),
+			connectDragPreview: connect.dragPreview(),
+			isDragging: monitor.isDragging()
+		};
+	}
+	
+	var Box = function (_Component) {
+		_inherits(Box, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+	
+		function Box(props) {
+			_classCallCheck(this, Box);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Box).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * rendering
+	  * ---------------------
+	  */
+	
+	
+		_createClass(Box, [{
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var connectDragSource = _props.connectDragSource;
+				var connectDragPreview = _props.connectDragPreview;
+				var isDragging = _props.isDragging;
+	
+				var class_name = "grid-box ";
+				var title = "";
+				if (this.props.titleurl) {
+					title = _react2.default.createElement(
+						'h3',
+						null,
+						this.props.titleurl,
+						_react2.default.createElement(
+							'a',
+							{
+								href: this.props.titleurl,
+								className: 'box-title' },
+							this.props.title
+						)
+					);
+				} else {
+					title = _react2.default.createElement(
+						'h3',
+						null,
+						this.props.title
+					);
+				}
+				return connectDragPreview(_react2.default.createElement(
+					'div',
+					{ className: class_name,
+						style: {
+							display: isDragging ? "none" : "block"
+						} },
+					_react2.default.createElement(
+						'div',
+						{ className: 'grid-box-content' },
+						title,
+						_react2.default.createElement(
+							'div',
+							{ className: 'prolog' },
+							this.props.prolog
+						),
+						_react2.default.createElement('div', { className: 'content', dangerouslySetInnerHTML: { __html: this.props.html } }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'epilog' },
+							this.props.epilog
+						),
+						_react2.default.createElement(
+							'p',
+							{ className: 'readmore' },
+							_react2.default.createElement(
+								'a',
+								{ href: this.props.readmoreurl },
+								this.props.readmore
+							)
+						)
+					),
+					connectDragSource(_react2.default.createElement(
+						'div',
+						{ className: 'grid-box-controls grid-box-movable' },
+						_react2.default.createElement('i', { className: 'grid-box-drag icon-drag' }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-box-control-button grid-box-edit' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'grid-box-control-wrapper' },
+								_react2.default.createElement('i', { className: 'icon-edit' }),
+								_react2.default.createElement(
+									'span',
+									{ className: 'grid-box-control-text' },
+									'Edit'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-box-reused' },
+							'Reused box ',
+							_react2.default.createElement('i', { className: 'icon-reuse' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'grid-box-control-button grid-box-delete' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'grid-box-control-wrapper' },
+								_react2.default.createElement('i', { className: 'icon-trash' }),
+								_react2.default.createElement(
+									'span',
+									{ className: 'grid-box-control-text' },
+									'Delete'
+								)
+							)
+						)
+					))
+				));
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return Box;
+	}(_react.Component);
+	
+	Box.propTypes = {
+		connectDragSource: _react.PropTypes.func.isRequired,
+		connectDragPreview: _react.PropTypes.func.isRequired,
+		isDragging: _react.PropTypes.bool.isRequired,
+		id: _react.PropTypes.any.isRequired
+	};
+	
+	exports.default = (0, _reactDnd.DragSource)(_constants.ItemTypes.BOX, boxSource, collect)(Box);
+
+/***/ },
+/* 351 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+	
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+	
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+	
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+	
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function(n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n))
+	    throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+	
+	EventEmitter.prototype.emit = function(type) {
+	  var er, handler, len, args, i, listeners;
+	
+	  if (!this._events)
+	    this._events = {};
+	
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error ||
+	        (isObject(this._events.error) && !this._events.error.length)) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      } else {
+	        // At least give some kind of context to the user
+	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+	        err.context = er;
+	        throw err;
+	      }
+	    }
+	  }
+	
+	  handler = this._events[type];
+	
+	  if (isUndefined(handler))
+	    return false;
+	
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        args = Array.prototype.slice.call(arguments, 1);
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    args = Array.prototype.slice.call(arguments, 1);
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++)
+	      listeners[i].apply(this, args);
+	  }
+	
+	  return true;
+	};
+	
+	EventEmitter.prototype.addListener = function(type, listener) {
+	  var m;
+	
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  if (!this._events)
+	    this._events = {};
+	
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener)
+	    this.emit('newListener', type,
+	              isFunction(listener.listener) ?
+	              listener.listener : listener);
+	
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;
+	  else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);
+	  else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+	
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+	
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' +
+	                    'leak detected. %d listeners added. ' +
+	                    'Use emitter.setMaxListeners() to increase limit.',
+	                    this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+	
+	EventEmitter.prototype.once = function(type, listener) {
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  var fired = false;
+	
+	  function g() {
+	    this.removeListener(type, g);
+	
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+	
+	  g.listener = listener;
+	  this.on(type, g);
+	
+	  return this;
+	};
+	
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function(type, listener) {
+	  var list, position, length, i;
+	
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  if (!this._events || !this._events[type])
+	    return this;
+	
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+	
+	  if (list === listener ||
+	      (isFunction(list.listener) && list.listener === listener)) {
+	    delete this._events[type];
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener ||
+	          (list[i].listener && list[i].listener === listener)) {
+	        position = i;
+	        break;
+	      }
+	    }
+	
+	    if (position < 0)
+	      return this;
+	
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+	
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	  }
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.removeAllListeners = function(type) {
+	  var key, listeners;
+	
+	  if (!this._events)
+	    return this;
+	
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0)
+	      this._events = {};
+	    else if (this._events[type])
+	      delete this._events[type];
+	    return this;
+	  }
+	
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+	
+	  listeners = this._events[type];
+	
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else if (listeners) {
+	    // LIFO order
+	    while (listeners.length)
+	      this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.listeners = function(type) {
+	  var ret;
+	  if (!this._events || !this._events[type])
+	    ret = [];
+	  else if (isFunction(this._events[type]))
+	    ret = [this._events[type]];
+	  else
+	    ret = this._events[type].slice();
+	  return ret;
+	};
+	
+	EventEmitter.prototype.listenerCount = function(type) {
+	  if (this._events) {
+	    var evlistener = this._events[type];
+	
+	    if (isFunction(evlistener))
+	      return 1;
+	    else if (evlistener)
+	      return evlistener.length;
+	  }
+	  return 0;
+	};
+	
+	EventEmitter.listenerCount = function(emitter, type) {
+	  return emitter.listenerCount(type);
+	};
+	
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+	
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+	
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+	
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+
+
+/***/ },
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _grid = __webpack_require__(344);
+	
+	var _grid2 = _interopRequireDefault(_grid);
+	
+	var _reactDnd = __webpack_require__(176);
+	
+	var _reactDndHtml5Backend = __webpack_require__(306);
+	
+	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TheGrid = function (_React$Component) {
+		_inherits(TheGrid, _React$Component);
+	
+		function TheGrid(props) {
+			_classCallCheck(this, TheGrid);
+	
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(TheGrid).call(this, props));
+		}
+	
+		_createClass(TheGrid, [{
+			key: 'render',
+			value: function render() {
+	
+				return _react2.default.createElement(
+					'div',
+					{ id: 'new-grid-wrapper' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'grid-toolbar' },
+						'Buttons | Elements | Revisions'
+					),
+					_react2.default.createElement(_grid2.default, {
+						id: this.props.grid.id,
+						container: this.props.grid.container,
+						draft: this.props.grid.isDraft
+					})
+				);
+			}
+		}]);
+	
+		return TheGrid;
+	}(_react2.default.Component);
+	
+	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(TheGrid);
 
 /***/ }
 /******/ ]);

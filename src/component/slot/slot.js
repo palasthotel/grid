@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export default class Slot extends Component{
 	/**
@@ -16,7 +16,9 @@ export default class Slot extends Component{
 	 */
 	render(){
 		return(
-			<div className="grid-slot grid-slot-1d3">
+			<div
+				className="grid-slot grid-slot-1d3"
+			>
 				<StyleChanger />
 				<div className="grid-boxes-wrapper boxes-wrapper">{this.props.children}</div>
 			</div>

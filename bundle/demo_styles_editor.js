@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _stylesEditor = __webpack_require__(351);
+	var _stylesEditor = __webpack_require__(352);
 	
 	var _stylesEditor2 = _interopRequireDefault(_stylesEditor);
 	
@@ -21567,7 +21567,8 @@
 /* 348 */,
 /* 349 */,
 /* 350 */,
-/* 351 */
+/* 351 */,
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21582,11 +21583,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _singleEdit = __webpack_require__(352);
+	var _singleEdit = __webpack_require__(353);
 	
 	var _singleEdit2 = _interopRequireDefault(_singleEdit);
 	
-	var _add = __webpack_require__(357);
+	var _add = __webpack_require__(358);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
@@ -21771,7 +21772,7 @@
 	exports.default = StylesEditor;
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21786,15 +21787,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _trash = __webpack_require__(353);
+	var _trash = __webpack_require__(354);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _undoPanel = __webpack_require__(354);
+	var _undoPanel = __webpack_require__(355);
 	
 	var _undoPanel2 = _interopRequireDefault(_undoPanel);
 	
-	var _slugify = __webpack_require__(356);
+	var _slugify = __webpack_require__(357);
 	
 	var _slugify2 = _interopRequireDefault(_slugify);
 	
@@ -22000,7 +22001,7 @@
 	};
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22056,7 +22057,7 @@
 	exports.default = Trash;
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22071,7 +22072,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _restore = __webpack_require__(355);
+	var _restore = __webpack_require__(356);
 	
 	var _restore2 = _interopRequireDefault(_restore);
 	
@@ -22152,7 +22153,7 @@
 	};
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22209,7 +22210,7 @@
 	exports.default = Restore;
 
 /***/ },
-/* 356 */
+/* 357 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22233,7 +22234,7 @@
 	}
 
 /***/ },
-/* 357 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 
 import Container from './container/container.js';
 import ContainerDrop from './container/container-drop.js';
-import Slot from './slot/slot';
+import Slot from './slot/slot.js';
 import BoxDrop from './box/box-drop.js';
 import Box from './box/box.js';
 

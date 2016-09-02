@@ -207,7 +207,7 @@ pp.parseExprOp = function (left, leftStartPos, leftStartLoc, minPrec, noIn) {
       node.left = left;
       node.operator = this.state.value;
 
-      if (node.operator === "**" && left.type === "UnaryExpression" && left.extra && !left.extra.parenthesizedArgument) {
+      if (node.operator === "**" && left.type === "UnaryExpression" && left.extra && !left.extra.parenthesizedArgument && !left.extra.parenthesized) {
         this.raise(left.argument.start, "Illegal expression. Wrap left hand side or entire exponentiation in parentheses.");
       }
 
@@ -236,8 +236,9 @@ pp.parseMaybeUnary = function (refShorthandDefaultPos) {
     this.next();
 
     var argType = this.state.type;
-    this.addExtra(node, "parenthesizedArgument", argType === _types.types.parenL);
     node.argument = this.parseMaybeUnary();
+
+    this.addExtra(node, "parenthesizedArgument", argType === _types.types.parenL && (!node.argument.extra || !node.argument.extra.parenthesized));
 
     if (refShorthandDefaultPos && refShorthandDefaultPos.start) {
       this.unexpected(refShorthandDefaultPos.start);
@@ -313,7 +314,7 @@ pp.parseSubscripts = function (base, startPos, startLoc, noCalls) {
 
       var _node4 = this.startNodeAt(startPos, startLoc);
       _node4.callee = base;
-      _node4.arguments = this.parseCallExpressionArguments(_types.types.parenR, this.hasPlugin("trailingFunctionCommas"), possibleAsync);
+      _node4.arguments = this.parseCallExpressionArguments(_types.types.parenR, possibleAsync);
       base = this.finishNode(_node4, "CallExpression");
 
       if (possibleAsync && this.shouldParseAsyncArrow()) {
@@ -332,7 +333,7 @@ pp.parseSubscripts = function (base, startPos, startLoc, noCalls) {
   }
 };
 
-pp.parseCallExpressionArguments = function (close, allowTrailingComma, possibleAsyncArrow) {
+pp.parseCallExpressionArguments = function (close, possibleAsyncArrow) {
   var innerParenStart = void 0;
 
   var elts = [],
@@ -342,7 +343,7 @@ pp.parseCallExpressionArguments = function (close, allowTrailingComma, possibleA
       first = false;
     } else {
       this.expect(_types.types.comma);
-      if (allowTrailingComma && this.eat(close)) break;
+      if (this.eat(close)) break;
     }
 
     // we need to make sure that if this is an async arrow functions, that we don't allow inner parens inside the params
@@ -350,7 +351,7 @@ pp.parseCallExpressionArguments = function (close, allowTrailingComma, possibleA
       innerParenStart = this.state.start;
     }
 
-    elts.push(this.parseExprListItem());
+    elts.push(this.parseExprListItem(undefined, possibleAsyncArrow ? { start: 0 } : undefined));
   }
 
   // we found an async arrow function so let's not allow any inner parens
@@ -366,7 +367,6 @@ pp.shouldParseAsyncArrow = function () {
 };
 
 pp.parseAsyncArrowFromCallExpression = function (node, call) {
-  if (!this.hasPlugin("asyncFunctions")) this.unexpected();
   this.expect(_types.types.arrow);
   return this.parseArrowExpression(node, call.arguments, true);
 };
@@ -413,24 +413,22 @@ pp.parseExprAtom = function (refShorthandDefaultPos) {
 
     case _types.types.name:
       node = this.startNode();
-      var allowAwait = this.hasPlugin("asyncFunctions") && this.state.value === "await" && this.state.inAsync;
+      var allowAwait = this.state.value === "await" && this.state.inAsync;
       var allowYield = this.shouldAllowYieldIdentifier();
       var id = this.parseIdentifier(allowAwait || allowYield);
 
-      if (this.hasPlugin("asyncFunctions")) {
-        if (id.name === "await") {
-          if (this.state.inAsync || this.inModule) {
-            return this.parseAwait(node);
-          }
-        } else if (id.name === "async" && this.match(_types.types._function) && !this.canInsertSemicolon()) {
-          this.next();
-          return this.parseFunction(node, false, false, true);
-        } else if (canBeArrow && id.name === "async" && this.match(_types.types.name)) {
-          var params = [this.parseIdentifier()];
-          this.expect(_types.types.arrow);
-          // let foo = bar => {};
-          return this.parseArrowExpression(node, params, true);
+      if (id.name === "await") {
+        if (this.state.inAsync || this.inModule) {
+          return this.parseAwait(node);
         }
+      } else if (id.name === "async" && this.match(_types.types._function) && !this.canInsertSemicolon()) {
+        this.next();
+        return this.parseFunction(node, false, false, true);
+      } else if (canBeArrow && id.name === "async" && this.match(_types.types.name)) {
+        var params = [this.parseIdentifier()];
+        this.expect(_types.types.arrow);
+        // let foo = bar => {};
+        return this.parseArrowExpression(node, params, true);
       }
 
       if (canBeArrow && !this.canInsertSemicolon() && this.eat(_types.types.arrow)) {
@@ -483,7 +481,7 @@ pp.parseExprAtom = function (refShorthandDefaultPos) {
     case _types.types.bracketL:
       node = this.startNode();
       this.next();
-      node.elements = this.parseExprList(_types.types.bracketR, true, true, refShorthandDefaultPos);
+      node.elements = this.parseExprList(_types.types.bracketR, true, refShorthandDefaultPos);
       this.toReferencedList(node.elements);
       return this.finishNode(node, "ArrayExpression");
 
@@ -579,8 +577,8 @@ pp.parseParenAndDistinguishExpression = function (startPos, startLoc, canBeArrow
     if (first) {
       first = false;
     } else {
-      this.expect(_types.types.comma);
-      if (this.match(_types.types.parenR) && this.hasPlugin("trailingFunctionCommas")) {
+      this.expect(_types.types.comma, refNeedsArrowPos.start || null);
+      if (this.match(_types.types.parenR)) {
         optionalCommaStart = this.state.start;
         break;
       }
@@ -683,7 +681,7 @@ pp.parseNew = function () {
   node.callee = this.parseNoCallExpr();
 
   if (this.eat(_types.types.parenL)) {
-    node.arguments = this.parseExprList(_types.types.parenR, this.hasPlugin("trailingFunctionCommas"));
+    node.arguments = this.parseExprList(_types.types.parenR);
     this.toReferencedList(node.arguments);
   } else {
     node.arguments = [];
@@ -773,7 +771,7 @@ pp.parseObj = function (isPattern, refShorthandDefaultPos) {
       isGenerator = this.eat(_types.types.star);
     }
 
-    if (!isPattern && this.hasPlugin("asyncFunctions") && this.isContextual("async")) {
+    if (!isPattern && this.isContextual("async")) {
       if (isGenerator) this.unexpected();
 
       var asyncId = this.parseIdentifier();
@@ -879,9 +877,7 @@ pp.initFunction = function (node, isAsync) {
   node.id = null;
   node.generator = false;
   node.expression = false;
-  if (this.hasPlugin("asyncFunctions")) {
-    node.async = !!isAsync;
-  }
+  node.async = !!isAsync;
 };
 
 // Parse object or class method.
@@ -891,7 +887,7 @@ pp.parseMethod = function (node, isGenerator, isAsync) {
   this.state.inMethod = node.kind || true;
   this.initFunction(node, isAsync);
   this.expect(_types.types.parenL);
-  node.params = this.parseBindingList(_types.types.parenR, false, this.hasPlugin("trailingFunctionCommas"));
+  node.params = this.parseBindingList(_types.types.parenR);
   node.generator = isGenerator;
   this.parseFunctionBody(node);
   this.state.inMethod = oldInMethod;
@@ -1020,7 +1016,7 @@ pp.parseFunctionBody = function (node, allowExpression) {
 // nothing in between them to be parsed as `null` (which is needed
 // for array literals).
 
-pp.parseExprList = function (close, allowTrailingComma, allowEmpty, refShorthandDefaultPos) {
+pp.parseExprList = function (close, allowEmpty, refShorthandDefaultPos) {
   var elts = [],
       first = true;
   while (!this.eat(close)) {
@@ -1028,7 +1024,7 @@ pp.parseExprList = function (close, allowTrailingComma, allowEmpty, refShorthand
       first = false;
     } else {
       this.expect(_types.types.comma);
-      if (allowTrailingComma && this.eat(close)) break;
+      if (this.eat(close)) break;
     }
 
     elts.push(this.parseExprListItem(allowEmpty, refShorthandDefaultPos));
@@ -1043,7 +1039,7 @@ pp.parseExprListItem = function (allowEmpty, refShorthandDefaultPos) {
   } else if (this.match(_types.types.ellipsis)) {
     elt = this.parseSpread(refShorthandDefaultPos);
   } else {
-    elt = this.parseMaybeAssign(false, refShorthandDefaultPos);
+    elt = this.parseMaybeAssign(false, refShorthandDefaultPos, this.parseParenItem);
   }
   return elt;
 };
@@ -1070,6 +1066,8 @@ pp.parseIdentifier = function (liberal) {
   if (!liberal && node.name === "await" && this.state.inAsync) {
     this.raise(node.start, "invalid use of await inside of an async function");
   }
+
+  node.loc.identifierName = node.name;
 
   this.next();
   return this.finishNode(node, "Identifier");

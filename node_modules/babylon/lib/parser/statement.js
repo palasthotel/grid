@@ -141,7 +141,7 @@ pp.parseStatement = function (declaration, topLevel) {
       return starttype === _types.types._import ? this.parseImport(node) : this.parseExport(node);
 
     case _types.types.name:
-      if (this.hasPlugin("asyncFunctions") && this.state.value === "async") {
+      if (this.state.value === "async") {
         // peek ahead and see if next token is a function
         var state = this.state.clone();
         this.next();
@@ -653,7 +653,7 @@ pp.parseFunction = function (node, isStatement, allowExpressionBody, isAsync, op
 
 pp.parseFunctionParams = function (node) {
   this.expect(_types.types.parenL);
-  node.params = this.parseBindingList(_types.types.parenR, false, this.hasPlugin("trailingFunctionCommas"));
+  node.params = this.parseBindingList(_types.types.parenR);
 };
 
 // Parse a class declaration or literal (depending on the
@@ -734,7 +734,7 @@ pp.parseClassBody = function (node) {
       }
     }
 
-    var isAsyncMethod = this.hasPlugin("asyncFunctions") && !this.match(_types.types.parenL) && !method.computed && method.key.type === "Identifier" && method.key.name === "async";
+    var isAsyncMethod = !this.match(_types.types.parenL) && !method.computed && method.key.type === "Identifier" && method.key.name === "async";
     if (isAsyncMethod) {
       if (this.hasPlugin("asyncGenerators") && this.eat(_types.types.star)) isGenerator = true;
       isAsync = true;
@@ -945,7 +945,7 @@ pp.parseExportFrom = function (node, expect) {
 };
 
 pp.shouldParseExportDeclaration = function () {
-  return this.hasPlugin("asyncFunctions") && this.isContextual("async");
+  return this.isContextual("async");
 };
 
 pp.checkExport = function (node) {

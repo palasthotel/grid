@@ -160,14 +160,14 @@ pp.parseBindingAtom = function () {
   switch (this.state.type) {
     case _types.types._yield:
       if (this.state.strict || this.state.inGenerator) this.unexpected();
-
+    // fall-through
     case _types.types.name:
       return this.parseIdentifier(true);
 
     case _types.types.bracketL:
       var node = this.startNode();
       this.next();
-      node.elements = this.parseBindingList(_types.types.bracketR, true, true);
+      node.elements = this.parseBindingList(_types.types.bracketR, true);
       return this.finishNode(node, "ArrayPattern");
 
     case _types.types.braceL:
@@ -178,7 +178,7 @@ pp.parseBindingAtom = function () {
   }
 };
 
-pp.parseBindingList = function (close, allowEmpty, allowTrailingComma) {
+pp.parseBindingList = function (close, allowEmpty) {
   var elts = [];
   var first = true;
   while (!this.eat(close)) {
@@ -189,7 +189,7 @@ pp.parseBindingList = function (close, allowEmpty, allowTrailingComma) {
     }
     if (allowEmpty && this.match(_types.types.comma)) {
       elts.push(null);
-    } else if (allowTrailingComma && this.eat(close)) {
+    } else if (this.eat(close)) {
       break;
     } else if (this.match(_types.types.ellipsis)) {
       elts.push(this.parseAssignableListItemTypes(this.parseRest()));

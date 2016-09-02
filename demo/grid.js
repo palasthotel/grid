@@ -23,13 +23,22 @@ const container = require('./dummy-data/grid').container;
  */
 const DNDGrid = DragDropContext(HTML5Backend)(Grid);
 
+
 /**
- * render to demo dom
+ * wait for dom to be ready so all plugins etc are loaded
  */
-ReactDOM.render(
-  <DNDGrid
-    container={container}
-    events={events}
-	/>,
-  document.getElementById("grid-demo")
-);
+document.addEventListener("DOMContentLoaded", function(event) {
+	
+	
+	/**
+	 * render to demo dom
+	 */
+	ReactDOM.render(
+		<DNDGrid
+			container={container}
+			events={events}
+		/>,
+		document.getElementById("grid-demo")
+	);
+	
+});

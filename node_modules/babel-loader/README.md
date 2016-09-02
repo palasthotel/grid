@@ -1,4 +1,4 @@
-# babel-loader [![Build Status](https://travis-ci.org/babel/babel-loader.svg?branch=master)](https://travis-ci.org/babel/babel-loader)
+# babel-loader [![NPM Status](https://img.shields.io/npm/v/babel-loader.svg?style=flat)](https://www.npmjs.com/package/babel-loader) [![Build Status](https://travis-ci.org/babel/babel-loader.svg?branch=master)](https://travis-ci.org/babel/babel-loader) [![codecov](https://codecov.io/gh/babel/babel-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/babel/babel-loader)
   > Babel is a compiler for writing next generation JavaScript.
 
   This package allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and [webpack](https://github.com/webpack/webpack).
@@ -8,7 +8,7 @@
 ## Installation
 
 ```bash
-npm install babel-loader babel-core babel-preset-es2015 babel-preset-react --save-dev
+npm install babel-loader babel-core babel-preset-es2015 --save-dev
 ```
 
 __Note:__ [npm](https://npmjs.com) deprecated [auto-installing of peerDependencies](https://github.com/npm/npm/issues/6565) since npm@3, so required peer dependencies like babel-core and webpack must be listed explicitly in your `package.json`.
@@ -25,11 +25,11 @@ __Note:__ If you're upgrading from babel 5 to babel 6, please take a look [at th
 module: {
   loaders: [
     {
-      test: /\.jsx?$/,
+      test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       loader: 'babel', // 'babel-loader' is also a legal name to reference
       query: {
-        presets: ['react', 'es2015']
+        presets: ['es2015']
       }
     }
   ]
@@ -46,9 +46,9 @@ You can pass options to the loader by writing them as a [query string](https://g
 module: {
   loaders: [
     {
-      test: /\.jsx?$/,
+      test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
-      loader: 'babel?presets[]=react,presets[]=es2015'
+      loader: 'babel?presets[]=es2015'
     }
   ]
 }
@@ -60,11 +60,11 @@ module: {
 module: {
   loaders: [
     {
-      test: /\.jsx?$/,
+      test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       loader: 'babel',
       query: {
-        presets: ['react', 'es2015']
+        presets: ['es2015']
       }
     }
   ]
@@ -75,7 +75,7 @@ module: {
 
   * `cacheDirectory`: Default `false`. When set, the given directory will be used to cache the results of the loader. Future webpack builds will attempt to read from the cache to avoid needing to run the potentially expensive Babel recompilation process on each run. If the value is blank (`loader: 'babel-loader?cacheDirectory'`) the loader will use the default OS temporary file directory.
 
-  * `cacheIdentifier`: Default is a string composed by the babel-core's version, the babel-loader's version and the contents of .babelrc file if it exists. This can set to a custom value to force cache busting if the identifier changes.
+  * `cacheIdentifier`: Default is a string composed by the babel-core's version, the babel-loader's version, the contents of .babelrc file if it exists and the value of the environment variable `BABEL_ENV` with a fallback to the `NODE_ENV` environment variable. This can be set to a custom value to force cache busting if the identifier changes.
 
 
   __Note:__ The `sourceMap` option is ignored, instead sourceMaps are automatically enabled when webpack is configured to use them (via the `devtool` config option).
@@ -105,18 +105,18 @@ module: {
 
   See the [docs](http://babeljs.io/docs/plugins/transform-runtime/) for more information.
 
-  **NOTE:** You must run `npm install babel-plugin-transform-runtime --save` to include this in your project.
+  **NOTE:** You must run `npm install babel-plugin-transform-runtime --save-dev` to include this in your project and `babel-runtime` itelf as a dependency with `npm install babel-runtime --save`.
 
 ```javascript
 loaders: [
   // the 'transform-runtime' plugin tells babel to require the runtime
   // instead of inlining it.
   {
-    test: /\.jsx?$/,
+    test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'babel',
     query: {
-      presets: ['react', 'es2015'],
+      presets: ['es2015'],
       plugins: ['transform-runtime']
     }
   }
@@ -128,7 +128,7 @@ loaders: [
 If using cacheDirectory results in an error similar to the following:
 
 ```
-ERROR in ./frontend/src/main.jsx
+ERROR in ./frontend/src/main.js
 Module build failed: Error: ENOENT, open 'true/350c59cae6b7bce3bb58c8240147581bfdc9cccc.json.gzip'
  @ multi app
 ```
@@ -139,7 +139,7 @@ That means that most likely, you're not setting the options correctly, and you'r
 ```javascript
 loaders: [
   {
-    test: /\.jsx?$/,
+    test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'babel?cacheDirectory=true'
   }
@@ -151,7 +151,7 @@ That's not the correct way of setting boolean values. You should do instead:
 ```javascript
 loaders: [
   {
-    test: /\.jsx?$/,
+    test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'babel?cacheDirectory'
   }
@@ -165,7 +165,7 @@ loaders: [
   // the optional 'runtime' transformer tells babel to require the runtime
   // instead of inlining it.
   {
-    test: /\.jsx?$/,
+    test: /\.js$/,
     exclude: /(node_modules|bower_components)/,
     loader: 'babel',
     query: {

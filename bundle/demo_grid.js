@@ -64,7 +64,7 @@
 	
 	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 	
-	var _events = __webpack_require__(358);
+	var _events = __webpack_require__(351);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -88,12 +88,18 @@
 	var DNDGrid = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(_grid2.default);
 	
 	/**
-	 * render to demo dom
+	 * wait for dom to be ready so all plugins etc are loaded
 	 */
-	_reactDom2.default.render(_react2.default.createElement(DNDGrid, {
-	  container: container,
-	  events: events
-	}), document.getElementById("grid-demo"));
+	document.addEventListener("DOMContentLoaded", function (event) {
+	
+		/**
+	  * render to demo dom
+	  */
+		_reactDom2.default.render(_react2.default.createElement(DNDGrid, {
+			container: container,
+			events: events
+		}), document.getElementById("grid-demo"));
+	});
 
 /***/ },
 /* 1 */
@@ -30531,6 +30537,10 @@
 	
 	var _react = __webpack_require__(1);
 	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30561,11 +30571,13 @@
 		_createClass(Slot, [{
 			key: "render",
 			value: function render() {
-				return React.createElement(
+				return _react2.default.createElement(
 					"div",
-					{ className: "grid-slot grid-slot-1d3" },
-					React.createElement(StyleChanger, null),
-					React.createElement(
+					{
+						className: "grid-slot grid-slot-1d3"
+					},
+					_react2.default.createElement(StyleChanger, null),
+					_react2.default.createElement(
 						"div",
 						{ className: "grid-boxes-wrapper boxes-wrapper" },
 						this.props.children
@@ -30615,7 +30627,7 @@
 		_createClass(StyleChanger, [{
 			key: "render",
 			value: function render() {
-				return React.createElement("div", { className: "grid-slot-style-changer style-changer" });
+				return _react2.default.createElement("div", { className: "grid-slot-style-changer style-changer" });
 			}
 			/**
 	   * ---------------------
@@ -30932,14 +30944,7 @@
 	exports.default = (0, _reactDnd.DragSource)(_constants.ItemTypes.BOX, boxSource, collect)(Box);
 
 /***/ },
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */,
-/* 358 */
+/* 351 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.

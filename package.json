@@ -10,15 +10,12 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "ampersand-state": "^5.0.2",
+    "ampersand-model": "^8.0.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
-    "backbone-collection": "^1.0.10",
-    "jquery": "^3.0.0",
-    "path": "^0.12.7",
     "react": "^15.3.1",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
