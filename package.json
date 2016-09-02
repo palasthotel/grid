@@ -10,6 +10,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "ampersand-collection": "^2.0.0",
     "ampersand-model": "^8.0.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",

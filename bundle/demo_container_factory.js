@@ -54,11 +54,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _containerFactory = __webpack_require__(341);
+	var _containerFactory = __webpack_require__(336);
 	
 	var _containerFactory2 = _interopRequireDefault(_containerFactory);
 	
-	var _containerTypes = __webpack_require__(342);
+	var _containerTypes = __webpack_require__(337);
 	
 	var _containerTypes2 = _interopRequireDefault(_containerTypes);
 	
@@ -68,7 +68,7 @@
 	 * grid dummy
 	 * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
 	 */
-	var container_types = __webpack_require__(339);
+	var container_types = __webpack_require__(334);
 	
 	/**
 	 * append app to grid app root
@@ -191,7 +191,6 @@
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-	
 	var process = module.exports = {};
 	
 	// cached from whatever global is present so that test runners that stub it
@@ -202,22 +201,84 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
-	  try {
-	    cachedSetTimeout = setTimeout;
-	  } catch (e) {
-	    cachedSetTimeout = function () {
-	      throw new Error('setTimeout is not defined');
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
 	    }
-	  }
-	  try {
-	    cachedClearTimeout = clearTimeout;
-	  } catch (e) {
-	    cachedClearTimeout = function () {
-	      throw new Error('clearTimeout is not defined');
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
-	  }
 	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	
+	
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	
+	
+	
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -242,7 +303,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = cachedSetTimeout(cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -259,7 +320,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    cachedClearTimeout(timeout);
+	    runClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -271,7 +332,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout(drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 	
@@ -21555,12 +21616,7 @@
 /* 331 */,
 /* 332 */,
 /* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
-/* 339 */
+/* 334 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21638,8 +21694,8 @@
 	}];
 
 /***/ },
-/* 340 */,
-/* 341 */
+/* 335 */,
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21676,7 +21732,7 @@
 		function ContainerFactory(props) {
 			_classCallCheck(this, ContainerFactory);
 	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerFactory).call(this, props));
+			var _this = _possibleConstructorReturn(this, (ContainerFactory.__proto__ || Object.getPrototypeOf(ContainerFactory)).call(this, props));
 	
 			_this.state = {
 				slots: 1,
@@ -21862,7 +21918,7 @@
 	exports.default = ContainerFactory;
 
 /***/ },
-/* 342 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21878,7 +21934,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _containerType = __webpack_require__(343);
+	var _containerType = __webpack_require__(338);
 	
 	var _containerType2 = _interopRequireDefault(_containerType);
 	
@@ -21896,7 +21952,7 @@
 		function ContainerTypes() {
 			_classCallCheck(this, ContainerTypes);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerTypes).apply(this, arguments));
+			return _possibleConstructorReturn(this, (ContainerTypes.__proto__ || Object.getPrototypeOf(ContainerTypes)).apply(this, arguments));
 		}
 	
 		_createClass(ContainerTypes, [{
@@ -21963,11 +22019,10 @@
 	  * lifecycle
 	  * ---------------------
 	  */
-	
 		function ContainerType(props) {
 			_classCallCheck(this, ContainerType);
 	
-			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(ContainerType).call(this, props));
+			var _this3 = _possibleConstructorReturn(this, (ContainerType.__proto__ || Object.getPrototypeOf(ContainerType)).call(this, props));
 	
 			_this3.state = {
 				trashed: props.trashed
@@ -22029,7 +22084,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 343 */
+/* 338 */
 /***/ function(module, exports) {
 
 	"use strict";

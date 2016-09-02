@@ -1,19 +1,41 @@
-import AmpersandModel from 'ampersand-model';
+import Model from 'ampersand-model';
+import Collection from 'ampersand-collection';
 
-moduel.exports = AmpersandModel.extend({
+module.exports.GRID = GRID;
+module.exports.ContainerCollection = ContainerCollection;
+module.exports.Container = Container;
+
+const ContainerCollection = Collection.extend({
+	model: Container
+});
+
+
+const GRID = Model.extend({
 	props: {
-		firstName: 'string',
-		lastName: 'string'
+		id: 'number',
+		autor: 'string',
 	},
 	session: {
-		signedIn: ['boolean', true, false],
-	},
-	derived: {
-		fullName: {
-			deps: ['firstName', 'lastName'],
-			fn: function () {
-				return this.firstName + ' ' + this.lastName;
-			}
+		loading: ['boolean', true, false],
+		revisions: {
+			type: 'array',
+			default: function () { return []; }
 		}
-	}
+	},
+	collections:{
+		containers: ContainerCollection,
+	},
+});
+
+const Container = Model.extend({
+	props: {
+		id: 'number',
+		title: 'string',
+	},
+	session:{
+		editing: ['boolean', false, true],
+	},
+	collections:{
+		// slots: ContainerCollection,
+	},
 });

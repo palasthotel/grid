@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _stylesEditor = __webpack_require__(352);
+	var _stylesEditor = __webpack_require__(347);
 	
 	var _stylesEditor2 = _interopRequireDefault(_stylesEditor);
 	
@@ -186,7 +186,6 @@
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-	
 	var process = module.exports = {};
 	
 	// cached from whatever global is present so that test runners that stub it
@@ -197,22 +196,84 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
-	  try {
-	    cachedSetTimeout = setTimeout;
-	  } catch (e) {
-	    cachedSetTimeout = function () {
-	      throw new Error('setTimeout is not defined');
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
 	    }
-	  }
-	  try {
-	    cachedClearTimeout = clearTimeout;
-	  } catch (e) {
-	    cachedClearTimeout = function () {
-	      throw new Error('clearTimeout is not defined');
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
-	  }
 	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	
+	
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	
+	
+	
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -237,7 +298,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = cachedSetTimeout(cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -254,7 +315,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    cachedClearTimeout(timeout);
+	    runClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -266,7 +327,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout(drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 	
@@ -21563,12 +21624,7 @@
 /* 344 */,
 /* 345 */,
 /* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21583,11 +21639,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _singleEdit = __webpack_require__(353);
+	var _singleEdit = __webpack_require__(348);
 	
 	var _singleEdit2 = _interopRequireDefault(_singleEdit);
 	
-	var _add = __webpack_require__(358);
+	var _add = __webpack_require__(353);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
@@ -21611,7 +21667,7 @@
 	    function StylesEditor(props) {
 	        _classCallCheck(this, StylesEditor);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(StylesEditor).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (StylesEditor.__proto__ || Object.getPrototypeOf(StylesEditor)).call(this, props));
 	
 	        var first = Object.keys(props.styles)[0];
 	        _this.state = {
@@ -21772,7 +21828,7 @@
 	exports.default = StylesEditor;
 
 /***/ },
-/* 353 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21787,15 +21843,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _trash = __webpack_require__(354);
+	var _trash = __webpack_require__(349);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _undoPanel = __webpack_require__(355);
+	var _undoPanel = __webpack_require__(350);
 	
 	var _undoPanel2 = _interopRequireDefault(_undoPanel);
 	
-	var _slugify = __webpack_require__(357);
+	var _slugify = __webpack_require__(352);
 	
 	var _slugify2 = _interopRequireDefault(_slugify);
 	
@@ -21815,11 +21871,10 @@
 	     * lifecycle
 	     * ---------------------
 	     */
-	
 	    function SingleEdit(props) {
 	        _classCallCheck(this, SingleEdit);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SingleEdit).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (SingleEdit.__proto__ || Object.getPrototypeOf(SingleEdit)).call(this, props));
 	
 	        _this.state = {
 	            name: _this.props.name,
@@ -22001,7 +22056,7 @@
 	};
 
 /***/ },
-/* 354 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22032,7 +22087,7 @@
 	    function Trash() {
 	        _classCallCheck(this, Trash);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Trash).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Trash.__proto__ || Object.getPrototypeOf(Trash)).apply(this, arguments));
 	    }
 	
 	    _createClass(Trash, [{
@@ -22057,7 +22112,7 @@
 	exports.default = Trash;
 
 /***/ },
-/* 355 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22072,7 +22127,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _restore = __webpack_require__(356);
+	var _restore = __webpack_require__(351);
 	
 	var _restore2 = _interopRequireDefault(_restore);
 	
@@ -22090,7 +22145,7 @@
 	    function UndoPanel(props) {
 	        _classCallCheck(this, UndoPanel);
 	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UndoPanel).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (UndoPanel.__proto__ || Object.getPrototypeOf(UndoPanel)).call(this, props));
 	
 	        _this.state = {
 	            seconds: _this.props.seconds
@@ -22153,7 +22208,7 @@
 	};
 
 /***/ },
-/* 356 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22185,7 +22240,7 @@
 	    function Restore() {
 	        _classCallCheck(this, Restore);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Restore).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Restore.__proto__ || Object.getPrototypeOf(Restore)).apply(this, arguments));
 	    }
 	
 	    _createClass(Restore, [{
@@ -22210,7 +22265,7 @@
 	exports.default = Restore;
 
 /***/ },
-/* 357 */
+/* 352 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22234,7 +22289,7 @@
 	}
 
 /***/ },
-/* 358 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22265,7 +22320,7 @@
 	    function Add() {
 	        _classCallCheck(this, Add);
 	
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Add).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Add.__proto__ || Object.getPrototypeOf(Add)).apply(this, arguments));
 	    }
 	
 	    _createClass(Add, [{
