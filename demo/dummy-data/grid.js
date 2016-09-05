@@ -27,10 +27,10 @@ module.exports = {
 			"lastcontentcontainer":null,
 			"sidebarleft":false,
 			"style_label":null,
-			"id":"1",
+			"id":1,
 			"slots":[
 				{
-					"id":"1",
+					"id":1,
 					"style":null,
 					"boxes":[
 						{
@@ -47,7 +47,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"8",
+							"id":8,
 							"html":"<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
 							"type":"plaintext",
 							"content":{
@@ -64,7 +64,7 @@ module.exports = {
 					]
 				},
 				{
-					"id":"2",
+					"id":2,
 					"style":null,
 					"boxes":[
 						{
@@ -81,7 +81,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"9",
+							"id":9,
 							"html":"<div class=\"grid-box-editmode\">\n\tStatic HTML-Content<\/div>\n",
 							"type":"wp_html",
 							"content":{
@@ -98,7 +98,7 @@ module.exports = {
 					]
 				},
 				{
-					"id":"3",
+					"id":3,
 					"style":null,
 					"boxes":[
 						{
@@ -115,7 +115,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"10",
+							"id":10,
 							"html":"<div class=\"grid-box-editmode\">\n  RSS Feed\n<\/div>",
 							"type":"rss",
 							"content":{
@@ -163,10 +163,10 @@ module.exports = {
 			"lastcontentcontainer":null,
 			"sidebarleft":false,
 			"style_label":null,
-			"id":"2",
+			"id":2,
 			"slots":[
 				{
-					"id":"4",
+					"id":4,
 					"style":null,
 					"boxes":[
 						{
@@ -183,7 +183,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"6",
+							"id":6,
 							"html":"<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
 							"type":"wp_html",
 							"content":{
@@ -211,7 +211,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"6",
+							"id":6,
 							"html":"<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
 							"type":"wp_html",
 							"content":{
@@ -239,7 +239,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"6",
+							"id":6,
 							"html":"<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
 							"type":"wp_html",
 							"content":{
@@ -256,7 +256,7 @@ module.exports = {
 					]
 				},
 				{
-					"id":"5",
+					"id":5,
 					"style":null,
 					"boxes":[
 
@@ -288,10 +288,10 @@ module.exports = {
 			"lastcontentcontainer":null,
 			"sidebarleft":false,
 			"style_label":null,
-			"id":"5",
+			"id":5,
 			"slots":[
 				{
-					"id":"1",
+					"id":1,
 					"style":null,
 					"boxes":[
 						{
@@ -308,7 +308,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"8",
+							"id":8,
 							"html":"<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
 							"type":"plaintext",
 							"content":{
@@ -325,7 +325,7 @@ module.exports = {
 					]
 				},
 				{
-					"id":"2",
+					"id":2,
 					"style":null,
 					"boxes":[
 						{
@@ -342,7 +342,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"9",
+							"id":9,
 							"html":"<div class=\"grid-box-editmode\">\n\tStatic HTML-Content<\/div>\n",
 							"type":"wp_html",
 							"content":{
@@ -359,7 +359,7 @@ module.exports = {
 					]
 				},
 				{
-					"id":"4",
+					"id":4,
 					"style":null,
 					"boxes":[
 						{
@@ -376,7 +376,7 @@ module.exports = {
 							"layout":null,
 							"language":null,
 							"style_label":null,
-							"id":"10",
+							"id":10,
 							"html":"<div class=\"grid-box-editmode\">\n  RSS Feed\n<\/div>",
 							"type":"rss",
 							"content":{
