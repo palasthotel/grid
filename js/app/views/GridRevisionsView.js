@@ -80,7 +80,7 @@ var GridRevisionsView = GridBackbone.View.extend({
             alert("You have no rights for that...");
             return false;
         }
-		var revision=jQuery(e.srcElement).parents(".grid-revision").data("revision");
+		var revision=jQuery(e.target).parents(".grid-revision").data("revision");
 		GRID.setToRevision(revision);
 	},
 });
