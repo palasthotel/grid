@@ -17,8 +17,10 @@ class grid_db {
 	private $connection;
 	private $author;
 	private $prefix;
+	private $hook_gateway;
 
-	public function __construct($host,$user,$password,$database,$author="UNKNOWN",$prefix="") {
+	public function __construct($host,$user,$password,$database,$author="UNKNOWN",$prefix="",$hook_gateway=NULL) {
+		$this->hook_gateway=$hook_gateway;
 		$port = 3306;
 		if(strpos($host, ":")>=0){
 			$parts = explode(":", $host);
@@ -39,6 +41,12 @@ class grid_db {
 	public function __destruct() {
 		$this->connection->close();
 	}
+
+	public function fireHook($subject,$arguments) {
+		if($this->hook_gateway==NULL) return;
+		call_user_func($this->hook_gateway,$subject,$arguments);
+	}
+
 	public function createGrid()
 	{
 		$query="select max(id) as id from ".$this->prefix."grid_grid";

@@ -16,6 +16,7 @@ class grid_grid extends grid_base {
 
 	public function render($editmode)
 	{
+		$this->storage->fireHook("rendering",array('grid'=>$this->gridid,'editmode'=>$editmode));
 		$containermap=array();
 		$containerlist=array();
 		
@@ -50,6 +51,7 @@ class grid_grid extends grid_base {
 		}
 		
 		$output=ob_get_clean();
+		$this->storage->fireHook("rendered",array('grid'=>$this->gridid,'editmode'=>$editmode));
 		return $output;
 	}
 	
