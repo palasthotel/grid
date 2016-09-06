@@ -246,6 +246,9 @@ class grid_plugin {
 		return false;
 	}
 
+	function fire_hook($subject,$arguments) {
+		do_action('grid_'.$subject,$arguments);
+	}
 
 	/**
 	 * get grid storage
@@ -260,7 +263,7 @@ class grid_plugin {
 		global $grid_storage;
 		if ( ! isset( $grid_storage ) ) {
 			$user = wp_get_current_user();
-			$storage = new grid_db( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, $user->user_login, $wpdb->prefix );
+			$storage = new grid_db( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, $user->user_login, $wpdb->prefix, array($this,'fire_hook') );
 			$storage->ajaxEndpoint = new \grid_plugin\ajaxendpoint();
 			$storage->ajaxEndpoint->storage = $storage;
 
