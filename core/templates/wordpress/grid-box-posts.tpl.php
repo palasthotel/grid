@@ -29,6 +29,14 @@
 	$query = new WP_Query( $content );
 	while ( $query->have_posts() ) {
 		$query->the_post();
+		
+		/**
+		 * if avoid doublets plugin is activated
+		 */
+		if(function_exists('grid_avoid_doublets_add')){
+			grid_avoid_doublets_add(get_the_ID(), $this->grid->gridid);
+		}
+		
 		$found = false;
 		// Checks if WordPress has a template for post content ...
 		if ( $this->storage->templatesPath != null ) {

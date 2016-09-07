@@ -45,12 +45,20 @@ class grid_post_box extends grid_box {
 		if ( $editmode ) {
 			return $post->post_type.': '.$post->post_title.' ('.$post->post_date.' - '.$post->post_status.')';
 		} else {
-			$query = new WP_Query( array( 
+			$query = new WP_Query( array(
 				'p' => $this->content->postid,
 				'post_type' => 'any',
 			) );
 			if ( $query->have_posts() ) {
 				$query->the_post();
+				
+				/**
+				 * if avoid doublets plugin is activated
+				 */
+				if(function_exists('grid_avoid_doublets_add')){
+					grid_avoid_doublets_add(get_the_ID(), $this->grid->gridid);
+				}
+				
 				ob_start();
 				$found = false;
 				if(is_array($this->storage->templatesPaths))

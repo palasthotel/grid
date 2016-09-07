@@ -94,7 +94,13 @@ class grid_posts_box extends grid_list_box {
 			$args['posts_per_page'] = $this->content->posts_per_page;
 			$args['offset'] = $this->content->offset;
 			$args['post_type'] = $this->content->post_type;
-
+			
+			/**
+			 * if avoid doublets plugin is activated
+			 */
+			if(function_exists('grid_avoid_doublets_get_placed')){
+				$args["post__not_in"] = grid_avoid_doublets_get_placed();
+			}
 			return $args;
 		}
 	}
