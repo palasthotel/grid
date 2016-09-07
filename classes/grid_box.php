@@ -18,7 +18,7 @@ class grid_box extends grid_base {
 
 	/**
 	* Reference to the Grid itself
-	* @obj Grid
+	* @var grid_grid
 	*/
 	public $grid;
 
@@ -92,7 +92,7 @@ class grid_box extends grid_base {
 	* Class constructor
 	*/
 	public function __construct() {
-		$this->content=new Stdclass();
+		$this->content=new stdClass();
 	}
 
 	/**
