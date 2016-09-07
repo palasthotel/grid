@@ -6,8 +6,9 @@
  * @package Palasthotel\Grid
  */
 
+use Grid\Constants\Hook;
+
 class grid_grid extends grid_base {
-	
 	public $container;
 	public $gridid;
 	public $gridrevision;
@@ -16,7 +17,7 @@ class grid_grid extends grid_base {
 
 	public function render($editmode)
 	{
-		$this->storage->fireHook("rendering",array('grid'=>$this->gridid,'editmode'=>$editmode));
+		$this->storage->fireHook(Hook::GRID_RENDER_BEFORE,array('grid'=>$this->gridid,'editmode'=>$editmode));
 		$containermap=array();
 		$containerlist=array();
 		
@@ -25,6 +26,9 @@ class grid_grid extends grid_base {
 		
 		foreach($this->container as $container)
 		{
+			/**
+			 * @var $container grid_container
+			 */
 			$html=$container->render($editmode);
 			$containermap[$container->containerid]=$html;
 			$containerlist[]=$html;
@@ -51,7 +55,7 @@ class grid_grid extends grid_base {
 		}
 		
 		$output=ob_get_clean();
-		$this->storage->fireHook("rendered",array('grid'=>$this->gridid,'editmode'=>$editmode));
+		$this->storage->fireHook(Hook::GRID_RENDER_AFTER, array('grid'=>$this->gridid,'editmode'=>$editmode));
 		return $output;
 	}
 	
@@ -190,6 +194,9 @@ class grid_grid extends grid_base {
 		$contentcontainerclosecounter = 0;
 		$i = 0;
 		foreach($this->container as $container){
+			/**
+			 * @var $container grid_container
+			 */
 			$mycontainer = $container;
 			$this->container[$i]->position = $i;
 			

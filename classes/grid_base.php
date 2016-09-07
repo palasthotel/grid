@@ -7,5 +7,8 @@
  */
 
 class grid_base {
+	/**
+	 * @var grid_db
+	 */
 	public $storage;
 }
