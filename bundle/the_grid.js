@@ -56,7 +56,7 @@
 	
 	var _events = __webpack_require__(346);
 	
-	var _theGrid = __webpack_require__(354);
+	var _theGrid = __webpack_require__(521);
 	
 	var _theGrid2 = _interopRequireDefault(_theGrid);
 	
@@ -29403,20 +29403,25 @@
 			/**
 	   * render slots
 	   * @param slots
+	   * @param dimensions array
 	   * @returns {*}
 	   */
 	
 		}, {
 			key: 'renderSlots',
-			value: function renderSlots(slots) {
+			value: function renderSlots(slots, dimensions) {
 				var _this2 = this;
 	
 				return slots.map(function (slot, index) {
+					var parts = dimensions[index].split("d");
+					var width = parts[0] / parts[1] * 100;
 					return _react2.default.createElement(
 						_slot2.default,
 						_extends({
 							key: index
-						}, slot),
+						}, slot, {
+							dimension: width
+						}),
 						_this2.renderBoxes(slot.boxes)
 					);
 				});
@@ -29432,7 +29437,6 @@
 			key: 'renderContainers',
 			value: function renderContainers(containers) {
 				var $containers = [];
-				var drop_key = "";
 	
 				for (var i = 0; i < containers.length; i++) {
 					var container = containers[i];
@@ -29441,12 +29445,12 @@
 	     * render drop area for containers
 	     * @type {string}
 	     */
-					drop_key = "container-drop_" + i;
 					$containers.push(this.renderContainerDrop(i));
 	
 					/**
 	     * render container
 	     */
+					var dimensions = container.type.split("-").slice(1);
 					$containers.push(_react2.default.createElement(
 						_container2.default,
 						_extends({
@@ -29455,7 +29459,7 @@
 							index: i,
 							events: this.props.events
 						}),
-						this.renderSlots(container.slots)
+						this.renderSlots(container.slots, dimensions)
 					));
 	
 					/**
@@ -29489,17 +29493,13 @@
 	
 				return _react2.default.createElement(
 					'div',
-					{ className: 'grid-wrapper' },
-					_react2.default.createElement(
-						'div',
-						{
-							className: 'grid-containers-wrapper',
-							ref: function ref(element) {
-								return _this3.state.dom = element;
-							}
-						},
-						this.renderContainers(this.props.container)
-					)
+					{
+						className: 'grid',
+						ref: function ref(element) {
+							return _this3.state.dom = element;
+						}
+					},
+					this.renderContainers(this.props.container)
 				);
 			}
 	
@@ -29649,14 +29649,15 @@
 			value: function render() {
 				var _this2 = this;
 	
-				var class_name = "grid-container grid-contaner-" + this.props.type;
 				var _props = this.props;
 				var connectDragSource = _props.connectDragSource;
 				var isDragging = _props.isDragging;
+				var type = _props.type;
 	
 				return _react2.default.createElement(
 					'div',
-					{ className: class_name,
+					{
+						className: 'container contaner__' + type,
 						style: {
 							display: isDragging ? "none" : "block"
 						},
@@ -29666,10 +29667,10 @@
 					},
 					_react2.default.createElement(
 						'div',
-						{ className: 'grid-container-controls' },
+						{ className: 'container__controls' },
 						_react2.default.createElement(
 							'span',
-							{ className: 'grid-container-title' },
+							{ className: 'container__title' },
 							'test',
 							this.props.title
 						),
@@ -29679,42 +29680,42 @@
 								style: {
 									cursor: "move"
 								},
-								className: 'grid-container-sorthandle hide-grid-container-editor ui-sortable-handle' },
+								className: 'container__drag' },
 							_react2.default.createElement('i', { className: 'icon-drag' })
 						)),
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-container-options' },
+							{ className: 'container__options' },
 							_react2.default.createElement(
 								'span',
-								{ className: 'grid-container-options-icon' },
+								{ className: 'container__options-icon' },
 								'Options ',
 								_react2.default.createElement('i', { className: 'icon-options' })
 							),
 							_react2.default.createElement(
 								'ul',
-								{ className: 'grid-container-options-list' },
+								{ className: 'container__options-list' },
 								_react2.default.createElement(
 									'li',
-									{ className: 'grid-container-options-list-item', role: 'edit' },
+									{ className: 'container__options-list-item', role: 'edit' },
 									_react2.default.createElement('i', { className: 'icon-edit' }),
 									' Edit'
 								),
 								_react2.default.createElement(
 									'li',
-									{ className: 'grid-container-options-list-item', role: 'reuse' },
+									{ className: 'container__options-list-item', role: 'reuse' },
 									_react2.default.createElement('i', { className: 'icon-reuse' }),
 									' Reuse'
 								),
 								_react2.default.createElement(
 									'li',
-									{ className: 'grid-container-options-list-item', role: 'toggleslotstyles' },
+									{ className: 'container__options-list-item', role: 'toggleslotstyles' },
 									_react2.default.createElement('i', { className: 'icon-style' }),
 									' Slot-styles'
 								),
 								_react2.default.createElement(
 									'li',
-									{ className: 'grid-container-options-list-item', role: 'trash' },
+									{ className: 'container__options-list-item', role: 'trash' },
 									_react2.default.createElement('i', { className: 'icon-trash' }),
 									' Delete'
 								)
@@ -29723,27 +29724,27 @@
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'grid-container-content' },
+						{ className: 'container__content' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-container-before' },
+							{ className: 'container__before' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'grid-container-prolog' },
+								{ className: 'container__prolog' },
 								'PROLOG'
 							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-slots-wrapper' },
+							{ className: 'container__slots' },
 							this.props.children
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-container-after' },
+							{ className: 'container__after' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'grid-container-epilog' },
+								{ className: 'container__epilog' },
 								'EPILOG'
 							)
 						)
@@ -29927,10 +29928,10 @@
 	
 				return connectDropTarget(_react2.default.createElement(
 					'div',
-					{ className: 'container-drop-area-wrapper', style: {
+					{ className: 'container__drop-area-wrapper', style: {
 							display: display
 						} },
-					_react2.default.createElement('div', { className: 'container-drop-area', style: {
+					_react2.default.createElement('div', { className: 'container__drop-area', style: {
 							backgroundColor: color
 						} })
 				));
@@ -29998,7 +29999,10 @@
 				return _react2.default.createElement(
 					"div",
 					{
-						className: "grid-slot grid-slot-1d3"
+						className: "slot",
+						style: {
+							width: this.props.dimension + "%"
+						}
 					},
 					_react2.default.createElement(StyleChanger, null),
 					_react2.default.createElement(
@@ -30024,6 +30028,10 @@
 	
 		return Slot;
 	}(_react.Component);
+	
+	Slot.propTypes = {
+		dimension: _react.PropTypes.number.isRequired
+	};
 	
 	exports.default = Slot;
 	
@@ -30245,7 +30253,6 @@
 				var connectDragPreview = _props.connectDragPreview;
 				var isDragging = _props.isDragging;
 	
-				var class_name = "grid-box ";
 				var title = "";
 				if (this.props.titleurl) {
 					title = _react2.default.createElement(
@@ -30269,28 +30276,32 @@
 				}
 				return connectDragPreview(_react2.default.createElement(
 					'div',
-					{ className: class_name,
+					{ className: 'box',
 						style: {
 							display: isDragging ? "none" : "block"
 						} },
 					_react2.default.createElement(
 						'div',
-						{ className: 'grid-box-content' },
-						title,
+						{ className: 'box__content' },
+						_react2.default.createElement(
+							'span',
+							null,
+							title
+						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'prolog' },
+							{ className: 'box__prolog' },
 							this.props.prolog
 						),
-						_react2.default.createElement('div', { className: 'content', dangerouslySetInnerHTML: { __html: this.props.html } }),
+						_react2.default.createElement('div', { className: 'box__html', dangerouslySetInnerHTML: { __html: this.props.html } }),
 						_react2.default.createElement(
 							'div',
-							{ className: 'epilog' },
+							{ className: 'box__epilog' },
 							this.props.epilog
 						),
 						_react2.default.createElement(
 							'p',
-							{ className: 'readmore' },
+							{ className: 'box__readmore' },
 							_react2.default.createElement(
 								'a',
 								{ href: this.props.readmoreurl },
@@ -30300,7 +30311,7 @@
 					),
 					connectDragSource(_react2.default.createElement(
 						'div',
-						{ className: 'grid-box-controls grid-box-movable' },
+						{ className: 'box__controls grid-box-movable' },
 						_react2.default.createElement('i', { className: 'grid-box-drag icon-drag' }),
 						_react2.default.createElement(
 							'div',
@@ -30681,7 +30692,174 @@
 /* 351 */,
 /* 352 */,
 /* 353 */,
-/* 354 */
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30729,7 +30907,7 @@
 	
 				return _react2.default.createElement(
 					'div',
-					{ id: 'new-grid-wrapper' },
+					{ className: 'the-grid' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'grid-toolbar' },

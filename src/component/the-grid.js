@@ -11,7 +11,7 @@ class TheGrid extends React.Component{
 	render(){
 		
 		return (
-		  <div id="new-grid-wrapper">
+		  <div className="the-grid">
             <div className="grid-toolbar">
                 Buttons | Elements | Revisions
             </div>

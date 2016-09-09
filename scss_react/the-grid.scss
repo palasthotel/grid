@@ -1,6 +1,10 @@
 @import "helpers/all";
 @import "styleguide/all";
 
+@import "namespaced/grid";
+@import "namespaced/container";
+@import "namespaced/slot";
+@import "namespaced/box";
 
 #grid-app{
   font-family: $font__type;

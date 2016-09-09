@@ -32,10 +32,10 @@ class ContainerDrop extends Component {
 		const display = (canDrop)? 'block': 'none';
 		
 		return connectDropTarget(
-			<div className="container-drop-area-wrapper" style={{
+			<div className="container__drop-area-wrapper" style={{
 				display: display
 			}}>
-				<div className="container-drop-area" style={{
+				<div className="container__drop-area" style={{
 					backgroundColor: color,
 				}}></div>
 			</div>

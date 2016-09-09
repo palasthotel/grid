@@ -91,14 +91,18 @@ export default class Grid extends Component{
 	/**
 	 * render slots
 	 * @param slots
+	 * @param dimensions array
 	 * @returns {*}
 	 */
-	renderSlots(slots){
+	renderSlots(slots, dimensions){
 		return slots.map((slot, index)=>{
+			let parts = dimensions[index].split("d");
+			let width = (parts[0]/parts[1])*100;
 			return(
 				<Slot
 					key={index}
 					{...slot}
+					dimension={width}
 				>{this.renderBoxes(slot.boxes)}</Slot>
 			)
 		});
@@ -111,7 +115,6 @@ export default class Grid extends Component{
 	 */
 	renderContainers(containers){
 		const $containers = [];
-		let drop_key = "";
 		
 		for(let i = 0; i < containers.length; i++ ){
 			let container = containers[i];
@@ -120,12 +123,12 @@ export default class Grid extends Component{
 			 * render drop area for containers
 			 * @type {string}
 			 */
-			drop_key = "container-drop_"+i;
 			$containers.push(this.renderContainerDrop(i));
 			
 			/**
 			 * render container
 			 */
+			let dimensions = container.type.split("-").slice(1);
 			$containers.push((
 				<Container
 					key={container.id}
@@ -133,7 +136,7 @@ export default class Grid extends Component{
 					index={i}
 				    events={this.props.events}
 				>
-					{this.renderSlots(container.slots)}
+					{this.renderSlots(container.slots, dimensions)}
 				</Container>
 			));
 			
@@ -162,13 +165,11 @@ export default class Grid extends Component{
 	 */
 	render(){
 		return (
-			<div className="grid-wrapper">
-				<div
-					className="grid-containers-wrapper"
-					ref={(element)=> this.state.dom = element}
-				>
-					{this.renderContainers(this.props.container)}
-				</div>
+			<div
+				className="grid"
+				ref={(element)=> this.state.dom = element}
+			>
+				{this.renderContainers(this.props.container)}
 			</div>
 		);
 	}

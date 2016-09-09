@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class Slot extends Component{
+class Slot extends Component{
 	/**
 	 * ---------------------
 	 * lifecycle
@@ -17,7 +17,10 @@ export default class Slot extends Component{
 	render(){
 		return(
 			<div
-				className="grid-slot grid-slot-1d3"
+				className="slot"
+			    style={{
+			    	width: this.props.dimension+"%",
+			    }}
 			>
 				<StyleChanger />
 				<div className="grid-boxes-wrapper boxes-wrapper">{this.props.children}</div>
@@ -36,6 +39,11 @@ export default class Slot extends Component{
 	 * ---------------------
 	 */
 }
+Slot.propTypes = {
+	dimension: PropTypes.number.isRequired,
+}
+
+export default Slot;
 
 class StyleChanger extends Component{
 	/**

@@ -30776,7 +30776,7 @@
 					"language": null,
 					"style_label": null,
 					"id": 6,
-					"html": "<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
+					"html": "<div class=\"grid-box-editmode\">\n\t<p><img src='http://placeholder.palasthotel.de/make/800x200.png'<\/p>\n<\/div>\n",
 					"type": "wp_html",
 					"content": {
 						"html": "<p>HTML TEST<\/p>\n"
@@ -30922,6 +30922,84 @@
 						"key": "numItems",
 						"label": "Number of items to show",
 						"type": "number"
+					}]
+				}]
+			}]
+		}, {
+			"reusetitle": null,
+			"type": "c-2d3-1d3",
+			"type_id": "6",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "Container 4",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": 6,
+			"slots": [{
+				"id": 1,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 8,
+					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
+					"type": "plaintext",
+					"content": {
+						"plain": ""
+					},
+					"contentstructure": [{
+						"key": "plain",
+						"type": "textarea",
+						"label": "Plaintext"
+					}]
+				}]
+			}, {
+				"id": 2,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 9,
+					"html": "<div class=\"grid-box-editmode\"><img src='http://placeholder.palasthotel.de/make/400x200.png' /><\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": ""
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
 					}]
 				}]
 			}]

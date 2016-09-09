@@ -48,7 +48,6 @@ class Box extends Component{
 	 */
 	render(){
 		const { connectDragSource, connectDragPreview, isDragging } = this.props;
-		const class_name = "grid-box ";
 		let title = "";
 		if(this.props.titleurl){
 			title = <h3>
@@ -65,20 +64,20 @@ class Box extends Component{
 				</h3>
 		}
 		return connectDragPreview(
-			<div className={class_name}
+			<div className="box"
 			style={{
 				display: isDragging? "none": "block",
 			}}>
-				<div className="grid-box-content">
-					{title}
-					<div className="prolog">{this.props.prolog}</div>
-					<div className="content" dangerouslySetInnerHTML={{__html: this.props.html}} ></div>
-					<div className="epilog">{this.props.epilog}</div>
-					<p className="readmore">
+				<div className="box__content">
+					<span>{title}</span>
+					<div className="box__prolog">{this.props.prolog}</div>
+					<div className="box__html" dangerouslySetInnerHTML={{__html: this.props.html}} ></div>
+					<div className="box__epilog">{this.props.epilog}</div>
+					<p className="box__readmore">
 						<a href={this.props.readmoreurl} >{this.props.readmore}</a>
 					</p>
 				</div>
-				{connectDragSource(<div className="grid-box-controls grid-box-movable">
+				{connectDragSource(<div className="box__controls grid-box-movable">
 					<i className="grid-box-drag icon-drag" />
 					<div className="grid-box-control-button grid-box-edit">
 						<div className="grid-box-control-wrapper">

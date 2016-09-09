@@ -1,0 +1,47 @@
+.container{
+	
+	position: relative;
+	
+	border:1px solid black;
+	padding: 15px;
+	margin: 15px 0;
+	
+	.container__controls{
+		border: 1px solid $color-container-border;
+		position: relative;
+		background-color: transparent;
+		height: 40px;
+		border: 1px solid transparent;
+		border-bottom: none;
+	}
+	
+	.container__drag{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 40px;
+		cursor: move;
+		.icon-drag{
+			position: absolute;
+			top: 9px;
+		}
+	}
+	
+	.container__title{
+		color: $color-dark;
+	}
+	.container__style {
+		font-weight: normal;
+		font-size: 11px;
+	}
+	
+	.container__slots{
+		display: flex;
+		flex-direction: row;
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+}
+
+@import "container__options";
