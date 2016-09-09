@@ -26,7 +26,7 @@ class grid_video_box extends grid_static_base_box
 	* Initializes editor widgets for backend
 	*/
 	public function __construct() {
-		$this->content=new Stdclass();
+		parent::__construct();
 		$this->content->url='';
 		$this->content->title = 0;
 		$this->content->related=0;
@@ -133,8 +133,15 @@ class grid_video_box extends grid_static_base_box
 					$url_related.="1";
 				} else {
 					$url_related.="0";
+				
 				}
-				$parts = explode("/", $this->content->url);
+				
+				$url = $this->content->url;
+				if(strpos($url, "?") !== false){
+					$url = explode("?",$url)[0];
+				}
+				
+				$parts = explode("/", $url);
 				$scheme=$result['scheme'];
 				$url=$result['scheme']."://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
 				$request=curl_init($url);
