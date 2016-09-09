@@ -134,7 +134,12 @@ class grid_video_box extends grid_static_base_box
 				} else {
 					$url_related.="0";
 				}
-				$parts = explode("/", $this->content->url);
+				$url = $this->content->url;
+				if(strpos($url, "?") !== false){
+					$url = explode("?",$url)[0];
+				}
+				
+				$parts = explode("/", $url);
 				$scheme=$result['scheme'];
 				$url=$result['scheme']."://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=".urlencode(end($parts))."&format=json";
 				$request=curl_init($url);
