@@ -26,7 +26,7 @@ class grid_video_box extends grid_static_base_box
 	* Initializes editor widgets for backend
 	*/
 	public function __construct() {
-		$this->content=new Stdclass();
+		parent::__construct();
 		$this->content->url='';
 		$this->content->title = 0;
 		$this->content->related=0;
@@ -111,7 +111,8 @@ class grid_video_box extends grid_static_base_box
 				$result=curl_exec($request);
 				if($result===FALSE)
 				{
-					die(var_dump(curl_error($request)));
+					var_dump(curl_error($request));
+					die();
 				}
 				curl_close($request);
 				$result=json_decode($result);
