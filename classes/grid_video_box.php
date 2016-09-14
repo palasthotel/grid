@@ -112,7 +112,8 @@ class grid_video_box extends grid_static_base_box
 				$result=curl_exec($request);
 				if($result===FALSE)
 				{
-					die(var_dump(curl_error($request)));
+					var_dump(curl_error($request))
+					die();
 				}
 				curl_close($request);
 				$result=json_decode($result);
