@@ -1,6 +1,7 @@
 .slot{
-	border-right: 1px;
+	background-color: black;
+	padding: 15px;
 	&+&{
-		border-left:1px solid black;
+		margin-left: 5px;
 	}
 }

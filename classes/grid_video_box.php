@@ -104,6 +104,7 @@ class grid_video_box extends grid_static_base_box
 					$url_related.="0";
 				}
 				$scheme=$result['scheme'];
+				
 				$url=$scheme."://www.youtube.com/oembed?url=".urlencode($this->content->url)."&format=json";
 				$request=curl_init($url);
 				curl_setopt($request,CURLOPT_RETURNTRANSFER,TRUE);
