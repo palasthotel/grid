@@ -61,8 +61,22 @@ class grid_posts_box extends grid_list_box {
 			$tax_query = array();
 			foreach($this->content as $field => $value){
 				if(''== $value || strpos($field,"tax_") !== 0) continue;
+				/**
+				 * legacy: single autocomplete support
+				 */
+				if(!is_array($value)){
+					$tax_query[] = array(
+						'taxonomy' => $this->getTaxonomyNameByKey($field),
+						'terms' => $value,
+					);
+					continue;
+				}
+				/**
+				 * new multiautoselect support
+				 */
 				$tax_query[] = array(
 					'taxonomy' => $this->getTaxonomyNameByKey($field),
+					'field' => 'term_id',
 					'terms' => $value,
 				);
 			}
@@ -158,7 +172,7 @@ class grid_posts_box extends grid_list_box {
 			$cs[] = array(
 				'key' => $this->getTaxonomyKey($tax),
 				'label' => $tax->label,
-				'type' => 'autocomplete',
+				'type' => 'multi-autocomplete',
 			);
 		}
 

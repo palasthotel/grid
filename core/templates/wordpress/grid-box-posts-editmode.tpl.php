@@ -15,14 +15,31 @@
 			if( '' != $value && strpos($field,"tax_") === 0 )
 			{
 				$taxonomy = $this->getTaxonomyNameByKey($field);
-				$term = get_term($value,$taxonomy);
-				if(!is_wp_error($term) && '' != $term->name ){
-					echo "<br/>$taxonomy: ".$term->name;
+				
+				/**
+				 * legacy support for single autocomplete
+				 */
+				if(!is_array($value)){
+					$value = array($value);
 				}
+				
+				if(count($value) > 0){
+					echo "<br/><i>$taxonomy:</i> ";
+					$terms = array();
+					foreach ($value as $term_id){
+						$term = get_term($term_id,$taxonomy);
+						if(!is_wp_error($term) && '' != $term->name ){
+							$terms[] = $term->name;
+						}
+					}
+					echo implode(", ", $terms);
+				}
+				
+				
 			}
 			else if(!empty($value) && is_string($value))
 			{
-				echo "<br/>".$field.": ".$value;
+				echo "<br/><i>".$field.":</i> ".$value;
 			}
 		}
 	}
