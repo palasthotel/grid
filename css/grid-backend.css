@@ -919,8 +919,8 @@ h3 {
       -ms-transform: rotate(90deg);
       -o-transform: rotate(90deg);
       transform: rotate(90deg);
-      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
-      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
+      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
+      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
       zoom: 1; }
 
 .grid-element-box-lists .grid-new-element {
@@ -997,8 +997,8 @@ h3 {
       -ms-transform: rotate(90deg);
       -o-transform: rotate(90deg);
       transform: rotate(90deg);
-      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807);
-      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=-0.44807, M12=-0.894, M21=0.894, M22=-0.44807)";
+      filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90));
+      -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))";
       zoom: 1; }
 
 .grid-element-type-select .grid-element-type {
@@ -1475,35 +1475,43 @@ h3 {
       opacity: 1; }
 
 .grid-editor-widget-autocomplete .autocomplete-wrapper,
-.grid-editor-autocomplete-with-links .autocomplete-wrapper {
+.grid-editor-autocomplete-with-links .autocomplete-wrapper,
+.grid-editor-widget-multi-autocomplete .autocomplete-wrapper {
   position: relative; }
 .grid-editor-widget-autocomplete .icon-cancel,
-.grid-editor-autocomplete-with-links .icon-cancel {
+.grid-editor-autocomplete-with-links .icon-cancel,
+.grid-editor-widget-multi-autocomplete .icon-cancel {
   font-size: 140%; }
 .grid-editor-widget-autocomplete .suggestion-list,
-.grid-editor-autocomplete-with-links .suggestion-list {
+.grid-editor-autocomplete-with-links .suggestion-list,
+.grid-editor-widget-multi-autocomplete .suggestion-list {
   position: relative;
   list-style: none;
   margin-left: 0; }
   .grid-editor-widget-autocomplete .suggestion-list li,
-  .grid-editor-autocomplete-with-links .suggestion-list li {
+  .grid-editor-autocomplete-with-links .suggestion-list li,
+  .grid-editor-widget-multi-autocomplete .suggestion-list li {
     padding: 8px 15px;
     background-color: #e5e3df;
     cursor: pointer;
     margin-bottom: 0px;
     border-bottom: 1px solid #bdc7d3; }
     .grid-editor-widget-autocomplete .suggestion-list li:last-child,
-    .grid-editor-autocomplete-with-links .suggestion-list li:last-child {
+    .grid-editor-autocomplete-with-links .suggestion-list li:last-child,
+    .grid-editor-widget-multi-autocomplete .suggestion-list li:last-child {
       border-bottom: none; }
     .grid-editor-widget-autocomplete .suggestion-list li:hover,
-    .grid-editor-autocomplete-with-links .suggestion-list li:hover {
+    .grid-editor-autocomplete-with-links .suggestion-list li:hover,
+    .grid-editor-widget-multi-autocomplete .suggestion-list li:hover {
       background-color: #3ac5d9;
       color: white; }
   .grid-editor-widget-autocomplete .suggestion-list:empty,
-  .grid-editor-autocomplete-with-links .suggestion-list:empty {
+  .grid-editor-autocomplete-with-links .suggestion-list:empty,
+  .grid-editor-widget-multi-autocomplete .suggestion-list:empty {
     display: none; }
   .grid-editor-widget-autocomplete .suggestion-list:before,
-  .grid-editor-autocomplete-with-links .suggestion-list:before {
+  .grid-editor-autocomplete-with-links .suggestion-list:before,
+  .grid-editor-widget-multi-autocomplete .suggestion-list:before {
     content: "";
     border: 8px solid #e5e3df;
     font-size: 0;
@@ -1518,32 +1526,40 @@ h3 {
     top: -16px;
     left: 10px; }
 .grid-editor-widget-autocomplete .links a,
-.grid-editor-autocomplete-with-links .links a {
+.grid-editor-autocomplete-with-links .links a,
+.grid-editor-widget-multi-autocomplete .links a {
   margin-right: 15px; }
   .grid-editor-widget-autocomplete .links a.full,
-  .grid-editor-autocomplete-with-links .links a.full {
+  .grid-editor-autocomplete-with-links .links a.full,
+  .grid-editor-widget-multi-autocomplete .links a.full {
     display: none; }
 .grid-editor-widget-autocomplete .cancel,
-.grid-editor-autocomplete-with-links .cancel {
+.grid-editor-autocomplete-with-links .cancel,
+.grid-editor-widget-multi-autocomplete .cancel {
   position: absolute;
   cursor: pointer;
   top: 4px;
   display: none; }
 .grid-editor-widget-autocomplete input,
-.grid-editor-autocomplete-with-links input {
+.grid-editor-autocomplete-with-links input,
+.grid-editor-widget-multi-autocomplete input {
   padding-left: 0px;
   transition: all 0.3s ease; }
 .grid-editor-widget-autocomplete .locked .links .full,
-.grid-editor-autocomplete-with-links .locked .links .full {
+.grid-editor-autocomplete-with-links .locked .links .full,
+.grid-editor-widget-multi-autocomplete .locked .links .full {
   display: inline; }
 .grid-editor-widget-autocomplete .locked input,
-.grid-editor-autocomplete-with-links .locked input {
+.grid-editor-autocomplete-with-links .locked input,
+.grid-editor-widget-multi-autocomplete .locked input {
   padding-left: 20px; }
 .grid-editor-widget-autocomplete .locked .cancel,
-.grid-editor-autocomplete-with-links .locked .cancel {
+.grid-editor-autocomplete-with-links .locked .cancel,
+.grid-editor-widget-multi-autocomplete .locked .cancel {
   display: block; }
 .grid-editor-widget-autocomplete .loading,
-.grid-editor-autocomplete-with-links .loading {
+.grid-editor-autocomplete-with-links .loading,
+.grid-editor-widget-multi-autocomplete .loading {
   position: absolute;
   opacity: 0;
   transition: 0.3s all;
@@ -1552,9 +1568,10 @@ h3 {
   width: 15px;
   animation: loading 1s infinite ease-in-out;
   top: 8px;
-  right: 8px; }
+  left: -22px; }
   .grid-editor-widget-autocomplete .loading.go,
-  .grid-editor-autocomplete-with-links .loading.go {
+  .grid-editor-autocomplete-with-links .loading.go,
+  .grid-editor-widget-multi-autocomplete .loading.go {
     opacity: 1; }
 
 @keyframes loading {
@@ -1610,35 +1627,15 @@ h3 {
   background-position: -80px -128px;
   float: right;
   cursor: pointer; }
-.grid-editor-widget-multi-autocomplete .suggestion-list {
-  position: absolute;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: block;
-  outline: none;
-  background-color: white;
-  border: 1px solid #DBDBDB; }
-.grid-editor-widget-multi-autocomplete .suggestion-list li {
-  position: relative;
-  margin: 0;
-  padding: 3px 1em 3px .4em;
-  cursor: pointer;
-  min-height: 0; }
-.grid-editor-widget-multi-autocomplete .suggestion-list li:hover {
-  border: 1px solid #999999;
-  background: #509BF8;
-  font-weight: normal;
-  color: #FFFFFF; }
 .grid-editor-widget-multi-autocomplete .autocomplete-multiselect-item {
+  padding: 8px 15px;
+  background-color: #e5e3df;
   display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 1px 3px;
   margin-right: 2px;
-  margin-bottom: 3px;
-  color: #333;
-  background-color: #f6f6f6; }
+  margin-bottom: 3px; }
+  .grid-editor-widget-multi-autocomplete .autocomplete-multiselect-item:hover {
+    background-color: #ed5032;
+    color: white; }
 
 .grid-editor-widget-textarea textarea {
   width: 10 0%;

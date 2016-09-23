@@ -1,5 +1,6 @@
 .grid-editor-widget-autocomplete,
-.grid-editor-autocomplete-with-links{
+.grid-editor-autocomplete-with-links,
+.grid-editor-widget-multi-autocomplete{
 	.autocomplete-wrapper{
 		position:relative;
 	}
@@ -79,7 +80,7 @@
 		width: 15px;
 		animation: loading 1s infinite ease-in-out;
 		top: 8px;
-		right: 8px;
+		left: -22px;
 		&.go{
 			opacity: 1;
 		}
