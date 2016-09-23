@@ -24,9 +24,8 @@ export default class BoxEditorProlog extends Component{
 					</label>
 					<textarea
 						className="form-html grid-editor-prolog"
-					>
-						Content
-					</textarea>
+					    value="Prolog"
+					/>
 				</Collapsible>
 			</div>
 		);

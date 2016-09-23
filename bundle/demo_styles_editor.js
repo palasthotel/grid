@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _stylesEditor = __webpack_require__(514);
+	var _stylesEditor = __webpack_require__(522);
 	
 	var _stylesEditor2 = _interopRequireDefault(_stylesEditor);
 	
@@ -21791,7 +21791,15 @@
 /* 511 */,
 /* 512 */,
 /* 513 */,
-/* 514 */
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21806,11 +21814,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _singleEdit = __webpack_require__(515);
+	var _singleEdit = __webpack_require__(523);
 	
 	var _singleEdit2 = _interopRequireDefault(_singleEdit);
 	
-	var _add = __webpack_require__(520);
+	var _add = __webpack_require__(528);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
@@ -21995,7 +22003,7 @@
 	exports.default = StylesEditor;
 
 /***/ },
-/* 515 */
+/* 523 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22010,15 +22018,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _trash = __webpack_require__(516);
+	var _trash = __webpack_require__(524);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _undoPanel = __webpack_require__(517);
+	var _undoPanel = __webpack_require__(525);
 	
 	var _undoPanel2 = _interopRequireDefault(_undoPanel);
 	
-	var _slugify = __webpack_require__(519);
+	var _slugify = __webpack_require__(527);
 	
 	var _slugify2 = _interopRequireDefault(_slugify);
 	
@@ -22223,7 +22231,7 @@
 	};
 
 /***/ },
-/* 516 */
+/* 524 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22279,7 +22287,7 @@
 	exports.default = Trash;
 
 /***/ },
-/* 517 */
+/* 525 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22294,7 +22302,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _restore = __webpack_require__(518);
+	var _restore = __webpack_require__(526);
 	
 	var _restore2 = _interopRequireDefault(_restore);
 	
@@ -22375,7 +22383,7 @@
 	};
 
 /***/ },
-/* 518 */
+/* 526 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22432,7 +22440,7 @@
 	exports.default = Restore;
 
 /***/ },
-/* 519 */
+/* 527 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22456,7 +22464,7 @@
 	}
 
 /***/ },
-/* 520 */
+/* 528 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

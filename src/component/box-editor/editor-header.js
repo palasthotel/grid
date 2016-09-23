@@ -5,6 +5,8 @@ export default class BoxEditorHeader extends Component{
 	constructor(props) {
 		super(props);
 		
+		
+		
 	}
 	render(){
 		

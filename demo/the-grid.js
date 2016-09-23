@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TheGrid from '../src/component/the-grid/the-grid.js';
+import TheGrid from '../src/component/the-grid.js';
 
 /**
  * grid dummy
@@ -21,5 +21,6 @@ ReactDOM.render(
     container_types={container_types}
     box_types={box_types}
 	/>,
-  document.getElementById("grid-app")
+  document.getElementById("demo")
+	
 );

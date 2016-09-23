@@ -1,0 +1,39 @@
+.box-editor__url-builder{
+	position: relative;
+	width: 140px;
+	
+	@include transition();
+	
+	
+	font-size: 11px;
+	
+	
+	.url-builder__title-url{
+		width: 100%;
+		padding-right: 130px;
+		opacity: 0;
+	}
+	.url-builder__button,
+	.url-builder__button:focus {
+		position: absolute;
+		right: 0px;
+		top: 2px;
+		width: 140px;
+		color: $color-editor-reuse;
+		background-color: $color-editor-reuse-bg;
+	}
+	
+	&.is-active {
+		width: 100%;
+		.url-builder__button{
+			&:hover{
+				color: $color-warning;
+			}
+			
+			background-color: transparent;
+		}
+		.url-builder__title-url{
+			opacity: 1;
+		}
+	}
+}

@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _editor = __webpack_require__(522);
+	var _editor = __webpack_require__(172);
 	
 	var _editor2 = _interopRequireDefault(_editor);
 	
@@ -64,18 +64,20 @@
 	 * grid dummy
 	 * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
 	 */
-	var grid = __webpack_require__(172);
-	var revisions = __webpack_require__(173);
-	var container_types = __webpack_require__(174);
-	var box_types = __webpack_require__(175);
+	var grid = __webpack_require__(180);
+	var revisions = __webpack_require__(181);
+	var container_types = __webpack_require__(182);
+	var box_types = __webpack_require__(183);
 	
 	/**
 	 * append app to grid app root
 	 */
 	var box = grid.container[0].slots[0].boxes[0];
+	
+	console.log(box);
 	_reactDom2.default.render(_react2.default.createElement(_editor2.default, {
 	  box: box
-	}), document.getElementById("box-editor-demo"));
+	}), document.getElementById("demo"));
 
 /***/ },
 /* 1 */
@@ -21450,6 +21452,887 @@
 
 /***/ },
 /* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _controls = __webpack_require__(173);
+	
+	var _controls2 = _interopRequireDefault(_controls);
+	
+	var _textWithLink = __webpack_require__(174);
+	
+	var _textWithLink2 = _interopRequireDefault(_textWithLink);
+	
+	var _collapsible = __webpack_require__(177);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	var _editorHeader = __webpack_require__(175);
+	
+	var _editorHeader2 = _interopRequireDefault(_editorHeader);
+	
+	var _editorProlog = __webpack_require__(176);
+	
+	var _editorProlog2 = _interopRequireDefault(_editorProlog);
+	
+	var _editorEpilog = __webpack_require__(178);
+	
+	var _editorEpilog2 = _interopRequireDefault(_editorEpilog);
+	
+	var _editorFooter = __webpack_require__(179);
+	
+	var _editorFooter2 = _interopRequireDefault(_editorFooter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditor = function (_Component) {
+		_inherits(BoxEditor, _Component);
+	
+		function BoxEditor(props) {
+			_classCallCheck(this, BoxEditor);
+	
+			return _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
+		}
+	
+		_createClass(BoxEditor, [{
+			key: 'render',
+			value: function render() {
+				var _props$box = this.props.box;
+				var type = _props$box.type;
+				var title = _props$box.title;
+				var titleurl = _props$box.titleurl;
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor'
+					},
+					_react2.default.createElement(_controls2.default, null),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'box-editor__content' },
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'box-editor__type' },
+							'Boxtype: ',
+							type
+						),
+						_react2.default.createElement(_textWithLink2.default, {
+							title: 'Boxtitle',
+							onTextChange: this.onTitleChange.bind(this),
+							onUrlChange: this.onTitleUrlChange.bind(this)
+						}),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{
+								title: 'Prolog'
+							},
+							_react2.default.createElement(
+								'p',
+								null,
+								'Hier kommt der Prolog hin'
+							)
+						),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{
+								title: 'Spezific'
+							},
+							_react2.default.createElement(
+								'p',
+								null,
+								'Hier kommen die widgets'
+							)
+						),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{
+								title: 'Epilog'
+							},
+							_react2.default.createElement(
+								'p',
+								null,
+								'Hier kommt der Epilog'
+							),
+							_react2.default.createElement(_textWithLink2.default, {
+								title: 'Readmore',
+								onTextChange: this.onTitleChange.bind(this),
+								onUrlChange: this.onTitleUrlChange.bind(this)
+							})
+						)
+					)
+				);
+			}
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'onTitleChange',
+			value: function onTitleChange(title) {
+				console.log(title);
+			}
+		}, {
+			key: 'onTitleUrlChange',
+			value: function onTitleUrlChange(url) {
+				console.log(url);
+			}
+		}]);
+	
+		return BoxEditor;
+	}(_react.Component);
+	
+	BoxEditor.propTypes = {
+		box: _react.PropTypes.object.isRequired
+	};
+	BoxEditor.defaultProps = {};
+	
+	exports.default = BoxEditor;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorControls = function (_Component) {
+		_inherits(BoxEditorControls, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function BoxEditorControls(props) {
+			_classCallCheck(this, BoxEditorControls);
+	
+			return _possibleConstructorReturn(this, (BoxEditorControls.__proto__ || Object.getPrototypeOf(BoxEditorControls)).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(BoxEditorControls, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"ul",
+					{
+						className: "box-editor__controls"
+					},
+					_react2.default.createElement(
+						"li",
+						{
+							className: "control__save"
+						},
+						_react2.default.createElement(
+							"button",
+							{
+								className: "control__button control__type_save" },
+							_react2.default.createElement("i", { className: "icon-ok" }),
+							"Save"
+						)
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return BoxEditorControls;
+	}(_react.Component);
+	
+	exports.default = BoxEditorControls;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _editorInput = __webpack_require__(530);
+	
+	var _editorInput2 = _interopRequireDefault(_editorInput);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TextWithLink = function (_Component) {
+		_inherits(TextWithLink, _Component);
+	
+		/**
+	  * ------------------------------------------------
+	  * lifecycle
+	  * ------------------------------------------------
+	  */
+		function TextWithLink(props) {
+			_classCallCheck(this, TextWithLink);
+	
+			var _this = _possibleConstructorReturn(this, (TextWithLink.__proto__ || Object.getPrototypeOf(TextWithLink)).call(this, props));
+	
+			_this.state = {
+				show_link_input: props.showLinkInput
+			};
+			return _this;
+		}
+	
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(TextWithLink, [{
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var title = _props.title;
+				var title_placeholder = _props.title_placeholder;
+				var text = _props.text;
+				var url = _props.url;
+				var onTextChange = _props.onTextChange;
+				var onUrlChange = _props.onUrlChange;
+				var urlDeleteText = _props.urlDeleteText;
+				var urlAddText = _props.urlAddText;
+				var show_link_input = this.state.show_link_input;
+	
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__text-with-link'
+					},
+					_react2.default.createElement(
+						'label',
+						{
+							className: 'text-with-link__title' },
+						title
+					),
+					_react2.default.createElement(_editorInput2.default, {
+						placeholder: title_placeholder,
+						type: 'text',
+						value: text,
+						classname: 'text-with-link__input',
+						onChange: onTextChange
+					}),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'box-editor__url-builder ' + (show_link_input ? "is-active" : "is-inactive")
+						},
+						_react2.default.createElement(_editorInput2.default, {
+							placeholder: 'Title URL (for internals links, please use a relative path starting with \'/\'):',
+							type: 'text',
+							value: url,
+							classname: 'url-builder__title-url',
+							onChange: onUrlChange,
+							disabled: !show_link_input
+						}),
+						_react2.default.createElement(
+							'button',
+							{
+								className: 'url-builder__button',
+								onClick: this.onToggleLink.bind(this)
+							},
+							show_link_input ? urlDeleteText : urlAddText
+						)
+					)
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'onToggleLink',
+			value: function onToggleLink() {
+				if (this.state.show_link_input) {
+					this.state.value = '';
+				}
+				this.setState({ show_link_input: !this.state.show_link_input });
+			}
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return TextWithLink;
+	}(_react.Component);
+	
+	TextWithLink.defaultProps = {
+		title: null,
+		title_placeholder: "Title",
+		text: "",
+		url: "",
+		showLinkInput: false,
+		urlDeleteText: "Delete Link",
+		urlAddText: "Add Link"
+	};
+	
+	TextWithLink.propTypes = {
+		title: _react.PropTypes.string,
+		title_placeholder: _react.PropTypes.string,
+		text: _react.PropTypes.string,
+		url: _react.PropTypes.string,
+		onTextChange: _react.PropTypes.func.isRequired,
+		onUrlChange: _react.PropTypes.func.isRequired,
+		showLinkInput: _react.PropTypes.bool,
+		urlDeleteText: _react.PropTypes.string,
+		urlAddText: _react.PropTypes.string
+	};
+	
+	exports.default = TextWithLink;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorHeader = function (_Component) {
+		_inherits(BoxEditorHeader, _Component);
+	
+		function BoxEditorHeader(props) {
+			_classCallCheck(this, BoxEditorHeader);
+	
+			return _possibleConstructorReturn(this, (BoxEditorHeader.__proto__ || Object.getPrototypeOf(BoxEditorHeader)).call(this, props));
+		}
+	
+		_createClass(BoxEditorHeader, [{
+			key: "render",
+			value: function render() {
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__header"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "box-editor__label" },
+						"Boxtitle"
+					),
+					_react2.default.createElement("input", {
+						placeholder: "Title:",
+						name: "grid-editor-title",
+						type: "text",
+						value: "Youtube.com Link",
+						className: "box-editor__input-title" }),
+					_react2.default.createElement(
+						"div",
+						{
+							className: "grid-editor-url-builder"
+						},
+						_react2.default.createElement("input", {
+							placeholder: "Title URL (for internals links, please use a relative path starting with '/'):",
+							name: "grid-editor-titleurl",
+							type: "text",
+							value: "",
+							className: "grid-editor-titleurl grid-editor-url-input",
+							disabled: "disabled"
+						}),
+						_react2.default.createElement(
+							"button",
+							{
+								className: "grid-editor-url-button icon-link"
+							},
+							"Add link"
+						)
+					)
+				);
+			}
+		}]);
+	
+		return BoxEditorHeader;
+	}(_react.Component);
+	
+	exports.default = BoxEditorHeader;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _collapsible = __webpack_require__(177);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorProlog = function (_Component) {
+		_inherits(BoxEditorProlog, _Component);
+	
+		function BoxEditorProlog(props) {
+			_classCallCheck(this, BoxEditorProlog);
+	
+			return _possibleConstructorReturn(this, (BoxEditorProlog.__proto__ || Object.getPrototypeOf(BoxEditorProlog)).call(this, props));
+		}
+	
+		_createClass(BoxEditorProlog, [{
+			key: 'render',
+			value: function render() {
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__prolog'
+					},
+					_react2.default.createElement(
+						_collapsible2.default,
+						{
+							title: 'Prolog',
+							collapsed: true
+						},
+						_react2.default.createElement(
+							'label',
+							{
+								className: 'box-editor__label'
+							},
+							'Text'
+						),
+						_react2.default.createElement('textarea', {
+							className: 'form-html grid-editor-prolog',
+							value: 'Prolog'
+						})
+					)
+				);
+			}
+		}]);
+	
+		return BoxEditorProlog;
+	}(_react.Component);
+	
+	exports.default = BoxEditorProlog;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Collapsible = function (_Component) {
+		_inherits(Collapsible, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function Collapsible(props) {
+			_classCallCheck(this, Collapsible);
+	
+			var _this = _possibleConstructorReturn(this, (Collapsible.__proto__ || Object.getPrototypeOf(Collapsible)).call(this, props));
+	
+			_this.state = {
+				collapsed: props.collapsed
+			};
+			return _this;
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(Collapsible, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var title = _props.title;
+				var children = _props.children;
+				var collapsed = this.state.collapsed;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "collapsible"
+					},
+					_react2.default.createElement(
+						"div",
+						{
+							className: "collapsible__title",
+							onClick: this.onToggle.bind(this)
+						},
+						_react2.default.createElement("span", { className: "icon-arrow" }),
+						title
+					),
+					_react2.default.createElement(
+						"div",
+						{
+							style: {
+								display: collapsed ? "none" : "block"
+							},
+							className: "collapsible__content"
+						},
+						children
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+		}, {
+			key: "onToggle",
+			value: function onToggle() {
+				this.setState({ collapsed: !this.state.collapsed });
+			}
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return Collapsible;
+	}(_react.Component);
+	
+	Collapsible.propTypes = {
+		title: _react.PropTypes.string.isRequired,
+		collapsed: _react.PropTypes.bool
+	};
+	Collapsible.defaultProps = {
+		collapsed: true
+	};
+	
+	exports.default = Collapsible;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _collapsible = __webpack_require__(177);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorProlog = function (_Component) {
+		_inherits(BoxEditorProlog, _Component);
+	
+		function BoxEditorProlog(props) {
+			_classCallCheck(this, BoxEditorProlog);
+	
+			return _possibleConstructorReturn(this, (BoxEditorProlog.__proto__ || Object.getPrototypeOf(BoxEditorProlog)).call(this, props));
+		}
+	
+		_createClass(BoxEditorProlog, [{
+			key: 'render',
+			value: function render() {
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__prolog'
+					},
+					_react2.default.createElement(
+						_collapsible2.default,
+						{
+							title: 'Prolog',
+							collapsed: true
+						},
+						_react2.default.createElement(
+							'label',
+							{
+								className: 'box-editor__label'
+							},
+							'Text'
+						),
+						_react2.default.createElement('textarea', {
+							className: 'form-html grid-editor-prolog',
+							value: 'epilog'
+						}),
+						_react2.default.createElement(
+							'label',
+							{
+								className: 'box-editor__label' },
+							'Readmore'
+						),
+						_react2.default.createElement('input', {
+							placeholder: 'Readmore text:',
+							type: 'text',
+							value: '',
+							className: 'box-editor_input-readmore'
+						}),
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'box-editor__url-builder'
+							},
+							_react2.default.createElement('input', {
+								placeholder: 'Readmore URL (for internals links, please use a relative path starting with \'/\'):',
+								type: 'text',
+								value: '',
+								className: 'grid-editor-readmoreurl grid-editor-url-input',
+								disabled: 'disabled'
+							}),
+							_react2.default.createElement(
+								'button',
+								{
+									className: 'box-editor__url-button icon-link'
+								},
+								'Add link'
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return BoxEditorProlog;
+	}(_react.Component);
+	
+	exports.default = BoxEditorProlog;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorFooter = function (_Component) {
+		_inherits(BoxEditorFooter, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function BoxEditorFooter(props) {
+			_classCallCheck(this, BoxEditorFooter);
+	
+			return _possibleConstructorReturn(this, (BoxEditorFooter.__proto__ || Object.getPrototypeOf(BoxEditorFooter)).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(BoxEditorFooter, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__footer"
+					},
+					_react2.default.createElement(
+						"div",
+						{
+							className: "grid-editor-styles-wrapper"
+						},
+						_react2.default.createElement(
+							"label",
+							null,
+							"Boxstyle"
+						),
+						_react2.default.createElement(
+							"select",
+							{
+								name: "grid-editor-style",
+								className: "form-select grid-editor-style",
+								id: "grid-editor-style"
+							},
+							_react2.default.createElement(
+								"option",
+								{ value: "" },
+								"Default style"
+							)
+						)
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return BoxEditorFooter;
+	}(_react.Component);
+	
+	exports.default = BoxEditorFooter;
+
+/***/ },
+/* 180 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21496,15 +22379,74 @@
 					"language": null,
 					"style_label": null,
 					"id": 8,
-					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
-					"type": "plaintext",
+					"html": "<div class=\"grid-box-editmode\">\n\tEvery Widget Box<\/div>\n",
+					"type": "all_widgets_box",
 					"content": {
 						"plain": ""
 					},
 					"contentstructure": [{
-						"key": "plain",
+						"key": "key_text",
+						"type": "text",
+						"label": "widget type: text"
+					}, {
+						"key": "key_number",
+						"type": "number",
+						"label": "widget type: number"
+					}, {
+						"key": "key_textarea",
 						"type": "textarea",
-						"label": "Plaintext"
+						"label": "widget type: textarea"
+					}, {
+						"key": "key_checkbox",
+						"type": "checkbox",
+						"label": "widget type: checkbox"
+					}, {
+						"key": "key_select",
+						"label": "widget type: select",
+						"type": "select",
+						"selections": [{
+							"key": 0,
+							"text": "Entry 0"
+						}, {
+							"key": 1,
+							"text": "Entry 1"
+						}, {
+							"key": 2,
+							"text": "Entry 2"
+						}]
+					}, {
+						"key": "key_html",
+						"label": "widget type: html",
+						"type": "html"
+					}, {
+						"label": "widget type: info",
+						"text": "this is the info text",
+						"type": "info"
+					}, {
+						// todo: check if we need that
+						"key": "key_hidden",
+						"type": "hidden"
+					}, {
+						'key': 'list',
+						"label": "widget type: list",
+						"type": "list",
+						"contentstructure": [{
+							"key": "key_list_item_1",
+							"type": "text",
+							"label": "Text in Liste"
+						}]
+					}, {
+						"key": "key_file",
+						"label": "widget type: file",
+						"uploadpath": "/grid_file_endpoint"
+					}, {
+						"key": "key_autocomplete",
+						"label": "widget type: autocomplete",
+						"type": "autocomplete"
+					}, {
+						"key": "key_multi_autocomplete",
+						"label": "widget type: multi-autocomplete",
+						"type": "multi-autocomplete"
 					}]
 				}]
 			}, {
@@ -21861,7 +22803,7 @@
 	};
 
 /***/ },
-/* 173 */
+/* 181 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21881,7 +22823,7 @@
 	}];
 
 /***/ },
-/* 174 */
+/* 182 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21959,7 +22901,7 @@
 	}];
 
 /***/ },
-/* 175 */
+/* 183 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21983,14 +22925,6 @@
 	}];
 
 /***/ },
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
 /* 184 */,
 /* 185 */,
 /* 186 */,
@@ -22329,94 +23263,15 @@
 /* 519 */,
 /* 520 */,
 /* 521 */,
-/* 522 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _controls = __webpack_require__(523);
-	
-	var _controls2 = _interopRequireDefault(_controls);
-	
-	var _editorHeader = __webpack_require__(524);
-	
-	var _editorHeader2 = _interopRequireDefault(_editorHeader);
-	
-	var _editorProlog = __webpack_require__(525);
-	
-	var _editorProlog2 = _interopRequireDefault(_editorProlog);
-	
-	var _editorEpilog = __webpack_require__(526);
-	
-	var _editorEpilog2 = _interopRequireDefault(_editorEpilog);
-	
-	var _editorFooter = __webpack_require__(527);
-	
-	var _editorFooter2 = _interopRequireDefault(_editorFooter);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxEditor = function (_Component) {
-		_inherits(BoxEditor, _Component);
-	
-		function BoxEditor(props) {
-			_classCallCheck(this, BoxEditor);
-	
-			return _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
-		}
-	
-		_createClass(BoxEditor, [{
-			key: 'render',
-			value: function render() {
-	
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor'
-					},
-					_react2.default.createElement(_controls2.default, null),
-					_react2.default.createElement(
-						'div',
-						{
-							className: 'box-editor__content' },
-						_react2.default.createElement(
-							'div',
-							{
-								className: 'box-editor__type' },
-							'Video'
-						),
-						_react2.default.createElement(_editorHeader2.default, null),
-						_react2.default.createElement(_editorProlog2.default, null),
-						_react2.default.createElement(_editorEpilog2.default, null),
-						_react2.default.createElement(_editorFooter2.default, null)
-					)
-				);
-			}
-		}]);
-	
-		return BoxEditor;
-	}(_react.Component);
-	
-	exports.default = BoxEditor;
-
-/***/ },
-/* 523 */
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22439,547 +23294,97 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var BoxEditorControls = function (_Component) {
-		_inherits(BoxEditorControls, _Component);
+	var EditorInput = function (_Component) {
+		_inherits(EditorInput, _Component);
 	
 		/**
-	  * ---------------------
+	  * ------------------------------------------------
 	  * lifecycle
-	  * ---------------------
+	  * ------------------------------------------------
 	  */
-		function BoxEditorControls(props) {
-			_classCallCheck(this, BoxEditorControls);
+		function EditorInput(props) {
+			_classCallCheck(this, EditorInput);
 	
-			return _possibleConstructorReturn(this, (BoxEditorControls.__proto__ || Object.getPrototypeOf(BoxEditorControls)).call(this, props));
-		}
-		/**
-	  * ---------------------
-	  * render
-	  * ---------------------
-	  */
-	
-	
-		_createClass(BoxEditorControls, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"ul",
-					{
-						className: "box-editor__controls"
-					},
-					_react2.default.createElement(
-						"li",
-						{
-							className: "control__save"
-						},
-						_react2.default.createElement(
-							"button",
-							{
-								className: "control__button control__type_save" },
-							_react2.default.createElement("i", { className: "icon-ok" }),
-							"Save"
-						)
-					)
-				);
-			}
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
-		}]);
-	
-		return BoxEditorControls;
-	}(_react.Component);
-	
-	exports.default = BoxEditorControls;
-
-/***/ },
-/* 524 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxEditorHeader = function (_Component) {
-		_inherits(BoxEditorHeader, _Component);
-	
-		function BoxEditorHeader(props) {
-			_classCallCheck(this, BoxEditorHeader);
-	
-			return _possibleConstructorReturn(this, (BoxEditorHeader.__proto__ || Object.getPrototypeOf(BoxEditorHeader)).call(this, props));
-		}
-	
-		_createClass(BoxEditorHeader, [{
-			key: "render",
-			value: function render() {
-	
-				return _react2.default.createElement(
-					"div",
-					{
-						className: "box-editor__header"
-					},
-					_react2.default.createElement(
-						"label",
-						{
-							className: "box-editor__label" },
-						"Boxtitle"
-					),
-					_react2.default.createElement("input", {
-						placeholder: "Title:",
-						name: "grid-editor-title",
-						type: "text",
-						value: "Youtube.com Link",
-						className: "box-editor__input-title" }),
-					_react2.default.createElement(
-						"div",
-						{
-							className: "grid-editor-url-builder"
-						},
-						_react2.default.createElement("input", {
-							placeholder: "Title URL (for internals links, please use a relative path starting with '/'):",
-							name: "grid-editor-titleurl",
-							type: "text",
-							value: "",
-							className: "grid-editor-titleurl grid-editor-url-input",
-							disabled: "disabled"
-						}),
-						_react2.default.createElement(
-							"button",
-							{
-								className: "grid-editor-url-button icon-link"
-							},
-							"Add link"
-						)
-					)
-				);
-			}
-		}]);
-	
-		return BoxEditorHeader;
-	}(_react.Component);
-	
-	exports.default = BoxEditorHeader;
-
-/***/ },
-/* 525 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _collapsible = __webpack_require__(528);
-	
-	var _collapsible2 = _interopRequireDefault(_collapsible);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxEditorProlog = function (_Component) {
-		_inherits(BoxEditorProlog, _Component);
-	
-		function BoxEditorProlog(props) {
-			_classCallCheck(this, BoxEditorProlog);
-	
-			return _possibleConstructorReturn(this, (BoxEditorProlog.__proto__ || Object.getPrototypeOf(BoxEditorProlog)).call(this, props));
-		}
-	
-		_createClass(BoxEditorProlog, [{
-			key: 'render',
-			value: function render() {
-	
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor__prolog'
-					},
-					_react2.default.createElement(
-						_collapsible2.default,
-						{
-							title: 'Prolog',
-							collapsed: true
-						},
-						_react2.default.createElement(
-							'label',
-							{
-								className: 'box-editor__label'
-							},
-							'Text'
-						),
-						_react2.default.createElement(
-							'textarea',
-							{
-								className: 'form-html grid-editor-prolog'
-							},
-							'Content'
-						)
-					)
-				);
-			}
-		}]);
-	
-		return BoxEditorProlog;
-	}(_react.Component);
-	
-	exports.default = BoxEditorProlog;
-
-/***/ },
-/* 526 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _collapsible = __webpack_require__(528);
-	
-	var _collapsible2 = _interopRequireDefault(_collapsible);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxEditorProlog = function (_Component) {
-		_inherits(BoxEditorProlog, _Component);
-	
-		function BoxEditorProlog(props) {
-			_classCallCheck(this, BoxEditorProlog);
-	
-			return _possibleConstructorReturn(this, (BoxEditorProlog.__proto__ || Object.getPrototypeOf(BoxEditorProlog)).call(this, props));
-		}
-	
-		_createClass(BoxEditorProlog, [{
-			key: 'render',
-			value: function render() {
-	
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor__prolog'
-					},
-					_react2.default.createElement(
-						_collapsible2.default,
-						{
-							title: 'Prolog',
-							collapsed: true
-						},
-						_react2.default.createElement(
-							'label',
-							{
-								className: 'box-editor__label'
-							},
-							'Text'
-						),
-						_react2.default.createElement(
-							'textarea',
-							{
-								className: 'form-html grid-editor-prolog'
-							},
-							'Content'
-						),
-						_react2.default.createElement(
-							'label',
-							{
-								className: 'box-editor__label' },
-							'Readmore'
-						),
-						_react2.default.createElement('input', {
-							placeholder: 'Readmore text:',
-							type: 'text',
-							value: '',
-							className: 'box-editor_input-readmore'
-						}),
-						_react2.default.createElement(
-							'div',
-							{
-								className: 'box-editor__url-builder'
-							},
-							_react2.default.createElement('input', {
-								placeholder: 'Readmore URL (for internals links, please use a relative path starting with \'/\'):',
-								type: 'text',
-								value: '',
-								className: 'grid-editor-readmoreurl grid-editor-url-input',
-								disabled: 'disabled'
-							}),
-							_react2.default.createElement(
-								'button',
-								{
-									className: 'box-editor__url-button icon-link'
-								},
-								'Add link'
-							)
-						)
-					)
-				);
-			}
-		}]);
-	
-		return BoxEditorProlog;
-	}(_react.Component);
-	
-	exports.default = BoxEditorProlog;
-
-/***/ },
-/* 527 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxEditorFooter = function (_Component) {
-		_inherits(BoxEditorFooter, _Component);
-	
-		/**
-	  * ---------------------
-	  * lifecycle
-	  * ---------------------
-	  */
-		function BoxEditorFooter(props) {
-			_classCallCheck(this, BoxEditorFooter);
-	
-			return _possibleConstructorReturn(this, (BoxEditorFooter.__proto__ || Object.getPrototypeOf(BoxEditorFooter)).call(this, props));
-		}
-		/**
-	  * ---------------------
-	  * render
-	  * ---------------------
-	  */
-	
-	
-		_createClass(BoxEditorFooter, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{
-						className: "box-editor__footer"
-					},
-					_react2.default.createElement(
-						"div",
-						{
-							className: "grid-editor-styles-wrapper"
-						},
-						_react2.default.createElement(
-							"label",
-							null,
-							"Boxstyle"
-						),
-						_react2.default.createElement(
-							"select",
-							{
-								name: "grid-editor-style",
-								className: "form-select grid-editor-style",
-								id: "grid-editor-style"
-							},
-							_react2.default.createElement(
-								"option",
-								{ value: "" },
-								"Default style"
-							)
-						)
-					)
-				);
-			}
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
-		}]);
-	
-		return BoxEditorFooter;
-	}(_react.Component);
-	
-	exports.default = BoxEditorFooter;
-
-/***/ },
-/* 528 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Collapsible = function (_Component) {
-		_inherits(Collapsible, _Component);
-	
-		/**
-	  * ---------------------
-	  * lifecycle
-	  * ---------------------
-	  */
-		function Collapsible(props) {
-			_classCallCheck(this, Collapsible);
-	
-			var _this = _possibleConstructorReturn(this, (Collapsible.__proto__ || Object.getPrototypeOf(Collapsible)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (EditorInput.__proto__ || Object.getPrototypeOf(EditorInput)).call(this, props));
 	
 			_this.state = {
-				collapsed: props.collapsed
+				value: props.value
 			};
 			return _this;
 		}
+	
 		/**
-	  * ---------------------
-	  * render
-	  * ---------------------
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
 	  */
 	
 	
-		_createClass(Collapsible, [{
+		_createClass(EditorInput, [{
 			key: "render",
 			value: function render() {
 				var _props = this.props;
-				var title = _props.title;
-				var children = _props.children;
-				var collapsed = this.state.collapsed;
+				var placeholder = _props.placeholder;
+				var type = _props.type;
+				var classname = _props.classname;
+				var disabled = _props.disabled;
+				var value = this.state.value;
 	
-				return _react2.default.createElement(
-					"div",
-					{
-						className: "collapsible"
-					},
-					_react2.default.createElement(
-						"div",
-						{
-							className: "collapsible__title",
-							onClick: this.onToggle.bind(this)
-						},
-						_react2.default.createElement("span", { className: "icon-arrow" }),
-						title
-					),
-					_react2.default.createElement(
-						"div",
-						{
-							style: {
-								display: collapsed ? "none" : "block"
-							},
-							className: "collapsible__content"
-						},
-						children
-					)
-				);
+				return _react2.default.createElement("input", {
+					placeholder: placeholder,
+					type: type,
+					value: value,
+					className: "box-editor__input " + classname,
+					onChange: this.onChange.bind(this),
+					disabled: disabled
+				});
 			}
 			/**
-	   * ---------------------
+	   * ------------------------------------------------
 	   * events
-	   * ---------------------
+	   * ------------------------------------------------
 	   */
 	
 		}, {
-			key: "onToggle",
-			value: function onToggle() {
-				this.setState({ collapsed: !this.state.collapsed });
+			key: "onChange",
+			value: function onChange(event) {
+				this.setState({ value: event.target.value });
+				this.props.onChange(this.state.value);
 			}
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
 		}]);
 	
-		return Collapsible;
+		return EditorInput;
 	}(_react.Component);
 	
-	Collapsible.propTypes = {
-		title: _react.PropTypes.string.isRequired,
-		collapsed: _react.PropTypes.bool
-	};
-	Collapsible.defaultProps = {
-		collapsed: true
+	/**
+	 * property defaults
+	 */
+	
+	
+	EditorInput.defaultProps = {
+		value: "",
+		placeholder: "",
+		type: "text",
+		classname: "",
+		disabeld: false
 	};
 	
-	exports.default = Collapsible;
+	/**
+	 * define property types
+	 */
+	EditorInput.propTypes = {
+		value: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+		placeholder: _react.PropTypes.string,
+		type: _react.PropTypes.string,
+		classname: _react.PropTypes.string,
+		onChange: _react.PropTypes.func.isRequired,
+		disabled: _react.PropTypes.bool
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = EditorInput;
 
 /***/ }
 /******/ ]);

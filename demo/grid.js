@@ -1,3 +1,5 @@
+"use strict";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Grid from '../src/component/grid.js';
@@ -27,18 +29,11 @@ const DNDGrid = DragDropContext(HTML5Backend)(Grid);
 /**
  * wait for dom to be ready so all plugins etc are loaded
  */
-document.addEventListener("DOMContentLoaded", function(event) {
-	
-	
-	/**
-	 * render to demo dom
-	 */
-	ReactDOM.render(
-		<DNDGrid
-			container={container}
-			events={events}
-		/>,
-		document.getElementById("grid-demo")
-	);
-	
-});
+ReactDOM.render(
+	<DNDGrid
+		container={container}
+		events={events}
+	/>,
+	document.getElementById("demo")
+);
+

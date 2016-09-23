@@ -15,9 +15,11 @@ var box_types = require('./dummy-data/box_types');
  * append app to grid app root
  */
 let box = grid.container[0].slots[0].boxes[0];
+
+console.log(box);
 ReactDOM.render(
   <BoxEditor
     box={box}
 	/>,
-  document.getElementById("box-editor-demo")
+  document.getElementById("demo")
 );

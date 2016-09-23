@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>The Grid</title>
+		<link rel="stylesheet" href="../css/normalize.css" />
+		<link rel="stylesheet" href="../css/the-grid.css" />
+		<link rel="stylesheet" href="../css/container-factory.css" />
+	</head>
+	<body>
+		<p id="demo-links"></p>
+		<div id="demo"></div>
+		
+		<script>
+			console.log(window.location.hash);
+			
+			/**
+			 * add demo script
+			 */
+			function add_script(file){
+				var sc =  document.createElement("script");
+				var js_file = window.location.pathname+"../bundle/"+file;
+				sc.setAttribute("src", js_file);
+				sc.setAttribute("type", "text/javascript");
+				document.head.appendChild(sc);
+				document.title = file;
+			}
+			
+			/**
+			 * map demo files
+			 */
+			var mapping = {
+				"#the-grid": "demo_the_grid.js",
+				"#grid":"demo_grid.js",
+				"#grid-model":"demo_grid_model.js",
+				'#container-dnd': 'demo_container_dnd.js',
+				'#box-editor': 'demo_box_editor.js',
+				'#style-editor': 'demo_styles_editor.js',
+				'#container-factory':'demo_container_factory.js',
+			};
+			
+			for(link in mapping){
+				document.getElementById("demo-links").innerHTML+="| <a href='"+link+"'>"+link+"</a> |";
+			}
+			
+			/**
+			 * do it!
+			 */
+			add_script((typeof mapping[window.location.hash] !== typeof undefined)? mapping[window.location.hash]: mapping['#the-grid']);
+			
+			/**
+			 * on hash change script
+			 */
+			window.addEventListener("hashchange",function(){
+				window.location.reload();
+			});
+			
+		</script>
+		
+	</body>
+</html>

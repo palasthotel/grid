@@ -85,5 +85,17 @@
 
 .box__controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
 
-#grid-app { font-family: "OpenSans", sans-serif; }
+.box-editor__url-builder { position: relative; width: 140px; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; font-size: 11px; }
+
+.box-editor__url-builder .url-builder__title-url { width: 100%; padding-right: 130px; opacity: 0; }
+
+.box-editor__url-builder .url-builder__button, .box-editor__url-builder .url-builder__button:focus { position: absolute; right: 0px; top: 2px; width: 140px; color: #262e38; background-color: #e5e3df; }
+
+.box-editor__url-builder.is-active { width: 100%; }
+
+.box-editor__url-builder.is-active .url-builder__button { background-color: transparent; }
+
+.box-editor__url-builder.is-active .url-builder__button:hover { color: #ed5032; }
+
+.box-editor__url-builder.is-active .url-builder__title-url { opacity: 1; }
 /*# sourceMappingURL=the-grid.css.map */

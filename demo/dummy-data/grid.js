@@ -48,16 +48,92 @@ module.exports = {
 							"language":null,
 							"style_label":null,
 							"id":8,
-							"html":"<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
-							"type":"plaintext",
+							"html":"<div class=\"grid-box-editmode\">\n\tEvery Widget Box<\/div>\n",
+							"type":"all_widgets_box",
 							"content":{
 								"plain":""
 							},
 							"contentstructure":[
 								{
-									"key":"plain",
+									"key":"key_text",
+									"type":"text",
+									"label":"widget type: text"
+								},
+								{
+									"key":"key_number",
+									"type":"number",
+									"label":"widget type: number"
+								},
+								{
+									"key":"key_textarea",
 									"type":"textarea",
-									"label":"Plaintext"
+									"label":"widget type: textarea"
+								},
+								{
+									"key": "key_checkbox",
+									"type": "checkbox",
+									"label": "widget type: checkbox",
+								},
+								{
+									"key": "key_select",
+									"label": "widget type: select",
+									"type": "select",
+									"selections": [
+										{
+											"key": 0,
+											"text": "Entry 0"
+										},
+										{
+											"key": 1,
+											"text": "Entry 1"
+										},
+										{
+											"key": 2,
+											"text": "Entry 2"
+										},
+									]
+								},
+								{
+									"key": "key_html",
+									"label": "widget type: html",
+									"type": "html",
+								},
+								{
+									"label": "widget type: info",
+									"text": "this is the info text",
+									"type": "info",
+								},
+								{
+									// todo: check if we need that
+									"key": "key_hidden",
+									"type": "hidden",
+								},
+								{
+									'key': 'list',
+									"label": "widget type: list",
+									"type": "list",
+									"contentstructure":[
+										{
+											"key": "key_list_item_1",
+											"type": "text",
+											"label": "Text in Liste",
+										}
+									],
+								},
+								{
+									"key": "key_file",
+									"label": "widget type: file",
+									"uploadpath": "/grid_file_endpoint",
+								},
+								{
+									"key": "key_autocomplete",
+									"label": "widget type: autocomplete",
+									"type": "autocomplete",
+								},
+								{
+									"key": "key_multi_autocomplete",
+									"label": "widget type: multi-autocomplete",
+									"type": "multi-autocomplete",
 								}
 							]
 						}

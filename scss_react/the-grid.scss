@@ -6,6 +6,5 @@
 @import "namespaced/slot";
 @import "namespaced/box";
 
-#grid-app{
-  font-family: $font__type;
-}
+@import "namespaced/box-editor/text-with-link";
+@import "namespaced/box-editor/url-builder";
