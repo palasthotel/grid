@@ -74,6 +74,7 @@ class grid_posts_box extends grid_list_box {
 				/**
 				 * new multiautoselect support
 				 */
+				if(count($value) < 1) continue;
 				$tax_query[] = array(
 					'taxonomy' => $this->getTaxonomyNameByKey($field),
 					'field' => 'term_id',
