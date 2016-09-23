@@ -54,13 +54,9 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _containerFactory = __webpack_require__(336);
+	var _editor = __webpack_require__(522);
 	
-	var _containerFactory2 = _interopRequireDefault(_containerFactory);
-	
-	var _containerTypes = __webpack_require__(337);
-	
-	var _containerTypes2 = _interopRequireDefault(_containerTypes);
+	var _editor2 = _interopRequireDefault(_editor);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -68,19 +64,18 @@
 	 * grid dummy
 	 * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
 	 */
+	var grid = __webpack_require__(172);
+	var revisions = __webpack_require__(173);
 	var container_types = __webpack_require__(174);
+	var box_types = __webpack_require__(175);
 	
 	/**
 	 * append app to grid app root
 	 */
-	_reactDom2.default.render(_react2.default.createElement(
-	  'div',
-	  { className: 'grid-container-factory' },
-	  _react2.default.createElement(_containerFactory2.default, null),
-	  _react2.default.createElement(_containerTypes2.default, {
-	    container_types: container_types
-	  })
-	), document.getElementById("container-factory"));
+	var box = grid.container[0].slots[0].boxes[0];
+	_reactDom2.default.render(_react2.default.createElement(_editor2.default, {
+	  box: box
+	}), document.getElementById("box-editor-demo"));
 
 /***/ },
 /* 1 */
@@ -21454,8 +21449,438 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 172 */,
-/* 173 */,
+/* 172 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+		"id": 1,
+		"isDraft": true,
+		"container": [{
+			"reusetitle": null,
+			"type": "c-1d3-1d3-1d3",
+			"type_id": "3",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "Erster Container",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": 1,
+			"slots": [{
+				"id": 1,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 8,
+					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
+					"type": "plaintext",
+					"content": {
+						"plain": ""
+					},
+					"contentstructure": [{
+						"key": "plain",
+						"type": "textarea",
+						"label": "Plaintext"
+					}]
+				}]
+			}, {
+				"id": 2,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 9,
+					"html": "<div class=\"grid-box-editmode\">\n\tStatic HTML-Content<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": ""
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}, {
+				"id": 3,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 10,
+					"html": "<div class=\"grid-box-editmode\">\n  RSS Feed\n<\/div>",
+					"type": "rss",
+					"content": {
+						"url": "",
+						"numItems": 15
+					},
+					"contentstructure": [{
+						"key": "url",
+						"label": "RSS-URL",
+						"type": "text"
+					}, {
+						"key": "numItems",
+						"label": "Number of items to show",
+						"type": "number"
+					}]
+				}]
+			}]
+		}, {
+			"reusetitle": null,
+			"type": "c-1d2-1d2",
+			"type_id": "8",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "Container zwei",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": 2,
+			"slots": [{
+				"id": 4,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "Mein HTML",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 6,
+					"html": "<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": "<p>HTML TEST<\/p>\n"
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}, {
+					"style": null,
+					"classes": [],
+					"title": "Mein HTML",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 6,
+					"html": "<div class=\"grid-box-editmode\">\n\t<p><img src='http://placeholder.palasthotel.de/make/800x200.png'<\/p>\n<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": "<p>HTML TEST<\/p>\n"
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}, {
+					"style": null,
+					"classes": [],
+					"title": "Mein HTML",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 6,
+					"html": "<div class=\"grid-box-editmode\">\n\t<p>HTML TEST<\/p>\n<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": "<p>HTML TEST<\/p>\n"
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}, {
+				"id": 5,
+				"style": null,
+				"boxes": []
+			}]
+		}, {
+			"reusetitle": null,
+			"type": "c-1d3-1d3-1d3",
+			"type_id": "3",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "Container 3",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": 5,
+			"slots": [{
+				"id": 1,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 8,
+					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
+					"type": "plaintext",
+					"content": {
+						"plain": ""
+					},
+					"contentstructure": [{
+						"key": "plain",
+						"type": "textarea",
+						"label": "Plaintext"
+					}]
+				}]
+			}, {
+				"id": 2,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 9,
+					"html": "<div class=\"grid-box-editmode\">\n\tStatic HTML-Content<\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": ""
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}, {
+				"id": 4,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 10,
+					"html": "<div class=\"grid-box-editmode\">\n  RSS Feed\n<\/div>",
+					"type": "rss",
+					"content": {
+						"url": "",
+						"numItems": 15
+					},
+					"contentstructure": [{
+						"key": "url",
+						"label": "RSS-URL",
+						"type": "text"
+					}, {
+						"key": "numItems",
+						"label": "Number of items to show",
+						"type": "number"
+					}]
+				}]
+			}]
+		}, {
+			"reusetitle": null,
+			"type": "c-2d3-1d3",
+			"type_id": "6",
+			"dimension": null,
+			"space_to_left": null,
+			"space_to_right": null,
+			"style": null,
+			"classes": [],
+			"title": "Container 4",
+			"titleurl": "",
+			"readmore": "",
+			"readmoreurl": "",
+			"prolog": "",
+			"epilog": "",
+			"reused": false,
+			"position": null,
+			"iscontentcontainer": null,
+			"firstcontentcontainer": null,
+			"lastcontentcontainer": null,
+			"sidebarleft": false,
+			"style_label": null,
+			"id": 6,
+			"slots": [{
+				"id": 1,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 8,
+					"html": "<div class=\"grid-box-editmode\">\n\tPlaintext<\/div>\n",
+					"type": "plaintext",
+					"content": {
+						"plain": ""
+					},
+					"contentstructure": [{
+						"key": "plain",
+						"type": "textarea",
+						"label": "Plaintext"
+					}]
+				}]
+			}, {
+				"id": 2,
+				"style": null,
+				"boxes": [{
+					"style": null,
+					"classes": [],
+					"title": "",
+					"titleurl": "",
+					"readmore": "",
+					"readmoreurl": "",
+					"prolog": "",
+					"epilog": "",
+					"layout": null,
+					"language": null,
+					"style_label": null,
+					"id": 9,
+					"html": "<div class=\"grid-box-editmode\"><img src='http://placeholder.palasthotel.de/make/400x200.png' /><\/div>\n",
+					"type": "wp_html",
+					"content": {
+						"html": ""
+					},
+					"contentstructure": [{
+						"key": "html",
+						"label": "Text",
+						"type": "html"
+					}]
+				}]
+			}]
+		}],
+		"isSidebar": false
+	};
+
+/***/ },
+/* 173 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = [{
+		"revision": "1",
+		"published": "0",
+		"state": "draft",
+		"editor": "palasthotel",
+		"date": "1467184323"
+	}, {
+		"revision": "0",
+		"published": "1",
+		"state": "published",
+		"editor": "palasthotel",
+		"date": "1464962293"
+	}];
+
+/***/ },
 /* 174 */
 /***/ function(module, exports) {
 
@@ -21534,7 +21959,30 @@
 	}];
 
 /***/ },
-/* 175 */,
+/* 175 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = [{
+		"type": "static",
+		"title": "Static content",
+		"criteria": []
+	}, {
+		"type": "abstract_list",
+		"title": "Lists",
+		"criteria": []
+	}, {
+		"type": "reference",
+		"title": "Reusable boxes",
+		"criteria": []
+	}, {
+		"type": "post",
+		"title": "Contents",
+		"criteria": ["title"]
+	}];
+
+/***/ },
 /* 176 */,
 /* 177 */,
 /* 178 */,
@@ -21695,230 +22143,193 @@
 /* 333 */,
 /* 334 */,
 /* 335 */,
-/* 336 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ContainerFactory = function (_Component) {
-		_inherits(ContainerFactory, _Component);
-	
-		/**
-	  * ---------------------
-	  * lifecycle
-	  * ---------------------
-	  */
-	
-		function ContainerFactory(props) {
-			_classCallCheck(this, ContainerFactory);
-	
-			var _this = _possibleConstructorReturn(this, (ContainerFactory.__proto__ || Object.getPrototypeOf(ContainerFactory)).call(this, props));
-	
-			_this.state = {
-				slots: 1,
-				dimensions: [1],
-				sidebar: {
-					left: false,
-					right: false
-				}
-			};
-			return _this;
-		}
-	
-		/**
-	  * ---------------------
-	  * rendering
-	  * ---------------------
-	  */
-	
-		_createClass(ContainerFactory, [{
-			key: "renderSlot",
-			value: function renderSlot(index, denominator) {
-				var dim = this.state.dimensions[index];
-				var width = dim / denominator * 100;
-				var styles = {
-					width: width + "%"
-				};
-				return _react2.default.createElement(
-					"div",
-					{
-						style: styles,
-						key: index,
-						className: "container-factory-slot" },
-					dim,
-					"d",
-					denominator,
-					_react2.default.createElement("br", null),
-					_react2.default.createElement(
-						"button",
-						{ onClick: this.onPlus.bind(this, index) },
-						"+"
-					),
-					" / ",
-					_react2.default.createElement(
-						"button",
-						{ onClick: this.onMinus.bind(this, index) },
-						"-"
-					)
-				);
-			}
-		}, {
-			key: "renderSlots",
-			value: function renderSlots() {
-				var denominator = 0;
-				for (var i = 0; i < this.state.slots; i++) {
-					denominator += this.state.dimensions[i];
-				}
-				var slots = [];
-				for (var _i = 0; _i < this.state.slots; _i++) {
-					slots.push(this.renderSlot(_i, denominator));
-				}
-				return slots;
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "container-factory" },
-					_react2.default.createElement(
-						"div",
-						{ className: "container-factory-num-slots" },
-						_react2.default.createElement(
-							"button",
-							{ onClick: this.onMoreSlots.bind(this) },
-							"+"
-						),
-						this.state.slots,
-						_react2.default.createElement(
-							"button",
-							{ onClick: this.onLessSlots.bind(this) },
-							"-"
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "container-factory-slots-preview" },
-						this.renderSlots()
-					),
-					_react2.default.createElement(
-						"button",
-						{
-							onClick: this.onSaveContainer.bind(this)
-						},
-						"Save Container"
-					)
-				);
-			}
-	
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-		}, {
-			key: "onChangeSlots",
-			value: function onChangeSlots(slots) {
-				var new_dim = [];
-				for (var i = 0; i <= slots; i++) {
-					if (_typeof(this.state.dimensions[i]) !== ( true ? "undefined" : _typeof(undefined))) {
-						new_dim.push(this.state.dimensions[i]);
-					} else {
-						new_dim.push(1);
-					}
-				}
-				this.setState({
-					slots: slots,
-					dimensions: new_dim
-				});
-			}
-		}, {
-			key: "onMoreSlots",
-			value: function onMoreSlots() {
-				var slots = this.state.slots;
-				slots++;
-				if (slots > 12) return;
-				this.onChangeSlots(slots);
-			}
-		}, {
-			key: "onLessSlots",
-			value: function onLessSlots() {
-				var slots = this.state.slots;
-				slots--;
-				if (slots < 1) return;
-				this.onChangeSlots(slots);
-			}
-			// onChangeSlot(index, e){
-			// 	if(e.target.value == ""){
-			// 		this.state.dimensions[index] = 1;
-			// 		this.setState({
-			// 			dimensions: this.state.dimensions
-			// 		});
-			// 		return;
-			// 	}
-			// 	const dim = parseInt(e.target.value);
-			// 	if(dim < 1) return;
-			// 	this.state.dimensions[index] = parseInt(e.target.value);
-			// 	this.setState({
-			// 		dimensions: this.state.dimensions
-			// 	});
-			// }
-	
-		}, {
-			key: "onMinus",
-			value: function onMinus(index) {
-				var dim = this.state.dimensions[index];
-				if (dim > 1) this.state.dimensions[index]--;
-				this.setState({ dimensions: this.state.dimensions });
-			}
-		}, {
-			key: "onPlus",
-			value: function onPlus(index) {
-				this.state.dimensions[index]++;
-				this.setState({ dimensions: this.state.dimensions });
-			}
-		}, {
-			key: "onSaveContainer",
-			value: function onSaveContainer() {
-				console.log("save");
-			}
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
-		}]);
-	
-		return ContainerFactory;
-	}(_react.Component);
-	
-	exports.default = ContainerFactory;
-
-/***/ },
-/* 337 */
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21926,7 +22337,6 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.ContainerType = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -21934,9 +22344,25 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _containerType = __webpack_require__(338);
+	var _controls = __webpack_require__(523);
 	
-	var _containerType2 = _interopRequireDefault(_containerType);
+	var _controls2 = _interopRequireDefault(_controls);
+	
+	var _editorHeader = __webpack_require__(524);
+	
+	var _editorHeader2 = _interopRequireDefault(_editorHeader);
+	
+	var _editorProlog = __webpack_require__(525);
+	
+	var _editorProlog2 = _interopRequireDefault(_editorProlog);
+	
+	var _editorEpilog = __webpack_require__(526);
+	
+	var _editorEpilog2 = _interopRequireDefault(_editorEpilog);
+	
+	var _editorFooter = __webpack_require__(527);
+	
+	var _editorFooter2 = _interopRequireDefault(_editorFooter);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21946,146 +22372,52 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ContainerTypes = function (_React$Component) {
-		_inherits(ContainerTypes, _React$Component);
+	var BoxEditor = function (_Component) {
+		_inherits(BoxEditor, _Component);
 	
-		function ContainerTypes() {
-			_classCallCheck(this, ContainerTypes);
+		function BoxEditor(props) {
+			_classCallCheck(this, BoxEditor);
 	
-			return _possibleConstructorReturn(this, (ContainerTypes.__proto__ || Object.getPrototypeOf(ContainerTypes)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
 		}
 	
-		_createClass(ContainerTypes, [{
-			key: 'renderContainer',
-	
-	
-			/**
-	   * ---------------------
-	   * lifecycle
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * rendering
-	   * ---------------------
-	   */
-			value: function renderContainer(container) {
-				if (!container.type.startsWith("c-") && !container.type.startsWith('s-')) return;
-				return _react2.default.createElement(ContainerType, {
-					key: container.type,
-					container: container,
-					trashed: false
-				});
-			}
-		}, {
+		_createClass(BoxEditor, [{
 			key: 'render',
 			value: function render() {
-				var _this2 = this;
 	
-				return _react2.default.createElement(
-					'div',
-					{ className: 'container-factory-types' },
-					this.props.container_types.map(function (container) {
-						return _this2.renderContainer(container);
-					})
-				);
-			}
-	
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
-		}]);
-	
-		return ContainerTypes;
-	}(_react2.default.Component);
-	
-	exports.default = ContainerTypes;
-	
-	var ContainerType = exports.ContainerType = function (_React$Component2) {
-		_inherits(ContainerType, _React$Component2);
-	
-		/**
-	  * ---------------------
-	  * lifecycle
-	  * ---------------------
-	  */
-		function ContainerType(props) {
-			_classCallCheck(this, ContainerType);
-	
-			var _this3 = _possibleConstructorReturn(this, (ContainerType.__proto__ || Object.getPrototypeOf(ContainerType)).call(this, props));
-	
-			_this3.state = {
-				trashed: props.trashed
-			};
-			return _this3;
-		}
-	
-		/**
-	  * ---------------------
-	  * rendering
-	  * ---------------------
-	  */
-	
-	
-		_createClass(ContainerType, [{
-			key: 'renderSlot',
-			value: function renderSlot(slot, index) {
-				var style = {
-					width: _containerType2.default.getSlotWidth(slot) + "%"
-				};
 				return _react2.default.createElement(
 					'div',
 					{
-						key: index,
-						style: style,
-						className: 'container-factory-type-slot'
+						className: 'box-editor'
 					},
-					slot
+					_react2.default.createElement(_controls2.default, null),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'box-editor__content' },
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'box-editor__type' },
+							'Video'
+						),
+						_react2.default.createElement(_editorHeader2.default, null),
+						_react2.default.createElement(_editorProlog2.default, null),
+						_react2.default.createElement(_editorEpilog2.default, null),
+						_react2.default.createElement(_editorFooter2.default, null)
+					)
 				);
 			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var sizes = _containerType2.default.getSlotSizes(this.props.container.type);
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'container-factory-type'
-					},
-					sizes.map(this.renderSlot.bind(this))
-				);
-			}
-	
-			/**
-	   * ---------------------
-	   * events
-	   * ---------------------
-	   */
-	
-			/**
-	   * ---------------------
-	   * other functions
-	   * ---------------------
-	   */
-	
 		}]);
 	
-		return ContainerType;
-	}(_react2.default.Component);
+		return BoxEditor;
+	}(_react.Component);
+	
+	exports.default = BoxEditor;
 
 /***/ },
-/* 338 */
-/***/ function(module, exports) {
+/* 523 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
@@ -22095,114 +22427,560 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	/**
-	 * container types
-	 * @type {{SIDEBAR_LEFT: string, SIDEBAR_RIGHT: string, CONTAINER: string, INVISIBLE: string, UNKNOWN:string}}
-	 */
-	var TYPES = exports.TYPES = {
-		SIDEBAR_LEFT: "sidebar_left",
-		SIDEBAR_RIGHT: "sidebar_right",
-		CONTAINER: "container",
-		INVISIBLE: "invisible",
-		UNKNOWN: "unknown"
-	};
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	/**
-	 * helper functions for container types
-	 */
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ContainerTypeHelper = function () {
-		function ContainerTypeHelper() {
-			_classCallCheck(this, ContainerTypeHelper);
+	var BoxEditorControls = function (_Component) {
+		_inherits(BoxEditorControls, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function BoxEditorControls(props) {
+			_classCallCheck(this, BoxEditorControls);
+	
+			return _possibleConstructorReturn(this, (BoxEditorControls.__proto__ || Object.getPrototypeOf(BoxEditorControls)).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(BoxEditorControls, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"ul",
+					{
+						className: "box-editor__controls"
+					},
+					_react2.default.createElement(
+						"li",
+						{
+							className: "control__save"
+						},
+						_react2.default.createElement(
+							"button",
+							{
+								className: "control__button control__type_save" },
+							_react2.default.createElement("i", { className: "icon-ok" }),
+							"Save"
+						)
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return BoxEditorControls;
+	}(_react.Component);
+	
+	exports.default = BoxEditorControls;
+
+/***/ },
+/* 524 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorHeader = function (_Component) {
+		_inherits(BoxEditorHeader, _Component);
+	
+		function BoxEditorHeader(props) {
+			_classCallCheck(this, BoxEditorHeader);
+	
+			return _possibleConstructorReturn(this, (BoxEditorHeader.__proto__ || Object.getPrototypeOf(BoxEditorHeader)).call(this, props));
 		}
 	
-		_createClass(ContainerTypeHelper, null, [{
-			key: "isSidebar",
+		_createClass(BoxEditorHeader, [{
+			key: "render",
+			value: function render() {
 	
-	
-			/**
-	   * check if container type is sidebar
-	   * @param container_type
-	   * @returns {boolean}
-	   */
-			value: function isSidebar(container_type) {
-				return container_type.startsWith("s-");
-			}
-	
-			/**
-	   * extracts slot sizes array from container type
-	   * @returns {array}
-	   * @param container_type
-	   */
-	
-		}, {
-			key: "getSlotSizes",
-			value: function getSlotSizes(container_type) {
-				return container_type.split("-").splice(1);
-			}
-	
-			/**
-	   * calculates with of a divider slot size on percent
-	   * @returns {float}
-	   * @param slot_size
-	   */
-	
-		}, {
-			key: "getSlotWidth",
-			value: function getSlotWidth(slot_size) {
-				var parts = slot_size.split("d");
-				return parts[0] / parts[1] * 100;
-			}
-	
-			/**
-	   * get denominator for container type
-	   * @param container_type
-	   * @returns {number}
-	   */
-	
-		}, {
-			key: "getDenominator",
-			value: function getDenominator(container_type) {
-				var slots = container_type.split("-");
-				var denom = 0;
-				for (var i = 1; i < slots.length; i++) {
-					denom += parseInt(slots[i]);
-				}
-				return denom;
-			}
-	
-			/**
-	   * returns a static container type
-	   * @param container_type
-	   * @returns {TYPES}
-	   */
-	
-		}, {
-			key: "getType",
-			value: function getType(container_type) {
-				if (container_type.startsWith("c-")) {
-					return TYPES.CONTAINER;
-				}
-				if (container_type.startsWith("i-")) {
-					return TYPES.INVISIBLE;
-				}
-				if (container_type.startsWith("s-0")) {
-					return TYPES.SIDEBAR_RIGHT;
-				}
-				if (container_type.startsWith("s-")) {
-					return TYPES.SIDEBAR_LEFT;
-				}
-				return TYPES.UNKNOWN;
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__header"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "box-editor__label" },
+						"Boxtitle"
+					),
+					_react2.default.createElement("input", {
+						placeholder: "Title:",
+						name: "grid-editor-title",
+						type: "text",
+						value: "Youtube.com Link",
+						className: "box-editor__input-title" }),
+					_react2.default.createElement(
+						"div",
+						{
+							className: "grid-editor-url-builder"
+						},
+						_react2.default.createElement("input", {
+							placeholder: "Title URL (for internals links, please use a relative path starting with '/'):",
+							name: "grid-editor-titleurl",
+							type: "text",
+							value: "",
+							className: "grid-editor-titleurl grid-editor-url-input",
+							disabled: "disabled"
+						}),
+						_react2.default.createElement(
+							"button",
+							{
+								className: "grid-editor-url-button icon-link"
+							},
+							"Add link"
+						)
+					)
+				);
 			}
 		}]);
 	
-		return ContainerTypeHelper;
-	}();
+		return BoxEditorHeader;
+	}(_react.Component);
 	
-	exports.default = ContainerTypeHelper;
+	exports.default = BoxEditorHeader;
+
+/***/ },
+/* 525 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _collapsible = __webpack_require__(528);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorProlog = function (_Component) {
+		_inherits(BoxEditorProlog, _Component);
+	
+		function BoxEditorProlog(props) {
+			_classCallCheck(this, BoxEditorProlog);
+	
+			return _possibleConstructorReturn(this, (BoxEditorProlog.__proto__ || Object.getPrototypeOf(BoxEditorProlog)).call(this, props));
+		}
+	
+		_createClass(BoxEditorProlog, [{
+			key: 'render',
+			value: function render() {
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__prolog'
+					},
+					_react2.default.createElement(
+						_collapsible2.default,
+						{
+							title: 'Prolog',
+							collapsed: true
+						},
+						_react2.default.createElement(
+							'label',
+							{
+								className: 'box-editor__label'
+							},
+							'Text'
+						),
+						_react2.default.createElement(
+							'textarea',
+							{
+								className: 'form-html grid-editor-prolog'
+							},
+							'Content'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return BoxEditorProlog;
+	}(_react.Component);
+	
+	exports.default = BoxEditorProlog;
+
+/***/ },
+/* 526 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _collapsible = __webpack_require__(528);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorProlog = function (_Component) {
+		_inherits(BoxEditorProlog, _Component);
+	
+		function BoxEditorProlog(props) {
+			_classCallCheck(this, BoxEditorProlog);
+	
+			return _possibleConstructorReturn(this, (BoxEditorProlog.__proto__ || Object.getPrototypeOf(BoxEditorProlog)).call(this, props));
+		}
+	
+		_createClass(BoxEditorProlog, [{
+			key: 'render',
+			value: function render() {
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__prolog'
+					},
+					_react2.default.createElement(
+						_collapsible2.default,
+						{
+							title: 'Prolog',
+							collapsed: true
+						},
+						_react2.default.createElement(
+							'label',
+							{
+								className: 'box-editor__label'
+							},
+							'Text'
+						),
+						_react2.default.createElement(
+							'textarea',
+							{
+								className: 'form-html grid-editor-prolog'
+							},
+							'Content'
+						),
+						_react2.default.createElement(
+							'label',
+							{
+								className: 'box-editor__label' },
+							'Readmore'
+						),
+						_react2.default.createElement('input', {
+							placeholder: 'Readmore text:',
+							type: 'text',
+							value: '',
+							className: 'box-editor_input-readmore'
+						}),
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'box-editor__url-builder'
+							},
+							_react2.default.createElement('input', {
+								placeholder: 'Readmore URL (for internals links, please use a relative path starting with \'/\'):',
+								type: 'text',
+								value: '',
+								className: 'grid-editor-readmoreurl grid-editor-url-input',
+								disabled: 'disabled'
+							}),
+							_react2.default.createElement(
+								'button',
+								{
+									className: 'box-editor__url-button icon-link'
+								},
+								'Add link'
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return BoxEditorProlog;
+	}(_react.Component);
+	
+	exports.default = BoxEditorProlog;
+
+/***/ },
+/* 527 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditorFooter = function (_Component) {
+		_inherits(BoxEditorFooter, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function BoxEditorFooter(props) {
+			_classCallCheck(this, BoxEditorFooter);
+	
+			return _possibleConstructorReturn(this, (BoxEditorFooter.__proto__ || Object.getPrototypeOf(BoxEditorFooter)).call(this, props));
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(BoxEditorFooter, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__footer"
+					},
+					_react2.default.createElement(
+						"div",
+						{
+							className: "grid-editor-styles-wrapper"
+						},
+						_react2.default.createElement(
+							"label",
+							null,
+							"Boxstyle"
+						),
+						_react2.default.createElement(
+							"select",
+							{
+								name: "grid-editor-style",
+								className: "form-select grid-editor-style",
+								id: "grid-editor-style"
+							},
+							_react2.default.createElement(
+								"option",
+								{ value: "" },
+								"Default style"
+							)
+						)
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return BoxEditorFooter;
+	}(_react.Component);
+	
+	exports.default = BoxEditorFooter;
+
+/***/ },
+/* 528 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Collapsible = function (_Component) {
+		_inherits(Collapsible, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function Collapsible(props) {
+			_classCallCheck(this, Collapsible);
+	
+			var _this = _possibleConstructorReturn(this, (Collapsible.__proto__ || Object.getPrototypeOf(Collapsible)).call(this, props));
+	
+			_this.state = {
+				collapsed: props.collapsed
+			};
+			return _this;
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(Collapsible, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var title = _props.title;
+				var children = _props.children;
+				var collapsed = this.state.collapsed;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "collapsible"
+					},
+					_react2.default.createElement(
+						"div",
+						{
+							className: "collapsible__title",
+							onClick: this.onToggle.bind(this)
+						},
+						_react2.default.createElement("span", { className: "icon-arrow" }),
+						title
+					),
+					_react2.default.createElement(
+						"div",
+						{
+							style: {
+								display: collapsed ? "none" : "block"
+							},
+							className: "collapsible__content"
+						},
+						children
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+		}, {
+			key: "onToggle",
+			value: function onToggle() {
+				this.setState({ collapsed: !this.state.collapsed });
+			}
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return Collapsible;
+	}(_react.Component);
+	
+	Collapsible.propTypes = {
+		title: _react.PropTypes.string.isRequired,
+		collapsed: _react.PropTypes.bool
+	};
+	Collapsible.defaultProps = {
+		collapsed: true
+	};
+	
+	exports.default = Collapsible;
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=demo_container_factory.map
+//# sourceMappingURL=demo_box_editor.map

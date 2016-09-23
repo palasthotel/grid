@@ -4,6 +4,7 @@ module.exports = {
 		the_grid: './src/the-grid.js',
 		demo_grid: './demo/grid.js',
 		demo_grid_model: './demo/grid-model.js',
+		demo_box_editor: './demo/box-editor.js',
 		demo_container_dnd: './demo/container-dnd.js',
 		demo_styles_editor: './demo/styles-editor.js',
 		demo_container_factory: './demo/container-factory.js'
