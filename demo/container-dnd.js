@@ -22,5 +22,5 @@ ReactDOM.render(
     container_types={container_types}
     box_types={box_types}
 	/>,
-  document.getElementById("grid-app")
+  document.getElementById("demo")
 );
