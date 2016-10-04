@@ -39,8 +39,9 @@ class TextWidget extends Component {
 	 * ------------------------------------------------
 	 */
 	onChange(e){
-		this.setState({value: e.target.value});
-		this.props.onChange(this.state.value);
+		let value = e.target.value;
+		this.setState({value: value});
+		this.props.onChange(value);
 	}
 	
 	/**

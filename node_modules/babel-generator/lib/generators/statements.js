@@ -1,7 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.ThrowStatement = exports.BreakStatement = exports.ReturnStatement = exports.ContinueStatement = exports.ForOfStatement = exports.ForInStatement = undefined;
+exports.ThrowStatement = exports.BreakStatement = exports.ReturnStatement = exports.ContinueStatement = exports.ForAwaitStatement = exports.ForOfStatement = exports.ForInStatement = undefined;
 
 var _getIterator2 = require("babel-runtime/core-js/get-iterator");
 
@@ -112,7 +112,13 @@ var buildForXStatement = function buildForXStatement(op) {
   return function (node) {
     this.word("for");
     this.space();
+    if (op === "await") {
+      this.word("await");
+      this.space();
+      op = "of";
+    }
     this.token("(");
+
     this.print(node.left, node);
     this.space();
     this.word(op);
@@ -125,6 +131,7 @@ var buildForXStatement = function buildForXStatement(op) {
 
 var ForInStatement = exports.ForInStatement = buildForXStatement("in");
 var ForOfStatement = exports.ForOfStatement = buildForXStatement("of");
+var ForAwaitStatement = exports.ForAwaitStatement = buildForXStatement("await");
 
 function DoWhileStatement(node) {
   this.word("do");

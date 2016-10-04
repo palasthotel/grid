@@ -2,6 +2,10 @@
 
 exports.__esModule = true;
 
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _stringify = require("babel-runtime/core-js/json/stringify");
 
 var _stringify2 = _interopRequireDefault(_stringify);
@@ -275,28 +279,59 @@ var OptionManager = function () {
       }
 
       var presetLoc = void 0;
-      if (typeof val === "string") {
-        presetLoc = (0, _resolve2.default)("babel-preset-" + val, dirname) || (0, _resolve2.default)(val, dirname);
-        if (!presetLoc) {
-          throw new Error("Couldn't find preset " + (0, _stringify2.default)(val) + " relative to directory " + (0, _stringify2.default)(dirname));
+      try {
+        if (typeof val === "string") {
+          presetLoc = (0, _resolve2.default)("babel-preset-" + val, dirname) || (0, _resolve2.default)(val, dirname);
+
+          if (!presetLoc) {
+            var matches = val.match(/^(@[^/]+)\/(.+)$/);
+            if (matches) {
+              var orgName = matches[1];
+              var presetPath = matches[2];
+
+              val = orgName + "/babel-preset-" + presetPath;
+              presetLoc = (0, _resolve2.default)(val, dirname);
+            }
+          }
+
+          if (!presetLoc) {
+            throw new Error("Couldn't find preset " + (0, _stringify2.default)(val) + " relative to directory " + (0, _stringify2.default)(dirname));
+          }
+
+          val = require(presetLoc);
         }
 
-        val = require(presetLoc);
+        if ((typeof val === "undefined" ? "undefined" : (0, _typeof3.default)(val)) === "object" && val.__esModule) {
+          if (val.default) {
+            val = val.default;
+          } else {
+            var _val2 = val;
+            var __esModule = _val2.__esModule;
+            var rest = (0, _objectWithoutProperties3.default)(_val2, ["__esModule"]);
+
+            val = rest;
+          }
+        }
+
+        if ((typeof val === "undefined" ? "undefined" : (0, _typeof3.default)(val)) === "object" && val.buildPreset) val = val.buildPreset;
+
+        if (typeof val !== "function" && options !== undefined) {
+          throw new Error("Options " + (0, _stringify2.default)(options) + " passed to " + (presetLoc || "a preset") + " which does not accept options.");
+        }
+
+        if (typeof val === "function") val = val(context, options);
+
+        if ((typeof val === "undefined" ? "undefined" : (0, _typeof3.default)(val)) !== "object") {
+          throw new Error("Unsupported preset format: " + val + ".");
+        }
+
+        onResolve && onResolve(val, presetLoc);
+      } catch (e) {
+        if (presetLoc) {
+          e.message += " (While processing preset: " + (0, _stringify2.default)(presetLoc) + ")";
+        }
+        throw e;
       }
-
-      if ((typeof val === "undefined" ? "undefined" : (0, _typeof3.default)(val)) === "object" && val.buildPreset) val = val.buildPreset;
-
-      if (typeof val !== "function" && options !== undefined) {
-        throw new Error("Options " + (0, _stringify2.default)(options) + " passed to " + (presetLoc || "a preset") + " which does not accept options.");
-      }
-
-      if (typeof val === "function") val = val(context, options);
-
-      if ((typeof val === "undefined" ? "undefined" : (0, _typeof3.default)(val)) !== "object") {
-        throw new Error("Unsupported preset format: " + val + ".");
-      }
-
-      onResolve && onResolve(val);
       return val;
     });
   };

@@ -299,7 +299,12 @@ exports.TypeParameterDeclaration = TypeParameterInstantiation;
 function ObjectTypeAnnotation(node) {
   var _this = this;
 
-  this.token("{");
+  if (node.exact) {
+    this.token("{|");
+  } else {
+    this.token("{");
+  }
+
   var props = node.properties.concat(node.callProperties, node.indexers);
 
   if (props.length) {
@@ -319,7 +324,11 @@ function ObjectTypeAnnotation(node) {
     this.space();
   }
 
-  this.token("}");
+  if (node.exact) {
+    this.token("|}");
+  } else {
+    this.token("}");
+  }
 }
 
 function ObjectTypeCallProperty(node) {

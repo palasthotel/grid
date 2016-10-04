@@ -27,9 +27,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint max-len: 0 */
-
-var buildDefaultParam = (0, _babelTemplate2.default)("\n  let VARIABLE_NAME =\n    ARGUMENTS.length <= ARGUMENT_KEY || ARGUMENTS[ARGUMENT_KEY] === undefined ?\n      DEFAULT_VALUE\n    :\n      ARGUMENTS[ARGUMENT_KEY];\n");
+var buildDefaultParam = (0, _babelTemplate2.default)("\n  let VARIABLE_NAME =\n    ARGUMENTS.length > ARGUMENT_KEY && ARGUMENTS[ARGUMENT_KEY] !== undefined ?\n      ARGUMENTS[ARGUMENT_KEY]\n    :\n      DEFAULT_VALUE;\n");
 
 var buildCutOff = (0, _babelTemplate2.default)("\n  let $0 = $1[$2];\n");
 
@@ -62,7 +60,6 @@ var iifeVisitor = {
     }
   },
   Scope: function Scope(path) {
-    // different bindings
     path.skip();
   }
 };
@@ -74,7 +71,6 @@ var visitor = exports.visitor = {
 
     if (!hasDefaults(node)) return;
 
-    // ensure it's a block, useful for arrow functions
     path.ensureBlock();
 
     var state = {
@@ -84,11 +80,9 @@ var visitor = exports.visitor = {
 
     var body = [];
 
-    //
     var argsIdentifier = t.identifier("arguments");
     argsIdentifier._shadowedFunctionLiteral = path;
 
-    // push a default parameter definition
     function pushDefNode(left, right, i) {
       var defNode = buildDefaultParam({
         VARIABLE_NAME: left,
@@ -100,10 +94,8 @@ var visitor = exports.visitor = {
       body.push(defNode);
     }
 
-    //
     var lastNonDefaultParam = (0, _babelHelperGetFunctionArity2.default)(node);
 
-    //
     var params = path.get("params");
     for (var i = 0; i < params.length; i++) {
       var param = params[i];
@@ -119,7 +111,6 @@ var visitor = exports.visitor = {
       var left = param.get("left");
       var right = param.get("right");
 
-      //
       if (i >= lastNonDefaultParam || left.isPattern()) {
         var placeholder = scope.generateUidIdentifier("x");
         placeholder._isDefaultPlaceholder = true;
@@ -128,10 +119,8 @@ var visitor = exports.visitor = {
         node.params[i] = left.node;
       }
 
-      //
       if (!state.iife) {
         if (right.isIdentifier() && scope.hasOwnBinding(right.node.name) && scope.getOwnBinding(right.node.name).kind !== "param") {
-          // the right hand side references a parameter
           state.iife = true;
         } else {
           right.traverse(iifeVisitor, state);
@@ -141,7 +130,6 @@ var visitor = exports.visitor = {
       pushDefNode(left.node, right.node, i);
     }
 
-    // add declarations for trailing parameters
     for (var _i2 = lastNonDefaultParam + 1; _i2 < node.params.length; _i2++) {
       var _param = node.params[_i2];
       if (_param._isDefaultPlaceholder) continue;
@@ -151,7 +139,6 @@ var visitor = exports.visitor = {
       body.push(declar);
     }
 
-    // we need to cut off all trailing parameters
     node.params = node.params.slice(0, lastNonDefaultParam);
 
     if (state.iife) {

@@ -62,6 +62,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _sourceMapSupport2.default.install({
   handleUncaughtExceptions: false,
+  environment: "node",
   retrieveSourceMap: function retrieveSourceMap(source) {
     var map = maps && maps[source];
     if (map) {
@@ -99,10 +100,7 @@ function mtime(filename) {
 function compile(filename) {
   var result = void 0;
 
-  var opts = new _babelCore.OptionManager().init((0, _extend2.default)((0, _cloneDeep2.default)(transformOpts), {
-    filename: filename,
-    sourceRoot: _path2.default.dirname(filename)
-  }));
+  var opts = new _babelCore.OptionManager().init((0, _extend2.default)({ sourceRoot: _path2.default.dirname(filename) }, (0, _cloneDeep2.default)(transformOpts), { filename: filename }));
 
   var cacheKey = (0, _stringify2.default)(opts) + ":" + babel.version;
 

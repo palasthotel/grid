@@ -2,11 +2,6 @@
 
 exports.__esModule = true;
 exports.ArrayPattern = exports.ObjectPattern = exports.RestProperty = exports.SpreadProperty = exports.SpreadElement = undefined;
-
-var _stringify = require("babel-runtime/core-js/json/stringify");
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 exports.Identifier = Identifier;
 exports.RestElement = RestElement;
 exports.ObjectExpression = ObjectExpression;
@@ -23,9 +18,13 @@ var _babelTypes = require("babel-types");
 
 var t = _interopRequireWildcard(_babelTypes);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _jsesc = require("jsesc");
+
+var _jsesc2 = _interopRequireDefault(_jsesc);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function Identifier(node) {
   if (node.variance) {
@@ -140,21 +139,10 @@ function StringLiteral(node, parent) {
     return;
   }
 
-  var val = (0, _stringify2.default)(node.value);
-
-  val = val.replace(/[\u000A\u000D\u2028\u2029]/g, function (c) {
-    return "\\u" + ("0000" + c.charCodeAt(0).toString(16)).slice(-4);
+  var val = (0, _jsesc2.default)(node.value, {
+    quotes: t.isJSX(parent) ? "double" : this.format.quotes,
+    wrap: true
   });
-
-  if (this.format.quotes === "single" && !t.isJSX(parent)) {
-    val = val.slice(1, -1);
-
-    val = val.replace(/\\"/g, '"');
-
-    val = val.replace(/'/g, "\\'");
-
-    val = "'" + val + "'";
-  }
 
   return this.token(val);
 }

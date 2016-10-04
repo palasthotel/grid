@@ -51,7 +51,24 @@ module.exports = {
 							"html":"<div class=\"grid-box-editmode\">\n\tEvery Widget Box<\/div>\n",
 							"type":"all_widgets_box",
 							"content":{
-								"plain":""
+								"key_text":"This is a Text",
+								"key_number": 42,
+								"key_textarea":"This could be a large text.",
+								"key_checkbox": 1,
+								"key_select": 3,
+								"key_html": "<p>This could be <b>markup</b></p>",
+								"key_hidden": "nothing to see here",
+								"list": [
+									{
+										"key_list_item_1": "Test in der liste",
+									},
+									{
+										"key_list_item_1": "Test in der liste",
+									}
+								],
+								"key_file": "fileid",
+								"key_autocomplete": "termidzb",
+								"key_multi_autocomplete": "term1,term2",
 							},
 							"contentstructure":[
 								{
@@ -104,7 +121,6 @@ module.exports = {
 									"type": "info",
 								},
 								{
-									// todo: check if we need that
 									"key": "key_hidden",
 									"type": "hidden",
 								},
@@ -122,6 +138,7 @@ module.exports = {
 								},
 								{
 									"key": "key_file",
+									"type": "file",
 									"label": "widget type: file",
 									"uploadpath": "/grid_file_endpoint",
 								},

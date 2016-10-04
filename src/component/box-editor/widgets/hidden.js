@@ -10,6 +10,7 @@ class HiddenWidget extends Component {
 	render() {
 		return (
 			<input
+				type="hidden"
 				className="box-editor__widget widget__hidden"
 				value={this.props.value}
 			/>
@@ -33,14 +34,14 @@ class HiddenWidget extends Component {
  * property defaults
  */
 HiddenWidget.defaultProps = {
-	value: 0
+	value: "",
 };
 
 /**
  * define property types
  */
 HiddenWidget.propTypes = {
-	value: PropTypes.number.isRequired
+	value: PropTypes.string.isRequired
 };
 
 /**

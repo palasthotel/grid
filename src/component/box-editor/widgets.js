@@ -49,12 +49,16 @@ class Widgets extends Component {
 			/**
 			 * else init widget
 			 */
+			let data = {
+				value: (_.isUndefined(content[key]))? "":content["key"],
+				key: key,
+			};
 			elements.push(React.createElement(
 				widget,
 				{
-					key: key,
-					content: content[key],
-					onChange: this.onChangeWidget(key, value),
+					...cs,
+					...data,
+					onChange: this.onChangeWidget.bind(this, key),
 				}
 			));
 		}

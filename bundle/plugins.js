@@ -47,18 +47,42 @@
 
 	"use strict";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	/**
 	 * import default widgets
 	 */
 	
 	
-	var _events = __webpack_require__(355);
+	var _events = __webpack_require__(367);
 	
-	var _text = __webpack_require__(532);
+	var _text = __webpack_require__(565);
 	
 	var _text2 = _interopRequireDefault(_text);
+	
+	var _number = __webpack_require__(566);
+	
+	var _number2 = _interopRequireDefault(_number);
+	
+	var _hidden = __webpack_require__(567);
+	
+	var _hidden2 = _interopRequireDefault(_hidden);
+	
+	var _textarea = __webpack_require__(568);
+	
+	var _textarea2 = _interopRequireDefault(_textarea);
+	
+	var _checkbox = __webpack_require__(569);
+	
+	var _checkbox2 = _interopRequireDefault(_checkbox);
+	
+	var _select = __webpack_require__(570);
+	
+	var _select2 = _interopRequireDefault(_select);
+	
+	var _info = __webpack_require__(571);
+	
+	var _info2 = _interopRequireDefault(_info);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -91,7 +115,13 @@
 	if (_typeof(window.GRID) != _typeof({})) throw new Exception("GRID is missing");
 	
 	GRID.box_editor_widgets = {
-	  "text": _text2.default
+	  "text": _text2.default,
+	  "number": _number2.default,
+	  "hidden": _hidden2.default,
+	  "textarea": _textarea2.default,
+	  "checkbox": _checkbox2.default,
+	  "select": _select2.default,
+	  "info": _info2.default
 	};
 
 /***/ },
@@ -1100,14 +1130,6 @@
 	  var source = null;
 	
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.createElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-	
 	    if (hasValidRef(config)) {
 	      ref = config.ref;
 	    }
@@ -1208,14 +1230,6 @@
 	  var owner = element._owner;
 	
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.cloneElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-	
 	    if (hasValidRef(config)) {
 	      // Silently steal the ref from the parent.
 	      ref = config.ref;
@@ -4272,7 +4286,7 @@
 	
 	'use strict';
 	
-	module.exports = '15.3.1';
+	module.exports = '15.3.2';
 
 /***/ },
 
@@ -4321,7 +4335,7 @@
 
 /***/ },
 
-/***/ 355:
+/***/ 367:
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -4630,7 +4644,7 @@
 
 /***/ },
 
-/***/ 532:
+/***/ 565:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4706,8 +4720,9 @@
 		}, {
 			key: "onChange",
 			value: function onChange(e) {
-				this.setState({ value: e.target.value });
-				this.props.onChange(this.state.value);
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
 			}
 	
 			/**
@@ -4744,6 +4759,701 @@
 	 * export component to public
 	 */
 	exports.default = TextWidget;
+
+/***/ },
+
+/***/ 566:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NumberWidget = function (_Component) {
+		_inherits(NumberWidget, _Component);
+	
+		function NumberWidget(props) {
+			_classCallCheck(this, NumberWidget);
+	
+			var _this = _possibleConstructorReturn(this, (NumberWidget.__proto__ || Object.getPrototypeOf(NumberWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(NumberWidget, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__text"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "widget__label widget-text__label"
+						},
+						this.props.label
+					),
+					_react2.default.createElement("input", {
+						className: "widget__input widget-text__input",
+						type: "number",
+						value: this.state.value,
+						onChange: this.onChange.bind(this)
+					})
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onChange",
+			value: function onChange(e) {
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return NumberWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	NumberWidget.defaultProps = {
+		label: "",
+		value: 5
+	};
+	
+	/**
+	 * define property types
+	 */
+	NumberWidget.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.number.isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = NumberWidget;
+
+/***/ },
+
+/***/ 567:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var HiddenWidget = function (_Component) {
+		_inherits(HiddenWidget, _Component);
+	
+		function HiddenWidget() {
+			_classCallCheck(this, HiddenWidget);
+	
+			return _possibleConstructorReturn(this, (HiddenWidget.__proto__ || Object.getPrototypeOf(HiddenWidget)).apply(this, arguments));
+		}
+	
+		_createClass(HiddenWidget, [{
+			key: "render",
+	
+	
+			/**
+	   * ------------------------------------------------
+	   * rendering
+	   * ------------------------------------------------
+	   */
+			value: function render() {
+				return _react2.default.createElement("input", {
+					type: "hidden",
+					className: "box-editor__widget widget__hidden",
+					value: this.props.value
+				});
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return HiddenWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	HiddenWidget.defaultProps = {
+		value: ""
+	};
+	
+	/**
+	 * define property types
+	 */
+	HiddenWidget.propTypes = {
+		value: _react.PropTypes.string.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = HiddenWidget;
+
+/***/ },
+
+/***/ 568:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TextWidget = function (_Component) {
+		_inherits(TextWidget, _Component);
+	
+		function TextWidget(props) {
+			_classCallCheck(this, TextWidget);
+	
+			var _this = _possibleConstructorReturn(this, (TextWidget.__proto__ || Object.getPrototypeOf(TextWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(TextWidget, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__textarea"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "widget__label widget-text__label"
+						},
+						this.props.label
+					),
+					_react2.default.createElement("textarea", {
+						className: "widget__input widget-text__input",
+						type: "text",
+						value: this.state.value,
+						onChange: this.onChange.bind(this)
+					})
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onChange",
+			value: function onChange(e) {
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return TextWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	TextWidget.defaultProps = {
+		label: "",
+		value: ""
+	};
+	
+	/**
+	 * define property types
+	 */
+	TextWidget.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.string.isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = TextWidget;
+
+/***/ },
+
+/***/ 569:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CheckboxWidget = function (_Component) {
+		_inherits(CheckboxWidget, _Component);
+	
+		function CheckboxWidget(props) {
+			_classCallCheck(this, CheckboxWidget);
+	
+			var _this = _possibleConstructorReturn(this, (CheckboxWidget.__proto__ || Object.getPrototypeOf(CheckboxWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(CheckboxWidget, [{
+			key: "render",
+			value: function render() {
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__text"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "widget__label widget-text__label"
+						},
+						this.props.label
+					),
+					_react2.default.createElement("input", {
+						className: "widget__checkbox widget-text__checkbox",
+						type: "checkbox",
+						checked: this.state.value,
+						onChange: this.onChange.bind(this)
+					})
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onChange",
+			value: function onChange(e) {
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return CheckboxWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	CheckboxWidget.defaultProps = {
+		label: "",
+		value: false
+	};
+	
+	/**
+	 * define property types
+	 */
+	CheckboxWidget.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.bool]).isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = CheckboxWidget;
+
+/***/ },
+
+/***/ 570:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SelectWidget = function (_Component) {
+		_inherits(SelectWidget, _Component);
+	
+		function SelectWidget(props) {
+			_classCallCheck(this, SelectWidget);
+	
+			var _this = _possibleConstructorReturn(this, (SelectWidget.__proto__ || Object.getPrototypeOf(SelectWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(SelectWidget, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var selections = _props.selections;
+				var value = _props.value;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__text"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "widget__label widget-text__label"
+						},
+						this.props.label
+					),
+					_react2.default.createElement(
+						"select",
+						{
+							value: this.state.value,
+							className: "widget_select",
+							onChange: this.onChange.bind(this)
+						},
+						selections.map(function (item) {
+							return _react2.default.createElement(
+								"option",
+								{
+									key: item.key,
+									value: item.key
+								},
+								item.text
+							);
+						})
+					)
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onChange",
+			value: function onChange(e) {
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return SelectWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	SelectWidget.defaultProps = {
+		label: "",
+		value: ""
+	};
+	
+	/**
+	 * define property types
+	 */
+	SelectWidget.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]).isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = SelectWidget;
+
+/***/ },
+
+/***/ 571:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var InfoWidget = function (_Component) {
+		_inherits(InfoWidget, _Component);
+	
+		function InfoWidget(props) {
+			_classCallCheck(this, InfoWidget);
+	
+			var _this = _possibleConstructorReturn(this, (InfoWidget.__proto__ || Object.getPrototypeOf(InfoWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(InfoWidget, [{
+			key: "renderLabel",
+			value: function renderLabel() {
+				if (_typeof(this.props.label) !== ( true ? "undefined" : _typeof(undefined)) && this.props.label != "") {
+					return _react2.default.createElement(
+						"label",
+						{
+							className: "widget__label widget-text__label"
+						},
+						this.props.label
+					);
+				}
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__text"
+					},
+					this.renderLabel(),
+					_react2.default.createElement(
+						"p",
+						null,
+						this.props.text
+					)
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return InfoWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	InfoWidget.defaultProps = {
+		label: "",
+		text: ""
+	};
+	
+	/**
+	 * define property types
+	 */
+	InfoWidget.propTypes = {
+		label: _react.PropTypes.string,
+		text: _react.PropTypes.string
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = InfoWidget;
 
 /***/ }
 

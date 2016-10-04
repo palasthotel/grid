@@ -118,6 +118,8 @@ function remap(path, key) {
   } else {
     var init = key === "this" ? t.thisExpression() : t.identifier(key);
 
+    if (shadowFunction) init._shadowedFunctionLiteral = shadowFunction;
+
     fnPath.scope.push({ id: id, init: init });
   }
 

@@ -286,6 +286,9 @@ var Printer = function () {
     this._maybeAddAuxComment(this._insideAux && !oldInAux);
 
     var needsParens = n.needsParens(node, parent, this._printStack);
+    if (this.format.retainFunctionParens && node.type === "FunctionExpression" && node.extra && node.extra.parenthesized) {
+      needsParens = true;
+    }
     if (needsParens) this.token("(");
 
     this._printLeadingComments(node, parent);

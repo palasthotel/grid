@@ -77,6 +77,7 @@ function normalizeOptions(code, opts, tokens) {
     auxiliaryCommentAfter: opts.auxiliaryCommentAfter,
     shouldPrintComment: opts.shouldPrintComment,
     retainLines: opts.retainLines,
+    retainFunctionParens: opts.retainFunctionParens,
     comments: opts.comments == null || opts.comments,
     compact: opts.compact,
     minified: opts.minified,
@@ -117,6 +118,11 @@ function normalizeOptions(code, opts, tokens) {
 }
 
 function findCommonStringDelimiter(code, tokens) {
+  var DEFAULT_STRING_DELIMITER = "double";
+  if (!code) {
+    return DEFAULT_STRING_DELIMITER;
+  }
+
   var occurences = {
     single: 0,
     double: 0

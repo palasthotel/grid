@@ -16,6 +16,7 @@ var box_types = require('./dummy-data/box_types');
  */
 let box = grid.container[0].slots[0].boxes[0];
 
+
 ReactDOM.render(
 	<div className="grid">
 		  <BoxEditor

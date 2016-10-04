@@ -172,7 +172,6 @@ var ReplaceSupers = function () {
     var property = void 0;
     var computed = void 0;
     var args = void 0;
-    var thisReference = void 0;
 
     var parent = path.parent;
     var node = path.node;
@@ -207,7 +206,7 @@ var ReplaceSupers = function () {
 
     if (!property) return;
 
-    var superProperty = this.getSuperProperty(property, computed, thisReference);
+    var superProperty = this.getSuperProperty(property, computed);
 
     if (args) {
       return this.optimiseCall(superProperty, args);
