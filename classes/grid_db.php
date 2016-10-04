@@ -33,7 +33,7 @@ class grid_db {
 		$this->connection=new mysqli($host,$user,$password,$database, $port);
 		$this->connection->set_charset("utf8");
 		$this->author=$author;
-		$this->ajaxEndpoint=new grid_ajaxendpoint();
+		$this->ajaxEndpoint=new grid_ajaxendpoint($this);
 		$this->prefix=$prefix;
 		$this->templatesPaths = array();
 	}
