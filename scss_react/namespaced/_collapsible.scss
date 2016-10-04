@@ -1,0 +1,13 @@
+.grid .collapsible{
+	.collapsible__title{
+		background-color: #efefef;
+		padding: 15px;
+	}
+	.collapsible__content{
+		padding: 15px;
+		border: 1px solid #efefef;
+	}
+}
+.grid .collapsible + .collapsible{
+	border-top: 1px solid #333;
+}

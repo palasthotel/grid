@@ -1,0 +1,73 @@
+import React, {Component, PropTypes} from 'react';
+
+class TextWidget extends Component {
+	
+	constructor(props){
+		super(props);
+		this.state = {
+			value: props.value,
+		};
+	}
+	/**
+	 * ------------------------------------------------
+	 * rendering
+	 * ------------------------------------------------
+	 */
+	render() {
+		return (
+			<div
+				className="box-editor__widget widget__text"
+			>
+				<label
+					className="widget__label widget-text__label"
+				>
+					{this.props.label}
+				</label>
+				<input
+					className="widget__input widget-text__input"
+					type="text"
+					value={this.state.value}
+					onChange={this.onChange.bind(this)}
+				/>
+			</div>
+		)
+	}
+	
+	/**
+	 * ------------------------------------------------
+	 * events
+	 * ------------------------------------------------
+	 */
+	onChange(e){
+		this.setState({value: e.target.value});
+		this.props.onChange(this.state.value);
+	}
+	
+	/**
+	 * ------------------------------------------------
+	 * other functions
+	 * ------------------------------------------------
+	 */
+}
+
+/**
+ * property defaults
+ */
+TextWidget.defaultProps = {
+	label: "",
+	value: "",
+};
+
+/**
+ * define property types
+ */
+TextWidget.propTypes = {
+	label: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired,
+	onChange: PropTypes.func.isRequired,
+};
+
+/**
+ * export component to public
+ */
+export default TextWidget;

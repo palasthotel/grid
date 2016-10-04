@@ -5,6 +5,7 @@
 @import "namespaced/container";
 @import "namespaced/slot";
 @import "namespaced/box";
+@import "namespaced/collapsible";
 
-@import "namespaced/box-editor/text-with-link";
-@import "namespaced/box-editor/url-builder";
+
+@import "namespaced/box-editor/*";

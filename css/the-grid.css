@@ -85,6 +85,14 @@
 
 .box__controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
 
+.grid .collapsible .collapsible__title { background-color: #efefef; padding: 15px; }
+
+.grid .collapsible .collapsible__content { padding: 15px; border: 1px solid #efefef; }
+
+.grid .collapsible + .collapsible { border-top: 1px solid #333; }
+
+.box-editor { max-width: 960px; margin: 0px auto; border: 1px solid #333; padding: 15px; }
+
 .box-editor__url-builder { position: relative; width: 140px; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; font-size: 11px; }
 
 .box-editor__url-builder .url-builder__title-url { width: 100%; padding-right: 130px; opacity: 0; }
