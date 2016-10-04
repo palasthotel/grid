@@ -21511,7 +21511,13 @@
 		function BoxEditor(props) {
 			_classCallCheck(this, BoxEditor);
 	
-			return _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
+	
+			_this.state = {
+				content: props.box.content
+			};
+	
+			return _this;
 		}
 	
 		_createClass(BoxEditor, [{
@@ -21521,6 +21527,8 @@
 				var type = _props$box.type;
 				var title = _props$box.title;
 				var titleurl = _props$box.titleurl;
+				var contentstructure = _props$box.contentstructure;
+				var content = this.state.content;
 	
 				return _react2.default.createElement(
 					'div',
@@ -21562,7 +21570,9 @@
 								collapsed: false
 							},
 							_react2.default.createElement(_widgets2.default, {
-								box: this.props.box
+								content: content,
+								contentstructure: contentstructure,
+								onChangeContent: this.onContentChange.bind(this)
 							})
 						),
 						_react2.default.createElement(
@@ -21599,6 +21609,13 @@
 			key: 'onTitleUrlChange',
 			value: function onTitleUrlChange(url) {
 				console.log(url);
+			}
+		}, {
+			key: 'onContentChange',
+			value: function onContentChange(content) {
+				console.log("content change", content);
+				this.state.content = content;
+				this.setState({ content: this.state.content });
 			}
 		}]);
 	
@@ -22124,6 +22141,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	/**
+	 * widgets component
+	 */
 	var Widgets = function (_Component) {
 		_inherits(Widgets, _Component);
 	
@@ -22135,7 +22155,12 @@
 		function Widgets(props) {
 			_classCallCheck(this, Widgets);
 	
-			return _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this, props));
+	
+			_this.state = {
+				content: props.content
+			};
+			return _this;
 		}
 	
 		_createClass(Widgets, [{
@@ -22151,41 +22176,37 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var contentstructure = this.props.contentstructure;
+				var content = this.state.content;
 	
 				var widgets = GRID.box_editor_widgets;
-				var _props$box = this.props.box;
-				var contentstructure = _props$box.contentstructure;
-				var content = _props$box.content;
-	
 	
 				var elements = [];
+	
 				for (var i = 0; i < contentstructure.length; i++) {
 	
 					var cs = contentstructure[i];
 					var key = _underscore2.default.isUndefined(cs.key) ? i : cs.key;
+					var value = _underscore2.default.isUndefined(content[key]) ? "" : content[key];
 	
 					/**
 	     * if there is no widget registered
 	     */
 					var widget = widgets[cs.type];
 					if (_underscore2.default.isUndefined(widget)) {
-						elements.push(_react2.default.createElement(_error2.default, {
-							key: key,
-							type: cs.type,
-							constentstructure: cs
-						}));
+						elements.push(_react2.default.createElement(_error2.default, _extends({}, cs, {
+							key: key
+						})));
 						continue;
 					}
 	
 					/**
 	     * else init widget
 	     */
-					var data = {
-						value: _underscore2.default.isUndefined(content[key]) ? "" : content["key"],
-						key: key
-					};
-					elements.push(_react2.default.createElement(widget, _extends({}, cs, data, {
-						onChange: this.onChangeWidget.bind(this, key)
+					elements.push(_react2.default.createElement(widget, _extends({}, cs, {
+						value: value,
+						key: key,
+						onChange: this.onChange.bind(this, key)
 					})));
 				}
 	
@@ -22205,9 +22226,12 @@
 	   */
 	
 		}, {
-			key: 'onChangeWidget',
-			value: function onChangeWidget(key, value) {
+			key: 'onChange',
+			value: function onChange(key, value) {
 				console.log("new value", key, value);
+				this.state.content[key] = value;
+				this.setState({ content: this.state.content });
+				this.props.onChangeContent(this.state.content);
 			}
 	
 			/**
@@ -22226,13 +22250,18 @@
 	 */
 	
 	
-	Widgets.defaultProps = {};
+	Widgets.defaultProps = {
+		content: {},
+		contentstructure: []
+	};
 	
 	/**
 	 * define property types
 	 */
 	Widgets.propTypes = {
-		box: _react.PropTypes.object.isRequired
+		content: _react.PropTypes.object.isRequired,
+		contentstructure: _react.PropTypes.array.isRequired,
+		onChangeContent: _react.PropTypes.func.isRequired
 	};
 	
 	/**
@@ -24303,13 +24332,13 @@
 						"key_number": 42,
 						"key_textarea": "This could be a large text.",
 						"key_checkbox": 1,
-						"key_select": 3,
+						"key_select": 1,
 						"key_html": "<p>This could be <b>markup</b></p>",
 						"key_hidden": "nothing to see here",
 						"list": [{
 							"key_list_item_1": "Test in der liste"
 						}, {
-							"key_list_item_1": "Test in der liste"
+							"key_list_item_1": "Test in der liste 2"
 						}],
 						"key_file": "fileid",
 						"key_autocomplete": "termidzb",

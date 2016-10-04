@@ -40,9 +40,8 @@ class CheckboxWidget extends Component {
 	 * ------------------------------------------------
 	 */
 	onChange(e){
-		let value = e.target.value;
-		this.setState({value: value});
-		this.props.onChange(value);
+		this.setState({value: e.target.checked});
+		this.props.onChange(e.target.checked);
 	}
 	
 	/**

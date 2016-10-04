@@ -55,7 +55,7 @@ module.exports = {
 								"key_number": 42,
 								"key_textarea":"This could be a large text.",
 								"key_checkbox": 1,
-								"key_select": 3,
+								"key_select": 1,
 								"key_html": "<p>This could be <b>markup</b></p>",
 								"key_hidden": "nothing to see here",
 								"list": [
@@ -63,7 +63,7 @@ module.exports = {
 										"key_list_item_1": "Test in der liste",
 									},
 									{
-										"key_list_item_1": "Test in der liste",
+										"key_list_item_1": "Test in der liste 2",
 									}
 								],
 								"key_file": "fileid",

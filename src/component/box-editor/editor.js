@@ -15,10 +15,14 @@ import Footer from './editor-footer.js';
 class BoxEditor extends Component{
 	constructor(props) {
 		super(props);
+		this.state = {
+			content: props.box.content,
+		}
 		
 	}
 	render(){
-		const {type, title, titleurl} = this.props.box;
+		const {type, title, titleurl, contentstructure} = this.props.box;
+		const {content} = this.state;
 		return (
 			<div
 				className="box-editor"
@@ -47,10 +51,10 @@ class BoxEditor extends Component{
 						title="Spezific"
 					    collapsed={false}
 					>
-						
-						
 						<Widgets
-							box={this.props.box}
+							content={content}
+						    contentstructure={contentstructure}
+						    onChangeContent={this.onContentChange.bind(this)}
 						/>
 					</Collapsible>
 					
@@ -66,10 +70,6 @@ class BoxEditor extends Component{
 						/>
 						
 					</Collapsible>
-					
-					
-					
-					
 						
 				</div>
 			</div>
@@ -85,6 +85,11 @@ class BoxEditor extends Component{
 	}
 	onTitleUrlChange(url){
 		console.log(url);
+	}
+	onContentChange(content){
+		console.log("content change", content);
+		this.state.content = content;
+		this.setState({content: this.state.content});
 	}
 }
 

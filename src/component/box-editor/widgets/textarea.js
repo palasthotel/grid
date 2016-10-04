@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-class TextWidget extends Component {
+class TextareaWidget extends Component {
 	
 	constructor(props){
 		super(props);
@@ -54,7 +54,7 @@ class TextWidget extends Component {
 /**
  * property defaults
  */
-TextWidget.defaultProps = {
+TextareaWidget.defaultProps = {
 	label: "",
 	value: "",
 };
@@ -62,7 +62,7 @@ TextWidget.defaultProps = {
 /**
  * define property types
  */
-TextWidget.propTypes = {
+TextareaWidget.propTypes = {
 	label: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
@@ -71,4 +71,4 @@ TextWidget.propTypes = {
 /**
  * export component to public
  */
-export default TextWidget;
+export default TextareaWidget;
