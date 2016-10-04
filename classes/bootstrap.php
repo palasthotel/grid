@@ -29,5 +29,15 @@ include dirname(__FILE__).'/grid_grid.php';
 include dirname(__FILE__).'/grid_slot.php';
 include dirname(__FILE__).'/grid_container.php';
 include dirname(__FILE__).'/grid_db.php';
+
+include dirname(__FILE__).'/ajax/grid_ajax_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_test_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_document_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_styles_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_container_editing_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_box_editing_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_permissions_component.php';
+include dirname(__FILE__).'/ajax/grid_ajax_typeahead_component.php';
+
 include dirname(__FILE__).'/grid_ajaxendpoint.php';
 

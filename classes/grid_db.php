@@ -598,17 +598,10 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		{
 			$input=file_get_contents("php://input");
 			$json=json_decode($input);
-			$method=$json->method;
-			$params=$json->params;
+            $this->ajaxEndpoint->storage=$this;
 
-			$this->ajaxEndpoint->storage=$this;
-			try {
-				$reflectionMethod=new reflectionMethod($this->ajaxEndpoint,$method);
-				$retval=$reflectionMethod->invokeArgs($this->ajaxEndpoint,$params);
-				echo json_encode(array('result'=>$retval));
-			} catch (Exception $e) {
-				echo json_encode(array('error'=>$e->getMessage()));
-			}
+            $result=$this->ajaxEndpoint->perform($json);
+            echo json_encode($result);
 		}
 	}
 	
