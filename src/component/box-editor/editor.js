@@ -3,6 +3,9 @@ import React, {Component, PropTypes} from 'react';
 import Controls from './controls.js';
 import TextWithLink from './text-with-link.js';
 import Collapsible from './collapsible.js';
+
+import Widgets from './widgets.js';
+
 import BoxEditorHeader from './editor-header.js';
 import Prolog from './editor-prolog.js';
 import Epilog from './editor-epilog.js';
@@ -42,8 +45,13 @@ class BoxEditor extends Component{
 					
 					<Collapsible
 						title="Spezific"
+					    collapsed={false}
 					>
-						<p>Hier kommen die widgets</p>
+						
+						
+						<Widgets
+							box={this.props.box}
+						/>
 					</Collapsible>
 					
 					<Collapsible

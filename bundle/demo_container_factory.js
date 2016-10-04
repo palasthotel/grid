@@ -54,11 +54,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _containerFactory = __webpack_require__(344);
+	var _containerFactory = __webpack_require__(345);
 	
 	var _containerFactory2 = _interopRequireDefault(_containerFactory);
 	
-	var _containerTypes = __webpack_require__(345);
+	var _containerTypes = __webpack_require__(346);
 	
 	var _containerTypes2 = _interopRequireDefault(_containerTypes);
 	
@@ -68,7 +68,7 @@
 	 * grid dummy
 	 * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
 	 */
-	var container_types = __webpack_require__(182);
+	var container_types = __webpack_require__(183);
 	
 	/**
 	 * append app to grid app root
@@ -21464,7 +21464,8 @@
 /* 179 */,
 /* 180 */,
 /* 181 */,
-/* 182 */
+/* 182 */,
+/* 183 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21542,7 +21543,6 @@
 	}];
 
 /***/ },
-/* 183 */,
 /* 184 */,
 /* 185 */,
 /* 186 */,
@@ -21703,7 +21703,8 @@
 /* 341 */,
 /* 342 */,
 /* 343 */,
-/* 344 */
+/* 344 */,
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21926,7 +21927,7 @@
 	exports.default = ContainerFactory;
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21942,7 +21943,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _containerType = __webpack_require__(346);
+	var _containerType = __webpack_require__(347);
 	
 	var _containerType2 = _interopRequireDefault(_containerType);
 	
@@ -22092,7 +22093,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports) {
 
 	"use strict";

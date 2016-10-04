@@ -2,6 +2,10 @@
 module.exports = {
 	entry: {
 		/**
+		 * all plugin information
+		 */
+		plugins: './src/plugins.js',
+		/**
 		 * script for the grid
 		 */
 		the_grid: './src/the-grid.js',
