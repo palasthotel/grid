@@ -11,6 +11,7 @@ class grid_slot extends grid_base {
 	public $slotid;
 	public $style;
 	public $classes = array();
+    /** @var grid_box[] */
 	public $boxes;
 	public $dimension;
 

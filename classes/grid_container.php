@@ -29,6 +29,8 @@ class grid_container extends grid_base {
 	public $firstcontentcontainer;
 	public $lastcontentcontainer;
 	public $sidebarleft = false;
+
+    /** @var grid_slot[] */
 	public $slots;
 
 	public function __construct()

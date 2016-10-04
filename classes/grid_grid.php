@@ -9,6 +9,7 @@
 use Grid\Constants\Hook;
 
 class grid_grid extends grid_base {
+    /** @var grid_container[]  */
 	public $container;
 	public $gridid;
 	public $gridrevision;
