@@ -36,12 +36,6 @@ ErrorWidget.defaultProps = {
 };
 
 /**
- * define property types
- */
-ErrorWidget.propTypes = {
-};
-
-/**
  * export component to public
  */
 export default ErrorWidget;

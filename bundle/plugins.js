@@ -6143,11 +6143,6 @@
 	};
 	
 	/**
-	 * define property types
-	 */
-	ErrorWidget.propTypes = {};
-	
-	/**
 	 * export component to public
 	 */
 	exports.default = ErrorWidget;
