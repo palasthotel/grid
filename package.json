@@ -2,7 +2,8 @@
   "name": "grid-lib",
   "version": "1.0.0",
   "scripts": {
-    "watch": "webpack --progress --colors"
+    "watch": "webpack --progress --colors",
+    "compile": "webpack --progress --colors -p --config webpack.config.production.js"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",

@@ -2,8 +2,8 @@
 module.exports = {
 	entry: require('./webpack.entries.js'),
 	output: {
-		path: './bundle',
-		filename: '[name].js',
+		path: './bundle/min',
+		filename: '[name].min.js',
 		sourceMapFilename: '[name].min.map'
 	},
 	devtool: 'source-map',
@@ -18,5 +18,4 @@ module.exports = {
 			}
 		}]
 	},
-	watch: true,
 };
