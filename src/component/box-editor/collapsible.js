@@ -22,7 +22,7 @@ class Collapsible extends Component{
 		const {collapsed} = this.state;
 		return (
 			<div
-				className="collapsible"
+				className={`collapsible ${(collapsed)? "": "is-active"}`}
 			>
 				<div
 					className="collapsible__title"

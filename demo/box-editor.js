@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BoxEditor from '../src/component/box-editor/editor.js';
+import BoxEditor from '../src/component/box-editor/box-editor.js';
 
 /**
  * grid dummy

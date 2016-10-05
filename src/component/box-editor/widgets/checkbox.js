@@ -17,19 +17,20 @@ class CheckboxWidget extends Component {
 		
 		return (
 			<div
-				className="box-editor__widget widget__text"
+				className="box-editor__widget widget__checkbox"
 			>
 				<label
-					className="widget__label widget-text__label"
+					className="widget__label"
 				>
+					<input
+						className="widget__input"
+						type="checkbox"
+						checked={this.state.value}
+						onChange={this.onChange.bind(this)}
+					/>
 					{this.props.label}
 				</label>
-				<input
-					className="widget__checkbox widget-text__checkbox"
-					type="checkbox"
-					checked={this.state.value}
-					onChange={this.onChange.bind(this)}
-				/>
+				
 			</div>
 		)
 	}

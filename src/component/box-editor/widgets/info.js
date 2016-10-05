@@ -17,7 +17,7 @@ class InfoWidget extends Component {
 		if(typeof this.props.label !== typeof undefined && this.props.label != ""){
 			return (
 				<label
-					className="widget__label widget-text__label"
+					className="widget__label"
 				>
 					{this.props.label}
 				</label>
@@ -27,10 +27,13 @@ class InfoWidget extends Component {
 	render() {
 		return (
 			<div
-				className="box-editor__widget widget__text"
+				className="box-editor__widget widget__info"
 			>
 				{this.renderLabel()}
-				<p>{this.props.text}</p>
+				<div
+					className="widget__text"
+					dangerouslySetInnerHTML={{__html: this.props.text}}
+				/>
 			</div>
 		)
 	}

@@ -22,7 +22,7 @@
   }
 }
 
-@mixin transition($properties: all, $duration: .1337s, $easing: ease) {
+@mixin transition($properties: all, $duration: .2s, $easing: ease) {
 	@if length($properties) > 1 {
 		transition-property: $properties;
 		transition-duration: $duration;

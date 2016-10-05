@@ -11,7 +11,12 @@ class ErrorWidget extends Component {
 	render() {
 		return (
 			<div className="box-editor__widget widget__error">
-				<i>Unknown widget of type:</i> <b>{this.props.type}</b>
+				<label
+				className="widget__label"
+				>
+					Unknown widget of type:
+				</label>
+				<div>{this.props.type}</div>
 			</div>
 		)
 	}

@@ -1,11 +1,8 @@
+@import "styleguide/*";
 @import "helpers/all";
-@import "styleguide/all";
 
-@import "namespaced/grid";
-@import "namespaced/container";
-@import "namespaced/slot";
-@import "namespaced/box";
-@import "namespaced/collapsible";
 
+@import "namespaced/*";
 
 @import "namespaced/box-editor/*";
+@import "namespaced/box-editor/widgets/*";

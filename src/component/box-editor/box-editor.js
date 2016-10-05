@@ -4,7 +4,7 @@ import Controls from './controls.js';
 import TextWithLink from './text-with-link.js';
 import Collapsible from './collapsible.js';
 
-import Widgets from './widgets.js';
+import Widgets from './widgets/widgets.js';
 
 import BoxEditorHeader from './editor-header.js';
 import Prolog from './editor-prolog.js';
@@ -86,9 +86,8 @@ class BoxEditor extends Component{
 	onTitleUrlChange(url){
 		console.log(url);
 	}
-	onContentChange(content){
-		console.log("content change", content);
-		this.state.content = content;
+	onContentChange(key, value){
+		this.state.content[key] = value;
 		this.setState({content: this.state.content});
 	}
 }

@@ -1,0 +1,42 @@
+.box-editor__widget.widget__list{
+
+	.widget-list-item{
+		position: relative;
+		border-left: 4px solid black;
+		padding: 15px 0 0 15px;
+		margin-bottom: 15px;
+		@include transition();
+		
+		& > .widget-list-item__remove-button{
+			margin-top: 25px;
+			margin-left: -15px;
+			padding-left: 15px;
+			border-left: transparent;
+		}
+		.widget-list-item__remove-button:hover{
+			background-color: $color-warning;
+		}
+		.widget-list-item__sort-button{
+			position: absolute;
+			top: 0;
+			left: -31px;
+			padding: 4px;
+			border-color: transparent;
+			border-right: transparent;
+			&.widget-list-item__move-down-button{
+				top: auto;
+				bottom: 0;
+			}
+		}
+		&:hover .widget-list-item__sort-button{
+			border-color: black;
+		}
+		&:first-child .widget-list-item__move-up-button{
+			display: none;
+		}
+		&:last-child .widget-list-item__move-down-button{
+			display: none;
+		}
+	}
+	
+}

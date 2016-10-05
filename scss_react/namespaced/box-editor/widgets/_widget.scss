@@ -1,0 +1,11 @@
+.box-editor__widget{
+	.widget__label{
+		padding: 10px 0;
+		font-weight: bold;
+		color: black;
+		display: block;
+	}
+	& + & {
+		margin-top: 15px;
+	}
+}

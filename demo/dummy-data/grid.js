@@ -121,6 +121,11 @@ module.exports = {
 									"type": "info",
 								},
 								{
+									"label": "widget type: info",
+									"text": "<p>This is a info text with html markup</p><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam</p><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam</p>",
+									"type": "info",
+								},
+								{
 									"key": "key_hidden",
 									"type": "hidden",
 								},
@@ -133,14 +138,45 @@ module.exports = {
 											"key": "key_list_item_1",
 											"type": "text",
 											"label": "Text in Liste",
-										}
+										},
+										{
+											"label": "widget type: info",
+											"text": "this is the info text",
+											"type": "info",
+										},
+										{
+											"key": "key_select",
+											"label": "widget type: select in list",
+											"type": "select",
+											"selections": [
+												{
+													"key": 0,
+													"text": "Select Entry 0"
+												},
+												{
+													"key": 1,
+													"text": "Select Entry 1"
+												},
+												{
+													"key": 2,
+													"text": "Select Entry 2"
+												},
+											]
+										},
 									],
+								},
+								{
+									"type": "divider",
 								},
 								{
 									"key": "key_file",
 									"type": "file",
 									"label": "widget type: file",
 									"uploadpath": "/grid_file_endpoint",
+								},
+								{
+									"text": "Autocompletes Section",
+									"type": "divider",
 								},
 								{
 									"key": "key_autocomplete",

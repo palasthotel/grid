@@ -13,6 +13,7 @@ import CheckboxWidget from './component/box-editor/widgets/checkbox.js';
 import SelectWidget from './component/box-editor/widgets/select.js';
 import InfoWidget from './component/box-editor/widgets/info.js';
 import ListWidget from './component/box-editor/widgets/list.js';
+import DividerWidget from './component/box-editor/widgets/divider.js';
 
 /**
  *
@@ -53,4 +54,5 @@ GRID.box_editor_widgets = {
 	"select": SelectWidget,
 	"info": InfoWidget,
 	"list": ListWidget,
+	"divider": DividerWidget,
 };

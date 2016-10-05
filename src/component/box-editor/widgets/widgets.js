@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import _ from 'underscore';
-import ErrorWidget from './widgets/error.js';
+import ErrorWidget from './error.js';
 
 
 /**
@@ -15,12 +15,6 @@ class Widgets extends Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.state = {
-			content: props.content,
-		};
-	}
-	
-	componentWillUnmount() {
 	}
 	
 	/**
@@ -30,8 +24,7 @@ class Widgets extends Component {
 	 */
 	render() {
 		
-		const {contentstructure} = this.props;
-		const {content} = this.state;
+		const {contentstructure, content} = this.props;
 		const widgets = GRID.box_editor_widgets;
 		
 		let elements = [];
@@ -85,9 +78,7 @@ class Widgets extends Component {
 	 */
 	onChange(key, value){
 		console.log("new value", key, value);
-		this.state.content[key] = value;
-		this.setState({content: this.state.content});
-		this.props.onChangeContent(this.state.content);
+		this.props.onChangeContent(key, value);
 	}
 	
 	/**

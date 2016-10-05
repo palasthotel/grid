@@ -1,0 +1,13 @@
+.box-editor__widget.widget__info{
+	border: 1px dashed black;
+	padding: 0 10px 10px 10px;
+	.widget__text{
+		margin: 0;
+		p{
+			margin: 0;
+		}
+		p + p {
+			margin-top: 1em;
+		}
+	}
+}

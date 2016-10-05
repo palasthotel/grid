@@ -17,16 +17,16 @@ class SelectWidget extends Component {
 		const {selections, value} = this.props;
 		return (
 			<div
-				className="box-editor__widget widget__text"
+				className="box-editor__widget widget__select"
 			>
 				<label
-					className="widget__label widget-text__label"
+					className="widget__label"
 				>
 					{this.props.label}
 				</label>
 				<select
 					value={this.state.value}
-					className="widget_select"
+					className="widget__select"
 				    onChange={this.onChange.bind(this)}
 				>
 					{selections.map((item)=>{

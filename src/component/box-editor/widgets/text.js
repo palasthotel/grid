@@ -19,12 +19,12 @@ class TextWidget extends Component {
 				className="box-editor__widget widget__text"
 			>
 				<label
-					className="widget__label widget-text__label"
+					className="widget__label"
 				>
 					{this.props.label}
 				</label>
 				<input
-					className="widget__input widget-text__input"
+					className="widget__input"
 					type="text"
 					value={this.state.value}
 					onChange={this.onChange.bind(this)}
