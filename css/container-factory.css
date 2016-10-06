@@ -199,6 +199,8 @@ button, button:focus { outline: none; border: 1px solid black; cursor: pointer; 
 
 button:hover, button:focus:hover { border-color: transparent; background-color: black; color: white; }
 
+.button-delete:hover { background-color: #ed5032; border-color: #ed5032; color: white; }
+
 #container-factory { font-family: "OpenSans", sans-serif; max-width: 1000px; margin: 0px auto; }
 
 #container-factory, #container-factory * { box-sizing: border-box; }

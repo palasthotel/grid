@@ -1,0 +1,27 @@
+.box-editor__widget.widget__file{
+	.widget__dropzone{
+		padding: 15px;
+		border: 1px dashed black;
+		cursor: pointer;
+	}
+	.widget_svg{
+		margin-right: 8px;
+	}
+	.widget__img{
+		width: 250px;
+		height: auto;
+		display: block;
+	}
+	.widget__delete-button{
+		@extend .button-delete;
+	}
+	.widget__content{
+		display: flex;
+		.widget__file{
+			order: 1;
+		}
+		.widget__file-description{
+			order: 2;
+		}
+	}
+}

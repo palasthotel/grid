@@ -8,13 +8,14 @@
 		@include transition();
 		
 		& > .widget-list-item__remove-button{
+			
+			@extend .button-delete;
+			
 			margin-top: 25px;
 			margin-left: -15px;
 			padding-left: 15px;
 			border-left: transparent;
-		}
-		.widget-list-item__remove-button:hover{
-			background-color: $color-warning;
+			
 		}
 		.widget-list-item__sort-button{
 			position: absolute;

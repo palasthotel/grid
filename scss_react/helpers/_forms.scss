@@ -51,3 +51,10 @@ button:focus {
     color: white;
   }
 }
+.button-delete{
+  &:hover{
+    background-color: $color-warning;
+    border-color: $color-warning;
+    color: white;
+  }
+}

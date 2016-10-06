@@ -169,12 +169,6 @@ module.exports = {
 									"type": "divider",
 								},
 								{
-									"key": "key_file",
-									"type": "file",
-									"label": "widget type: file",
-									"uploadpath": "/grid_file_endpoint",
-								},
-								{
 									"text": "Autocompletes Section",
 									"type": "divider",
 								},
@@ -187,7 +181,19 @@ module.exports = {
 									"key": "key_multi_autocomplete",
 									"label": "widget type: multi-autocomplete",
 									"type": "multi-autocomplete",
-								}
+								},
+								{
+									"key": "key_file",
+									"type": "file",
+									"label": "widget type: file",
+									"uploadpath": "/grid_file_endpoint",
+								},
+								{
+									"key": "key_wp_mediaselect",
+									"type": "wp_mediaselect",
+									"label": "widget type: wp_mediaselect",
+									"media_type": "jpg",
+								},
 							]
 						}
 					]

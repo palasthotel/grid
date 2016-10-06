@@ -199,6 +199,8 @@ button, button:focus { outline: none; border: 1px solid black; cursor: pointer; 
 
 button:hover, button:focus:hover { border-color: transparent; background-color: black; color: white; }
 
+.button-delete:hover, .box-editor__widget.widget__file .widget__delete-button:hover, .box-editor__widget.widget__list .widget-list-item > .widget-list-item__remove-button:hover { background-color: #ed5032; border-color: #ed5032; color: white; }
+
 .box { position: relative; padding: 12px 0; min-height: 50px; background-color: white; box-shadow: inset 0 0 2px 0px #838688; }
 
 .box .box__content { font-size: 11px; padding: 0 10px; word-break: break-all; }
@@ -349,6 +351,18 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .box-editor__widget.widget__divider { border-bottom: 1px solid black; margin-top: 30px !important; }
 
+.box-editor__widget.widget__file .widget__dropzone { padding: 15px; border: 1px dashed black; cursor: pointer; }
+
+.box-editor__widget.widget__file .widget_svg { margin-right: 8px; }
+
+.box-editor__widget.widget__file .widget__img { width: 250px; height: auto; display: block; }
+
+.box-editor__widget.widget__file .widget__content { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; }
+
+.box-editor__widget.widget__file .widget__content .widget__file { -webkit-box-ordinal-group: 2; -webkit-order: 1; -ms-flex-order: 1; order: 1; }
+
+.box-editor__widget.widget__file .widget__content .widget__file-description { -webkit-box-ordinal-group: 3; -webkit-order: 2; -ms-flex-order: 2; order: 2; }
+
 .box-editor__widget.widget__info { border: 1px dashed black; padding: 0 10px 10px 10px; }
 
 .box-editor__widget.widget__info .widget__text { margin: 0; }
@@ -360,8 +374,6 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 .box-editor__widget.widget__list .widget-list-item { position: relative; border-left: 4px solid black; padding: 15px 0 0 15px; margin-bottom: 15px; -webkit-transition: all 0.2s ease; transition: all 0.2s ease; }
 
 .box-editor__widget.widget__list .widget-list-item > .widget-list-item__remove-button { margin-top: 25px; margin-left: -15px; padding-left: 15px; border-left: transparent; }
-
-.box-editor__widget.widget__list .widget-list-item .widget-list-item__remove-button:hover { background-color: #ed5032; }
 
 .box-editor__widget.widget__list .widget-list-item .widget-list-item__sort-button { position: absolute; top: 0; left: -31px; padding: 8px 4px; border-color: transparent; border-right: transparent; }
 

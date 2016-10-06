@@ -14,6 +14,8 @@ import SelectWidget from './component/box-editor/widgets/select.js';
 import InfoWidget from './component/box-editor/widgets/info.js';
 import ListWidget from './component/box-editor/widgets/list.js';
 import DividerWidget from './component/box-editor/widgets/divider.js';
+import FileWidget from './component/box-editor/widgets/file.js';
+import WPMediaselectWidget from './component/box-editor/widgets/wp_mediaselect.js';
 
 /**
  *
@@ -55,4 +57,6 @@ GRID.box_editor_widgets = {
 	"info": InfoWidget,
 	"list": ListWidget,
 	"divider": DividerWidget,
+	"file": FileWidget,
+	"wp_mediaselect": WPMediaselectWidget,
 };

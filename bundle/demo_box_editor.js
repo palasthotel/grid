@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _boxEditor = __webpack_require__(573);
+	var _boxEditor = __webpack_require__(172);
 	
 	var _boxEditor2 = _interopRequireDefault(_boxEditor);
 	
@@ -21450,7 +21450,185 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 172 */,
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _controls = __webpack_require__(173);
+	
+	var _controls2 = _interopRequireDefault(_controls);
+	
+	var _textWithLink = __webpack_require__(174);
+	
+	var _textWithLink2 = _interopRequireDefault(_textWithLink);
+	
+	var _collapsible = __webpack_require__(176);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	var _widgets = __webpack_require__(177);
+	
+	var _widgets2 = _interopRequireDefault(_widgets);
+	
+	var _editorHeader = __webpack_require__(180);
+	
+	var _editorHeader2 = _interopRequireDefault(_editorHeader);
+	
+	var _editorProlog = __webpack_require__(181);
+	
+	var _editorProlog2 = _interopRequireDefault(_editorProlog);
+	
+	var _editorEpilog = __webpack_require__(182);
+	
+	var _editorEpilog2 = _interopRequireDefault(_editorEpilog);
+	
+	var _editorFooter = __webpack_require__(183);
+	
+	var _editorFooter2 = _interopRequireDefault(_editorFooter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxEditor = function (_Component) {
+		_inherits(BoxEditor, _Component);
+	
+		function BoxEditor(props) {
+			_classCallCheck(this, BoxEditor);
+	
+			var _this = _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
+	
+			_this.state = {
+				content: props.box.content
+			};
+	
+			return _this;
+		}
+	
+		_createClass(BoxEditor, [{
+			key: 'render',
+			value: function render() {
+				var _props$box = this.props.box;
+				var type = _props$box.type;
+				var title = _props$box.title;
+				var titleurl = _props$box.titleurl;
+				var contentstructure = _props$box.contentstructure;
+				var content = this.state.content;
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor'
+					},
+					_react2.default.createElement(_controls2.default, null),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'box-editor__content' },
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'box-editor__type' },
+							'Boxtype: ',
+							type
+						),
+						_react2.default.createElement(_textWithLink2.default, {
+							title: 'Boxtitle',
+							onTextChange: this.onTitleChange.bind(this),
+							onUrlChange: this.onTitleUrlChange.bind(this)
+						}),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{
+								title: 'Prolog'
+							},
+							_react2.default.createElement(
+								'p',
+								null,
+								'Hier kommt der Prolog hin'
+							)
+						),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{
+								title: 'Spezific',
+								collapsed: false
+							},
+							_react2.default.createElement(_widgets2.default, {
+								content: content,
+								contentstructure: contentstructure,
+								onChangeContent: this.onContentChange.bind(this)
+							})
+						),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{
+								title: 'Epilog'
+							},
+							_react2.default.createElement(
+								'p',
+								null,
+								'Hier kommt der Epilog'
+							),
+							_react2.default.createElement(_textWithLink2.default, {
+								title: 'Readmore',
+								onTextChange: this.onTitleChange.bind(this),
+								onUrlChange: this.onTitleUrlChange.bind(this)
+							})
+						)
+					)
+				);
+			}
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'onTitleChange',
+			value: function onTitleChange(title) {
+				console.log(title);
+			}
+		}, {
+			key: 'onTitleUrlChange',
+			value: function onTitleUrlChange(url) {
+				console.log(url);
+			}
+		}, {
+			key: 'onContentChange',
+			value: function onContentChange(key, value) {
+				this.state.content[key] = value;
+				this.setState({ content: this.state.content });
+			}
+		}]);
+	
+		return BoxEditor;
+	}(_react.Component);
+	
+	BoxEditor.propTypes = {
+		box: _react.PropTypes.object.isRequired
+	};
+	BoxEditor.defaultProps = {};
+	
+	exports.default = BoxEditor;
+
+/***/ },
 /* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -21929,7 +22107,159 @@
 	exports.default = Collapsible;
 
 /***/ },
-/* 177 */,
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _underscore = __webpack_require__(178);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	var _error = __webpack_require__(179);
+	
+	var _error2 = _interopRequireDefault(_error);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/**
+	 * widgets component
+	 */
+	var Widgets = function (_Component) {
+		_inherits(Widgets, _Component);
+	
+		/**
+	  * ------------------------------------------------
+	  * lifecycle
+	  * ------------------------------------------------
+	  */
+		function Widgets(props) {
+			_classCallCheck(this, Widgets);
+	
+			return _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this, props));
+		}
+	
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(Widgets, [{
+			key: 'render',
+			value: function render() {
+				var _props = this.props;
+				var contentstructure = _props.contentstructure;
+				var content = _props.content;
+	
+				var widgets = GRID.box_editor_widgets;
+	
+				var elements = [];
+	
+				for (var i = 0; i < contentstructure.length; i++) {
+	
+					var cs = contentstructure[i];
+					var key = _underscore2.default.isUndefined(cs.key) ? i : cs.key;
+					var value = _underscore2.default.isUndefined(content[key]) ? "" : content[key];
+	
+					/**
+	     * if there is no widget registered
+	     */
+					var widget = widgets[cs.type];
+					if (_underscore2.default.isUndefined(widget)) {
+						elements.push(_react2.default.createElement(_error2.default, _extends({}, cs, {
+							key: key
+						})));
+						continue;
+					}
+	
+					/**
+	     * else init widget
+	     */
+					elements.push(_react2.default.createElement(widget, _extends({}, cs, {
+						value: value,
+						key: key,
+						onChange: this.onChange.bind(this, key)
+					})));
+				}
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__widget-list'
+					},
+					elements
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'onChange',
+			value: function onChange(key, value) {
+				console.log("new value", key, value);
+				this.props.onChangeContent(key, value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return Widgets;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	Widgets.defaultProps = {
+		content: {},
+		contentstructure: []
+	};
+	
+	/**
+	 * define property types
+	 */
+	Widgets.propTypes = {
+		content: _react.PropTypes.object.isRequired,
+		contentstructure: _react.PropTypes.array.isRequired,
+		onChangeContent: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = Widgets;
+
+/***/ },
 /* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23526,6 +23856,10 @@
 	   * ------------------------------------------------
 	   */
 			value: function render() {
+				var _props = this.props;
+				var type = _props.type;
+				var message = _props.message;
+	
 				return _react2.default.createElement(
 					"div",
 					{ className: "box-editor__widget widget__error" },
@@ -23534,12 +23868,12 @@
 						{
 							className: "widget__label"
 						},
-						"Unknown widget of type:"
+						message
 					),
 					_react2.default.createElement(
 						"div",
 						null,
-						this.props.type
+						type
 					)
 				);
 			}
@@ -23566,6 +23900,7 @@
 	
 	
 	ErrorWidget.defaultProps = {
+		message: "Unknown widget of type:",
 		type: "unknown"
 	};
 	
@@ -24075,11 +24410,6 @@
 					}, {
 						"type": "divider"
 					}, {
-						"key": "key_file",
-						"type": "file",
-						"label": "widget type: file",
-						"uploadpath": "/grid_file_endpoint"
-					}, {
 						"text": "Autocompletes Section",
 						"type": "divider"
 					}, {
@@ -24090,6 +24420,16 @@
 						"key": "key_multi_autocomplete",
 						"label": "widget type: multi-autocomplete",
 						"type": "multi-autocomplete"
+					}, {
+						"key": "key_file",
+						"type": "file",
+						"label": "widget type: file",
+						"uploadpath": "/grid_file_endpoint"
+					}, {
+						"key": "key_wp_mediaselect",
+						"type": "wp_mediaselect",
+						"label": "widget type: wp_mediaselect",
+						"media_type": "jpg"
 					}]
 				}]
 			}, {
@@ -24566,747 +24906,6 @@
 		"title": "Contents",
 		"criteria": ["title"]
 	}];
-
-/***/ },
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
-/* 339 */,
-/* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */,
-/* 358 */,
-/* 359 */,
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */,
-/* 364 */,
-/* 365 */,
-/* 366 */,
-/* 367 */,
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */,
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */,
-/* 378 */,
-/* 379 */,
-/* 380 */,
-/* 381 */,
-/* 382 */,
-/* 383 */,
-/* 384 */,
-/* 385 */,
-/* 386 */,
-/* 387 */,
-/* 388 */,
-/* 389 */,
-/* 390 */,
-/* 391 */,
-/* 392 */,
-/* 393 */,
-/* 394 */,
-/* 395 */,
-/* 396 */,
-/* 397 */,
-/* 398 */,
-/* 399 */,
-/* 400 */,
-/* 401 */,
-/* 402 */,
-/* 403 */,
-/* 404 */,
-/* 405 */,
-/* 406 */,
-/* 407 */,
-/* 408 */,
-/* 409 */,
-/* 410 */,
-/* 411 */,
-/* 412 */,
-/* 413 */,
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */,
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */,
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
-/* 479 */,
-/* 480 */,
-/* 481 */,
-/* 482 */,
-/* 483 */,
-/* 484 */,
-/* 485 */,
-/* 486 */,
-/* 487 */,
-/* 488 */,
-/* 489 */,
-/* 490 */,
-/* 491 */,
-/* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */,
-/* 532 */,
-/* 533 */,
-/* 534 */,
-/* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */,
-/* 539 */,
-/* 540 */,
-/* 541 */,
-/* 542 */,
-/* 543 */,
-/* 544 */,
-/* 545 */,
-/* 546 */,
-/* 547 */,
-/* 548 */,
-/* 549 */,
-/* 550 */,
-/* 551 */,
-/* 552 */,
-/* 553 */,
-/* 554 */,
-/* 555 */,
-/* 556 */,
-/* 557 */,
-/* 558 */,
-/* 559 */,
-/* 560 */,
-/* 561 */,
-/* 562 */,
-/* 563 */,
-/* 564 */,
-/* 565 */,
-/* 566 */,
-/* 567 */,
-/* 568 */,
-/* 569 */,
-/* 570 */,
-/* 571 */,
-/* 572 */,
-/* 573 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _controls = __webpack_require__(173);
-	
-	var _controls2 = _interopRequireDefault(_controls);
-	
-	var _textWithLink = __webpack_require__(174);
-	
-	var _textWithLink2 = _interopRequireDefault(_textWithLink);
-	
-	var _collapsible = __webpack_require__(176);
-	
-	var _collapsible2 = _interopRequireDefault(_collapsible);
-	
-	var _widgets = __webpack_require__(598);
-	
-	var _widgets2 = _interopRequireDefault(_widgets);
-	
-	var _editorHeader = __webpack_require__(180);
-	
-	var _editorHeader2 = _interopRequireDefault(_editorHeader);
-	
-	var _editorProlog = __webpack_require__(181);
-	
-	var _editorProlog2 = _interopRequireDefault(_editorProlog);
-	
-	var _editorEpilog = __webpack_require__(182);
-	
-	var _editorEpilog2 = _interopRequireDefault(_editorEpilog);
-	
-	var _editorFooter = __webpack_require__(183);
-	
-	var _editorFooter2 = _interopRequireDefault(_editorFooter);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BoxEditor = function (_Component) {
-		_inherits(BoxEditor, _Component);
-	
-		function BoxEditor(props) {
-			_classCallCheck(this, BoxEditor);
-	
-			var _this = _possibleConstructorReturn(this, (BoxEditor.__proto__ || Object.getPrototypeOf(BoxEditor)).call(this, props));
-	
-			_this.state = {
-				content: props.box.content
-			};
-	
-			return _this;
-		}
-	
-		_createClass(BoxEditor, [{
-			key: 'render',
-			value: function render() {
-				var _props$box = this.props.box;
-				var type = _props$box.type;
-				var title = _props$box.title;
-				var titleurl = _props$box.titleurl;
-				var contentstructure = _props$box.contentstructure;
-				var content = this.state.content;
-	
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor'
-					},
-					_react2.default.createElement(_controls2.default, null),
-					_react2.default.createElement(
-						'div',
-						{
-							className: 'box-editor__content' },
-						_react2.default.createElement(
-							'div',
-							{
-								className: 'box-editor__type' },
-							'Boxtype: ',
-							type
-						),
-						_react2.default.createElement(_textWithLink2.default, {
-							title: 'Boxtitle',
-							onTextChange: this.onTitleChange.bind(this),
-							onUrlChange: this.onTitleUrlChange.bind(this)
-						}),
-						_react2.default.createElement(
-							_collapsible2.default,
-							{
-								title: 'Prolog'
-							},
-							_react2.default.createElement(
-								'p',
-								null,
-								'Hier kommt der Prolog hin'
-							)
-						),
-						_react2.default.createElement(
-							_collapsible2.default,
-							{
-								title: 'Spezific',
-								collapsed: false
-							},
-							_react2.default.createElement(_widgets2.default, {
-								content: content,
-								contentstructure: contentstructure,
-								onChangeContent: this.onContentChange.bind(this)
-							})
-						),
-						_react2.default.createElement(
-							_collapsible2.default,
-							{
-								title: 'Epilog'
-							},
-							_react2.default.createElement(
-								'p',
-								null,
-								'Hier kommt der Epilog'
-							),
-							_react2.default.createElement(_textWithLink2.default, {
-								title: 'Readmore',
-								onTextChange: this.onTitleChange.bind(this),
-								onUrlChange: this.onTitleUrlChange.bind(this)
-							})
-						)
-					)
-				);
-			}
-			/**
-	   * ------------------------------------------------
-	   * events
-	   * ------------------------------------------------
-	   */
-	
-		}, {
-			key: 'onTitleChange',
-			value: function onTitleChange(title) {
-				console.log(title);
-			}
-		}, {
-			key: 'onTitleUrlChange',
-			value: function onTitleUrlChange(url) {
-				console.log(url);
-			}
-		}, {
-			key: 'onContentChange',
-			value: function onContentChange(key, value) {
-				this.state.content[key] = value;
-				this.setState({ content: this.state.content });
-			}
-		}]);
-	
-		return BoxEditor;
-	}(_react.Component);
-	
-	BoxEditor.propTypes = {
-		box: _react.PropTypes.object.isRequired
-	};
-	BoxEditor.defaultProps = {};
-	
-	exports.default = BoxEditor;
-
-/***/ },
-/* 574 */,
-/* 575 */,
-/* 576 */,
-/* 577 */,
-/* 578 */,
-/* 579 */,
-/* 580 */,
-/* 581 */,
-/* 582 */,
-/* 583 */,
-/* 584 */,
-/* 585 */,
-/* 586 */,
-/* 587 */,
-/* 588 */,
-/* 589 */,
-/* 590 */,
-/* 591 */,
-/* 592 */,
-/* 593 */,
-/* 594 */,
-/* 595 */,
-/* 596 */,
-/* 597 */,
-/* 598 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _underscore = __webpack_require__(178);
-	
-	var _underscore2 = _interopRequireDefault(_underscore);
-	
-	var _error = __webpack_require__(179);
-	
-	var _error2 = _interopRequireDefault(_error);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/**
-	 * widgets component
-	 */
-	var Widgets = function (_Component) {
-		_inherits(Widgets, _Component);
-	
-		/**
-	  * ------------------------------------------------
-	  * lifecycle
-	  * ------------------------------------------------
-	  */
-		function Widgets(props) {
-			_classCallCheck(this, Widgets);
-	
-			return _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this, props));
-		}
-	
-		/**
-	  * ------------------------------------------------
-	  * rendering
-	  * ------------------------------------------------
-	  */
-	
-	
-		_createClass(Widgets, [{
-			key: 'render',
-			value: function render() {
-				var _props = this.props;
-				var contentstructure = _props.contentstructure;
-				var content = _props.content;
-	
-				var widgets = GRID.box_editor_widgets;
-	
-				var elements = [];
-	
-				for (var i = 0; i < contentstructure.length; i++) {
-	
-					var cs = contentstructure[i];
-					var key = _underscore2.default.isUndefined(cs.key) ? i : cs.key;
-					var value = _underscore2.default.isUndefined(content[key]) ? "" : content[key];
-	
-					/**
-	     * if there is no widget registered
-	     */
-					var widget = widgets[cs.type];
-					if (_underscore2.default.isUndefined(widget)) {
-						elements.push(_react2.default.createElement(_error2.default, _extends({}, cs, {
-							key: key
-						})));
-						continue;
-					}
-	
-					/**
-	     * else init widget
-	     */
-					elements.push(_react2.default.createElement(widget, _extends({}, cs, {
-						value: value,
-						key: key,
-						onChange: this.onChange.bind(this, key)
-					})));
-				}
-	
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor__widget-list'
-					},
-					elements
-				);
-			}
-	
-			/**
-	   * ------------------------------------------------
-	   * events
-	   * ------------------------------------------------
-	   */
-	
-		}, {
-			key: 'onChange',
-			value: function onChange(key, value) {
-				console.log("new value", key, value);
-				this.props.onChangeContent(key, value);
-			}
-	
-			/**
-	   * ------------------------------------------------
-	   * other functions
-	   * ------------------------------------------------
-	   */
-	
-		}]);
-	
-		return Widgets;
-	}(_react.Component);
-	
-	/**
-	 * property defaults
-	 */
-	
-	
-	Widgets.defaultProps = {
-		content: {},
-		contentstructure: []
-	};
-	
-	/**
-	 * define property types
-	 */
-	Widgets.propTypes = {
-		content: _react.PropTypes.object.isRequired,
-		contentstructure: _react.PropTypes.array.isRequired,
-		onChangeContent: _react.PropTypes.func.isRequired
-	};
-	
-	/**
-	 * export component to public
-	 */
-	exports.default = Widgets;
 
 /***/ }
 /******/ ]);
