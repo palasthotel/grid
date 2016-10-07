@@ -189,7 +189,7 @@
 
 input, textarea, select, button { font-family: inherit; font-size: 12px; box-sizing: border-box; }
 
-input { height: 27px; width: 100%; line-height: 27px; text-indent: 10px; font-size: 1em; border: solid 1px black; margin-bottom: 5px; }
+input { height: 32px; width: 100%; line-height: 27px; text-indent: 10px; font-size: 1em; border: solid 1px black; margin-bottom: 5px; }
 
 input:hover { border-color: #4d4d4d; }
 
