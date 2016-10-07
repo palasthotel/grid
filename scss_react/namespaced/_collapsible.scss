@@ -1,4 +1,4 @@
-.grid .collapsible{
+.collapsible{
 	.collapsible__title{
 		background-color: #efefef;
 		padding: 15px;
@@ -8,6 +8,6 @@
 		border: 1px solid #efefef;
 	}
 }
-.grid .collapsible + .collapsible{
+.collapsible + .collapsible{
 	border-top: 1px solid #333;
 }

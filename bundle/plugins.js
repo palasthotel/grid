@@ -96,7 +96,7 @@
 	
 	var _file2 = _interopRequireDefault(_file);
 	
-	var _wp_mediaselect = __webpack_require__(598);
+	var _wp_mediaselect = __webpack_require__(599);
 	
 	var _wp_mediaselect2 = _interopRequireDefault(_wp_mediaselect);
 	
@@ -4403,6 +4403,9 @@
 			_classCallCheck(this, Widgets);
 	
 			return _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this, props));
+	
+			// TODO: merge widgets
+			// widgets = {...GRID.box_editor_widgets, ...widgets}
 		}
 	
 		/**
@@ -6591,7 +6594,7 @@
 /***/ 566:
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -6602,6 +6605,10 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _underscore = __webpack_require__(178);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -6632,23 +6639,23 @@
 	
 	
 		_createClass(NumberWidget, [{
-			key: "render",
+			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					"div",
+					'div',
 					{
-						className: "box-editor__widget widget__text"
+						className: 'box-editor__widget widget__text'
 					},
 					_react2.default.createElement(
-						"label",
+						'label',
 						{
-							className: "widget__label"
+							className: 'widget__label'
 						},
 						this.props.label
 					),
-					_react2.default.createElement("input", {
-						className: "widget__input",
-						type: "number",
+					_react2.default.createElement('input', {
+						className: 'widget__input',
+						type: 'number',
 						value: this.state.value,
 						onChange: this.onChange.bind(this)
 					})
@@ -6662,7 +6669,7 @@
 	   */
 	
 		}, {
-			key: "onChange",
+			key: 'onChange',
 			value: function onChange(e) {
 				var value = e.target.value;
 				this.setState({ value: value });
@@ -6849,12 +6856,12 @@
 					_react2.default.createElement(
 						"label",
 						{
-							className: "widget__label widget-text__label"
+							className: "widget__label"
 						},
 						this.props.label
 					),
 					_react2.default.createElement("textarea", {
-						className: "widget__input widget-text__input",
+						className: "widget__input",
 						type: "text",
 						value: this.state.value,
 						onChange: this.onChange.bind(this)
@@ -7146,7 +7153,8 @@
 	
 	SelectWidget.defaultProps = {
 		label: "",
-		value: ""
+		value: "",
+		selections: []
 	};
 	
 	/**
@@ -7155,6 +7163,7 @@
 	SelectWidget.propTypes = {
 		label: _react.PropTypes.string.isRequired,
 		value: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]).isRequired,
+		selections: _react.PropTypes.array.isRequired,
 		onChange: _react.PropTypes.func.isRequired
 	};
 	
@@ -12008,7 +12017,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDropzone = __webpack_require__(599);
+	var _reactDropzone = __webpack_require__(598);
 	
 	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 	
@@ -12201,200 +12210,6 @@
 /***/ },
 
 /***/ 598:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _underscore = __webpack_require__(178);
-	
-	var _underscore2 = _interopRequireDefault(_underscore);
-	
-	var _error = __webpack_require__(179);
-	
-	var _error2 = _interopRequireDefault(_error);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var WPMediaselect = function (_Component) {
-		_inherits(WPMediaselect, _Component);
-	
-		function WPMediaselect(props) {
-			_classCallCheck(this, WPMediaselect);
-	
-			var _this = _possibleConstructorReturn(this, (WPMediaselect.__proto__ || Object.getPrototypeOf(WPMediaselect)).call(this, props));
-	
-			var value = props.value;
-			if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== _typeof({})) {
-				value = {
-					id: ""
-				};
-			}
-	
-			_this.state = {
-				value: value
-			};
-			return _this;
-		}
-		/**
-	  * ------------------------------------------------
-	  * rendering
-	  * ------------------------------------------------
-	  */
-	
-	
-		_createClass(WPMediaselect, [{
-			key: 'render',
-			value: function render() {
-				// TODO: implement in working wordpress installation
-				/**
-	    * if try to use outside an wordpress
-	    */
-				if ((typeof wp === 'undefined' ? 'undefined' : _typeof(wp)) == ( true ? 'undefined' : _typeof(undefined)) || _typeof(wp.media) == ( true ? 'undefined' : _typeof(undefined))) {
-					return _react2.default.createElement(_error2.default, {
-						message: 'I don\'t think this is a WordPress installation... sorry!',
-						type: 'wp_mediaselect'
-					});
-				}
-	
-				return _react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor__widget widget__wp-media'
-					},
-					_react2.default.createElement(
-						'label',
-						{
-							className: 'widget__label'
-						},
-						this.props.label
-					),
-					_react2.default.createElement(
-						'button',
-						{
-							className: 'widget__button',
-							onClick: this.onClick.bind(this)
-						},
-						'Media'
-					)
-				);
-			}
-	
-			/**
-	   * ------------------------------------------------
-	   * events
-	   * ------------------------------------------------
-	   */
-	
-		}, {
-			key: 'onClick',
-			value: function onClick() {
-				var self = this;
-				var media_type = this.props.media_type;
-				var value = this.state.value;
-	
-				var frame = wp.media({
-					//title : lang_values['title-wp-media'],
-					multiple: false,
-					library: { type: media_type },
-					button: { text: "Insert" }
-				});
-				frame.on('open', function () {
-					var selection = frame.state().get('selection');
-					var attachment = wp.media.attachment(value.id);
-					selection.add(attachment ? [attachment] : []);
-				});
-				frame.on('close', function () {
-					var selection = frame.state().get('selection');
-					console.log(selection);
-					// jQuery.each(frame.state().get('selection')._byId, function(id, val) {
-					// 	var sizes = val.get("sizes");
-					// 	if(typeof sizes == "undefined"){
-					// 		sizes = {
-					// 			full: {
-					// 				height: "",
-					// 				width: "",
-					// 				url: val.get("url"),
-					// 				orientation: ""
-					// 			}
-					// 		};
-					// 	}
-					// 	var r_json = {
-					// 		id: val.id,
-					// 		size: "full",
-					// 		sizes: sizes
-					// 	};
-					// 	self.$input.val(JSON.stringify(r_json));
-					// 	self.buildImageSizeSelect();
-					// 	self.buildImagePreview();
-					// 	return false;
-					// });
-				});
-				frame.open();
-			}
-	
-			/**
-	   * ------------------------------------------------
-	   * other functions
-	   * ------------------------------------------------
-	   */
-	
-		}, {
-			key: 'getImage',
-			value: function getImage() {
-				// TODO: ask server about the image
-				// mime type, path, etc
-				// info for visualisation
-			}
-		}]);
-	
-		return WPMediaselect;
-	}(_react.Component);
-	
-	/**
-	 * property defaults
-	 */
-	
-	
-	WPMediaselect.defaultProps = {
-		value: {},
-		label: "",
-		media_type: "*"
-	};
-	
-	/**
-	 * define property types
-	 */
-	WPMediaselect.propTypes = {
-		label: _react.PropTypes.string.isRequired,
-		onChange: _react.PropTypes.func.isRequired
-	};
-	
-	/**
-	 * export component to public
-	 */
-	exports.default = WPMediaselect;
-
-/***/ },
-
-/***/ 599:
 /***/ function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -12804,6 +12619,200 @@
 	});
 	;
 	//# sourceMappingURL=index.js.map
+
+/***/ },
+
+/***/ 599:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _underscore = __webpack_require__(178);
+	
+	var _underscore2 = _interopRequireDefault(_underscore);
+	
+	var _error = __webpack_require__(179);
+	
+	var _error2 = _interopRequireDefault(_error);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var WPMediaselect = function (_Component) {
+		_inherits(WPMediaselect, _Component);
+	
+		function WPMediaselect(props) {
+			_classCallCheck(this, WPMediaselect);
+	
+			var _this = _possibleConstructorReturn(this, (WPMediaselect.__proto__ || Object.getPrototypeOf(WPMediaselect)).call(this, props));
+	
+			var value = props.value;
+			if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== _typeof({})) {
+				value = {
+					id: ""
+				};
+			}
+	
+			_this.state = {
+				value: value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(WPMediaselect, [{
+			key: 'render',
+			value: function render() {
+				// TODO: implement in working wordpress installation
+				/**
+	    * if try to use outside an wordpress
+	    */
+				if ((typeof wp === 'undefined' ? 'undefined' : _typeof(wp)) == ( true ? 'undefined' : _typeof(undefined)) || _typeof(wp.media) == ( true ? 'undefined' : _typeof(undefined))) {
+					return _react2.default.createElement(_error2.default, {
+						message: 'I don\'t think this is a WordPress installation... sorry!',
+						type: 'wp_mediaselect'
+					});
+				}
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-editor__widget widget__wp-media'
+					},
+					_react2.default.createElement(
+						'label',
+						{
+							className: 'widget__label'
+						},
+						this.props.label
+					),
+					_react2.default.createElement(
+						'button',
+						{
+							className: 'widget__button',
+							onClick: this.onClick.bind(this)
+						},
+						'Media'
+					)
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'onClick',
+			value: function onClick() {
+				var self = this;
+				var media_type = this.props.media_type;
+				var value = this.state.value;
+	
+				var frame = wp.media({
+					//title : lang_values['title-wp-media'],
+					multiple: false,
+					library: { type: media_type },
+					button: { text: "Insert" }
+				});
+				frame.on('open', function () {
+					var selection = frame.state().get('selection');
+					var attachment = wp.media.attachment(value.id);
+					selection.add(attachment ? [attachment] : []);
+				});
+				frame.on('close', function () {
+					var selection = frame.state().get('selection');
+					console.log(selection);
+					// jQuery.each(frame.state().get('selection')._byId, function(id, val) {
+					// 	var sizes = val.get("sizes");
+					// 	if(typeof sizes == "undefined"){
+					// 		sizes = {
+					// 			full: {
+					// 				height: "",
+					// 				width: "",
+					// 				url: val.get("url"),
+					// 				orientation: ""
+					// 			}
+					// 		};
+					// 	}
+					// 	var r_json = {
+					// 		id: val.id,
+					// 		size: "full",
+					// 		sizes: sizes
+					// 	};
+					// 	self.$input.val(JSON.stringify(r_json));
+					// 	self.buildImageSizeSelect();
+					// 	self.buildImagePreview();
+					// 	return false;
+					// });
+				});
+				frame.open();
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'getImage',
+			value: function getImage() {
+				// TODO: ask server about the image
+				// mime type, path, etc
+				// info for visualisation
+			}
+		}]);
+	
+		return WPMediaselect;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	WPMediaselect.defaultProps = {
+		value: {},
+		label: "",
+		media_type: "*"
+	};
+	
+	/**
+	 * define property types
+	 */
+	WPMediaselect.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = WPMediaselect;
 
 /***/ }
 

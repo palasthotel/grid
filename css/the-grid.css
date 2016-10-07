@@ -255,11 +255,11 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .box__controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
 
-.grid .collapsible .collapsible__title { background-color: #efefef; padding: 15px; }
+.collapsible .collapsible__title { background-color: #efefef; padding: 15px; }
 
-.grid .collapsible .collapsible__content { padding: 15px; border: 1px solid #efefef; }
+.collapsible .collapsible__content { padding: 15px; border: 1px solid #efefef; }
 
-.grid .collapsible + .collapsible { border-top: 1px solid #333; }
+.collapsible + .collapsible { border-top: 1px solid #333; }
 
 .container { position: relative; border: 1px solid black; padding: 15px; margin: 15px 0; }
 
@@ -315,21 +315,29 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .undo-panel .button-undo { color: #536DFE; }
 
-.box-editor .box-editor__content { padding: 15px 35px; margin: 20px 10%; padding-bottom: 100px; background-color: white; border: 1px solid black; }
+.box-editor .box-editor__type { font-style: italic; margin-bottom: 15px; }
 
-.box-editor .box-editor__content .collapsible { border: none; border-bottom: 1px solid black; padding: 0; margin: -1px -35px 0px -35px; /** in active state */ }
+.box-editor .box-editor__header { margin-bottom: 35px; }
 
-.box-editor .box-editor__content .collapsible .collapsible__title { padding: 15px 0px 15px 35px; box-sizing: border-box; width: 100%; cursor: pointer; position: relative; font-size: 14px; font-weight: bold; border-top: 1px solid black; background-color: white; -webkit-transition: background-color 0.5s ease; transition: background-color 0.5s ease; }
+.box-editor .box-editor__footer { margin-top: 20px; }
 
-.box-editor .box-editor__content .collapsible .collapsible__title .icon-arrow { position: absolute; left: 5px; top: 16px; -webkit-transition: all 0.2s ease; transition: all 0.2s ease; }
-
-.box-editor .box-editor__content .collapsible .collapsible__content { display: block; margin: 15px 35px; padding: 0; border: none; }
-
-.box-editor .box-editor__content .collapsible.is-active .collapsible__title { background-color: black; color: white; }
-
-.box-editor .box-editor__content .collapsible.is-active .collapsible__title .icon-arrow { -webkit-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90)); -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))"; zoom: 1; }
+.box-editor .box-editor__content { padding: 20px 35px 35px 35px; margin: 20px 10%; background-color: white; border: 1px solid black; }
 
 .box-editor .box-editor__content input, .box-editor .box-editor__content textarea { width: 100%; }
+
+.box-editor .collapsible { border: none; border-bottom: 1px solid black; padding: 0; margin: -1px -35px 0px -35px; /** in active state */ }
+
+.box-editor .collapsible .collapsible__title { padding: 15px 0px 15px 35px; box-sizing: border-box; width: 100%; cursor: pointer; position: relative; font-size: 14px; font-weight: bold; border-top: 1px solid black; background-color: white; -webkit-transition: background-color 0.5s ease; transition: background-color 0.5s ease; }
+
+.box-editor .collapsible .collapsible__title .icon-arrow { position: absolute; left: 5px; top: 16px; -webkit-transition: all 0.2s ease; transition: all 0.2s ease; }
+
+.box-editor .collapsible .collapsible__content { display: block; margin: 15px 35px; padding: 0; border: none; }
+
+.box-editor .collapsible.is-active .collapsible__title { background-color: black; color: white; }
+
+.box-editor .collapsible.is-active .collapsible__title .icon-arrow { -webkit-transform: rotate(90deg); transform: rotate(90deg); filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90)); -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=cos(90), M12=-sin(90), M21=sin(90), M22=cos(90))"; zoom: 1; }
+
+.box-editor__text-with-link .text-with-link__label { font-weight: bold; padding: 10px 0; display: block; }
 
 .box-editor__url-builder { position: relative; width: 140px; -webkit-transition: all 0.2s ease; transition: all 0.2s ease; font-size: 11px; }
 
@@ -386,6 +394,8 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 .box-editor__widget.widget__list .widget-list-item:last-child .widget-list-item__move-down-button { display: none; }
 
 .box-editor__widget.widget__select select { width: 100%; }
+
+.box-editor__widget.widget__textarea .widget__input { height: 200px; }
 
 .box-editor__widget .widget__label { padding: 10px 0; font-weight: bold; color: black; display: block; }
 

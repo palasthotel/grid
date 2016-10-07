@@ -21481,6 +21481,14 @@
 	
 	var _widgets2 = _interopRequireDefault(_widgets);
 	
+	var _select = __webpack_require__(570);
+	
+	var _select2 = _interopRequireDefault(_select);
+	
+	var _textarea = __webpack_require__(568);
+	
+	var _textarea2 = _interopRequireDefault(_textarea);
+	
 	var _editorHeader = __webpack_require__(180);
 	
 	var _editorHeader2 = _interopRequireDefault(_editorHeader);
@@ -21539,29 +21547,34 @@
 					_react2.default.createElement(
 						'div',
 						{
-							className: 'box-editor__content' },
+							className: 'box-editor__content'
+						},
 						_react2.default.createElement(
 							'div',
-							{
-								className: 'box-editor__type' },
-							'Boxtype: ',
-							type
+							{ className: 'box-editor__header' },
+							_react2.default.createElement(
+								'div',
+								{
+									className: 'box-editor__type' },
+								type
+							),
+							_react2.default.createElement(_textWithLink2.default, {
+								className: 'box-editor__title',
+								title: 'Boxtitle',
+								onTextChange: this.onChangeTitle.bind(this),
+								onUrlChange: this.onChangeTitleUrl.bind(this)
+							})
 						),
-						_react2.default.createElement(_textWithLink2.default, {
-							title: 'Boxtitle',
-							onTextChange: this.onTitleChange.bind(this),
-							onUrlChange: this.onTitleUrlChange.bind(this)
-						}),
 						_react2.default.createElement(
 							_collapsible2.default,
 							{
 								title: 'Prolog'
 							},
-							_react2.default.createElement(
-								'p',
-								null,
-								'Hier kommt der Prolog hin'
-							)
+							_react2.default.createElement(_textarea2.default, {
+								label: 'Prolog',
+								value: 'WERT f\xFCr prolog',
+								onChange: this.onChangeProlog.bind(this)
+							})
 						),
 						_react2.default.createElement(
 							_collapsible2.default,
@@ -21572,7 +21585,7 @@
 							_react2.default.createElement(_widgets2.default, {
 								content: content,
 								contentstructure: contentstructure,
-								onChangeContent: this.onContentChange.bind(this)
+								onChangeContent: this.onChangeContent.bind(this)
 							})
 						),
 						_react2.default.createElement(
@@ -21580,15 +21593,26 @@
 							{
 								title: 'Epilog'
 							},
-							_react2.default.createElement(
-								'p',
-								null,
-								'Hier kommt der Epilog'
-							),
+							_react2.default.createElement(_textarea2.default, {
+								label: 'Epilog',
+								value: 'WERT',
+								onChange: this.onChangeEpilog.bind(this)
+							}),
 							_react2.default.createElement(_textWithLink2.default, {
 								title: 'Readmore',
-								onTextChange: this.onTitleChange.bind(this),
-								onUrlChange: this.onTitleUrlChange.bind(this)
+								onTextChange: this.onChangeTitle.bind(this),
+								onUrlChange: this.onChangeTitleUrl.bind(this)
+							})
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'box-editor__footer' },
+							_react2.default.createElement(_select2.default, {
+								className: 'box-style',
+								label: 'Box Style',
+								value: '1',
+								selections: [{ key: 1, text: "eins" }, { key: 2, text: "zwei" }],
+								onChange: this.onChangeStyle.bind(this)
 							})
 						)
 					)
@@ -21601,18 +21625,33 @@
 	   */
 	
 		}, {
-			key: 'onTitleChange',
-			value: function onTitleChange(title) {
+			key: 'onChangeTitle',
+			value: function onChangeTitle(title) {
 				console.log(title);
 			}
 		}, {
-			key: 'onTitleUrlChange',
-			value: function onTitleUrlChange(url) {
+			key: 'onChangeTitleUrl',
+			value: function onChangeTitleUrl(url) {
 				console.log(url);
 			}
 		}, {
-			key: 'onContentChange',
-			value: function onContentChange(key, value) {
+			key: 'onChangeEpilog',
+			value: function onChangeEpilog(value) {
+				console.log(value);
+			}
+		}, {
+			key: 'onChangeProlog',
+			value: function onChangeProlog(value) {
+				console.log(value);
+			}
+		}, {
+			key: 'onChangeStyle',
+			value: function onChangeStyle(value) {
+				console.log("box style", value);
+			}
+		}, {
+			key: 'onChangeContent',
+			value: function onChangeContent(key, value) {
 				this.state.content[key] = value;
 				this.setState({ content: this.state.content });
 			}
@@ -21780,18 +21819,19 @@
 				var onUrlChange = _props.onUrlChange;
 				var urlDeleteText = _props.urlDeleteText;
 				var urlAddText = _props.urlAddText;
+				var className = _props.className;
 				var show_link_input = this.state.show_link_input;
 	
 	
 				return _react2.default.createElement(
 					'div',
 					{
-						className: 'box-editor__text-with-link'
+						className: className + ' box-editor__text-with-link'
 					},
 					_react2.default.createElement(
 						'label',
 						{
-							className: 'text-with-link__title' },
+							className: 'text-with-link__label' },
 						title
 					),
 					_react2.default.createElement(_editorInput2.default, {
@@ -21858,7 +21898,8 @@
 		url: "",
 		showLinkInput: false,
 		urlDeleteText: "Delete Link",
-		urlAddText: "Add Link"
+		urlAddText: "Add Link",
+		className: ""
 	};
 	
 	TextWithLink.propTypes = {
@@ -22155,6 +22196,9 @@
 			_classCallCheck(this, Widgets);
 	
 			return _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this, props));
+	
+			// TODO: merge widgets
+			// widgets = {...GRID.box_editor_widgets, ...widgets}
 		}
 	
 		/**
@@ -24906,6 +24950,639 @@
 		"title": "Contents",
 		"criteria": ["title"]
 	}];
+
+/***/ },
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */,
+/* 558 */,
+/* 559 */,
+/* 560 */,
+/* 561 */,
+/* 562 */,
+/* 563 */,
+/* 564 */,
+/* 565 */,
+/* 566 */,
+/* 567 */,
+/* 568 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TextareaWidget = function (_Component) {
+		_inherits(TextareaWidget, _Component);
+	
+		function TextareaWidget(props) {
+			_classCallCheck(this, TextareaWidget);
+	
+			var _this = _possibleConstructorReturn(this, (TextareaWidget.__proto__ || Object.getPrototypeOf(TextareaWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(TextareaWidget, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__textarea"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "widget__label"
+						},
+						this.props.label
+					),
+					_react2.default.createElement("textarea", {
+						className: "widget__input",
+						type: "text",
+						value: this.state.value,
+						onChange: this.onChange.bind(this)
+					})
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onChange",
+			value: function onChange(e) {
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return TextareaWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	TextareaWidget.defaultProps = {
+		label: "",
+		value: ""
+	};
+	
+	/**
+	 * define property types
+	 */
+	TextareaWidget.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.string.isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = TextareaWidget;
+
+/***/ },
+/* 569 */,
+/* 570 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SelectWidget = function (_Component) {
+		_inherits(SelectWidget, _Component);
+	
+		function SelectWidget(props) {
+			_classCallCheck(this, SelectWidget);
+	
+			var _this = _possibleConstructorReturn(this, (SelectWidget.__proto__ || Object.getPrototypeOf(SelectWidget)).call(this, props));
+	
+			_this.state = {
+				value: props.value
+			};
+			return _this;
+		}
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(SelectWidget, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var selections = _props.selections;
+				var value = _props.value;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "box-editor__widget widget__select"
+					},
+					_react2.default.createElement(
+						"label",
+						{
+							className: "widget__label"
+						},
+						this.props.label
+					),
+					_react2.default.createElement(
+						"select",
+						{
+							value: this.state.value,
+							className: "widget__select",
+							onChange: this.onChange.bind(this)
+						},
+						selections.map(function (item) {
+							return _react2.default.createElement(
+								"option",
+								{
+									key: item.key,
+									value: item.key
+								},
+								item.text
+							);
+						})
+					)
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onChange",
+			value: function onChange(e) {
+				var value = e.target.value;
+				this.setState({ value: value });
+				this.props.onChange(value);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return SelectWidget;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	SelectWidget.defaultProps = {
+		label: "",
+		value: "",
+		selections: []
+	};
+	
+	/**
+	 * define property types
+	 */
+	SelectWidget.propTypes = {
+		label: _react.PropTypes.string.isRequired,
+		value: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]).isRequired,
+		selections: _react.PropTypes.array.isRequired,
+		onChange: _react.PropTypes.func.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = SelectWidget;
 
 /***/ }
 /******/ ]);

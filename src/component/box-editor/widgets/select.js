@@ -68,6 +68,7 @@ class SelectWidget extends Component {
 SelectWidget.defaultProps = {
 	label: "",
 	value: "",
+	selections:[],
 };
 
 /**
@@ -79,6 +80,7 @@ SelectWidget.propTypes = {
 		PropTypes.number,
 		PropTypes.string,
 	]).isRequired,
+	selections: PropTypes.array.isRequired,
 	onChange: PropTypes.func.isRequired,
 };
 

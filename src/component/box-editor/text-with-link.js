@@ -31,16 +31,18 @@ class TextWithLink extends Component {
 			onUrlChange,
 			urlDeleteText,
 			urlAddText,
+			className,
 		} = this.props;
+		
 		
 		const {show_link_input} = this.state;
 		
 		return (
 			<div
-				className="box-editor__text-with-link"
+				className={`${className} box-editor__text-with-link`}
 			>
 				<label
-					className="text-with-link__title">
+					className="text-with-link__label">
 					{title}
 				</label>
 				
@@ -101,6 +103,7 @@ TextWithLink.defaultProps = {
 	showLinkInput: false,
 	urlDeleteText: "Delete Link",
 	urlAddText: "Add Link",
+	className: "",
 };
 
 TextWithLink.propTypes = {

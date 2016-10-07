@@ -19,12 +19,12 @@ class TextareaWidget extends Component {
 				className="box-editor__widget widget__textarea"
 			>
 				<label
-					className="widget__label widget-text__label"
+					className="widget__label"
 				>
 					{this.props.label}
 				</label>
 				<textarea
-					className="widget__input widget-text__input"
+					className="widget__input"
 					type="text"
 					value={this.state.value}
 					onChange={this.onChange.bind(this)}

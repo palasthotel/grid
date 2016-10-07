@@ -5,6 +5,8 @@ import TextWithLink from './text-with-link.js';
 import Collapsible from './collapsible.js';
 
 import Widgets from './widgets/widgets.js';
+import SelectWidget from './widgets/select.js';
+import TextareaWidget from './widgets/textarea.js';
 
 import BoxEditorHeader from './editor-header.js';
 import Prolog from './editor-prolog.js';
@@ -27,24 +29,37 @@ class BoxEditor extends Component{
 			<div
 				className="box-editor"
 			>
-				<Controls/>
+				
+				<Controls
+				/>
+				
 				<div
-					className="box-editor__content">
-					<div
-						className="box-editor__type">
-						Boxtype: {type}
+					className="box-editor__content"
+				>
+					<div className="box-editor__header">
+						<div
+							className="box-editor__type">
+							{type}
+						</div>
+						
+						<TextWithLink
+							className="box-editor__title"
+							title="Boxtitle"
+							onTextChange={this.onChangeTitle.bind(this)}
+							onUrlChange={this.onChangeTitleUrl.bind(this)}
+						/>
 					</div>
-					
-					<TextWithLink
-						title="Boxtitle"
-						onTextChange={this.onTitleChange.bind(this)}
-						onUrlChange={this.onTitleUrlChange.bind(this)}
-					/>
 					
 					<Collapsible
 						title="Prolog"
 					>
-						<p>Hier kommt der Prolog hin</p>
+						
+						<TextareaWidget
+							label="Prolog"
+							value="WERT für prolog"
+							onChange={this.onChangeProlog.bind(this)}
+						/>
+						
 					</Collapsible>
 					
 					<Collapsible
@@ -54,23 +69,40 @@ class BoxEditor extends Component{
 						<Widgets
 							content={content}
 						    contentstructure={contentstructure}
-						    onChangeContent={this.onContentChange.bind(this)}
+						    onChangeContent={this.onChangeContent.bind(this)}
 						/>
 					</Collapsible>
 					
 					<Collapsible
 						title="Epilog"
 					>
-						<p>Hier kommt der Epilog</p>
+						
+						<TextareaWidget
+							label="Epilog"
+							value="WERT"
+							onChange={this.onChangeEpilog.bind(this)}
+						/>
 						
 						<TextWithLink
 							title="Readmore"
-							onTextChange={this.onTitleChange.bind(this)}
-							onUrlChange={this.onTitleUrlChange.bind(this)}
+							onTextChange={this.onChangeTitle.bind(this)}
+							onUrlChange={this.onChangeTitleUrl.bind(this)}
 						/>
 						
 					</Collapsible>
+					
+					<div className="box-editor__footer">
 						
+						<SelectWidget
+							className="box-style"
+							label="Box Style"
+							value="1"
+							selections={[{key:1,text:"eins"},{key:2, text: "zwei"}]}
+							onChange={this.onChangeStyle.bind(this)}
+						/>
+						
+					</div>
+					
 				</div>
 			</div>
 		);
@@ -80,13 +112,22 @@ class BoxEditor extends Component{
 	 * events
 	 * ------------------------------------------------
 	 */
-	onTitleChange(title){
+	onChangeTitle(title){
 		console.log(title);
 	}
-	onTitleUrlChange(url){
+	onChangeTitleUrl(url){
 		console.log(url);
 	}
-	onContentChange(key, value){
+	onChangeEpilog(value){
+		console.log(value);
+	}
+	onChangeProlog(value){
+		console.log(value);
+	}
+	onChangeStyle(value){
+		console.log("box style", value);
+	}
+	onChangeContent(key, value){
 		this.state.content[key] = value;
 		this.setState({content: this.state.content});
 	}

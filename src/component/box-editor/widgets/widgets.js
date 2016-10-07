@@ -15,6 +15,9 @@ class Widgets extends Component {
 	 */
 	constructor(props) {
 		super(props);
+		
+		// TODO: merge widgets
+		// widgets = {...GRID.box_editor_widgets, ...widgets}
 	}
 	
 	/**
