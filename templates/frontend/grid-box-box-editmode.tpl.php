@@ -16,7 +16,7 @@
 			$vars = get_object_vars($content);
 			foreach ($vars as $field => $value) {
 				if(!empty($value)){
-					echo "<br/>".$field.": ";
+					echo "<br/><i>".$field.":</i> ";
 					if(is_string($value) || is_numeric($value)){
 						echo $value;
 					} else {

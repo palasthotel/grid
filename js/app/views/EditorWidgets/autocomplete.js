@@ -36,6 +36,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         jQuery(this.$el).html(html);
         if(fetch)
         {
+            self.$el.find(".loading").addClass("go");
             var key=this.model.container[this.model.structure.key];
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;
@@ -43,6 +44,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
             GridAjax("typeAheadGetText",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key],{
                 success_fn:function(data)
                 {
+                    self.$el.find(".loading").removeClass("go");
                     self.$el.find("input.i-autocomplete").val(data.result);
                 }
             });

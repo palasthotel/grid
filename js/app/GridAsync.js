@@ -19,7 +19,6 @@ function GridAsync(){
 	this._onIdleInterval = function() {
 		var time = new Date().getTime();
 		var diff = (time - self.last_time);
-		console.log("diff "+diff+" vs "+this.timeout*1000);
 		if(diff>= this.timeout*1000 && GRID.authors.length>0 && GRID.authors.haveLock()) {
 			window.location.reload(true);
 		}

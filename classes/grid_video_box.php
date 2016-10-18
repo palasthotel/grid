@@ -137,10 +137,11 @@ class grid_video_box extends grid_static_base_box
 					$url_related.="0";
 				
 				}
-				
+
 				$url = $this->content->url;
 				if(strpos($url, "?") !== false){
-					$url = explode("?",$url)[0];
+					$url = explode("?",$url);
+					$url = $url[0];
 				}
 				
 				$parts = explode("/", $url);

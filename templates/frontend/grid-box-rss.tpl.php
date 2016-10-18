@@ -29,7 +29,6 @@
 	if(is_string($content)){
 		// nothing selected
 	} else if(!empty($content) && count($content) > 0){
-		var_dump($content);
 		foreach($content as $item){
 			/**
 			 * @var grid_rss_box_item $item
