@@ -86,7 +86,7 @@ class Container extends Component{
 							<li className="container__options-list-item" role="toggleslotstyles">
 								<i className="icon-style" /> Slot-styles
 							</li>
-							<li className="container__options-list-item" role="trash">
+							<li className="container__options-list-item" role="delete">
 								<i className="icon-trash" /> Delete
 							</li>
 						</ul>

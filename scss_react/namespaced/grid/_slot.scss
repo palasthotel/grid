@@ -1,0 +1,10 @@
+.grid .slot{
+	padding: 0 15px;
+	
+	& + &{
+		
+	}
+}
+.grid .slot + .slot{
+	border-left:1px solid black;
+}

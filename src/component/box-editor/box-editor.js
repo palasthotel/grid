@@ -7,11 +7,7 @@ import Collapsible from './collapsible.js';
 import Widgets from './widgets/widgets.js';
 import SelectWidget from './widgets/select.js';
 import TextareaWidget from './widgets/textarea.js';
-
-import BoxEditorHeader from './editor-header.js';
-import Prolog from './editor-prolog.js';
-import Epilog from './editor-epilog.js';
-import Footer from './editor-footer.js';
+import HtmlWidget from './widgets/html.js';
 
 
 class BoxEditor extends Component{
@@ -54,9 +50,9 @@ class BoxEditor extends Component{
 						title="Prolog"
 					>
 						
-						<TextareaWidget
+						<HtmlWidget
 							label="Prolog"
-							value="WERT für prolog"
+							value={this.state.content.prolog}
 							onChange={this.onChangeProlog.bind(this)}
 						/>
 						
@@ -77,9 +73,9 @@ class BoxEditor extends Component{
 						title="Epilog"
 					>
 						
-						<TextareaWidget
+						<HtmlWidget
 							label="Epilog"
-							value="WERT"
+							value={this.state.content.epilog}
 							onChange={this.onChangeEpilog.bind(this)}
 						/>
 						

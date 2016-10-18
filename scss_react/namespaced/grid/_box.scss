@@ -1,0 +1,33 @@
+.grid .box{
+	position: relative;
+	
+	padding: 12px 0;
+	min-height: 50px;
+	
+	background-color: white;
+	
+	border: 1px solid black;
+	
+	.box__content {
+		font-size: 11px;
+		padding: 0 10px;
+		word-break:break-all;
+	}
+	
+	.box__html{
+		overflow-x: hidden;
+		img{
+			max-width: 100%;
+		}
+	}
+	
+	
+	&:hover .box__controls{
+		height: auto;
+		overflow: visible;
+		display: block;
+		opacity:1;
+	}
+}
+
+@import "box__controls";

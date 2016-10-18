@@ -27,7 +27,7 @@ class Widgets extends Component {
 	 */
 	render() {
 		
-		const {contentstructure, content} = this.props;
+		const {contentstructure, content, parentpath} = this.props;
 		const widgets = GRID.box_editor_widgets;
 		
 		let elements = [];
@@ -36,6 +36,7 @@ class Widgets extends Component {
 			
 			let cs = contentstructure[i];
 			let key = (_.isUndefined(cs.key))? i: cs.key;
+			
 			let value = (_.isUndefined(content[key]))? "": content[key];
 			
 			/**
@@ -45,6 +46,7 @@ class Widgets extends Component {
 			if(_.isUndefined(widget)){
 				elements.push(<ErrorWidget
 					{...cs}
+					parentpath={( (parentpath=="")? "" : parentpath+"." ) + key }
 					key={key}
 				/>);
 				continue;
@@ -59,6 +61,7 @@ class Widgets extends Component {
 					...cs,
 					value: value,
 					key: key,
+					parentpath: ( (parentpath=="")? "" : parentpath+"." ) + key,
 					onChange: this.onChange.bind(this, key),
 				}
 			));
@@ -97,6 +100,7 @@ class Widgets extends Component {
 Widgets.defaultProps = {
 	content: {},
 	contentstructure: [],
+	parentpath: "",
 };
 
 /**

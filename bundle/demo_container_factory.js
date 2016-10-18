@@ -54,11 +54,11 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _containerFactory = __webpack_require__(357);
+	var _containerFactory = __webpack_require__(400);
 	
 	var _containerFactory2 = _interopRequireDefault(_containerFactory);
 	
-	var _containerTypes = __webpack_require__(358);
+	var _containerTypes = __webpack_require__(401);
 	
 	var _containerTypes2 = _interopRequireDefault(_containerTypes);
 	
@@ -68,7 +68,7 @@
 	 * grid dummy
 	 * @type {{id: number, isDraft: boolean, container: *[], isSidebar: boolean}}
 	 */
-	var container_types = __webpack_require__(186);
+	var container_types = __webpack_require__(229);
 	
 	/**
 	 * append app to grid app root
@@ -21464,7 +21464,50 @@
 /* 183 */,
 /* 184 */,
 /* 185 */,
-/* 186 */
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21542,49 +21585,6 @@
 	}];
 
 /***/ },
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
 /* 230 */,
 /* 231 */,
 /* 232 */,
@@ -21712,7 +21712,50 @@
 /* 354 */,
 /* 355 */,
 /* 356 */,
-/* 357 */
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21935,7 +21978,7 @@
 	exports.default = ContainerFactory;
 
 /***/ },
-/* 358 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21951,7 +21994,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _containerType = __webpack_require__(359);
+	var _containerType = __webpack_require__(402);
 	
 	var _containerType2 = _interopRequireDefault(_containerType);
 	
@@ -22101,7 +22144,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 359 */
+/* 402 */
 /***/ function(module, exports) {
 
 	"use strict";

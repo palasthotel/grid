@@ -19,6 +19,7 @@ class ListWidgetItem extends Component{
 				className="widget-list-item"
 			>
 				<Widgets
+					parentpath={this.props.parentpath}
 					content={this.props.content}
 					contentstructure={this.props.contentstructure}
 					onChangeContent={this.onChangeContent.bind(this)}
@@ -68,6 +69,7 @@ ListWidgetItem.defaultProps = {
  */
 ListWidgetItem.propTypes = {
 	content: PropTypes.object.isRequired,
+	parentpath: PropTypes.string.isRequired,
 	contentstructure: PropTypes.array.isRequired,
 	onChange: PropTypes.func.isRequired,
 	onDelete: PropTypes.func.isRequired,
@@ -91,6 +93,7 @@ class ListWidget extends Component {
 	 */
 	render() {
 		const {contents} = this.state;
+		const {parentpath} = this.props;
 		return (
 			<div
 				className="box-editor__widget widget__list"
@@ -108,6 +111,7 @@ class ListWidget extends Component {
 						return (
 							<ListWidgetItem
 								key={index}
+								parentpath={parentpath}
 								content={contents[index]}
 								contentstructure={this.props.contentstructure}
 								onChange={this.onChange.bind(this,index)}

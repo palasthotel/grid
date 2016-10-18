@@ -1,0 +1,19 @@
+.grid .box-drop{
+	position: relative;
+	height: 15px;
+	
+	&:first-child,
+	&:last-child{
+		height: 0;
+	}
+	
+	.box-drop__area{
+		position: absolute;
+		width: 100%;
+		height: 20px;
+		top:-3px;
+		left: 0;
+		right: 0;
+		border: 2px dashed blue;
+	}
+}

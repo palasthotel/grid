@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _stylesEditor = __webpack_require__(557);
+	var _stylesEditor = __webpack_require__(600);
 	
 	var _stylesEditor2 = _interopRequireDefault(_stylesEditor);
 	
@@ -21830,7 +21830,50 @@
 /* 554 */,
 /* 555 */,
 /* 556 */,
-/* 557 */
+/* 557 */,
+/* 558 */,
+/* 559 */,
+/* 560 */,
+/* 561 */,
+/* 562 */,
+/* 563 */,
+/* 564 */,
+/* 565 */,
+/* 566 */,
+/* 567 */,
+/* 568 */,
+/* 569 */,
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */,
+/* 574 */,
+/* 575 */,
+/* 576 */,
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */,
+/* 590 */,
+/* 591 */,
+/* 592 */,
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */,
+/* 597 */,
+/* 598 */,
+/* 599 */,
+/* 600 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21845,11 +21888,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _singleEdit = __webpack_require__(558);
+	var _singleEdit = __webpack_require__(601);
 	
 	var _singleEdit2 = _interopRequireDefault(_singleEdit);
 	
-	var _add = __webpack_require__(563);
+	var _add = __webpack_require__(606);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
@@ -22034,7 +22077,7 @@
 	exports.default = StylesEditor;
 
 /***/ },
-/* 558 */
+/* 601 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22049,15 +22092,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _trash = __webpack_require__(559);
+	var _trash = __webpack_require__(602);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _undoPanel = __webpack_require__(560);
+	var _undoPanel = __webpack_require__(603);
 	
 	var _undoPanel2 = _interopRequireDefault(_undoPanel);
 	
-	var _slugify = __webpack_require__(562);
+	var _slugify = __webpack_require__(605);
 	
 	var _slugify2 = _interopRequireDefault(_slugify);
 	
@@ -22262,7 +22305,7 @@
 	};
 
 /***/ },
-/* 559 */
+/* 602 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22318,7 +22361,7 @@
 	exports.default = Trash;
 
 /***/ },
-/* 560 */
+/* 603 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22333,7 +22376,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _restore = __webpack_require__(561);
+	var _restore = __webpack_require__(604);
 	
 	var _restore2 = _interopRequireDefault(_restore);
 	
@@ -22414,7 +22457,7 @@
 	};
 
 /***/ },
-/* 561 */
+/* 604 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22471,7 +22514,7 @@
 	exports.default = Restore;
 
 /***/ },
-/* 562 */
+/* 605 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22495,7 +22538,7 @@
 	}
 
 /***/ },
-/* 563 */
+/* 606 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

@@ -32,10 +32,10 @@ class BoxDrop extends Component {
 		
 		return connectDropTarget(
 			<div
-				className="grid-box-drop-area-wrapper"
+				className="box-drop"
 			>
 				<div
-					className="grid-box-drop-area"
+					className="box-drop__area"
 					style={{
 						backgroundColor: color,
 						display: display
