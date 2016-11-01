@@ -1,45 +1,49 @@
-// english
+// English
 
 document.lang_values = {
-	// texts
+	// Texts
 	"btn-publish": "Publish",
 	"btn-revert": "Revert",
 	"btn-revisions": "Revisions",
 	"btn-preview": "Preview",
-	"btn-toggle-boxes": "Toggle",
+	"btn-toggle-boxes": "Toggle boxes",
 	"btn-add-container": "Add container",
-	"btn-add-box": "Add Box",
+	"btn-add-box": "Add box",
 	"btn-cancle": "Cancel",
 	"btn-save": "Save",
 	"btn-make-reusable": "Make reusable",
-	"btn-wp-media": "Insert media",
+	"btn-wp-media": "Mediendatei einfügen",
 	"state-display": {
 		"published": "Published!",
-		"draft": "Is draft..."
+		"draft": "Is draft…"
 	},
 	"default-style": "Default style",
 	"rev-by-author": "by",
-	// placeholder
+
+	// Placeholder
 	"placeholder-search-box": "Search boxes",
-	// titles
-	"title-tab-containers": "New containers",
-	"title-tab-sidebars": "Sidebars",
-	"title-tab-reuse-container": "Reusable containers",
+
+	// Titles
+	"title-tab-containers": "New container",
+	"title-tab-sidebars": "New sidebar",
+	"title-tab-reuse-container": "Reusable container",
 	"title-wp-media": "Choose an image",
-	// editor labels
+
+	// Editor labels
 	"label-title": "Title:",
-	"label-title-url": "Title URL (for internals links, please use a relative path starting with '/'):",
+	"label-title-url": "Title URL (for internals links please use a relative path starting with '/'):",
 	"label-prolog": "Prolog:",
 	"label-epilog": "Epilog:",
-	"label-readmore": "Readmore text:",
-	"label-readmore-url": "Readmore URL (for internals links, please use a relative path starting with '/'):",
+	"label-readmore": "Read more link label:",
+	"label-readmore-url": "Read more link URL (for internals links please use a relative path starting with '/'):",
 	"label-style": "Style:",
 	"label-b-before": "Prolog",
-	"label-b-dynamic": "Spezific",
+	"label-b-dynamic": "Box specific settings",
 	"label-b-after": "Epilog",
-	// errors: something went wrong
-	"err_publish": "Could not publish...",
-	"err_revert": "Could not revert Grid...",
+
+	// Errors: Something went wrong.
+	"err_publish": "Could not publish…",
+	"err_revert": "Could not revert Grid…",
 	"err_container_reuse": "Error while trying to make container reusable!",
 	"err_container_save": "Could not save container.",
 	"err_container_delete": "Could not delete container.",
@@ -50,17 +54,20 @@ document.lang_values = {
 	"err-box-reuse-sidebar": "Sidebar boxes are not allowed for reuse.",
 	"err-box-reuse": "Could not make box reusable. Please reload the page and try again.",
 	"err-box-save": "Could not save the box. Please reload the page and try again.",
-	// warnings: nothing went wrong, but please do it another way
+
+	// Warnings: Nothing went wrong, but please do it another way.
 	"warn_container_edited": "Please finish container editing first.",
 	"warn_container_reuse_need_title": "The container needs a title to be reusable. Please try again.",
 	"warn_toggle_boxes_container_edited": "Please finish the container editing first.",
-	//prompt
-	"prom_container_reuse_title": "Once a container is reusable you cannot modify it within this grid anymore. "+
-								"If you want to proceed choose a REUSE-TITLE and confirm:",
-	// confirm
+
+	// Prompt
+	"prom_container_reuse_title": "Once a container is reusable you cannot modify it within this grid anymore. " +
+								"If you want to proceed choose a Reuse-Title and confirm:",
+
+	// Confirm
 	"confirm-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed?",
 	"confirm-leave-page": "Do you really want to leave Grid?",
 	"confirm-grid-revert": "Delete all changes?",
 
-	"info-wp-hide-adminbar": "You can expand the admin menu again here. Grid needs space so admin menu is automatically collapsed."
+	"info-wp-hide-adminbar": "You can expand the admin menu here. Grid needs some more space, so the admin menu is automatically collapsed."
 };
