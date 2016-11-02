@@ -1,4 +1,4 @@
-grid
+Grid
 ====
 
 A PHP/HTML/JS Framework to build landing pages.
@@ -7,19 +7,19 @@ This library does not work on it's own - it needs some help from outside.
 
 ## Requirements
 
-* you need to provide db_query() which replaces {...} with PREFIX... and executes the statement
+* You need to provide db_query() which replaces {...} with PREFIX... and executes the statement
 
 ## Supported Browsers
 
- * Chrome  
- * Firefox 4.0+
- * Safari
- * IE9+
+* Chrome  
+* Firefox 4.0+
+* Safari
+* IE9+
 
 ## Usage
 
-* whatever you want to do, require grid.php and instantiate a new grid_library object.
-* the grid_library object will provide you with everything you need to.
+* Whatever you want to do, require grid.php and instantiate a new grid_library object.
+* The grid_library object will provide you with everything you need to.
 
 ## grid_library
 
