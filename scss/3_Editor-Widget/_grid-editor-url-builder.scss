@@ -15,7 +15,7 @@
 	.grid-editor-url-button,
 	.grid-editor-url-button:focus {
 		position: absolute;
-		right: 0px;
+		right: 0;
 		top: 2px;
 		width: 140px;
 		color: $color-editor-reuse;
@@ -28,7 +28,7 @@
 			&:hover{
 				color: $color-warning;
 			}
-			
+
 			background-color: transparent;
 		}
 		.grid-editor-url-input{

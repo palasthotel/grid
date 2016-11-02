@@ -1,14 +1,14 @@
 .grid-wrapper .grid-container-type-s {
 	// width: 100%;
-	// padding:0px;
+	// padding: 0;
 	// background-color: transparent;
 	// border:none;
 	// .grid-box{
 	// 	border:none;
 	// 	background-color: white;
 	// }
-	
-	
+
+
 }
 
 // new file ? what name? tell me...
@@ -23,13 +23,13 @@
 }
 
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s{
-	
+
 	.grid-slot{
 		position: absolute;
 		width: 32%;
-		bottom: 0px;
+		bottom: 0;
 		padding-bottom: 4px;
-		left: 0px;
+		left: 0;
 		padding-right: 4px;
 		padding-left: 4px;
 		box-sizing: border-box;
@@ -38,16 +38,16 @@
 	&[data-type*=s-0] .grid-slot{
 		// sidebar to right
 		left: auto;
-		right: 0px;
+		right: 0;
 	}
-	
+
 	.grid{
 		.grid-container,
 		.grid-slot,
 		.grid-box,
 		.grid-container-content{
-			padding: 0px;
-			margin: 0px;
+			padding: 0;
+			margin: 0;
 			border:none;
 			background-color: transparent;
 			width: auto;

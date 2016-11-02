@@ -9,6 +9,7 @@ function GridAsync(){
 	this.observers = [];
 
 	this.browser_identifier=window.localStorage.getItem("grid_browser_identifier");
+
 	if(this.browser_identifier==null) {
 		this.browser_identifier=Math.random().toString(36).substring(7);
 		window.localStorage.setItem("grid_browser_identifier",this.browser_identifier);
@@ -22,20 +23,23 @@ function GridAsync(){
 		if(diff>= this.timeout*1000 && GRID.authors.length>0 && GRID.authors.haveLock()) {
 			window.location.reload(true);
 		}
-	}
+	};
+
 	var idle_interval=setInterval(function(){
 		self._onIdleInterval();
 	},1000);
 
 	this._onActivity = function() {
 		self.last_time = new Date().getTime();
-	}
-	$('body').on('mousemove',function(){
-		self._onActivity();
-	});
-	$('body').on('keypress',function(){
-		self._onActivity();
-	});
+	};
+
+	$('body')
+		.on('mousemove',function(){
+			self._onActivity();
+		})
+		.on('keypress',function(){
+			self._onActivity();
+		});
 
 	/**
 	 * init function
@@ -77,13 +81,13 @@ function GridAsync(){
 		this.on("locking.lockRequested", "locking_lock_requested");
 		// ping
 		this.on('ping.send',"ping_send");
-	}
+	};
 	this.on = function(e, f){
 		var self = this;
 		this.socket.on(e, function(data){
 			self[f](data);
 		});
-	}
+	};
 	this.connect = function(data){
 		this.authors_join();
 	};
@@ -96,22 +100,22 @@ function GridAsync(){
 	 */
 	this.authors_join = function(){
 		this.socket.emit("authors.join", {domain: this.domain, path: this.path, author: this.author, identity:this.browser_identifier});
-	}
+	};
 	/**
 	 * locking
 	 */
 	this.locking_request_lock = function(){
 		this.socket.emit("locking.requestLock");
-	}
+	};
 	this.locking_handover = function(identifier){
 		GRID.authors.each(function(author){
 			author.set("request_lock", false);
 		});
 		this.socket.emit("locking.handover", identifier);
-	}
+	};
 	this.locking_deny_handover = function(identifier){
 		this.socket.emit("locking.denyHandover", identifier);
-	}
+	};
 	/**
 	 * authors events
 	 */
@@ -126,7 +130,7 @@ function GridAsync(){
 	};
 	this.authors_multihit = function(count) {
 		alert("You have opened this grid on "+count+" browser windows. As parallel editing is not allowed you're locked out here.");
-	}
+	};
 	/**
 	 * locking events
 	 */

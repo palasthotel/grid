@@ -1,17 +1,14 @@
 .grid-editor-widget-multi-autocomplete{
-    
+
     .icon-cancel {
         display: block;
-        background-repeat: no-repeat;
         width: 16px;
         height: 16px;
-        background-position: -80px -128px; 
+        background-position: -80px -128px;
+        background-repeat: no-repeat;
         float: right;
         cursor: pointer;
-        
     }
-    
-    
 
     .autocomplete-multiselect-item {
         padding: 8px 15px;

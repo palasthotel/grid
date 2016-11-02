@@ -42,7 +42,7 @@ var GridRevisionsView = GridBackbone.View.extend({
 				var date = new Date(parseInt(elem["date"])*1000);
 				elem["readable_date"] = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" &bull; "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 			}
-			if(typeof elem["editor"] == "undefined" || elem["editor"] == "" || elem["editor"] == null){
+			if(typeof elem["editor"] === "undefined" || elem["editor"] == "" || elem["editor"] === null){
 				elem["editor"] = "unknown";
 			}
 		});
@@ -82,5 +82,5 @@ var GridRevisionsView = GridBackbone.View.extend({
         }
 		var revision=jQuery(e.target).parents(".grid-revision").data("revision");
 		GRID.setToRevision(revision);
-	},
+	}
 });

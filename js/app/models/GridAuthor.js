@@ -9,7 +9,7 @@ var GridAuthor = GridBackbone.Model.extend({
 	defaults: function(){
 		return {
 			has_lock: false,
-			request_lock: false,
+			request_lock: false
 		}
 	},
     initialize: function(spec){

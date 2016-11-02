@@ -35,7 +35,7 @@ class base_update
 		}
 		$this->markAsUpdated();
 	}
-	
+
 	public function getUpdateMethods()
 	{
 		$methods=get_class_methods($this);
@@ -51,7 +51,7 @@ class base_update
 		}
 		return $updates;
 	}
-	
+
 	public function getNeededSchemaVersion()
 	{
 		$methods=$this->getUpdateMethods();
@@ -63,14 +63,14 @@ class base_update
 		}
 		return $i;
 	}
-	
+
 	public function markAsUpdated()
 	{
 		//we assume that all updates have been applied during installation, so we're searching for the highest one and save that.
 		$schema=$this->getNeededSchemaVersion();
 		db_query("update {grid_schema} set value=".$schema." where propkey='schema_version".$this->schemakey."'");
 	}
-	
+
 	public function getCurrentSchemaVersion()
 	{
 		try
@@ -81,10 +81,8 @@ class base_update
 				return $entry->value;
 			}
 		}
-		catch(Exception $ex)
-		{
-			return 0;
-		}
+		catch(Exception $ex){}
+    return 0;
 	}
 
 	public function install(){
@@ -97,7 +95,7 @@ class base_update
 class grid_update extends base_update
 {
 	/**
-	 * shema key for update shema identification 
+	 * shema key for update shema identification
 	 * Grid lib
 	 */
 	public $schemakey = "";
@@ -183,10 +181,10 @@ class grid_update extends base_update
 					" WHERE type = 'I-0';");
 
 	}
-	
+
 	public function update_3() {
 		db_query("alter table {grid_grid2container} drop foreign key fk_grid_container");
 		db_query("alter table {grid_grid2container} add constraint {fk_grid_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
 	}
-	
+
 }

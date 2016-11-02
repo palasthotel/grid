@@ -9,14 +9,13 @@
 	@include transition();
 
 	&.is-active{
-		right: 0px;
+		right: 0;
 	}
 
 	.grid-authors{
 		padding-top: 4px;
 	}
 	.authors-header{
-		background-color: $color-container-border;
 		width: 100%;
 		padding: 15px;
 		text-align: center;
@@ -43,7 +42,7 @@
 	}
 	.authors-list{
 		overflow-y: scroll;
-		margin: 0px auto;
+		margin: 0 auto;
 		padding: 15px;
 		background-color: white;
 		border: 1px solid $color-container-border;

@@ -5,9 +5,9 @@
 			position: absolute;
 			content:"";
 			top: -45px;
-			left: 0px;
-			bottom: 0px;
-			right: 0px;
+			left: 0;
+			bottom: 0;
+			right: 0;
 			background-color: rgba(0,0,0,0.6);
 			z-index: $idx-locked-overlay;
 		}

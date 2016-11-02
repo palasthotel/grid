@@ -1,4 +1,4 @@
-<div class="grid-toolbar" data-draft="{{isDraft}}">
+<div class="grid-toolbar" role="g-controls" data-draft="{{isDraft}}">
     <div class="grid-tool-elements">
         <div class="grid-element-type-select">
             <div class="grid-element-type" data-type="container">Container</div><div class="grid-element-type" data-type="box">Box</div>
@@ -9,11 +9,11 @@
         </div>
     </div>
 
-    <ul class="grid-tool-list grid-toolbar-state">
-        <li class="grid-tool grid-tool-publish"><button><span class="icon-publish"></span>Publish</button></li>
-        <li class="grid-tool grid-tool-preview"><button><span class="icon-preview"></span>Preview</button></li>
-        <li class="grid-tool grid-tool-revert"><button><span class="icon-revert"></span>Revert</button></li>
-        <li class="grid-tool grid-tool-revisions"><button><span class="icon-revisions"></span>Revisions</button></li>
-        <li class="grid-tool grid-tool-authors"><button><span class="indicator-authors-count"></span>Authors</button></li>
+    <ul class="grid-tool-list grid-toolbar-state" role="data">
+        <li class="grid-tool grid-tool-publish"><button role="publish"><span class="icon-publish"></span>Publish</button></li>
+        <li class="grid-tool grid-tool-preview"><button role="preview"><span class="icon-preview"></span>Preview</button></li>
+        <li class="grid-tool grid-tool-revert"><button role="revert"><span class="icon-revert"></span>Revert</button></li>
+        <li class="grid-tool grid-tool-revisions"><button role="revisions"><span class="icon-revisions"></span>Revisions</button></li>
+        <li class="grid-tool grid-tool-authors"><button role="authors"><span class="indicator-authors-count"></span>Authors</button></li>
     </ul>
 </div>

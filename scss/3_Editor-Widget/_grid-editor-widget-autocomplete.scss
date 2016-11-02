@@ -15,7 +15,7 @@
 			padding: 8px 15px;
 			background-color: $color-light;
 			cursor: pointer;
-			margin-bottom: 0px;
+			margin-bottom: 0;
 			border-bottom: 1px solid lighten($color-dark,60%);
 			&:last-child{
 				border-bottom: none;
@@ -57,8 +57,8 @@
 		display: none;
 	}
 	input{
-		padding-left: 0px;
-		@include transition(all, .3s, ease);		
+		padding-left: 0;
+		@include transition(all, .3s, ease);
 	}
 	.locked{
 		.links .full{
@@ -66,10 +66,10 @@
 		}
 		input{
 			padding-left: 20px;
-		}	
+		}
 		.cancel{
 			display:block;
-		}	
+		}
 	}
 	.loading{
 		position: absolute;

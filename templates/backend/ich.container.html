@@ -16,13 +16,13 @@
         <ul class="grid-container-options-list">
 			{{^reused}}
 			{{#right_edit}}
-			<li class="grid-container-options-list-item"><i class="icon-edit"></i> Edit</li>
-			<li class="grid-container-options-list-item"><i class="icon-reuse"></i> Reuse</li>
-			<li class="grid-container-options-list-item"><i class="icon-style"></i> Slot styles</li>
+			<li class="grid-container-options-list-item" role="edit"><i class="icon-edit"></i> Edit</li>
+			<li class="grid-container-options-list-item" role="reuse"><i class="icon-reuse"></i> Reuse</li>
+			<li class="grid-container-options-list-item" role="toggleslotstyles"><i class="icon-style"></i> Slot styles</li>
 			{{/right_edit}}
 			{{/reused}}
 			{{#right_delete}}
-			<li class="grid-container-options-list-item"><i class="icon-trash"></i> Delete</li>
+			<li class="grid-container-options-list-item" role="trash"><i class="icon-trash"></i> Delete</li>
 			{{/right_delete}}
         </ul>
     </div>

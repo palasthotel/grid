@@ -17,7 +17,7 @@ var GridToolbarView = GridBackbone.View.extend({
         "click .grid-toolbar [role=revisions]": "revisions",
         "click .grid-toolbar [role=authors]": "onClickAuthors",
         "click .grid-element-type[data-type=box]:not(.active)": "showBoxTools",
-        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools",
+        "click .grid-element-type[data-type=container]:not(.active)": "showContainerTools"
     },
     initialize: function() {
         this.listenTo(this.model, "change:isDraft", this.setState);
@@ -31,7 +31,7 @@ var GridToolbarView = GridBackbone.View.extend({
         this.$el.html(ich.tpl_toolbar(this.model.toJSON()));
 
         this.$toolbar = this.$el.find(".grid-toolbar");
-        
+
         this.$tool_elements = this.$el.find(".grid-tool-elements");
         this.$tool_element_content = this.$el.find(".grid-element-type-content");
         this.$tab_container = this.$el.find(".grid-element-type[data-type=container]");
@@ -40,10 +40,10 @@ var GridToolbarView = GridBackbone.View.extend({
         this.$authors_count = this.$el.find(".indicator-authors-count");
 
         if(GRID.mode == "grid"){
-           this._revisionsView = new GridRevisionsView({collection:GRID.revisions}); 
+           this._revisionsView = new GridRevisionsView({collection:GRID.revisions});
            this.$el.append(this._revisionsView.$el.hide());
-           
-        } 
+
+        }
         var type = "container";
         if(GRID.mode == "container" || GRID.IS_SIDEBAR || !GRID.getRights().get("create-container")){
             this.$tab_container.remove();
@@ -60,7 +60,7 @@ var GridToolbarView = GridBackbone.View.extend({
             this.showBoxTools();
         }
         this.onUpdateAuthors();
-        
+
         return this;
     },
     publish: function(){
@@ -142,7 +142,7 @@ var GridToolbarView = GridBackbone.View.extend({
     toggleBoxTools: function(){
         this.hideContainerTools();
         if(!this.boxToolsVisible()){
-            this.showBoxTools
+            this.showBoxTools();
         } else {
             this.hideBoxTools();
         }
@@ -184,7 +184,6 @@ var GridToolbarView = GridBackbone.View.extend({
         GRID.authors.each(function(author){
             if(author.get("request_lock")){
                 self.$toolbar.addClass("async-request-lock");
-                return;
             }
         });
     },
@@ -197,6 +196,6 @@ var GridToolbarView = GridBackbone.View.extend({
      */
     async_request_lock: function(){
         this.$toolbar.addClass("async-request-lock");
-    },
+    }
 });
 

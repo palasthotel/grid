@@ -4,17 +4,17 @@
 	display: block;
 	overflow-x: scroll;
 	margin-right: $dim-tool-elements-width;
-	padding: 0px 0px 15px 50px;
+	padding: 0 0 15px 50px;
 	button{
-		margin: 0px;
-		padding: 0px;
-	} 
+		margin: 0;
+		padding: 0;
+	}
 
-	
+
 }
 
 .grid-revisions-list{
-	padding: 0px 15px 0px 0px;
+	padding: 0 15px 0 0;
 }
 
 .grid-revision{
@@ -63,14 +63,13 @@
 		line-height:0;
 		height:0;
 		padding:0;
-		margin:0;
+		margin:0 0 0 -8px;
 		border-left-color:    transparent;
 		border-right-color:  transparent;
 		border-bottom-color:   transparent;
 		position:absolute;
 		bottom:-16px;
 		left:50%;
-		margin-left: -8px;
 		@include transition();
 	}
 
@@ -79,12 +78,12 @@
 	}
 }
 
-// Description section 
+// Description section
 .grid-revision-description {
 	padding: 10px;
 
 	p {
-		margin: 0px;
+		margin: 0;
 	}
 
 	.grid-revision-date {
@@ -100,17 +99,17 @@
 	.grid-revision-button {
 		height: 40px;
 		position: absolute;
-		bottom: 0px;
+		bottom: 0;
 	}
 
 	.grid-revision-preview-button {
-		left: 0px;
+		left: 0;
 		width: 50%;
 	}
 
 	.grid-revision-delete-button,
 	.grid-revision-revert-button {
-		right: 0px;
+		right: 0;
 		width: 50%;
 	}
 }

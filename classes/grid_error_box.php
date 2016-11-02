@@ -20,8 +20,7 @@ class grid_error_box extends grid_box {
 		$this->content->error_msg=$msg;
 	}
 
-	public function type()
-	{
+	public function type() {
 		return 'error';
 	}
 
@@ -30,5 +29,3 @@ class grid_error_box extends grid_box {
 	}
 
 }
-
-?>

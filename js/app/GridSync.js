@@ -14,7 +14,7 @@ var GridAjax = function(method, params_array, settings){
 	json["method"] = method;
 	json["params"] = params_array;
 	if(typeof settings != "object"){ settings = {}; }
-	if(typeof settings.checkIsDraft == "undefined"){ settings.checkIsDraft = true; }
+	if(typeof settings.checkIsDraft === "undefined"){ settings.checkIsDraft = true; }
 	// default settings
 	this.settings = {
 		url: GRID.SERVER,
@@ -69,9 +69,9 @@ var GridAjax = function(method, params_array, settings){
 	// sends the request to the server
 	this.send = function(){
 		jQuery.ajax(this.settings);
-	}
+	};
 	if(!this.settings.wait){ this.send(); }
-}
+};
 
 // -------------------
 // Method-map that uses the GridAjax object for server communication
@@ -98,7 +98,7 @@ var GridRequest = {
 					new GridAjax(
 						"loadGrid",
 						[grid.getGridID()],
-						{ 
+						{
 							success_fn: function(data){
 								grid.attributes = _.extend(grid.attributes, data.result);
 								grid.getContainers().reset();
@@ -114,7 +114,7 @@ var GridRequest = {
 						}
 					);
 			}
-			
+
 		},
 		update: function(grid, options){
 			GRID.log("Grid->update");
@@ -176,20 +176,20 @@ var GridRequest = {
 		new GridAjax(
 			"getGridRevisions",
 			[revisions.getGridID(), page],
-			{ 
-				success_fn: function(data){ 
+			{
+				success_fn: function(data){
 					GRID.log("getGridRevisions succes");
 					if(data.result.length > 0){
 						revisions.nextpage = page+1;
-					} 					
+					}
 					if(page == 0){
 						revisions.reset();
 					}
 					_.each(data.result, function(revision){
-						revisions.add( new Revision(revision) );						
+						revisions.add( new Revision(revision) );
 					});
 				},
-			   	checkIsDraft: false 
+			   	checkIsDraft: false
 			}
 		);
 	},
@@ -199,13 +199,13 @@ var GridRequest = {
 		new GridAjax(
 			"getContainerTypes",
 			[GRID.ID],
-			{ 
-				success_fn: function(data){ 
+			{
+				success_fn: function(data){
 					GRID.log("getContainerTypes succes");
 					GRID.log(data);
 					containertypes.reset();
 					_.each(data.result, function(containertype){
-						containertypes.add( new ContainerType(containertype) );						
+						containertypes.add( new ContainerType(containertype) );
 					});
 				},
 			   	checkIsDraft: false
@@ -231,12 +231,12 @@ var GridRequest = {
 		new GridAjax(
 			"getMetaTypesAndSearchCriteria",
 			[GRID.ID],
-			{ 
-				success_fn: function(data){ 
+			{
+				success_fn: function(data){
 					GRID.log("getMetaTypesAndSearchCriteria succes");
 					GRID.log(data);
 					_.each(data.result, function(boxtype){
-						boxtypes.add( new BoxType(boxtype) );						
+						boxtypes.add( new BoxType(boxtype) );
 					});
 				},
 			   	checkIsDraft: false
@@ -262,13 +262,13 @@ var GridRequest = {
 		new GridAjax(
 			"get"+styles.type+"Styles",
 			[],
-			{ 
-				success_fn: function(data){ 
+			{
+				success_fn: function(data){
 					GRID.log("get"+styles.type+"Styles succes");
 					GRID.log(data);
 					styles.reset();
 					_.each(data.result, function(style){
-						styles.add( new StyleType(style) );						
+						styles.add( new StyleType(style) );
 					});
 				},
 			   	checkIsDraft: false
@@ -280,8 +280,8 @@ var GridRequest = {
 		new GridAjax(
 			"Rights",
 			[],
-			{ 
-				success_fn: function(data){ 
+			{
+				success_fn: function(data){
 					GRID.log(["rights",data]);
 					_.each(data.result, function(value, key, list){
 						rights.set(value,true);
@@ -301,7 +301,7 @@ var GridRequest = {
 			new GridAjax( "addContainer", params,
 				{
 					success_fn: function(data){
-						GRID.log("addContainer success")
+						GRID.log("addContainer success");
 						GRID.log(data);
 						container.set("id", data.result.id);
 						container.set("slots", data.result.slots);
@@ -335,16 +335,16 @@ var GridRequest = {
 					var params = [container.getGridID(), container.get("id"), options.index];
 					new GridAjax("moveContainer", params,{
 						success_fn: options.success
-					})
+					});
 					break;
 				default:
 					var attributes = _.clone(container.attributes);
-					delete(attributes.slots); 
-					delete(attributes.collection_slots);	
+					delete(attributes.slots);
+					delete(attributes.collection_slots);
 					delete(attributes.classes);
-					delete(attributes.parent);		
+					delete(attributes.parent);
 					var params =[container.getGridID(), container.get("id"),attributes];
-					GRID.log(params);			
+					GRID.log(params);
 					new GridAjax("updateContainer", params,
 						{
 							success_fn: function(data){
@@ -387,7 +387,7 @@ var GridRequest = {
 					success_fn: function(data){
 						GRID.log("updateSlotStyle success");
 						options.success();
-					}	
+					}
 				}
 			);
 		},
@@ -400,11 +400,11 @@ var GridRequest = {
 		create: function(box, options){
 			GRID.log("box->create");
 			// create a new box
-			params = [
-						box.getGridID(), 
-						box.getContainer().get("id"), 
+			var params = [
+						box.getGridID(),
+						box.getContainer().get("id"),
 						box.getSlot().get("id"),
-						// index position in slot 
+						// index position in slot
 						options.index,
 						box.get("type"),
 						box.get("content")];
@@ -432,7 +432,7 @@ var GridRequest = {
 				},
 			   	checkIsDraft: false
 			});
-			
+
 		},
 		update: function(box, options){
 			GRID.log("box->update "+options.action);
@@ -465,10 +465,10 @@ var GridRequest = {
 					delete(attributes.contentstructure);
 					delete(attributes.parent);
 					var params = [
-						box.getGridID(), 
-						box.getSlot().getContainer().get("id"), 
-						box.getSlot().get("id"), 
-						box.getIndex(), 
+						box.getGridID(),
+						box.getSlot().getContainer().get("id"),
+						box.getSlot().get("id"),
+						box.getIndex(),
 						attributes
 					];
 					GRID.log(params);

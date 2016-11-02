@@ -6,19 +6,19 @@
 	position: relative;
 
 	padding-left: 20px;
-	
+
 	margin-bottom: 8px;
 	color: $color-draggable-border;
-	
+
 
 	.grid-element-title {
 		color: $color-text;
 		padding-left: 20px;
-		margin: 0px;
-		padding-top: 10px; 
+		margin: 0;
+		padding-top: 10px;
 		&.grid-reusable-container-title{
-			padding-left: 0px;
-			padding-top: 0px;
+			padding-left: 0;
+			padding-top: 0;
 			min-height: 20px;
 		}
 	}

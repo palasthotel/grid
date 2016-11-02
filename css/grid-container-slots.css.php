@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * @author Palasthotel <rezeption@palasthotel.de>
 * @copyright Copyright (c) 2014, Palasthotel
@@ -6,7 +6,7 @@
 * @package Palasthotel\Grid
 */
 
-header('Content-Type: text/css'); 
+header('Content-Type: text/css');
 ?>
 .grid-slots-wrapper{
 	display: table;
@@ -23,7 +23,7 @@ header('Content-Type: text/css');
 
 // $container_types = db_query("SELECT * FROM {grid_container_type}");
 
-foreach ($container_types as $key => $type) 
+foreach ($container_types as $key => $type)
 {
 	$type_arr = explode("-",$type->type);
 	$container_type = $type_arr[0];
@@ -35,13 +35,13 @@ foreach ($container_types as $key => $type)
 	$space_to_right = ($type->space_to_right)? $this->calculateSpace($type->space_to_right) : 0;
 	$space_to_left = ($type->space_to_left)? $this->calculateSpace($type->space_to_left) : 0;
 	$container_dimension = (100-($space_to_left+$space_to_right));
-	
+
 	if($container_type == "s") print ".grid-toolbar ";
 
 	print ".grid-container-".$type->type;
 	print ($space_to_left > 0)? ".grid-container-left-space-".$type->space_to_left: "";
 	print ($space_to_right > 0)? ".grid-container-right-space-".$type->space_to_right: "";
-	print "{"; 
+	print "{";
 		print ($space_to_left > 0)? "padding-left:".$space_to_left."%;" : "";
 		print ($space_to_right > 0)? "padding-right:".$space_to_right."%;" : "";
 		print "width:$container_dimension%;";
@@ -49,7 +49,7 @@ foreach ($container_types as $key => $type)
 
 
 	$calculated = array();
-	foreach ($dimensions as $key => $slot) 
+	foreach ($dimensions as $key2 => $slot)
 	{
 		if($slot == 0 || in_array($slot, $calculated)) continue;
 		$calculated[] = $slot;
@@ -59,22 +59,22 @@ foreach ($container_types as $key => $type)
 	}
 }
 
-?>
 // for frontend only
-.grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0 .grid-container-*,
-.grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3 .grid-container-*
+?>
+.grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0 .grid-container,
+.grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3 .grid-container
 {
 	width: 100%;
-	padding: 0px;
+	padding: 0;
 }
 .grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0
 {
-	padding: 0px;
+	padding: 0;
 	float: left;
 }
 .grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3
 {
-	padding: 0px;
+	padding: 0;
 	float:right;
 }
 .grid-frontend .grid-slot-sidebar{

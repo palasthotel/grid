@@ -10,7 +10,7 @@ var GridContainerEditor = GridBackbone.View.extend({
     events: {
         'click .grid-editor-controls [role=cancel]' : 'onCancel',
         'click .grid-editor-controls [role=save]' : 'onSave',
-        'click legend' : 'onToggle',
+        'click .grid-editor-legend' : 'onToggle',
         'click .grid-editor-url-button': 'onUrlToggle'
     },
     initialize: function(){
@@ -54,7 +54,7 @@ var GridContainerEditor = GridBackbone.View.extend({
     {
         jQuery(e.currentTarget).parent().toggleClass('grid-active');
     },
-    
+
     onUrlToggle: function(e){
         var $parent = jQuery(e.target).parent();
         if($parent.hasClass('grid-editor-url-show')){

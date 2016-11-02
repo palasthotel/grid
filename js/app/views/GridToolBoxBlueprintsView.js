@@ -30,11 +30,7 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
     addBlueprintBox: function(blueprint,collection,event){
         var json = blueprint.toJSON();
         json.cid = blueprint.cid;
-        if(this.box_type == "reference"){
-            json.reusable = true;
-        } else {
-            json.reusable = false;
-        }
+        json.reusable = this.box_type == "reference";
         this.$blueprintslist.append(ich.tpl_toolBoxesBlueprint(json));
         this.initializesDraggable();
         return this;
@@ -54,7 +50,7 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
     },
     initializesDraggable: function(){
         var self = this;
-        this.$el.find(".grid-box-dragger").draggable({ 
+        this.$el.find(".grid-box-dragger").draggable({
             helper: function(event, element){
                 return jQuery("<div class='dragger-helper'></div>");
             },
@@ -64,13 +60,13 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
             addClass: true,
             //connectToSortable: GRID_SORTABLE,
             start: function(event, ui){
-                
+
                 var $ = jQuery;
-                $slots = jQuery(GRID.getView().el).find(".grid-container-type-c[data-reused=false] .grid-slot .grid-boxes-wrapper"+
+                var $slots = jQuery(GRID.getView().el).find(".grid-container-type-c[data-reused=false] .grid-slot .grid-boxes-wrapper"+
                                                         ", .grid-container-type-sc .grid-slot .grid-boxes-wrapper");
                 GRID.log($slots);
                 // drop place template
-                // TODO: if boxes toggled hidden 
+                // TODO: if boxes toggled hidden
                 // var $toggle_btn = $toolbar.find("[role=hide_boxes]");
 
                 $slots.children(".grid-box").before($( document.createElement('div'))
@@ -79,8 +75,8 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
                                 .addClass("grid-box-drop-area-wrapper"));
                 $slots.find(".grid-box-drop-area-wrapper").append($( document.createElement('div'))
                                 .addClass("grid-box-drop-area"));
-                
-                $slots.find(".grid-box-drop-area").droppable({ 
+
+                $slots.find(".grid-box-drop-area").droppable({
                     accept: ".grid-box-dragger",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
@@ -91,13 +87,13 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
                         var slot = GRID.getModel().getContainers().get($this_container.data("id")).getSlots().get($this_slot.data("id"));
                         var blueprint = self.blueprints.get($this_box.data("cid"));
 
-                        $new_box = $this_drop.parent().addClass('grid-new-box-place').removeClass('grid-box-drop-area-wrapper');
+                        var $new_box = $this_drop.parent().addClass('grid-new-box-place').removeClass('grid-box-drop-area-wrapper');
                         GRID.getView().$el.find(".grid-box-drop-area-wrapper").remove();
-                        
+
                         var box = slot.createBox(blueprint, $new_box.index() );
                     }
                 });
-                
+
             },
             stop: function( event, ui ){
                 GRID.getView().$el.find(".grid-box-drop-area-wrapper").remove();

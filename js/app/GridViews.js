@@ -9,7 +9,7 @@ var GridView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-wrapper',
     initialize: function() {
-        this._containersView = new ContainersView({collection: this.model.getContainers() });    
+        this._containersView = new ContainersView({collection: this.model.getContainers() });
     },
     render: function() {
         this.$el.empty();
@@ -102,7 +102,7 @@ var ContainerView = GridBackbone.View.extend({
         json.isSidebarGrid = GRID.IS_SIDEBAR;
         this.$el.empty();
     	this.$el.append(ich.tpl_container( json));
-        
+
         this.$slots_wrapper = this.$el.find(".grid-slots-wrapper");
         this.$slots_wrapper.replaceWith(this._slotsView.render().el);
         return this;
@@ -127,7 +127,7 @@ var ContainerView = GridBackbone.View.extend({
         this.model.save();
         return this.render();
     },
-    onReuse: function(){ 
+    onReuse: function(){
         var reusetitle = prompt("Bitte gib einen Titel für den Container ein");
         if(reusetitle == "" || reusetitle == false || reusetitle == null){
             return false;
@@ -186,7 +186,7 @@ var SlotView = GridBackbone.View.extend({
                 .attr("data-id",json.id)
                 .attr("data-dimension",json.dimension);
 
-        this.$el.addClass('grid-slot-'+json.dimension); 
+        this.$el.addClass('grid-slot-'+json.dimension);
 
         this.$el.html(ich.tpl_slot( this.model.toJSON() ));
         if(GRID.mode != "box"){
@@ -234,7 +234,7 @@ var BoxView = GridBackbone.View.extend({
         .attr("data-id",json.id)
         .attr("data-type",json.type)
         .attr("data-style", json.style);
-        
+
         this.$el.addClass("grid-box-"+json.type);
 
         if(json.type == "reference"){
@@ -276,7 +276,7 @@ var BoxView = GridBackbone.View.extend({
 var BoxEditor = GridBackbone.View.extend({
     events: {
         'click .btn-cancel' : 'onCancel',
-        'click legend' : 'onToggle',
+        'click .grid-editor-legend' : 'onToggle',
         'click .btn-save' : 'onSave',
         'click .btn-make-reusable' : 'onMakeReusable'
     },
@@ -298,7 +298,7 @@ var BoxEditor = GridBackbone.View.extend({
             'b_index':this.model.getIndex(),
             'c_id':this.model.getContainer().get("id"),
             's_id':this.model.getSlot().get("id"),
-            'styles':styles,
+            'styles':styles
         }));
         var contentstructure=this.model.get("contentstructure");
         var fieldcontainer=jQuery(this.$el).find(".dynamic-fields .field-wrapper");
@@ -313,7 +313,7 @@ var BoxEditor = GridBackbone.View.extend({
                     structure:elem,
                     container:self.model.get("content"),
                     box:self.model,
-                    parentpath:"",
+                    parentpath:""
                 }
             });
             views.push(view);

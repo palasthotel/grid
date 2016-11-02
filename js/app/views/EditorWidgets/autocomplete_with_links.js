@@ -10,7 +10,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
     events:{
         "keyup .i-autocomplete":"keyup",
         "click .suggestion-list li":"listItemSelected",
-        "click .cancel":"cancelSelection",
+        "click .cancel":"cancelSelection"
     },
     initialize:function(){
 
@@ -23,7 +23,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         if(this.model.container[this.model.structure.key]!='' ||
             this.model.container[this.model.structure.key]===0)
         {
-            classes+=" locked";            
+            classes+=" locked";
             readonly="readonly";
             fetch=true;
         }
@@ -71,7 +71,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
             var search=this.$el.find("input.i-autocomplete").val();
             if(search==this.old_search_string)return;
             var self=this;
-            
+
             this.$el.find(".loading").show();
 
             clearTimeout(this.searching);
@@ -79,8 +79,8 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
             this.searching = setTimeout(function(){
                 self.doSearch(search);
             }, 1000);
-            
-            
+
+
         }
     },
     doSearch: function(search){

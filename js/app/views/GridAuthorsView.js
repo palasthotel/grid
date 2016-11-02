@@ -30,5 +30,5 @@ var Authors = GridBackbone.View.extend({
     onAddAuthor: function(author){
         var author = new Author({model: author});
         this.$list.append(author.render().$el);
-    },
+    }
 });

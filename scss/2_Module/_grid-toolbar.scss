@@ -3,18 +3,18 @@
 .grid-toolbar {
 	@include transition();
 	border-top: 4px solid $color-draft;
-	
+
 	position:relative;
 	background-color: $color-toolbar-bg;
 	box-sizing: border-box;
 	width: $dim-toolbar-width;
 	height: $dim-toolbar-height;
-	
+
 	.grid-tool-list {
 		list-style: none;
 		position: fixed;
 		z-index: $idx-toolbar;
-		margin: 0px;
+		margin: 0;
 		width: 40px;
 		li {
 			width: 135px;
@@ -23,12 +23,12 @@
 			margin: 0;
 			@include transition();
 			&:hover {
-				right:0px;
+				right: 0;
 			}
 			button {
 				text-align: right;
 				padding: 5px 48px 5px 5px;
-				margin: 0px;
+				margin: 0;
 				font-size: 12px;
 				width: 100%;
 				height: 45px;
@@ -36,7 +36,7 @@
 				border: none;
 				background-color: transparent;
 
-				[class^="icon-"], 
+				[class^="icon-"],
 				[class*=" icon-"]{
 					position: absolute;
 					right: 11px;

@@ -12,8 +12,8 @@ boxEditorControls['file']=GridBackbone.View.extend({
     },
     render:function(){
     	var $ = jQuery;
-    	var val = this.model.container[this.model.structure.key]
-        var $upload_form_item = $("<div class='form-item file-upload'>");
+    	var val = this.model.container[this.model.structure.key];
+    	var $upload_form_item = $("<div class='form-item file-upload'>");
 		$upload_form_item.append("<label>"+this.model.structure.label+"</label>");
 
 		var $file_input = $("<input type='file' data-path='"+this.model.parentpath+this.model.structure.key+"' class='form-file' />");
@@ -36,7 +36,7 @@ boxEditorControls['file']=GridBackbone.View.extend({
 		$upload_form_item.append(this.$progress_display).append(this.$progress_bar_wrapper);
 		var self = this;
 
-		
+
 		$file_input.fileupload({
 	        url: this.model.structure.uploadpath,
 	        dataType: 'json',
@@ -61,10 +61,10 @@ boxEditorControls['file']=GridBackbone.View.extend({
 	    var element_key = self.model.parentpath+self.model.structure.key;
 	    var box = self.model.box;
 	    data.formData = {
-	    		gridid : GRID.ID, 
-	    		container: box.getContainer().get("id"), 
-	    		slot : box.getSlot().get("id"), 
-	    		box : box.getIndex(), 
+	    		gridid : GRID.ID,
+	    		container: box.getContainer().get("id"),
+	    		slot : box.getSlot().get("id"),
+	    		box : box.getIndex(),
 	    		key: element_key
 	    	};
 	    self.$progress_bar_status.removeClass("done");
@@ -75,7 +75,7 @@ boxEditorControls['file']=GridBackbone.View.extend({
     	this.$progress_bar_status.css("width", percent+"%");
     },
     uploadDone: function(e, data){
-    	result  = data.result;
+    	var result = data.result;
     	this.$key_field.val(result.result);
         this.$progress_display.text("OK!");
         this.$progress_bar_status.addClass("done");

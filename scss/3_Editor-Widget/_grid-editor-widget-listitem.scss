@@ -18,11 +18,11 @@
 	}
 	.widget-list-sort-button{
 		position: absolute;
-		top: 0px;
+		top: 0;
 		left: -35px;
 		&.widget-list-move-down-item-button{
 			top: auto;
-			bottom: 0px;
+			bottom: 0;
 		}
 	}
 	&:hover .widget-list-sort-button{

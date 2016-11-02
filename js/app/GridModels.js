@@ -20,7 +20,7 @@ var ContainerType = GridBackbone.Model.extend({
     },
     getType: function(){
         return this.get("type").split("-")[0];
-    },
+    }
 });
 var BoxType = GridBackbone.Model.extend({
     defaults: function(){
@@ -86,7 +86,7 @@ var Grid = GridBackbone.Model.extend({
             PREVIEW_URL: window.location.pathname+'/preview',
             // 0 == false == unknown, 1 published, 2 draft
             isDraft: true,
-            isSidebar: false,
+            isSidebar: false
         }
     },
 	getGridID: function(){
@@ -166,7 +166,7 @@ var Grid = GridBackbone.Model.extend({
         } else {
             GRID.log("grid sync metod not defined "+method);
         }
-    	
+
     }
 });
 
@@ -187,9 +187,9 @@ var Container =  ContainerType.extend({
         this.set("right_space", this.getSpace("right"));
 	},
     getSpace: function(side){
-        if(typeof side == "undefined") var side = "left";
-        space = this.get("space_to_"+side);
-        if(space == "" || typeof space == "undefined" || space == null) return 0;
+        if(typeof side === "undefined") side = "left";
+        var space = this.get("space_to_"+side);
+        if(space == "" || typeof space === "undefined" || space === null) return 0;
         var space_arr =  space.split("d");
         return (space_arr[0]/space_arr[1]);
     },

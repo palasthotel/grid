@@ -65,15 +65,15 @@ GRID = {
 
 		// initialize constants
 		this._initConstants();
-		if(typeof GRID.ID == "undefined" || GRID.ID == null) return false;
+		if(typeof GRID.ID === "undefined" || GRID.ID === null) return false;
 		/**
 		 * loading indicator before grid is ready
-		 * 
+		 *
 		 */
 		GRID.$loading = ich.tpl_loading();
 		this.$root.append(GRID.$loading);
 		GRID.$loading.addClass("grid-init-loading");
-		
+
 		// load all model classes for grid works
 		this.getRights().fetch();
 		this.getBoxTypes().fetch();
@@ -244,20 +244,20 @@ GRID = {
 		this.DEBUGGING = document.grid_debug_mode;
 		this.ID = document.ID;
 		this.SERVER = "/grid_ajax_endpoint";
-		if( typeof document.gridajax != "undefined" && 
-			document.gridajax != null && 
+		if( typeof document.gridajax != "undefined" &&
+			document.gridajax != null &&
 			document.gridajax != ""){
 			this.SERVER = document.gridajax;
 		}
 		this.PREVIEW_URL = this.PREVIEW_URL.replace("//","/");
 		if( typeof document.previewurl != typeof undefined &&
-			document.previewurl != null && 
+			document.previewurl != null &&
 			document.previewurl != ""){
 			this.PREVIEW_URL = document.previewurl;
 		}
 		var PREVIEW_PATTERN = window.location.pathname+'/{REV}/preview';
 		if( typeof document.previewpattern != typeof undefined &&
-			document.previewpattern != null && 
+			document.previewpattern != null &&
 			document.previewpattern != ""){
 			PREVIEW_PATTERN = document.previewpattern;
 		}
@@ -290,8 +290,8 @@ GRID = {
 			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
 			$sidebar_slot.css("padding-bottom",need_bottom_offset+"px");
 		}
-		
-	},	
+
+	},
 	calculateSidebarableContainerHeight: function($sidebar){
 		var c_height = 0;
 		var container_side = null;
@@ -307,10 +307,10 @@ GRID = {
 			return c_height;
 		}
 		var $container = $sidebar.prev();
-		while( $container.length > 0 && 
+		while( $container.length > 0 &&
 				(
-					Math.abs( 1-($container.data("space-"+container_side)+sidebar_space)) < 0.005 
-					||  $container.hasClass('grid-container-sort-placeholder') 
+					Math.abs( 1-($container.data("space-"+container_side)+sidebar_space)) < 0.005
+					||  $container.hasClass('grid-container-sort-placeholder')
 				)
 			){
 			c_height += $container.outerHeight(true);
@@ -330,20 +330,20 @@ GRID = {
 		return CKEDITOR.instances[selector].getData();
 	},
 	destroyCKEDITORs: function(){
-		for(name in CKEDITOR.instances){
+		for(var name in CKEDITOR.instances){
 		    CKEDITOR.instances[name].destroy();
 		}
 	},
 	// publishes the grid
-	publish: function(){ 
+	publish: function(){
 		if( !GRID.getRights().get("publish") || GRID.locked() ){
 			alert("Sorry you have no rights for that...");
 			return false;
 		}
-		new GridAjax("publishDraft",[GRID.ID]); 
+		new GridAjax("publishDraft",[GRID.ID]);
 	},
 	// revert to old revision
-	revert: function(){	
+	revert: function(){
 		if(GRID.locked()) return;
         GridRequest.grid.update(GRID.grid, {action: "revertDraft"});
 	},
@@ -377,7 +377,7 @@ GRID = {
 			GRID.$root.animate({width:"100%"},220,function(){
 				callback();
 				GRID.onSidebarCalculation();
-			})
+			});
 			window.scrollTo(0,0);
 		},50);
 	},
@@ -415,7 +415,7 @@ GRID = {
 			GRID.reload();
 			GRID.$root.removeClass("grid-is-locked");
 			this.hideAuthors();
-		}		
+		}
 	},
 	async_disconnect: function(){
 		this.async_locking_is_locked();
@@ -460,7 +460,7 @@ GRID = {
             update: function( event, ui ){
             	if(container_deleted)return;
             	var containerview = ui.item.attr("data-cid");
-               
+
                 var newIndex = ui.item.index();
                 var containermodel = GRID.getModel().getContainers().get(containerview);
                 var oldIndex = GRID.getModel().getContainers().indexOf(containermodel);
@@ -515,9 +515,9 @@ GRID = {
 			},
 			stop: function(e, ui){
 				//jQuery(".grid-box-trash").hide();
-				jQuery(".grid-element-trash").removeClass("grid-active")
+				jQuery(".grid-element-trash").removeClass("grid-active");
 				if(box_deleted)	return;
-				
+
 				new_container_id = ui.item.parents(".grid-container").data("id");
 				new_slot_id = ui.item.parents(".grid-slot").data("id");
 				new_box_index = ui.item.index();

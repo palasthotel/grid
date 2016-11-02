@@ -31,7 +31,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
                        self.onAdd();
                     });
 
-        
+
         _.each(list,function(elem){
             var view=new boxEditorControls['listitem']({
                 model:{
@@ -56,13 +56,13 @@ boxEditorControls['list']=GridBackbone.View.extend({
         var $button= $(e.currentTarget);
         var $this = $button.closest(".grid-editor-widget-listitem");
         var index = $this.index();
-        var views = self.views
+        var views = self.views;
         var view = views[index];
         var newPos = index;
         switch($button.attr("data-dir")){
-            case "up":    
+            case "up":
                 newPos = index-1;
-                if(newPos < 0) 
+                if(newPos < 0)
                     newPos = 0;
                 $this.insertBefore($this.prev());
                 break;

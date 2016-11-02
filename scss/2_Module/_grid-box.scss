@@ -12,8 +12,8 @@
 
 	background-color: white;
 
-	-webkit-box-shadow:inset 0 0 2px 0px $color-box-border;
-			box-shadow:inset 0 0 2px 0px $color-box-border;
+	-webkit-box-shadow:inset 0 0 2px 0 $color-box-border;
+			box-shadow:inset 0 0 2px 0 $color-box-border;
 	.grid-box-content {
 		font-size: 11px;
 		padding: 0 10px;
@@ -47,9 +47,9 @@
 	.grid-box-control-button{
 		cursor: pointer;
 		position: absolute;
-		top: 0px;
-		bottom: 0px;
-		right: 0px;
+		top: 0;
+		bottom: 0;
+		right: 0;
 		width: 40px;
 		max-width: 250px;
 		@include transition(all, .3s, ease);
@@ -74,10 +74,10 @@
 		overflow: hidden;
 		padding-left: 8px;
 	}
-	
+
 	.grid-box-edit{
 		background-color: $color-edit;
-		top: 0px;
+		top: 0;
 		bottom: 50%;
 	}
 	.grid-box-reused{
@@ -88,7 +88,7 @@
 	}
 	.grid-box-delete{
 		top: 50%;
-		bottom: 0px;
+		bottom: 0;
 		background-color: $color-warning;
 	}
 	.grid-box-drag{
@@ -107,7 +107,7 @@
 
 // new boxes
 .grid-box-type-content {
-	margin:0px;
+	margin: 0;
 	border-bottom: 1px solid $color-grid-bg;
 }
 
@@ -130,7 +130,7 @@
 		display: none;
 	}
 	.grid-box-edit{
-		bottom: 0px;
+		bottom: 0;
 	}
 	.grid-box-drag{
 		display: none;

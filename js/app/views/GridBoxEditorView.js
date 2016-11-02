@@ -9,7 +9,7 @@ var BoxEditor = GridBackbone.View.extend({
     className: "grid-box-editor",
     events: {
         'click .grid-editor-controls [role=cancel]' : 'onCancel',
-        'click legend' : 'onToggle',
+        'click .grid-editor-legend' : 'onToggle',
         'click .grid-editor-controls [role=save]' : 'onSave',
         'click .grid-editor-controls [role=reuse]' : 'onMakeReusable',
         'click .grid-editor-url-button': 'onUrlToggle'
@@ -35,7 +35,7 @@ var BoxEditor = GridBackbone.View.extend({
             'c_id':this.model.getContainer().get("id"),
             's_id':this.model.getSlot().get("id"),
             'styles':styles,
-            'isSidebarBox': isSidebarBox,
+            'isSidebarBox': isSidebarBox
         }));
         var contentstructure=this.model.get("contentstructure");
         var fieldcontainer=this.$el.find(".grid-dynamic-fields .grid-editor-field-wrapper");
@@ -49,7 +49,7 @@ var BoxEditor = GridBackbone.View.extend({
                     structure:elem,
                     container:self.model.get("content"),
                     box:self.model,
-                    parentpath:"",
+                    parentpath:""
                 }
             });
             views.push(view);
@@ -76,7 +76,7 @@ var BoxEditor = GridBackbone.View.extend({
                 $url.siblings('button').trigger("click");
              }
         });
-        
+
         return this;
     },
     onCancel: function(){

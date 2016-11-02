@@ -1,16 +1,16 @@
 
 .grid-element-trash {
 	position: absolute;
-	bottom:0px;
-	left: 0px;
-	right: 0px;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	text-transform: uppercase;
-	height: 0px;
+	height: 0;
 	overflow: hidden;
 	background-color: $color-tool-element-trash-bg;
 	color: white;
 	box-sizing: border-box;
-	vertical-align: baseline; 
+	vertical-align: baseline;
 	z-index: $idx-toolbar;
 	@include transition();
 	& > div{

@@ -9,7 +9,7 @@ var GridSlotStyleChangerView = GridBackbone.View.extend({
     className:"grid-slot-style-changer style-changer",
     tagName: "div",
     events:{
-        "click li": "changeStyle",
+        "click li": "changeStyle"
     },
     initialize: function() {
         this.listenTo(GRID.getSlotStyles(),"add",this.render);

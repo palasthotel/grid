@@ -10,7 +10,7 @@ var Author = GridBackbone.View.extend({
     className: "grid-author",
     events: {
         "click .author-lock-sender": "onClickSendLock",
-        "click .author-lock-requester": "onClickRequestLock",
+        "click .author-lock-requester": "onClickRequestLock"
     },
     initialize: function(){
         this.listenTo(this.model, "change:request_lock", this.onRequestLock);
@@ -35,6 +35,6 @@ var Author = GridBackbone.View.extend({
 		} else {
 			this.$el.removeClass('async-request-lock');
 		}
-    },
+    }
 
 });

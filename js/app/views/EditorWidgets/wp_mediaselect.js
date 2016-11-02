@@ -75,19 +75,19 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
             //title : lang_values['title-wp-media'],
             multiple : false,
             library : { type : this.media_type},
-            button : { text : "Insert" },
+            button : { text : "Insert" }
         });
         frame.on('open',function() {
             var selection = frame.state().get('selection');
-            val = JSON.parse(self.$input.val());
-            attachment = wp.media.attachment(val.id);
-            selection.add( attachment ? [ attachment ] : [] );                          
+            var val = JSON.parse(self.$input.val());
+            var attachment = wp.media.attachment(val.id);
+            selection.add( attachment ? [ attachment ] : [] );
         });
         frame.on('close',function() {
-            var selection = frame.state().get('selection');            
+            var selection = frame.state().get('selection');
             jQuery.each(frame.state().get('selection')._byId, function(id, val) {
                 var sizes = val.get("sizes");
-                if(typeof sizes == "undefined"){
+                if(typeof sizes === "undefined"){
                     sizes = {
                         full: {
                             height: "",
@@ -157,9 +157,9 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 
         if(this.$input.val() == ""){
             return;
-        } 
+        }
         var json = this.get_json_from_input();
-        
+
         if( json == null
 			|| json == ''
 			|| typeof json != typeof {}
@@ -178,7 +178,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
              jQuery("<option "+selected+" >"+index+"</option>").
              attr('value', index).appendTo(self.$select_image_size);
         });
-        if(this.$select_image_size.children().length > 0){ 
+        if(this.$select_image_size.children().length > 0){
             this.$select_image_size.show();
         } else {
             this.$select_image_size.hide();

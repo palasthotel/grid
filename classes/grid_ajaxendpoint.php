@@ -14,7 +14,7 @@ class grid_ajaxendpoint {
 	public function add($a,$b) {
 		return $a+$b;
 	}
-	
+
 	protected function encodeBox($box)
 	{
 		$bx=array();
@@ -32,7 +32,7 @@ class grid_ajaxendpoint {
 		$bx['contentstructure']=$box->contentStructure();
 		return $bx;
 	}
-	
+
 	private function encodeContainer($container)
 	{
 		$cnt=array();
@@ -79,7 +79,7 @@ class grid_ajaxendpoint {
 		return $this->encodeGrid($grid);
 
 	}
-	
+
 	public function fetchBox($gridid,$containerid,$slotid,$boxidx)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -100,7 +100,7 @@ class grid_ajaxendpoint {
 		}
 		return false;
 	}
-	
+
 	public function checkDraftStatus($gridid) {
 		$grid=$this->storage->loadGrid($gridid);
 		if($grid->isDraft)
@@ -142,7 +142,7 @@ class grid_ajaxendpoint {
 		}
 		return $result;
 	}
-	
+
 	public function addReuseContainer($gridid,$idx,$containerid)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -152,7 +152,7 @@ class grid_ajaxendpoint {
 		}
 		$container=$grid->insertContainer("I-0",$idx);
 		$this->storage->convertToReferenceContainer($container,$containerid);
-		$reusecontainer=$this->storage->loadReuseContainer($containerid);		
+		$reusecontainer=$this->storage->loadReuseContainer($containerid);
 		$reusecontainer->containerid=$container->containerid;
 
 		$cnt=array();
@@ -178,10 +178,10 @@ class grid_ajaxendpoint {
 			}
 			$cnt['slots'][]=$slt;
 		}
-		
+
 		return $cnt;
 	}
-	
+
 
 	public function moveContainer($gridid,$containerid,$newidx)
 	{
@@ -212,7 +212,7 @@ class grid_ajaxendpoint {
 		}
 		return $grid->updateContainer($containerid,$containerdata);
 	}
-	
+
 	public function moveBox($gridid,$oldcontainerid,$oldslotid,$oldidx,$newcontainerid,$newslotid,$newidx)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -286,7 +286,7 @@ class grid_ajaxendpoint {
 		}
 		return false;
 	}
-	
+
 	public function reuseBox($gridid,$containerid,$slotid,$idx)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -319,7 +319,7 @@ class grid_ajaxendpoint {
 						$box->prepareReuseDeletion();
 						$slot->removeBox($idx);
 						$box->delete();
-						
+
 						//4. add new reference box to this slot
 						$reference=new grid_reference_box();
 						$reference->content->boxid=$clone->boxid;
@@ -332,8 +332,9 @@ class grid_ajaxendpoint {
 				}
 			}
 		}
+		return null;
 	}
-	
+
 	public function reuseContainer($gridid,$containerid,$title)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -351,12 +352,12 @@ class grid_ajaxendpoint {
 		}
 		return false;
 	}
-	
+
 	public function getReusableContainers($grid_id)
 	{
 		$ids=$this->storage->getReuseContainerIds();
 		$result=array();
-		
+
 		foreach($ids as $id)
 		{
 			$container=$this->storage->loadReuseContainer($id);
@@ -398,7 +399,7 @@ class grid_ajaxendpoint {
 		$grid=$grid->draftify();
 		return $this->encodeGrid($grid);
 	}
-	
+
 	public function getContainerStyles()
 	{
 		return $this->storage->fetchContainerStyles();
@@ -413,7 +414,7 @@ class grid_ajaxendpoint {
 	{
 		return $this->storage->fetchBoxStyles();
 	}
-	
+
 	public function updateSlotStyle($gridid,$containerid,$slotid,$style)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -436,7 +437,7 @@ class grid_ajaxendpoint {
 		}
 		return false;
 	}
-	
+
 	public function getMetaTypesAndSearchCriteria($grid_id){
 		$boxes=$this->storage->getMetaTypes();
 		$result=array();
@@ -451,7 +452,7 @@ class grid_ajaxendpoint {
 		}
 		return $result;
 	}
-	
+
 	public function Search($grid_id,$metatype,$searchstring,$criteria)
 	{
 		$class="grid_".$metatype."_box";
@@ -465,7 +466,7 @@ class grid_ajaxendpoint {
 		}
 		return $return;
 	}
-	
+
 	public function CreateBox($gridid,$containerid,$slotid,$idx,$boxtype,$content)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -505,7 +506,7 @@ class grid_ajaxendpoint {
 		}
 		return $ret;
 	}
-	
+
 	public function UpdateBox($gridid,$containerid,$slotid,$idx,$boxdata)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -536,7 +537,7 @@ class grid_ajaxendpoint {
 		}
 		return FALSE;
 	}
-	
+
 	public function Rights()
 	{
 		return array(
@@ -552,7 +553,7 @@ class grid_ajaxendpoint {
 			'revert',
 		);
 	}
-	
+
 	public function typeAheadSearch($gridid,$containerid,$slotid,$idx,$field,$query)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -575,7 +576,7 @@ class grid_ajaxendpoint {
 		}
 		return array(array('key'=>-2,'value'=>'Box not found'));
 	}
-	
+
 	public function typeAheadGetText($gridid,$containerid,$slotid,$idx,$path,$id)
 	{
 		$grid=$this->storage->loadGrid($gridid);
@@ -596,7 +597,7 @@ class grid_ajaxendpoint {
 		}
 		return "WRONG CONTAINER";
 	}
-	
+
 	public function getContainerTypes($grid_id)
 	{
 		return $this->storage->fetchContainerTypes();

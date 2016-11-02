@@ -10,7 +10,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
     events:{
         "keyup .i-autocomplete":"keyup",
         "click .suggestion-list li":"listItemSelected",
-        "click .cancel":"cancelSelection",
+        "click .cancel":"cancelSelection"
     },
     initialize:function(){
 
@@ -25,7 +25,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
             (this.model.container[this.model.structure.key]!='' ||
             this.model.container[this.model.structure.key]===0))
         {
-            classes+=" locked";            
+            classes+=" locked";
             readonly="readonly=readonly";
             fetch=true;
         }
@@ -68,13 +68,13 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
             this.searching = setTimeout(function(){
                 self.doSearch(search);
             }, 1000);
-            
+
         }
     },
     doSearch: function(search){
         var self = this;
         var box=this.model.box;
-        
+
         GridAjax("typeAheadSearch",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
             success_fn:function(data){
                 self.$el.find(".suggestion-list").empty();
