@@ -27,19 +27,18 @@ class BoxDrop extends Component {
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
 		
-		const color = (isOver)? 'red': 'transparent';
-		const display = (canDrop)? 'block': 'none';
+		console.log("is over "+isOver);
+		
+		const can_drop_class = (canDrop)? 'can_drop': '';
+		const over_class = (isOver)? 'is_over': '';
+		
 		
 		return connectDropTarget(
 			<div
-				className="box-drop"
+				className={`box-drop ${over_class} ${can_drop_class}`}
 			>
 				<div
-					className="box-drop__area"
-					style={{
-						backgroundColor: color,
-						display: display
-					}}
+					className={`box-drop__area`}
 				></div>
 			</div>
 		);

@@ -30457,20 +30457,18 @@
 				var canDrop = _props.canDrop;
 	
 	
-				var color = isOver ? 'red' : 'transparent';
-				var display = canDrop ? 'block' : 'none';
+				console.log("is over " + isOver);
+	
+				var can_drop_class = canDrop ? 'can_drop' : '';
+				var over_class = isOver ? 'is_over' : '';
 	
 				return connectDropTarget(_react2.default.createElement(
 					'div',
 					{
-						className: 'box-drop'
+						className: 'box-drop ' + over_class + ' ' + can_drop_class
 					},
 					_react2.default.createElement('div', {
-						className: 'box-drop__area',
-						style: {
-							backgroundColor: color,
-							display: display
-						}
+						className: 'box-drop__area'
 					})
 				));
 			}
@@ -30597,7 +30595,7 @@
 					'div',
 					{ className: 'box',
 						style: {
-							display: isDragging ? "none" : "block"
+							opacity: isDragging ? 0.3 : 1
 						} },
 					_react2.default.createElement(
 						'div',
@@ -30632,6 +30630,16 @@
 						'div',
 						{ className: 'box__controls grid-box-movable' },
 						_react2.default.createElement('i', { className: 'grid-box-drag icon-drag' }),
+						function () {
+							if (false) {
+								return _react2.default.createElement(
+									'div',
+									{ className: 'grid-box-reused' },
+									'Reused box ',
+									_react2.default.createElement('i', { className: 'icon-reuse' })
+								);
+							}
+						},
 						_react2.default.createElement(
 							'div',
 							{ className: 'grid-box-control-button grid-box-edit' },
@@ -30645,12 +30653,6 @@
 									'Edit'
 								)
 							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-box-reused' },
-							'Reused box ',
-							_react2.default.createElement('i', { className: 'icon-reuse' })
 						),
 						_react2.default.createElement(
 							'div',
@@ -31225,6 +31227,8 @@
 	
 	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 	
+	var _events = __webpack_require__(410);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31239,7 +31243,11 @@
 		function TheGrid(props) {
 			_classCallCheck(this, TheGrid);
 	
-			return _possibleConstructorReturn(this, (TheGrid.__proto__ || Object.getPrototypeOf(TheGrid)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (TheGrid.__proto__ || Object.getPrototypeOf(TheGrid)).call(this, props));
+	
+			_this._events = new _events.EventEmitter();
+			_this._events.setMaxListeners(0);
+			return _this;
 		}
 	
 		_createClass(TheGrid, [{
@@ -31255,9 +31263,9 @@
 						'Buttons | Elements | Revisions'
 					),
 					_react2.default.createElement(_grid2.default, {
-						id: this.props.grid.id,
 						container: this.props.grid.container,
-						draft: this.props.grid.isDraft
+						draft: this.props.grid.isDraft,
+						events: this._events
 					})
 				);
 			}
@@ -31270,4 +31278,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=the_grid.min.map
+//# sourceMappingURL=the_grid.map

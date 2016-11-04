@@ -30956,20 +30956,18 @@
 				var canDrop = _props.canDrop;
 	
 	
-				var color = isOver ? 'red' : 'transparent';
-				var display = canDrop ? 'block' : 'none';
+				console.log("is over " + isOver);
+	
+				var can_drop_class = canDrop ? 'can_drop' : '';
+				var over_class = isOver ? 'is_over' : '';
 	
 				return connectDropTarget(_react2.default.createElement(
 					'div',
 					{
-						className: 'box-drop'
+						className: 'box-drop ' + over_class + ' ' + can_drop_class
 					},
 					_react2.default.createElement('div', {
-						className: 'box-drop__area',
-						style: {
-							backgroundColor: color,
-							display: display
-						}
+						className: 'box-drop__area'
 					})
 				));
 			}
@@ -31096,7 +31094,7 @@
 					'div',
 					{ className: 'box',
 						style: {
-							display: isDragging ? "none" : "block"
+							opacity: isDragging ? 0.3 : 1
 						} },
 					_react2.default.createElement(
 						'div',
@@ -31131,6 +31129,16 @@
 						'div',
 						{ className: 'box__controls grid-box-movable' },
 						_react2.default.createElement('i', { className: 'grid-box-drag icon-drag' }),
+						function () {
+							if (false) {
+								return _react2.default.createElement(
+									'div',
+									{ className: 'grid-box-reused' },
+									'Reused box ',
+									_react2.default.createElement('i', { className: 'icon-reuse' })
+								);
+							}
+						},
 						_react2.default.createElement(
 							'div',
 							{ className: 'grid-box-control-button grid-box-edit' },
@@ -31144,12 +31152,6 @@
 									'Edit'
 								)
 							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'grid-box-reused' },
-							'Reused box ',
-							_react2.default.createElement('i', { className: 'icon-reuse' })
 						),
 						_react2.default.createElement(
 							'div',
@@ -31504,4 +31506,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=demo_grid.min.map
+//# sourceMappingURL=demo_grid.map

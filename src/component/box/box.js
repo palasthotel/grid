@@ -66,7 +66,7 @@ class Box extends Component{
 		return connectDragPreview(
 			<div className="box"
 			style={{
-				display: isDragging? "none": "block",
+				opacity: isDragging? 0.3: 1,
 			}}>
 				<div className="box__content">
 					<span>{title}</span>
@@ -79,13 +79,17 @@ class Box extends Component{
 				</div>
 				{connectDragSource(<div className="box__controls grid-box-movable">
 					<i className="grid-box-drag icon-drag" />
+					{() => {
+						if(false){
+							return <div className="grid-box-reused">Reused box <i className="icon-reuse" /></div>;
+						}
+					}}
 					<div className="grid-box-control-button grid-box-edit">
 						<div className="grid-box-control-wrapper">
 							<i className="icon-edit" />
 							<span className="grid-box-control-text">Edit</span>
 						</div>
 					</div>
-					<div className="grid-box-reused">Reused box <i className="icon-reuse" /></div>
 					<div className="grid-box-control-button grid-box-delete">
 						<div className="grid-box-control-wrapper">
 							<i className="icon-trash" />

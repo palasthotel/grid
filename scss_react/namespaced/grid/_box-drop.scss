@@ -1,10 +1,12 @@
 .grid .box-drop{
 	position: relative;
 	height: 15px;
+	visibility: hidden;
 	
 	&:first-child,
 	&:last-child{
-		height: 0;
+		//position: absolute;
+		
 	}
 	
 	.box-drop__area{
@@ -14,6 +16,16 @@
 		top:-3px;
 		left: 0;
 		right: 0;
-		border: 2px dashed blue;
+		background-color: $color__highlight_on_light;
+	}
+	
+	&.can_drop{
+		visibility: visible;
+	}
+	
+	&.is_over{
+		.box-drop__area{
+			background-color: red;
+		}
 	}
 }

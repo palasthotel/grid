@@ -211,11 +211,15 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .undo-panel .button-undo { color: #536DFE; }
 
-.grid .box-drop { position: relative; height: 15px; }
+.the-grid { margin-bottom: 30px; }
 
-.grid .box-drop:first-child, .grid .box-drop:last-child { height: 0; }
+.grid .box-drop { position: relative; height: 15px; visibility: hidden; }
 
-.grid .box-drop .box-drop__area { position: absolute; width: 100%; height: 20px; top: -3px; left: 0; right: 0; border: 2px dashed blue; }
+.grid .box-drop .box-drop__area { position: absolute; width: 100%; height: 20px; top: -3px; left: 0; right: 0; background-color: #536dfe; }
+
+.grid .box-drop.can_drop { visibility: visible; }
+
+.grid .box-drop.is_over .box-drop__area { background-color: red; }
 
 .grid .box { position: relative; padding: 12px 0; min-height: 50px; background-color: white; border: 1px solid black; }
 
@@ -226,28 +230,6 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 .grid .box .box__html img { max-width: 100%; }
 
 .grid .box:hover .box__controls { height: auto; overflow: visible; display: block; opacity: 1; }
-
-.grid .box .box__controls { color: white; height: 0; overflow: hidden; opacity: 0; position: absolute; left: 0; right: 0; bottom: 0; top: 0; background-color: rgba(63, 72, 83, 0.9); font-weight: bold; text-transform: uppercase; -webkit-transition: opacity 0.2s ease; transition: opacity 0.2s ease; }
-
-.grid .box .box__controls.grid-box-movable { cursor: move; }
-
-.grid .box .box__controls .grid-box-control-button { cursor: pointer; position: absolute; top: 0px; bottom: 0px; right: 0px; width: 40px; max-width: 250px; -webkit-transition: all 0.3s ease; transition: all 0.3s ease; }
-
-.grid .box .box__controls .grid-box-control-button:hover { width: 100%; }
-
-.grid .box .box__controls .grid-box-control-button .grid-box-control-text { opacity: 0; -webkit-transition: all 0.3s ease; transition: all 0.3s ease; }
-
-.grid .box .box__controls .grid-box-control-button:hover .grid-box-control-text { opacity: 1; }
-
-.grid .box .box__controls .grid-box-control-wrapper { position: absolute; left: 0; right: 0; top: 50%; margin-top: -10px; white-space: nowrap; overflow: hidden; padding-left: 8px; }
-
-.grid .box .box__controls .grid-box-edit { background-color: #3ac5d9; top: 0px; bottom: 50%; }
-
-.grid .box .box__controls .grid-box-reused { position: absolute; top: 10px; right: 14px; font-weight: normal; }
-
-.grid .box .box__controls .grid-box-delete { top: 50%; bottom: 0px; background-color: #ed5032; }
-
-.grid .box .box__controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
 
 .grid .box .box__controls { color: white; height: 0; overflow: hidden; opacity: 0; position: absolute; left: 0; right: 0; bottom: 0; top: 0; background-color: rgba(63, 72, 83, 0.9); font-weight: bold; text-transform: uppercase; -webkit-transition: opacity 0.2s ease; transition: opacity 0.2s ease; }
 

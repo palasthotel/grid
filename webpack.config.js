@@ -4,7 +4,7 @@ module.exports = {
 	output: {
 		path: './bundle',
 		filename: '[name].js',
-		sourceMapFilename: '[name].min.map'
+		sourceMapFilename: '[name].map'
 	},
 	devtool: 'source-map',
 	module: {

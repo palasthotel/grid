@@ -26882,4 +26882,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=demo_box_editor.min.map
+//# sourceMappingURL=demo_box_editor.map

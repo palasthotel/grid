@@ -22593,4 +22593,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=demo_styles_editor.min.map
+//# sourceMappingURL=demo_styles_editor.map
