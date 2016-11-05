@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _theGrid = __webpack_require__(607);
+	var _theGrid = __webpack_require__(608);
 	
 	var _theGrid2 = _interopRequireDefault(_theGrid);
 	
@@ -31807,6 +31807,142 @@
 /* 607 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TabView = function (_Component) {
+		_inherits(TabView, _Component);
+	
+		/**
+	  * ------------------------------------------------
+	  * lifecycle
+	  * ------------------------------------------------
+	  */
+		function TabView(props) {
+			_classCallCheck(this, TabView);
+	
+			var _this = _possibleConstructorReturn(this, (TabView.__proto__ || Object.getPrototypeOf(TabView)).call(this, props));
+	
+			_this.state = {
+				active: props.active
+			};
+			return _this;
+		}
+	
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(TabView, [{
+			key: "render",
+			value: function render() {
+				var _this2 = this;
+	
+				var titles = this.props.titles;
+				var active = this.state.active;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "tab-view"
+					},
+					_react2.default.createElement(
+						"div",
+						{
+							className: "tab-view__tabs"
+						},
+						titles.map(function (title, index) {
+							return _react2.default.createElement(
+								"div",
+								{
+									key: index,
+									className: "tab-view__tab" + (active == index ? " is-active" : ""),
+									onClick: _this2.onClickTab.bind(_this2, index)
+								},
+								title
+							);
+						})
+					),
+					_react2.default.createElement(
+						"div",
+						{
+							className: "tab-view__content"
+						},
+						this.props.children[active]
+					)
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: "onClickTab",
+			value: function onClickTab(index) {
+				this.setState({ active: index });
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return TabView;
+	}(_react.Component);
+	
+	/**
+	 * property defaults
+	 */
+	
+	
+	TabView.defaultProps = {
+		titles: [],
+		active: 0
+	};
+	
+	/**
+	 * define property types
+	 */
+	TabView.propTypes = {
+		titles: _react.PropTypes.arrayOf(_react.PropTypes.string).isRequired,
+		active: _react.PropTypes.number
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = TabView;
+
+/***/ },
+/* 608 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -31822,6 +31958,14 @@
 	var _grid = __webpack_require__(403);
 	
 	var _grid2 = _interopRequireDefault(_grid);
+	
+	var _tabView = __webpack_require__(607);
+	
+	var _tabView2 = _interopRequireDefault(_tabView);
+	
+	var _containerTypes = __webpack_require__(647);
+	
+	var _containerTypes2 = _interopRequireDefault(_containerTypes);
 	
 	var _reactDnd = __webpack_require__(235);
 	
@@ -31865,10 +32009,25 @@
 						'Buttons | Elements | Revisions'
 					),
 					_react2.default.createElement(_grid2.default, {
+						id: '1',
 						container: this.props.grid.container,
 						draft: this.props.grid.isDraft,
 						events: this._events
-					})
+					}),
+					_react2.default.createElement(
+						_tabView2.default,
+						{
+							titles: ["Containers", "Boxes"]
+						},
+						_react2.default.createElement(_containerTypes2.default, {
+							container_types: []
+						}),
+						_react2.default.createElement(
+							'div',
+							null,
+							'Boxes'
+						)
+					)
 				);
 			}
 		}]);
@@ -31877,6 +32036,143 @@
 	}(_react2.default.Component);
 	
 	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(TheGrid);
+
+/***/ },
+/* 609 */,
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */,
+/* 614 */,
+/* 615 */,
+/* 616 */,
+/* 617 */,
+/* 618 */,
+/* 619 */,
+/* 620 */,
+/* 621 */,
+/* 622 */,
+/* 623 */,
+/* 624 */,
+/* 625 */,
+/* 626 */,
+/* 627 */,
+/* 628 */,
+/* 629 */,
+/* 630 */,
+/* 631 */,
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */,
+/* 636 */,
+/* 637 */,
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */,
+/* 646 */,
+/* 647 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ContainerTypes = function (_Component) {
+		_inherits(ContainerTypes, _Component);
+	
+		/**
+	  * ------------------------------------------------
+	  * lifecycle
+	  * ------------------------------------------------
+	  */
+		function ContainerTypes(props) {
+			_classCallCheck(this, ContainerTypes);
+	
+			return _possibleConstructorReturn(this, (ContainerTypes.__proto__ || Object.getPrototypeOf(ContainerTypes)).call(this, props));
+		}
+	
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(ContainerTypes, [{
+			key: "render",
+			value: function render() {
+				var container_types = this.props.container_types;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "container-types"
+					},
+					container_types.map(function (container, index) {
+						if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0) return;
+						return _react2.default.createElement(
+							"div",
+							{
+								key: container.type
+							},
+							container.type
+						);
+					})
+				);
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}]);
+	
+		return ContainerTypes;
+	}(_react.Component);
+	
+	/**
+	 * define property types
+	 */
+	
+	
+	ContainerTypes.propTypes = {
+		container_types: _react.PropTypes.array.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = ContainerTypes;
 
 /***/ }
 /******/ ]);

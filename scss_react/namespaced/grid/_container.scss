@@ -22,6 +22,7 @@
 		width: 100%;
 		height: 40px;
 		cursor: move;
+		margin-left: -8px;
 		.icon-drag{
 			position: absolute;
 			top: 9px;
@@ -29,6 +30,9 @@
 	}
 	
 	.container__title{
+		position: absolute;
+		top:8px;
+		left: 20px;
 		color: $color-dark;
 	}
 	.container__style {

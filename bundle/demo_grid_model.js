@@ -3068,121 +3068,9 @@
 /* 368 */,
 /* 369 */,
 /* 370 */,
-/* 371 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var apply = __webpack_require__(306),
-	    assignInDefaults = __webpack_require__(372),
-	    assignInWith = __webpack_require__(373),
-	    baseRest = __webpack_require__(303);
-	
-	/**
-	 * Assigns own and inherited enumerable string keyed properties of source
-	 * objects to the destination object for all destination properties that
-	 * resolve to `undefined`. Source objects are applied from left to right.
-	 * Once a property is set, additional values of the same property are ignored.
-	 *
-	 * **Note:** This method mutates `object`.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} [sources] The source objects.
-	 * @returns {Object} Returns `object`.
-	 * @see _.defaultsDeep
-	 * @example
-	 *
-	 * _.defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
-	 * // => { 'a': 1, 'b': 2 }
-	 */
-	var defaults = baseRest(function(args) {
-	  args.push(undefined, assignInDefaults);
-	  return apply(assignInWith, undefined, args);
-	});
-	
-	module.exports = defaults;
-
-
-/***/ },
-/* 372 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var eq = __webpack_require__(281);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used by `_.defaults` to customize its `_.assignIn` use.
-	 *
-	 * @private
-	 * @param {*} objValue The destination value.
-	 * @param {*} srcValue The source value.
-	 * @param {string} key The key of the property to assign.
-	 * @param {Object} object The parent object of `objValue`.
-	 * @returns {*} Returns the value to assign.
-	 */
-	function assignInDefaults(objValue, srcValue, key, object) {
-	  if (objValue === undefined ||
-	      (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
-	    return srcValue;
-	  }
-	  return objValue;
-	}
-	
-	module.exports = assignInDefaults;
-
-
-/***/ },
-/* 373 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var copyObject = __webpack_require__(374),
-	    createAssigner = __webpack_require__(377),
-	    keysIn = __webpack_require__(380);
-	
-	/**
-	 * This method is like `_.assignIn` except that it accepts `customizer`
-	 * which is invoked to produce the assigned values. If `customizer` returns
-	 * `undefined`, assignment is handled by the method instead. The `customizer`
-	 * is invoked with five arguments: (objValue, srcValue, key, object, source).
-	 *
-	 * **Note:** This method mutates `object`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @alias extendWith
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} sources The source objects.
-	 * @param {Function} [customizer] The function to customize assigned values.
-	 * @returns {Object} Returns `object`.
-	 * @see _.assignWith
-	 * @example
-	 *
-	 * function customizer(objValue, srcValue) {
-	 *   return _.isUndefined(objValue) ? srcValue : objValue;
-	 * }
-	 *
-	 * var defaults = _.partialRight(_.assignInWith, customizer);
-	 *
-	 * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
-	 * // => { 'a': 1, 'b': 2 }
-	 */
-	var assignInWith = createAssigner(function(object, source, srcIndex, customizer) {
-	  copyObject(source, keysIn(source), object, customizer);
-	});
-	
-	module.exports = assignInWith;
-
-
-/***/ },
+/* 371 */,
+/* 372 */,
+/* 373 */,
 /* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3868,29 +3756,25 @@
 
 	'use strict';
 	
-	var _ampersandModel = __webpack_require__(412);
+	var _ampersandState = __webpack_require__(413);
 	
-	var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
+	var _ampersandState2 = _interopRequireDefault(_ampersandState);
 	
 	var _container = __webpack_require__(574);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Grid = _ampersandModel2.default.extend({
+	// https://ampersandjs.com/docs/#ampersand-state
+	// https://ampersandjs.com/docs/#ampersand-collection
+	
+	var Grid = _ampersandState2.default.extend({
 		props: {
 			id: ['number', true, -1],
-			isDraft: ['boolean', true, true],
-			autor: 'string'
+			isDraft: ['boolean', true, true]
 		},
 		session: {
 			// [type, required, default]
-			loading: ['boolean', true, false],
-			revisions: {
-				type: 'array',
-				default: function _default() {
-					return [];
-				}
-			}
+			loading: ['boolean', true, false]
 		},
 		collections: {
 			container: _container.ContainerCollection
@@ -3899,154 +3783,7 @@
 	module.exports.Grid = Grid;
 
 /***/ },
-/* 412 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*$AMPERSAND_VERSION*/
-	var State = __webpack_require__(413);
-	var sync = __webpack_require__(541);
-	var assign = __webpack_require__(418);
-	var isObject = __webpack_require__(253);
-	var clone = __webpack_require__(555);
-	var result = __webpack_require__(496);
-	
-	// Throw an error when a URL is needed, and none is supplied.
-	var urlError = function () {
-	    throw new Error('A "url" property or function must be specified');
-	};
-	
-	// Wrap an optional error callback with a fallback error event.
-	var wrapError = function (model, options) {
-	    var error = options.error;
-	    options.error = function (resp) {
-	        if (error) error(model, resp, options);
-	        model.trigger('error', model, resp, options);
-	    };
-	};
-	
-	var Model = State.extend({
-	    save: function (key, val, options) {
-	        var attrs, method;
-	
-	        // Handle both `"key", value` and `{key: value}` -style arguments.
-	        if (key == null || typeof key === 'object') {
-	            attrs = key;
-	            options = val;
-	        } else {
-	            (attrs = {})[key] = val;
-	        }
-	
-	        options = assign({validate: true}, options);
-	
-	        // If we're not waiting and attributes exist, save acts as
-	        // `set(attr).save(null, opts)` with validation. Otherwise, check if
-	        // the model will be valid when the attributes, if any, are set.
-	        if (attrs && !options.wait) {
-	            if (!this.set(attrs, options)) return false;
-	        } else {
-	            if (!this._validate(attrs, options)) return false;
-	        }
-	
-	        // After a successful server-side save, the client is (optionally)
-	        // updated with the server-side state.
-	        if (options.parse === void 0) options.parse = true;
-	        var model = this;
-	        var success = options.success;
-	        options.success = function (resp) {
-	            var serverAttrs = model.parse(resp, options);
-	            if (options.wait) serverAttrs = assign(attrs || {}, serverAttrs);
-	            if (isObject(serverAttrs) && !model.set(serverAttrs, options)) {
-	                return false;
-	            }
-	            if (success) success(model, resp, options);
-	            model.trigger('sync', model, resp, options);
-	        };
-	        wrapError(this, options);
-	
-	        method = this.isNew() ? 'create' : (options.patch ? 'patch' : 'update');
-	        if (method === 'patch') options.attrs = attrs;
-	        // if we're waiting we haven't actually set our attributes yet so
-	        // we need to do make sure we send right data
-	        if (options.wait && method !== 'patch') options.attrs = assign(model.serialize(), attrs);
-	        var sync = this.sync(method, this, options);
-	
-	        // Make the request available on the options object so it can be accessed
-	        // further down the line by `parse`, attached listeners, etc
-	        // Same thing is done below for fetch and destroy
-	        // https://github.com/AmpersandJS/ampersand-collection-rest-mixin/commit/d32d788aaff912387eb1106f2d7ad183ec39e11a#diff-84c84703169bf5017b1bc323653acaa3R32
-	        options.xhr = sync;
-	        return sync;
-	    },
-	
-	    // Fetch the model from the server. If the server's representation of the
-	    // model differs from its current attributes, they will be overridden,
-	    // triggering a `"change"` event.
-	    fetch: function (options) {
-	        options = options ? clone(options) : {};
-	        if (options.parse === void 0) options.parse = true;
-	        var model = this;
-	        var success = options.success;
-	        options.success = function (resp) {
-	            if (!model.set(model.parse(resp, options), options)) return false;
-	            if (success) success(model, resp, options);
-	            model.trigger('sync', model, resp, options);
-	        };
-	        wrapError(this, options);
-	        var sync = this.sync('read', this, options);
-	        options.xhr = sync;
-	        return sync;
-	    },
-	
-	    // Destroy this model on the server if it was already persisted.
-	    // Optimistically removes the model from its collection, if it has one.
-	    // If `wait: true` is passed, waits for the server to respond before removal.
-	    destroy: function (options) {
-	        options = options ? clone(options) : {};
-	        var model = this;
-	        var success = options.success;
-	
-	        var destroy = function () {
-	            model.trigger('destroy', model, model.collection, options);
-	        };
-	
-	        options.success = function (resp) {
-	            if (options.wait || model.isNew()) destroy();
-	            if (success) success(model, resp, options);
-	            if (!model.isNew()) model.trigger('sync', model, resp, options);
-	        };
-	
-	        if (this.isNew()) {
-	            options.success();
-	            return false;
-	        }
-	        wrapError(this, options);
-	
-	        var sync = this.sync('delete', this, options);
-	        options.xhr = sync;
-	        if (!options.wait) destroy();
-	        return sync;
-	    },
-	
-	    // Proxy `ampersand-sync` by default -- but override this if you need
-	    // custom syncing semantics for *this* particular model.
-	    sync: function () {
-	        return sync.apply(this, arguments);
-	    },
-	
-	    // Default URL for the model's representation on the server -- if you're
-	    // using Backbone's restful methods, override this to change the endpoint
-	    // that will be called.
-	    url: function () {
-	        var base = result(this, 'urlRoot') || result(this.collection, 'url') || urlError();
-	        if (this.isNew()) return base;
-	        return base + (base.charAt(base.length - 1) === '/' ? '' : '/') + encodeURIComponent(this.getId());
-	    }
-	});
-	
-	module.exports = Model;
-
-
-/***/ },
+/* 412 */,
 /* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -9983,1882 +9720,57 @@
 
 
 /***/ },
-/* 541 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var xhr = __webpack_require__(542);
-	module.exports = __webpack_require__(549)(xhr);
-
-
-/***/ },
-/* 542 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var window = __webpack_require__(543)
-	var isFunction = __webpack_require__(544)
-	var parseHeaders = __webpack_require__(545)
-	var xtend = __webpack_require__(548)
-	
-	module.exports = createXHR
-	createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
-	createXHR.XDomainRequest = "withCredentials" in (new createXHR.XMLHttpRequest()) ? createXHR.XMLHttpRequest : window.XDomainRequest
-	
-	forEachArray(["get", "put", "post", "patch", "head", "delete"], function(method) {
-	    createXHR[method === "delete" ? "del" : method] = function(uri, options, callback) {
-	        options = initParams(uri, options, callback)
-	        options.method = method.toUpperCase()
-	        return _createXHR(options)
-	    }
-	})
-	
-	function forEachArray(array, iterator) {
-	    for (var i = 0; i < array.length; i++) {
-	        iterator(array[i])
-	    }
-	}
-	
-	function isEmpty(obj){
-	    for(var i in obj){
-	        if(obj.hasOwnProperty(i)) return false
-	    }
-	    return true
-	}
-	
-	function initParams(uri, options, callback) {
-	    var params = uri
-	
-	    if (isFunction(options)) {
-	        callback = options
-	        if (typeof uri === "string") {
-	            params = {uri:uri}
-	        }
-	    } else {
-	        params = xtend(options, {uri: uri})
-	    }
-	
-	    params.callback = callback
-	    return params
-	}
-	
-	function createXHR(uri, options, callback) {
-	    options = initParams(uri, options, callback)
-	    return _createXHR(options)
-	}
-	
-	function _createXHR(options) {
-	    if(typeof options.callback === "undefined"){
-	        throw new Error("callback argument missing")
-	    }
-	
-	    var called = false
-	    var callback = function cbOnce(err, response, body){
-	        if(!called){
-	            called = true
-	            options.callback(err, response, body)
-	        }
-	    }
-	
-	    function readystatechange() {
-	        if (xhr.readyState === 4) {
-	            loadFunc()
-	        }
-	    }
-	
-	    function getBody() {
-	        // Chrome with requestType=blob throws errors arround when even testing access to responseText
-	        var body = undefined
-	
-	        if (xhr.response) {
-	            body = xhr.response
-	        } else {
-	            body = xhr.responseText || getXml(xhr)
-	        }
-	
-	        if (isJson) {
-	            try {
-	                body = JSON.parse(body)
-	            } catch (e) {}
-	        }
-	
-	        return body
-	    }
-	
-	    var failureResponse = {
-	                body: undefined,
-	                headers: {},
-	                statusCode: 0,
-	                method: method,
-	                url: uri,
-	                rawRequest: xhr
-	            }
-	
-	    function errorFunc(evt) {
-	        clearTimeout(timeoutTimer)
-	        if(!(evt instanceof Error)){
-	            evt = new Error("" + (evt || "Unknown XMLHttpRequest Error") )
-	        }
-	        evt.statusCode = 0
-	        return callback(evt, failureResponse)
-	    }
-	
-	    // will load the data & process the response in a special response object
-	    function loadFunc() {
-	        if (aborted) return
-	        var status
-	        clearTimeout(timeoutTimer)
-	        if(options.useXDR && xhr.status===undefined) {
-	            //IE8 CORS GET successful response doesn't have a status field, but body is fine
-	            status = 200
-	        } else {
-	            status = (xhr.status === 1223 ? 204 : xhr.status)
-	        }
-	        var response = failureResponse
-	        var err = null
-	
-	        if (status !== 0){
-	            response = {
-	                body: getBody(),
-	                statusCode: status,
-	                method: method,
-	                headers: {},
-	                url: uri,
-	                rawRequest: xhr
-	            }
-	            if(xhr.getAllResponseHeaders){ //remember xhr can in fact be XDR for CORS in IE
-	                response.headers = parseHeaders(xhr.getAllResponseHeaders())
-	            }
-	        } else {
-	            err = new Error("Internal XMLHttpRequest Error")
-	        }
-	        return callback(err, response, response.body)
-	    }
-	
-	    var xhr = options.xhr || null
-	
-	    if (!xhr) {
-	        if (options.cors || options.useXDR) {
-	            xhr = new createXHR.XDomainRequest()
-	        }else{
-	            xhr = new createXHR.XMLHttpRequest()
-	        }
-	    }
-	
-	    var key
-	    var aborted
-	    var uri = xhr.url = options.uri || options.url
-	    var method = xhr.method = options.method || "GET"
-	    var body = options.body || options.data || null
-	    var headers = xhr.headers = options.headers || {}
-	    var sync = !!options.sync
-	    var isJson = false
-	    var timeoutTimer
-	
-	    if ("json" in options) {
-	        isJson = true
-	        headers["accept"] || headers["Accept"] || (headers["Accept"] = "application/json") //Don't override existing accept header declared by user
-	        if (method !== "GET" && method !== "HEAD") {
-	            headers["content-type"] || headers["Content-Type"] || (headers["Content-Type"] = "application/json") //Don't override existing accept header declared by user
-	            body = JSON.stringify(options.json)
-	        }
-	    }
-	
-	    xhr.onreadystatechange = readystatechange
-	    xhr.onload = loadFunc
-	    xhr.onerror = errorFunc
-	    // IE9 must have onprogress be set to a unique function.
-	    xhr.onprogress = function () {
-	        // IE must die
-	    }
-	    xhr.ontimeout = errorFunc
-	    xhr.open(method, uri, !sync, options.username, options.password)
-	    //has to be after open
-	    if(!sync) {
-	        xhr.withCredentials = !!options.withCredentials
-	    }
-	    // Cannot set timeout with sync request
-	    // not setting timeout on the xhr object, because of old webkits etc. not handling that correctly
-	    // both npm's request and jquery 1.x use this kind of timeout, so this is being consistent
-	    if (!sync && options.timeout > 0 ) {
-	        timeoutTimer = setTimeout(function(){
-	            aborted=true//IE9 may still call readystatechange
-	            xhr.abort("timeout")
-	            var e = new Error("XMLHttpRequest timeout")
-	            e.code = "ETIMEDOUT"
-	            errorFunc(e)
-	        }, options.timeout )
-	    }
-	
-	    if (xhr.setRequestHeader) {
-	        for(key in headers){
-	            if(headers.hasOwnProperty(key)){
-	                xhr.setRequestHeader(key, headers[key])
-	            }
-	        }
-	    } else if (options.headers && !isEmpty(options.headers)) {
-	        throw new Error("Headers cannot be set on an XDomainRequest object")
-	    }
-	
-	    if ("responseType" in options) {
-	        xhr.responseType = options.responseType
-	    }
-	
-	    if ("beforeSend" in options &&
-	        typeof options.beforeSend === "function"
-	    ) {
-	        options.beforeSend(xhr)
-	    }
-	
-	    xhr.send(body)
-	
-	    return xhr
-	
-	
-	}
-	
-	function getXml(xhr) {
-	    if (xhr.responseType === "document") {
-	        return xhr.responseXML
-	    }
-	    var firefoxBugTakenEffect = xhr.status === 204 && xhr.responseXML && xhr.responseXML.documentElement.nodeName === "parsererror"
-	    if (xhr.responseType === "" && !firefoxBugTakenEffect) {
-	        return xhr.responseXML
-	    }
-	
-	    return null
-	}
-	
-	function noop() {}
-
-
-/***/ },
-/* 543 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {if (typeof window !== "undefined") {
-	    module.exports = window;
-	} else if (typeof global !== "undefined") {
-	    module.exports = global;
-	} else if (typeof self !== "undefined"){
-	    module.exports = self;
-	} else {
-	    module.exports = {};
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 544 */
-/***/ function(module, exports) {
-
-	module.exports = isFunction
-	
-	var toString = Object.prototype.toString
-	
-	function isFunction (fn) {
-	  var string = toString.call(fn)
-	  return string === '[object Function]' ||
-	    (typeof fn === 'function' && string !== '[object RegExp]') ||
-	    (typeof window !== 'undefined' &&
-	     // IE8 and below
-	     (fn === window.setTimeout ||
-	      fn === window.alert ||
-	      fn === window.confirm ||
-	      fn === window.prompt))
-	};
-
-
-/***/ },
-/* 545 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var trim = __webpack_require__(546)
-	  , forEach = __webpack_require__(547)
-	  , isArray = function(arg) {
-	      return Object.prototype.toString.call(arg) === '[object Array]';
-	    }
-	
-	module.exports = function (headers) {
-	  if (!headers)
-	    return {}
-	
-	  var result = {}
-	
-	  forEach(
-	      trim(headers).split('\n')
-	    , function (row) {
-	        var index = row.indexOf(':')
-	          , key = trim(row.slice(0, index)).toLowerCase()
-	          , value = trim(row.slice(index + 1))
-	
-	        if (typeof(result[key]) === 'undefined') {
-	          result[key] = value
-	        } else if (isArray(result[key])) {
-	          result[key].push(value)
-	        } else {
-	          result[key] = [ result[key], value ]
-	        }
-	      }
-	  )
-	
-	  return result
-	}
-
-/***/ },
-/* 546 */
-/***/ function(module, exports) {
-
-	
-	exports = module.exports = trim;
-	
-	function trim(str){
-	  return str.replace(/^\s*|\s*$/g, '');
-	}
-	
-	exports.left = function(str){
-	  return str.replace(/^\s*/, '');
-	};
-	
-	exports.right = function(str){
-	  return str.replace(/\s*$/, '');
-	};
-
-
-/***/ },
-/* 547 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isFunction = __webpack_require__(544)
-	
-	module.exports = forEach
-	
-	var toString = Object.prototype.toString
-	var hasOwnProperty = Object.prototype.hasOwnProperty
-	
-	function forEach(list, iterator, context) {
-	    if (!isFunction(iterator)) {
-	        throw new TypeError('iterator must be a function')
-	    }
-	
-	    if (arguments.length < 3) {
-	        context = this
-	    }
-	    
-	    if (toString.call(list) === '[object Array]')
-	        forEachArray(list, iterator, context)
-	    else if (typeof list === 'string')
-	        forEachString(list, iterator, context)
-	    else
-	        forEachObject(list, iterator, context)
-	}
-	
-	function forEachArray(array, iterator, context) {
-	    for (var i = 0, len = array.length; i < len; i++) {
-	        if (hasOwnProperty.call(array, i)) {
-	            iterator.call(context, array[i], i, array)
-	        }
-	    }
-	}
-	
-	function forEachString(string, iterator, context) {
-	    for (var i = 0, len = string.length; i < len; i++) {
-	        // no such thing as a sparse string.
-	        iterator.call(context, string.charAt(i), i, string)
-	    }
-	}
-	
-	function forEachObject(object, iterator, context) {
-	    for (var k in object) {
-	        if (hasOwnProperty.call(object, k)) {
-	            iterator.call(context, object[k], k, object)
-	        }
-	    }
-	}
-
-
-/***/ },
-/* 548 */
-/***/ function(module, exports) {
-
-	module.exports = extend
-	
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	
-	function extend() {
-	    var target = {}
-	
-	    for (var i = 0; i < arguments.length; i++) {
-	        var source = arguments[i]
-	
-	        for (var key in source) {
-	            if (hasOwnProperty.call(source, key)) {
-	                target[key] = source[key]
-	            }
-	        }
-	    }
-	
-	    return target
-	}
-
-
-/***/ },
-/* 549 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*$AMPERSAND_VERSION*/
-	var result = __webpack_require__(496);
-	var defaults = __webpack_require__(371);
-	var includes = __webpack_require__(484);
-	var assign = __webpack_require__(418);
-	var qs = __webpack_require__(550);
-	var mediaType = __webpack_require__(554);
-	
-	
-	module.exports = function (xhr) {
-	
-	  // Throw an error when a URL is needed, and none is supplied.
-	  var urlError = function () {
-	      throw new Error('A "url" property or function must be specified');
-	  };
-	
-	  // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
-	  var methodMap = {
-	      'create': 'POST',
-	      'update': 'PUT',
-	      'patch':  'PATCH',
-	      'delete': 'DELETE',
-	      'read':   'GET'
-	  };
-	
-	  return function (method, model, optionsInput) {
-	      //Copy the options object. It's using assign instead of clonedeep as an optimization.
-	      //The only object we could expect in options is headers, which is safely transfered below.
-	      var options = assign({},optionsInput);
-	      var type = methodMap[method];
-	      var headers = {};
-	
-	      // Default options, unless specified.
-	      defaults(options || (options = {}), {
-	          emulateHTTP: false,
-	          emulateJSON: false,
-	          // overrideable primarily to enable testing
-	          xhrImplementation: xhr
-	      });
-	
-	      // Default request options.
-	      var params = {type: type};
-	
-	
-	      var ajaxConfig = (result(model, 'ajaxConfig') || {});
-	      var key;
-	      // Combine generated headers with user's headers.
-	      if (ajaxConfig.headers) {
-	          for (key in ajaxConfig.headers) {
-	              headers[key.toLowerCase()] = ajaxConfig.headers[key];
-	          }
-	      }
-	      if (options.headers) {
-	          for (key in options.headers) {
-	              headers[key.toLowerCase()] = options.headers[key];
-	          }
-	          delete options.headers;
-	      }
-	      //ajaxConfig has to be merged into params before other options take effect, so it is in fact a 2lvl default
-	      assign(params, ajaxConfig);
-	      params.headers = headers;
-	
-	      // Ensure that we have a URL.
-	      if (!options.url) {
-	          options.url = result(model, 'url') || urlError();
-	      }
-	
-	      // Ensure that we have the appropriate request data.
-	      if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
-	          params.json = options.attrs || model.toJSON(options);
-	      }
-	
-	      // If passed a data param, we add it to the URL or body depending on request type
-	      if (options.data && type === 'GET') {
-	          // make sure we've got a '?'
-	          options.url += includes(options.url, '?') ? '&' : '?';
-	          options.url += qs.stringify(options.data);
-	          //delete `data` so `xhr` doesn't use it as a body
-	          delete options.data;
-	      }
-	
-	      // For older servers, emulate JSON by encoding the request into an HTML-form.
-	      if (options.emulateJSON) {
-	          params.headers['content-type'] = 'application/x-www-form-urlencoded';
-	          params.body = params.json ? {model: params.json} : {};
-	          delete params.json;
-	      }
-	
-	      // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
-	      // And an `X-HTTP-Method-Override` header.
-	      if (options.emulateHTTP && (type === 'PUT' || type === 'DELETE' || type === 'PATCH')) {
-	          params.type = 'POST';
-	          if (options.emulateJSON) params.body._method = type;
-	          params.headers['x-http-method-override'] = type;
-	      }
-	
-	      // When emulating JSON, we turn the body into a querystring.
-	      // We do this later to let the emulateHTTP run its course.
-	      if (options.emulateJSON) {
-	          params.body = qs.stringify(params.body);
-	      }
-	
-	      // Set raw XMLHttpRequest options.
-	      if (ajaxConfig.xhrFields) {
-	          var beforeSend = ajaxConfig.beforeSend;
-	          params.beforeSend = function (req) {
-	              assign(req, ajaxConfig.xhrFields);
-	              if (beforeSend) return beforeSend.apply(this, arguments);
-	          };
-	          params.xhrFields = ajaxConfig.xhrFields;
-	      }
-	
-	      // Turn a jQuery.ajax formatted request into xhr compatible
-	      params.method = params.type;
-	
-	      var ajaxSettings = assign(params, options);
-	
-	      // Make the request. The callback executes functions that are compatible
-	      // With jQuery.ajax's syntax.
-	      var request = options.xhrImplementation(ajaxSettings, function (err, resp, body) {
-	          if (err || resp.statusCode >= 400) {
-	              if (options.error) {
-	                  try {
-	                      body = JSON.parse(body);
-	                  } catch(e){}
-	                  var message = (err? err.message : (body || "HTTP"+resp.statusCode));
-	                  options.error(resp, 'error', message);
-	              }
-	          } else {
-	              // Parse body as JSON
-	              var accept = mediaType.fromString(params.headers.accept);
-	              var parseJson = accept.isValid() && accept.type === 'application' && (accept.subtype === 'json' || accept.suffix === 'json');
-	              if (typeof body === 'string' && (!params.headers.accept || parseJson)) {
-	                  try {
-	                      body = JSON.parse(body);
-	                  } catch (err) {
-	                      if (options.error) options.error(resp, 'error', err.message);
-	                      if (options.always) options.always(err, resp, body);
-	                      return;
-	                  }
-	              }
-	              if (options.success) options.success(body, 'success', resp);
-	          }
-	          if (options.always) options.always(err, resp, body);
-	      });
-	      if (model) model.trigger('request', model, request, optionsInput, ajaxSettings);
-	      request.ajaxSettings = ajaxSettings;
-	      return request;
-	  };
-	};
-
-
-/***/ },
-/* 550 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Stringify = __webpack_require__(551);
-	var Parse = __webpack_require__(553);
-	
-	module.exports = {
-	    stringify: Stringify,
-	    parse: Parse
-	};
-
-
-/***/ },
-/* 551 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utils = __webpack_require__(552);
-	
-	var arrayPrefixGenerators = {
-	    brackets: function brackets(prefix) {
-	        return prefix + '[]';
-	    },
-	    indices: function indices(prefix, key) {
-	        return prefix + '[' + key + ']';
-	    },
-	    repeat: function repeat(prefix) {
-	        return prefix;
-	    }
-	};
-	
-	var defaults = {
-	    delimiter: '&',
-	    strictNullHandling: false,
-	    skipNulls: false,
-	    encode: true,
-	    encoder: Utils.encode
-	};
-	
-	var stringify = function stringify(object, prefix, generateArrayPrefix, strictNullHandling, skipNulls, encoder, filter, sort, allowDots) {
-	    var obj = object;
-	    if (typeof filter === 'function') {
-	        obj = filter(prefix, obj);
-	    } else if (obj instanceof Date) {
-	        obj = obj.toISOString();
-	    } else if (obj === null) {
-	        if (strictNullHandling) {
-	            return encoder ? encoder(prefix) : prefix;
-	        }
-	
-	        obj = '';
-	    }
-	
-	    if (typeof obj === 'string' || typeof obj === 'number' || typeof obj === 'boolean' || Utils.isBuffer(obj)) {
-	        if (encoder) {
-	            return [encoder(prefix) + '=' + encoder(obj)];
-	        }
-	        return [prefix + '=' + String(obj)];
-	    }
-	
-	    var values = [];
-	
-	    if (typeof obj === 'undefined') {
-	        return values;
-	    }
-	
-	    var objKeys;
-	    if (Array.isArray(filter)) {
-	        objKeys = filter;
-	    } else {
-	        var keys = Object.keys(obj);
-	        objKeys = sort ? keys.sort(sort) : keys;
-	    }
-	
-	    for (var i = 0; i < objKeys.length; ++i) {
-	        var key = objKeys[i];
-	
-	        if (skipNulls && obj[key] === null) {
-	            continue;
-	        }
-	
-	        if (Array.isArray(obj)) {
-	            values = values.concat(stringify(obj[key], generateArrayPrefix(prefix, key), generateArrayPrefix, strictNullHandling, skipNulls, encoder, filter, sort, allowDots));
-	        } else {
-	            values = values.concat(stringify(obj[key], prefix + (allowDots ? '.' + key : '[' + key + ']'), generateArrayPrefix, strictNullHandling, skipNulls, encoder, filter, sort, allowDots));
-	        }
-	    }
-	
-	    return values;
-	};
-	
-	module.exports = function (object, opts) {
-	    var obj = object;
-	    var options = opts || {};
-	    var delimiter = typeof options.delimiter === 'undefined' ? defaults.delimiter : options.delimiter;
-	    var strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : defaults.strictNullHandling;
-	    var skipNulls = typeof options.skipNulls === 'boolean' ? options.skipNulls : defaults.skipNulls;
-	    var encode = typeof options.encode === 'boolean' ? options.encode : defaults.encode;
-	    var encoder = encode ? (typeof options.encoder === 'function' ? options.encoder : defaults.encoder) : null;
-	    var sort = typeof options.sort === 'function' ? options.sort : null;
-	    var allowDots = typeof options.allowDots === 'undefined' ? false : options.allowDots;
-	    var objKeys;
-	    var filter;
-	
-	    if (options.encoder !== null && options.encoder !== undefined && typeof options.encoder !== 'function') {
-	        throw new TypeError('Encoder has to be a function.');
-	    }
-	
-	    if (typeof options.filter === 'function') {
-	        filter = options.filter;
-	        obj = filter('', obj);
-	    } else if (Array.isArray(options.filter)) {
-	        objKeys = filter = options.filter;
-	    }
-	
-	    var keys = [];
-	
-	    if (typeof obj !== 'object' || obj === null) {
-	        return '';
-	    }
-	
-	    var arrayFormat;
-	    if (options.arrayFormat in arrayPrefixGenerators) {
-	        arrayFormat = options.arrayFormat;
-	    } else if ('indices' in options) {
-	        arrayFormat = options.indices ? 'indices' : 'repeat';
-	    } else {
-	        arrayFormat = 'indices';
-	    }
-	
-	    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
-	
-	    if (!objKeys) {
-	        objKeys = Object.keys(obj);
-	    }
-	
-	    if (sort) {
-	        objKeys.sort(sort);
-	    }
-	
-	    for (var i = 0; i < objKeys.length; ++i) {
-	        var key = objKeys[i];
-	
-	        if (skipNulls && obj[key] === null) {
-	            continue;
-	        }
-	
-	        keys = keys.concat(stringify(obj[key], key, generateArrayPrefix, strictNullHandling, skipNulls, encoder, filter, sort, allowDots));
-	    }
-	
-	    return keys.join(delimiter);
-	};
-
-
-/***/ },
-/* 552 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var hexTable = (function () {
-	    var array = new Array(256);
-	    for (var i = 0; i < 256; ++i) {
-	        array[i] = '%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase();
-	    }
-	
-	    return array;
-	}());
-	
-	exports.arrayToObject = function (source, options) {
-	    var obj = options.plainObjects ? Object.create(null) : {};
-	    for (var i = 0; i < source.length; ++i) {
-	        if (typeof source[i] !== 'undefined') {
-	            obj[i] = source[i];
-	        }
-	    }
-	
-	    return obj;
-	};
-	
-	exports.merge = function (target, source, options) {
-	    if (!source) {
-	        return target;
-	    }
-	
-	    if (typeof source !== 'object') {
-	        if (Array.isArray(target)) {
-	            target.push(source);
-	        } else if (typeof target === 'object') {
-	            target[source] = true;
-	        } else {
-	            return [target, source];
-	        }
-	
-	        return target;
-	    }
-	
-	    if (typeof target !== 'object') {
-	        return [target].concat(source);
-	    }
-	
-	    var mergeTarget = target;
-	    if (Array.isArray(target) && !Array.isArray(source)) {
-	        mergeTarget = exports.arrayToObject(target, options);
-	    }
-	
-	    return Object.keys(source).reduce(function (acc, key) {
-	        var value = source[key];
-	
-	        if (Object.prototype.hasOwnProperty.call(acc, key)) {
-	            acc[key] = exports.merge(acc[key], value, options);
-	        } else {
-	            acc[key] = value;
-	        }
-	        return acc;
-	    }, mergeTarget);
-	};
-	
-	exports.decode = function (str) {
-	    try {
-	        return decodeURIComponent(str.replace(/\+/g, ' '));
-	    } catch (e) {
-	        return str;
-	    }
-	};
-	
-	exports.encode = function (str) {
-	    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
-	    // It has been adapted here for stricter adherence to RFC 3986
-	    if (str.length === 0) {
-	        return str;
-	    }
-	
-	    var string = typeof str === 'string' ? str : String(str);
-	
-	    var out = '';
-	    for (var i = 0; i < string.length; ++i) {
-	        var c = string.charCodeAt(i);
-	
-	        if (
-	            c === 0x2D || // -
-	            c === 0x2E || // .
-	            c === 0x5F || // _
-	            c === 0x7E || // ~
-	            (c >= 0x30 && c <= 0x39) || // 0-9
-	            (c >= 0x41 && c <= 0x5A) || // a-z
-	            (c >= 0x61 && c <= 0x7A) // A-Z
-	        ) {
-	            out += string.charAt(i);
-	            continue;
-	        }
-	
-	        if (c < 0x80) {
-	            out = out + hexTable[c];
-	            continue;
-	        }
-	
-	        if (c < 0x800) {
-	            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
-	            continue;
-	        }
-	
-	        if (c < 0xD800 || c >= 0xE000) {
-	            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
-	            continue;
-	        }
-	
-	        i += 1;
-	        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
-	        out += hexTable[0xF0 | (c >> 18)] + hexTable[0x80 | ((c >> 12) & 0x3F)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)];
-	    }
-	
-	    return out;
-	};
-	
-	exports.compact = function (obj, references) {
-	    if (typeof obj !== 'object' || obj === null) {
-	        return obj;
-	    }
-	
-	    var refs = references || [];
-	    var lookup = refs.indexOf(obj);
-	    if (lookup !== -1) {
-	        return refs[lookup];
-	    }
-	
-	    refs.push(obj);
-	
-	    if (Array.isArray(obj)) {
-	        var compacted = [];
-	
-	        for (var i = 0; i < obj.length; ++i) {
-	            if (obj[i] && typeof obj[i] === 'object') {
-	                compacted.push(exports.compact(obj[i], refs));
-	            } else if (typeof obj[i] !== 'undefined') {
-	                compacted.push(obj[i]);
-	            }
-	        }
-	
-	        return compacted;
-	    }
-	
-	    var keys = Object.keys(obj);
-	    for (var j = 0; j < keys.length; ++j) {
-	        var key = keys[j];
-	        obj[key] = exports.compact(obj[key], refs);
-	    }
-	
-	    return obj;
-	};
-	
-	exports.isRegExp = function (obj) {
-	    return Object.prototype.toString.call(obj) === '[object RegExp]';
-	};
-	
-	exports.isBuffer = function (obj) {
-	    if (obj === null || typeof obj === 'undefined') {
-	        return false;
-	    }
-	
-	    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
-	};
-
-
-/***/ },
-/* 553 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utils = __webpack_require__(552);
-	
-	var has = Object.prototype.hasOwnProperty;
-	
-	var defaults = {
-	    delimiter: '&',
-	    depth: 5,
-	    arrayLimit: 20,
-	    parameterLimit: 1000,
-	    strictNullHandling: false,
-	    plainObjects: false,
-	    allowPrototypes: false,
-	    allowDots: false,
-	    decoder: Utils.decode
-	};
-	
-	var parseValues = function parseValues(str, options) {
-	    var obj = {};
-	    var parts = str.split(options.delimiter, options.parameterLimit === Infinity ? undefined : options.parameterLimit);
-	
-	    for (var i = 0; i < parts.length; ++i) {
-	        var part = parts[i];
-	        var pos = part.indexOf(']=') === -1 ? part.indexOf('=') : part.indexOf(']=') + 1;
-	
-	        var key, val;
-	        if (pos === -1) {
-	            key = options.decoder(part);
-	            val = options.strictNullHandling ? null : '';
-	        } else {
-	            key = options.decoder(part.slice(0, pos));
-	            val = options.decoder(part.slice(pos + 1));
-	        }
-	        if (has.call(obj, key)) {
-	            obj[key] = [].concat(obj[key]).concat(val);
-	        } else {
-	            obj[key] = val;
-	        }
-	    }
-	
-	    return obj;
-	};
-	
-	var parseObject = function parseObject(chain, val, options) {
-	    if (!chain.length) {
-	        return val;
-	    }
-	
-	    var root = chain.shift();
-	
-	    var obj;
-	    if (root === '[]') {
-	        obj = [];
-	        obj = obj.concat(parseObject(chain, val, options));
-	    } else {
-	        obj = options.plainObjects ? Object.create(null) : {};
-	        var cleanRoot = root[0] === '[' && root[root.length - 1] === ']' ? root.slice(1, root.length - 1) : root;
-	        var index = parseInt(cleanRoot, 10);
-	        if (
-	            !isNaN(index) &&
-	            root !== cleanRoot &&
-	            String(index) === cleanRoot &&
-	            index >= 0 &&
-	            (options.parseArrays && index <= options.arrayLimit)
-	        ) {
-	            obj = [];
-	            obj[index] = parseObject(chain, val, options);
-	        } else {
-	            obj[cleanRoot] = parseObject(chain, val, options);
-	        }
-	    }
-	
-	    return obj;
-	};
-	
-	var parseKeys = function parseKeys(givenKey, val, options) {
-	    if (!givenKey) {
-	        return;
-	    }
-	
-	    // Transform dot notation to bracket notation
-	    var key = options.allowDots ? givenKey.replace(/\.([^\.\[]+)/g, '[$1]') : givenKey;
-	
-	    // The regex chunks
-	
-	    var parent = /^([^\[\]]*)/;
-	    var child = /(\[[^\[\]]*\])/g;
-	
-	    // Get the parent
-	
-	    var segment = parent.exec(key);
-	
-	    // Stash the parent if it exists
-	
-	    var keys = [];
-	    if (segment[1]) {
-	        // If we aren't using plain objects, optionally prefix keys
-	        // that would overwrite object prototype properties
-	        if (!options.plainObjects && has.call(Object.prototype, segment[1])) {
-	            if (!options.allowPrototypes) {
-	                return;
-	            }
-	        }
-	
-	        keys.push(segment[1]);
-	    }
-	
-	    // Loop through children appending to the array until we hit depth
-	
-	    var i = 0;
-	    while ((segment = child.exec(key)) !== null && i < options.depth) {
-	        i += 1;
-	        if (!options.plainObjects && has.call(Object.prototype, segment[1].replace(/\[|\]/g, ''))) {
-	            if (!options.allowPrototypes) {
-	                continue;
-	            }
-	        }
-	        keys.push(segment[1]);
-	    }
-	
-	    // If there's a remainder, just add whatever is left
-	
-	    if (segment) {
-	        keys.push('[' + key.slice(segment.index) + ']');
-	    }
-	
-	    return parseObject(keys, val, options);
-	};
-	
-	module.exports = function (str, opts) {
-	    var options = opts || {};
-	
-	    if (options.decoder !== null && options.decoder !== undefined && typeof options.decoder !== 'function') {
-	        throw new TypeError('Decoder has to be a function.');
-	    }
-	
-	    options.delimiter = typeof options.delimiter === 'string' || Utils.isRegExp(options.delimiter) ? options.delimiter : defaults.delimiter;
-	    options.depth = typeof options.depth === 'number' ? options.depth : defaults.depth;
-	    options.arrayLimit = typeof options.arrayLimit === 'number' ? options.arrayLimit : defaults.arrayLimit;
-	    options.parseArrays = options.parseArrays !== false;
-	    options.decoder = typeof options.decoder === 'function' ? options.decoder : defaults.decoder;
-	    options.allowDots = typeof options.allowDots === 'boolean' ? options.allowDots : defaults.allowDots;
-	    options.plainObjects = typeof options.plainObjects === 'boolean' ? options.plainObjects : defaults.plainObjects;
-	    options.allowPrototypes = typeof options.allowPrototypes === 'boolean' ? options.allowPrototypes : defaults.allowPrototypes;
-	    options.parameterLimit = typeof options.parameterLimit === 'number' ? options.parameterLimit : defaults.parameterLimit;
-	    options.strictNullHandling = typeof options.strictNullHandling === 'boolean' ? options.strictNullHandling : defaults.strictNullHandling;
-	
-	    if (str === '' || str === null || typeof str === 'undefined') {
-	        return options.plainObjects ? Object.create(null) : {};
-	    }
-	
-	    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
-	    var obj = options.plainObjects ? Object.create(null) : {};
-	
-	    // Iterate over the keys and setup the new object
-	
-	    var keys = Object.keys(tempObj);
-	    for (var i = 0; i < keys.length; ++i) {
-	        var key = keys[i];
-	        var newObj = parseKeys(key, tempObj[key], options);
-	        obj = Utils.merge(obj, newObj, options);
-	    }
-	
-	    return Utils.compact(obj);
-	};
-
-
-/***/ },
-/* 554 */
-/***/ function(module, exports) {
-
-	/**
-	 * media-type
-	 * @author Lovell Fuller
-	 *
-	 * This code is distributed under the Apache License Version 2.0, the terms of
-	 * which may be found at http://www.apache.org/licenses/LICENSE-2.0.html
-	 */
-	
-	var MediaType = function() {
-	  this.type = null;
-	  this._setSubtypeAndSuffix(null);
-	  this.parameters = {};
-	};
-	
-	MediaType.prototype.isValid = function() {
-	  return this.type !== null && this.subtype !== null && this.subtype !== "example";
-	};
-	
-	MediaType.prototype._setSubtypeAndSuffix = function(subtype) {
-	  this.subtype = subtype;
-	  this.subtypeFacets = [];
-	  this.suffix = null;
-	  if (subtype) {
-	    if (subtype.indexOf("+") > -1 && subtype.substr(-1) !== "+") {
-	      var fixes = subtype.split("+", 2);
-	      this.subtype = fixes[0];
-	      this.subtypeFacets = fixes[0].split(".");
-	      this.suffix = fixes[1];
-	    } else {
-	      this.subtypeFacets = subtype.split(".");
-	    }
-	  }
-	};
-	
-	MediaType.prototype.hasSuffix = function() {
-	  return !!this.suffix;
-	};
-	
-	MediaType.prototype._firstSubtypeFacetEquals = function(str) {
-	  return this.subtypeFacets.length > 0 && this.subtypeFacets[0] === str;
-	};
-	
-	MediaType.prototype.isVendor = function() {
-	  return this._firstSubtypeFacetEquals("vnd");
-	};
-	
-	MediaType.prototype.isPersonal = function() {
-	  return this._firstSubtypeFacetEquals("prs");
-	};
-	
-	MediaType.prototype.isExperimental = function() {
-	  return this._firstSubtypeFacetEquals("x") || this.subtype.substring(0, 2).toLowerCase() === "x-";
-	};
-	
-	MediaType.prototype.asString = function() {
-	  var str = "";
-	  if (this.isValid()) {
-	    str = str + this.type + "/" + this.subtype;
-	    if (this.hasSuffix()) {
-	      str = str + "+" + this.suffix;
-	    }
-	    var parameterKeys = Object.keys(this.parameters);
-	    if (parameterKeys.length > 0) {
-	      var parameters = [];
-	      var that = this;
-	      parameterKeys.sort(function(a, b) {
-	        return a.localeCompare(b);
-	      }).forEach(function(element) {
-	        parameters.push(element + "=" + wrapQuotes(that.parameters[element]));
-	      });
-	      str = str + ";" + parameters.join(";");
-	    }
-	  }
-	  return str;
-	};
-	
-	var wrapQuotes = function(str) {
-	  return (str.indexOf(";") > -1) ? '"' + str + '"' : str;
-	};
-	
-	var unwrapQuotes = function(str) {
-	  return (str.substr(0, 1) === '"' && str.substr(-1) === '"') ? str.substr(1, str.length - 2) : str;
-	};
-	
-	var mediaTypeMatcher = /^(application|audio|image|message|model|multipart|text|video|\*)\/([a-zA-Z0-9!#$%^&\*_\-\+{}\|'.`~]{1,127})(;.*)?$/;
-	
-	var parameterSplitter = /;(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/;
-	
-	exports.fromString = function(str) {
-	  var mediaType = new MediaType();
-	  if (str) {
-	    var match = str.match(mediaTypeMatcher);
-	    if (match && !(match[1] === '*' && match[2] !== '*')) { 
-	      mediaType.type = match[1];
-	      mediaType._setSubtypeAndSuffix(match[2]);
-	      if (match[3]) {
-	        match[3].substr(1).split(parameterSplitter).forEach(function(parameter) {
-	          var keyAndValue = parameter.split('=', 2);
-	          if (keyAndValue.length === 2) {
-	            mediaType.parameters[keyAndValue[0].toLowerCase().trim()] = unwrapQuotes(keyAndValue[1].trim());
-	          }
-	        });
-	      }
-	    }
-	  }
-	  return mediaType;
-	};
-
-
-/***/ },
-/* 555 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseClone = __webpack_require__(556);
-	
-	/**
-	 * Creates a shallow clone of `value`.
-	 *
-	 * **Note:** This method is loosely based on the
-	 * [structured clone algorithm](https://mdn.io/Structured_clone_algorithm)
-	 * and supports cloning arrays, array buffers, booleans, date objects, maps,
-	 * numbers, `Object` objects, regexes, sets, strings, symbols, and typed
-	 * arrays. The own enumerable properties of `arguments` objects are cloned
-	 * as plain objects. An empty object is returned for uncloneable values such
-	 * as error objects, functions, DOM nodes, and WeakMaps.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Lang
-	 * @param {*} value The value to clone.
-	 * @returns {*} Returns the cloned value.
-	 * @see _.cloneDeep
-	 * @example
-	 *
-	 * var objects = [{ 'a': 1 }, { 'b': 2 }];
-	 *
-	 * var shallow = _.clone(objects);
-	 * console.log(shallow[0] === objects[0]);
-	 * // => true
-	 */
-	function clone(value) {
-	  return baseClone(value, false, true);
-	}
-	
-	module.exports = clone;
-
-
-/***/ },
-/* 556 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Stack = __webpack_require__(443),
-	    arrayEach = __webpack_require__(525),
-	    assignValue = __webpack_require__(375),
-	    baseAssign = __webpack_require__(557),
-	    cloneBuffer = __webpack_require__(558),
-	    copyArray = __webpack_require__(519),
-	    copySymbols = __webpack_require__(559),
-	    getAllKeys = __webpack_require__(560),
-	    getTag = __webpack_require__(457),
-	    initCloneArray = __webpack_require__(561),
-	    initCloneByTag = __webpack_require__(562),
-	    initCloneObject = __webpack_require__(573),
-	    isArray = __webpack_require__(251),
-	    isBuffer = __webpack_require__(462),
-	    isObject = __webpack_require__(253),
-	    keys = __webpack_require__(419);
-	
-	/** `Object#toString` result references. */
-	var argsTag = '[object Arguments]',
-	    arrayTag = '[object Array]',
-	    boolTag = '[object Boolean]',
-	    dateTag = '[object Date]',
-	    errorTag = '[object Error]',
-	    funcTag = '[object Function]',
-	    genTag = '[object GeneratorFunction]',
-	    mapTag = '[object Map]',
-	    numberTag = '[object Number]',
-	    objectTag = '[object Object]',
-	    regexpTag = '[object RegExp]',
-	    setTag = '[object Set]',
-	    stringTag = '[object String]',
-	    symbolTag = '[object Symbol]',
-	    weakMapTag = '[object WeakMap]';
-	
-	var arrayBufferTag = '[object ArrayBuffer]',
-	    dataViewTag = '[object DataView]',
-	    float32Tag = '[object Float32Array]',
-	    float64Tag = '[object Float64Array]',
-	    int8Tag = '[object Int8Array]',
-	    int16Tag = '[object Int16Array]',
-	    int32Tag = '[object Int32Array]',
-	    uint8Tag = '[object Uint8Array]',
-	    uint8ClampedTag = '[object Uint8ClampedArray]',
-	    uint16Tag = '[object Uint16Array]',
-	    uint32Tag = '[object Uint32Array]';
-	
-	/** Used to identify `toStringTag` values supported by `_.clone`. */
-	var cloneableTags = {};
-	cloneableTags[argsTag] = cloneableTags[arrayTag] =
-	cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
-	cloneableTags[boolTag] = cloneableTags[dateTag] =
-	cloneableTags[float32Tag] = cloneableTags[float64Tag] =
-	cloneableTags[int8Tag] = cloneableTags[int16Tag] =
-	cloneableTags[int32Tag] = cloneableTags[mapTag] =
-	cloneableTags[numberTag] = cloneableTags[objectTag] =
-	cloneableTags[regexpTag] = cloneableTags[setTag] =
-	cloneableTags[stringTag] = cloneableTags[symbolTag] =
-	cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
-	cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
-	cloneableTags[errorTag] = cloneableTags[funcTag] =
-	cloneableTags[weakMapTag] = false;
-	
-	/**
-	 * The base implementation of `_.clone` and `_.cloneDeep` which tracks
-	 * traversed objects.
-	 *
-	 * @private
-	 * @param {*} value The value to clone.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @param {boolean} [isFull] Specify a clone including symbols.
-	 * @param {Function} [customizer] The function to customize cloning.
-	 * @param {string} [key] The key of `value`.
-	 * @param {Object} [object] The parent object of `value`.
-	 * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
-	 * @returns {*} Returns the cloned value.
-	 */
-	function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
-	  var result;
-	  if (customizer) {
-	    result = object ? customizer(value, key, object, stack) : customizer(value);
-	  }
-	  if (result !== undefined) {
-	    return result;
-	  }
-	  if (!isObject(value)) {
-	    return value;
-	  }
-	  var isArr = isArray(value);
-	  if (isArr) {
-	    result = initCloneArray(value);
-	    if (!isDeep) {
-	      return copyArray(value, result);
-	    }
-	  } else {
-	    var tag = getTag(value),
-	        isFunc = tag == funcTag || tag == genTag;
-	
-	    if (isBuffer(value)) {
-	      return cloneBuffer(value, isDeep);
-	    }
-	    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
-	      result = initCloneObject(isFunc ? {} : value);
-	      if (!isDeep) {
-	        return copySymbols(value, baseAssign(result, value));
-	      }
-	    } else {
-	      if (!cloneableTags[tag]) {
-	        return object ? value : {};
-	      }
-	      result = initCloneByTag(value, tag, baseClone, isDeep);
-	    }
-	  }
-	  // Check for circular references and return its corresponding clone.
-	  stack || (stack = new Stack);
-	  var stacked = stack.get(value);
-	  if (stacked) {
-	    return stacked;
-	  }
-	  stack.set(value, result);
-	
-	  if (!isArr) {
-	    var props = isFull ? getAllKeys(value) : keys(value);
-	  }
-	  arrayEach(props || value, function(subValue, key) {
-	    if (props) {
-	      key = subValue;
-	      subValue = value[key];
-	    }
-	    // Recursively populate clone (susceptible to call stack limits).
-	    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
-	  });
-	  return result;
-	}
-	
-	module.exports = baseClone;
-
-
-/***/ },
-/* 557 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var copyObject = __webpack_require__(374),
-	    keys = __webpack_require__(419);
-	
-	/**
-	 * The base implementation of `_.assign` without support for multiple sources
-	 * or `customizer` functions.
-	 *
-	 * @private
-	 * @param {Object} object The destination object.
-	 * @param {Object} source The source object.
-	 * @returns {Object} Returns `object`.
-	 */
-	function baseAssign(object, source) {
-	  return object && copyObject(source, keys(source), object);
-	}
-	
-	module.exports = baseAssign;
-
-
-/***/ },
-/* 558 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(269);
-	
-	/** Detect free variable `exports`. */
-	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-	
-	/** Detect free variable `module`. */
-	var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
-	
-	/** Detect the popular CommonJS extension `module.exports`. */
-	var moduleExports = freeModule && freeModule.exports === freeExports;
-	
-	/** Built-in value references. */
-	var Buffer = moduleExports ? root.Buffer : undefined,
-	    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
-	
-	/**
-	 * Creates a clone of  `buffer`.
-	 *
-	 * @private
-	 * @param {Buffer} buffer The buffer to clone.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @returns {Buffer} Returns the cloned buffer.
-	 */
-	function cloneBuffer(buffer, isDeep) {
-	  if (isDeep) {
-	    return buffer.slice();
-	  }
-	  var length = buffer.length,
-	      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
-	
-	  buffer.copy(result);
-	  return result;
-	}
-	
-	module.exports = cloneBuffer;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(463)(module)))
-
-/***/ },
-/* 559 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var copyObject = __webpack_require__(374),
-	    getSymbols = __webpack_require__(430);
-	
-	/**
-	 * Copies own symbol properties of `source` to `object`.
-	 *
-	 * @private
-	 * @param {Object} source The object to copy symbols from.
-	 * @param {Object} [object={}] The object to copy symbols to.
-	 * @returns {Object} Returns `object`.
-	 */
-	function copySymbols(source, object) {
-	  return copyObject(source, getSymbols(source), object);
-	}
-	
-	module.exports = copySymbols;
-
-
-/***/ },
-/* 560 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseGetAllKeys = __webpack_require__(428),
-	    getSymbols = __webpack_require__(430),
-	    keys = __webpack_require__(419);
-	
-	/**
-	 * Creates an array of own enumerable property names and symbols of `object`.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @returns {Array} Returns the array of property names and symbols.
-	 */
-	function getAllKeys(object) {
-	  return baseGetAllKeys(object, keys, getSymbols);
-	}
-	
-	module.exports = getAllKeys;
-
-
-/***/ },
-/* 561 */
-/***/ function(module, exports) {
-
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Initializes an array clone.
-	 *
-	 * @private
-	 * @param {Array} array The array to clone.
-	 * @returns {Array} Returns the initialized clone.
-	 */
-	function initCloneArray(array) {
-	  var length = array.length,
-	      result = array.constructor(length);
-	
-	  // Add properties assigned by `RegExp#exec`.
-	  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
-	    result.index = array.index;
-	    result.input = array.input;
-	  }
-	  return result;
-	}
-	
-	module.exports = initCloneArray;
-
-
-/***/ },
-/* 562 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var cloneArrayBuffer = __webpack_require__(563),
-	    cloneDataView = __webpack_require__(564),
-	    cloneMap = __webpack_require__(565),
-	    cloneRegExp = __webpack_require__(568),
-	    cloneSet = __webpack_require__(569),
-	    cloneSymbol = __webpack_require__(571),
-	    cloneTypedArray = __webpack_require__(572);
-	
-	/** `Object#toString` result references. */
-	var boolTag = '[object Boolean]',
-	    dateTag = '[object Date]',
-	    mapTag = '[object Map]',
-	    numberTag = '[object Number]',
-	    regexpTag = '[object RegExp]',
-	    setTag = '[object Set]',
-	    stringTag = '[object String]',
-	    symbolTag = '[object Symbol]';
-	
-	var arrayBufferTag = '[object ArrayBuffer]',
-	    dataViewTag = '[object DataView]',
-	    float32Tag = '[object Float32Array]',
-	    float64Tag = '[object Float64Array]',
-	    int8Tag = '[object Int8Array]',
-	    int16Tag = '[object Int16Array]',
-	    int32Tag = '[object Int32Array]',
-	    uint8Tag = '[object Uint8Array]',
-	    uint8ClampedTag = '[object Uint8ClampedArray]',
-	    uint16Tag = '[object Uint16Array]',
-	    uint32Tag = '[object Uint32Array]';
-	
-	/**
-	 * Initializes an object clone based on its `toStringTag`.
-	 *
-	 * **Note:** This function only supports cloning values with tags of
-	 * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
-	 *
-	 * @private
-	 * @param {Object} object The object to clone.
-	 * @param {string} tag The `toStringTag` of the object to clone.
-	 * @param {Function} cloneFunc The function to clone values.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @returns {Object} Returns the initialized clone.
-	 */
-	function initCloneByTag(object, tag, cloneFunc, isDeep) {
-	  var Ctor = object.constructor;
-	  switch (tag) {
-	    case arrayBufferTag:
-	      return cloneArrayBuffer(object);
-	
-	    case boolTag:
-	    case dateTag:
-	      return new Ctor(+object);
-	
-	    case dataViewTag:
-	      return cloneDataView(object, isDeep);
-	
-	    case float32Tag: case float64Tag:
-	    case int8Tag: case int16Tag: case int32Tag:
-	    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
-	      return cloneTypedArray(object, isDeep);
-	
-	    case mapTag:
-	      return cloneMap(object, isDeep, cloneFunc);
-	
-	    case numberTag:
-	    case stringTag:
-	      return new Ctor(object);
-	
-	    case regexpTag:
-	      return cloneRegExp(object);
-	
-	    case setTag:
-	      return cloneSet(object, isDeep, cloneFunc);
-	
-	    case symbolTag:
-	      return cloneSymbol(object);
-	  }
-	}
-	
-	module.exports = initCloneByTag;
-
-
-/***/ },
-/* 563 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Uint8Array = __webpack_require__(454);
-	
-	/**
-	 * Creates a clone of `arrayBuffer`.
-	 *
-	 * @private
-	 * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
-	 * @returns {ArrayBuffer} Returns the cloned array buffer.
-	 */
-	function cloneArrayBuffer(arrayBuffer) {
-	  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-	  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
-	  return result;
-	}
-	
-	module.exports = cloneArrayBuffer;
-
-
-/***/ },
-/* 564 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var cloneArrayBuffer = __webpack_require__(563);
-	
-	/**
-	 * Creates a clone of `dataView`.
-	 *
-	 * @private
-	 * @param {Object} dataView The data view to clone.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @returns {Object} Returns the cloned data view.
-	 */
-	function cloneDataView(dataView, isDeep) {
-	  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
-	  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
-	}
-	
-	module.exports = cloneDataView;
-
-
-/***/ },
-/* 565 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var addMapEntry = __webpack_require__(566),
-	    arrayReduce = __webpack_require__(567),
-	    mapToArray = __webpack_require__(455);
-	
-	/**
-	 * Creates a clone of `map`.
-	 *
-	 * @private
-	 * @param {Object} map The map to clone.
-	 * @param {Function} cloneFunc The function to clone values.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @returns {Object} Returns the cloned map.
-	 */
-	function cloneMap(map, isDeep, cloneFunc) {
-	  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
-	  return arrayReduce(array, addMapEntry, new map.constructor);
-	}
-	
-	module.exports = cloneMap;
-
-
-/***/ },
-/* 566 */
-/***/ function(module, exports) {
-
-	/**
-	 * Adds the key-value `pair` to `map`.
-	 *
-	 * @private
-	 * @param {Object} map The map to modify.
-	 * @param {Array} pair The key-value pair to add.
-	 * @returns {Object} Returns `map`.
-	 */
-	function addMapEntry(map, pair) {
-	  // Don't return `map.set` because it's not chainable in IE 11.
-	  map.set(pair[0], pair[1]);
-	  return map;
-	}
-	
-	module.exports = addMapEntry;
-
-
-/***/ },
-/* 567 */
-/***/ function(module, exports) {
-
-	/**
-	 * A specialized version of `_.reduce` for arrays without support for
-	 * iteratee shorthands.
-	 *
-	 * @private
-	 * @param {Array} [array] The array to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @param {*} [accumulator] The initial value.
-	 * @param {boolean} [initAccum] Specify using the first element of `array` as
-	 *  the initial value.
-	 * @returns {*} Returns the accumulated value.
-	 */
-	function arrayReduce(array, iteratee, accumulator, initAccum) {
-	  var index = -1,
-	      length = array ? array.length : 0;
-	
-	  if (initAccum && length) {
-	    accumulator = array[++index];
-	  }
-	  while (++index < length) {
-	    accumulator = iteratee(accumulator, array[index], index, array);
-	  }
-	  return accumulator;
-	}
-	
-	module.exports = arrayReduce;
-
-
-/***/ },
-/* 568 */
-/***/ function(module, exports) {
-
-	/** Used to match `RegExp` flags from their coerced string values. */
-	var reFlags = /\w*$/;
-	
-	/**
-	 * Creates a clone of `regexp`.
-	 *
-	 * @private
-	 * @param {Object} regexp The regexp to clone.
-	 * @returns {Object} Returns the cloned regexp.
-	 */
-	function cloneRegExp(regexp) {
-	  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
-	  result.lastIndex = regexp.lastIndex;
-	  return result;
-	}
-	
-	module.exports = cloneRegExp;
-
-
-/***/ },
-/* 569 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var addSetEntry = __webpack_require__(570),
-	    arrayReduce = __webpack_require__(567),
-	    setToArray = __webpack_require__(325);
-	
-	/**
-	 * Creates a clone of `set`.
-	 *
-	 * @private
-	 * @param {Object} set The set to clone.
-	 * @param {Function} cloneFunc The function to clone values.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @returns {Object} Returns the cloned set.
-	 */
-	function cloneSet(set, isDeep, cloneFunc) {
-	  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
-	  return arrayReduce(array, addSetEntry, new set.constructor);
-	}
-	
-	module.exports = cloneSet;
-
-
-/***/ },
-/* 570 */
-/***/ function(module, exports) {
-
-	/**
-	 * Adds `value` to `set`.
-	 *
-	 * @private
-	 * @param {Object} set The set to modify.
-	 * @param {*} value The value to add.
-	 * @returns {Object} Returns `set`.
-	 */
-	function addSetEntry(set, value) {
-	  // Don't return `set.add` because it's not chainable in IE 11.
-	  set.add(value);
-	  return set;
-	}
-	
-	module.exports = addSetEntry;
-
-
-/***/ },
-/* 571 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Symbol = __webpack_require__(392);
-	
-	/** Used to convert symbols to primitives and strings. */
-	var symbolProto = Symbol ? Symbol.prototype : undefined,
-	    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
-	
-	/**
-	 * Creates a clone of the `symbol` object.
-	 *
-	 * @private
-	 * @param {Object} symbol The symbol object to clone.
-	 * @returns {Object} Returns the cloned symbol object.
-	 */
-	function cloneSymbol(symbol) {
-	  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
-	}
-	
-	module.exports = cloneSymbol;
-
-
-/***/ },
-/* 572 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var cloneArrayBuffer = __webpack_require__(563);
-	
-	/**
-	 * Creates a clone of `typedArray`.
-	 *
-	 * @private
-	 * @param {Object} typedArray The typed array to clone.
-	 * @param {boolean} [isDeep] Specify a deep clone.
-	 * @returns {Object} Returns the cloned typed array.
-	 */
-	function cloneTypedArray(typedArray, isDeep) {
-	  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-	  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-	}
-	
-	module.exports = cloneTypedArray;
-
-
-/***/ },
-/* 573 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseCreate = __webpack_require__(503),
-	    getPrototype = __webpack_require__(241),
-	    isPrototype = __webpack_require__(385);
-	
-	/**
-	 * Initializes an object clone.
-	 *
-	 * @private
-	 * @param {Object} object The object to clone.
-	 * @returns {Object} Returns the initialized clone.
-	 */
-	function initCloneObject(object) {
-	  return (typeof object.constructor == 'function' && !isPrototype(object))
-	    ? baseCreate(getPrototype(object))
-	    : {};
-	}
-	
-	module.exports = initCloneObject;
-
-
-/***/ },
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */,
+/* 558 */,
+/* 559 */,
+/* 560 */,
+/* 561 */,
+/* 562 */,
+/* 563 */,
+/* 564 */,
+/* 565 */,
+/* 566 */,
+/* 567 */,
+/* 568 */,
+/* 569 */,
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */,
 /* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _ampersandModel = __webpack_require__(412);
+	var _ampersandState = __webpack_require__(413);
 	
-	var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
+	var _ampersandState2 = _interopRequireDefault(_ampersandState);
 	
 	var _ampersandCollection = __webpack_require__(575);
 	
 	var _ampersandCollection2 = _interopRequireDefault(_ampersandCollection);
 	
-	var _grid = __webpack_require__(411);
-	
-	var _grid2 = _interopRequireDefault(_grid);
+	var _slot = __webpack_require__(645);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Container = _ampersandModel2.default.extend({
+	var Container = _ampersandState2.default.extend({
 		props: {
 			grid: 'state',
 			id: 'number',
@@ -11868,7 +9780,7 @@
 			editing: ['boolean', false, true]
 		},
 		collections: {
-			// slots: ContainerCollection,
+			slots: _slot.SlotCollection
 		}
 	});
 	
@@ -13741,6 +11653,135 @@
 	  };
 	};
 
+
+/***/ },
+/* 600 */,
+/* 601 */,
+/* 602 */,
+/* 603 */,
+/* 604 */,
+/* 605 */,
+/* 606 */,
+/* 607 */,
+/* 608 */,
+/* 609 */,
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */,
+/* 614 */,
+/* 615 */,
+/* 616 */,
+/* 617 */,
+/* 618 */,
+/* 619 */,
+/* 620 */,
+/* 621 */,
+/* 622 */,
+/* 623 */,
+/* 624 */,
+/* 625 */,
+/* 626 */,
+/* 627 */,
+/* 628 */,
+/* 629 */,
+/* 630 */,
+/* 631 */,
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */,
+/* 636 */,
+/* 637 */,
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _ampersandState = __webpack_require__(413);
+	
+	var _ampersandState2 = _interopRequireDefault(_ampersandState);
+	
+	var _ampersandCollection = __webpack_require__(575);
+	
+	var _ampersandCollection2 = _interopRequireDefault(_ampersandCollection);
+	
+	var _box = __webpack_require__(646);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * a single slot
+	 */
+	var Slot = _ampersandState2.default.extend({
+		props: {},
+		collections: {
+			boxes: _box.BoxCollection
+		}
+	});
+	
+	/**
+	 * collection of slots (for container slots)
+	 */
+	var SlotCollection = _ampersandCollection2.default.extend({
+		model: Slot
+	});
+	
+	/**
+	 * expose to public
+	 */
+	module.exports.Slot = Slot;
+	module.exports.SlotCollection = SlotCollection;
+
+/***/ },
+/* 646 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _ampersandState = __webpack_require__(413);
+	
+	var _ampersandState2 = _interopRequireDefault(_ampersandState);
+	
+	var _ampersandCollection = __webpack_require__(575);
+	
+	var _ampersandCollection2 = _interopRequireDefault(_ampersandCollection);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * the box module
+	 */
+	var Box = _ampersandState2.default.extend({
+		props: {
+			id: 'number',
+			title: 'string',
+			content: 'object'
+		},
+		session: {
+			editing: ['boolean', false, true]
+		}
+	});
+	
+	/**
+	 * box collection defintion
+	 */
+	var BoxCollection = _ampersandCollection2.default.extend({
+		model: Box
+	});
+	
+	/**
+	 * expose to public
+	 */
+	module.exports.Box = Box;
+	module.exports.BoxCollection = BoxCollection;
 
 /***/ }
 /******/ ]);

@@ -35,5 +35,9 @@ module.exports = {
 	/**
 	 * demo of container factory
 	 */
-	demo_container_factory: './demo/container-factory.js'
+	demo_container_factory: './demo/container-factory.js',
+	/**
+	 * demo of tabview with container and boxes
+	 */
+	demo_tab_view: './demo/tab-view.js',
 };

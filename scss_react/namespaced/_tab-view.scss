@@ -1,0 +1,22 @@
+.tab-view{
+	.tab-view__tabs{
+		border-bottom: 1px solid black;
+	}
+	.tab-view__tab{
+		display: inline-block;
+		padding: 15px;
+		cursor: pointer;
+		&:hover,
+		&.is-active{
+			color: white;
+			background-color: black;
+		}
+	}
+	.tab-view__tab + .tab-view__tab {
+		border-left: 1px solid black;
+	}
+	.tab-view__content{
+		padding: 15px 0;
+	}
+	
+}

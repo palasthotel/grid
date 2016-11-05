@@ -1,9 +1,9 @@
-import Model from 'ampersand-model';
+import State from 'ampersand-state';
 import Collection from 'ampersand-collection';
 
-import Grid from './grid.js';
+import {SlotCollection} from './slot.js';
 
-const Container = Model.extend({
+const Container = State.extend({
 	props: {
 		grid: 'state',
 		id: 'number',
@@ -13,7 +13,7 @@ const Container = Model.extend({
 		editing: ['boolean', false, true],
 	},
 	collections:{
-		// slots: ContainerCollection,
+		slots: SlotCollection,
 	},
 });
 

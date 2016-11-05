@@ -23,7 +23,7 @@ class HtmlWidget extends Component {
 			return(
 				<TinyMCE
 					content={this.state.value}
-					id="test"
+					id={this.parentpath}
 					config={{
 						menubar:false,
 						plugins: 'link',

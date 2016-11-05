@@ -1,23 +1,18 @@
+// https://ampersandjs.com/docs/#ampersand-state
+// https://ampersandjs.com/docs/#ampersand-collection
 
-import Model from 'ampersand-model';
+import State from 'ampersand-state';
 
-import {Container, ContainerCollection} from './container.js';
+import {ContainerCollection} from './container.js';
 
-
-
-var Grid = Model.extend({
+var Grid = State.extend({
 	props: {
 		id: ['number', true, -1],
 		isDraft: ['boolean', true, true],
-		autor: 'string',
 	},
 	session: {
 		// [type, required, default]
 		loading: ['boolean', true, false],
-		revisions: {
-			type: 'array',
-			default: function () { return []; }
-		}
 	},
 	collections:{
 		container: ContainerCollection,

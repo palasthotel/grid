@@ -1,7 +1,10 @@
 .grid .box-drop{
 	position: relative;
 	height: 15px;
-	visibility: hidden;
+	
+	opacity: 0;
+	@include transition(opacity, .2s, ease);
+	
 	
 	&:first-child,
 	&:last-child{
@@ -17,10 +20,11 @@
 		left: 0;
 		right: 0;
 		background-color: $color__highlight_on_light;
+		@include transition(background-color, .2s, ease);
 	}
 	
 	&.can_drop{
-		visibility: visible;
+		opacity: 1;
 	}
 	
 	&.is_over{

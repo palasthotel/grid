@@ -207,17 +207,29 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .collapsible + .collapsible { border-top: 1px solid #333; }
 
+.tab-view .tab-view__tabs { border-bottom: 1px solid black; }
+
+.tab-view .tab-view__tab { display: inline-block; padding: 15px; cursor: pointer; }
+
+.tab-view .tab-view__tab:hover, .tab-view .tab-view__tab.is-active { color: white; background-color: black; }
+
+.tab-view .tab-view__tab + .tab-view__tab { border-left: 1px solid black; }
+
+.tab-view .tab-view__content { padding: 15px 0; }
+
 .undo-panel { background-color: black; color: white; fill: currentColor; border-radius: 2px; padding: 0 15px; }
 
 .undo-panel .button-undo { color: #536DFE; }
 
 .the-grid { margin-bottom: 30px; }
 
-.grid .box-drop { position: relative; height: 15px; visibility: hidden; }
+.the-grid .grid { margin-right: 300px; }
 
-.grid .box-drop .box-drop__area { position: absolute; width: 100%; height: 20px; top: -3px; left: 0; right: 0; background-color: #536dfe; }
+.grid .box-drop { position: relative; height: 15px; opacity: 0; -webkit-transition: opacity 0.2s ease; transition: opacity 0.2s ease; }
 
-.grid .box-drop.can_drop { visibility: visible; }
+.grid .box-drop .box-drop__area { position: absolute; width: 100%; height: 20px; top: -3px; left: 0; right: 0; background-color: #536dfe; -webkit-transition: background-color 0.2s ease; transition: background-color 0.2s ease; }
+
+.grid .box-drop.can_drop { opacity: 1; }
 
 .grid .box-drop.is_over .box-drop__area { background-color: red; }
 
@@ -257,11 +269,11 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .container .container__controls { border: 1px solid rgba(176, 186, 194, 0.7); position: relative; background-color: transparent; height: 40px; border: 1px solid transparent; border-bottom: none; }
 
-.container .container__drag { position: absolute; top: 0; left: 0; width: 100%; height: 40px; cursor: move; }
+.container .container__drag { position: absolute; top: 0; left: 0; width: 100%; height: 40px; cursor: move; margin-left: -8px; }
 
 .container .container__drag .icon-drag { position: absolute; top: 9px; }
 
-.container .container__title { color: #262e38; }
+.container .container__title { position: absolute; top: 8px; left: 20px; color: #262e38; }
 
 .container .container__style { font-weight: normal; font-size: 11px; }
 
