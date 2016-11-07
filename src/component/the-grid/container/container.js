@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes, Events } from '../../constants.js';
-import ContainerDragPreview from '../../helper/container-drag-preview.js';
+import { ItemTypes, Events } from '../../../helper/constants.js';
+import {ContainerDragPreview} from '../../../helper/drag-preview.js';
 
 
 const containerSource = {
@@ -46,6 +46,7 @@ class Container extends Component{
 	}
 	componentDidMount(){
 		this.props.events.on(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+		this.buildDragPreview();
 	}
 	/**
 	 * ---------------------
@@ -114,7 +115,7 @@ class Container extends Component{
 	 * ---------------------
 	 */
 	onGridResize(size){
-		this.buildDragPreview(size);
+		this.buildDragPreview();
 	}
 	
 	/**
@@ -122,7 +123,7 @@ class Container extends Component{
 	 * other functions
 	 * ---------------------
 	 */
-	buildDragPreview(size){
+	buildDragPreview(){
 		const { connectDragPreview } = this.props;
 		let result = ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
 		result.img.onload = () => connectDragPreview(result.img);

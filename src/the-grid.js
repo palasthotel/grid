@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {EventEmitter} from 'events';
-import TheGrid from './component/the-grid.js';
+import TheGrid from './component/the-grid/the-grid.js';
 
 /**
  *

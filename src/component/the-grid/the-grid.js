@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from './grid.js';
-import TabView from './tab-view.js';
-import ContainerTypes from './toolbar/container-types.js';
+import TabView from './sidebar/tab-view.js';
+import ContainerTypes from './sidebar/container-types.js';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';

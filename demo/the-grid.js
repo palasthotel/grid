@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TheGrid from '../src/component/the-grid.js';
+import TheGrid from '../src/component/the-grid/the-grid.js';
 
 /**
  * grid dummy

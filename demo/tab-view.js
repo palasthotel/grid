@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import TabView from '../src/component/tab-view.js';
-import ContainerTypes from '../src/component/toolbar/container-types.js';
+import TabView from '../src/component/the-grid/sidebar/tab-view.js';
+import ContainerTypes from '../src/component/the-grid/sidebar/container-types.js';
 
 
 /**

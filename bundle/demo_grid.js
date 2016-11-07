@@ -30202,7 +30202,9 @@
 					$boxes.push(_react2.default.createElement(_box2.default, _extends({
 						key: i,
 						index: i
-					}, box)));
+					}, box, {
+						events: this.props.events
+					})));
 					if (i == boxes.length - 1) $boxes.push(this.renderBoxDrop(++i));
 				}
 				return $boxes;
@@ -30214,7 +30216,8 @@
 				return _react2.default.createElement(_boxDrop2.default, {
 					key: drop_key,
 					index: index,
-					onDrop: this.onBoxDrop.bind(this, index)
+					onDrop: this.onBoxDrop.bind(this, index),
+					events: this.props.events
 				});
 			}
 	
@@ -30238,7 +30241,8 @@
 						_extends({
 							key: index
 						}, slot, {
-							dimension: width
+							dimension: width,
+							events: _this2.props.events
 						}),
 						_this2.renderBoxes(slot.boxes)
 					);
@@ -30393,9 +30397,7 @@
 	
 	var _constants = __webpack_require__(234);
 	
-	var _containerDragPreview = __webpack_require__(405);
-	
-	var _containerDragPreview2 = _interopRequireDefault(_containerDragPreview);
+	var _dragPreview = __webpack_require__(405);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30455,6 +30457,7 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				this.props.events.on(_constants.Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+				this.buildDragPreview();
 			}
 			/**
 	   * ---------------------
@@ -30579,7 +30582,7 @@
 		}, {
 			key: 'onGridResize',
 			value: function onGridResize(size) {
-				this.buildDragPreview(size);
+				this.buildDragPreview();
 			}
 	
 			/**
@@ -30590,10 +30593,10 @@
 	
 		}, {
 			key: 'buildDragPreview',
-			value: function buildDragPreview(size) {
+			value: function buildDragPreview() {
 				var connectDragPreview = this.props.connectDragPreview;
 	
-				var result = _containerDragPreview2.default.create(this.state.dom.clientWidth, this.props.slots.length);
+				var result = _dragPreview.ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
 				result.img.onload = function () {
 					return connectDragPreview(result.img);
 				};
@@ -30627,7 +30630,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var ContainerDragPreview = function () {
+	var ContainerDragPreview = exports.ContainerDragPreview = function () {
 		function ContainerDragPreview() {
 			_classCallCheck(this, ContainerDragPreview);
 		}
@@ -30645,7 +30648,7 @@
 		}, {
 			key: "create",
 			value: function create(width, slots) {
-				console.log("create", width, slots);
+				console.log("create container preview", width, slots);
 				var img = new Image();
 				var c = document.createElement('canvas');
 				c.height = this.height();
@@ -30672,7 +30675,44 @@
 		return ContainerDragPreview;
 	}();
 	
-	exports.default = ContainerDragPreview;
+	var BoxDragPreview = exports.BoxDragPreview = function () {
+		function BoxDragPreview() {
+			_classCallCheck(this, BoxDragPreview);
+		}
+	
+		_createClass(BoxDragPreview, null, [{
+			key: "height",
+			value: function height() {
+				return 40;
+			}
+		}, {
+			key: "padding",
+			value: function padding() {
+				return 2;
+			}
+		}, {
+			key: "create",
+			value: function create(width) {
+				console.log("create box preview", width);
+				var img = new Image();
+				var c = document.createElement('canvas');
+				c.height = this.height();
+				c.width = width;
+	
+				var ctx = c.getContext('2d');
+				ctx.rect(0, 0, width, this.height());
+				ctx.fillStyle = "#333333";
+				ctx.fill();
+	
+				return {
+					img: img,
+					src: c.toDataURL()
+				};
+			}
+		}]);
+
+		return BoxDragPreview;
+	}();
 
 /***/ },
 /* 406 */
@@ -31004,6 +31044,8 @@
 	
 	var _constants = __webpack_require__(234);
 	
+	var _dragPreview = __webpack_require__(405);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31052,18 +31094,29 @@
 		function Box(props) {
 			_classCallCheck(this, Box);
 	
-			return _possibleConstructorReturn(this, (Box.__proto__ || Object.getPrototypeOf(Box)).call(this, props));
-		}
-		/**
-	  * ---------------------
-	  * rendering
-	  * ---------------------
-	  */
+			var _this = _possibleConstructorReturn(this, (Box.__proto__ || Object.getPrototypeOf(Box)).call(this, props));
 	
+			_this.state = {};
+			return _this;
+		}
 	
 		_createClass(Box, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.props.events.on(_constants.Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+				this.buildDragPreview();
+			}
+			/**
+	   * ---------------------
+	   * rendering
+	   * ---------------------
+	   */
+	
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+	
 				var _props = this.props;
 				var connectDragSource = _props.connectDragSource;
 				var connectDragPreview = _props.connectDragPreview;
@@ -31092,10 +31145,15 @@
 				}
 				return connectDragPreview(_react2.default.createElement(
 					'div',
-					{ className: 'box',
+					{
+						className: 'box' + (isDragging ? " is-dragged" : ""),
 						style: {
 							opacity: isDragging ? 0.3 : 1
-						} },
+						},
+						ref: function ref(element) {
+							return _this2.state.dom = element;
+						}
+					},
 					_react2.default.createElement(
 						'div',
 						{ className: 'box__content' },
@@ -31176,12 +31234,29 @@
 	   * ---------------------
 	   */
 	
+		}, {
+			key: 'onGridResize',
+			value: function onGridResize(size) {
+				this.buildDragPreview();
+			}
+	
 			/**
 	   * ---------------------
 	   * other functions
 	   * ---------------------
 	   */
 	
+		}, {
+			key: 'buildDragPreview',
+			value: function buildDragPreview() {
+				var connectDragPreview = this.props.connectDragPreview;
+	
+				var result = _dragPreview.BoxDragPreview.create(this.state.dom.clientWidth);
+				result.img.onload = function () {
+					return connectDragPreview(result.img);
+				};
+				result.img.src = result.src;
+			}
 		}]);
 	
 		return Box;

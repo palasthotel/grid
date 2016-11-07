@@ -8,7 +8,7 @@ import Slot from './slot/slot.js';
 import BoxDrop from './box/box-drop.js';
 import Box from './box/box.js';
 
-import { Events } from '../constants.js';
+import { ItemTypes, Events } from '../../helper/constants.js';
 
 export default class Grid extends Component{
 	
@@ -70,6 +70,7 @@ export default class Grid extends Component{
 				key={i}
 				index={i}
 				{...box}
+				events={this.props.events}
 			/>);
 			if(i == boxes.length-1)
 				$boxes.push(this.renderBoxDrop(++i));
@@ -84,6 +85,7 @@ export default class Grid extends Component{
 				key={drop_key}
 				index={index}
 				onDrop={this.onBoxDrop.bind(this, index)}
+				events={this.props.events}
 			/>
 		);
 	}
@@ -103,6 +105,7 @@ export default class Grid extends Component{
 					key={index}
 					{...slot}
 					dimension={width}
+					events={this.props.events}
 				>{this.renderBoxes(slot.boxes)}</Slot>
 			)
 		});

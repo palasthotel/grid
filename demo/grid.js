@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Grid from '../src/component/grid.js';
+import Grid from '../src/component/the-grid/grid.js';
 
 /**
  * drag and drop context

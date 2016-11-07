@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TrashIcon from '../icon/trash.js';
-import UndoPanel from '../undo-panel.js';
+import UndoPanel from '../utils/undo-panel.js';
 import slugify from '../../helper/slugify.js';
 
 export default class SingleEdit extends Component{

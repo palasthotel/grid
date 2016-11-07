@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
-import { ItemTypes } from '../../constants';
+import { ItemTypes, Events } from '../../../helper/constants.js';
 
 
 const boxTarget = {

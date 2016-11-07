@@ -241,7 +241,7 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .grid .box .box__html img { max-width: 100%; }
 
-.grid .box:hover .box__controls { height: auto; overflow: visible; display: block; opacity: 1; }
+.grid .box:hover:not(.is-dragged) .box__controls { height: auto; overflow: visible; display: block; opacity: 1; }
 
 .grid .box .box__controls { color: white; height: 0; overflow: hidden; opacity: 0; position: absolute; left: 0; right: 0; bottom: 0; top: 0; background-color: rgba(63, 72, 83, 0.9); font-weight: bold; text-transform: uppercase; -webkit-transition: opacity 0.2s ease; transition: opacity 0.2s ease; }
 

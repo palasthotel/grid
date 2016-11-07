@@ -56,7 +56,7 @@
 	
 	var _events = __webpack_require__(410);
 	
-	var _theGrid = __webpack_require__(608);
+	var _theGrid = __webpack_require__(577);
 	
 	var _theGrid2 = _interopRequireDefault(_theGrid);
 	
@@ -29703,7 +29703,9 @@
 					$boxes.push(_react2.default.createElement(_box2.default, _extends({
 						key: i,
 						index: i
-					}, box)));
+					}, box, {
+						events: this.props.events
+					})));
 					if (i == boxes.length - 1) $boxes.push(this.renderBoxDrop(++i));
 				}
 				return $boxes;
@@ -29715,7 +29717,8 @@
 				return _react2.default.createElement(_boxDrop2.default, {
 					key: drop_key,
 					index: index,
-					onDrop: this.onBoxDrop.bind(this, index)
+					onDrop: this.onBoxDrop.bind(this, index),
+					events: this.props.events
 				});
 			}
 	
@@ -29739,7 +29742,8 @@
 						_extends({
 							key: index
 						}, slot, {
-							dimension: width
+							dimension: width,
+							events: _this2.props.events
 						}),
 						_this2.renderBoxes(slot.boxes)
 					);
@@ -29894,9 +29898,7 @@
 	
 	var _constants = __webpack_require__(234);
 	
-	var _containerDragPreview = __webpack_require__(405);
-	
-	var _containerDragPreview2 = _interopRequireDefault(_containerDragPreview);
+	var _dragPreview = __webpack_require__(405);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29956,6 +29958,7 @@
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				this.props.events.on(_constants.Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+				this.buildDragPreview();
 			}
 			/**
 	   * ---------------------
@@ -30080,7 +30083,7 @@
 		}, {
 			key: 'onGridResize',
 			value: function onGridResize(size) {
-				this.buildDragPreview(size);
+				this.buildDragPreview();
 			}
 	
 			/**
@@ -30091,10 +30094,10 @@
 	
 		}, {
 			key: 'buildDragPreview',
-			value: function buildDragPreview(size) {
+			value: function buildDragPreview() {
 				var connectDragPreview = this.props.connectDragPreview;
 	
-				var result = _containerDragPreview2.default.create(this.state.dom.clientWidth, this.props.slots.length);
+				var result = _dragPreview.ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
 				result.img.onload = function () {
 					return connectDragPreview(result.img);
 				};
@@ -30128,7 +30131,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var ContainerDragPreview = function () {
+	var ContainerDragPreview = exports.ContainerDragPreview = function () {
 		function ContainerDragPreview() {
 			_classCallCheck(this, ContainerDragPreview);
 		}
@@ -30146,7 +30149,7 @@
 		}, {
 			key: "create",
 			value: function create(width, slots) {
-				console.log("create", width, slots);
+				console.log("create container preview", width, slots);
 				var img = new Image();
 				var c = document.createElement('canvas');
 				c.height = this.height();
@@ -30173,7 +30176,44 @@
 		return ContainerDragPreview;
 	}();
 	
-	exports.default = ContainerDragPreview;
+	var BoxDragPreview = exports.BoxDragPreview = function () {
+		function BoxDragPreview() {
+			_classCallCheck(this, BoxDragPreview);
+		}
+	
+		_createClass(BoxDragPreview, null, [{
+			key: "height",
+			value: function height() {
+				return 40;
+			}
+		}, {
+			key: "padding",
+			value: function padding() {
+				return 2;
+			}
+		}, {
+			key: "create",
+			value: function create(width) {
+				console.log("create box preview", width);
+				var img = new Image();
+				var c = document.createElement('canvas');
+				c.height = this.height();
+				c.width = width;
+	
+				var ctx = c.getContext('2d');
+				ctx.rect(0, 0, width, this.height());
+				ctx.fillStyle = "#333333";
+				ctx.fill();
+	
+				return {
+					img: img,
+					src: c.toDataURL()
+				};
+			}
+		}]);
+
+		return BoxDragPreview;
+	}();
 
 /***/ },
 /* 406 */
@@ -30505,6 +30545,8 @@
 	
 	var _constants = __webpack_require__(234);
 	
+	var _dragPreview = __webpack_require__(405);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30553,18 +30595,29 @@
 		function Box(props) {
 			_classCallCheck(this, Box);
 	
-			return _possibleConstructorReturn(this, (Box.__proto__ || Object.getPrototypeOf(Box)).call(this, props));
-		}
-		/**
-	  * ---------------------
-	  * rendering
-	  * ---------------------
-	  */
+			var _this = _possibleConstructorReturn(this, (Box.__proto__ || Object.getPrototypeOf(Box)).call(this, props));
 	
+			_this.state = {};
+			return _this;
+		}
 	
 		_createClass(Box, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.props.events.on(_constants.Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+				this.buildDragPreview();
+			}
+			/**
+	   * ---------------------
+	   * rendering
+	   * ---------------------
+	   */
+	
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+	
 				var _props = this.props;
 				var connectDragSource = _props.connectDragSource;
 				var connectDragPreview = _props.connectDragPreview;
@@ -30593,10 +30646,15 @@
 				}
 				return connectDragPreview(_react2.default.createElement(
 					'div',
-					{ className: 'box',
+					{
+						className: 'box' + (isDragging ? " is-dragged" : ""),
 						style: {
 							opacity: isDragging ? 0.3 : 1
-						} },
+						},
+						ref: function ref(element) {
+							return _this2.state.dom = element;
+						}
+					},
 					_react2.default.createElement(
 						'div',
 						{ className: 'box__content' },
@@ -30677,12 +30735,29 @@
 	   * ---------------------
 	   */
 	
+		}, {
+			key: 'onGridResize',
+			value: function onGridResize(size) {
+				this.buildDragPreview();
+			}
+	
 			/**
 	   * ---------------------
 	   * other functions
 	   * ---------------------
 	   */
 	
+		}, {
+			key: 'buildDragPreview',
+			value: function buildDragPreview() {
+				var connectDragPreview = this.props.connectDragPreview;
+	
+				var result = _dragPreview.BoxDragPreview.create(this.state.dom.clientWidth);
+				result.img.onload = function () {
+					return connectDragPreview(result.img);
+				};
+				result.img.src = result.src;
+			}
 		}]);
 	
 		return Box;
@@ -31170,39 +31245,7 @@
 /* 572 */,
 /* 573 */,
 /* 574 */,
-/* 575 */,
-/* 576 */,
-/* 577 */,
-/* 578 */,
-/* 579 */,
-/* 580 */,
-/* 581 */,
-/* 582 */,
-/* 583 */,
-/* 584 */,
-/* 585 */,
-/* 586 */,
-/* 587 */,
-/* 588 */,
-/* 589 */,
-/* 590 */,
-/* 591 */,
-/* 592 */,
-/* 593 */,
-/* 594 */,
-/* 595 */,
-/* 596 */,
-/* 597 */,
-/* 598 */,
-/* 599 */,
-/* 600 */,
-/* 601 */,
-/* 602 */,
-/* 603 */,
-/* 604 */,
-/* 605 */,
-/* 606 */,
-/* 607 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -31338,143 +31381,7 @@
 	exports.default = TabView;
 
 /***/ },
-/* 608 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _grid = __webpack_require__(403);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _tabView = __webpack_require__(607);
-	
-	var _tabView2 = _interopRequireDefault(_tabView);
-	
-	var _containerTypes = __webpack_require__(647);
-	
-	var _containerTypes2 = _interopRequireDefault(_containerTypes);
-	
-	var _reactDnd = __webpack_require__(235);
-	
-	var _reactDndHtml5Backend = __webpack_require__(369);
-	
-	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
-	
-	var _events = __webpack_require__(410);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TheGrid = function (_React$Component) {
-		_inherits(TheGrid, _React$Component);
-	
-		function TheGrid(props) {
-			_classCallCheck(this, TheGrid);
-	
-			var _this = _possibleConstructorReturn(this, (TheGrid.__proto__ || Object.getPrototypeOf(TheGrid)).call(this, props));
-	
-			_this._events = new _events.EventEmitter();
-			_this._events.setMaxListeners(0);
-			return _this;
-		}
-	
-		_createClass(TheGrid, [{
-			key: 'render',
-			value: function render() {
-	
-				return _react2.default.createElement(
-					'div',
-					{ className: 'the-grid' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'grid-toolbar' },
-						'Buttons | Elements | Revisions'
-					),
-					_react2.default.createElement(_grid2.default, {
-						id: '1',
-						container: this.props.grid.container,
-						draft: this.props.grid.isDraft,
-						events: this._events
-					}),
-					_react2.default.createElement(
-						_tabView2.default,
-						{
-							titles: ["Containers", "Boxes"]
-						},
-						_react2.default.createElement(_containerTypes2.default, {
-							container_types: []
-						}),
-						_react2.default.createElement(
-							'div',
-							null,
-							'Boxes'
-						)
-					)
-				);
-			}
-		}]);
-	
-		return TheGrid;
-	}(_react2.default.Component);
-	
-	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(TheGrid);
-
-/***/ },
-/* 609 */,
-/* 610 */,
-/* 611 */,
-/* 612 */,
-/* 613 */,
-/* 614 */,
-/* 615 */,
-/* 616 */,
-/* 617 */,
-/* 618 */,
-/* 619 */,
-/* 620 */,
-/* 621 */,
-/* 622 */,
-/* 623 */,
-/* 624 */,
-/* 625 */,
-/* 626 */,
-/* 627 */,
-/* 628 */,
-/* 629 */,
-/* 630 */,
-/* 631 */,
-/* 632 */,
-/* 633 */,
-/* 634 */,
-/* 635 */,
-/* 636 */,
-/* 637 */,
-/* 638 */,
-/* 639 */,
-/* 640 */,
-/* 641 */,
-/* 642 */,
-/* 643 */,
-/* 644 */,
-/* 645 */,
-/* 646 */,
-/* 647 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -31571,6 +31478,104 @@
 	 * export component to public
 	 */
 	exports.default = ContainerTypes;
+
+/***/ },
+/* 577 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _grid = __webpack_require__(403);
+	
+	var _grid2 = _interopRequireDefault(_grid);
+	
+	var _tabView = __webpack_require__(575);
+	
+	var _tabView2 = _interopRequireDefault(_tabView);
+	
+	var _containerTypes = __webpack_require__(576);
+	
+	var _containerTypes2 = _interopRequireDefault(_containerTypes);
+	
+	var _reactDnd = __webpack_require__(235);
+	
+	var _reactDndHtml5Backend = __webpack_require__(369);
+	
+	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
+	
+	var _events = __webpack_require__(410);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TheGrid = function (_React$Component) {
+		_inherits(TheGrid, _React$Component);
+	
+		function TheGrid(props) {
+			_classCallCheck(this, TheGrid);
+	
+			var _this = _possibleConstructorReturn(this, (TheGrid.__proto__ || Object.getPrototypeOf(TheGrid)).call(this, props));
+	
+			_this._events = new _events.EventEmitter();
+			_this._events.setMaxListeners(0);
+			return _this;
+		}
+	
+		_createClass(TheGrid, [{
+			key: 'render',
+			value: function render() {
+	
+				return _react2.default.createElement(
+					'div',
+					{ className: 'the-grid' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'grid-toolbar' },
+						'Buttons | Elements | Revisions'
+					),
+					_react2.default.createElement(_grid2.default, {
+						id: '1',
+						container: this.props.grid.container,
+						draft: this.props.grid.isDraft,
+						events: this._events
+					}),
+					_react2.default.createElement(
+						_tabView2.default,
+						{
+							titles: ["Containers", "Boxes"]
+						},
+						_react2.default.createElement(_containerTypes2.default, {
+							container_types: []
+						}),
+						_react2.default.createElement(
+							'div',
+							null,
+							'Boxes'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return TheGrid;
+	}(_react2.default.Component);
+	
+	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(TheGrid);
 
 /***/ }
 /******/ ]);

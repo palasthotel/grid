@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { ItemTypes } from '../constants';
+import { ItemTypes } from '../helper/constants.js';
 import { DropTarget } from 'react-dnd';
 
 const containerTarget = {

@@ -22,7 +22,7 @@
 	}
 	
 	
-	&:hover .box__controls{
+	&:hover:not(.is-dragged) .box__controls{
 		height: auto;
 		overflow: visible;
 		display: block;
