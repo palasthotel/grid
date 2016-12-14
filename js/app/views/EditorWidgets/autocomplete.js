@@ -36,7 +36,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         jQuery(this.$el).html(html);
         if(fetch)
         {
-            self.$el.find(".loading").addClass("go");
+            this.$el.find(".loading").addClass("go");
             var key=this.model.container[this.model.structure.key];
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;
