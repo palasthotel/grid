@@ -6,55 +6,62 @@
  * @package Palasthotel\Grid-WordPress
  */
 /**
-* Posts-Box is considered a list
-*
-* In the Grid selection menu, Posts-Box is named "List Of Contents".
-*/
+ * Posts-Box is considered a list
+ *
+ * In the Grid selection menu, Posts-Box is named "List Of Contents".
+ */
 class grid_posts_box extends grid_list_box {
-
+	
 	/**
-	* Class contructor
-	*
-	* Initializes editor widgets for backend
-	*/
+	 * Class contructor
+	 *
+	 * Initializes editor widgets for backend
+	 */
 	function __construct() {
 		parent::__construct();
-
+		
 		$viewmodes = $this->getViewmodes();
 		if(count($viewmodes)>0 && !empty($viewmodes[0]) && !empty($viewmodes[0]['key'])){
 			$this->content->viewmode = $viewmodes[0]['key'];
 		} else {
 			$this->content->viewmode = 'excerpt';
 		}
-
+		
 		$this->content->posts_per_page = 5;
 		$this->content->offset = 0;
 		$this->content->post_type = 'post';
 		$this->content->relation = 'OR';
 	}
-
+	
 	/**
-	* Sets box type
-	*
-	* @return string
-	*/
+	 * Sets box type
+	 *
+	 * @return string
+	 */
 	public function type() {
 		return 'posts';
 	}
-
+	
 	/**
-	* Box renders its menu label and its content in here.
-	*
-	* @param boolean $editmode
-	*
-	* @return string
-	*/
+	 * Box renders its menu label and its content in here.
+	 *
+	 * @param boolean $editmode
+	 *
+	 * @return string
+	 */
 	public function build( $editmode ) {
 		if ( $editmode ) {
 			return $this->content;
 		} else {
 			$args = array();
 			// Checks if catergory is set
+			/**
+			 * get relation
+			 */
+			$relation = "OR";
+			if(!empty($this->content->relation)){
+				$relation = $this->content->relation;
+			}
 			/**
 			 * generate taxonomy
 			 */
@@ -68,6 +75,7 @@ class grid_posts_box extends grid_list_box {
 					$tax_query[] = array(
 						'taxonomy' => $this->getTaxonomyNameByKey($field),
 						'terms' => $value,
+						'operator' => $relation,
 					);
 					continue;
 				}
@@ -79,16 +87,14 @@ class grid_posts_box extends grid_list_box {
 					'taxonomy' => $this->getTaxonomyNameByKey($field),
 					'field' => 'term_id',
 					'terms' => $value,
+					'operator' => $relation,
 				);
 			}
 			/**
 			 * add relation if more than one term was selected
 			 */
 			if(count($tax_query)>1){
-				$tax_query["relation"] = "OR";
-				if(!empty($this->content->relation)){
-					$tax_query["relation"] = $this->content->relation;
-				}
+				$tax_query["relation"] = $relation;
 			}
 			/**
 			 * add to args if there are tax_query items
@@ -96,13 +102,13 @@ class grid_posts_box extends grid_list_box {
 			if(count($tax_query)>0){
 				$args['tax_query'] = $tax_query;
 			}
-
+			
 			// START legacy support for category
 			if ( isset( $this->content->category ) && $this->content->category != '' ) {
 				$args['cat'] = $this->content->category;
 			}
 			// ENDE legacy support for category
-
+			
 			/**
 			 * add other stuff to args
 			 */
@@ -119,15 +125,15 @@ class grid_posts_box extends grid_list_box {
 			return $args;
 		}
 	}
-
+	
 	/**
-	* Determines editor widgets used in backend
-	*
-	* @return array
-	*/
+	 * Determines editor widgets used in backend
+	 *
+	 * @return array
+	 */
 	public function contentStructure() {
 		$cs = parent::contentStructure();
-
+		
 		$viewmodes = $this->getViewmodes();
 		if(count($viewmodes) > 0){
 			$cs[] = array(
@@ -137,7 +143,7 @@ class grid_posts_box extends grid_list_box {
 				'selections' => $viewmodes,
 			);
 		}
-
+		
 		/**
 		 * posts per page
 		 */
@@ -146,7 +152,7 @@ class grid_posts_box extends grid_list_box {
 			'label' => t( 'Posts per page' ),
 			'type' => 'number',
 		);
-
+		
 		/**
 		 * offset
 		 */
@@ -155,7 +161,7 @@ class grid_posts_box extends grid_list_box {
 			'label' => t( 'Offset' ),
 			'type' => 'number',
 		);
-
+		
 		/**
 		 * taxonomies
 		 */
@@ -176,7 +182,7 @@ class grid_posts_box extends grid_list_box {
 				'type' => 'multi-autocomplete',
 			);
 		}
-
+		
 		/**
 		 * relation type
 		 */
@@ -189,7 +195,7 @@ class grid_posts_box extends grid_list_box {
 				array('key' => 'AND', 'text' => 'AND: all posts that have all of these terms'),
 			),
 		);
-
+		
 		/**
 		 * post type select
 		 */
@@ -205,12 +211,12 @@ class grid_posts_box extends grid_list_box {
 			'type' => 'select',
 			'selections' => $post_types,
 		);
-
-
-
+		
+		
+		
 		return $cs;
 	}
-
+	
 	public function getViewmodes(){
 		$viewmodes = array(
 			array('key' => 'excerpt', 'text' => t('Excerpt') ),
@@ -218,7 +224,7 @@ class grid_posts_box extends grid_list_box {
 		);
 		return apply_filters('grid_post_viewmodes',$viewmodes);
 	}
-
+	
 	/**
 	 * content structure key for taxonomy
 	 * @param $taxonomy
@@ -227,7 +233,7 @@ class grid_posts_box extends grid_list_box {
 	public function getTaxonomyKey($taxonomy){
 		return 'tax_'.$taxonomy->name;
 	}
-
+	
 	/**
 	 * taxonomyname from constent structure key
 	 * @param $key
@@ -236,16 +242,16 @@ class grid_posts_box extends grid_list_box {
 	public function getTaxonomyNameByKey($key){
 		return str_replace("tax_","", $key);
 	}
-
+	
 	/**
-	* Implements search for categories
-	*
-	* @param string $path
-	*
-	* @param string $query
-	*
-	* @return array
-	*/
+	 * Implements search for categories
+	 *
+	 * @param string $path
+	 *
+	 * @param string $query
+	 *
+	 * @return array
+	 */
 	public function performElementSearch( $path, $query) {
 		$taxonomy = $this->getTaxonomyNameByKey($path);
 		if(!taxonomy_exists($taxonomy)){
@@ -266,16 +272,16 @@ class grid_posts_box extends grid_list_box {
 		}
 		return $results;
 	}
-
+	
 	/**
-	* Gets categories
-	*
-	* @param string $path
-	*
-	* @param integer $id
-	*
-	* @return string
-	*/
+	 * Gets categories
+	 *
+	 * @param string $path
+	 *
+	 * @param integer $id
+	 *
+	 * @return string
+	 */
 	public function getElementValue( $path, $id ) {
 		$taxonomy = $this->getTaxonomyNameByKey($path);
 		if( !taxonomy_exists($taxonomy) || $id == null || $id == '' ){
