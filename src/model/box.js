@@ -6,7 +6,7 @@ import Collection from 'ampersand-collection';
  */
 const Box = State.extend({
 	props: {
-		id: 'number',
+		id: 'any',
 		title: 'string',
 		content: 'object',
 	},

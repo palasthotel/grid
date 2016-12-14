@@ -20,7 +20,7 @@ class TheGrid extends React.Component{
 		
 		return (
 			<div className="the-grid">
-				<div className="grid-toolbar">
+				<div className="grid__toolbar">
 					Buttons | Elements | Revisions
 				</div>
 				<Grid
@@ -30,6 +30,7 @@ class TheGrid extends React.Component{
 					events={this._events}
 				/>
 				<TabView
+					className="grid__new-elements"
 					titles={["Containers","Boxes"]}
 				>
 					<ContainerTypes

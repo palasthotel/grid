@@ -20,11 +20,11 @@ class TabView extends Component {
 	 * ------------------------------------------------
 	 */
 	render() {
-		const {titles} = this.props;
+		const {titles, className} = this.props;
 		const {active} = this.state;
 		return (
 			<div
-				className="tab-view"
+				className={`tab-view ${className}`}
 			>
 				<div
 					className="tab-view__tabs"

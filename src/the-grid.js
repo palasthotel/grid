@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {EventEmitter} from 'events';
-import TheGrid from './component/the-grid/the-grid.js';
+import TheGridRouter from './router/the-grid-router.js';
 
 /**
  *
@@ -15,16 +14,17 @@ import TheGrid from './component/the-grid/the-grid.js';
  *  overlays_editor: Array
  *  }}
  */
-const GRID = window.GRID = {
-    id: null,
-	events: new EventEmitter(),
-	toobar_buttons: [],
-	toolbar_buttons_editor: [],
-	overlays: [],
-	overlays_editor: [],
-};
-
-GRID.events.setMaxListeners(0);
+// const GRID = window.GRID = {
+//     id: null,
+// 	events: new EventEmitter(),
+// 	plugins: [],
+// 	toobar_buttons: [],
+// 	toolbar_buttons_editor: [],
+// 	overlays: [],
+// 	overlays_editor: [],
+// };
+//
+// GRID.events.setMaxListeners(0);
 
 
 
@@ -48,11 +48,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	 * append app to grid app root
 	 */
 	ReactDOM.render(
-		<TheGrid
-			grid={grid}
-			revisions={revisions}
-			container_types={container_types}
-			box_types={box_types}
+		<TheGridRouter
+			ajax_url={document.gridajax}
+			grid_id={document.ID}
 		/>,
 		document.getElementById("grid-app")
 	);

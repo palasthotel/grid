@@ -8,11 +8,10 @@ import {ContainerCollection} from './container.js';
 var Grid = State.extend({
 	props: {
 		id: ['number', true, -1],
-		isDraft: ['boolean', true, true],
 	},
 	session: {
+		isDraft: ['boolean', true, true],
 		// [type, required, default]
-		loading: ['boolean', true, false],
 	},
 	collections:{
 		container: ContainerCollection,

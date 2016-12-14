@@ -4,10 +4,12 @@ import Collection from 'ampersand-collection';
 import {SlotCollection} from './slot.js';
 
 const Container = State.extend({
+	extraProperties: 'allow',
 	props: {
 		grid: 'state',
-		id: 'number',
+		id: 'any',
 		title: 'string',
+		type: "string",
 	},
 	session:{
 		editing: ['boolean', false, true],

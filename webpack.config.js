@@ -43,7 +43,7 @@ let config = {
 		demo_tab_view: './demo/tab-view.js',
 	},
 	output: {
-		path: './bundle',
+		path: './js/app',
 		filename: '[name].js',
 		sourceMapFilename: '[name].map'
 	},
