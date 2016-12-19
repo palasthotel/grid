@@ -75,7 +75,6 @@ class grid_posts_box extends grid_list_box {
 					$tax_query[] = array(
 						'taxonomy' => $this->getTaxonomyNameByKey($field),
 						'terms' => $value,
-						'operator' => $relation,
 					);
 					continue;
 				}
@@ -83,12 +82,14 @@ class grid_posts_box extends grid_list_box {
 				 * new multiautoselect support
 				 */
 				if(count($value) < 1) continue;
-				$tax_query[] = array(
+				$tax = array(
 					'taxonomy' => $this->getTaxonomyNameByKey($field),
 					'field' => 'term_id',
 					'terms' => $value,
-					'operator' => $relation,
 				);
+				// Operator to test. Possible values are 'IN', 'NOT IN', 'AND', 'EXISTS' and 'NOT EXISTS'. Default value is 'IN'.
+				if(count($value) > 1 && $relation == "AND") $tax["operator"] = $relation;
+				$tax_query[] = $tax;
 			}
 			/**
 			 * add relation if more than one term was selected

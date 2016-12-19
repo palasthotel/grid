@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 1.6.9
+Stable tag: 1.6.9.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -74,6 +74,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.6.9.1 =
+ * Posts Box Bugfix
 
 = 1.6.9 =
  * Posts Box taxonomy relation "AND" working now
