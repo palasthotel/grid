@@ -4,6 +4,8 @@ import { DragSource } from 'react-dnd';
 import { ItemTypes, Events } from '../../../helper/constants.js';
 import {BoxDragPreview} from '../../../helper/drag-preview.js';
 
+import TrashIcon from '../../icon/trash.js';
+
 const boxSource = {
 	beginDrag(props){
 		console.log("begin drag");
@@ -101,7 +103,7 @@ class Box extends Component{
 					</div>
 					<div className="grid-box-control-button grid-box-delete">
 						<div className="grid-box-control-wrapper">
-							<i className="icon-trash" />
+							<TrashIcon/>
 							<span className="grid-box-control-text">Delete</span>
 						</div>
 					</div>

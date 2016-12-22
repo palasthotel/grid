@@ -54,7 +54,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _stylesEditor = __webpack_require__(568);
+	var _stylesEditor = __webpack_require__(569);
 	
 	var _stylesEditor2 = _interopRequireDefault(_stylesEditor);
 	
@@ -21683,7 +21683,62 @@
 /* 407 */,
 /* 408 */,
 /* 409 */,
-/* 410 */,
+/* 410 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * source: https://github.com/google/material-design-icons/blob/eae603ae946b6f813b7edc5611226d8ceae327ff/action/svg/production/ic_delete_24px.svg
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var Trash = function (_Component) {
+	    _inherits(Trash, _Component);
+	
+	    function Trash() {
+	        _classCallCheck(this, Trash);
+	
+	        return _possibleConstructorReturn(this, (Trash.__proto__ || Object.getPrototypeOf(Trash)).apply(this, arguments));
+	    }
+	
+	    _createClass(Trash, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "svg",
+	                {
+	                    width: "18",
+	                    height: "18",
+	                    viewBox: "0 0 24 24",
+	                    className: "svg-icon svg-icon__delete"
+	                },
+	                _react2.default.createElement("path", { d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" })
+	            );
+	        }
+	    }]);
+	
+	    return Trash;
+	}(_react.Component);
+	
+	exports.default = Trash;
+
+/***/ },
 /* 411 */,
 /* 412 */,
 /* 413 */,
@@ -21841,7 +21896,8 @@
 /* 565 */,
 /* 566 */,
 /* 567 */,
-/* 568 */
+/* 568 */,
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21856,7 +21912,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _singleEdit = __webpack_require__(569);
+	var _singleEdit = __webpack_require__(570);
 	
 	var _singleEdit2 = _interopRequireDefault(_singleEdit);
 	
@@ -22045,7 +22101,7 @@
 	exports.default = StylesEditor;
 
 /***/ },
-/* 569 */
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22060,7 +22116,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _trash = __webpack_require__(570);
+	var _trash = __webpack_require__(410);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
@@ -22273,62 +22329,6 @@
 	};
 
 /***/ },
-/* 570 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * source: https://github.com/google/material-design-icons/blob/eae603ae946b6f813b7edc5611226d8ceae327ff/action/svg/production/ic_delete_24px.svg
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	var Trash = function (_Component) {
-	    _inherits(Trash, _Component);
-	
-	    function Trash() {
-	        _classCallCheck(this, Trash);
-	
-	        return _possibleConstructorReturn(this, (Trash.__proto__ || Object.getPrototypeOf(Trash)).apply(this, arguments));
-	    }
-	
-	    _createClass(Trash, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "svg",
-	                {
-	                    width: "18",
-	                    height: "18",
-	                    viewBox: "0 0 24 24",
-	                    className: "svg-icon"
-	                },
-	                _react2.default.createElement("path", { d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" })
-	            );
-	        }
-	    }]);
-	
-	    return Trash;
-	}(_react.Component);
-	
-	exports.default = Trash;
-
-/***/ },
 /* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -22469,7 +22469,7 @@
 	                    width: "18",
 	                    height: "18",
 	                    viewBox: "0 0 24 24",
-	                    className: "svg-icon"
+	                    className: "svg-icon svg-icon__restore"
 	                },
 	                _react2.default.createElement("path", { d: "M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" })
 	            );
@@ -22548,7 +22548,9 @@
 	                {
 	                    width: "24",
 	                    height: "24",
-	                    viewBox: "0 0 24 24" },
+	                    viewBox: "0 0 24 24",
+	                    className: "svg-icon svg-icon__add"
+	                },
 	                _react2.default.createElement("path", { d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" })
 	            );
 	        }

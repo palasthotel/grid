@@ -21451,7 +21451,125 @@
 /* 173 */,
 /* 174 */,
 /* 175 */,
-/* 176 */,
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Collapsible = function (_Component) {
+		_inherits(Collapsible, _Component);
+	
+		/**
+	  * ---------------------
+	  * lifecycle
+	  * ---------------------
+	  */
+		function Collapsible(props) {
+			_classCallCheck(this, Collapsible);
+	
+			var _this = _possibleConstructorReturn(this, (Collapsible.__proto__ || Object.getPrototypeOf(Collapsible)).call(this, props));
+	
+			_this.state = {
+				collapsed: props.collapsed
+			};
+			return _this;
+		}
+		/**
+	  * ---------------------
+	  * render
+	  * ---------------------
+	  */
+	
+	
+		_createClass(Collapsible, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props;
+				var title = _props.title;
+				var children = _props.children;
+				var collapsed = this.state.collapsed;
+	
+				return _react2.default.createElement(
+					"div",
+					{
+						className: "collapsible " + (collapsed ? "" : "is-active")
+					},
+					_react2.default.createElement(
+						"div",
+						{
+							className: "collapsible__title",
+							onClick: this.onToggle.bind(this)
+						},
+						_react2.default.createElement("span", { className: "icon-arrow" }),
+						title
+					),
+					_react2.default.createElement(
+						"div",
+						{
+							style: {
+								display: collapsed ? "none" : "block"
+							},
+							className: "collapsible__content"
+						},
+						children
+					)
+				);
+			}
+			/**
+	   * ---------------------
+	   * events
+	   * ---------------------
+	   */
+	
+		}, {
+			key: "onToggle",
+			value: function onToggle() {
+				this.setState({ collapsed: !this.state.collapsed });
+				if (_typeof(this.props.onStateChanged) != ( true ? "undefined" : _typeof(undefined))) this.props.onStateChanged(this.state.collapsed);
+			}
+			/**
+	   * ---------------------
+	   * other functions
+	   * ---------------------
+	   */
+	
+		}]);
+	
+		return Collapsible;
+	}(_react.Component);
+	
+	Collapsible.propTypes = {
+		title: _react.PropTypes.string.isRequired,
+		collapsed: _react.PropTypes.bool,
+		onStateChanged: _react.PropTypes.func
+	};
+	Collapsible.defaultProps = {
+		collapsed: true
+	};
+	
+	exports.default = Collapsible;
+
+/***/ },
 /* 177 */,
 /* 178 */,
 /* 179 */,
@@ -22162,10 +22280,33 @@
 		NEW_BOX: 'new_box'
 	};
 	
+	var States = exports.States = {
+		/**
+	  * nothing happend
+	  */
+		WAITING: "waiting",
+		/**
+	  * loading something
+	  */
+		LOADING: "loading",
+		/**
+	  * done and finished with whatever
+	  */
+		DONE: "done"
+	};
+	
 	/**
 	 * Events on the grid
 	 */
 	var Events = exports.Events = {
+		BACKEND: {
+			key: "backend_event",
+			description: "when a request goes to backend"
+		},
+		GET_BOX_TYPES: {
+			key: "get_box_types",
+			description: "get box types based on meta type and search criteria"
+		},
 		GRID_RESIZE: {
 			key: "grid_resize",
 			description: "fired when grid is resized"
@@ -31149,6 +31290,10 @@
 	
 	var _dragPreview = __webpack_require__(405);
 	
+	var _trash = __webpack_require__(410);
+	
+	var _trash2 = _interopRequireDefault(_trash);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31320,7 +31465,7 @@
 							_react2.default.createElement(
 								'div',
 								{ className: 'grid-box-control-wrapper' },
-								_react2.default.createElement('i', { className: 'icon-trash' }),
+								_react2.default.createElement(_trash2.default, null),
 								_react2.default.createElement(
 									'span',
 									{ className: 'grid-box-control-text' },
@@ -31376,311 +31521,59 @@
 
 /***/ },
 /* 410 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// Copyright Joyent, Inc. and other Node contributors.
-	//
-	// Permission is hereby granted, free of charge, to any person obtaining a
-	// copy of this software and associated documentation files (the
-	// "Software"), to deal in the Software without restriction, including
-	// without limitation the rights to use, copy, modify, merge, publish,
-	// distribute, sublicense, and/or sell copies of the Software, and to permit
-	// persons to whom the Software is furnished to do so, subject to the
-	// following conditions:
-	//
-	// The above copyright notice and this permission notice shall be included
-	// in all copies or substantial portions of the Software.
-	//
-	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	"use strict";
 	
-	function EventEmitter() {
-	  this._events = this._events || {};
-	  this._maxListeners = this._maxListeners || undefined;
-	}
-	module.exports = EventEmitter;
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
-	// Backwards-compat with node 0.10.x
-	EventEmitter.EventEmitter = EventEmitter;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	EventEmitter.prototype._events = undefined;
-	EventEmitter.prototype._maxListeners = undefined;
+	var _react = __webpack_require__(1);
 	
-	// By default EventEmitters will print a warning if more than 10 listeners are
-	// added to it. This is a useful default which helps finding memory leaks.
-	EventEmitter.defaultMaxListeners = 10;
+	var _react2 = _interopRequireDefault(_react);
 	
-	// Obviously not all Emitters should be limited to 10. This function allows
-	// that to be increased. Set to zero for unlimited.
-	EventEmitter.prototype.setMaxListeners = function(n) {
-	  if (!isNumber(n) || n < 0 || isNaN(n))
-	    throw TypeError('n must be a positive number');
-	  this._maxListeners = n;
-	  return this;
-	};
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	EventEmitter.prototype.emit = function(type) {
-	  var er, handler, len, args, i, listeners;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  if (!this._events)
-	    this._events = {};
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	  // If there is no 'error' event listener then throw.
-	  if (type === 'error') {
-	    if (!this._events.error ||
-	        (isObject(this._events.error) && !this._events.error.length)) {
-	      er = arguments[1];
-	      if (er instanceof Error) {
-	        throw er; // Unhandled 'error' event
-	      } else {
-	        // At least give some kind of context to the user
-	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-	        err.context = er;
-	        throw err;
-	      }
-	    }
-	  }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * source: https://github.com/google/material-design-icons/blob/eae603ae946b6f813b7edc5611226d8ceae327ff/action/svg/production/ic_delete_24px.svg
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 	
-	  handler = this._events[type];
+	var Trash = function (_Component) {
+	    _inherits(Trash, _Component);
 	
-	  if (isUndefined(handler))
-	    return false;
+	    function Trash() {
+	        _classCallCheck(this, Trash);
 	
-	  if (isFunction(handler)) {
-	    switch (arguments.length) {
-	      // fast cases
-	      case 1:
-	        handler.call(this);
-	        break;
-	      case 2:
-	        handler.call(this, arguments[1]);
-	        break;
-	      case 3:
-	        handler.call(this, arguments[1], arguments[2]);
-	        break;
-	      // slower
-	      default:
-	        args = Array.prototype.slice.call(arguments, 1);
-	        handler.apply(this, args);
-	    }
-	  } else if (isObject(handler)) {
-	    args = Array.prototype.slice.call(arguments, 1);
-	    listeners = handler.slice();
-	    len = listeners.length;
-	    for (i = 0; i < len; i++)
-	      listeners[i].apply(this, args);
-	  }
-	
-	  return true;
-	};
-	
-	EventEmitter.prototype.addListener = function(type, listener) {
-	  var m;
-	
-	  if (!isFunction(listener))
-	    throw TypeError('listener must be a function');
-	
-	  if (!this._events)
-	    this._events = {};
-	
-	  // To avoid recursion in the case that type === "newListener"! Before
-	  // adding it to the listeners, first emit "newListener".
-	  if (this._events.newListener)
-	    this.emit('newListener', type,
-	              isFunction(listener.listener) ?
-	              listener.listener : listener);
-	
-	  if (!this._events[type])
-	    // Optimize the case of one listener. Don't need the extra array object.
-	    this._events[type] = listener;
-	  else if (isObject(this._events[type]))
-	    // If we've already got an array, just append.
-	    this._events[type].push(listener);
-	  else
-	    // Adding the second element, need to change to array.
-	    this._events[type] = [this._events[type], listener];
-	
-	  // Check for listener leak
-	  if (isObject(this._events[type]) && !this._events[type].warned) {
-	    if (!isUndefined(this._maxListeners)) {
-	      m = this._maxListeners;
-	    } else {
-	      m = EventEmitter.defaultMaxListeners;
+	        return _possibleConstructorReturn(this, (Trash.__proto__ || Object.getPrototypeOf(Trash)).apply(this, arguments));
 	    }
 	
-	    if (m && m > 0 && this._events[type].length > m) {
-	      this._events[type].warned = true;
-	      console.error('(node) warning: possible EventEmitter memory ' +
-	                    'leak detected. %d listeners added. ' +
-	                    'Use emitter.setMaxListeners() to increase limit.',
-	                    this._events[type].length);
-	      if (typeof console.trace === 'function') {
-	        // not supported in IE 10
-	        console.trace();
-	      }
-	    }
-	  }
+	    _createClass(Trash, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "svg",
+	                {
+	                    width: "18",
+	                    height: "18",
+	                    viewBox: "0 0 24 24",
+	                    className: "svg-icon svg-icon__delete"
+	                },
+	                _react2.default.createElement("path", { d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" })
+	            );
+	        }
+	    }]);
 	
-	  return this;
-	};
+	    return Trash;
+	}(_react.Component);
 	
-	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-	
-	EventEmitter.prototype.once = function(type, listener) {
-	  if (!isFunction(listener))
-	    throw TypeError('listener must be a function');
-	
-	  var fired = false;
-	
-	  function g() {
-	    this.removeListener(type, g);
-	
-	    if (!fired) {
-	      fired = true;
-	      listener.apply(this, arguments);
-	    }
-	  }
-	
-	  g.listener = listener;
-	  this.on(type, g);
-	
-	  return this;
-	};
-	
-	// emits a 'removeListener' event iff the listener was removed
-	EventEmitter.prototype.removeListener = function(type, listener) {
-	  var list, position, length, i;
-	
-	  if (!isFunction(listener))
-	    throw TypeError('listener must be a function');
-	
-	  if (!this._events || !this._events[type])
-	    return this;
-	
-	  list = this._events[type];
-	  length = list.length;
-	  position = -1;
-	
-	  if (list === listener ||
-	      (isFunction(list.listener) && list.listener === listener)) {
-	    delete this._events[type];
-	    if (this._events.removeListener)
-	      this.emit('removeListener', type, listener);
-	
-	  } else if (isObject(list)) {
-	    for (i = length; i-- > 0;) {
-	      if (list[i] === listener ||
-	          (list[i].listener && list[i].listener === listener)) {
-	        position = i;
-	        break;
-	      }
-	    }
-	
-	    if (position < 0)
-	      return this;
-	
-	    if (list.length === 1) {
-	      list.length = 0;
-	      delete this._events[type];
-	    } else {
-	      list.splice(position, 1);
-	    }
-	
-	    if (this._events.removeListener)
-	      this.emit('removeListener', type, listener);
-	  }
-	
-	  return this;
-	};
-	
-	EventEmitter.prototype.removeAllListeners = function(type) {
-	  var key, listeners;
-	
-	  if (!this._events)
-	    return this;
-	
-	  // not listening for removeListener, no need to emit
-	  if (!this._events.removeListener) {
-	    if (arguments.length === 0)
-	      this._events = {};
-	    else if (this._events[type])
-	      delete this._events[type];
-	    return this;
-	  }
-	
-	  // emit removeListener for all listeners on all events
-	  if (arguments.length === 0) {
-	    for (key in this._events) {
-	      if (key === 'removeListener') continue;
-	      this.removeAllListeners(key);
-	    }
-	    this.removeAllListeners('removeListener');
-	    this._events = {};
-	    return this;
-	  }
-	
-	  listeners = this._events[type];
-	
-	  if (isFunction(listeners)) {
-	    this.removeListener(type, listeners);
-	  } else if (listeners) {
-	    // LIFO order
-	    while (listeners.length)
-	      this.removeListener(type, listeners[listeners.length - 1]);
-	  }
-	  delete this._events[type];
-	
-	  return this;
-	};
-	
-	EventEmitter.prototype.listeners = function(type) {
-	  var ret;
-	  if (!this._events || !this._events[type])
-	    ret = [];
-	  else if (isFunction(this._events[type]))
-	    ret = [this._events[type]];
-	  else
-	    ret = this._events[type].slice();
-	  return ret;
-	};
-	
-	EventEmitter.prototype.listenerCount = function(type) {
-	  if (this._events) {
-	    var evlistener = this._events[type];
-	
-	    if (isFunction(evlistener))
-	      return 1;
-	    else if (evlistener)
-	      return evlistener.length;
-	  }
-	  return 0;
-	};
-	
-	EventEmitter.listenerCount = function(emitter, type) {
-	  return emitter.listenerCount(type);
-	};
-	
-	function isFunction(arg) {
-	  return typeof arg === 'function';
-	}
-	
-	function isNumber(arg) {
-	  return typeof arg === 'number';
-	}
-	
-	function isObject(arg) {
-	  return typeof arg === 'object' && arg !== null;
-	}
-	
-	function isUndefined(arg) {
-	  return arg === void 0;
-	}
-
+	exports.default = Trash;
 
 /***/ },
 /* 411 */,
@@ -32032,14 +31925,14 @@
 		_createClass(ContainerTypes, [{
 			key: "render",
 			value: function render() {
-				var container_types = this.props.container_types;
+				var items = this.props.items;
 	
 				return _react2.default.createElement(
 					"div",
 					{
 						className: "container-types"
 					},
-					container_types.map(function (container, index) {
+					items.map(function (container, index) {
 						if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0) return;
 						return _react2.default.createElement(
 							"div",
@@ -32075,7 +31968,7 @@
 	
 	
 	ContainerTypes.propTypes = {
-		container_types: _react.PropTypes.array.isRequired
+		items: _react.PropTypes.array.isRequired
 	};
 	
 	/**
@@ -32111,13 +32004,15 @@
 	
 	var _containerTypes2 = _interopRequireDefault(_containerTypes);
 	
+	var _boxTypes = __webpack_require__(578);
+	
+	var _boxTypes2 = _interopRequireDefault(_boxTypes);
+	
 	var _reactDnd = __webpack_require__(235);
 	
 	var _reactDndHtml5Backend = __webpack_require__(369);
 	
 	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
-	
-	var _events = __webpack_require__(410);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -32133,30 +32028,40 @@
 		function TheGrid(props) {
 			_classCallCheck(this, TheGrid);
 	
-			var _this = _possibleConstructorReturn(this, (TheGrid.__proto__ || Object.getPrototypeOf(TheGrid)).call(this, props));
-	
-			_this._events = new _events.EventEmitter();
-			_this._events.setMaxListeners(0);
-			return _this;
+			return _possibleConstructorReturn(this, (TheGrid.__proto__ || Object.getPrototypeOf(TheGrid)).call(this, props));
 		}
 	
 		_createClass(TheGrid, [{
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps(nextProps) {
+				console.log(nextProps);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _props = this.props;
+				var events = _props.events;
+				var isDraft = _props.isDraft;
+				var container = _props.container;
+				var container_types = _props.container_types;
+				var box_types = _props.box_types;
 	
 				return _react2.default.createElement(
 					'div',
-					{ className: 'the-grid' },
+					{
+						className: 'the-grid'
+					},
 					_react2.default.createElement(
 						'div',
-						{ className: 'grid__toolbar' },
+						{
+							className: 'grid__toolbar'
+						},
 						'Buttons | Elements | Revisions'
 					),
 					_react2.default.createElement(_grid2.default, {
-						id: '1',
-						container: this.props.grid.container,
-						draft: this.props.grid.isDraft,
-						events: this._events
+						container: container,
+						draft: isDraft,
+						events: events
 					}),
 					_react2.default.createElement(
 						_tabView2.default,
@@ -32165,13 +32070,13 @@
 							titles: ["Containers", "Boxes"]
 						},
 						_react2.default.createElement(_containerTypes2.default, {
-							container_types: []
+							items: container_types,
+							events: events
 						}),
-						_react2.default.createElement(
-							'div',
-							null,
-							'Boxes'
-						)
+						_react2.default.createElement(_boxTypes2.default, {
+							items: box_types,
+							events: events
+						})
 					)
 				);
 			}
@@ -32180,7 +32085,214 @@
 		return TheGrid;
 	}(_react2.default.Component);
 	
+	/**
+	 * property defaults
+	 */
+	
+	
+	TheGrid.defaultProps = {
+		container_types: [],
+		box_types: []
+	};
+	
+	/**
+	 * define property types
+	 */
+	TheGrid.propTypes = {
+		events: _react.PropTypes.object.isRequired,
+		isDraft: _react.PropTypes.bool.isRequired,
+		container: _react.PropTypes.array.isRequired,
+		revisions: _react.PropTypes.array.isRequired,
+		container_types: _react.PropTypes.array,
+		box_types: _react.PropTypes.array
+	};
+	
 	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(TheGrid);
+
+/***/ },
+/* 578 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _collapsible = __webpack_require__(176);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
+	var _constants = __webpack_require__(234);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BoxTypes = function (_Component) {
+		_inherits(BoxTypes, _Component);
+	
+		/**
+	  * ------------------------------------------------
+	  * lifecycle
+	  * ------------------------------------------------
+	  */
+		function BoxTypes(props) {
+			_classCallCheck(this, BoxTypes);
+	
+			var _this = _possibleConstructorReturn(this, (BoxTypes.__proto__ || Object.getPrototypeOf(BoxTypes)).call(this, props));
+	
+			_this.events = props.events;
+			_this.state = {
+				box_key_incrementation: 0
+			};
+			return _this;
+		}
+	
+		/**
+	  * ------------------------------------------------
+	  * rendering
+	  * ------------------------------------------------
+	  */
+	
+	
+		_createClass(BoxTypes, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				var items = this.props.items;
+	
+	
+				return _react2.default.createElement(
+					'div',
+					{
+						className: 'box-types'
+					},
+					items.map(function (item, index) {
+						return _react2.default.createElement(
+							_collapsible2.default,
+							{
+								key: item.type,
+								title: item.title,
+								onStateChanged: _this2.onStateChanged.bind(_this2, item.type)
+							},
+							_this2.renderBoxes(item)
+						);
+					})
+				);
+			}
+		}, {
+			key: 'renderBoxes',
+			value: function renderBoxes(item) {
+				var _this3 = this;
+	
+				if (_typeof(item.boxes) == ( true ? 'undefined' : _typeof(undefined))) return this.state[item.type];
+				return item.boxes.map(function (box) {
+					return _react2.default.createElement('div', { key: _this3.state.box_key_incrementation++, dangerouslySetInnerHTML: { __html: box.html } });
+				});
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * events
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'onStateChanged',
+			value: function onStateChanged(type, collapsed) {
+	
+				/**
+	    * if there are items do not react on change
+	    */
+				if (this.getTypeItems(type) != null) return;
+	
+				/**
+	    * else load boxes
+	    */
+				if (_typeof(this.state[type]) == ( true ? 'undefined' : _typeof(undefined))) {
+					this.events.emit(_constants.Events.GET_BOX_TYPES.key, type);
+					this.state[type] = _constants.States.LOADING;
+					this.setState(this.state);
+				}
+			}
+			/**
+	   * ------------------------------------------------
+	   * other functions
+	   * ------------------------------------------------
+	   */
+	
+		}, {
+			key: 'getTypeItems',
+			value: function getTypeItems(type) {
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+	
+				try {
+					for (var _iterator = this.props.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var item = _step.value;
+	
+						if (item.type == type) {
+							return item.boxes ? item.boxes : null;
+						}
+					}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+	
+				return null;
+			}
+		}, {
+			key: 'getTypeState',
+			value: function getTypeState(type) {
+				if (_typeof(this.state[type]) == ( true ? 'undefined' : _typeof(undefined))) {
+					return _constants.States.WAITING;
+				}
+				return this.state[type];
+			}
+		}]);
+	
+		return BoxTypes;
+	}(_react.Component);
+	
+	/**
+	 * define property types
+	 */
+	
+	
+	BoxTypes.propTypes = {
+		items: _react.PropTypes.array.isRequired
+	};
+	
+	/**
+	 * export component to public
+	 */
+	exports.default = BoxTypes;
 
 /***/ }
 /******/ ]);

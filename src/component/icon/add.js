@@ -10,7 +10,9 @@ export default class Add extends Component{
             <svg
                 width="24"
                 height="24"
-                viewBox="0 0 24 24">
+                viewBox="0 0 24 24"
+                className="svg-icon svg-icon__add"
+            >
                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
             </svg>
         )

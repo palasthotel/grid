@@ -1,11 +1,18 @@
+
 import React, {Component, PropTypes} from 'react';
-import {EventEmitter} from 'events';
+
+import GridEvents from './grid-event.js';
+import {Events} from '../helper/constants.js';
+
+import BackendHandler from './backend-handler.js';
 
 import TheGrid from '../component/the-grid/the-grid.js';
 import Backend from '../connection/backend.js'
-import {Grid} from '../model/grid.js';
-import {Container} from '../model/container.js';
 
+/**
+ * this is where all input and output will be handled
+ * all other sub components should only use states and props
+ */
 class TheGridRouter extends Component {
 	
 	/**
@@ -16,24 +23,60 @@ class TheGridRouter extends Component {
 	constructor(props) {
 		super(props);
 		
+		/**
+		 * grid events object
+		 * @type {GridEvent}
+		 */
+		this.events = new GridEvents();
+		this.events.on(Events.GET_BOX_TYPES,this.onGetBoxTypes.bind(this));
+		
+		/**
+		 * Toolbar button components
+		 */
+		const tb = window.grid_toolbar_buttons;
+		const etb = window.grid_toolbar_buttons_editor;
+		
+		/**
+		 * grid overlays
+		 */
+		const gov = window.grid_overlays;
+		const eov = window.grid_overlays_editor;
+		
+		/**
+		 * grid backend connection
+		 * @type {Backend}
+		 */
+		this.backend = new Backend(this.getConfig().endpoint, this.events);
+		if(this.getConfig().debug) this.getConfig().backend = this.backend;
+		
+		/**
+		 * connection handler
+		 */
+		this.handler = new BackendHandler(this.getState.bind(this), this.setState.bind(this),this.events);
+		if(this.getConfig().debug) this.getConfig().handler = this.handler;
+		
+		/**
+		 * component state
+		 */
 		this.state = {
+			
 			loading: true,
+			isDraft: true,
+			isSidebar: false,
+			
+			container:{},
+			revisions: [],
+			container_types: [],
+			box_types: [],
+			
 		};
-		
-		this.grid = new Grid({id:props.grid_id});
-		
-		this.revisions = {};
-		this.container_types = {};
-		this.box_types = {};
-		this.backend = new Backend(props.ajax_url);
-		
-		this.events = new EventEmitter();
-		this.events.setMaxListeners(0);
 	}
 	
 	componentDidMount(){
 		// TODO: get data from grid
-		this.backend.execute("grid.document","loadGrid",[this.grid.id], this.onLoadedGrid.bind(this));
+		this.backend.execute("grid.document","loadGrid",[this.getConfig().ID]);
+		this.backend.execute("grid.editing.container","getContainerTypes",[this.getConfig().ID]);
+		this.backend.execute("grid.editing.box","getMetaTypesAndSearchCriteria",[this.getConfig().ID]);
 	}
 	
 	/**
@@ -42,15 +85,29 @@ class TheGridRouter extends Component {
 	 * ------------------------------------------------
 	 */
 	render() {
-		if(this.state.loading){
-			return(<div className="the-grid loading">Loading...</div>)
+		const {
+			loading,
+			isDraft,
+			container,
+			revisions,
+			container_types,
+			box_types,
+		} = this.state;
+		if(loading){
+			return(
+				<div className="the-grid loading">
+					Loading...
+				</div>
+			)
 		} else {
 			return (
 				<TheGrid
-					grid={this.grid.toJSON()}
-					revisions={this.revisions}
-					container_types={this.container_types}
-					box_types={this.box_types}
+					isDraft={isDraft}
+					container={container}
+					revisions={revisions}
+					container_types={container_types}
+					box_types={box_types}
+				    events={this.events}
 				/>
 			)
 		}
@@ -61,38 +118,32 @@ class TheGridRouter extends Component {
 	 * events
 	 * ------------------------------------------------
 	 */
-	onLoadedGrid(data){
-		console.log(data, this.grid);
-		this.grid.container.add(data.result.container);
-		// for(let ci = 0; ci < data.result.container.length; ci++){
-		// 	const container = data.result.container[ci];
-		//
-		// }
-		console.log(this.grid);
-		this.setState({loading:false});
+	onGetBoxTypes(type){
+		this.backend.execute(
+			"grid.editing.box",
+			"Search",
+			[
+				this.getConfig().ID,
+				type,
+				"",
+				""
+			]
+		);
 	}
+	
 	
 	/**
 	 * ------------------------------------------------
 	 * other functions
 	 * ------------------------------------------------
 	 */
+	getConfig(){
+		return window.grid;
+	}
+	getState(){
+		return this.state;
+	}
 }
-
-/**
- * property defaults
- */
-TheGridRouter.defaultProps = {
-	mode: "",
-};
-
-/**
- * define property types
- */
-TheGridRouter.propTypes = {
-	grid_id: PropTypes.number.isRequired,
-	ajax_url: PropTypes.string.isRequired,
-};
 
 /**
  * export component to public

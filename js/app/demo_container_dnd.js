@@ -22675,10 +22675,33 @@
 		NEW_BOX: 'new_box'
 	};
 	
+	var States = exports.States = {
+		/**
+	  * nothing happend
+	  */
+		WAITING: "waiting",
+		/**
+	  * loading something
+	  */
+		LOADING: "loading",
+		/**
+	  * done and finished with whatever
+	  */
+		DONE: "done"
+	};
+	
 	/**
 	 * Events on the grid
 	 */
 	var Events = exports.Events = {
+		BACKEND: {
+			key: "backend_event",
+			description: "when a request goes to backend"
+		},
+		GET_BOX_TYPES: {
+			key: "get_box_types",
+			description: "get box types based on meta type and search criteria"
+		},
 		GRID_RESIZE: {
 			key: "grid_resize",
 			description: "fired when grid is resized"

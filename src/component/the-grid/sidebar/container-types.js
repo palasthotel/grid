@@ -18,12 +18,12 @@ class ContainerTypes extends Component {
 	 * ------------------------------------------------
 	 */
 	render() {
-		const {container_types} = this.props;
+		const {items} = this.props;
 		return (
 			<div
 				className="container-types"
 			>
-				{container_types.map((container,index)=>{
+				{items.map((container,index)=>{
 					if(container.type.indexOf("i-") === 0
 						|| container.type.indexOf("sc-") === 0
 					)
@@ -57,7 +57,7 @@ class ContainerTypes extends Component {
  * define property types
  */
 ContainerTypes.propTypes = {
-	container_types: PropTypes.array.isRequired
+	items: PropTypes.array.isRequired
 };
 
 /**

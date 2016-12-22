@@ -64,7 +64,7 @@ export default class Grid extends Component{
 	renderBoxes(boxes){
 		let $boxes = [];
 		for(let i = 0; i < boxes.length; i++){
-			var box = boxes[i];
+			const box = boxes[i];
 			$boxes.push(this.renderBoxDrop(i));
 			$boxes.push(<Box
 				key={i}

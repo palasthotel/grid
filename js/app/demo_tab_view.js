@@ -22145,14 +22145,14 @@
 		_createClass(ContainerTypes, [{
 			key: "render",
 			value: function render() {
-				var container_types = this.props.container_types;
+				var items = this.props.items;
 	
 				return _react2.default.createElement(
 					"div",
 					{
 						className: "container-types"
 					},
-					container_types.map(function (container, index) {
+					items.map(function (container, index) {
 						if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0) return;
 						return _react2.default.createElement(
 							"div",
@@ -22188,7 +22188,7 @@
 	
 	
 	ContainerTypes.propTypes = {
-		container_types: _react.PropTypes.array.isRequired
+		items: _react.PropTypes.array.isRequired
 	};
 	
 	/**

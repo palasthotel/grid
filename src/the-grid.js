@@ -33,25 +33,15 @@ import TheGridRouter from './router/the-grid-router.js';
  */
 document.addEventListener("DOMContentLoaded", function(event) {
 	/**
-	 * Toolbar button components
+	 * grid config
 	 */
-	const tb = window.grid_toolbar_buttons;
-	const etb = window.grid_toolbar_buttons_editor;
-	
-	/**
-	 * grid overlays
-	 */
-	const gov = window.grid_overlays;
-	const eov = window.grid_overlays_editor;
+	const grid = window.grid;
 	
 	/**
 	 * append app to grid app root
 	 */
 	ReactDOM.render(
-		<TheGridRouter
-			ajax_url={document.gridajax}
-			grid_id={document.ID}
-		/>,
+		<TheGridRouter />,
 		document.getElementById("grid-app")
 	);
 });

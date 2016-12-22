@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 import Controls from './controls.js';
 import TextWithLink from './text-with-link.js';
-import Collapsible from './collapsible.js';
+import Collapsible from '../utils/collapsible.js';
 
 import Widgets from './widgets/widgets.js';
 import SelectWidget from './widgets/select.js';

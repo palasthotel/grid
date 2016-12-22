@@ -49,6 +49,7 @@ class Collapsible extends Component{
 	 */
 	onToggle(){
 		this.setState({collapsed: !this.state.collapsed});
+		if(typeof this.props.onStateChanged != typeof undefined) this.props.onStateChanged(this.state.collapsed);
 	}
 	/**
 	 * ---------------------
@@ -59,6 +60,7 @@ class Collapsible extends Component{
 Collapsible.propTypes = {
 	title: PropTypes.string.isRequired,
 	collapsed: PropTypes.bool,
+	onStateChanged: PropTypes.func,
 };
 Collapsible.defaultProps = {
 	collapsed: true,

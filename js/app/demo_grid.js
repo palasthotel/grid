@@ -64,7 +64,7 @@
 	
 	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 	
-	var _events = __webpack_require__(410);
+	var _events = __webpack_require__(411);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22059,10 +22059,33 @@
 		NEW_BOX: 'new_box'
 	};
 	
+	var States = exports.States = {
+		/**
+	  * nothing happend
+	  */
+		WAITING: "waiting",
+		/**
+	  * loading something
+	  */
+		LOADING: "loading",
+		/**
+	  * done and finished with whatever
+	  */
+		DONE: "done"
+	};
+	
 	/**
 	 * Events on the grid
 	 */
 	var Events = exports.Events = {
+		BACKEND: {
+			key: "backend_event",
+			description: "when a request goes to backend"
+		},
+		GET_BOX_TYPES: {
+			key: "get_box_types",
+			description: "get box types based on meta type and search criteria"
+		},
 		GRID_RESIZE: {
 			key: "grid_resize",
 			description: "fired when grid is resized"
@@ -31046,6 +31069,10 @@
 	
 	var _dragPreview = __webpack_require__(405);
 	
+	var _trash = __webpack_require__(410);
+	
+	var _trash2 = _interopRequireDefault(_trash);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31217,7 +31244,7 @@
 							_react2.default.createElement(
 								'div',
 								{ className: 'grid-box-control-wrapper' },
-								_react2.default.createElement('i', { className: 'icon-trash' }),
+								_react2.default.createElement(_trash2.default, null),
 								_react2.default.createElement(
 									'span',
 									{ className: 'grid-box-control-text' },
@@ -31273,6 +31300,62 @@
 
 /***/ },
 /* 410 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * source: https://github.com/google/material-design-icons/blob/eae603ae946b6f813b7edc5611226d8ceae327ff/action/svg/production/ic_delete_24px.svg
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var Trash = function (_Component) {
+	    _inherits(Trash, _Component);
+	
+	    function Trash() {
+	        _classCallCheck(this, Trash);
+	
+	        return _possibleConstructorReturn(this, (Trash.__proto__ || Object.getPrototypeOf(Trash)).apply(this, arguments));
+	    }
+	
+	    _createClass(Trash, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "svg",
+	                {
+	                    width: "18",
+	                    height: "18",
+	                    viewBox: "0 0 24 24",
+	                    className: "svg-icon svg-icon__delete"
+	                },
+	                _react2.default.createElement("path", { d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" })
+	            );
+	        }
+	    }]);
+	
+	    return Trash;
+	}(_react.Component);
+	
+	exports.default = Trash;
+
+/***/ },
+/* 411 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
