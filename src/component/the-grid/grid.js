@@ -8,7 +8,7 @@ import Slot from './slot/slot.js';
 import BoxDrop from './box/box-drop.js';
 import Box from './box/box.js';
 
-import { ItemTypes, Events } from '../../helper/constants.js';
+import { ItemTypes, Events } from '../../constants.js';
 
 export default class Grid extends Component{
 	

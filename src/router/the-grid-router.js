@@ -2,9 +2,9 @@
 import React, {Component, PropTypes} from 'react';
 
 import GridEvents from './grid-event.js';
-import {Events} from '../helper/constants.js';
+import {Events} from '../constants.js';
 
-import BackendHandler from './backend-handler.js';
+import BackendHandler from './backend-handler';
 
 import TheGrid from '../component/the-grid/the-grid.js';
 import Backend from '../connection/backend.js'
@@ -52,7 +52,9 @@ class TheGridRouter extends Component {
 		/**
 		 * connection handler
 		 */
-		this.handler = new BackendHandler(this.getState.bind(this), this.setState.bind(this),this.events);
+		// TODO: inject additional handlers
+		let additional_handlers = [];
+		this.handler = new BackendHandler(this.getState.bind(this), this.setState.bind(this),this.events, additional_handlers);
 		if(this.getConfig().debug) this.getConfig().handler = this.handler;
 		
 		/**
@@ -118,15 +120,15 @@ class TheGridRouter extends Component {
 	 * events
 	 * ------------------------------------------------
 	 */
-	onGetBoxTypes(type){
+	onGetBoxTypes(type, search = "", criteria = []){
 		this.backend.execute(
 			"grid.editing.box",
 			"Search",
 			[
 				this.getConfig().ID,
 				type,
-				"",
-				""
+				search,
+				criteria
 			]
 		);
 	}

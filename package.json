@@ -3,7 +3,7 @@
   "dependencies": {
     "ampersand-collection": "^2.0.0",
     "ampersand-model": "^8.0.0",
-    "axios": "^0.14.0",
+    "axios": "^0.15.3",
     "node-uuid": "^1.4.7",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",

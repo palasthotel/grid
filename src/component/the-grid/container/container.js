@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes, Events } from '../../../helper/constants.js';
+import { ItemTypes, Events } from '../../../constants.js';
 import {ContainerDragPreview} from '../../../helper/drag-preview.js';
 
 

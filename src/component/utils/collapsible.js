@@ -37,7 +37,7 @@ class Collapsible extends Component{
 					}}
 					className="collapsible__content"
 				>
-					{children}
+					{(collapsed)?null:children}
 				</div>
 			</div>
 		);

@@ -22101,7 +22101,7 @@
 							},
 							className: "collapsible__content"
 						},
-						children
+						collapsed ? null : children
 					)
 				);
 			}

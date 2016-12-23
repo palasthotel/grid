@@ -49,6 +49,7 @@ var GridAjax = function(method, params_array, settings){
 			// GRID.log(data);
 			// GRID.log(textStatus);
 			// GRID.log(jqXHR);
+			// GRID.log(jqXHR);
 			// GRID.log(json);
 			// GRID.log("---------!");
 			GRID.log(["AJAX Success",settings]);

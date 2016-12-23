@@ -55,6 +55,8 @@ module.exports = function httpAdapter(config) {
 
     // Parse url
     var parsed = url.parse(config.url);
+    var protocol = parsed.protocol || 'http:';
+
     if (!auth && parsed.auth) {
       var urlAuth = parsed.auth.split(':');
       var urlUsername = urlAuth[0] || '';
@@ -66,7 +68,7 @@ module.exports = function httpAdapter(config) {
       delete headers.Authorization;
     }
 
-    var isHttps = parsed.protocol === 'https:';
+    var isHttps = protocol === 'https:';
     var agent = isHttps ? config.httpsAgent : config.httpAgent;
 
     var options = {
@@ -81,7 +83,7 @@ module.exports = function httpAdapter(config) {
 
     var proxy = config.proxy;
     if (!proxy) {
-      var proxyEnv = parsed.protocol.slice(0, -1) + '_proxy';
+      var proxyEnv = protocol.slice(0, -1) + '_proxy';
       var proxyUrl = process.env[proxyEnv] || process.env[proxyEnv.toUpperCase()];
       if (proxyUrl) {
         var parsedProxyUrl = url.parse(proxyUrl);
@@ -89,13 +91,29 @@ module.exports = function httpAdapter(config) {
           host: parsedProxyUrl.hostname,
           port: parsedProxyUrl.port
         };
+
+        if (parsedProxyUrl.auth) {
+          var proxyUrlAuth = parsedProxyUrl.auth.split(':');
+          proxy.auth = {
+            username: proxyUrlAuth[0],
+            password: proxyUrlAuth[1]
+          };
+        }
       }
     }
 
     if (proxy) {
+      options.hostname = proxy.host;
       options.host = proxy.host;
+      options.headers.host = parsed.hostname + (parsed.port ? ':' + parsed.port : '');
       options.port = proxy.port;
-      options.path = parsed.protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path;
+      options.path = protocol + '//' + parsed.hostname + (parsed.port ? ':' + parsed.port : '') + options.path;
+
+      // Basic proxy authorization
+      if (proxy.auth) {
+        var base64 = new Buffer(proxy.auth.username + ':' + proxy.auth.password, 'utf8').toString('base64');
+        options.headers['Proxy-Authorization'] = 'Basic ' + base64;
+      }
     }
 
     var transport;
@@ -183,6 +201,19 @@ module.exports = function httpAdapter(config) {
         reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED'));
         aborted = true;
       }, config.timeout);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (aborted) {
+          return;
+        }
+
+        req.abort();
+        reject(cancel);
+        aborted = true;
+      });
     }
 
     // Send the request

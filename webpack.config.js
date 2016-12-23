@@ -50,7 +50,7 @@ let config = {
 	devtool: 'source-map',
 	module: {
 		loaders: [{
-			test: /\.js$/,
+			test: /\.(js|jsx)$/,
 			exclude: /node_modules|bower_components/,
 			loader: 'babel-loader',
 			query: {

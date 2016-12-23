@@ -26,6 +26,11 @@
 			path: "<?php echo $async_path; ?>",
 			timeout: <?php echo $async_timeout; ?>,
 		},
+		
+		// component injections
+		plugins:[],
+		editor_widgets:[],
+		
 	};
 	
 </script>

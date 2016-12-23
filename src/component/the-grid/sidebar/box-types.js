@@ -1,8 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 
+import BoxTypeList from './box-type-list.jsx';
 import Collapsible from '../../utils/collapsible.js';
 
-import {States, Events} from '../../../helper/constants.js';
+import {States, Events} from '../../../constants.js';
+
+class BoxType extends Component{
+	constructor(props){
+		super(props);
+		
+	}
+}
 
 class BoxTypes extends Component {
 	
@@ -13,10 +21,14 @@ class BoxTypes extends Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.events = props.events;
-		this.state = {
-			box_key_incrementation: 0,
-		};
+		this.state = {};
+		
+	}
+	componentDidMount(){
+		this.props.events.on(Events.GOT_BOX_TYPE_SEARCH,this.onSearchResult.bind(this));
+	}
+	componentWillUnmount(){
+		this.props.events.off(Events.GOT_BOX_TYPE_SEARCH,this.onSearchResult.bind(this));
 	}
 	
 	/**
@@ -36,9 +48,7 @@ class BoxTypes extends Component {
 						<Collapsible
 							key={item.type}
 							title={item.title}
-						    onStateChanged={this.onStateChanged.bind(this, item.type)}
 						>
-							{/* TODO: criteria intelligent search input field */}
 							{this.renderBoxes(item)}
 						</Collapsible>
 					)
@@ -47,10 +57,12 @@ class BoxTypes extends Component {
 		)
 	}
 	renderBoxes(item){
-		if(typeof item.boxes == typeof undefined) return this.state[item.type];
-		return item.boxes.map((box)=>{
-			return <div key={this.state.box_key_incrementation++} dangerouslySetInnerHTML={{ __html : box.html}} />
-		});
+		return (<BoxTypeList
+			item={item}
+			events={this.props.events}
+		/>)
+		
+		
 	}
 	
 	/**
@@ -69,10 +81,13 @@ class BoxTypes extends Component {
 		 * else load boxes
 		 */
 		if(typeof this.state[type] == typeof undefined){
-			this.events.emit(Events.GET_BOX_TYPES.key,type);
+			this.props.events.emit(Events.GET_BOX_TYPES.key,type);
 			this.state[type] = States.LOADING;
 			this.setState( this.state );
 		}
+	}
+	onSearchResult(){
+		this.setState({state:States.DONE});
 	}
 	/**
 	 * ------------------------------------------------

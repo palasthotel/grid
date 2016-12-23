@@ -1,11 +1,36 @@
 # Changelog
 
+### 0.15.3 (Nov 27, 2016)
+
+- Fixing issue with custom instances and global defaults ([#443](https://github.com/mzabriskie/axios/issues/443))
+- Renaming `axios.d.ts` to `index.d.ts` ([#519](https://github.com/mzabriskie/axios/issues/519))
+- Adding `get`, `head`, and `delete` to `defaults.headers` ([#509](https://github.com/mzabriskie/axios/issues/509))
+- Fixing issue with `btoa` and IE ([#507](https://github.com/mzabriskie/axios/issues/507))
+- Adding support for proxy authentication ([#483](https://github.com/mzabriskie/axios/pull/483))
+- Improving HTTP adapter to use `http` protocol by default ([#493](https://github.com/mzabriskie/axios/pull/493))
+- Fixing proxy issues ([#491](https://github.com/mzabriskie/axios/pull/491))
+
+### 0.15.2 (Oct 17, 2016)
+
+- Fixing issue with calling `cancel` after response has been received ([#482](https://github.com/mzabriskie/axios/issues/482))
+
+### 0.15.1 (Oct 14, 2016)
+
+- Fixing issue with UMD ([#485](https://github.com/mzabriskie/axios/issues/485))
+
+### 0.15.0 (Oct 10, 2016)
+
+- Adding cancellation support ([#452](https://github.com/mzabriskie/axios/pull/452))
+- Moving default adapter to global defaults ([#437](https://github.com/mzabriskie/axios/pull/437))
+- Fixing issue with `file` URI scheme ([#440](https://github.com/mzabriskie/axios/pull/440))
+- Fixing issue with `params` objects that have no prototype ([#445](https://github.com/mzabriskie/axios/pull/445))
+
 ### 0.14.0 (Aug 27, 2016)
 
-- Updating TypeScript definitions ([#419](https://github.com/mzabriskie/axios/pull/419))
+- **BREAKING** Updating TypeScript definitions ([#419](https://github.com/mzabriskie/axios/pull/419))
+- **BREAKING** Replacing `agent` option with `httpAgent` and `httpsAgent` ([#387](https://github.com/mzabriskie/axios/pull/387))
+- **BREAKING** Splitting `progress` event handlers into `onUploadProgress` and `onDownloadProgress` ([#423](https://github.com/mzabriskie/axios/pull/423))
 - Adding support for `http_proxy` and `https_proxy` environment variables ([#366](https://github.com/mzabriskie/axios/pull/366))
-- Replacing `agent` option with `httpAgent` and `httpsAgent` ([#387](https://github.com/mzabriskie/axios/pull/387))
-- Splitting `progress` event handlers into `onUploadProgress` and `onDownloadProgress` ([#423](https://github.com/mzabriskie/axios/pull/423))
 - Fixing issue with `auth` config option and `Authorization` header ([#397](https://github.com/mzabriskie/axios/pull/397))
 - Don't set XSRF header if `xsrfCookieName` is `null` ([#406](https://github.com/mzabriskie/axios/pull/406))
 
@@ -15,13 +40,13 @@
 
 ### 0.13.0 (Jul 13, 2016)
 
-- Improved error handling ([#345](https://github.com/mzabriskie/axios/pull/345))
+- **BREAKING** Improved error handling ([#345](https://github.com/mzabriskie/axios/pull/345))
+- **BREAKING** Response transformer now invoked in dispatcher not adapter ([10eb238](https://github.com/mzabriskie/axios/commit/10eb23865101f9347570552c04e9d6211376e25e))
+- **BREAKING** Request adapters now return a `Promise` ([157efd5](https://github.com/mzabriskie/axios/commit/157efd5615890301824e3121cc6c9d2f9b21f94a))
 - Fixing issue with `withCredentials` not being overwritten ([#343](https://github.com/mzabriskie/axios/issues/343))
 - Fixing regression with request transformer being called before request interceptor ([#352](https://github.com/mzabriskie/axios/issues/352))
 - Fixing custom instance defaults ([#341](https://github.com/mzabriskie/axios/issues/341))
 - Fixing instances created from `axios.create` to have same API as default axios ([#217](https://github.com/mzabriskie/axios/issues/217))
-- Response transformer now invoked in dispatcher not adapter ([10eb238](https://github.com/mzabriskie/axios/commit/10eb23865101f9347570552c04e9d6211376e25e))
-- Request adapters now return a `Promise` ([157efd5](https://github.com/mzabriskie/axios/commit/157efd5615890301824e3121cc6c9d2f9b21f94a))
 
 ### 0.12.0 (May 31, 2016)
 

@@ -2,7 +2,7 @@
 // https://github.com/mzabriskie/axios
 import axios from 'axios';
 
-import {Events} from '../helper/constants.js';
+import {Events} from '../constants.js';
 
 class BackendRequest{
 	constructor(url, component, method){
@@ -21,7 +21,7 @@ class BackendRequest{
 		}).then((response)=>{
 			if(typeof success == "function") success({
 				success: true,
-				data: response.data,
+				data: response.data.result,
 				component: this.settings.component,
 				method: this.settings.method,
 				async: this.settings.async,
@@ -32,7 +32,7 @@ class BackendRequest{
 }
 
 class Backend {
-	constructor(endpoint, events){
+	constructor(endpoint, events = null){
 		this.endpoint = endpoint;
 		this.events = events;
 	}
@@ -46,19 +46,50 @@ class Backend {
 	
 	/**
 	 *
+	 * @param {boolean} error
+	 * @param {object} result
+	 * @param {function|null} callback
+	 */
+	callback(error, result, callback){
+		// direct callback?
+		if(typeof callback != typeof undefined && callback != null){
+			callback(error, result);
+		}
+		// deliver as event
+		if(typeof this.events != typeof undefined
+			&& this.events != null ){
+			this.events.emit(Events.BACKEND, result);
+		}
+	}
+	
+	/**
+	 *
 	 * @param {String} component
 	 * @param {String} method
 	 * @param {array} params
+	 * @param {function|null} callback
 	 */
-	execute(component, method, params){
-		
+	execute(component, method, params = [], callback = null){
+		if(typeof component != "string"){
+			throw "Component must be of type string.";
+		}
+		if(typeof method != "string"){
+			throw "Method must be of type string.";
+		}
+		if(typeof params != typeof []){
+			throw "Params must be of type array.";
+		}
+		if(typeof callback != typeof undefined && callback != null && typeof callback != "function"){
+			console.error(typeof callback);
+			throw "If use callback it must be a function.";
+		}
 		this.buildRequest(component, method).execute(
 			params,
 			(result)=>{
-				this.events.emit(Events.BACKEND, result);
+				this.callback(false, result, callback);
 			},
 			(error)=>{
-				this.events.emit(Events.BACKEND, error);
+				this.callback(true, error, callback);
 			}
 		);
 	}

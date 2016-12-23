@@ -3,6 +3,7 @@
 var utils = require('./utils');
 var bind = require('./helpers/bind');
 var Axios = require('./core/Axios');
+var defaults = require('./defaults');
 
 /**
  * Create an instance of Axios
@@ -24,15 +25,20 @@ function createInstance(defaultConfig) {
 }
 
 // Create the default instance to be exported
-var axios = createInstance();
+var axios = createInstance(defaults);
 
 // Expose Axios class to allow class inheritance
 axios.Axios = Axios;
 
 // Factory for creating new instances
-axios.create = function create(defaultConfig) {
-  return createInstance(defaultConfig);
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
 };
+
+// Expose Cancel & CancelToken
+axios.Cancel = require('./cancel/Cancel');
+axios.CancelToken = require('./cancel/CancelToken');
+axios.isCancel = require('./cancel/isCancel');
 
 // Expose all/spread
 axios.all = function all(promises) {
