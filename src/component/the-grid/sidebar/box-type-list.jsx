@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 
 import {Events} from '../../../constants.js';
 
+import Box from './new-box';
+
 let box_key_incrementation = 0;
 
 
@@ -50,6 +52,8 @@ class BoxTypeList extends Component {
 		const {criteria} = this.props.item;
 		if (criteria.length < 1) return null;
 		
+		// TODO: advanced criteria rendering #
+		
 		return (
 			<div>
 				<input
@@ -65,9 +69,10 @@ class BoxTypeList extends Component {
 		const {boxes} = this.state;
 		if(typeof boxes == typeof undefined || typeof boxes != typeof []) return null;
 		return boxes.map((box)=>{
-			return <div
+			return <Box
+				item={box}
 				key={this.key_incrementation++}
-				dangerouslySetInnerHTML={{ __html : box.html}}
+			    events={this.props.events}
 			/>
 		});
 	}
@@ -87,9 +92,9 @@ class BoxTypeList extends Component {
 			this.emitGetBoxes();
 		},600);
 	}
-	onSearchResult(result){
-		if(result.type != this.props.item.type) return;
-		this.setState({boxes:result.boxes, loading: false});
+	onSearchResult(type,boxes){
+		if(type != this.props.item.type) return;
+		this.setState({boxes:boxes, loading: false});
 	}
 	
 	/**

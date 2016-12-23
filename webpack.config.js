@@ -12,11 +12,11 @@ let config = {
 		/**
 		 * demo of a whole grid
 		 */
-		demo_the_grid: './demo/the-grid.js',
+		// demo_the_grid: './demo/the-grid.js',
 		/**
 		 * demo of only the grid content part
 		 */
-		demo_grid: './demo/grid.js',
+		// demo_grid: './demo/grid.js',
 		/**
 		 * demo of grid model
 		 */
@@ -24,23 +24,23 @@ let config = {
 		/**
 		 * demo of box editor
 		 */
-		demo_box_editor: './demo/box-editor.js',
+		// demo_box_editor: './demo/box-editor.js',
 		/**
 		 * container drag and drop demo
 		 */
-		demo_container_dnd: './demo/container-dnd.js',
+		// demo_container_dnd: './demo/container-dnd.js',
 		/**
 		 * demo of styles editor
 		 */
-		demo_styles_editor: './demo/styles-editor.js',
+		// demo_styles_editor: './demo/styles-editor.js',
 		/**
 		 * demo of container factory
 		 */
-		demo_container_factory: './demo/container-factory.js',
+		// demo_container_factory: './demo/container-factory.js',
 		/**
 		 * demo of tabview with container and boxes
 		 */
-		demo_tab_view: './demo/tab-view.js',
+		// demo_tab_view: './demo/tab-view.js',
 	},
 	output: {
 		path: './js/app',

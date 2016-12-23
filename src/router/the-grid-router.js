@@ -28,7 +28,6 @@ class TheGridRouter extends Component {
 		 * @type {GridEvent}
 		 */
 		this.events = new GridEvents();
-		this.events.on(Events.GET_BOX_TYPES,this.onGetBoxTypes.bind(this));
 		
 		/**
 		 * Toolbar button components
@@ -79,6 +78,18 @@ class TheGridRouter extends Component {
 		this.backend.execute("grid.document","loadGrid",[this.getConfig().ID]);
 		this.backend.execute("grid.editing.container","getContainerTypes",[this.getConfig().ID]);
 		this.backend.execute("grid.editing.box","getMetaTypesAndSearchCriteria",[this.getConfig().ID]);
+		
+		/**
+		 * bind events
+		 */
+		this.events.on(Events.GET_BOX_TYPES,this.onGetBoxTypes.bind(this));
+		this.events.on(Events.BOX_MOVE,this.onBoxMove.bind(this));
+		this.events.on(Events.BOX_ADD,this.onBoxAdd.bind(this));
+	}
+	componentWillUnmount(){
+		this.events.off(Events.GET_BOX_TYPES, this.onGetBoxTypes.bind(this));
+		this.events.off(Events.BOX_MOVE,this.onBoxMove.bind(this));
+		this.events.off(Events.BOX_ADD,this.onBoxAdd.bind(this));
 	}
 	
 	/**
@@ -131,6 +142,20 @@ class TheGridRouter extends Component {
 				criteria
 			]
 		);
+	}
+	onBoxAdd(box, to){
+		const {container} = this.state;
+		this.backend.execute("grid.editing.box","CreateBox",[
+			this.getConfig().ID,
+			to.container_id,
+			to.slot_id,
+			to.box_index,
+			box.type,
+			box.content,
+		]);
+	}
+	onBoxMove(){
+		
 	}
 	
 	

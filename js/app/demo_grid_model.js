@@ -40,14 +40,13 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var _backend = __webpack_require__(402);
+	var _backend = __webpack_require__(1);
 	
 	var _backend2 = _interopRequireDefault(_backend);
 	
@@ -89,294 +88,7 @@
 	});
 
 /***/ },
-
-/***/ 3:
-/***/ function(module, exports) {
-
-	// shim for using process in browser
-	var process = module.exports = {};
-	
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-	
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-	
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout () {
-	    throw new Error('clearTimeout has not been defined');
-	}
-	(function () {
-	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
-	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
-	    }
-	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
-	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
-	    }
-	} ())
-	function runTimeout(fun) {
-	    if (cachedSetTimeout === setTimeout) {
-	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
-	        return setTimeout(fun, 0);
-	    }
-	    try {
-	        // when when somebody has screwed with setTimeout but no I.E. maddness
-	        return cachedSetTimeout(fun, 0);
-	    } catch(e){
-	        try {
-	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-	            return cachedSetTimeout.call(null, fun, 0);
-	        } catch(e){
-	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-	            return cachedSetTimeout.call(this, fun, 0);
-	        }
-	    }
-	
-	
-	}
-	function runClearTimeout(marker) {
-	    if (cachedClearTimeout === clearTimeout) {
-	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
-	        return clearTimeout(marker);
-	    }
-	    try {
-	        // when when somebody has screwed with setTimeout but no I.E. maddness
-	        return cachedClearTimeout(marker);
-	    } catch (e){
-	        try {
-	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-	            return cachedClearTimeout.call(null, marker);
-	        } catch (e){
-	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-	            return cachedClearTimeout.call(this, marker);
-	        }
-	    }
-	
-	
-	
-	}
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
-	
-	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
-	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
-	
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = runTimeout(cleanUpNextTick);
-	    draining = true;
-	
-	    var len = queue.length;
-	    while(len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
-	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    runClearTimeout(timeout);
-	}
-	
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
-	        }
-	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        runTimeout(drainQueue);
-	    }
-	};
-	
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
-	
-	function noop() {}
-	
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-	
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-	
-	process.cwd = function () { return '/' };
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function() { return 0; };
-
-
-/***/ },
-
-/***/ 363:
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	/**
-	 * Drag and drop item types
-	 */
-	var ItemTypes = exports.ItemTypes = {
-		CONTAINER: 'container',
-		NEW_CONTAINER: 'new_container',
-		BOX: 'box',
-		NEW_BOX: 'new_box'
-	};
-	
-	var States = exports.States = {
-		/**
-	  * nothing happend
-	  */
-		WAITING: "waiting",
-		/**
-	  * loading something
-	  */
-		LOADING: "loading",
-		/**
-	  * done and finished with whatever
-	  */
-		DONE: "done"
-	};
-	
-	/**
-	 * Events on the grid
-	 */
-	var Events = exports.Events = {
-		BACKEND: {
-			key: "backend_event",
-			description: "when a request goes to backend"
-		},
-		GET_BOX_TYPES: {
-			key: "get_box_types",
-			description: "get box types based on meta type and search criteria"
-		},
-		GOT_BOX_TYPE_SEARCH: {
-			key: "got_box_type_search",
-			description: "result of box type search"
-		},
-		GRID_RESIZE: {
-			key: "grid_resize",
-			description: "fired when grid is resized"
-		},
-		CONTAINER_ADD: {
-			key: 'container_add',
-			description: 'fired when a container added to the grid'
-		},
-		CONTAINER_MOVE: {
-			key: 'container_move',
-			description: 'fired when a container moved on the grid'
-		},
-		CONTAINER_DELETE: {
-			key: 'container_delete',
-			description: 'fired when a container is deleted from the grid'
-		},
-		BOX_ADD: {
-			key: 'box_add',
-			description: 'fired when a box added to the grid'
-		},
-		BOX_MOVE: {
-			key: 'box_move',
-			description: 'fired when a box moved on the grid'
-		},
-		BOX_DELETE: {
-			key: 'box_delete',
-			description: 'fired when a box is deleted from the grid'
-		}
-	};
-	
-	// deprecated
-	var alt = {
-		EVENTS: {
-			LOADING: {
-				KEY: "grid_is_loading",
-				description: "when the whole grid is initially loading"
-			},
-			LOADING_BOXES: {
-				KEY: "grid_is_loading_boxes",
-				description: "when grid is loading boxes from server"
-			},
-			LOADING_REVISIONS: {
-				KEY: "grid_is_loading_revisions",
-				description: "when grid loads revisions"
-			}
-		}
-	};
-
-/***/ },
-
-/***/ 402:
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -391,11 +103,11 @@
 	// https://github.com/mzabriskie/axios
 	
 	
-	var _axios = __webpack_require__(403);
+	var _axios = __webpack_require__(2);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _constants = __webpack_require__(363);
+	var _constants = __webpack_require__(28);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -530,23 +242,21 @@
 	exports.default = Backend;
 
 /***/ },
-
-/***/ 403:
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(404);
+	module.exports = __webpack_require__(3);
 
 /***/ },
-
-/***/ 404:
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
-	var bind = __webpack_require__(406);
-	var Axios = __webpack_require__(407);
-	var defaults = __webpack_require__(408);
+	var utils = __webpack_require__(4);
+	var bind = __webpack_require__(5);
+	var Axios = __webpack_require__(6);
+	var defaults = __webpack_require__(7);
 	
 	/**
 	 * Create an instance of Axios
@@ -579,15 +289,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(425);
-	axios.CancelToken = __webpack_require__(426);
-	axios.isCancel = __webpack_require__(422);
+	axios.Cancel = __webpack_require__(25);
+	axios.CancelToken = __webpack_require__(26);
+	axios.isCancel = __webpack_require__(22);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(427);
+	axios.spread = __webpack_require__(27);
 	
 	module.exports = axios;
 	
@@ -596,13 +306,12 @@
 
 
 /***/ },
-
-/***/ 405:
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var bind = __webpack_require__(406);
+	var bind = __webpack_require__(5);
 	
 	/*global toString:true*/
 	
@@ -902,8 +611,7 @@
 
 
 /***/ },
-
-/***/ 406:
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -920,18 +628,17 @@
 
 
 /***/ },
-
-/***/ 407:
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var defaults = __webpack_require__(408);
-	var utils = __webpack_require__(405);
-	var InterceptorManager = __webpack_require__(419);
-	var dispatchRequest = __webpack_require__(420);
-	var isAbsoluteURL = __webpack_require__(423);
-	var combineURLs = __webpack_require__(424);
+	var defaults = __webpack_require__(7);
+	var utils = __webpack_require__(4);
+	var InterceptorManager = __webpack_require__(19);
+	var dispatchRequest = __webpack_require__(20);
+	var isAbsoluteURL = __webpack_require__(23);
+	var combineURLs = __webpack_require__(24);
 	
 	/**
 	 * Create a new instance of Axios
@@ -1012,14 +719,13 @@
 
 
 /***/ },
-
-/***/ 408:
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(405);
-	var normalizeHeaderName = __webpack_require__(409);
+	var utils = __webpack_require__(4);
+	var normalizeHeaderName = __webpack_require__(9);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -1036,10 +742,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(410);
+	    adapter = __webpack_require__(10);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(410);
+	    adapter = __webpack_require__(10);
 	  }
 	  return adapter;
 	}
@@ -1110,16 +816,201 @@
 	
 	module.exports = defaults;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
+/* 8 */
+/***/ function(module, exports) {
 
-/***/ 409:
+	// shim for using process in browser
+	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	
+	
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	
+	
+	
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+	
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+	
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+	
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+	
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+	
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+	
+	function noop() {}
+	
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+	
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+	
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -1132,19 +1023,18 @@
 
 
 /***/ },
-
-/***/ 410:
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(405);
-	var settle = __webpack_require__(411);
-	var buildURL = __webpack_require__(414);
-	var parseHeaders = __webpack_require__(415);
-	var isURLSameOrigin = __webpack_require__(416);
-	var createError = __webpack_require__(412);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(417);
+	var utils = __webpack_require__(4);
+	var settle = __webpack_require__(11);
+	var buildURL = __webpack_require__(14);
+	var parseHeaders = __webpack_require__(15);
+	var isURLSameOrigin = __webpack_require__(16);
+	var createError = __webpack_require__(12);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(17);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1240,7 +1130,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(418);
+	      var cookies = __webpack_require__(18);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1314,16 +1204,15 @@
 	  });
 	};
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ },
-
-/***/ 411:
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var createError = __webpack_require__(412);
+	var createError = __webpack_require__(12);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -1349,13 +1238,12 @@
 
 
 /***/ },
-
-/***/ 412:
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(413);
+	var enhanceError = __webpack_require__(13);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -1373,8 +1261,7 @@
 
 
 /***/ },
-
-/***/ 413:
+/* 13 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1399,13 +1286,12 @@
 
 
 /***/ },
-
-/***/ 414:
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -1474,13 +1360,12 @@
 
 
 /***/ },
-
-/***/ 415:
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	/**
 	 * Parse headers into an object
@@ -1518,13 +1403,12 @@
 
 
 /***/ },
-
-/***/ 416:
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1593,8 +1477,7 @@
 
 
 /***/ },
-
-/***/ 417:
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1636,13 +1519,12 @@
 
 
 /***/ },
-
-/***/ 418:
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -1696,13 +1578,12 @@
 
 
 /***/ },
-
-/***/ 419:
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -1755,16 +1636,15 @@
 
 
 /***/ },
-
-/***/ 420:
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
-	var transformData = __webpack_require__(421);
-	var isCancel = __webpack_require__(422);
-	var defaults = __webpack_require__(408);
+	var utils = __webpack_require__(4);
+	var transformData = __webpack_require__(21);
+	var isCancel = __webpack_require__(22);
+	var defaults = __webpack_require__(7);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -1841,13 +1721,12 @@
 
 
 /***/ },
-
-/***/ 421:
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(405);
+	var utils = __webpack_require__(4);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -1868,8 +1747,7 @@
 
 
 /***/ },
-
-/***/ 422:
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1880,8 +1758,7 @@
 
 
 /***/ },
-
-/***/ 423:
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1901,8 +1778,7 @@
 
 
 /***/ },
-
-/***/ 424:
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1920,8 +1796,7 @@
 
 
 /***/ },
-
-/***/ 425:
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1946,13 +1821,12 @@
 
 
 /***/ },
-
-/***/ 426:
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(425);
+	var Cancel = __webpack_require__(25);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -2010,8 +1884,7 @@
 
 
 /***/ },
-
-/***/ 427:
+/* 27 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2043,7 +1916,112 @@
 	};
 
 
-/***/ }
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
 
-/******/ });
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	/**
+	 * Drag and drop item types
+	 */
+	var ItemTypes = exports.ItemTypes = {
+		CONTAINER: 'container',
+		NEW_CONTAINER: 'new_container',
+		BOX: 'box',
+		NEW_BOX: 'new_box'
+	};
+	
+	var States = exports.States = {
+		/**
+	  * nothing happend
+	  */
+		WAITING: "waiting",
+		/**
+	  * loading something
+	  */
+		LOADING: "loading",
+		/**
+	  * done and finished with whatever
+	  */
+		DONE: "done"
+	};
+	
+	/**
+	 * Events on the grid
+	 */
+	var Events = exports.Events = {
+		BACKEND: {
+			key: "backend_event",
+			description: "when a request goes to backend"
+		},
+		GET_BOX_TYPES: {
+			key: "get_box_types",
+			description: "get box types based on meta type and search criteria"
+		},
+		GOT_BOX_TYPE_SEARCH: {
+			key: "got_box_type_search",
+			description: "result of box type search"
+		},
+		GRID_RESIZE: {
+			key: "grid_resize",
+			description: "fired when grid is resized"
+		},
+		CONTAINER_ADD: {
+			key: 'container_add',
+			description: 'fired when a container added to the grid'
+		},
+		CONTAINER_MOVE: {
+			key: 'container_move',
+			description: 'fired when a container moved on the grid'
+		},
+		CONTAINER_DELETE: {
+			key: 'container_delete',
+			description: 'fired when a container is deleted from the grid'
+		},
+		BOX_ADD: {
+			key: 'box_add',
+			description: 'fired when a box added to the grid'
+		},
+		BOX_WAS_ADDED: {
+			key: 'box_was_added',
+			description: 'fired when a box added to the grid in backend'
+		},
+		BOX_MOVE: {
+			key: 'box_move',
+			description: 'fired when a box moved on the grid'
+		},
+		BOX_WAS_MOVED: {
+			key: 'box_was_moved',
+			description: 'fired when a box moved on the grid in backend'
+		},
+		BOX_DELETE: {
+			key: 'box_delete',
+			description: 'fired when a box is deleted from the grid'
+		}
+	};
+	
+	// deprecated
+	var alt = {
+		EVENTS: {
+			LOADING: {
+				KEY: "grid_is_loading",
+				description: "when the whole grid is initially loading"
+			},
+			LOADING_BOXES: {
+				KEY: "grid_is_loading_boxes",
+				description: "when grid is loading boxes from server"
+			},
+			LOADING_REVISIONS: {
+				KEY: "grid_is_loading_revisions",
+				description: "when grid loads revisions"
+			}
+		}
+	};
+
+/***/ }
+/******/ ]);
 //# sourceMappingURL=demo_grid_model.map

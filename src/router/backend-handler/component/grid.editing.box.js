@@ -27,7 +27,13 @@ export default class GridEditingBox extends HandlerBase{
 		/**
 		 * send directly to component
 		 */
-		this.events.emit(Events.GOT_BOX_TYPE_SEARCH, {type:type, boxes:data});
+		this.events.emit(Events.GOT_BOX_TYPE_SEARCH, type, data);
 		
+	}
+	
+	CreateBox(response){
+		console.log(response);
+		const {params, data} = response;
+		this.events.emit(Events.BOX_WAS_ADDED, data, params[1], params[2], params[3], params[4]);
 	}
 }

@@ -22102,25 +22102,7 @@
 			var _this = _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).call(this, props));
 	
 			_this.state = {
-				container: {
-					dragging: false,
-					from: null,
-					to: null
-				},
-				box: {
-					dragging: false,
-					from: {
-						container: null,
-						slot: null,
-						index: null
-					},
-					to: {
-						container: null,
-						slot: null,
-						index: null
-					}
-				},
-				loading: false
+				container: props.container
 			};
 			return _this;
 		}
@@ -22130,11 +22112,18 @@
 			value: function componentDidMount() {
 				window.addEventListener('resize', this.onResize.bind(this));
 				this.onResize();
+	
+				var events = this.props.events;
+	
+	
+				events.on(_constants.Events.BOX_ADD, this.onBoxAdd.bind(this));
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
 				window.removeEventListener('resize', this.onResize);
+	
+				events.off(_constants.Events.BOX_ADD, this.onBoxAdd.bind(this));
 			}
 	
 			/**
@@ -22151,29 +22140,33 @@
 	
 		}, {
 			key: 'renderBoxes',
-			value: function renderBoxes(boxes) {
+			value: function renderBoxes(boxes, container_index, slot_index) {
 				var $boxes = [];
 				for (var i = 0; i < boxes.length; i++) {
 					var box = boxes[i];
-					$boxes.push(this.renderBoxDrop(i));
+					$boxes.push(this.renderBoxDrop(i, container_index, slot_index));
 					$boxes.push(_react2.default.createElement(_box2.default, _extends({
 						key: i,
-						index: i
+						index: i,
+						container_index: container_index,
+						slot_index: slot_index
 					}, box, {
 						events: this.props.events
 					})));
-					if (i == boxes.length - 1) $boxes.push(this.renderBoxDrop(++i));
+					if (i == boxes.length - 1) $boxes.push(this.renderBoxDrop(++i, container_index, slot_index));
 				}
 				return $boxes;
 			}
 		}, {
 			key: 'renderBoxDrop',
-			value: function renderBoxDrop(index) {
+			value: function renderBoxDrop(index, container_index, slot_index) {
 				var drop_key = "box-drop-" + index;
 				return _react2.default.createElement(_boxDrop2.default, {
 					key: drop_key,
 					index: index,
-					onDrop: this.onBoxDrop.bind(this, index),
+					container_index: container_index,
+					slot_index: slot_index,
+					onDrop: this.onBoxDrop.bind(this),
 					events: this.props.events
 				});
 			}
@@ -22187,7 +22180,7 @@
 	
 		}, {
 			key: 'renderSlots',
-			value: function renderSlots(slots, dimensions) {
+			value: function renderSlots(slots, dimensions, container_index) {
 				var _this2 = this;
 	
 				return slots.map(function (slot, index) {
@@ -22196,12 +22189,14 @@
 					return _react2.default.createElement(
 						_slot2.default,
 						_extends({
-							key: index
+							key: index,
+							index: index,
+							container_index: container_index
 						}, slot, {
 							dimension: width,
 							events: _this2.props.events
 						}),
-						_this2.renderBoxes(slot.boxes)
+						_this2.renderBoxes(slot.boxes, container_index, index)
 					);
 				});
 			}
@@ -22238,7 +22233,7 @@
 							index: i,
 							events: this.props.events
 						}),
-						this.renderSlots(container.slots, dimensions)
+						this.renderSlots(container.slots, dimensions, i)
 					));
 	
 					/**
@@ -22278,7 +22273,7 @@
 							return _this3.state.dom = element;
 						}
 					},
-					this.renderContainers(this.props.container)
+					this.renderContainers(this.state.container)
 				);
 			}
 	
@@ -22301,13 +22296,23 @@
 			}
 		}, {
 			key: 'onBoxDrop',
-			value: function onBoxDrop(box, slot, container) {
-				console.log("dropped on container ");
-				console.log(container);
-				console.log("dropped on slot ");
-				console.log(slot);
-				console.log("box dropped ");
-				console.log(box);
+			value: function onBoxDrop(container_index, slot_index, box_index, box) {
+				// console.log("Box drop on", container_index, slot_index, box_index, box);
+			}
+		}, {
+			key: 'onBoxAdd',
+			value: function onBoxAdd(box, to) {
+				console.log("onBoxAdd", box, to);
+				var container_index = to.container_index;
+				var slot_index = to.slot_index;
+				var box_index = to.box_index;
+	
+				// TODO: needs to get an id first
+	
+				box.id = -1;
+				this.state.container[container_index].slots[slot_index].boxes.splice(box_index, 0, box);
+				console.log(this.state.container[container_index].slots[slot_index]);
+				// this.setState(this.state);
 			}
 	
 			/**
@@ -29128,8 +29133,18 @@
 	
 	var boxTarget = {
 		drop: function drop(props, monitor) {
-			console.log("drop");
-			props.onDrop(monitor.getItem());
+			/**
+	   * call onDrop function of BoxDrop component with index information and item that was dropped
+	   */
+			props.onDrop(props.container_index, props.slot_index, props.index, monitor.getItem());
+			/**
+	   * return a drop result to draggable
+	   */
+			return {
+				container_index: props.container_index,
+				slot_index: props.slot_index,
+				box_index: props.index
+			};
 		}
 	};
 	
@@ -29159,8 +29174,6 @@
 				var canDrop = _props.canDrop;
 	
 	
-				console.log("is over " + isOver);
-	
 				var can_drop_class = canDrop ? 'can_drop' : '';
 				var over_class = isOver ? 'is_over' : '';
 	
@@ -29180,7 +29193,11 @@
 	}(_react.Component);
 	
 	BoxDrop.propTypes = {
+	
 		index: _react.PropTypes.number.isRequired,
+		slot_index: _react.PropTypes.number.isRequired,
+		container_index: _react.PropTypes.number.isRequired,
+	
 		isOver: _react.PropTypes.bool.isRequired,
 		onDrop: _react.PropTypes.func.isRequired
 	};
@@ -29223,22 +29240,19 @@
 	
 	var boxSource = {
 		beginDrag: function beginDrag(props) {
-			console.log("begin drag");
 			return {
-				id: props.id,
-				index: props.index
+				container_index: props.container_index,
+				slot_index: props.slot_index,
+				box_index: props.index,
+				box_id: props.id
 			};
 		},
 		endDrag: function endDrag(props, monitor) {
-			console.log("end drop");
+	
 			var item = monitor.getItem();
 			var dropResult = monitor.getDropResult();
 	
-			if (dropResult) {
-				// window.alert( // eslint-disable-line no-alert
-				//   `You dropped ${item.name} into ${dropResult.name}!`
-				// );
-			}
+			props.events.emit(_constants.Events.BOX_MOVE, item, dropResult);
 		}
 	};
 	

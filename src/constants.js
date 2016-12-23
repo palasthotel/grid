@@ -21,7 +21,7 @@ export const States = {
 	 * done and finished with whatever
 	 */
 	DONE: "done",
-}
+};
 
 /**
  * Events on the grid
@@ -59,9 +59,17 @@ export const Events = {
 		key: 'box_add',
 		description: 'fired when a box added to the grid',
 	},
+	BOX_WAS_ADDED:{
+		key: 'box_was_added',
+		description: 'fired when a box added to the grid in backend',
+	},
 	BOX_MOVE:{
 		key: 'box_move',
 		description: 'fired when a box moved on the grid',
+	},
+	BOX_WAS_MOVED:{
+		key: 'box_was_moved',
+		description: 'fired when a box moved on the grid in backend',
 	},
 	BOX_DELETE:{
 		key: 'box_delete',

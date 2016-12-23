@@ -1,29 +1,28 @@
 import React, {Component, PropTypes} from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes, Events } from '../../../constants.js';
+import { ItemTypes, Events, States } from '../../../constants.js';
 import {BoxDragPreview} from '../../../helper/drag-preview.js';
 
 import TrashIcon from '../../icon/trash.js';
 
 const boxSource = {
 	beginDrag(props){
-		console.log("begin drag");
 		return {
-			id: props.id,
-			index: props.index
+			container_index: props.container_index,
+			container_id: props.container_id,
+			slot_index: props.slot_index,
+			slot_id: props.slot_id,
+			box_index: props.index,
+			box_id: props.id,
 		};
 	},
 	endDrag(props, monitor) {
-		console.log("end drop");
+		
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		
-		if (dropResult) {
-			// window.alert( // eslint-disable-line no-alert
-			//   `You dropped ${item.name} into ${dropResult.name}!`
-			// );
-		}
+		props.events.emit(Events.BOX_MOVE, item, dropResult);
 	}
 };
 
@@ -49,26 +48,31 @@ class Box extends Component{
 		this.props.events.on(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
 		this.buildDragPreview();
 	}
+	componentWillUnmount(){
+		this.props.events.off(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+		
+	}
 	/**
 	 * ---------------------
 	 * rendering
 	 * ---------------------
 	 */
 	render(){
-		const { connectDragSource, connectDragPreview, isDragging } = this.props;
-		let title = "";
-		if(this.props.titleurl){
+		const { connectDragSource, connectDragPreview, isDragging, box} = this.props;
+		const {state, titleurl, prolog, epilog, readmore, readmoreurl, html} = this.props;
+		let {title} = this.props;
+		if(titleurl){
 			title = <h3>
-				{this.props.titleurl}
+				{titleurl}
 				<a
-					href={this.props.titleurl}
+					href={titleurl}
 				    className="box-title">
-					{this.props.title}
+					{title}
 					</a>
 			</h3>
 		} else {
 			title = <h3>
-				{this.props.title}
+				{title}
 				</h3>
 		}
 		return connectDragPreview(
@@ -80,12 +84,13 @@ class Box extends Component{
 				ref={ (element) => this.state.dom = element }
 			>
 				<div className="box__content">
+					{(state == States.LOADING)? <p>{state}</p>: null}
 					<span>{title}</span>
-					<div className="box__prolog">{this.props.prolog}</div>
-					<div className="box__html" dangerouslySetInnerHTML={{__html: this.props.html}} ></div>
-					<div className="box__epilog">{this.props.epilog}</div>
+					<div className="box__prolog">{prolog}</div>
+					<div className="box__html" dangerouslySetInnerHTML={{__html: html}} ></div>
+					<div className="box__epilog">{epilog}</div>
 					<p className="box__readmore">
-						<a href={this.props.readmoreurl} >{this.props.readmore}</a>
+						<a href={readmoreurl} >{readmore}</a>
 					</p>
 				</div>
 				{connectDragSource(<div className="box__controls grid-box-movable">
@@ -120,6 +125,7 @@ class Box extends Component{
 		this.buildDragPreview();
 	}
 	
+	
 	/**
 	 * ---------------------
 	 * other functions
@@ -137,7 +143,7 @@ Box.propTypes = {
 	connectDragSource: PropTypes.func.isRequired,
 	connectDragPreview: PropTypes.func.isRequired,
 	isDragging: PropTypes.bool.isRequired,
-	id: PropTypes.any.isRequired
+	id: PropTypes.any.isRequired,
 };
 
 export default DragSource(ItemTypes.BOX, boxSource, collect)(Box);

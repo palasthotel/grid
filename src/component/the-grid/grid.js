@@ -8,7 +8,7 @@ import Slot from './slot/slot.js';
 import BoxDrop from './box/box-drop.js';
 import Box from './box/box.js';
 
-import { ItemTypes, Events } from '../../constants.js';
+import { ItemTypes, Events, States } from '../../constants.js';
 
 export default class Grid extends Component{
 	
@@ -21,33 +21,25 @@ export default class Grid extends Component{
 		super(props);
 		
 		this.state = {
-			container: {
-				dragging: false,
-				from: null,
-				to: null,
-			},
-			box: {
-				dragging: false,
-				from: {
-					container: null,
-					slot: null,
-					index: null,
-				},
-				to: {
-					container: null,
-					slot: null,
-					index: null,
-				}
-			},
-			loading: false
+			container: props.container,
 		};
 	}
 	componentDidMount(){
 		window.addEventListener('resize', this.onResize.bind(this));
 		this.onResize();
+		
+		const {events} = this.props;
+		
+		events.on(Events.BOX_ADD,this.onBoxAdd.bind(this));
+		events.on(Events.BOX_WAS_ADDED, this.onBoxWasAdded.bind(this));
+		
 	}
 	componentWillUnmount(){
 		window.removeEventListener('resize', this.onResize);
+		
+		const {events} = this.props;
+		events.off(Events.BOX_ADD,this.onBoxAdd.bind(this));
+		events.off(Events.BOX_WAS_ADDED, this.onBoxWasAdded.bind(this));
 	}
 	
 	/**
@@ -61,30 +53,42 @@ export default class Grid extends Component{
 	 * @param boxes
 	 * @returns {Array}
 	 */
-	renderBoxes(boxes){
+	renderBoxes(boxes, container_index, slot_index){
+		const container_id = this.state.container[container_index].id;
+		const slot_id = this.state.container[container_index].slots[slot_index].id;
 		let $boxes = [];
 		for(let i = 0; i < boxes.length; i++){
 			const box = boxes[i];
-			$boxes.push(this.renderBoxDrop(i));
+			$boxes.push(this.renderBoxDrop(i, container_index, slot_index));
 			$boxes.push(<Box
 				key={i}
 				index={i}
+				container_index={container_index}
+				container_id={container_id}
+				slot_index={slot_index}
+				slot_id={slot_id}
 				{...box}
 				events={this.props.events}
 			/>);
 			if(i == boxes.length-1)
-				$boxes.push(this.renderBoxDrop(++i));
+				$boxes.push(this.renderBoxDrop(++i, container_index, slot_index));
 			
 		}
 		return $boxes;
 	}
-	renderBoxDrop(index){
+	renderBoxDrop(index, container_index, slot_index){
 		const drop_key = "box-drop-"+index;
+		const container_id = this.state.container[container_index].id;
+		const slot_id = this.state.container[container_index].slots[slot_index].id;
 		return(
 			<BoxDrop
 				key={drop_key}
 				index={index}
-				onDrop={this.onBoxDrop.bind(this, index)}
+				container_index={container_index}
+				container_id={container_id}
+				slot_index={slot_index}
+				slot_id={slot_id}
+				onDrop={this.onBoxDrop.bind(this)}
 				events={this.props.events}
 			/>
 		);
@@ -96,17 +100,19 @@ export default class Grid extends Component{
 	 * @param dimensions array
 	 * @returns {*}
 	 */
-	renderSlots(slots, dimensions){
+	renderSlots(slots, dimensions, container_index){
 		return slots.map((slot, index)=>{
 			let parts = dimensions[index].split("d");
 			let width = (parts[0]/parts[1])*100;
 			return(
 				<Slot
 					key={index}
+					index={index}
+					container_index={container_index}
 					{...slot}
 					dimension={width}
 					events={this.props.events}
-				>{this.renderBoxes(slot.boxes)}</Slot>
+				>{this.renderBoxes(slot.boxes, container_index, index)}</Slot>
 			)
 		});
 	}
@@ -139,7 +145,7 @@ export default class Grid extends Component{
 					index={i}
 				    events={this.props.events}
 				>
-					{this.renderSlots(container.slots, dimensions)}
+					{this.renderSlots(container.slots, dimensions, i)}
 				</Container>
 			));
 			
@@ -172,7 +178,7 @@ export default class Grid extends Component{
 				className="grid"
 				ref={(element)=> this.state.dom = element}
 			>
-				{this.renderContainers(this.props.container)}
+				{this.renderContainers(this.state.container)}
 			</div>
 		);
 	}
@@ -189,13 +195,36 @@ export default class Grid extends Component{
 	onContainerDrop(index){
 		console.log("dropped on index "+index);
 	}
-	onBoxDrop(box, slot, container){
-		console.log("dropped on container ");
-		console.log(container);
-		console.log("dropped on slot ");
-		console.log(slot);
-		console.log("box dropped ");
-		console.log(box);
+	onBoxDrop(container_index, slot_index, box_index, box){
+		// console.log("Box drop on", container_index, slot_index, box_index, box);
+	}
+	onBoxAdd(box, to){
+		console.log("onBoxAdd", box, to);
+		const {container_index, slot_index, box_index} = to;
+		
+		box.id = "new";
+		box.state = States.LOADING;
+		this.state.container[container_index].slots[slot_index].boxes.splice(box_index,0,box);
+		this.setState(this.state);
+	}
+	onBoxWasAdded(box, container_id, slot_id, box_index, type){
+		
+		for(let c of this.state.container){
+			if(c.id == container_id){
+				for(let s of c.slots){
+					if(s.id == slot_id){
+						if(s.boxes[box_index].type == type && s.boxes[box_index].id == "new"){
+							s.boxes[box_index] = box;
+							this.setState(this.state);
+							return;
+						}
+						break;
+					}
+				}
+				break;
+			}
+		}
+		throw "Box that should have been added was not found in dom.";
 	}
 	
 	/**
