@@ -4,7 +4,7 @@ export default class GridEditingContainer extends HandlerBase{
 	
 	getContainerTypes(response){
 		const {data} = response;
-		this.setState({container_types: data});
+		this._setState({container_types: data});
 	}
 	
 }

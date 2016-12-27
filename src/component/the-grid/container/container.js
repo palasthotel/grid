@@ -7,22 +7,17 @@ import {ContainerDragPreview} from '../../../helper/drag-preview.js';
 
 const containerSource = {
 	beginDrag(props){
-		console.log("begin drag");
 		return {
 			id: props.id,
 			index: props.index,
 			title: props.title,
 		};
 	},
-	endDrag(props, monitor) {
-		const item = monitor.getItem();
-		const dropResult = monitor.getDropResult();
-		console.log("dropped", item, dropResult);
-		if (dropResult) {
-			// window.alert( // eslint-disable-line no-alert
-			//   `You dropped ${item.name} into ${dropResult.name}!`
-			// );
-		}
+	endDrag(props, monitor){
+		if(!monitor.didDrop()) return;
+		const this_container = monitor.getItem();
+		const container_drop = monitor.getDropResult();
+		props.onMove(this_container,container_drop);
 	}
 };
 
@@ -45,8 +40,11 @@ class Container extends Component{
 		this.state = {active: false};
 	}
 	componentDidMount(){
-		this.props.events.on(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+		window.addEventListener('resize', this.onResize.bind(this));
 		this.buildDragPreview();
+	}
+	componentWillUnmount(){
+		window.removeEventListener('resize', this.onResize);
 	}
 	/**
 	 * ---------------------
@@ -59,7 +57,7 @@ class Container extends Component{
 			<div
 				className={`container contaner__${type}`}
 			     style={{
-				     display: isDragging ? "none" : "block",
+				     opacity: isDragging? 0.3: 1,
 			     }}
 			     ref={ (element) => this.state.dom = element }
 			>
@@ -87,7 +85,11 @@ class Container extends Component{
 							<li className="container__options-list-item" role="toggleslotstyles">
 								<i className="icon-style" /> Slot-styles
 							</li>
-							<li className="container__options-list-item" role="delete">
+							<li
+								className="container__options-list-item"
+								role="delete"
+							    onClick={this.onDelete.bind(this)}
+							>
 								<i className="icon-trash" /> Delete
 							</li>
 						</ul>
@@ -95,6 +97,8 @@ class Container extends Component{
 				</div>
 				
 				<div className="container__content">
+					{(this.props.isMoving)? <p>Moving</p>: null}
+					{(this.props.isDeleting)? <p>Deleting</p>: null}
 					<div className="container__before">
 						<div className="container__prolog">PROLOG</div>
 					</div>
@@ -114,8 +118,11 @@ class Container extends Component{
 	 * events
 	 * ---------------------
 	 */
-	onGridResize(size){
+	onResize(size){
 		this.buildDragPreview();
+	}
+	onDelete(){
+		this.props.onDelete(this.props);
 	}
 	
 	/**
@@ -130,6 +137,16 @@ class Container extends Component{
 		result.img.src = result.src;
 	}
 }
+
+Container.defaultProps = {
+	
+	onEdit: (done)=>{ done(); },
+	onMove: (done)=>{ done(); },
+	onDelete: (done)=> { done(); },
+	
+	isSaving: false,
+	isDeleting: false,
+};
 
 Container.propTypes = {
 	connectDragSource: PropTypes.func.isRequired,

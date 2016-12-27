@@ -4,9 +4,9 @@ import { ItemTypes, Events } from '../../../constants.js';
 
 const containerTarget = {
 	drop(props, monitor) {
-		console.log("drop");
-		props.onDrop(monitor.getItem());
-		return {dropped: true};
+		return {
+			index: props.index,
+		};
 	},
 	// hover(props, monitor, component){
 	// 	console.log("hover!");
@@ -22,22 +22,17 @@ function collect(connect, monitor) {
 }
 
 class ContainerDrop extends Component {
-	onDrop(){
-		console.log("onDrop");
-	}
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
 		
-		const color = (isOver)? 'red': 'transparent';
-		const display = (canDrop)? 'block': 'none';
+		const can_drop_class = (canDrop)? 'can-drop': '';
+		const over_class = (isOver)? 'is-over': '';
 		
 		return connectDropTarget(
-			<div className="container__drop-area-wrapper" style={{
-				display: display
-			}}>
-				<div className="container__drop-area" style={{
-					backgroundColor: color,
-				}}></div>
+			<div
+				className={`container-drop ${over_class} ${can_drop_class}`}
+			>
+				<div className="container-drop__area"></div>
 			</div>
 		);
 	}
@@ -45,8 +40,7 @@ class ContainerDrop extends Component {
 
 ContainerDrop.propTypes = {
 	index: PropTypes.number.isRequired,
-	isOver: PropTypes.bool.isRequired,
-	onDrop: PropTypes.func.isRequired
+	isOver: PropTypes.bool,
 };
 
 export default DropTarget(ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);

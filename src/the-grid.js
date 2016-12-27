@@ -3,39 +3,9 @@ import ReactDOM from 'react-dom';
 import TheGridRouter from './router/the-grid-router.js';
 
 /**
- *
- * @type {
- *  {
- *  id: null,
- *  events: *,
- *  toobar_buttons: Array,
- *  toolbar_buttons_editor: Array,
- *  overlays: Array,
- *  overlays_editor: Array
- *  }}
- */
-// const GRID = window.GRID = {
-//     id: null,
-// 	events: new EventEmitter(),
-// 	plugins: [],
-// 	toobar_buttons: [],
-// 	toolbar_buttons_editor: [],
-// 	overlays: [],
-// 	overlays_editor: [],
-// };
-//
-// GRID.events.setMaxListeners(0);
-
-
-
-/**
  * wait for dom to be ready so all plugins etc are loaded
  */
-document.addEventListener("DOMContentLoaded", function(event) {
-	/**
-	 * grid config
-	 */
-	const grid = window.grid;
+document.addEventListener("DOMContentLoaded", function() {
 	
 	/**
 	 * append app to grid app root
@@ -44,4 +14,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		<TheGridRouter />,
 		document.getElementById("grid-app")
 	);
+	
 });

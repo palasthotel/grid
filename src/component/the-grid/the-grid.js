@@ -13,11 +13,8 @@ class TheGrid extends React.Component{
 	constructor(props) {
 		super(props);
 	}
-	componentWillReceiveProps(nextProps){
-		console.log(nextProps);
-	}
 	render(){
-		const {events,isDraft,container,container_types,box_types} = this.props;
+		const {isDraft,container,container_types,box_types} = this.props;
 		return (
 			<div
 				className="the-grid"
@@ -31,7 +28,9 @@ class TheGrid extends React.Component{
 				<Grid
 					container={container}
 					draft={isDraft}
-					events={events}
+				    onStateChange={this.onGridStateChange.bind(this)}
+				    onContainerMove={this.onContainerMove.bind(this)}
+				    onContainerDelete={this.onContainerDelete.bind(this)}
 				/>
 				
 				<TabView
@@ -41,18 +40,31 @@ class TheGrid extends React.Component{
 					
 					<ContainerTypes
 						items={container_types}
-					    events={events}
 					/>
 					
 					<BoxTypes
 						items={box_types}
-					    events={events}
+					    onSearch={this.props.onBoxTypeSearch.bind(this)}
 					/>
 					
 				</TabView>
 				
 			</div>
 		);
+	}
+	/**
+	 * ---------------------
+	 * events
+	 * ---------------------
+	 */
+	onGridStateChange(container){
+		console.log("onGridStateChange");
+	}
+	onContainerMove(done){
+		done();
+	}
+	onContainerDelete(done){
+		done();
 	}
 }
 
@@ -62,18 +74,21 @@ class TheGrid extends React.Component{
 TheGrid.defaultProps = {
 	container_types: [],
 	box_types: [],
+	
+	onBoxTypeSearch: (type, criteria, query, cb)=>{cb([])}
 };
 
 /**
  * define property types
  */
 TheGrid.propTypes = {
-	events: PropTypes.object.isRequired,
 	isDraft: PropTypes.bool.isRequired,
 	container: PropTypes.array.isRequired,
 	revisions: PropTypes.array.isRequired,
 	container_types: PropTypes.array,
 	box_types: PropTypes.array,
+	
+	onBoxTypeSearch: PropTypes.func,
 };
 
 

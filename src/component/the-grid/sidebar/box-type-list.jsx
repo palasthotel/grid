@@ -25,16 +25,10 @@ class BoxTypeList extends Component {
 	}
 	componentDidMount(){
 		if(!this.state.boxes){
-			this.emitGetBoxes();
+			this.onSearch();
 		}
-		
-		const {events} = this.props;
-		events.on(Events.GOT_BOX_TYPE_SEARCH,this.onSearchResult.bind(this));
 	}
-	componentWillUnmount(){
-		const {events} = this.props;
-		events.off(Events.GOT_BOX_TYPE_SEARCH,this.onSearchResult.bind(this));
-	}
+	
 	/**
 	 * ------------------------------------------------
 	 * rendering
@@ -89,12 +83,8 @@ class BoxTypeList extends Component {
 		 */
 		clearTimeout(this.timeout);
 		this.timeout = setTimeout(()=>{
-			this.emitGetBoxes();
+			this.onSearch()
 		},600);
-	}
-	onSearchResult(type,boxes){
-		if(type != this.props.item.type) return;
-		this.setState({boxes:boxes, loading: false});
 	}
 	
 	/**
@@ -102,9 +92,11 @@ class BoxTypeList extends Component {
 	 * other functions
 	 * ------------------------------------------------
 	 */
-	emitGetBoxes(){
+	onSearch(){
 		this.setState({loading: true});
-		this.props.events.emit(Events.GET_BOX_TYPES,this.props.item.type, this.state.query,this.props.item.criteria);
+		this.props.onSearch(this.props.item.type, this.props.item.criteria, this.state.query,(boxes)=>{
+			this.setState({loading: false, boxes: boxes});
+		});
 	}
 }
 
@@ -113,7 +105,8 @@ class BoxTypeList extends Component {
  */
 BoxTypeList.propTypes = {
 	item: PropTypes.object.isRequired,
-	events: PropTypes.object.isRequired,
+	
+	onSearch: PropTypes.func.isRequired,
 };
 
 /**

@@ -10,6 +10,9 @@ import GridStylesHandler from './component/grid.styles.js';
 import GridTestHandler from './component/grid.test.js';
 import GridWidgetsTypeAHeadBoxHandler from './component/grid.widgets.typeahead.box.js';
 
+/**
+ * Handles all answers from backend
+ */
 export default class BackendHandler{
 	/**
 	 *

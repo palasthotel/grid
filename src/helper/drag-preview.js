@@ -8,7 +8,6 @@ export class ContainerDragPreview{
 		return 2;
 	}
 	static create(width, slots){
-		console.log("create container preview", width, slots);
 		let img = new Image();
 		let c = document.createElement('canvas');
 		c.height = this.height();
@@ -45,7 +44,6 @@ export class BoxDragPreview{
 		return 2;
 	}
 	static create(width){
-		console.log("create box preview", width);
 		let img = new Image();
 		let c = document.createElement('canvas');
 		c.height = this.height();

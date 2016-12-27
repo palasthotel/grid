@@ -174,7 +174,7 @@ var SlotView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-slot',
 	initialize: function(){
-        this._boxesView = new BoxesView({collection: this.model.getBoxes() });
+        this._boxesView = new BoxesView({collection: this.model.onSearch() });
         if(GRID.mode != "box"){
             this._slotStyleChangerView = new GridSlotStyleChangerView({model:this.model});
         }

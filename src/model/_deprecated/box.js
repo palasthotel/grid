@@ -17,7 +17,7 @@ export default Backbone.Model.extend({
 
 	},
 	getIndex: function(){
-		return this.get("parent").getBoxes().indexOf(this);
+		return this.get("parent").onSearch().indexOf(this);
 	},
 	// handles all Server communication
 	sync: function(method, model, options){

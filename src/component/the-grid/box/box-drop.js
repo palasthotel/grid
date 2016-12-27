@@ -3,18 +3,8 @@ import { DropTarget } from 'react-dnd';
 
 import { ItemTypes, Events } from '../../../constants.js';
 
-
 const boxTarget = {
 	drop(props, monitor) {
-		/**
-		 * call onDrop function of BoxDrop component with index information and item that was dropped
-		 */
-		props.onDrop(
-			props.container_index,
-			props.slot_index,
-			props.index,
-			monitor.getItem()
-		);
 		/**
 		 * return a drop result to draggable
 		 */
@@ -23,7 +13,7 @@ const boxTarget = {
 			container_id: props.container_id,
 			slot_index: props.slot_index,
 			slot_id: props.slot_id,
-			box_index: props.index,
+			index: props.index,
 		}
 	},
 	// hover(props, monitor, component){
@@ -44,8 +34,8 @@ class BoxDrop extends Component {
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
 		
-		const can_drop_class = (canDrop)? 'can_drop': '';
-		const over_class = (isOver)? 'is_over': '';
+		const can_drop_class = (canDrop)? 'can-drop': '';
+		const over_class = (isOver)? 'is-over': '';
 		
 		
 		return connectDropTarget(
@@ -62,12 +52,17 @@ class BoxDrop extends Component {
 
 BoxDrop.propTypes = {
 	
-	index: PropTypes.number.isRequired,
-	slot_index:PropTypes.number.isRequired,
+	/**
+	 * positions
+	 */
 	container_index: PropTypes.number.isRequired,
+	slot_index:PropTypes.number.isRequired,
+	index: PropTypes.number.isRequired,
 	
-	isOver: PropTypes.bool.isRequired,
-	onDrop: PropTypes.func.isRequired,
+	/**
+	 * state
+	 */
+	isOver: PropTypes.bool,
 };
 
 export default DropTarget(ItemTypes.BOX, boxTarget, collect)(BoxDrop);

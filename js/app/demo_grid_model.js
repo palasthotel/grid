@@ -1960,7 +1960,7 @@
 		},
 		GET_BOX_TYPES: {
 			key: "get_box_types",
-			description: "get box types based on meta type and search criteria"
+			description: "search box types based on meta type and search criteria"
 		},
 		GOT_BOX_TYPE_SEARCH: {
 			key: "got_box_type_search",
@@ -2001,6 +2001,14 @@
 		BOX_DELETE: {
 			key: 'box_delete',
 			description: 'fired when a box is deleted from the grid'
+		},
+		BOX_WAS_DELETED: {
+			key: 'box_was_deleted',
+			description: 'fired when a box is deleted from the grid in backend'
+		},
+		PERMISSIONS: {
+			key: 'permissions',
+			description: 'announce permissions'
 		}
 	};
 	

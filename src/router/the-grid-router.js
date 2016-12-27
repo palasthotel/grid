@@ -4,10 +4,12 @@ import React, {Component, PropTypes} from 'react';
 import GridEvents from './grid-event.js';
 import {Events} from '../constants.js';
 
+import Backend from '../connection/backend.js'
 import BackendHandler from './backend-handler';
+import GUIHandler from './gui-handler';
 
 import TheGrid from '../component/the-grid/the-grid.js';
-import Backend from '../connection/backend.js'
+
 
 /**
  * this is where all input and output will be handled
@@ -24,37 +26,52 @@ class TheGridRouter extends Component {
 		super(props);
 		
 		/**
-		 * grid events object
+		 * save global config
+		 */
+		this._config = window.grid;
+		
+		/**
+		 * grid events objects
 		 * @type {GridEvent}
 		 */
-		this.events = new GridEvents();
-		
-		/**
-		 * Toolbar button components
-		 */
-		const tb = window.grid_toolbar_buttons;
-		const etb = window.grid_toolbar_buttons_editor;
-		
-		/**
-		 * grid overlays
-		 */
-		const gov = window.grid_overlays;
-		const eov = window.grid_overlays_editor;
+		this._events = new GridEvents();
 		
 		/**
 		 * grid backend connection
 		 * @type {Backend}
 		 */
-		this.backend = new Backend(this.getConfig().endpoint, this.events);
-		if(this.getConfig().debug) this.getConfig().backend = this.backend;
+		this._backend = new Backend(this.getConfig().endpoint, this._events);
+		if(this.getConfig().debug) this.getConfig().backend = this._backend;
+		
+		// TODO: inject additional handlers
+		// all to one global array and than filter in handler classes
+		let additional_handlers = [];
 		
 		/**
-		 * connection handler
+		 * backend handler
+		 * handles answers from backend
 		 */
-		// TODO: inject additional handlers
-		let additional_handlers = [];
-		this.handler = new BackendHandler(this.getState.bind(this), this.setState.bind(this),this.events, additional_handlers);
-		if(this.getConfig().debug) this.getConfig().handler = this.handler;
+		this._backend_handler = new BackendHandler(
+			this.getState.bind(this),
+			this.setState.bind(this),
+			this._events,
+			additional_handlers
+		);
+		if(this.getConfig().debug) this.getConfig().handler = this._backend_handler;
+		
+		/**
+		 * action handler
+		 * handles gui events
+		 */
+		this._gui_handler = new GUIHandler(
+			this.getState.bind(this),
+			this.setState.bind(this),
+			this._events,
+			this._backend,
+			this._config,
+			additional_handlers
+		);
+		if(this.getConfig().debug) this.getConfig().handler = this._gui_handler;
 		
 		/**
 		 * component state
@@ -65,31 +82,24 @@ class TheGridRouter extends Component {
 			isDraft: true,
 			isSidebar: false,
 			
-			container:{},
+			container: [],
 			revisions: [],
+			
 			container_types: [],
 			box_types: [],
+			permissions: [],
 			
 		};
 	}
 	
 	componentDidMount(){
-		// TODO: get data from grid
-		this.backend.execute("grid.document","loadGrid",[this.getConfig().ID]);
-		this.backend.execute("grid.editing.container","getContainerTypes",[this.getConfig().ID]);
-		this.backend.execute("grid.editing.box","getMetaTypesAndSearchCriteria",[this.getConfig().ID]);
-		
 		/**
-		 * bind events
+		 * get minimum data for the grid editor rendering
 		 */
-		this.events.on(Events.GET_BOX_TYPES,this.onGetBoxTypes.bind(this));
-		this.events.on(Events.BOX_MOVE,this.onBoxMove.bind(this));
-		this.events.on(Events.BOX_ADD,this.onBoxAdd.bind(this));
-	}
-	componentWillUnmount(){
-		this.events.off(Events.GET_BOX_TYPES, this.onGetBoxTypes.bind(this));
-		this.events.off(Events.BOX_MOVE,this.onBoxMove.bind(this));
-		this.events.off(Events.BOX_ADD,this.onBoxAdd.bind(this));
+		this._backend.execute("grid.document","loadGrid",[this.getConfig().ID]);
+		this._backend.execute("grid.editing.container","getContainerTypes",[this.getConfig().ID]);
+		this._backend.execute("grid.editing.box","getMetaTypesAndSearchCriteria",[this.getConfig().ID]);
+		this._backend.execute("grid.permissions","Rights");
 	}
 	
 	/**
@@ -120,7 +130,8 @@ class TheGridRouter extends Component {
 					revisions={revisions}
 					container_types={container_types}
 					box_types={box_types}
-				    events={this.events}
+				    events={this._events}
+				    onBoxTypeSearch={this.onGetBoxTypes.bind(this)}
 				/>
 			)
 		}
@@ -131,31 +142,19 @@ class TheGridRouter extends Component {
 	 * events
 	 * ------------------------------------------------
 	 */
-	onGetBoxTypes(type, search = "", criteria = []){
-		this.backend.execute(
+	onGetBoxTypes(type, criteria, query, cb){
+		this._backend.execute(
 			"grid.editing.box",
 			"Search",
 			[
 				this.getConfig().ID,
 				type,
-				search,
+				query,
 				criteria
-			]
+			], function(error, response){
+				cb(response.data);
+			}
 		);
-	}
-	onBoxAdd(box, to){
-		const {container} = this.state;
-		this.backend.execute("grid.editing.box","CreateBox",[
-			this.getConfig().ID,
-			to.container_id,
-			to.slot_id,
-			to.box_index,
-			box.type,
-			box.content,
-		]);
-	}
-	onBoxMove(){
-		
 	}
 	
 	
@@ -165,7 +164,10 @@ class TheGridRouter extends Component {
 	 * ------------------------------------------------
 	 */
 	getConfig(){
-		return window.grid;
+		return this._config;
+	}
+	getPlugins(){
+		return this.getConfig().plugins;
 	}
 	getState(){
 		return this.state;

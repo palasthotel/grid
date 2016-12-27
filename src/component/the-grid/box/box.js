@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes, Events, States } from '../../../constants.js';
+import { ItemTypes, States } from '../../../constants.js';
 import {BoxDragPreview} from '../../../helper/drag-preview.js';
 
 import TrashIcon from '../../icon/trash.js';
@@ -13,16 +13,15 @@ const boxSource = {
 			container_id: props.container_id,
 			slot_index: props.slot_index,
 			slot_id: props.slot_id,
-			box_index: props.index,
-			box_id: props.id,
+			index: props.index,
+			id: props.id,
 		};
 	},
 	endDrag(props, monitor) {
-		
-		const item = monitor.getItem();
-		const dropResult = monitor.getDropResult();
-		
-		props.events.emit(Events.BOX_MOVE, item, dropResult);
+		if(!monitor.didDrop()) return;
+		const this_box = monitor.getItem();
+		const box_drop = monitor.getDropResult();
+		props.onMove(this_box, box_drop);
 	}
 };
 
@@ -44,13 +43,23 @@ class Box extends Component{
 		super(props);
 		this.state = {};
 	}
-	componentDidMount(){
-		this.props.events.on(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+	componentWillReceiveProps(){
 		this.buildDragPreview();
 	}
-	componentWillUnmount(){
-		this.props.events.off(Events.GRID_RESIZE.key, this.onGridResize.bind(this));
+	componentDidMount(){
 		
+		/**
+		 * watch resizing of browser
+		 */
+		window.addEventListener('resize', this.onResize.bind(this));
+		this.onResize();
+		
+	}
+	componentWillUnmount(){
+		/**
+		 * unwatch events if not displayed
+		 */
+		window.removeEventListener('resize', this.onResize);
 	}
 	/**
 	 * ---------------------
@@ -60,6 +69,7 @@ class Box extends Component{
 	render(){
 		const { connectDragSource, connectDragPreview, isDragging, box} = this.props;
 		const {state, titleurl, prolog, epilog, readmore, readmoreurl, html} = this.props;
+		const {isMoving, isDeleting} = this.props;
 		let {title} = this.props;
 		if(titleurl){
 			title = <h3>
@@ -84,6 +94,8 @@ class Box extends Component{
 				ref={ (element) => this.state.dom = element }
 			>
 				<div className="box__content">
+					{(isDeleting)? <p>Box is deleting</p>: null}
+					{(isMoving)? <p>Box is Moving</p>: null}
 					{(state == States.LOADING)? <p>{state}</p>: null}
 					<span>{title}</span>
 					<div className="box__prolog">{prolog}</div>
@@ -100,13 +112,19 @@ class Box extends Component{
 							return <div className="grid-box-reused">Reused box <i className="icon-reuse" /></div>;
 						}
 					}}
-					<div className="grid-box-control-button grid-box-edit">
+					<div
+						className="grid-box-control-button grid-box-edit"
+					    onClick={this.onEdit.bind(this)}
+					>
 						<div className="grid-box-control-wrapper">
 							<i className="icon-edit" />
 							<span className="grid-box-control-text">Edit</span>
 						</div>
 					</div>
-					<div className="grid-box-control-button grid-box-delete">
+					<div
+						className="grid-box-control-button grid-box-delete"
+					    onClick={this.onDelete.bind(this)}
+					>
 						<div className="grid-box-control-wrapper">
 							<TrashIcon/>
 							<span className="grid-box-control-text">Delete</span>
@@ -121,8 +139,14 @@ class Box extends Component{
 	 * events
 	 * ---------------------
 	 */
-	onGridResize(size){
+	onResize(size){
 		this.buildDragPreview();
+	}
+	onEdit(){
+		this.props.onEdit(this.props);
+	}
+	onDelete(){
+		this.props.onDelete(this.props);
 	}
 	
 	
@@ -139,11 +163,30 @@ class Box extends Component{
 	}
 }
 
+Box.defaultProps = {
+	
+	onEdit: (done)=>{ done(); },
+	onDelete: (done)=> { done(); },
+	
+	onMove: ()=>{ },
+	
+	isSaving: false,
+	isDeleting: false,
+};
+
 Box.propTypes = {
 	connectDragSource: PropTypes.func.isRequired,
 	connectDragPreview: PropTypes.func.isRequired,
 	isDragging: PropTypes.bool.isRequired,
+	
 	id: PropTypes.any.isRequired,
+	
+	onEdit: PropTypes.func,
+	onDelete: PropTypes.func,
+	onMoved: PropTypes.func,
+	
+	isMoving: PropTypes.bool,
+	isDeleting: PropTypes.bool,
 };
 
 export default DragSource(ItemTypes.BOX, boxSource, collect)(Box);

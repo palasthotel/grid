@@ -58,9 +58,9 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .grid .box-drop .box-drop__area { position: absolute; width: 100%; height: 20px; top: -3px; left: 0; right: 0; background-color: #536dfe; -webkit-transition: background-color 0.2s ease; transition: background-color 0.2s ease; }
 
-.grid .box-drop.can_drop { opacity: 1; }
+.grid .box-drop.can-drop { opacity: 1; }
 
-.grid .box-drop.is_over .box-drop__area { background-color: red; }
+.grid .box-drop.is-over .box-drop__area { background-color: red; }
 
 .grid .box { position: relative; padding: 12px 0; min-height: 80px; background-color: white; border: 1px solid black; }
 
@@ -93,6 +93,14 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 .grid .box .box__controls .grid-box-delete { top: 50%; bottom: 0px; background-color: #ed5032; }
 
 .grid .box .box__controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
+
+.grid .container-drop { position: relative; height: 15px; opacity: 0; -webkit-transition: opacity 0.2s ease; transition: opacity 0.2s ease; }
+
+.grid .container-drop .container-drop__area { position: absolute; width: 100%; height: 20px; top: -3px; left: 0; right: 0; background-color: #536dfe; -webkit-transition: background-color 0.2s ease; transition: background-color 0.2s ease; }
+
+.grid .container-drop.can-drop { opacity: 1; }
+
+.grid .container-drop.is-over .container-drop__area { background-color: red; }
 
 .container { position: relative; background-color: white; border: 1px solid black; padding: 15px; margin: 15px 0; }
 

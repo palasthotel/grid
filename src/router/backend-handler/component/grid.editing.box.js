@@ -5,7 +5,7 @@ export default class GridEditingBox extends HandlerBase{
 	
 	getMetaTypesAndSearchCriteria(response){
 		const {data} = response;
-		this.setState({box_types: data});
+		this._setState({box_types: data});
 	}
 	
 	Search(response){
@@ -16,7 +16,7 @@ export default class GridEditingBox extends HandlerBase{
 		 * save to global state
 		 * do not trigger setState
 		 */
-		let state = this.getState();
+		let state = this._getState();
 		for(let i = 0; i < state.box_types.length; i++){
 			if(state.box_types[i].type == type){
 				state.box_types[i].boxes = data;
@@ -27,13 +27,39 @@ export default class GridEditingBox extends HandlerBase{
 		/**
 		 * send directly to component
 		 */
-		this.events.emit(Events.GOT_BOX_TYPE_SEARCH, type, data);
+		this._events.emit(Events.GOT_BOX_TYPE_SEARCH, type, data);
+		
+	}
+	
+	fetchBox(response){
 		
 	}
 	
 	CreateBox(response){
-		console.log(response);
 		const {params, data} = response;
-		this.events.emit(Events.BOX_WAS_ADDED, data, params[1], params[2], params[3], params[4]);
+		this._events.emit(Events.BOX_WAS_ADDED, data, params[1], params[2], params[3], params[4]);
 	}
+	
+	moveBox(response){
+		// const box = this.state.container[from.container_index].slots[from.slot_index].boxes.splice(from.index,1);
+		// this.state.container[to.container_index].slots[to.slot_index].boxes.
+	}
+	
+	removeBox(response){
+		const {params, data} = response;
+		
+		this._getState().container[params[1]].slots[params[2]].boxes.splice(params[3],1);
+		this._setState(this.state);
+		
+		this._events.emit(Events.BOX_WAS_DELETED, data, params[1], params[2], params[3]);
+	}
+	
+	reuseBox(response){
+		
+	}
+	
+	UpdateBox(response){
+		
+	}
+	
 }

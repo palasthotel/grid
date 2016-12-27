@@ -8,7 +8,6 @@ export default class ContainerDragPreview{
 		return 2;
 	}
 	static create(width, slots){
-		console.log("create", width, slots);
 		let img = new Image();
 		let c = document.createElement('canvas');
 		c.height = this.height();

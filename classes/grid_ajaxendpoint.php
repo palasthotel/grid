@@ -43,6 +43,9 @@ class grid_ajaxendpoint {
         if($comp==null) {
             return array('error'=>'Component not found');
         }
+        if($params == null){
+	        $params = array();
+        }
         try {
             $reflectionMethod=new reflectionMethod($comp,$method);
             $retval=$reflectionMethod->invokeArgs($comp,$params);

@@ -152,7 +152,7 @@ var Grid = GridBackbone.Model.extend({
     moveBox: function(box, new_slot, new_box_index){
         GridRequest.grid.moveBox(box, new_slot, new_box_index, function(data){
             var clone = box.clone();
-            box.getSlot().getBoxes().remove(box);
+            box.getSlot().onSearch().remove(box);
             new_slot.addBox(clone, new_box_index);
         });
     },
@@ -305,7 +305,7 @@ var Box = GridBackbone.Model.extend({
 
 	},
     getIndex: function(){
-        return this.get("parent").getBoxes().indexOf(this);
+        return this.get("parent").onSearch().indexOf(this);
     },
     // handles all Server communication
     sync: function(method, model, options){
