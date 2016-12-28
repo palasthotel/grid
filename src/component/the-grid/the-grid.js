@@ -31,6 +31,11 @@ class TheGrid extends React.Component{
 				    onStateChange={this.onGridStateChange.bind(this)}
 				    onContainerMove={this.onContainerMove.bind(this)}
 				    onContainerDelete={this.onContainerDelete.bind(this)}
+				    onBoxAdd={this.props.onBoxAdd}
+				    onBoxMove={this.props.onBoxMove}
+					onBoxEdit={this.props.onBoxEdit}
+				    onBoxDelete={this.props.onBoxDelete}
+				    
 				/>
 				
 				<TabView
@@ -44,7 +49,7 @@ class TheGrid extends React.Component{
 					
 					<BoxTypes
 						items={box_types}
-					    onSearch={this.props.onBoxTypeSearch.bind(this)}
+					    onSearch={this.props.onBoxTypeSearch}
 					/>
 					
 				</TabView>
@@ -66,6 +71,9 @@ class TheGrid extends React.Component{
 	onContainerDelete(done){
 		done();
 	}
+	onNewBoxDrop(dragged_box,box_drop){
+		
+	}
 }
 
 /**
@@ -75,7 +83,8 @@ TheGrid.defaultProps = {
 	container_types: [],
 	box_types: [],
 	
-	onBoxTypeSearch: (type, criteria, query, cb)=>{cb([])}
+	onBoxTypeSearch: (done, type, criteria, query)=>{ done([]) },
+	onBoxDrop: ()=>{},
 };
 
 /**
@@ -89,6 +98,7 @@ TheGrid.propTypes = {
 	box_types: PropTypes.array,
 	
 	onBoxTypeSearch: PropTypes.func,
+	onBoxDrop: PropTypes.func,
 };
 
 

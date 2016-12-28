@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes, Events } from '../../../constants.js';
+import { ItemTypes } from '../../../constants.js';
 
 const boxSource = {
 	beginDrag(props){
@@ -11,17 +11,16 @@ const boxSource = {
 		return props.item;
 	},
 	endDrag(props, monitor) {
-		const drop_result = monitor.getDropResult();
-		
-		if(monitor.didDrop() && typeof drop_result == typeof {}){
-			/**
-			 * monitor.getItem() is item returned from beginDrag
-			 */
-			const item = monitor.getItem();
-			console.log("did drop", props, item, drop_result);
-			
-			props.events.emit(Events.BOX_ADD, item, drop_result);
-		}
+		// const box_drop_area = monitor.getDropResult();
+		//
+		// if(monitor.didDrop() && typeof box_drop_area == typeof {}){
+		// 	/**
+		// 	 * monitor.getItem() is item returned from beginDrag
+		// 	 */
+		// 	const item = monitor.getItem();
+		// 	console.log("did drop", props, item, box_drop_area);
+		//
+		// }
 	}
 };
 
@@ -71,6 +70,10 @@ class NewBox extends Component{
 			</div>
 		)
 	}
+}
+
+NewBox.defaultProps = {
+	onDropped: ()=>{},
 }
 
 NewBox.propTypes = {

@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 import {Events} from '../../../constants.js';
 
-import Box from './new-box';
+import NewBox from './new-box';
 
 let box_key_incrementation = 0;
 
@@ -63,10 +63,9 @@ class BoxTypeList extends Component {
 		const {boxes} = this.state;
 		if(typeof boxes == typeof undefined || typeof boxes != typeof []) return null;
 		return boxes.map((box)=>{
-			return <Box
+			return <NewBox
 				item={box}
 				key={this.key_incrementation++}
-			    events={this.props.events}
 			/>
 		});
 	}
@@ -94,9 +93,9 @@ class BoxTypeList extends Component {
 	 */
 	onSearch(){
 		this.setState({loading: true});
-		this.props.onSearch(this.props.item.type, this.props.item.criteria, this.state.query,(boxes)=>{
+		this.props.onSearch((boxes)=>{
 			this.setState({loading: false, boxes: boxes});
-		});
+		},this.props.item.type, this.props.item.criteria, this.state.query);
 	}
 }
 

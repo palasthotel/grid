@@ -5,16 +5,25 @@ import { ItemTypes, Events } from '../../../constants.js';
 
 const boxTarget = {
 	drop(props, monitor) {
-		/**
-		 * return a drop result to draggable
-		 */
-		return {
+		
+		const drop = {
 			container_index: props.container_index,
 			container_id: props.container_id,
 			slot_index: props.slot_index,
 			slot_id: props.slot_id,
 			index: props.index,
+		};
+		
+		const dragged_box = monitor.getItem();
+		if(!dragged_box.id){
+			// handle self because its an box from outside
+			props.onAdd(dragged_box, drop);
+			return;
 		}
+		/**
+		 * return a drop result to dragged box
+		 */
+		return drop;
 	},
 	// hover(props, monitor, component){
 	// 	console.log("hover!");
@@ -63,6 +72,11 @@ BoxDrop.propTypes = {
 	 * state
 	 */
 	isOver: PropTypes.bool,
+	
+	/**
+	 * if new box from outside was added
+	 */
+	onAdd: PropTypes.func,
 };
 
 export default DropTarget(ItemTypes.BOX, boxTarget, collect)(BoxDrop);

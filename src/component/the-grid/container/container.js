@@ -76,7 +76,11 @@ class Container extends Component{
 					<div className="container__options">
 						<span className="container__options-icon">Options <i className="icon-options" /></span>
 						<ul className="container__options-list">
-							<li className="container__options-list-item" role="edit">
+							<li
+								className="container__options-list-item"
+								role="edit"
+							    onClick={this.onEdit.bind(this)}
+							>
 								<i className="icon-edit" /> Edit
 							</li>
 							<li className="container__options-list-item" role="reuse">
@@ -121,6 +125,9 @@ class Container extends Component{
 	onResize(size){
 		this.buildDragPreview();
 	}
+	onEdit(){
+		this.props.onEdit(this.props);
+	}
 	onDelete(){
 		this.props.onDelete(this.props);
 	}
@@ -141,7 +148,6 @@ class Container extends Component{
 Container.defaultProps = {
 	
 	onEdit: (done)=>{ done(); },
-	onMove: (done)=>{ done(); },
 	onDelete: (done)=> { done(); },
 	
 	isSaving: false,
@@ -152,7 +158,11 @@ Container.propTypes = {
 	connectDragSource: PropTypes.func.isRequired,
 	connectDragPreview: PropTypes.func.isRequired,
 	isDragging: PropTypes.bool.isRequired,
-	id: PropTypes.any.isRequired
+	id: PropTypes.any.isRequired,
+	
+	onMove: PropTypes.func.isRequired,
+	onEdit: PropTypes.func,
+	onDelete: PropTypes.func,
 };
 
 export default DragSource(ItemTypes.CONTAINER, containerSource, collect)(Container);

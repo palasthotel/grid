@@ -69,7 +69,7 @@ class Box extends Component{
 	render(){
 		const { connectDragSource, connectDragPreview, isDragging, box} = this.props;
 		const {state, titleurl, prolog, epilog, readmore, readmoreurl, html} = this.props;
-		const {isMoving, isDeleting} = this.props;
+		const {isMoving, isDeleting, isSaving} = this.props;
 		let {title} = this.props;
 		if(titleurl){
 			title = <h3>
@@ -94,6 +94,7 @@ class Box extends Component{
 				ref={ (element) => this.state.dom = element }
 			>
 				<div className="box__content">
+					{(isSaving)? <p>Box is saving</p>: null}
 					{(isDeleting)? <p>Box is deleting</p>: null}
 					{(isMoving)? <p>Box is Moving</p>: null}
 					{(state == States.LOADING)? <p>{state}</p>: null}
@@ -164,12 +165,7 @@ class Box extends Component{
 }
 
 Box.defaultProps = {
-	
-	onEdit: (done)=>{ done(); },
-	onDelete: (done)=> { done(); },
-	
-	onMove: ()=>{ },
-	
+	isMoving: false,
 	isSaving: false,
 	isDeleting: false,
 };
@@ -181,11 +177,12 @@ Box.propTypes = {
 	
 	id: PropTypes.any.isRequired,
 	
-	onEdit: PropTypes.func,
-	onDelete: PropTypes.func,
-	onMoved: PropTypes.func,
+	onEdit: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
+	onMove: PropTypes.func.isRequired,
 	
 	isMoving: PropTypes.bool,
+	isSaving: PropTypes.bool,
 	isDeleting: PropTypes.bool,
 };
 

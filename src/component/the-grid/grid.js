@@ -10,6 +10,7 @@ import Box from './box/box.js';
 
 import { States } from '../../constants.js';
 
+
 export default class Grid extends Component{
 	
 	/**
@@ -27,6 +28,8 @@ export default class Grid extends Component{
 		this.state = {
 			container: props.container,
 		};
+		
+		this.box_incremental_id = 1;
 	}
 	componentWillReceiveProps(nextProps){
 		this.state.container = nextProps.container;
@@ -82,6 +85,7 @@ export default class Grid extends Component{
 				container_id={container_id}
 				slot_index={slot_index}
 				slot_id={slot_id}
+			    onAdd={this.onBoxAdd.bind(this)}
 			/>
 		);
 	}
@@ -202,7 +206,6 @@ export default class Grid extends Component{
 			this.updateContainerState();
 		});
 	}
-	
 	onContainerDelete(container_props){
 		console.log("onContainerDelete", container_props);
 		let container = this.state.container[container_props.index];
@@ -217,6 +220,26 @@ export default class Grid extends Component{
 		},container_props);
 	}
 	
+	onBoxAdd(box, drop){
+		
+		// add temporary box id
+		if(!box.id){
+			box.id = "new-"+(this.box_incremental_id++);
+		}
+		
+		box.isSaving = true;
+		this.state.container[drop.container_index].slots[drop.slot_index].boxes.splice(drop.index,0,box);
+		this.updateContainerState();
+		
+		this.props.onBoxAdd((error, _box)=>{
+			if(error){
+				// TODO: error handling
+			}
+			_box.isSaving = false;
+			this.state.container[drop.container_index].slots[drop.slot_index].boxes[drop.index] = _box;
+			this.updateContainerState();
+		},box, drop);
+	}
 	onBoxMove(dragged_box, box_drop){
 		
 		if(dragged_box.container_id == box_drop.container_id
@@ -278,6 +301,7 @@ export default class Grid extends Component{
 		
 	}
 	
+	
 	/**
 	 * ---------------------
 	 * other functions
@@ -300,13 +324,16 @@ export default class Grid extends Component{
 Grid.defaultProps = {
 	onStateChange: (container)=>{ },
 	
+	onContainerAdd: (done)=> { done() },
 	onContainerMove: (done)=> { done(); },
-	onContainerDelete: (done)=>{ done(); },
 	onContainerEdit: (done)=>{ done(); },
+	onContainerDelete: (done)=>{ done(); },
 	
+	onBoxAdd: (done, box)=> { done(false, box) },
 	onBoxMove: (done)=>{ done(); },
-	onBoxDelete: (done)=>{ done(); },
 	onBoxEdit: (done)=>{ done(); },
+	onBoxDelete: (done)=>{ done(); },
+
 };
 
 Grid.propTypes = {
@@ -322,13 +349,17 @@ Grid.propTypes = {
 	 */
 	onStateChange: PropTypes.func,
 	
+	onContainerAdd: PropTypes.func,
 	onContainerMove: PropTypes.func,
-	onContainerDelete: PropTypes.func,
 	onContainerEdit: PropTypes.func,
+	onContainerDelete: PropTypes.func,
 	
+	
+	onBoxAdd: PropTypes.func,
 	onBoxMove: PropTypes.func,
-	onBoxDelete: PropTypes.func,
 	onBoxEdit: PropTypes.func,
+	onBoxDelete: PropTypes.func,
+	
 };
 
 
