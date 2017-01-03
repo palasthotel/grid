@@ -227,6 +227,9 @@ class grid_ajax_box_editing_component extends grid_ajax_component {
         $result=array();
         foreach($boxes as $box)
         {
+	        /**
+	         * @var grid_box $box
+	         */
             $elem=array(
                 'type'=>$box->type(),
                 'title'=>$box->metaTitle(),

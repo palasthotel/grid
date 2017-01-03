@@ -150,6 +150,8 @@
 		return BackendRequest;
 	}();
 	
+	// TODO: make it a callback queue and stop on error
+	
 	var Backend = function () {
 		function Backend(endpoint) {
 			var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;

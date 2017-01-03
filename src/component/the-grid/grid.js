@@ -29,7 +29,7 @@ export default class Grid extends Component{
 			container: props.container,
 		};
 		
-		this.box_incremental_id = 1;
+		this.incremental_id = 1;
 	}
 	componentWillReceiveProps(nextProps){
 		this.state.container = nextProps.container;
@@ -159,6 +159,7 @@ export default class Grid extends Component{
 			<ContainerDrop
 				key={drop_key}
 				index={index}
+			    onAdd={this.onContainerAdd.bind(this)}
 			/>
 		);
 	}
@@ -182,7 +183,31 @@ export default class Grid extends Component{
 	 * events
 	 * ---------------------
 	 */
-	
+	onContainerAdd(container, drop){
+		
+		// add temporary box id
+		if(!container.id){
+			container.id = "new-"+(this.incremental_id++);
+		}
+		
+		container.isSaving = true;
+		this.state.container.splice(drop.index,0,container);
+		
+		// TODO: add slots and boxes or set loading?
+		
+		container.slots = [];
+		
+		this.updateContainerState();
+		
+		this.props.onContainerAdd((error, _container)=>{
+			if(error){
+				// TODO: error handling
+			}
+			_container.isSaving = false;
+			this.state.container[drop.index] = _container;
+			this.updateContainerState();
+		},container, drop);
+	}
 	onContainerMove(dragged_container, container_drop){
 		
 		if( dragged_container.index == container_drop.index
@@ -198,20 +223,22 @@ export default class Grid extends Component{
 		this.state.container.splice(container_drop.index,0,container);
 		this.updateContainerState();
 		
-		this.props.onContainerMove((error)=>{
+		this.props.onContainerMove((error, data)=>{
 			if(error){
 				
 			}
+			console.log("onContainerMove", data);
 			container.isMoving = false;
 			this.updateContainerState();
-		});
+		}, dragged_container, container_drop.index);
 	}
 	onContainerDelete(container_props){
 		console.log("onContainerDelete", container_props);
 		let container = this.state.container[container_props.index];
 		container.isDeleting = true;
 		this.updateContainerState();
-		this.props.onContainerDelete((error)=>{
+		this.props.onContainerDelete((error, data)=>{
+			console.log("onContainerDelete", error, data);
 			if(error){
 				
 			}
@@ -224,7 +251,7 @@ export default class Grid extends Component{
 		
 		// add temporary box id
 		if(!box.id){
-			box.id = "new-"+(this.box_incremental_id++);
+			box.id = "new-"+(this.incremental_id++);
 		}
 		
 		box.isSaving = true;
@@ -324,7 +351,7 @@ export default class Grid extends Component{
 Grid.defaultProps = {
 	onStateChange: (container)=>{ },
 	
-	onContainerAdd: (done)=> { done() },
+	onContainerAdd: (done, container)=> { done(false, container) },
 	onContainerMove: (done)=> { done(); },
 	onContainerEdit: (done)=>{ done(); },
 	onContainerDelete: (done)=>{ done(); },

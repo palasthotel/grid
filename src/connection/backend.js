@@ -31,6 +31,8 @@ class BackendRequest{
 	}
 }
 
+// TODO: make it a callback queue and stop on error
+
 class Backend {
 	constructor(endpoint, events = null){
 		this.endpoint = endpoint;

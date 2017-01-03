@@ -19,15 +19,16 @@ export default class ToolbarButton extends Component{
 	 * ---------------------
 	 */
 	render(){
+		const {identifier, label, onClick, icon} = this.props;
 		return (
 			<div
-				className={`grid-tool grid-tool-${this.props.unique_id}`}
+				className={`toolbar-button toolbar-button__${identifier}`}
 			>
 				<button
-					onClick={this.onClick.bind(this)}
+					onClick={onClick}
 				>
-					<span className={`icon-${this.props.unique_id}`} />
-					{ this.props.label? this.props.label : "Tool Button"  }
+					{this.props.children}
+					<div className="toolbar-button__label">{label}</div>
 				</button>
 			</div>
 		);
@@ -49,10 +50,19 @@ export default class ToolbarButton extends Component{
 	 */
 }
 
-Grid.propTypes = {
-	unique_id: PropTypes.string.isRequired,
-	events: PropTypes.func.isRequired,
-	label: PropTypes.string
+ToolbarButton.defaultProps = {
+	identifier: "",
+	label: "Tool-Button",
+	onClick: ()=>{ }
+}
+
+ToolbarButton.propTypes = {
+	
+	identifier: PropTypes.string,
+	
+	label: PropTypes.string,
+	
+	onClick: PropTypes.func,
 };
 
 

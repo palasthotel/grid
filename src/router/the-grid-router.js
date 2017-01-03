@@ -66,6 +66,10 @@ class TheGridRouter extends Component {
 			box_types: [],
 			permissions: [],
 			
+			container_styles: [],
+			slot_styles: [],
+			box_styles: [],
+			
 		};
 	}
 	
@@ -74,9 +78,11 @@ class TheGridRouter extends Component {
 		 * get minimum data for the grid editor rendering
 		 */
 		this._backend.execute("grid.document","loadGrid",[this.getConfig().ID], this.onLoadGrid.bind(this));
+		this._backend.execute("grid.permissions","Rights",[],this.onRights.bind(this));
 		this._backend.execute("grid.editing.container","getContainerTypes",[this.getConfig().ID], this.onContainerTypes.bind(this));
 		this._backend.execute("grid.editing.box","getMetaTypesAndSearchCriteria",[this.getConfig().ID], this.onMetaTypesAndSearchCriteria.bind(this));
-		this._backend.execute("grid.permissions","Rights",[],this.onRights.bind(this));
+		this._backend.execute("grid.styles","getAllStyles",[],this.onStyles.bind(this));
+		this._backend.execute("grid.document","getGridRevisions",[this.getConfig().ID],this.onRevisions.bind(this));
 	}
 	
 	/**
@@ -85,6 +91,7 @@ class TheGridRouter extends Component {
 	 * ------------------------------------------------
 	 */
 	render() {
+		
 		const {
 			loading,
 			isDraft,
@@ -92,7 +99,11 @@ class TheGridRouter extends Component {
 			revisions,
 			container_types,
 			box_types,
+			container_styles,
+			slot_styles,
+			box_styles,
 		} = this.state;
+		
 		if(loading){
 			return(
 				<div className="the-grid loading">
@@ -104,10 +115,16 @@ class TheGridRouter extends Component {
 				<TheGrid
 					
 					isDraft={isDraft}
+					
 					container={container}
 					revisions={revisions}
+					
 					container_types={container_types}
 					box_types={box_types}
+					
+					container_styles={container_styles}
+					slot_styles={slot_styles}
+					box_styles={box_styles}
 					
 					{...this._action_handler.getHandlers()}
 				/>
@@ -128,6 +145,14 @@ class TheGridRouter extends Component {
 			isDraft: data.isDraft,
 		})
 	}
+	onRights(error, response){
+		this._rights = response.data;
+		this.setState(this.state);
+	}
+	onRevisions(error, response){
+		this.state.revisions = response.data;
+		this.setState(this.state);
+	}
 	onContainerTypes(error, response){
 		const {data} = response;
 		this.setState({container_types: data});
@@ -136,10 +161,13 @@ class TheGridRouter extends Component {
 		const {data} = response;
 		this.setState({box_types: data});
 	}
-	onRights(error, response){
-		console.log("onRights", response);
-		this._rights = response.data;
+	onStyles(error, response){
+		this.state.container_styles = response.data.container;
+		this.state.slot_styles = response.data.slot;
+		this.state.box_styles = response.data.box;
+		this.setState(this.state);
 	}
+	
 	
 	
 	/**

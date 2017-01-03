@@ -8,7 +8,7 @@ let config = {
 		/**
 		 * script for the grid
 		 */
-		the_grid: './src/the-grid.js',
+		"the-grid": './src/the-grid.js',
 		/**
 		 * demo of a whole grid
 		 */
@@ -59,12 +59,11 @@ let config = {
 			}
 		}]
 	},
-	watch: true,
 };
 
 if(process.env.NODE_ENV == "production"){
-	config.output.filename = "[name].min.js";
-	config.output.sourceMapFilename = "[name].min.map";
+	// config.output.filename = "[name].min.js";
+	// config.output.sourceMapFilename = "[name].min.map";
 }
 
 module.exports = config;

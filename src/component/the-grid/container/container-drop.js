@@ -4,13 +4,16 @@ import { ItemTypes, Events } from '../../../constants.js';
 
 const containerTarget = {
 	drop(props, monitor) {
+		const dragged_container = monitor.getItem();
+		if(!dragged_container.id){
+			// handle self because its a new container from outside
+			props.onAdd(dragged_container, props.index);
+			return;
+		}
 		return {
 			index: props.index,
 		};
-	},
-	// hover(props, monitor, component){
-	// 	console.log("hover!");
-	// }
+	}
 };
 
 function collect(connect, monitor) {
@@ -41,6 +44,11 @@ class ContainerDrop extends Component {
 ContainerDrop.propTypes = {
 	index: PropTypes.number.isRequired,
 	isOver: PropTypes.bool,
+	
+	/**
+	 * if new container from outside was added
+	 */
+	onAdd: PropTypes.func,
 };
 
 export default DropTarget(ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);

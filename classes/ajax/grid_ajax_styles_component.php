@@ -21,4 +21,13 @@ class grid_ajax_styles_component extends grid_ajax_component {
     {
         return $this->storage->fetchBoxStyles();
     }
+	
+	public function getAllStyles()
+	{
+		return array(
+			"container" => $this->getContainerStyles(),
+			"slot" => $this->getSlotStyles(),
+			"box" => $this->getBoxStyles(),
+		);
+	}
 }

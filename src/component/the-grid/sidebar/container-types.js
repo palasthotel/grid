@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import NewContainer from './new-container';
 
 class ContainerTypes extends Component {
 	
@@ -29,11 +30,10 @@ class ContainerTypes extends Component {
 					)
 						return;
 					return (
-						<div
+						<NewContainer
 							key={container.type}
-						>
-							{container.type}
-						</div>
+						    item={container}
+						/>
 					)
 				})}
 			</div>

@@ -1,3 +1,4 @@
+import DocumentHandler from './handler/document';
 import ContainerHandler from './handler/container';
 import BoxHandler from './handler/box';
 import SidebarHandler from './handler/sidebar';
@@ -20,8 +21,8 @@ export default class ActionHandler{
 		
 		this._methods = {};
 		
-		// TODO: autoload from ./handler and additional plugin handlers?
 		let _handlers = [];
+		_handlers.push(DocumentHandler);
 		_handlers.push(ContainerHandler);
 		_handlers.push(BoxHandler);
 		_handlers.push(SidebarHandler);
