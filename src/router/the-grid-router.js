@@ -127,6 +127,8 @@ class TheGridRouter extends Component {
 					box_styles={box_styles}
 					
 					{...this._action_handler.getHandlers()}
+					
+					onPreview={this.onPreview.bind(this)}
 				/>
 			)
 		}
@@ -137,6 +139,12 @@ class TheGridRouter extends Component {
 	 * events
 	 * ------------------------------------------------
 	 */
+	
+	/**
+	 * on get the grid containers from server
+	 * @param error
+	 * @param response
+	 */
 	onLoadGrid(error, response){
 		const {data} = response;
 		this.setState({
@@ -145,22 +153,52 @@ class TheGridRouter extends Component {
 			isDraft: data.isDraft,
 		})
 	}
+	
+	/**
+	 * on get rights from server
+	 * @param error
+	 * @param response
+	 */
 	onRights(error, response){
 		this._rights = response.data;
 		this.setState(this.state);
 	}
+	
+	/**
+	 * on get revisions from server
+	 * @param error
+	 * @param response
+	 */
 	onRevisions(error, response){
 		this.state.revisions = response.data;
 		this.setState(this.state);
 	}
+	
+	/**
+	 * on get container types from server
+	 * @param error
+	 * @param response
+	 */
 	onContainerTypes(error, response){
 		const {data} = response;
 		this.setState({container_types: data});
 	}
+	
+	/**
+	 * on get meta types and search criteria from server
+	 * @param error
+	 * @param response
+	 */
 	onMetaTypesAndSearchCriteria(error, response){
 		const {data} = response;
 		this.setState({box_types: data});
 	}
+	
+	/**
+	 * on get styles from server
+	 * @param error
+	 * @param response
+	 */
 	onStyles(error, response){
 		this.state.container_styles = response.data.container;
 		this.state.slot_styles = response.data.slot;
@@ -168,7 +206,23 @@ class TheGridRouter extends Component {
 		this.setState(this.state);
 	}
 	
-	
+	/**
+	 * handle preview
+	 * @param revision
+	 */
+	onPreview(revision){
+		if(!revision){
+			window.open(
+				this.getConfig().preview.url,
+				"grid_preview"
+			);
+			return;
+		}
+		window.open(
+			this.getConfig().preview.pattern.replace("{REV}", revision.revision),
+			"grid_preview"
+		);
+	}
 	
 	/**
 	 * ------------------------------------------------

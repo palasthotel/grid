@@ -40,7 +40,7 @@ class TheGrid extends React.Component{
 					<ToolbarButton
 						label="Preview"
 						identifier="preview"
-						onClick={this.onClickPreview.bind(this)}
+						onClick={this.props.onPreview}
 					/>
 					<ToolbarButton
 						label="Revert"
@@ -63,8 +63,8 @@ class TheGrid extends React.Component{
 							<Revision
 								key={item.revision}
 								{...item}
-								onClickPreview={this.onClickPreview.bind(this,item)}
-							    onClickRevert={this.onClickRevert.bind(this,item)}
+								onPreview={this.props.onPreview.bind(this,item)}
+							    onRevert={this.onClickRevert.bind(this,item)}
 							/>
 						)
 					} )}
@@ -120,21 +120,10 @@ class TheGrid extends React.Component{
 			
 		});
 	}
-	onClickPreview(revision){
-		if(typeof revision == typeof undefined){
-			console.log("preview");
-			return;
-		}
-		console.log("preview revision");
-	}
 	onClickRevert(revision){
-		if(typeof revision == typeof undefined){
-			this.props.onRevert((error, data)=>{
-				
-			});
-			return;
-		}
-		console.log("revert", revision);
+		this.props.onRevert((error, data)=>{
+			console.log("onReverted", data);
+		},revision);
 	}
 	onClickRevisions(){
 		this.setState({show_revisions: !this.state.show_revisions})
@@ -154,6 +143,7 @@ TheGrid.defaultProps = {
 	
 	onRevert: (done)=>{ done() },
 	onPublish: (done)=>{ done() },
+	onPreview: ()=>{ },
 	
 	onBoxTypeSearch: (done, type, criteria, query)=>{ done([]) },
 };

@@ -23758,7 +23758,10 @@
 						slot_styles: slot_styles,
 						box_styles: box_styles
 	
-					}, this._action_handler.getHandlers()));
+					}, this._action_handler.getHandlers(), {
+	
+						onPreview: this.onPreview.bind(this)
+					}));
 				}
 			}
 	
@@ -23766,6 +23769,12 @@
 	   * ------------------------------------------------
 	   * events
 	   * ------------------------------------------------
+	   */
+	
+			/**
+	   * on get the grid containers from server
+	   * @param error
+	   * @param response
 	   */
 	
 		}, {
@@ -23779,18 +23788,39 @@
 					isDraft: data.isDraft
 				});
 			}
+	
+			/**
+	   * on get rights from server
+	   * @param error
+	   * @param response
+	   */
+	
 		}, {
 			key: 'onRights',
 			value: function onRights(error, response) {
 				this._rights = response.data;
 				this.setState(this.state);
 			}
+	
+			/**
+	   * on get revisions from server
+	   * @param error
+	   * @param response
+	   */
+	
 		}, {
 			key: 'onRevisions',
 			value: function onRevisions(error, response) {
 				this.state.revisions = response.data;
 				this.setState(this.state);
 			}
+	
+			/**
+	   * on get container types from server
+	   * @param error
+	   * @param response
+	   */
+	
 		}, {
 			key: 'onContainerTypes',
 			value: function onContainerTypes(error, response) {
@@ -23798,6 +23828,13 @@
 	
 				this.setState({ container_types: data });
 			}
+	
+			/**
+	   * on get meta types and search criteria from server
+	   * @param error
+	   * @param response
+	   */
+	
 		}, {
 			key: 'onMetaTypesAndSearchCriteria',
 			value: function onMetaTypesAndSearchCriteria(error, response) {
@@ -23805,6 +23842,13 @@
 	
 				this.setState({ box_types: data });
 			}
+	
+			/**
+	   * on get styles from server
+	   * @param error
+	   * @param response
+	   */
+	
 		}, {
 			key: 'onStyles',
 			value: function onStyles(error, response) {
@@ -23812,6 +23856,21 @@
 				this.state.slot_styles = response.data.slot;
 				this.state.box_styles = response.data.box;
 				this.setState(this.state);
+			}
+	
+			/**
+	   * handle preview
+	   * @param revision
+	   */
+	
+		}, {
+			key: 'onPreview',
+			value: function onPreview(revision) {
+				if (!revision) {
+					window.open(this.getConfig().preview.url, "grid_preview");
+					return;
+				}
+				window.open(this.getConfig().preview.pattern.replace("{REV}", revision.revision), "grid_preview");
 			}
 	
 			/**
@@ -24145,9 +24204,7 @@
 	   * publish grid
 	   */
 			value: function onPublish(done) {
-				console.log("onPublish action");
 				this._backend.execute("grid.document", "publishDraft", [this._grid_id], function (error, response) {
-					console.log(response);
 					done(error, response.data);
 				});
 			}
@@ -24155,16 +24212,21 @@
 			/**
 	   * revert draft to last published grid
 	   * @param done
+	   * @param revision
 	   */
 	
 		}, {
 			key: "onRevert",
-			value: function onRevert(done) {
-				console.log("onRevert action");
-				this._backend.execute("grid.document", "revertDraft", [this._grid_id], function (error, response) {
-					console.log(response);
-					done(error, response.data);
-				});
+			value: function onRevert(done, revision) {
+				if (!revision) {
+					this._backend.execute("grid.document", "revertDraft", [this._grid_id], function (error, response) {
+						done(error, response.data);
+					});
+				} else {
+					this._backend.execute("grid.document", "setToRevision", [this._grid_id, revision.revision], function (error, response) {
+						done(error, response.data);
+					});
+				}
 			}
 		}]);
 	
@@ -24378,8 +24440,6 @@
 		value: true
 	});
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -24471,7 +24531,7 @@
 						_react2.default.createElement(_toolbarButton2.default, {
 							label: 'Preview',
 							identifier: 'preview',
-							onClick: this.onClickPreview.bind(this)
+							onClick: this.props.onPreview
 						}),
 						_react2.default.createElement(_toolbarButton2.default, {
 							label: 'Revert',
@@ -24493,8 +24553,8 @@
 							return _react2.default.createElement(_revision2.default, _extends({
 								key: item.revision
 							}, item, {
-								onClickPreview: _this2.onClickPreview.bind(_this2, item),
-								onClickRevert: _this2.onClickRevert.bind(_this2, item)
+								onPreview: _this2.props.onPreview.bind(_this2, item),
+								onRevert: _this2.onClickRevert.bind(_this2, item)
 							}));
 						})
 					),
@@ -24548,22 +24608,11 @@
 				this.props.onPublish(function (error, success) {});
 			}
 		}, {
-			key: 'onClickPreview',
-			value: function onClickPreview(revision) {
-				if ((typeof revision === 'undefined' ? 'undefined' : _typeof(revision)) == ( true ? 'undefined' : _typeof(undefined))) {
-					console.log("preview");
-					return;
-				}
-				console.log("preview revision");
-			}
-		}, {
 			key: 'onClickRevert',
 			value: function onClickRevert(revision) {
-				if ((typeof revision === 'undefined' ? 'undefined' : _typeof(revision)) == ( true ? 'undefined' : _typeof(undefined))) {
-					this.props.onRevert(function (error, data) {});
-					return;
-				}
-				console.log("revert", revision);
+				this.props.onRevert(function (error, data) {
+					console.log("onReverted", data);
+				}, revision);
 			}
 		}, {
 			key: 'onClickRevisions',
@@ -24594,6 +24643,7 @@
 		onPublish: function onPublish(done) {
 			done();
 		},
+		onPreview: function onPreview() {},
 	
 		onBoxTypeSearch: function onBoxTypeSearch(done, type, criteria, query) {
 			done([]);
@@ -33240,7 +33290,7 @@
 					_react2.default.createElement(
 						"button",
 						{
-							onClick: onClick
+							onClick: this.onClick.bind(this)
 						},
 						this.props.children,
 						_react2.default.createElement(
@@ -33261,7 +33311,7 @@
 		}, {
 			key: "onClick",
 			value: function onClick() {
-				console.log("grid tool clicked: " + this.props.unique_id);
+				this.props.onClick(null);
 			}
 	
 			/**
@@ -35227,7 +35277,8 @@
 					"button",
 					{
 						key: "preview",
-						className: "grid-revision__button grid-revision__button-preview"
+						className: "grid-revision__button grid-revision__button-preview",
+						onClick: this.props.onPreview
 					},
 					"Preview"
 				));
@@ -35236,7 +35287,8 @@
 						"button",
 						{
 							key: "delete",
-							className: "grid-revision__button grid-revision__button-delete"
+							className: "grid-revision__button grid-revision__button-delete",
+							onClick: this.props.onDelete
 						},
 						"Delete"
 					));
@@ -35245,7 +35297,8 @@
 						"button",
 						{
 							key: "revert",
-							className: "grid-revision__button grid-revision__button-revert"
+							className: "grid-revision__button grid-revision__button-revert",
+							onClick: this.props.onRevert
 						},
 						"Revert"
 					));
@@ -35297,17 +35350,24 @@
 		return Revision;
 	}(_react.Component);
 	
+	Revision.defaultProps = {
+		onPreview: function onPreview() {},
+		onDelete: function onDelete() {},
+		onRevert: function onRevert() {}
+	};
+	
 	/**
 	 * define property types
 	 */
-	
-	
 	Revision.propTypes = {
 		date: _react.PropTypes.string.isRequired,
 		editor: _react.PropTypes.string.isRequired,
 		published: _react.PropTypes.string.isRequired,
 		revision: _react.PropTypes.string.isRequired,
-		state: _react.PropTypes.string.isRequired
+		state: _react.PropTypes.string.isRequired,
+	
+		onPreview: _react.PropTypes.func,
+		onRevert: _react.PropTypes.func
 	};
 	
 	/**

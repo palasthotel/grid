@@ -25,7 +25,7 @@ export default class ToolbarButton extends Component{
 				className={`toolbar-button toolbar-button__${identifier}`}
 			>
 				<button
-					onClick={onClick}
+					onClick={this.onClick.bind(this)}
 				>
 					{this.props.children}
 					<div className="toolbar-button__label">{label}</div>
@@ -40,7 +40,7 @@ export default class ToolbarButton extends Component{
 	 * ---------------------
 	 */
 	onClick(){
-		console.log("grid tool clicked: "+this.props.unique_id);
+		this.props.onClick(null);
 	}
 	
 	/**

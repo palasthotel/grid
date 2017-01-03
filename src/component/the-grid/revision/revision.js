@@ -26,6 +26,7 @@ class Revision extends Component {
 			<button
 				key="preview"
 				className="grid-revision__button grid-revision__button-preview"
+			    onClick={this.props.onPreview}
 			>
 				Preview
 			</button>
@@ -35,6 +36,7 @@ class Revision extends Component {
 				<button
 					key="delete"
 					className="grid-revision__button grid-revision__button-delete"
+				    onClick={this.props.onDelete}
 				>
 					Delete
 				</button>
@@ -44,6 +46,7 @@ class Revision extends Component {
 				<button
 					key="revert"
 					className="grid-revision__button grid-revision__button-revert"
+				    onClick={this.props.onRevert}
 				>
 					Revert
 				</button>
@@ -80,6 +83,12 @@ class Revision extends Component {
 	 */
 }
 
+Revision.defaultProps = {
+	onPreview: ()=>{},
+	onDelete: ()=>{},
+	onRevert: ()=>{},
+}
+
 /**
  * define property types
  */
@@ -89,6 +98,9 @@ Revision.propTypes = {
 	published: PropTypes.string.isRequired,
 	revision: PropTypes.string.isRequired,
 	state: PropTypes.string.isRequired,
+	
+	onPreview: PropTypes.func,
+	onRevert: PropTypes.func,
 };
 
 /**
