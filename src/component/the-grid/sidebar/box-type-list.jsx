@@ -23,7 +23,7 @@ class BoxTypeList extends Component {
 		};
 	}
 	componentDidMount(){
-		if(!this.props.boxes){
+		if(!this.props.item.boxes){
 			this.onSearch();
 		}
 	}

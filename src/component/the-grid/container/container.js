@@ -52,7 +52,7 @@ class Container extends Component{
 	 * ---------------------
 	 */
 	render(){
-		const { connectDragSource, isDragging, type } = this.props;
+		const { connectDragSource, isDragging, type, reused, reusetitle } = this.props;
 		return (
 			<div
 				className={`container contaner__${type}`}
@@ -63,7 +63,7 @@ class Container extends Component{
 			>
 				
 				<div className="container__controls">
-					<span className="container__title">{this.props.title}</span>
+					<span className="container__title">{this.props.title} {(reused)? reusetitle+"__":""}</span>
 					{connectDragSource(
 						<span
 							style={{
@@ -78,12 +78,14 @@ class Container extends Component{
 						<ul className="container__options-list">
 							<li
 								className="container__options-list-item"
-								role="edit"
 							    onClick={this.onEdit.bind(this)}
 							>
 								<i className="icon-edit" /> Edit
 							</li>
-							<li className="container__options-list-item" role="reuse">
+							<li
+								className="container__options-list-item"
+							    onClick={this.onReuse.bind(this)}
+							>
 								<i className="icon-reuse" /> Reuse
 							</li>
 							<li className="container__options-list-item" role="toggleslotstyles">
@@ -135,6 +137,11 @@ class Container extends Component{
 	onDelete(){
 		this.props.onDelete(this.props);
 	}
+	onReuse(){
+		const title = prompt("Reuse title?", "");
+		if(title == "") return;
+		this.props.onReuse(this.props.index, title);
+	}
 	
 	/**
 	 * ---------------------
@@ -153,6 +160,7 @@ Container.defaultProps = {
 	
 	onEdit: (done)=>{ done(); },
 	onDelete: (done)=> { done(); },
+	onReuse: (done)=>{ done(); },
 	
 	isSaving: false,
 	isDeleting: false,
@@ -167,6 +175,7 @@ Container.propTypes = {
 	onMove: PropTypes.func.isRequired,
 	onEdit: PropTypes.func,
 	onDelete: PropTypes.func,
+	onReuse: PropTypes.func,
 };
 
 export default DragSource(ItemTypes.CONTAINER, containerSource, collect)(Container);

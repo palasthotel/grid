@@ -79,6 +79,7 @@ class TheGrid extends React.Component{
 					onContainerAdd={this.props.onContainerAdd.bind(this)}
 					onContainerMove={this.props.onContainerMove.bind(this)}
 				    onContainerDelete={this.props.onContainerDelete.bind(this)}
+				    onContainerReuse={this.props.onContainerReuse.bind(this)}
 				    
 				    onBoxAdd={this.props.onBoxAdd}
 				    onBoxMove={this.props.onBoxMove}

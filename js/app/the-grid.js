@@ -24335,9 +24335,9 @@
 	
 			/**
 	   * when adding a box from sidebar to grid
-	   * @param done
-	   * @param container
-	   * @param index
+	   * @param {function} done
+	   * @param {object} container
+	   * @param {int} index
 	   */
 			value: function onContainerAdd(done, container, index) {
 				this._backend.execute("grid.editing.container", "addContainer", [this._grid_id, container.type, index], function (error, response) {
@@ -24347,9 +24347,9 @@
 	
 			/**
 	   * moving box in grid from one to another position
-	   * @param done
-	   * @param container
-	   * @param to
+	   * @param {function} done
+	   * @param {object} container
+	   * @param {int} to
 	   */
 	
 		}, {
@@ -24364,14 +24364,28 @@
 			/**
 	   * delete box from grid
 	   * @param {function} done
-	   * @param container
+	   * @param {object} container
 	   */
 	
 		}, {
 			key: "onContainerDelete",
 			value: function onContainerDelete(done, container) {
 				this._backend.execute("grid.editing.container", "deleteContainer", [this._grid_id, container.id], function (error, response) {
-					console.log(response);
+					done(error, response.data);
+				});
+			}
+	
+			/**
+	   * make container reusable
+	   * @param {function} done
+	   * @param {object} container
+	   * @param {string} reuse_title
+	   */
+	
+		}, {
+			key: "onContainerReuse",
+			value: function onContainerReuse(done, container, reuse_title) {
+				this._backend.execute("grid.editing.container", "reuseContainer", [this._grid_id, container.id, reuse_title], function (error, response) {
 					done(error, response.data);
 				});
 			}
@@ -24640,6 +24654,7 @@
 						onContainerAdd: this.props.onContainerAdd.bind(this),
 						onContainerMove: this.props.onContainerMove.bind(this),
 						onContainerDelete: this.props.onContainerDelete.bind(this),
+						onContainerReuse: this.props.onContainerReuse.bind(this),
 	
 						onBoxAdd: this.props.onBoxAdd,
 						onBoxMove: this.props.onBoxMove,
@@ -24969,7 +24984,8 @@
 						}, container, {
 							index: i,
 							onMove: this.onContainerMove.bind(this),
-							onDelete: this.onContainerDelete.bind(this)
+							onDelete: this.onContainerDelete.bind(this),
+							onReuse: this.onContainerReuse.bind(this)
 						}),
 						this.renderSlots(container.slots, dimensions, i)
 					));
@@ -25089,9 +25105,24 @@
 				}, container_props);
 			}
 		}, {
+			key: 'onContainerReuse',
+			value: function onContainerReuse(container_index, title) {
+				var _this7 = this;
+	
+				this.state.container[container_index].reused = true;
+				this.state.container[container_index].reusetitle = title;
+				this.updateContainerState();
+				this.props.onContainerReuse(function (error, data) {
+					if (!error) {}
+					_this7.state.container[container_index].reused = data;
+					_this7.updateContainerState();
+					_this7.triggerStateChanged();
+				}, this.state.container[container_index], title);
+			}
+		}, {
 			key: 'onBoxAdd',
 			value: function onBoxAdd(box, drop) {
-				var _this7 = this;
+				var _this8 = this;
 	
 				// add temporary box id
 				if (!box.id) {
@@ -25107,14 +25138,14 @@
 						// TODO: error handling
 					}
 					_box.isSaving = false;
-					_this7.state.container[drop.container_index].slots[drop.slot_index].boxes[drop.index] = _box;
-					_this7.updateContainerState();
+					_this8.state.container[drop.container_index].slots[drop.slot_index].boxes[drop.index] = _box;
+					_this8.updateContainerState();
 				}, box, drop);
 			}
 		}, {
 			key: 'onBoxMove',
 			value: function onBoxMove(dragged_box, box_drop) {
-				var _this8 = this;
+				var _this9 = this;
 	
 				if (dragged_box.container_id == box_drop.container_id && dragged_box.slot_id == box_drop.slot_id) {
 					/**
@@ -25144,14 +25175,14 @@
 				this.props.onBoxMove(function (error) {
 					if (error) {}
 					box.isMoving = false;
-					_this8.updateContainerState();
-					_this8.triggerStateChanged();
+					_this9.updateContainerState();
+					_this9.triggerStateChanged();
 				}, dragged_box, box_drop);
 			}
 		}, {
 			key: 'onBoxDelete',
 			value: function onBoxDelete(box_props) {
-				var _this9 = this;
+				var _this10 = this;
 	
 				var container_index = box_props.container_index;
 				var slot_index = box_props.slot_index;
@@ -25172,9 +25203,9 @@
 					/**
 	     * if no error occured delete the box finally
 	     */
-					_this9.state.container[container_index].slots[slot_index].boxes.splice(index, 1);
-					_this9.updateContainerState();
-					_this9.triggerStateChanged();
+					_this10.state.container[container_index].slots[slot_index].boxes.splice(index, 1);
+					_this10.updateContainerState();
+					_this10.triggerStateChanged();
 				}, box_props);
 			}
 	
@@ -25224,6 +25255,9 @@
 			done();
 		},
 		onContainerDelete: function onContainerDelete(done) {
+			done();
+		},
+		onContainerReuse: function onContainerReuse(done) {
 			done();
 		},
 	
@@ -25362,6 +25396,8 @@
 				var connectDragSource = _props.connectDragSource;
 				var isDragging = _props.isDragging;
 				var type = _props.type;
+				var reused = _props.reused;
+				var reusetitle = _props.reusetitle;
 	
 				return _react2.default.createElement(
 					'div',
@@ -25380,7 +25416,9 @@
 						_react2.default.createElement(
 							'span',
 							{ className: 'container__title' },
-							this.props.title
+							this.props.title,
+							' ',
+							reused ? reusetitle + "__" : ""
 						),
 						connectDragSource(_react2.default.createElement(
 							'span',
@@ -25407,7 +25445,6 @@
 									'li',
 									{
 										className: 'container__options-list-item',
-										role: 'edit',
 										onClick: this.onEdit.bind(this)
 									},
 									_react2.default.createElement('i', { className: 'icon-edit' }),
@@ -25415,7 +25452,10 @@
 								),
 								_react2.default.createElement(
 									'li',
-									{ className: 'container__options-list-item', role: 'reuse' },
+									{
+										className: 'container__options-list-item',
+										onClick: this.onReuse.bind(this)
+									},
 									_react2.default.createElement('i', { className: 'icon-reuse' }),
 									' Reuse'
 								),
@@ -25501,6 +25541,13 @@
 			value: function onDelete() {
 				this.props.onDelete(this.props);
 			}
+		}, {
+			key: 'onReuse',
+			value: function onReuse() {
+				var title = prompt("Reuse title?", "");
+				if (title == "") return;
+				this.props.onReuse(this.props.index, title);
+			}
 	
 			/**
 	   * ---------------------
@@ -25532,6 +25579,9 @@
 		onDelete: function onDelete(done) {
 			done();
 		},
+		onReuse: function onReuse(done) {
+			done();
+		},
 	
 		isSaving: false,
 		isDeleting: false
@@ -25545,7 +25595,8 @@
 	
 		onMove: _react.PropTypes.func.isRequired,
 		onEdit: _react.PropTypes.func,
-		onDelete: _react.PropTypes.func
+		onDelete: _react.PropTypes.func,
+		onReuse: _react.PropTypes.func
 	};
 	
 	exports.default = (0, _reactDnd.DragSource)(_constants.ItemTypes.CONTAINER, containerSource, collect)(Container);
@@ -33059,7 +33110,7 @@
 		_createClass(BoxTypeList, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				if (!this.props.boxes) {
+				if (!this.props.item.boxes) {
 					this.onSearch();
 				}
 			}

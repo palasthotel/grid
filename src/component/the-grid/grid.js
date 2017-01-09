@@ -143,6 +143,7 @@ export default class Grid extends Component{
 					index={i}
 				    onMove={this.onContainerMove.bind(this)}
 				    onDelete={this.onContainerDelete.bind(this)}
+				    onReuse={this.onContainerReuse.bind(this)}
 				>
 					{this.renderSlots(container.slots, dimensions, i)}
 				</Container>
@@ -250,6 +251,19 @@ export default class Grid extends Component{
 			this.updateContainerState();
 			this.triggerStateChanged();
 		},container_props);
+	}
+	onContainerReuse(container_index,title){
+		this.state.container[container_index].reused = true;
+		this.state.container[container_index].reusetitle = title;
+		this.updateContainerState();
+		this.props.onContainerReuse((error, data)=>{
+			if(!error){
+				
+			}
+			this.state.container[container_index].reused = data;
+			this.updateContainerState();
+			this.triggerStateChanged();
+		}, this.state.container[container_index], title);
 	}
 	
 	onBoxAdd(box, drop){
@@ -362,6 +376,7 @@ Grid.defaultProps = {
 	onContainerMove: (done)=> { done(); },
 	onContainerEdit: (done)=>{ done(); },
 	onContainerDelete: (done)=>{ done(); },
+	onContainerReuse: (done)=>{ done(); },
 	
 	onBoxAdd: (done, box)=> { done(false, box) },
 	onBoxMove: (done)=>{ done(); },
