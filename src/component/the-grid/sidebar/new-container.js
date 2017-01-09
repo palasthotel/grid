@@ -49,11 +49,9 @@ class NewContainer extends Component {
 	}
 	
 	componentWillMount(){
-		
 		this.state.preview = ContainerDragPreview.createByType(100, this.props.item.type).src;
 	}
 	componentDidMount(){
-		
 		this.setState({preview: ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type).src})
 	}
 	

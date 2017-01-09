@@ -25569,7 +25569,7 @@
 			value: function buildDragPreview() {
 				var connectDragPreview = this.props.connectDragPreview;
 	
-				var result = _dragPreview.ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
+				var result = _dragPreview.ContainerDragPreview.createByType(this.state.dom.clientWidth, this.props.type);
 				result.img.onload = function () {
 					return connectDragPreview(result.img);
 				};
@@ -32929,13 +32929,11 @@
 		_createClass(NewContainer, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-	
 				this.state.preview = _dragPreview.ContainerDragPreview.createByType(100, this.props.item.type).src;
 			}
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-	
 				this.setState({ preview: _dragPreview.ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type).src });
 			}
 	

@@ -159,7 +159,7 @@ class Container extends Component{
 	 */
 	buildDragPreview(){
 		const { connectDragPreview } = this.props;
-		let result = ContainerDragPreview.create(this.state.dom.clientWidth, this.props.slots.length);
+		let result = ContainerDragPreview.createByType(this.state.dom.clientWidth, this.props.type);
 		result.img.onload = () => connectDragPreview(result.img);
 		result.img.src = result.src;
 	}
