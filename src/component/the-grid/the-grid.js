@@ -98,7 +98,7 @@ class TheGrid extends React.Component{
 					
 					<BoxTypes
 						items={box_types}
-					    onSearch={this.props.onBoxTypeSearch}
+					    onSearch={this.onBoxTypeSearch.bind(this)}
 					/>
 					
 				</TabView>
@@ -112,7 +112,7 @@ class TheGrid extends React.Component{
 	 * ---------------------
 	 */
 	onGridStateChange(container){
-		console.log("onGridStateChange", container);
+		this.props.onUpdateState({"container":container});
 	}
 	onClickPublish(){
 		console.log("publish grid!");
@@ -128,6 +128,26 @@ class TheGrid extends React.Component{
 	onClickRevisions(){
 		this.setState({show_revisions: !this.state.show_revisions})
 	}
+	onBoxTypeSearch(done, type, criteria, query){
+		console.log("on box type search");
+		this.props.onBoxTypeSearch((boxes)=>{
+			console.log("found boxes", boxes);
+			const box_types = this.props.box_types;
+			for(let index in box_types){
+				if(!box_types.hasOwnProperty(index)) continue;
+				if(box_types[index].type == type){
+					box_types[index].boxes = boxes;
+					this.props.onUpdateState({"box_types":box_types});
+				}
+			}
+		},type,criteria,query);
+	}
+	
+	/**
+	 * ---------------------
+	 * functions
+	 * ---------------------
+	 */
 }
 
 /**
@@ -146,6 +166,7 @@ TheGrid.defaultProps = {
 	onPreview: ()=>{ },
 	
 	onBoxTypeSearch: (done, type, criteria, query)=>{ done([]) },
+	onUpdateState: ()=>{},
 };
 
 /**
@@ -164,6 +185,8 @@ TheGrid.propTypes = {
 	container_styles: PropTypes.array,
 	slot_styles: PropTypes.array,
 	box_styles: PropTypes.array,
+	
+	onUpdateState: PropTypes.func,
 	
 };
 

@@ -129,6 +129,8 @@ class TheGridRouter extends Component {
 					{...this._action_handler.getHandlers()}
 					
 					onPreview={this.onPreview.bind(this)}
+				    
+				    onUpdateState={this.onUpdateChildState.bind(this)}
 				/>
 			)
 		}
@@ -139,6 +141,14 @@ class TheGridRouter extends Component {
 	 * events
 	 * ------------------------------------------------
 	 */
+	onUpdateChildState(state){
+		console.log("onUpdateChildState", state);
+		for(let prop in state){
+			if(!state.hasOwnProperty(prop))continue;
+			this.state[prop] = state[prop];
+		}
+		this.setState(this.state);
+	}
 	
 	/**
 	 * on get the grid containers from server

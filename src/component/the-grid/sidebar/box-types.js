@@ -15,8 +15,6 @@ class BoxTypes extends Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.state = {};
-		
 	}
 	
 	/**
@@ -49,8 +47,6 @@ class BoxTypes extends Component {
 			item={item}
 			onSearch={this.props.onSearch}
 		/>)
-		
-		
 	}
 	
 	/**
@@ -58,45 +54,45 @@ class BoxTypes extends Component {
 	 * events
 	 * ------------------------------------------------
 	 */
-	onStateChanged(type, collapsed){
-		
-		/**
-		 * if there are items do not react on change
-		 */
-		if(this.getTypeItems(type)!=null) return;
-		
-		/**
-		 * else load boxes
-		 */
-		if(typeof this.state[type] == typeof undefined){
-			this.props.onSearch((boxes)=>{
-				this.setState({state:States.DONE});
-			}, type);
-			this.state[type] = States.LOADING;
-			this.setState( this.state );
-		}
-		
-		
-	}
+	// onStateChanged(type, collapsed){
+	//
+	// 	/**
+	// 	 * if there are items do not react on change
+	// 	 */
+	// 	if(this.getTypeItems(type)!=null) return;
+	//
+	// 	/**
+	// 	 * else load boxes
+	// 	 */
+	// 	if(typeof this.state[type] == typeof undefined){
+	// 		this.props.onSearch((boxes)=>{
+	// 			this.setState({state:States.DONE});
+	// 		}, type);
+	// 		this.state[type] = States.LOADING;
+	// 		this.setState( this.state );
+	// 	}
+	//
+	//
+	// }
 	/**
 	 * ------------------------------------------------
 	 * other functions
 	 * ------------------------------------------------
 	 */
-	getTypeItems(type){
-		for(let item of this.props.items){
-			if(item.type == type){
-				return (item.boxes)? item.boxes: null;
-			}
-		}
-		return null;
-	}
-	getTypeState(type){
-		if(typeof this.state[type] == typeof undefined){
-			return States.WAITING;
-		}
-		return this.state[type];
-	}
+	// getTypeItems(type){
+	// 	for(let item of this.props.items){
+	// 		if(item.type == type){
+	// 			return (item.boxes)? item.boxes: null;
+	// 		}
+	// 	}
+	// 	return null;
+	// }
+	// getTypeState(type){
+	// 	if(typeof this.state[type] == typeof undefined){
+	// 		return States.WAITING;
+	// 	}
+	// 	return this.state[type];
+	// }
 }
 
 BoxTypes.defaultProps = {

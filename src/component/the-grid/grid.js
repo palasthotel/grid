@@ -183,7 +183,7 @@ export default class Grid extends Component{
 	 * events
 	 * ---------------------
 	 */
-	onContainerAdd(container, drop){
+	onContainerAdd(container, drop_index){
 		
 		// add temporary box id
 		if(!container.id){
@@ -191,7 +191,7 @@ export default class Grid extends Component{
 		}
 		
 		container.isSaving = true;
-		this.state.container.splice(drop.index,0,container);
+		this.state.container.splice(drop_index,0,container);
 		
 		// TODO: add slots and boxes or set loading?
 		
@@ -204,9 +204,12 @@ export default class Grid extends Component{
 				// TODO: error handling
 			}
 			_container.isSaving = false;
-			this.state.container[drop.index] = _container;
+			for(let prop in _container){
+				if(!_container.hasOwnProperty(prop)) continue;
+				this.state.container[drop_index][prop] = _container[prop];
+			}
 			this.updateContainerState();
-		},container, drop);
+		},container, drop_index);
 	}
 	onContainerMove(dragged_container, container_drop){
 		
@@ -230,6 +233,7 @@ export default class Grid extends Component{
 			console.log("onContainerMove", data);
 			container.isMoving = false;
 			this.updateContainerState();
+			this.triggerStateChanged();
 		}, dragged_container, container_drop.index);
 	}
 	onContainerDelete(container_props){
@@ -244,6 +248,7 @@ export default class Grid extends Component{
 			}
 			this.state.container.splice(container_props.index,1);
 			this.updateContainerState();
+			this.triggerStateChanged();
 		},container_props);
 	}
 	
@@ -302,6 +307,7 @@ export default class Grid extends Component{
 			}
 			box.isMoving = false;
 			this.updateContainerState();
+			this.triggerStateChanged();
 		},dragged_box,box_drop);
 	}
 	onBoxDelete(box_props){
@@ -323,7 +329,7 @@ export default class Grid extends Component{
 			 */
 			this.state.container[container_index].slots[slot_index].boxes.splice(index,1);
 			this.updateContainerState();
-			
+			this.triggerStateChanged();
 		}, box_props);
 		
 	}
@@ -337,11 +343,12 @@ export default class Grid extends Component{
 	getWidth(){
 		return this.state.dom.clientWidth;
 	}
-	triggerStateChange(){
+	triggerStateChanged(){
 		this.props.onStateChange(this.state.container);
 	}
 	updateContainerState(){
 		this.setState({container: this.state.container});
+		// this.props.onStateChange(this.state.container);
 	}
 }
 
@@ -380,7 +387,6 @@ Grid.propTypes = {
 	onContainerMove: PropTypes.func,
 	onContainerEdit: PropTypes.func,
 	onContainerDelete: PropTypes.func,
-	
 	
 	onBoxAdd: PropTypes.func,
 	onBoxMove: PropTypes.func,

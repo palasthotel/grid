@@ -20,15 +20,17 @@ class BoxTypeList extends Component {
 		this.state = {
 			loading: false,
 			query: "",
-			boxes: props.item.boxes,
 		};
 	}
 	componentDidMount(){
-		if(!this.state.boxes){
+		if(!this.props.boxes){
 			this.onSearch();
 		}
 	}
 	
+	componentWillReceiveProps(nextProps){
+		this.setState({loading: false });
+	}
 	/**
 	 * ------------------------------------------------
 	 * rendering
@@ -60,7 +62,7 @@ class BoxTypeList extends Component {
 	}
 	
 	renderBoxes(){
-		const {boxes} = this.state;
+		const {boxes} = this.props.item;
 		if(typeof boxes == typeof undefined || typeof boxes != typeof []) return null;
 		return boxes.map((box)=>{
 			return <NewBox
@@ -94,7 +96,7 @@ class BoxTypeList extends Component {
 	onSearch(){
 		this.setState({loading: true});
 		this.props.onSearch((boxes)=>{
-			this.setState({loading: false, boxes: boxes});
+			// is updated via properties from parent because of possible unmounting problem
 		},this.props.item.type, this.props.item.criteria, this.state.query);
 	}
 }

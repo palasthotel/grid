@@ -63,7 +63,7 @@ class Container extends Component{
 			>
 				
 				<div className="container__controls">
-					<span className="container__title">test{this.props.title}</span>
+					<span className="container__title">{this.props.title}</span>
 					{connectDragSource(
 						<span
 							style={{
@@ -104,17 +104,21 @@ class Container extends Component{
 					{(this.props.isMoving)? <p>Moving</p>: null}
 					{(this.props.isDeleting)? <p>Deleting</p>: null}
 					<div className="container__before">
-						<div className="container__prolog">PROLOG</div>
+						{this.renderIf("prolog")}
 					</div>
 					
 					<div className="container__slots">{this.props.children}</div>
 					
 					<div className="container__after">
-						<div className="container__epilog">EPILOG</div>
+						{this.renderIf("epilog")}
 					</div>
 				</div>
 			</div>
 		)
+	}
+	renderIf(prop){
+		if(this.props[prop]) return null;
+		return <div className={`container__${prop}`}>{this.props[prop]}</div>
 	}
 	
 	/**
