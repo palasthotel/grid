@@ -24385,6 +24385,7 @@
 		}, {
 			key: "onContainerReuse",
 			value: function onContainerReuse(done, container, reuse_title) {
+				console.log("onContainerReuse", container, reuse_title);
 				this._backend.execute("grid.editing.container", "reuseContainer", [this._grid_id, container.id, reuse_title], function (error, response) {
 					done(error, response.data);
 				});
@@ -25450,15 +25451,7 @@
 									_react2.default.createElement('i', { className: 'icon-edit' }),
 									' Edit'
 								),
-								_react2.default.createElement(
-									'li',
-									{
-										className: 'container__options-list-item',
-										onClick: this.onReuse.bind(this)
-									},
-									_react2.default.createElement('i', { className: 'icon-reuse' }),
-									' Reuse'
-								),
+								this.renderReuse(),
 								_react2.default.createElement(
 									'li',
 									{ className: 'container__options-list-item', role: 'toggleslotstyles' },
@@ -25519,6 +25512,22 @@
 					this.props[prop]
 				);
 			}
+		}, {
+			key: 'renderReuse',
+			value: function renderReuse() {
+				var reused = this.props.reused;
+	
+				if (reused) return null;
+				return _react2.default.createElement(
+					'li',
+					{
+						className: 'container__options-list-item',
+						onClick: this.onReuse.bind(this)
+					},
+					_react2.default.createElement('i', { className: 'icon-reuse' }),
+					' Reuse'
+				);
+			}
 	
 			/**
 	   * ---------------------
@@ -25573,15 +25582,9 @@
 	
 	Container.defaultProps = {
 	
-		onEdit: function onEdit(done) {
-			done();
-		},
-		onDelete: function onDelete(done) {
-			done();
-		},
-		onReuse: function onReuse(done) {
-			done();
-		},
+		onEdit: function onEdit() {},
+		onDelete: function onDelete() {},
+		onReuse: function onReuse() {},
 	
 		isSaving: false,
 		isDeleting: false
@@ -31762,6 +31765,79 @@
 					src: c.toDataURL()
 				};
 			}
+		}, {
+			key: 'createByType',
+			value: function createByType(width, type) {
+	
+				var img = new Image();
+				var c = document.createElement('canvas');
+				c.height = this.height();
+				c.width = width;
+	
+				var slots = type.split("-");
+				var parts = [];
+	
+				var zeros = 0;
+				var space_left = 1;
+				for (var i = 1; i < slots.length; i++) {
+					var slot = slots[i];
+					if (slot == "0") {
+						zeros++;
+						parts.push(0);
+						continue;
+					}
+					var division_pars = slot.split("d");
+					var space = parseInt(division_pars[0]) / parseInt(division_pars[1]);
+					parts.push(space);
+					space_left -= space;
+				}
+	
+				var ctx = c.getContext('2d');
+				var zero_space = zeros > 0 ? space_left / zeros : 0;
+				var x_pos = 0;
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+	
+				try {
+					for (var _iterator = parts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var part = _step.value;
+	
+						var _width = 1;
+						if (part == 0) {
+							// zero space
+							_width = parseInt(zero_space * width);
+						} else {
+							// normal space
+							_width = parseInt(part * width);
+						}
+	
+						ctx.rect(x_pos + this.padding(), 0, _width - this.padding(), this.height());
+						ctx.fillStyle = "#333333";
+						ctx.fill();
+	
+						x_pos += _width;
+					}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+	
+				return {
+					img: img,
+					src: c.toDataURL()
+				};
+			}
 		}]);
 	
 		return ContainerDragPreview;
@@ -32789,6 +32865,8 @@
 	
 	var _reactDnd = __webpack_require__(302);
 	
+	var _dragPreview = __webpack_require__(429);
+	
 	var _constants = __webpack_require__(28);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32841,19 +32919,37 @@
 		function NewContainer(props) {
 			_classCallCheck(this, NewContainer);
 	
-			return _possibleConstructorReturn(this, (NewContainer.__proto__ || Object.getPrototypeOf(NewContainer)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (NewContainer.__proto__ || Object.getPrototypeOf(NewContainer)).call(this, props));
+	
+			_this.state = {};
+	
+			return _this;
 		}
 	
-		/**
-	  * ------------------------------------------------
-	  * rendering
-	  * ------------------------------------------------
-	  */
-	
-	
 		_createClass(NewContainer, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+	
+				this.state.preview = _dragPreview.ContainerDragPreview.createByType(100, this.props.item.type).src;
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+	
+				this.setState({ preview: _dragPreview.ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type).src });
+			}
+	
+			/**
+	   * ------------------------------------------------
+	   * rendering
+	   * ------------------------------------------------
+	   */
+	
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+	
 				var _props = this.props;
 				var connectDragSource = _props.connectDragSource;
 				var isDragging = _props.isDragging;
@@ -32861,8 +32957,23 @@
 	
 				return connectDragSource(_react2.default.createElement(
 					'div',
-					null,
-					item.type
+					{
+						className: 'container__new'
+	
+					},
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'container__preview_wrapper'
+						},
+						_react2.default.createElement('img', {
+							ref: function ref(element) {
+								return _this2.state.preview_img = element;
+							},
+							className: 'container__preview',
+							src: this.state.preview
+						})
+					)
 				));
 			}
 	

@@ -56,6 +56,7 @@ export default class ContainerHandler{
 	 * @param {string} reuse_title
 	 */
 	onContainerReuse(done, container, reuse_title){
+		console.log("onContainerReuse", container, reuse_title);
 		this._backend.execute("grid.editing.container","reuseContainer",[
 			this._grid_id,
 			container.id,

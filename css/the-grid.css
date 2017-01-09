@@ -166,6 +166,8 @@ button:hover, button:focus:hover { border-color: transparent; background-color: 
 
 .grid__new-elements { position: absolute; top: 0; right: 0; width: 300px; }
 
+.grid__new-elements .container__new { padding: 0 30px; }
+
 .box-editor .box-editor__type { font-style: italic; margin-bottom: 15px; }
 
 .box-editor .box-editor__header { margin-bottom: 35px; }

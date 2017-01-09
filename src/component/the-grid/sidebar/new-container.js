@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import { DragSource } from 'react-dnd';
+import {ContainerDragPreview} from '../../../helper/drag-preview.js';
 
 import { ItemTypes } from '../../../constants.js';
 
@@ -43,7 +44,17 @@ class NewContainer extends Component {
 	 */
 	constructor(props) {
 		super(props);
+		this.state = {};
 		
+	}
+	
+	componentWillMount(){
+		
+		this.state.preview = ContainerDragPreview.createByType(100, this.props.item.type).src;
+	}
+	componentDidMount(){
+		
+		this.setState({preview: ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type).src})
 	}
 	
 	/**
@@ -54,8 +65,20 @@ class NewContainer extends Component {
 	render() {
 		const { connectDragSource, isDragging, item } = this.props;
 		return connectDragSource(
-			<div>
-				{item.type}
+			<div
+				className="container__new"
+				
+			>
+				<div
+					className="container__preview_wrapper"
+				>
+					<img
+						ref={(element)=> this.state.preview_img = element}
+						className="container__preview"
+						src={this.state.preview}
+					/>
+				</div>
+				
 			</div>
 		)
 	}

@@ -82,12 +82,9 @@ class Container extends Component{
 							>
 								<i className="icon-edit" /> Edit
 							</li>
-							<li
-								className="container__options-list-item"
-							    onClick={this.onReuse.bind(this)}
-							>
-								<i className="icon-reuse" /> Reuse
-							</li>
+							
+							{this.renderReuse()}
+							
 							<li className="container__options-list-item" role="toggleslotstyles">
 								<i className="icon-style" /> Slot-styles
 							</li>
@@ -121,6 +118,18 @@ class Container extends Component{
 	renderIf(prop){
 		if(this.props[prop]) return null;
 		return <div className={`container__${prop}`}>{this.props[prop]}</div>
+	}
+	renderReuse(){
+		const {reused} = this.props;
+		if(reused) return null;
+		return (
+			<li
+				className="container__options-list-item"
+				onClick={this.onReuse.bind(this)}
+			>
+				<i className="icon-reuse" /> Reuse
+			</li>
+		)
 	}
 	
 	/**
@@ -158,9 +167,9 @@ class Container extends Component{
 
 Container.defaultProps = {
 	
-	onEdit: (done)=>{ done(); },
-	onDelete: (done)=> { done(); },
-	onReuse: (done)=>{ done(); },
+	onEdit: ()=>{ },
+	onDelete: ()=> {},
+	onReuse: ()=>{ },
 	
 	isSaving: false,
 	isDeleting: false,
