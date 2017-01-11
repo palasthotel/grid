@@ -18,7 +18,7 @@ class Collapsible extends Component{
 	 * ---------------------
 	 */
 	render(){
-		const {title, children} = this.props;
+		const {title, children, removeChildrenFromDom} = this.props;
 		const {collapsed} = this.state;
 		return (
 			<div
@@ -37,7 +37,7 @@ class Collapsible extends Component{
 					}}
 					className="collapsible__content"
 				>
-					{children}
+					{(removeChildrenFromDom && collapsed)? null:children}
 				</div>
 			</div>
 		);
@@ -57,14 +57,17 @@ class Collapsible extends Component{
 	 * ---------------------
 	 */
 }
+Collapsible.defaultProps = {
+	collapsed: true,
+	removeChildrenFromDom: false,
+};
 Collapsible.propTypes = {
 	title: PropTypes.string.isRequired,
 	collapsed: PropTypes.bool,
+	removeChildrenFromDom:PropTypes.bool,
 	onStateChanged: PropTypes.func,
 };
-Collapsible.defaultProps = {
-	collapsed: true,
-};
+
 
 export default Collapsible;
 

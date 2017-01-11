@@ -32761,6 +32761,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _collapsible = __webpack_require__(441);
+	
+	var _collapsible2 = _interopRequireDefault(_collapsible);
+	
 	var _newContainer = __webpack_require__(437);
 	
 	var _newContainer2 = _interopRequireDefault(_newContainer);
@@ -32799,20 +32803,40 @@
 			value: function render() {
 				var items = this.props.items;
 	
+	
 				return _react2.default.createElement(
 					'div',
 					{
 						className: 'container-types'
 					},
-					items.map(function (container, index) {
-						if (container.type.indexOf("i-") === 0
-						//|| container.type.indexOf("sc-") === 0
-						) return;
-						return _react2.default.createElement(_newContainer2.default, {
-							key: container.type,
-							item: container
-						});
-					})
+					_react2.default.createElement(
+						_collapsible2.default,
+						{
+							title: 'Containers',
+							removeChildrenFromDom: true
+						},
+						items.map(function (container, index) {
+							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("s-") === 0) return;
+							return _react2.default.createElement(_newContainer2.default, {
+								key: container.type,
+								item: container
+							});
+						})
+					),
+					_react2.default.createElement(
+						_collapsible2.default,
+						{
+							title: 'Sidebars',
+							removeChildrenFromDom: true
+						},
+						items.map(function (container, index) {
+							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("c-") === 0) return;
+							return _react2.default.createElement(_newContainer2.default, {
+								key: container.type,
+								item: container
+							});
+						})
+					)
 				);
 			}
 	
@@ -32927,6 +32951,13 @@
 		}
 	
 		_createClass(NewContainer, [{
+			key: 'componentWillReceiveProps',
+			value: function componentWillReceiveProps() {
+				this.setState({
+					preview: _dragPreview.ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type, this.props.item.space_to_left).src
+				});
+			}
+		}, {
 			key: 'componentWillMount',
 			value: function componentWillMount() {
 				this.state.preview = _dragPreview.ContainerDragPreview.createByType(100, this.props.item.type, this.props.item.space_to_left).src;
@@ -33532,6 +33563,7 @@
 				var _props = this.props;
 				var title = _props.title;
 				var children = _props.children;
+				var removeChildrenFromDom = _props.removeChildrenFromDom;
 				var collapsed = this.state.collapsed;
 	
 				return _react2.default.createElement(
@@ -33556,7 +33588,7 @@
 							},
 							className: "collapsible__content"
 						},
-						children
+						removeChildrenFromDom && collapsed ? null : children
 					)
 				);
 			}
@@ -33583,13 +33615,15 @@
 		return Collapsible;
 	}(_react.Component);
 	
+	Collapsible.defaultProps = {
+		collapsed: true,
+		removeChildrenFromDom: false
+	};
 	Collapsible.propTypes = {
 		title: _react.PropTypes.string.isRequired,
 		collapsed: _react.PropTypes.bool,
+		removeChildrenFromDom: _react.PropTypes.bool,
 		onStateChanged: _react.PropTypes.func
-	};
-	Collapsible.defaultProps = {
-		collapsed: true
 	};
 	
 	exports.default = Collapsible;
