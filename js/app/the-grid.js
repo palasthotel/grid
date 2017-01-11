@@ -25569,7 +25569,7 @@
 			value: function buildDragPreview() {
 				var connectDragPreview = this.props.connectDragPreview;
 	
-				var result = _dragPreview.ContainerDragPreview.createByType(this.state.dom.clientWidth, this.props.type);
+				var result = _dragPreview.ContainerDragPreview.createByType(this.state.dom.clientWidth, this.props.type, this.props.space_to_left);
 				result.img.onload = function () {
 					return connectDragPreview(result.img);
 				};
@@ -31722,6 +31722,8 @@
 		value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31732,42 +31734,21 @@
 		}
 	
 		_createClass(ContainerDragPreview, null, [{
-			key: 'height',
+			key: "height",
 			value: function height() {
 				return 40;
 			}
 		}, {
-			key: 'padding',
+			key: "padding",
 			value: function padding() {
-				return 2;
+				return 4;
 			}
 		}, {
-			key: 'create',
-			value: function create(width, slots) {
-				var img = new Image();
-				var c = document.createElement('canvas');
-				c.height = this.height();
-				c.width = width;
-	
-				var ctx = c.getContext('2d');
-	
-				var slot = width / slots;
-				for (var i = 0; i < slots; i++) {
-					var x = slot * i;
-					if (x > 0) x += 2;
-					ctx.rect(x + this.padding(), 0, slot - this.padding(), this.height());
-					ctx.fillStyle = "#333333";
-					ctx.fill();
-				}
-	
-				return {
-					img: img,
-					src: c.toDataURL()
-				};
-			}
-		}, {
-			key: 'createByType',
+			key: "createByType",
 			value: function createByType(width, type) {
+				var space_to_left = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+				var space_to_right = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+	
 	
 				var img = new Image();
 				var c = document.createElement('canvas');
@@ -31775,26 +31756,34 @@
 				c.width = width;
 	
 				var slots = type.split("-");
+	
 				var parts = [];
 	
-				var zeros = 0;
-				var space_left = 1;
 				for (var i = 1; i < slots.length; i++) {
 					var slot = slots[i];
 					if (slot == "0") {
-						zeros++;
-						parts.push(0);
 						continue;
 					}
 					var division_pars = slot.split("d");
 					var space = parseInt(division_pars[0]) / parseInt(division_pars[1]);
 					parts.push(space);
-					space_left -= space;
 				}
 	
 				var ctx = c.getContext('2d');
-				var zero_space = zeros > 0 ? space_left / zeros : 0;
+	
+				/**
+	    * space to left
+	    */
 				var x_pos = 0;
+				if ((typeof space_to_left === "undefined" ? "undefined" : _typeof(space_to_left)) == _typeof("")) {
+					var _division_pars = space_to_left.split("d");
+					x_pos = parseInt(_division_pars[0]) / parseInt(_division_pars[1]) * width;
+				}
+	
+				/**
+	    * add elements
+	    */
+				var index = 0;
 				var _iteratorNormalCompletion = true;
 				var _didIteratorError = false;
 				var _iteratorError = undefined;
@@ -31803,21 +31792,30 @@
 					for (var _iterator = parts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 						var part = _step.value;
 	
-						var _width = 1;
-						if (part == 0) {
-							// zero space
-							_width = parseInt(zero_space * width);
-						} else {
-							// normal space
-							_width = parseInt(part * width);
-						}
+						var fillStyle = "#000";
+						var _width = part * width;
 	
-						ctx.rect(x_pos + this.padding(), 0, _width - this.padding(), this.height());
-						ctx.fillStyle = "#333333";
+						ctx.beginPath();
+						ctx.rect(x_pos + this.padding() / 2, 0, _width - this.padding(), this.height());
+	
+						ctx.fillStyle = fillStyle;
 						ctx.fill();
 	
+						index++;
 						x_pos += _width;
 					}
+	
+					// stroke or not?
+					// ctx.beginPath();
+					//
+					// ctx.rect(
+					// 	0,
+					// 	0,
+					// 	width,
+					// 	this.height(),
+					// );
+					// ctx.lineWidth = this.padding();
+					// ctx.stroke();
 				} catch (err) {
 					_didIteratorError = true;
 					_iteratorError = err;
@@ -31849,17 +31847,17 @@
 		}
 	
 		_createClass(BoxDragPreview, null, [{
-			key: 'height',
+			key: "height",
 			value: function height() {
 				return 40;
 			}
 		}, {
-			key: 'padding',
+			key: "padding",
 			value: function padding() {
 				return 2;
 			}
 		}, {
-			key: 'create',
+			key: "create",
 			value: function create(width) {
 				var img = new Image();
 				var c = document.createElement('canvas');
@@ -32807,7 +32805,9 @@
 						className: 'container-types'
 					},
 					items.map(function (container, index) {
-						if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0) return;
+						if (container.type.indexOf("i-") === 0
+						//|| container.type.indexOf("sc-") === 0
+						) return;
 						return _react2.default.createElement(_newContainer2.default, {
 							key: container.type,
 							item: container
@@ -32929,12 +32929,14 @@
 		_createClass(NewContainer, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				this.state.preview = _dragPreview.ContainerDragPreview.createByType(100, this.props.item.type).src;
+				this.state.preview = _dragPreview.ContainerDragPreview.createByType(100, this.props.item.type, this.props.item.space_to_left).src;
 			}
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				this.setState({ preview: _dragPreview.ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type).src });
+				this.setState({
+					preview: _dragPreview.ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type, this.props.item.space_to_left).src
+				});
 			}
 	
 			/**
@@ -32964,13 +32966,13 @@
 						{
 							className: 'container__preview_wrapper'
 						},
-						_react2.default.createElement('img', {
+						connectDragSource(_react2.default.createElement('img', {
 							ref: function ref(element) {
 								return _this2.state.preview_img = element;
 							},
 							className: 'container__preview',
 							src: this.state.preview
-						})
+						}))
 					)
 				));
 			}

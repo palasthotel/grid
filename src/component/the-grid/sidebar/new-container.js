@@ -49,10 +49,16 @@ class NewContainer extends Component {
 	}
 	
 	componentWillMount(){
-		this.state.preview = ContainerDragPreview.createByType(100, this.props.item.type).src;
+		this.state.preview = ContainerDragPreview.createByType(100, this.props.item.type, this.props.item.space_to_left).src;
 	}
 	componentDidMount(){
-		this.setState({preview: ContainerDragPreview.createByType(this.state.preview_img.parentNode.clientWidth, this.props.item.type).src})
+		this.setState({
+			preview: ContainerDragPreview.createByType(
+				this.state.preview_img.parentNode.clientWidth,
+				this.props.item.type,
+				this.props.item.space_to_left)
+				.src
+		})
 	}
 	
 	/**
@@ -70,11 +76,11 @@ class NewContainer extends Component {
 				<div
 					className="container__preview_wrapper"
 				>
-					<img
+					{connectDragSource(<img
 						ref={(element)=> this.state.preview_img = element}
 						className="container__preview"
 						src={this.state.preview}
-					/>
+					/>)}
 				</div>
 				
 			</div>

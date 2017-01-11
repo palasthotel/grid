@@ -26,7 +26,7 @@ class ContainerTypes extends Component {
 			>
 				{items.map((container,index)=>{
 					if(container.type.indexOf("i-") === 0
-						|| container.type.indexOf("sc-") === 0
+						//|| container.type.indexOf("sc-") === 0
 					)
 						return;
 					return (
