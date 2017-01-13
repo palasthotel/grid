@@ -324,7 +324,7 @@ class grid_plugin {
 		if(null != $editor){
 			$js = $editor->getJS( $lang, false );
 		} else {
-			$js = $grid_lib->getEditorJS($lang, false);
+			$js = $grid_lib->getEditorJS($lang, false, false);
 		}
 		/**
 		 * enqueue the js array
@@ -526,6 +526,7 @@ function grid_wp_get_storage() {
 
 function grid_wp_load_js() {
 	// for wp.media
+	wp_enqueue_script('jquery');
 	if ( function_exists( 'wp_enqueue_media' ) ) {
 		wp_enqueue_media();
 	} else {
