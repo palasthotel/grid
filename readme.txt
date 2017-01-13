@@ -76,6 +76,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 == Changelog ==
 
 = 1.6.9.2 =
+ * 4.7.1 Fixes
  * Use Wordpress default jQuery fix
 
 = 1.6.9.1 =
