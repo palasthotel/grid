@@ -29,7 +29,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	    /**
 	     * show preview of image
 	     */
-	    this.$img_wrapper = $("<div></div>");
+	    this.$img_wrapper = jQuery("<div></div>");
 	    this.$img_wrapper.addClass("wp-mediaselect-image-wrapper");
 	    this.$el.append(this.$img_wrapper);
 
@@ -141,7 +141,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
             return;
         }
 
-        var $img = $("<img/>");
+        var $img = jQuery("<img/>");
         $img
             .addClass("wp-mediaselect-image-preview")
             .attr("src", json.sizes.thumbnail.url)

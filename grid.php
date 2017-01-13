@@ -29,7 +29,7 @@ class grid_library
 	}
 
 	//Gets an array of JS files to include on editor view (if absolute is true, absolute paths are returned.
-	public function getEditorJS($language="en",$absolute=FALSE)
+	public function getEditorJS($language="en",$absolute=FALSE, $need_jquery = TRUE)
 	{
 		$home=$this->getHome();
 		$editorfields=glob($home."js/app/views/EditorWidgets/*.js");
@@ -45,7 +45,7 @@ class grid_library
 		$app_dir=$home."js/app/";
 
 		$scripts=array();
-		$scripts[]=$framework_dir."jquery-1.8.3.min.js";
+		if($need_jquery) $scripts[]=$framework_dir."jquery-1.8.3.min.js";
 		$scripts[]=$framework_dir."jquery-ui-1.10.2.custom.js";
 		$scripts[]=$framework_dir."jquery.ui.touch-punch.js";
 		$scripts[]=$framework_dir."jquery.iframe-transport.js";

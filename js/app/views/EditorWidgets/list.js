@@ -53,7 +53,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
     },
     sortItem: function(e){
         var self = e.data.self;
-        var $button= $(e.currentTarget);
+        var $button= jQuery(e.currentTarget);
         var $this = $button.closest(".grid-editor-widget-listitem");
         var index = $this.index();
         var views = self.views;
@@ -78,7 +78,7 @@ boxEditorControls['list']=GridBackbone.View.extend({
     onRemove: function(e){
 
         var self = e.data.self;
-        var index = $(e.currentTarget).closest(".grid-editor-widget-listitem").index();
+        var index = jQuery(e.currentTarget).closest(".grid-editor-widget-listitem").index();
         var list = self.model.container[self.model.structure.key];
         list.splice(index,1);
         self.views[index].removed = true;

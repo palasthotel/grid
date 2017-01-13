@@ -32,7 +32,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
         this.$el.html(html);
     
         this.$el.on("click", ".icon-cancel", function(e){
-            var item = $(this).parent();
+            var item = jQuery(this).parent();
             item.empty();
             item.remove();
                             
@@ -82,7 +82,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
     fetchValue:function(){
         var result = [];
         this.$el.find(".autocomplete-multiselect-item").each(function(index,element){
-            result.push($(element).data("key"));
+            result.push(jQuery(element).data("key"));
         });
         return result;
     },
@@ -155,18 +155,18 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
         {
             this.$el.find(".autocomplete-wrapper")
             .append(
-                $("<div></div>")
+                jQuery("<div></div>")
                     .addClass("autocomplete-multiselect-item")
                     .text(value)
                     .attr({
                         "data-key": key
                     })
                     .append(
-                        $("<span></span>")
+                        jQuery("<span></span>")
                             .addClass("icon icon-cancel")
                             .click(function()
                             {
-                                var item = $(this).parent();
+                                var item = jQuery(this).parent();
                                 item.empty();
                                 item.remove();
                             })

@@ -13,19 +13,19 @@ boxEditorControls['file']=GridBackbone.View.extend({
     render:function(){
     	var $ = jQuery;
     	var val = this.model.container[this.model.structure.key];
-    	var $upload_form_item = $("<div class='form-item file-upload'>");
+    	var $upload_form_item = jQuery("<div class='form-item file-upload'>");
 		$upload_form_item.append("<label>"+this.model.structure.label+"</label>");
 
-		var $file_input = $("<input type='file' data-path='"+this.model.parentpath+this.model.structure.key+"' class='form-file' />");
+		var $file_input = jQuery("<input type='file' data-path='"+this.model.parentpath+this.model.structure.key+"' class='form-file' />");
 		$upload_form_item.append($file_input);
 
-		this.$key_field = $("<input type='hidden' data-key='"+this.model.structure.key+"' "+
+		this.$key_field = jQuery("<input type='hidden' data-key='"+this.model.structure.key+"' "+
 			"value='"+this.model.container[this.model.structure.key]+"' class='dynamic-value' />");
 		$upload_form_item.append(this.$key_field);
 
 
-		this.$progress_display = $("<p>").addClass("progress");
-		this.$progress_bar_wrapper = $("<div class='progress-bar-wrapper'><div class='bar'></div>");
+		this.$progress_display = jQuery("<p>").addClass("progress");
+		this.$progress_bar_wrapper = jQuery("<div class='progress-bar-wrapper'><div class='bar'></div>");
 		this.$progress_bar_status = this.$progress_bar_wrapper.children(".bar");
 		if(this.model.container[this.model.structure.key] == "" || this.model.container[this.model.structure.key] == undefined){
 			this.$progress_display.text("Please choose a picture...");

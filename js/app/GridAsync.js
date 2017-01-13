@@ -33,7 +33,7 @@ function GridAsync(){
 		self.last_time = new Date().getTime();
 	};
 
-	$('body')
+	jQuery('body')
 		.on('mousemove',function(){
 			self._onActivity();
 		})

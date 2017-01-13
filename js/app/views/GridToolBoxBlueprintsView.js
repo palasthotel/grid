@@ -69,19 +69,19 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
                 // TODO: if boxes toggled hidden
                 // var $toggle_btn = $toolbar.find("[role=hide_boxes]");
 
-                $slots.children(".grid-box").before($( document.createElement('div'))
+                $slots.children(".grid-box").before(jQuery( document.createElement('div'))
                                 .addClass("grid-box-drop-area-wrapper"));
-                $slots.append($( document.createElement('div'))
+                $slots.append(jQuery( document.createElement('div'))
                                 .addClass("grid-box-drop-area-wrapper"));
-                $slots.find(".grid-box-drop-area-wrapper").append($( document.createElement('div'))
+                $slots.find(".grid-box-drop-area-wrapper").append(jQuery( document.createElement('div'))
                                 .addClass("grid-box-drop-area"));
 
                 $slots.find(".grid-box-drop-area").droppable({
                     accept: ".grid-box-dragger",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
-                        var $this_box = $(ui.draggable);
-                        var $this_drop = $(this);
+                        var $this_box = jQuery(ui.draggable);
+                        var $this_drop = jQuery(this);
                         var $this_slot = $this_drop.parents(".grid-slot");
                         var $this_container = $this_slot.parents(".grid-container");
                         var slot = GRID.getModel().getContainers().get($this_container.data("id")).getSlots().get($this_slot.data("id"));

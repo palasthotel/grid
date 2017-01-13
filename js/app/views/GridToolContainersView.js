@@ -84,24 +84,24 @@ var GridToolContainersView = GridBackbone.View.extend({
 
                 // only first layer of .grid-containers (needed if sidebar with nested grid)
                 var $containers = $grid.find('.grid-container').filter(function(){
-                   return !$(this).parent().closest(".grid-container").length;
+                   return !jQuery(this).parent().closest(".grid-container").length;
                 });
 
-                var $dropArea = $(document.createElement("div"))
+                var $dropArea = jQuery(document.createElement("div"))
                                 .addClass("container-drop-area-wrapper")
                                 .attr("data-type","container-drop-area-wrapper");
                 $grid.find(".containers-wrapper").prepend($dropArea.clone());
                 $containers.after( $dropArea.clone() );
-                $grid.find(".container-drop-area-wrapper").append($(document.createElement("div")).addClass("container-drop-area"));
+                $grid.find(".container-drop-area-wrapper").append(jQuery(document.createElement("div")).addClass("container-drop-area"));
                 $grid.find(".container-drop-area").droppable({
                     accept: ".grid-new-element",
                     hoverClass: "hover",
                     drop: function( event, ui ) {
 
-                        var $draggable = $(ui.draggable);
+                        var $draggable = jQuery(ui.draggable);
                         var containerReusable = $draggable.data("reusable");
                         var containerType =  $draggable.data("type");
-                        var $dropwrapper = $(this).parent();
+                        var $dropwrapper = jQuery(this).parent();
 
                         $dropwrapper.removeClass('container-drop-area-wrapper').addClass('new-container-target');
                         GRID.getView().$el.find('.container-drop-area-wrapper').remove();
