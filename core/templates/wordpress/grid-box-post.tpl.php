@@ -6,7 +6,7 @@
  * @package Palasthotel\Grid-Wordpress
  */
 
-if('publish' == $content->publish):
+if( isset($content) && isset($content->publish) && 'publish' == $content->publish):
 ?>
 <div class="grid-box<?php echo ($this->style)? " ".$this->style." ": " "; echo implode($this->classes," ")?>">
 	<?php
@@ -42,6 +42,10 @@ if('publish' == $content->publish):
 	<?php }?>
 	
 </div>
+<?php
+else:
+	?>
+	<p>No Content found!</p>
 <?php
 endif;
 ?>
