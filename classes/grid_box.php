@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  */
+use Grid\Constants\Hook;
+
 /**
 * Grid-Box is parent to all Grid boxes.
 */
@@ -123,6 +125,7 @@ class grid_box extends grid_base {
 	* @return mixed
 	*/
 	public function render($editmode) {
+		$this->storage->fireHook(Hook::WILL_RENDER_BOX,array("box" => $this, 'editmode'=>$editmode));
 		ob_start();
 		$found=FALSE;
 		$this->classes[] = "grid-box-".$this->type();
@@ -155,6 +158,7 @@ class grid_box extends grid_base {
 		}
 
 		$output=ob_get_clean();
+		$this->storage->fireHook(Hook::DID_RENDER_BOX,array("box" => $this, 'editmode'=>$editmode));
 		return $output;
 	}
 
