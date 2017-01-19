@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import {Events} from '../constants.js';
 
+
+
 class BackendRequest{
 	constructor(url, component, method){
 		this.settings = {
@@ -32,6 +34,7 @@ class BackendRequest{
 }
 
 // TODO: make it a callback queue and stop on error
+// TODO: use promises!!!
 
 class Backend {
 	constructor(endpoint, events = null){
