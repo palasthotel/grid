@@ -8,6 +8,8 @@
 /**
 * Grid-Box is parent to all Grid boxes.
 */
+use Grid\Constants\Hook;
+
 class grid_box extends grid_base {
 
 	/**
@@ -123,6 +125,7 @@ class grid_box extends grid_base {
 	* @return mixed
 	*/
 	public function render($editmode) {
+		$this->storage->fireHook(Hook::WILL_RENDER_BOX,array("box" => $this, 'editmode'=>$editmode));
 		ob_start();
 		$found=FALSE;
 		$this->classes[] = "grid-box-".$this->type();
@@ -155,6 +158,7 @@ class grid_box extends grid_base {
 		}
 
 		$output=ob_get_clean();
+		$this->storage->fireHook(Hook::DID_RENDER_BOX,array("box" => $this, 'editmode'=>$editmode));
 		return $output;
 	}
 
