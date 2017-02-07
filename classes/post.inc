@@ -100,7 +100,7 @@ class post
 	 */
 	function get_the_content_wrapper($content){
 		if($content == "") return $content;
-		$content_wrapper_class = array("grid-the-content");
+		$content_wrapper_class = array();
 		$content_wrapper_class = apply_filters("grid_the_content_wrapper_class", $content_wrapper_class);
 		if(!is_array($content_wrapper_class) || count($content_wrapper_class) < 1){
 			return $content;
