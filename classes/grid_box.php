@@ -127,7 +127,7 @@ class grid_box extends grid_base {
 	public function render($editmode) {
 		$found=FALSE;
 		$this->classes[] = "grid-box-".$this->type();
-		$this->storage->fireHook(Hook::WILL_RENDER_BOX,array("box" => $this, 'editmode'=>$editmode));
+		$this->storage->fireHook(Hook::WILL_RENDER_BOX, (object)array("box" => $this, 'editmode'=>$editmode));
 		ob_start();
 		$typechecks=array();
 		$class=get_class($this);
@@ -158,7 +158,7 @@ class grid_box extends grid_base {
 		}
 
 		$output=ob_get_clean();
-		$this->storage->fireHook(Hook::DID_RENDER_BOX,array("box" => $this, 'editmode'=>$editmode));
+		$this->storage->fireHook(Hook::DID_RENDER_BOX, (object)array("box" => $this, 'editmode'=>$editmode));
 		return $output;
 	}
 
