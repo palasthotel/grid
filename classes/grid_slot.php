@@ -6,6 +6,8 @@
  * @package Palasthotel\Grid
  */
 
+use Grid\Constants\Hook;
+
 class grid_slot extends grid_base {
 	public $grid;
 	public $slotid;
@@ -21,6 +23,8 @@ class grid_slot extends grid_base {
 
 	public function render($editmode, $container)
 	{
+		$this->storage->fireHook(Hook::WILL_RENDER_SLOT, (object) array( "container"=>$container, "slot" => $this, 'editmode'=>$editmode) );
+		
 		$boxes=array();
 		if(count($this->boxes)>0)
 		{
@@ -30,7 +34,7 @@ class grid_slot extends grid_base {
 
 		foreach($this->boxes as $box)
 		{
-			$boxes[]=$box->render($editmode);
+			$boxes[]=$box->render($editmode, $container, $this);
 		}
 
 		ob_start();
@@ -52,6 +56,9 @@ class grid_slot extends grid_base {
 			include dirname(__FILE__).'/../templates/frontend/grid-slot.tpl.php';
 		}
 		$output=ob_get_clean();
+		
+		$this->storage->fireHook(Hook::DIDL_RENDER_SLOT, (object) array( "container"=>$container, "slot" => $this, 'editmode'=>$editmode) );
+		
 		return $output;
 	}
 	

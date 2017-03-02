@@ -6,6 +6,8 @@
  * @package Palasthotel\Grid
  */
 
+use Grid\Constants\Hook;
+
 class grid_container extends grid_base {
 	public $grid;
 	public $containerid;
@@ -41,6 +43,9 @@ class grid_container extends grid_base {
 	{
 		$this->classes[] = "grid-container";
 		$this->classes[] = "grid-container-".$this->type;
+		
+		$this->storage->fireHook(Hook::WILL_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+		
 		switch (count($this->slots)) 
 		{
 			case 0:
@@ -58,6 +63,8 @@ class grid_container extends grid_base {
 		$counter = 0;
 		$slots_dimension = array_slice($type_arr,1);
 		if($slots_dimension[$counter] == "0") $counter++;
+		
+		
 
 		if( $type_arr[0] == "s" && $editmode==FALSE)
 		{	
@@ -73,7 +80,11 @@ class grid_container extends grid_base {
 							"grid-slot-last", 
 							"grid-slot-has-one-box",
 							"grid-$side-sidebar");
+			
 			$output=$slot->render($editmode, $this);
+			
+			$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+			
 			return $output;
 		}
 		else
@@ -126,6 +137,9 @@ class grid_container extends grid_base {
 				include dirname(__FILE__).'/../templates/frontend/grid-container.tpl.php';
 			}
 			$output=ob_get_clean();
+			
+			$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+			
 			return $output;
 			
 		}
