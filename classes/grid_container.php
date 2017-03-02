@@ -6,6 +6,8 @@
  * @package Palasthotel\Grid
  */
 
+use Grid\Constants\Hook;
+
 class grid_container extends grid_base {
 	public $grid;
 	public $containerid;
@@ -55,6 +57,9 @@ class grid_container extends grid_base {
 				$this->classes[] = "grid-container-has-multiple-slots";
 				break;
 		}
+		
+		$this->storage->fireHook(Hook::WILL_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+		
 		// prepare slot dimensions
 		$type_arr = explode("-", $this->type);
 		$counter = 0;
@@ -76,6 +81,7 @@ class grid_container extends grid_base {
 							"grid-slot-has-one-box",
 							"grid-$side-sidebar");
 			$output=$slot->render($editmode, $this);
+			$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
 			return $output;
 		}
 		else
@@ -128,8 +134,8 @@ class grid_container extends grid_base {
 				include dirname(__FILE__).'/../templates/frontend/grid-container.tpl.php';
 			}
 			$output=ob_get_clean();
+			$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
 			return $output;
-			
 		}
 	}
 	
