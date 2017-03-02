@@ -31,6 +31,8 @@ class grid_posts_box extends grid_list_box {
 		$this->content->offset = 0;
 		$this->content->post_type = 'post';
 		$this->content->relation = 'OR';
+		$this->content->post_format = '';
+		// $this->content->tax_* is used by dynamic taxonomies
 	}
 	
 	/**
@@ -66,6 +68,21 @@ class grid_posts_box extends grid_list_box {
 			 * generate taxonomy
 			 */
 			$tax_query = array();
+			
+			/**
+			 * post format
+			 */
+			if(!empty($this->content->post_format)){
+				$tax_query[] = array(
+					'taxonomy' => 'post_format',
+					'field' => 'slug',
+					'terms' => array( 'post-format-'.$this->content->post_format),
+				);
+			}
+			
+			/**
+			 * all other taxonomies
+			 */
 			foreach($this->content as $field => $value){
 				if(''== $value || strpos($field,"tax_") !== 0) continue;
 				/**
@@ -91,6 +108,7 @@ class grid_posts_box extends grid_list_box {
 				if(count($value) > 1 && $relation == "AND") $tax["operator"] = $relation;
 				$tax_query[] = $tax;
 			}
+			
 			/**
 			 * add relation if more than one term was selected
 			 */
@@ -174,6 +192,7 @@ class grid_posts_box extends grid_list_box {
 			 * post format is a special case so ignore
 			 */
 			if('post_format'==$tax->name) continue;
+			
 			/**
 			 * add taxonomy to content structure
 			 */
@@ -213,6 +232,34 @@ class grid_posts_box extends grid_list_box {
 			'selections' => $post_types,
 		);
 		
+		/**
+		 * post format select
+		 */
+		if ( current_theme_supports( 'post-formats' ) ) {
+			
+			$formats = array();
+			$formats[] = array(
+				'key' => '',
+				'text' => __('All post formats'),
+			);
+			
+			$post_formats = get_theme_support( 'post-formats' );
+			$available = $post_formats[0];
+			foreach ($available as $slug){
+				$formats[] = array(
+					'key' => $slug,
+					'text' => $slug,
+				);
+			}
+			
+			$cs[] = array(
+				'key' => 'post_format',
+				'label' => __('Post format'),
+				'type' => 'select',
+				'selections' => $formats,
+			);
+			
+		}
 		
 		
 		return $cs;
