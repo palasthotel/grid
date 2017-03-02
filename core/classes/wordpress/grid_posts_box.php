@@ -204,6 +204,35 @@ class grid_posts_box extends grid_list_box {
 		}
 		
 		/**
+		 * post format taxonomy
+		 */
+		if ( current_theme_supports( 'post-formats' ) ) {
+			
+			$formats = array();
+			$formats[] = array(
+				'key' => '',
+				'text' => __('All post formats'),
+			);
+			
+			$post_formats = get_theme_support( 'post-formats' );
+			$available = $post_formats[0];
+			foreach ($available as $slug){
+				$formats[] = array(
+					'key' => $slug,
+					'text' => get_post_format_string($slug),
+				);
+			}
+			
+			$cs[] = array(
+				'key' => 'post_format',
+				'label' => __('Post format'),
+				'type' => 'select',
+				'selections' => $formats,
+			);
+			
+		}
+		
+		/**
 		 * relation type
 		 */
 		$cs[] = array(
@@ -232,34 +261,7 @@ class grid_posts_box extends grid_list_box {
 			'selections' => $post_types,
 		);
 		
-		/**
-		 * post format select
-		 */
-		if ( current_theme_supports( 'post-formats' ) ) {
-			
-			$formats = array();
-			$formats[] = array(
-				'key' => '',
-				'text' => __('All post formats'),
-			);
-			
-			$post_formats = get_theme_support( 'post-formats' );
-			$available = $post_formats[0];
-			foreach ($available as $slug){
-				$formats[] = array(
-					'key' => $slug,
-					'text' => $slug,
-				);
-			}
-			
-			$cs[] = array(
-				'key' => 'post_format',
-				'label' => __('Post format'),
-				'type' => 'select',
-				'selections' => $formats,
-			);
-			
-		}
+		
 		
 		
 		return $cs;

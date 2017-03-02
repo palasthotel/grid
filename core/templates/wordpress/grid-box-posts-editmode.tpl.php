@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -24,7 +24,8 @@
 				}
 				
 				if(count($value) > 0){
-					echo "<br/><i>$taxonomy:</i> ";
+					$tax = get_taxonomy($taxonomy);
+					echo "<br/><i>{$tax->label}:</i> ";
 					$terms = array();
 					foreach ($value as $term_id){
 						$term = get_term($term_id,$taxonomy);
@@ -39,10 +40,15 @@
 			}
 			else if(!empty($value) && is_string($value))
 			{
-				echo "<br/><i>".$field.":</i> ".$value;
+				if($field == "post_format"){
+					echo "<br/><i>".$field.":</i> ".get_post_format_string($value);
+				} else {
+					echo "<br/><i>".$field.":</i> ".$value;
+				}
+				
 			}
 		}
 	}
-
+	
 	?>
 </div>
