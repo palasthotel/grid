@@ -57,7 +57,7 @@ class grid_slot extends grid_base {
 		}
 		$output=ob_get_clean();
 		
-		$this->storage->fireHook(Hook::DIDL_RENDER_SLOT, (object) array( "container"=>$container, "slot" => $this, 'editmode'=>$editmode) );
+		$this->storage->fireHook(Hook::DID_RENDER_SLOT, (object) array( "container"=>$container, "slot" => $this, 'editmode'=>$editmode) );
 		
 		return $output;
 	}
