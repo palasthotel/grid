@@ -35,5 +35,4 @@ class grid_wp_html_box extends grid_html_box {
 			return do_shortcode($this->content->html);
 		}
 	}
-
 }
