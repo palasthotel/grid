@@ -29,7 +29,7 @@ if ( ! empty( $this->style ) ) {
 		</div>
 	<?php endif; ?>
 
-	<?php echo $content->rendered_html;	?>
+	<?php echo $content->rendered_html; ?>
 
 	<?php if ( ! empty( $this->epilog ) ) : ?>
 		<div class="grid-box-epilog">
