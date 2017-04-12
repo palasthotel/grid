@@ -10,7 +10,7 @@
 ?>
 
 <div class="grid-box-editmode">
-    Shortcode
+	Shortcode
 	<?php
 	if ( null !== $this->grid ) {
 		if ( empty( $content->slug ) ) {

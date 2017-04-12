@@ -10,7 +10,7 @@
 
 ?>
 <div class="grid-box-editmode">
-    List of contents
+	List of contents
 	<?php
 	if ( null != $this->grid ) {
 		foreach ( $content as $field => $value ) {
