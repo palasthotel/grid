@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -7,18 +7,18 @@
  */
 ?>
 <div class="grid-box-editmode">
-	Soundcloud
-	<?php
-	/**
-	 * if part of grid render details
-	 */
-	$fields = array("url","color","height");
-	if(null != $this->grid){
-		foreach ($fields as $field) {
-			if(!empty($content->{$field})){
-				echo "<br/>".$field.": ".$content->{$field};
-			}
-		}
-	}
-	?>
+  Soundcloud
+  <?php
+  /**
+   * if part of grid render details
+   */
+  $fields = array('url', 'color', 'height');
+  if (NULL != $this->grid) {
+    foreach ($fields as $field) {
+      if (!empty($content->{$field})) {
+        echo '<br>' . $field . ': ' . $content->{$field};
+      }
+    }
+  }
+  ?>
 </div>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -6,6 +6,8 @@
  * @package Palasthotel\Grid
  */
 ?>
-<div class="grid clearfix grid-frontend">
-	<?php echo implode("", $containerlist)?>
+<div class="grid grid-frontend clearfix">
+  <?php if (!empty($containerlist)): ?>
+    <?php echo implode("\n", $containerlist); ?>
+  <?php endif; ?>
 </div>
