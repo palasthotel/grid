@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -10,17 +10,14 @@
 ?>
 
 <div class="grid-box-editmode">
-	Shortcode
+    Shortcode
 	<?php
-	if(null != $this->grid){
-		if(empty($content->slug)){
-			echo "<br>".__("You need to set a valid shortcode! {$content->slug}");
+	if ( null !== $this->grid ) {
+		if ( empty( $content->slug ) ) {
+			echo '<br>' . __( "You need to set a valid shortcode! {$content->slug}" );
 		} else {
-			
 			echo "<br>[{$content->slug} {$content->attributes}]";
-			
 		}
 	}
-
 	?>
 </div>
