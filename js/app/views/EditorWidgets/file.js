@@ -16,18 +16,23 @@ boxEditorControls['file']=GridBackbone.View.extend({
     	var $upload_form_item = jQuery("<div class='form-item file-upload'>");
 		$upload_form_item.append("<label>"+this.model.structure.label+"</label>");
 
+		this.$preview = jQuery("<div></div>").addClass("file-upload-preview");
+		$upload_form_item.append(this.$preview);
+
 		var $file_input = jQuery("<input type='file' data-path='"+this.model.parentpath+this.model.structure.key+"' class='form-file' />");
 		$upload_form_item.append($file_input);
 
+		var fid = this.model.container[this.model.structure.key];
+
 		this.$key_field = jQuery("<input type='hidden' data-key='"+this.model.structure.key+"' "+
-			"value='"+this.model.container[this.model.structure.key]+"' class='dynamic-value' />");
+			"value='"+((typeof fid !== typeof undefined)? fid: '')+"' class='dynamic-value' />");
 		$upload_form_item.append(this.$key_field);
 
 
 		this.$progress_display = jQuery("<p>").addClass("progress");
 		this.$progress_bar_wrapper = jQuery("<div class='progress-bar-wrapper'><div class='bar'></div>");
 		this.$progress_bar_status = this.$progress_bar_wrapper.children(".bar");
-		if(this.model.container[this.model.structure.key] == "" || this.model.container[this.model.structure.key] == undefined){
+		if(this.model.container[this.model.structure.key] === "" || this.model.container[this.model.structure.key] === undefined){
 			this.$progress_display.text("Please choose a picture...");
 		} else {
 			this.$progress_display.text("Choose another picture to override the old one.");
@@ -36,13 +41,13 @@ boxEditorControls['file']=GridBackbone.View.extend({
 		$upload_form_item.append(this.$progress_display).append(this.$progress_bar_wrapper);
 		var self = this;
 
-
 		$file_input.fileupload({
 	        url: this.model.structure.uploadpath,
 	        dataType: 'json',
 	        paramName: "file",
 	        done: function(e, data){
 	        	self.uploadDone(e, data);
+	        	self.loadPreview();
 	        },
 	        progressall: function(e, data){
 	        	self.progressall(e, data);
@@ -53,9 +58,40 @@ boxEditorControls['file']=GridBackbone.View.extend({
 	    }).bind('fileuploadsubmit', { self: self }, this.getFormData);
 
 		this.$el.append($upload_form_item);
+
+		this.loadPreview();
+
 		return this;
 
     },
+	loadPreview: function(){
+
+		this.$preview.empty();
+
+    	var fileid = this.$key_field.val();
+    	var path = this.model.parentpath+this.model.structure.key;
+		if(typeof fileid === typeof undefined || fileid === "") return;
+
+
+
+		var self = this;
+		var box=this.model.box;
+		var params = [box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),path,fileid];
+		console.log("getFileInfo", params);
+		GridAjax("getFileInfo",params,{
+			success_fn:function(data)
+			{
+
+				console.log(data.result.src);
+				self.$preview.append(
+					jQuery("<img>")
+					.css('max-width', '200px')
+						.attr("src", data.result.src)
+				);
+
+			}
+		});
+	},
     getFormData: function(e, data){
 	    var self = e.data.self;
 	    var element_key = self.model.parentpath+self.model.structure.key;

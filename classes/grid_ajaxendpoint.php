@@ -588,6 +588,9 @@ class grid_ajaxendpoint {
 				{
 					if($slot->slotid==$slotid)
 					{
+						/**
+						 * @var grid_box $box
+						 */
 						$box=$slot->boxes[$idx];
 						return $box->getElementValue($path,$id);
 					}

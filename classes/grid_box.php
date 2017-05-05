@@ -310,6 +310,16 @@ class grid_box extends grid_base {
 	public function performFileUpload($key,$path,$original_file) {
 		return FALSE;
 	}
+
+	/**
+	 * @param $fid int file id
+	 * @param $path string contentstructure
+	 *
+	 * @return boolean
+	 */
+	public function getFileInfo($fid,$path){
+		return FALSE;
+	}
 	
 	/**
 	* Initializes deletion of reuse box
