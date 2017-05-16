@@ -3,8 +3,8 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.7.2
-Stable tag: 1.6.13
+Tested up to: 4.7.3
+Stable tag: 1.6.14
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -74,6 +74,11 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.6.14 =
+
+ * Posts Box and Post Box with fallback to first viewmode if none set or found
+
 
 = 1.6.13 =
  * Shortcode box

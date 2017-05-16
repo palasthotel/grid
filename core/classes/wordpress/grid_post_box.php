@@ -144,7 +144,7 @@ class grid_post_box extends grid_box {
 			$box = new grid_post_box();
 			$box->storage = $this->storage;
 			$box->content = new StdClass();
-			$box->content->viewmode = 'excerpt';
+			$box->content->viewmode = $this->getViewmode();
 			$box->content->postid = $post->ID;
 			$box->content->publish = $post->post_status;
 			$results[] = $box;
@@ -172,12 +172,7 @@ class grid_post_box extends grid_box {
 				'type' => 'hidden',
 			)
 		));
-
-		$viewmodes = array(
-			array('key' => 'excerpt', 'text' => t('Excerpt') ),
-			array('key' => 'full', 'text' => t('Full') ),
-		);
-		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
+		$viewmodes = $this->getViewmodes();
 		if(count($viewmodes) > 0){
 			$cs[] = array(
 				'key' => 'viewmode',
@@ -188,5 +183,29 @@ class grid_post_box extends grid_box {
 		}
 
 		return $cs;
+	}
+	
+	/**
+	 * get selected viewmode
+	 */
+	public function getViewmode(){
+		if(!empty($this->content->viewmode)){
+			return $this->content->viewmode;
+		}
+		$viewmodes = $this->getViewmodes();
+		return (count($viewmodes) > 0 )? $viewmodes[0]['key']: "";
+	}
+	
+	/**
+	 * get available viewmodes
+	 * @return mixed
+	 */
+	public function getViewmodes(){
+		$viewmodes = array(
+			array('key' => 'excerpt', 'text' => t('Excerpt') ),
+			array('key' => 'full', 'text' => t('Full') ),
+		);
+		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
+		return (is_array($viewmodes))? $viewmodes: array();
 	}
 }
