@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
-import { ItemTypes, Events } from '../../../constants.js';
+import { ItemTypes } from '../../../constants.js';
 
 const containerTarget = {
 	drop(props, monitor) {

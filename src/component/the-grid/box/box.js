@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 
 import { ItemTypes, States } from '../../../constants.js';
@@ -41,7 +42,6 @@ class Box extends Component{
 	 */
 	constructor(props){
 		super(props);
-		this.state = {};
 	}
 	componentWillReceiveProps(){
 		this.buildDragPreview();
@@ -67,7 +67,7 @@ class Box extends Component{
 	 * ---------------------
 	 */
 	render(){
-		const { connectDragSource, connectDragPreview, isDragging, box} = this.props;
+		const { connectDragSource, connectDragPreview, isDragging} = this.props;
 		const {state, titleurl, prolog, epilog, readmore, readmoreurl, html} = this.props;
 		const {isMoving, isDeleting, isSaving} = this.props;
 		let {title} = this.props;
@@ -91,13 +91,13 @@ class Box extends Component{
 				style={{
 					opacity: isDragging? 0.3: 1,
 				}}
-				ref={ (element) => this.state.dom = element }
+				ref={ (element) => this.box_element = element }
 			>
 				<div className="box__content">
 					{(isSaving)? <p>Box is saving</p>: null}
 					{(isDeleting)? <p>Box is deleting</p>: null}
 					{(isMoving)? <p>Box is Moving</p>: null}
-					{(state == States.LOADING)? <p>{state}</p>: null}
+					{(state === States.LOADING)? <p>{state}</p>: null}
 					<span>{title}</span>
 					<div className="box__prolog">{prolog}</div>
 					<div className="box__html" dangerouslySetInnerHTML={{__html: html}} ></div>
@@ -144,7 +144,8 @@ class Box extends Component{
 		this.buildDragPreview();
 	}
 	onEdit(){
-		this.props.onEdit(this.props);
+		const {container_id, slot_id, id} = this.props;
+		this.props.onEdit({ container_id, slot_id, box_id:id });
 	}
 	onDelete(){
 		this.props.onDelete(this.props);
@@ -158,7 +159,7 @@ class Box extends Component{
 	 */
 	buildDragPreview(){
 		const { connectDragPreview } = this.props;
-		let result = BoxDragPreview.create(this.state.dom.clientWidth);
+		let result = BoxDragPreview.create(this.box_element.clientWidth);
 		result.img.onload = () => connectDragPreview(result.img);
 		result.img.src = result.src;
 	}
@@ -176,7 +177,7 @@ Box.propTypes = {
 	isDragging: PropTypes.bool.isRequired,
 	
 	id: PropTypes.any.isRequired,
-	
+
 	onEdit: PropTypes.func.isRequired,
 	onDelete: PropTypes.func.isRequired,
 	onMove: PropTypes.func.isRequired,

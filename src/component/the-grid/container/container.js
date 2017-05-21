@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 
-import { ItemTypes, Events } from '../../../constants.js';
+import { ItemTypes } from '../../../constants.js';
 import {ContainerDragPreview} from '../../../helper/drag-preview.js';
 
 
@@ -37,7 +38,9 @@ class Container extends Component{
 	 */
 	constructor(props){
 		super(props);
-		this.state = {active: false};
+		this.state = {
+			active: false,
+		};
 	}
 	componentDidMount(){
 		window.addEventListener('resize', this.onResize.bind(this));
@@ -144,11 +147,11 @@ class Container extends Component{
 		this.props.onEdit(this.props);
 	}
 	onDelete(){
-		this.props.onDelete(this.props);
+		this.props.onDelete(this.props.id);
 	}
 	onReuse(){
 		const title = prompt("Reuse title?", "");
-		if(title == "") return;
+		if(title === "") return;
 		this.props.onReuse(this.props.index, title);
 	}
 	

@@ -1,0 +1,1 @@
+containers map store state changes to the component props and inject function for dispatching actions

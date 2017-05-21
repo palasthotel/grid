@@ -16,7 +16,6 @@
   "_from": "assert@>=1.1.1 <2.0.0",
   "_id": "assert@1.4.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/assert",
   "_nodeVersion": "5.11.0",
   "_npmOperationalInternal": {

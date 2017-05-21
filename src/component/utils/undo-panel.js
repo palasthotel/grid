@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import RestoreIcon from '../icon/restore.js';
 
 export default class UndoPanel extends Component{

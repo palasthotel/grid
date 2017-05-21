@@ -16,7 +16,6 @@
   "_from": "base64-js@>=1.0.2 <2.0.0",
   "_id": "base64-js@1.2.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/base64-js",
   "_nodeVersion": "6.5.0",
   "_npmOperationalInternal": {

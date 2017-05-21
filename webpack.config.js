@@ -1,4 +1,7 @@
 
+const path = require('path');
+const webpack = require('webpack');
+
 let config = {
 	entry: {
 		/**
@@ -13,6 +16,7 @@ let config = {
 		 * demo of a whole grid
 		 */
 		// demo_the_grid: './demo/the-grid.js',
+		// demo_app_grid: './demo/app-grid.js',
 		/**
 		 * demo of only the grid content part
 		 */
@@ -20,7 +24,11 @@ let config = {
 		/**
 		 * demo of grid model
 		 */
-		demo_grid_model: './demo/grid-model.js',
+		// demo_grid_model: './demo/grid-model.js',
+		/**
+		 * demo of the redux implementation
+		 */
+		// demo_redux: './demo/redux.js',
 		/**
 		 * demo of box editor
 		 */
@@ -43,27 +51,36 @@ let config = {
 		// demo_tab_view: './demo/tab-view.js',
 	},
 	output: {
-		path: './js/app',
+		path: path.resolve(__dirname, 'js/app'),
 		filename: '[name].js',
 		sourceMapFilename: '[name].map'
 	},
 	devtool: 'source-map',
 	module: {
-		loaders: [{
-			test: /\.(js|jsx)$/,
-			exclude: /node_modules|bower_components/,
-			loader: 'babel-loader',
-			query: {
-				presets: ["es2015", "react"],
-				plugins: ["transform-object-rest-spread"]
+		rules: [
+			{
+				test: /\.jsx?$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ["es2015", "react"],
+						plugins: ["transform-object-rest-spread"]
+					},
+				}
 			}
-		}]
+		],
 	},
 };
 
-if(process.env.NODE_ENV == "production"){
-	// config.output.filename = "[name].min.js";
-	// config.output.sourceMapFilename = "[name].min.map";
+if(process.env.NODE_ENV === "production"){
+	config.plugins = [
+		new webpack.DefinePlugin({
+			'process.env': {
+				NODE_ENV: JSON.stringify('production')
+			}
+		}),
+	];
 }
 
 module.exports = config;

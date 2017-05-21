@@ -1,18 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import TheGridRouter from './router/the-grid-router.js';
+import {initGrid} from './init/the-grid'
+
 
 /**
  * wait for dom to be ready so all plugins etc are loaded
  */
 document.addEventListener("DOMContentLoaded", function() {
-	
-	/**
-	 * append app to grid app root
-	 */
-	ReactDOM.render(
-		<TheGridRouter />,
-		document.getElementById("grid-app")
-	);
+
+	initGrid(window.grid, document.getElementById("grid-app"));
 	
 });

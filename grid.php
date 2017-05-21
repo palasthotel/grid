@@ -44,7 +44,8 @@ class grid_library
 			$scripts[]=$home."/js/language/grid-".$language.".js";
 		}
 		$scripts[]=$home."/js/language/grid-en.js";
-		
+
+		$scripts[]=$app_dir."plugins.js";
 		$scripts[]=$app_dir."the-grid.js";
 
 		if($absolute)

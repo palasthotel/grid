@@ -1,0 +1,120 @@
+
+import {
+	REQUEST_GRID_CONTAINER_EDITING_GET_TYPES,
+	REQUEST_GRID_CONTAINER_EDITING_ADD,
+	REQUEST_GRID_CONTAINER_EDITING_DELETE,
+	REQUEST_GRID_CONTAINER_EDITING_MOVE,
+} from './types'
+
+import {
+	setGridLoading,
+} from './ui'
+
+import { actionAsyncExecute } from './index'
+
+import {
+	requestGridEditingContainerGetTypes,
+	requestGridEditingContainerAdd,
+	requestGridEditingContainerDelete,
+	requestGridEditingContainerMove,
+} from '../connection/backend'
+
+/**
+ *
+ * @param grid_id
+ * @return {Promise}
+ */
+export function actionGridContainerEditingGetTypes(grid_id) {
+	return actionAsyncExecute({
+		before: (dispatch)=>{
+			dispatch(setGridLoading(true));
+		},
+		request: requestGridEditingContainerGetTypes.bind(this,grid_id),
+		then: (dispatch, result)=>{
+			dispatch(setGridLoading(false));
+			dispatch({ type: REQUEST_GRID_CONTAINER_EDITING_GET_TYPES, payload: { container_types: result} } );
+		}
+	});
+}
+
+/**
+ *
+ * @param {{grid_id, container_type, to_index}} args
+ * @return {Promise}
+ */
+export function actionGridContainerEditingAdd(args) {
+	return actionAsyncExecute({
+		before: (dispatch)=>{
+			dispatch(setGridLoading(true));
+		},
+		request: requestGridEditingContainerAdd.bind(this,args),
+		then: (dispatch, result)=>{
+
+			dispatch(setGridLoading(false));
+
+			dispatch({
+				type: REQUEST_GRID_CONTAINER_EDITING_ADD,
+				payload: {
+					...args,
+					container: {
+						...result,
+						type: args.container_type,
+					}
+				}
+			});
+
+		}
+	});
+}
+
+/**
+ *
+ * @param {{grid_id, container_id, to_index}} args
+ * @return {Promise}
+ */
+export function actionGridContainerEditingMove(args) {
+
+	return actionAsyncExecute({
+		before: (dispatch)=>{
+			dispatch(setGridLoading(true));
+		},
+		request: requestGridEditingContainerMove.bind(this,args),
+		then: (dispatch, result)=>{
+
+			dispatch(setGridLoading(false));
+
+			dispatch({
+				type: REQUEST_GRID_CONTAINER_EDITING_MOVE,
+				payload: { ...args, result },
+			});
+
+		}
+	});
+
+}
+
+/**
+ *
+ * @param {{grid_id, container_id}} args
+ * @return {Promise}
+ */
+export function actionGridContainerEditingDelete(args) {
+
+	return actionAsyncExecute({
+		before: (dispatch)=>{
+			dispatch(setGridLoading(true));
+		},
+		request: requestGridEditingContainerDelete.bind(this,args),
+		then: (dispatch, result)=>{
+
+			dispatch(setGridLoading(false));
+
+			dispatch({
+				type: REQUEST_GRID_CONTAINER_EDITING_DELETE,
+				payload: { ...args, result },
+			});
+
+		}
+	});
+
+}

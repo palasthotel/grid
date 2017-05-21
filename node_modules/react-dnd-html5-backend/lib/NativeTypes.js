@@ -1,9 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
-var FILE = '__NATIVE_FILE__';
-exports.FILE = FILE;
-var URL = '__NATIVE_URL__';
-exports.URL = URL;
-var TEXT = '__NATIVE_TEXT__';
-exports.TEXT = TEXT;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var FILE = exports.FILE = '__NATIVE_FILE__';
+var URL = exports.URL = '__NATIVE_URL__';
+var TEXT = exports.TEXT = '__NATIVE_TEXT__';

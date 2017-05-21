@@ -1,20 +1,20 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.isSafari = exports.isFirefox = undefined;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _memoize = require('lodash/memoize');
 
-var _lodashMemoize = require('lodash/memoize');
+var _memoize2 = _interopRequireDefault(_memoize);
 
-var _lodashMemoize2 = _interopRequireDefault(_lodashMemoize);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var isFirefox = _lodashMemoize2['default'](function () {
+var isFirefox = exports.isFirefox = (0, _memoize2.default)(function () {
   return (/firefox/i.test(navigator.userAgent)
   );
 });
-
-exports.isFirefox = isFirefox;
-var isSafari = _lodashMemoize2['default'](function () {
+var isSafari = exports.isSafari = (0, _memoize2.default)(function () {
   return Boolean(window.safari);
 });
-exports.isSafari = isSafari;

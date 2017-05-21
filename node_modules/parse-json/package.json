@@ -16,7 +16,6 @@
   "_from": "parse-json@>=2.2.0 <3.0.0",
   "_id": "parse-json@2.2.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/parse-json",
   "_nodeVersion": "0.12.7",
   "_npmUser": {

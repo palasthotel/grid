@@ -16,7 +16,6 @@
   "_from": "parse-glob@>=3.0.4 <4.0.0",
   "_id": "parse-glob@3.0.4",
   "_inCache": true,
-  "_installable": true,
   "_location": "/parse-glob",
   "_nodeVersion": "0.12.4",
   "_npmUser": {

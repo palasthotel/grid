@@ -1,23 +1,24 @@
 'use strict';
 
-exports.__esModule = true;
-exports['default'] = refCount;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = refCount;
 
-var _actionsRegistry = require('../actions/registry');
+var _registry = require('../actions/registry');
 
-function refCount(state, action) {
-  if (state === undefined) state = 0;
+function refCount() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var action = arguments[1];
 
   switch (action.type) {
-    case _actionsRegistry.ADD_SOURCE:
-    case _actionsRegistry.ADD_TARGET:
+    case _registry.ADD_SOURCE:
+    case _registry.ADD_TARGET:
       return state + 1;
-    case _actionsRegistry.REMOVE_SOURCE:
-    case _actionsRegistry.REMOVE_TARGET:
+    case _registry.REMOVE_SOURCE:
+    case _registry.REMOVE_TARGET:
       return state - 1;
     default:
       return state;
   }
 }
-
-module.exports = exports['default'];

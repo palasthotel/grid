@@ -1,113 +1,204 @@
+'use strict';
 
 // https://github.com/mzabriskie/axios
 import axios from 'axios';
 
-import {Events} from '../constants.js';
+// -----------------------------------
+// init
+// -----------------------------------
 
+/*
+ * settings for ajax connection
+ */
+const _settings = {};
+export const init = (settings) => {
+	_settings.url = settings.url;
+}
 
-
-class BackendRequest{
-	constructor(url, component, method){
-		this.settings = {
-			url: url,
-			component: component,
+/*
+ * private ajax execution method
+ */
+const requestBackend = (component, method, params = [])=>{
+	if(typeof _settings.url === typeof undefined) throw("Please init backend with ajax url")
+	return axios.post(
+		_settings.url,
+		{
 			method: method,
-			async: true,
-		};
-	}
-	execute(params, success, error){
-		axios.post(this.settings.url,{
-			method: this.settings.method,
-			component: this.settings.component,
+			component: component,
 			params: params,
-		}).then((response)=>{
-			if(typeof success == "function") success({
-				success: true,
-				data: response.data.result,
-				component: this.settings.component,
-				method: this.settings.method,
-				async: this.settings.async,
-				params: params,
-			});
-		});
-	}
+		}
+	).then((response)=>response.data.result);
 }
 
-// TODO: make it a callback queue and stop on error
-// TODO: use promises!!!
 
-class Backend {
-	constructor(endpoint, events = null){
-		this.endpoint = endpoint;
-		this.events = events;
-	}
-	buildRequest(component, method){
-		return new BackendRequest(
-			this.endpoint,
-			component,
-			method,
-		);
-	}
-	
-	/**
-	 *
-	 * @param {boolean} error
-	 * @param {object} result
-	 * @param {function|null} callback
-	 */
-	callback(error, result, callback){
-		// direct callback?
-		if(typeof callback != typeof undefined && callback != null){
-			callback(error, result);
-		}
-		// deliver as event
-		if(typeof this.events != typeof undefined
-			&& this.events != null ){
-			this.events.emit(Events.BACKEND, result);
-		}
-	}
-	
-	/**
-	 *
-	 * @param {String} component
-	 * @param {String} method
-	 * @param {array} params
-	 * @param {function|null} callback
-	 */
-	execute(component, method, params = [], callback = null){
-		if(typeof component != "string"){
-			throw "Component must be of type string.";
-		}
-		if(typeof method != "string"){
-			throw "Method must be of type string.";
-		}
-		if(typeof params != typeof []){
-			throw "Params must be of type array.";
-		}
-		if(typeof callback != typeof undefined && callback != null && typeof callback != "function"){
-			console.error(typeof callback);
-			throw "If use callback it must be a function.";
-		}
-		this.buildRequest(component, method).execute(
-			params,
-			(result)=>{
-				this.callback(false, result, callback);
-			},
-			(error)=>{
-				this.callback(true, error, callback);
-			}
-		);
-	}
-	
-	/**
-	 *
-	 * @param {array} bundle array of {component,method,params}
-	 * @param {function} success
-	 * @param {function} error
-	 */
-	executeBundle(bundle, success, error){
-		// TODO: bundled requests
-	}
-}
+// -----------------------------------
+//  general requests
+// -----------------------------------
 
-export default Backend;
+export const requestGridDocumentLoad =
+	(grid_id) => requestBackend(
+		"grid.document",
+		"loadGrid",
+		[grid_id]
+	)
+export const requestGridDocumentCheckDraftState =
+	(grid_id) => requestBackend(
+		"grid.document",
+		"checkDraftStatus",
+		[grid_id]
+	)
+export const requestGridDocumentRevisions =
+	(grid_id) => requestBackend(
+		"grid.document",
+		"getGridRevisions",
+		[grid_id]
+	)
+export const requestGridPermissionRights =
+	() => requestBackend(
+		"grid.permissions",
+		"Rights"
+	)
+export const requestGridStylesGetAll =
+	() => requestBackend(
+		"grid.styles",
+		"getAllStyles"
+	)
+export const requestGridStylesGetContainer =
+	() => requestBackend(
+		"grid.styles",
+		"getContainerStyles"
+	)
+export const requestGridStylesGetSlot =
+	() => requestBackend(
+		"grid.styles",
+		"getSlotStyles"
+	)
+export const requestGridStylesGetBox =
+	() => requestBackend(
+		"grid.styles",
+		"getBoxStyles"
+	)
+
+
+
+// -------------------------
+// grid document manipulation
+// -------------------------
+
+export const requestGridDocumentPublishDraft =
+	(grid_id) => requestBackend(
+		"grid.document",
+		"publishDraft",
+		[grid_id]
+	)
+export const requestGridDocumentRevertDraft =
+	(grid_id) => requestBackend(
+		"grid.document",
+		"revertDraft",
+		[grid_id]
+	)
+export const requestGridDocumentRevertToRevision =
+	({grid_id, revision}) => requestBackend(
+		"grid.document",
+		"setToRevision",
+		[grid_id, revision]
+	)
+
+
+// -------------------------
+// container requests
+// -------------------------
+
+export const requestGridEditingContainerGetTypes =
+	(grid_id) => requestBackend(
+		"grid.editing.container",
+		"getContainerTypes",
+		[grid_id]
+	)
+export const requestGridEditingContainerAdd =
+	({grid_id, container_type, to_index}) => requestBackend(
+		"grid.editing.container",
+		"addContainer",
+		[ grid_id, container_type, to_index ]
+	)
+export const requestGridEditingContainerMove =
+	({grid_id, container_id, to_index} ) => requestBackend(
+		"grid.editing.container",
+		"moveContainer",
+		[ grid_id, container_id, to_index ]
+	)
+export const requestGridEditingContainerDelete =
+	({ grid_id, container_id } ) => requestBackend(
+		"grid.editing.container",
+		"deleteContainer",
+		[ grid_id, container_id ]
+	)
+export const requestGridEditingContainerReuse =
+	({grid_id, container_id, title} ) => requestBackend(
+		"grid.editing.container",
+		"reuseContainer",
+		[ grid_id, container_id, title ]
+	)
+
+// -------------------------
+// box requests
+// -------------------------
+
+export const requestGridEditingBoxMetaTypes =
+	(grid_id) => requestBackend(
+		"grid.editing.box",
+		"getMetaTypesAndSearchCriteria",
+		[grid_id]
+	)
+export const requestGridEditingBoxSearch =
+	({grid_id, box_meta_type, query, criteria}) => requestBackend(
+		"grid.editing.box",
+		"Search",
+		[grid_id, box_meta_type, query,	criteria]
+	)
+export const requestGridEditingBoxCreate =
+	({grid_id, to_container_id, to_slot_id,to_box_index, box_type, box_content}) => requestBackend(
+		"grid.editing.box",
+		"CreateBox",
+		[ grid_id, to_container_id, to_slot_id,to_box_index, box_type, box_content ]
+	)
+export const requestGridEditingBoxMove =
+	({grid_id, from_container_id, from_slot_id,	from_box_index, to_container_id, to_slot_id, to_box_index}) => requestBackend(
+		"grid.editing.box",
+		"moveBox",
+		[ grid_id, from_container_id, from_slot_id,	from_box_index, to_container_id, to_slot_id, to_box_index ]
+	)
+export const requestGridEditingBoxRemove =
+	({grid_id, container_id, slot_id, index}) => requestBackend(
+		"grid.editing.box",
+		"removeBox",
+		[ grid_id, container_id, slot_id, index ]
+	)
+export const requestGridEditingBoxFetch =
+	({grid_id, container_id, slot_id, index}) => requestBackend(
+		"grid.editing.box",
+		"fetchBox",
+		[ grid_id, container_id, slot_id, index ]
+	)
+export const requestGridEditingBoxUpdate =
+	({grid_id, container_id, slot_id, index, box}) => requestBackend(
+		"grid.editing.box",
+		"UpdateBox",
+		[ grid_id, container_id, slot_id, index, box ]
+	)
+
+// -------------------------
+// grid widget requests
+// -------------------------
+export const requestGridWidgetsTypeAheadSearch =
+	({grid_id, container_id, slot_id, box_index, field, query}) => requestBackend(
+		"grid.widgets.typeahead",
+		"typeAheadSearch",
+		[ grid_id, container_id, slot_id, box_index, field, query ]
+	)
+export const requestGridWidgetsTypeAheadGetText =
+	({grid_id, container_id, slot_id, box_index, path, id}) => requestBackend(
+		"grid.widgets.typeahead",
+		"typeAheadGetText",
+		[ grid_id, container_id, slot_id, box_index, path, id ]
+	)

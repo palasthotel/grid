@@ -1,41 +1,45 @@
 'use strict';
 
-exports.__esModule = true;
-exports['default'] = dirtyHandlerIds;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = dirtyHandlerIds;
 exports.areDirty = areDirty;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _xor = require('lodash/xor');
 
-var _lodashXor = require('lodash/xor');
+var _xor2 = _interopRequireDefault(_xor);
 
-var _lodashXor2 = _interopRequireDefault(_lodashXor);
+var _intersection = require('lodash/intersection');
 
-var _lodashIntersection = require('lodash/intersection');
+var _intersection2 = _interopRequireDefault(_intersection);
 
-var _lodashIntersection2 = _interopRequireDefault(_lodashIntersection);
+var _dragDrop = require('../actions/dragDrop');
 
-var _actionsDragDrop = require('../actions/dragDrop');
+var _registry = require('../actions/registry');
 
-var _actionsRegistry = require('../actions/registry');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var NONE = [];
 var ALL = [];
 
-function dirtyHandlerIds(state, action, dragOperation) {
-  if (state === undefined) state = NONE;
+function dirtyHandlerIds() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NONE;
+  var action = arguments[1];
+  var dragOperation = arguments[2];
 
   switch (action.type) {
-    case _actionsDragDrop.HOVER:
+    case _dragDrop.HOVER:
       break;
-    case _actionsRegistry.ADD_SOURCE:
-    case _actionsRegistry.ADD_TARGET:
-    case _actionsRegistry.REMOVE_TARGET:
-    case _actionsRegistry.REMOVE_SOURCE:
+    case _registry.ADD_SOURCE:
+    case _registry.ADD_TARGET:
+    case _registry.REMOVE_TARGET:
+    case _registry.REMOVE_SOURCE:
       return NONE;
-    case _actionsDragDrop.BEGIN_DRAG:
-    case _actionsDragDrop.PUBLISH_DRAG_SOURCE:
-    case _actionsDragDrop.END_DRAG:
-    case _actionsDragDrop.DROP:
+    case _dragDrop.BEGIN_DRAG:
+    case _dragDrop.PUBLISH_DRAG_SOURCE:
+    case _dragDrop.END_DRAG:
+    case _dragDrop.DROP:
     default:
       return ALL;
   }
@@ -43,10 +47,10 @@ function dirtyHandlerIds(state, action, dragOperation) {
   var targetIds = action.targetIds;
   var prevTargetIds = dragOperation.targetIds;
 
-  var dirtyHandlerIds = _lodashXor2['default'](targetIds, prevTargetIds);
+  var result = (0, _xor2.default)(targetIds, prevTargetIds);
 
   var didChange = false;
-  if (dirtyHandlerIds.length === 0) {
+  if (result.length === 0) {
     for (var i = 0; i < targetIds.length; i++) {
       if (targetIds[i] !== prevTargetIds[i]) {
         didChange = true;
@@ -66,14 +70,14 @@ function dirtyHandlerIds(state, action, dragOperation) {
 
   if (prevInnermostTargetId !== innermostTargetId) {
     if (prevInnermostTargetId) {
-      dirtyHandlerIds.push(prevInnermostTargetId);
+      result.push(prevInnermostTargetId);
     }
     if (innermostTargetId) {
-      dirtyHandlerIds.push(innermostTargetId);
+      result.push(innermostTargetId);
     }
   }
 
-  return dirtyHandlerIds;
+  return result;
 }
 
 function areDirty(state, handlerIds) {
@@ -85,5 +89,5 @@ function areDirty(state, handlerIds) {
     return true;
   }
 
-  return _lodashIntersection2['default'](handlerIds, state).length > 0;
+  return (0, _intersection2.default)(handlerIds, state).length > 0;
 }

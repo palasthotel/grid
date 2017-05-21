@@ -1,0 +1,1 @@
+all connections like ajax to backend or websockets to async server should be implemented here and used in "actions".

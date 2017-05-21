@@ -1,52 +1,62 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _union = require('lodash/union');
 
-var _lodashUnion = require('lodash/union');
+var _union2 = _interopRequireDefault(_union);
 
-var _lodashUnion2 = _interopRequireDefault(_lodashUnion);
+var _without = require('lodash/without');
 
-var _lodashWithout = require('lodash/without');
+var _without2 = _interopRequireDefault(_without);
 
-var _lodashWithout2 = _interopRequireDefault(_lodashWithout);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EnterLeaveCounter = (function () {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EnterLeaveCounter = function () {
   function EnterLeaveCounter() {
     _classCallCheck(this, EnterLeaveCounter);
 
     this.entered = [];
   }
 
-  EnterLeaveCounter.prototype.enter = function enter(enteringNode) {
-    var previousLength = this.entered.length;
+  _createClass(EnterLeaveCounter, [{
+    key: 'enter',
+    value: function enter(enteringNode) {
+      var previousLength = this.entered.length;
 
-    this.entered = _lodashUnion2['default'](this.entered.filter(function (node) {
-      return document.documentElement.contains(node) && (!node.contains || node.contains(enteringNode));
-    }), [enteringNode]);
+      var isNodeEntered = function isNodeEntered(node) {
+        return document.documentElement.contains(node) && (!node.contains || node.contains(enteringNode));
+      };
 
-    return previousLength === 0 && this.entered.length > 0;
-  };
+      this.entered = (0, _union2.default)(this.entered.filter(isNodeEntered), [enteringNode]);
 
-  EnterLeaveCounter.prototype.leave = function leave(leavingNode) {
-    var previousLength = this.entered.length;
+      return previousLength === 0 && this.entered.length > 0;
+    }
+  }, {
+    key: 'leave',
+    value: function leave(leavingNode) {
+      var previousLength = this.entered.length;
 
-    this.entered = _lodashWithout2['default'](this.entered.filter(function (node) {
-      return document.documentElement.contains(node);
-    }), leavingNode);
+      this.entered = (0, _without2.default)(this.entered.filter(function (node) {
+        return document.documentElement.contains(node);
+      }), leavingNode);
 
-    return previousLength > 0 && this.entered.length === 0;
-  };
-
-  EnterLeaveCounter.prototype.reset = function reset() {
-    this.entered = [];
-  };
+      return previousLength > 0 && this.entered.length === 0;
+    }
+  }, {
+    key: 'reset',
+    value: function reset() {
+      this.entered = [];
+    }
+  }]);
 
   return EnterLeaveCounter;
-})();
+}();
 
-exports['default'] = EnterLeaveCounter;
-module.exports = exports['default'];
+exports.default = EnterLeaveCounter;

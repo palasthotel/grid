@@ -1,6 +1,7 @@
 "use strict";
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class ToolbarButton extends Component{
 	
@@ -19,7 +20,7 @@ export default class ToolbarButton extends Component{
 	 * ---------------------
 	 */
 	render(){
-		const {identifier, label, onClick, icon} = this.props;
+		const {identifier, label, icon} = this.props;
 		return (
 			<div
 				className={`toolbar-button toolbar-button__${identifier}`}

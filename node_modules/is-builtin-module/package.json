@@ -16,7 +16,6 @@
   "_from": "is-builtin-module@>=1.0.0 <2.0.0",
   "_id": "is-builtin-module@1.0.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/is-builtin-module",
   "_nodeVersion": "0.12.2",
   "_npmUser": {

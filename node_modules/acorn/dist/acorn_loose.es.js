@@ -1,4 +1,4 @@
-import acorn, { SourceLocation, tokTypes, tokenizer, Node, lineBreak, isNewLine, getLineInfo, Token, lineBreakG } from './acorn.js';
+import { defaultOptions, addLooseExports, SourceLocation, tokTypes, tokenizer, Node, lineBreak, isNewLine, getLineInfo, Token, lineBreakG } from './acorn';
 
 // Registered plugins
 var pluginsLoose = {}
@@ -19,6 +19,7 @@ var LooseParser = function LooseParser(input, options) {
   this.curIndent = 0
   this.curLineStart = 0
   this.nextLineStart = this.lineEnd(this.curLineStart) + 1
+  this.inAsync = false
   // Load plugins
   this.options.pluginsLoose = options.pluginsLoose || {}
   this.loadPlugins(this.options.pluginsLoose)
@@ -204,7 +205,7 @@ lp.readToken = function() {
         this$1.toks.type = tokTypes.ellipsis
       }
       return new Token(this$1.toks)
-    } catch(e) {
+    } catch (e) {
       if (!(e instanceof SyntaxError)) throw e
 
       // Try to skip some text, based on the error message, and then continue
@@ -215,12 +216,15 @@ lp.readToken = function() {
           replace = {start: e.pos, end: pos, type: tokTypes.string, value: this$1.input.slice(e.pos + 1, pos)}
         } else if (/regular expr/i.test(msg)) {
           var re = this$1.input.slice(e.pos, pos)
-          try { re = new RegExp(re) } catch(e) {}
+          try { re = new RegExp(re) } catch (e) { /* ignore compilation error due to new syntax */ }
           replace = {start: e.pos, end: pos, type: tokTypes.regexp, value: re}
         } else if (/template/.test(msg)) {
-          replace = {start: e.pos, end: pos,
-                     type: tokTypes.template,
-                     value: this$1.input.slice(e.pos, pos)}
+          replace = {
+            start: e.pos,
+            end: pos,
+            type: tokTypes.template,
+            value: this$1.input.slice(e.pos, pos)
+          }
         } else {
           replace = false
         }
@@ -258,7 +262,7 @@ lp.resetTo = function(pos) {
 
   this.toks.pos = pos
   var ch = this.input.charAt(pos - 1)
-  this.toks.exprAllowed = !ch || /[\[\{\(,;:?\/*=+\-~!|&%^<>]/.test(ch) ||
+  this.toks.exprAllowed = !ch || /[[{(,;:?/*=+\-~!|&%^<>]/.test(ch) ||
     /[enwfd]/.test(ch) &&
     /\b(keywords|case|else|return|throw|new|in|(instance|type)of|delete|void)$/.test(this.input.slice(pos - 10, pos))
 
@@ -456,6 +460,11 @@ lp$1.parseStatement = function() {
     return this.parseExport()
 
   default:
+    if (this.toks.isAsyncFunction()) {
+      this.next()
+      this.next()
+      return this.parseFunction(node, true, true)
+    }
     var expr = this.parseExpression()
     if (isDummy(expr)) {
       this.next()
@@ -538,7 +547,7 @@ lp$1.parseClass = function(isStatement) {
   var node = this.startNode()
   this.next()
   if (this.tok.type === tokTypes.name) node.id = this.parseIdent()
-  else if (isStatement) node.id = this.dummyIdent()
+  else if (isStatement === true) node.id = this.dummyIdent()
   else node.id = null
   node.superClass = this.eat(tokTypes._extends) ? this.parseExpression() : null
   node.body = this.startNode()
@@ -549,7 +558,7 @@ lp$1.parseClass = function(isStatement) {
   if (this.curIndent + 1 < indent) { indent = this.curIndent; line = this.curLineStart }
   while (!this.closes(tokTypes.braceR, indent, line)) {
     if (this$1.semicolon()) continue
-    var method = this$1.startNode(), isGenerator
+    var method = this$1.startNode(), isGenerator, isAsync
     if (this$1.options.ecmaVersion >= 6) {
       method.static = false
       isGenerator = this$1.eat(tokTypes.star)
@@ -564,6 +573,14 @@ lp$1.parseClass = function(isStatement) {
     } else {
       method.static = false
     }
+    if (!method.computed &&
+        method.key.type === "Identifier" && method.key.name === "async" && this$1.tok.type !== tokTypes.parenL &&
+        !this$1.canInsertSemicolon()) {
+      this$1.parsePropertyName(method)
+      isAsync = true
+    } else {
+      isAsync = false
+    }
     if (this$1.options.ecmaVersion >= 5 && method.key.type === "Identifier" &&
         !method.computed && (method.key.name === "get" || method.key.name === "set") &&
         this$1.tok.type !== tokTypes.parenL && this$1.tok.type !== tokTypes.braceL) {
@@ -571,14 +588,14 @@ lp$1.parseClass = function(isStatement) {
       this$1.parsePropertyName(method)
       method.value = this$1.parseMethod(false)
     } else {
-      if (!method.computed && !method.static && !isGenerator && (
+      if (!method.computed && !method.static && !isGenerator && !isAsync && (
         method.key.type === "Identifier" && method.key.name === "constructor" ||
           method.key.type === "Literal" && method.key.value === "constructor")) {
         method.kind = "constructor"
       } else {
-        method.kind =  "method"
+        method.kind = "method"
       }
-      method.value = this$1.parseMethod(isGenerator)
+      method.value = this$1.parseMethod(isGenerator, isAsync)
     }
     node.body.body.push(this$1.finishNode(method, "MethodDefinition"))
   }
@@ -594,15 +611,21 @@ lp$1.parseClass = function(isStatement) {
   return this.finishNode(node, isStatement ? "ClassDeclaration" : "ClassExpression")
 }
 
-lp$1.parseFunction = function(node, isStatement) {
+lp$1.parseFunction = function(node, isStatement, isAsync) {
+  var oldInAsync = this.inAsync
   this.initFunction(node)
   if (this.options.ecmaVersion >= 6) {
     node.generator = this.eat(tokTypes.star)
   }
+  if (this.options.ecmaVersion >= 8) {
+    node.async = !!isAsync
+  }
   if (this.tok.type === tokTypes.name) node.id = this.parseIdent()
-  else if (isStatement) node.id = this.dummyIdent()
+  else if (isStatement === true) node.id = this.dummyIdent()
+  this.inAsync = node.async
   node.params = this.parseFunctionParams()
   node.body = this.parseBlock()
+  this.inAsync = oldInAsync
   return this.finishNode(node, isStatement ? "FunctionDeclaration" : "FunctionExpression")
 }
 
@@ -614,18 +637,22 @@ lp$1.parseExport = function() {
     return this.finishNode(node, "ExportAllDeclaration")
   }
   if (this.eat(tokTypes._default)) {
-    var expr = this.parseMaybeAssign()
-    if (expr.id) {
-      switch (expr.type) {
-      case "FunctionExpression": expr.type = "FunctionDeclaration"; break
-      case "ClassExpression": expr.type = "ClassDeclaration"; break
-      }
+    // export default (function foo() {}) // This is FunctionExpression.
+    var isAsync
+    if (this.tok.type === tokTypes._function || (isAsync = this.toks.isAsyncFunction())) {
+      var fNode = this.startNode()
+      this.next()
+      if (isAsync) this.next()
+      node.declaration = this.parseFunction(fNode, "nullableID", isAsync)
+    } else if (this.tok.type === tokTypes._class) {
+      node.declaration = this.parseClass("nullableID")
+    } else {
+      node.declaration = this.parseMaybeAssign()
+      this.semicolon()
     }
-    node.declaration = expr
-    this.semicolon()
     return this.finishNode(node, "ExportDefaultDeclaration")
   }
-  if (this.tok.type.keyword || this.toks.isLet()) {
+  if (this.tok.type.keyword || this.toks.isLet() || this.toks.isAsyncFunction()) {
     node.declaration = this.parseStatement()
     node.specifiers = []
     node.source = null
@@ -644,7 +671,7 @@ lp$1.parseImport = function() {
   if (this.tok.type === tokTypes.string) {
     node.specifiers = []
     node.source = this.parseExprAtom()
-    node.kind = ''
+    node.kind = ""
   } else {
     var elt
     if (this.tok.type === tokTypes.name && this.tok.value !== "from") {
@@ -832,7 +859,10 @@ lp$2.parseMaybeUnary = function(sawUnary) {
   var this$1 = this;
 
   var start = this.storeCurrentPos(), expr
-  if (this.tok.type.prefix) {
+  if (this.options.ecmaVersion >= 8 && this.inAsync && this.toks.isContextual("await")) {
+    expr = this.parseAwait()
+    sawUnary = true
+  } else if (this.tok.type.prefix) {
     var node = this.startNode(), update = this.tok.type === tokTypes.incDec
     if (!update) sawUnary = true
     node.operator = this.tok.value
@@ -885,6 +915,8 @@ lp$2.parseSubscripts = function(base, start, noCalls, startIndent, line) {
         return base
     }
 
+    var maybeAsyncArrow = base.type === "Identifier" && base.name === "async" && !this$1.canInsertSemicolon()
+
     if (this$1.eat(tokTypes.dot)) {
       var node = this$1.startNodeAt(start)
       node.object = base
@@ -905,9 +937,12 @@ lp$2.parseSubscripts = function(base, start, noCalls, startIndent, line) {
       this$1.expect(tokTypes.bracketR)
       base = this$1.finishNode(node$1, "MemberExpression")
     } else if (!noCalls && this$1.tok.type == tokTypes.parenL) {
+      var exprList = this$1.parseExprList(tokTypes.parenR)
+      if (maybeAsyncArrow && this$1.eat(tokTypes.arrow))
+        return this$1.parseArrowExpression(this$1.startNodeAt(start), exprList, true)
       var node$2 = this$1.startNodeAt(start)
       node$2.callee = base
-      node$2.arguments = this$1.parseExprList(tokTypes.parenR)
+      node$2.arguments = exprList
       base = this$1.finishNode(node$2, "CallExpression")
     } else if (this$1.tok.type == tokTypes.backQuote) {
       var node$3 = this$1.startNodeAt(start)
@@ -933,7 +968,16 @@ lp$2.parseExprAtom = function() {
   case tokTypes.name:
     var start = this.storeCurrentPos()
     var id = this.parseIdent()
-    return this.eat(tokTypes.arrow) ? this.parseArrowExpression(this.startNodeAt(start), [id]) : id
+    var isAsync = false
+    if (id.name === "async" && !this.canInsertSemicolon()) {
+      if (this.eat(tokTypes._function))
+        return this.parseFunction(this.startNodeAt(start), false, true)
+      if (this.tok.type === tokTypes.name) {
+        id = this.parseIdent()
+        isAsync = true
+      }
+    }
+    return this.eat(tokTypes.arrow) ? this.parseArrowExpression(this.startNodeAt(start), [id], isAsync) : id
 
   case tokTypes.regexp:
     node = this.startNode()
@@ -964,7 +1008,11 @@ lp$2.parseExprAtom = function() {
     var inner = this.parseExpression()
     this.expect(tokTypes.parenR)
     if (this.eat(tokTypes.arrow)) {
-      return this.parseArrowExpression(this.startNodeAt(parenStart), inner.expressions || (isDummy(inner) ? [] : [inner]))
+      // (a,)=>a // SequenceExpression makes dummy in the last hole. Drop the dummy.
+      var params = inner.expressions || [inner]
+      if (params.length && isDummy(params[params.length - 1]))
+        params.pop()
+      return this.parseArrowExpression(this.startNodeAt(parenStart), params)
     }
     if (this.options.preserveParens) {
       var par = this.startNodeAt(parenStart)
@@ -982,7 +1030,7 @@ lp$2.parseExprAtom = function() {
     return this.parseObj()
 
   case tokTypes._class:
-    return this.parseClass()
+    return this.parseClass(false)
 
   case tokTypes._function:
     node = this.startNode()
@@ -1021,7 +1069,7 @@ lp$2.parseNew = function() {
 lp$2.parseTemplateElement = function() {
   var elem = this.startNode()
   elem.value = {
-    raw: this.input.slice(this.tok.start, this.tok.end).replace(/\r\n?/g, '\n'),
+    raw: this.input.slice(this.tok.start, this.tok.end).replace(/\r\n?/g, "\n"),
     cooked: this.tok.value
   }
   this.next()
@@ -1044,7 +1092,7 @@ lp$2.parseTemplate = function() {
       curElt = this$1.parseTemplateElement()
     } else {
       curElt = this$1.startNode()
-      curElt.value = {cooked: '', raw: ''}
+      curElt.value = {cooked: "", raw: ""}
       curElt.tail = true
       this$1.finishNode(curElt, "TemplateElement")
     }
@@ -1064,7 +1112,7 @@ lp$2.parseObj = function() {
   this.eat(tokTypes.braceL)
   if (this.curIndent + 1 < indent) { indent = this.curIndent; line = this.curLineStart }
   while (!this.closes(tokTypes.braceR, indent, line)) {
-    var prop = this$1.startNode(), isGenerator, start
+    var prop = this$1.startNode(), isGenerator, isAsync, start
     if (this$1.options.ecmaVersion >= 6) {
       start = this$1.storeCurrentPos()
       prop.method = false
@@ -1072,6 +1120,14 @@ lp$2.parseObj = function() {
       isGenerator = this$1.eat(tokTypes.star)
     }
     this$1.parsePropertyName(prop)
+    if (!prop.computed &&
+        prop.key.type === "Identifier" && prop.key.name === "async" && this$1.tok.type !== tokTypes.parenL &&
+        this$1.tok.type !== tokTypes.colon && !this$1.canInsertSemicolon()) {
+      this$1.parsePropertyName(prop)
+      isAsync = true
+    } else {
+      isAsync = false
+    }
     if (isDummy(prop.key)) { if (isDummy(this$1.parseMaybeAssign())) this$1.next(); this$1.eat(tokTypes.comma); continue }
     if (this$1.eat(tokTypes.colon)) {
       prop.kind = "init"
@@ -1079,7 +1135,7 @@ lp$2.parseObj = function() {
     } else if (this$1.options.ecmaVersion >= 6 && (this$1.tok.type === tokTypes.parenL || this$1.tok.type === tokTypes.braceL)) {
       prop.kind = "init"
       prop.method = true
-      prop.value = this$1.parseMethod(isGenerator)
+      prop.value = this$1.parseMethod(isGenerator, isAsync)
     } else if (this$1.options.ecmaVersion >= 5 && prop.key.type === "Identifier" &&
                !prop.computed && (prop.key.name === "get" || prop.key.name === "set") &&
                (this$1.tok.type != tokTypes.comma && this$1.tok.type != tokTypes.braceR)) {
@@ -1151,6 +1207,8 @@ lp$2.initFunction = function(node) {
     node.generator = false
     node.expression = false
   }
+  if (this.options.ecmaVersion >= 8)
+    node.async = false
 }
 
 // Convert existing expression atom to assignable pattern
@@ -1198,21 +1256,31 @@ lp$2.parseFunctionParams = function(params) {
   return this.toAssignableList(params, true)
 }
 
-lp$2.parseMethod = function(isGenerator) {
-  var node = this.startNode()
+lp$2.parseMethod = function(isGenerator, isAsync) {
+  var node = this.startNode(), oldInAsync = this.inAsync
   this.initFunction(node)
+  if (this.options.ecmaVersion >= 6)
+    node.generator = !!isGenerator
+  if (this.options.ecmaVersion >= 8)
+    node.async = !!isAsync
+  this.inAsync = node.async
   node.params = this.parseFunctionParams()
-  node.generator = isGenerator || false
   node.expression = this.options.ecmaVersion >= 6 && this.tok.type !== tokTypes.braceL
   node.body = node.expression ? this.parseMaybeAssign() : this.parseBlock()
+  this.inAsync = oldInAsync
   return this.finishNode(node, "FunctionExpression")
 }
 
-lp$2.parseArrowExpression = function(node, params) {
+lp$2.parseArrowExpression = function(node, params, isAsync) {
+  var oldInAsync = this.inAsync
   this.initFunction(node)
+  if (this.options.ecmaVersion >= 8)
+    node.async = !!isAsync
+  this.inAsync = node.async
   node.params = this.toAssignableList(params, true)
   node.expression = this.tok.type !== tokTypes.braceL
   node.body = node.expression ? this.parseMaybeAssign() : this.parseBlock()
+  this.inAsync = oldInAsync
   return this.finishNode(node, "ArrowFunctionExpression")
 }
 
@@ -1246,16 +1314,53 @@ lp$2.parseExprList = function(close, allowEmpty) {
   return elts
 }
 
-acorn.defaultOptions.tabSize = 4
+lp$2.parseAwait = function() {
+  var node = this.startNode()
+  this.next()
+  node.argument = this.parseMaybeUnary()
+  return this.finishNode(node, "AwaitExpression")
+}
 
+// Acorn: Loose parser
+//
+// This module provides an alternative parser (`parse_dammit`) that
+// exposes that same interface as `parse`, but will try to parse
+// anything as JavaScript, repairing syntax error the best it can.
+// There are circumstances in which it will raise an error and give
+// up, but they are very rare. The resulting AST will be a mostly
+// valid JavaScript AST (as per the [Mozilla parser API][api], except
+// that:
+//
+// - Return outside functions is allowed
+//
+// - Label consistency (no conflicts, break only to existing labels)
+//   is not enforced.
+//
+// - Bogus Identifier nodes with a name of `"✖"` are inserted whenever
+//   the parser got too confused to return anything meaningful.
+//
+// [api]: https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API
+//
+// The expected use for this is to *first* try `acorn.parse`, and only
+// if that fails switch to `parse_dammit`. The loose parser might
+// parse badly indented code incorrectly, so **don't** use it as
+// your default parser.
+//
+// Quite a lot of acorn.js is duplicated here. The alternative was to
+// add a *lot* of extra cruft to that file, making it less readable
+// and slower. Copying and editing the code allowed me to make
+// invasive changes and simplifications without creating a complicated
+// tangle.
+
+defaultOptions.tabSize = 4
+
+// eslint-disable-next-line camelcase
 function parse_dammit(input, options) {
   var p = new LooseParser(input, options)
   p.next()
   return p.parseTopLevel()
 }
 
-acorn.parse_dammit = parse_dammit
-acorn.LooseParser = LooseParser
-acorn.pluginsLoose = pluginsLoose
+addLooseExports(parse_dammit, LooseParser, pluginsLoose)
 
 export { parse_dammit, LooseParser, pluginsLoose };

@@ -1,21 +1,27 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _nativeTypesConfig;
 
 exports.createNativeDragSource = createNativeDragSource;
 exports.matchNativeItemType = matchNativeItemType;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var _NativeTypes = require('./NativeTypes');
 
 var NativeTypes = _interopRequireWildcard(_NativeTypes);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _defineEnumerableProperties(obj, descs) { for (var key in descs) { var desc = descs[key]; desc.configurable = desc.enumerable = true; if ("value" in desc) desc.writable = true; Object.defineProperty(obj, key, desc); } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function getDataFromDataTransfer(dataTransfer, typesToTry, defaultValue) {
   var result = typesToTry.reduce(function (resultSoFar, typeToTry) {
@@ -47,47 +53,53 @@ var nativeTypesConfig = (_nativeTypesConfig = {}, _defineProperty(_nativeTypesCo
 }), _nativeTypesConfig);
 
 function createNativeDragSource(type) {
-  var _nativeTypesConfig$type = nativeTypesConfig[type];
-  var exposeProperty = _nativeTypesConfig$type.exposeProperty;
-  var matchesTypes = _nativeTypesConfig$type.matchesTypes;
-  var getData = _nativeTypesConfig$type.getData;
+  var _nativeTypesConfig$ty = nativeTypesConfig[type],
+      exposeProperty = _nativeTypesConfig$ty.exposeProperty,
+      matchesTypes = _nativeTypesConfig$ty.matchesTypes,
+      getData = _nativeTypesConfig$ty.getData;
 
-  return (function () {
+
+  return function () {
     function NativeDragSource() {
+      var _item, _mutatorMap;
+
       _classCallCheck(this, NativeDragSource);
 
-      this.item = Object.defineProperties({}, _defineProperty({}, exposeProperty, {
-        get: function get() {
-          console.warn( // eslint-disable-line no-console
-          'Browser doesn\'t allow reading "' + exposeProperty + '" until the drop event.');
-          return null;
-        },
-        configurable: true,
-        enumerable: true
-      }));
+      this.item = (_item = {}, _mutatorMap = {}, _mutatorMap[exposeProperty] = _mutatorMap[exposeProperty] || {}, _mutatorMap[exposeProperty].get = function () {
+        console.warn( // eslint-disable-line no-console
+        'Browser doesn\'t allow reading "' + exposeProperty + '" until the drop event.');
+        return null;
+      }, _defineEnumerableProperties(_item, _mutatorMap), _item);
     }
 
-    NativeDragSource.prototype.mutateItemByReadingDataTransfer = function mutateItemByReadingDataTransfer(dataTransfer) {
-      delete this.item[exposeProperty];
-      this.item[exposeProperty] = getData(dataTransfer, matchesTypes);
-    };
-
-    NativeDragSource.prototype.canDrag = function canDrag() {
-      return true;
-    };
-
-    NativeDragSource.prototype.beginDrag = function beginDrag() {
-      return this.item;
-    };
-
-    NativeDragSource.prototype.isDragging = function isDragging(monitor, handle) {
-      return handle === monitor.getSourceId();
-    };
-
-    NativeDragSource.prototype.endDrag = function endDrag() {};
+    _createClass(NativeDragSource, [{
+      key: 'mutateItemByReadingDataTransfer',
+      value: function mutateItemByReadingDataTransfer(dataTransfer) {
+        delete this.item[exposeProperty];
+        this.item[exposeProperty] = getData(dataTransfer, matchesTypes);
+      }
+    }, {
+      key: 'canDrag',
+      value: function canDrag() {
+        return true;
+      }
+    }, {
+      key: 'beginDrag',
+      value: function beginDrag() {
+        return this.item;
+      }
+    }, {
+      key: 'isDragging',
+      value: function isDragging(monitor, handle) {
+        return handle === monitor.getSourceId();
+      }
+    }, {
+      key: 'endDrag',
+      value: function endDrag() {}
+    }]);
 
     return NativeDragSource;
-  })();
+  }();
 }
 
 function matchNativeItemType(dataTransfer) {

@@ -1,16 +1,18 @@
 'use strict';
 
-exports.__esModule = true;
-exports['default'] = matchesType;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = matchesType;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _isArray = require('lodash/isArray');
 
-var _lodashIsArray = require('lodash/isArray');
+var _isArray2 = _interopRequireDefault(_isArray);
 
-var _lodashIsArray2 = _interopRequireDefault(_lodashIsArray);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function matchesType(targetType, draggedItemType) {
-  if (_lodashIsArray2['default'](targetType)) {
+  if ((0, _isArray2.default)(targetType)) {
     return targetType.some(function (t) {
       return t === draggedItemType;
     });
@@ -18,5 +20,3 @@ function matchesType(targetType, draggedItemType) {
     return targetType === draggedItemType;
   }
 }
-
-module.exports = exports['default'];

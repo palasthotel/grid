@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 
-import { ItemTypes, Events } from '../../../constants.js';
+import { ItemTypes } from '../../../constants.js';
 
 const boxTarget = {
 	drop(props, monitor) {
@@ -51,9 +52,7 @@ class BoxDrop extends Component {
 			<div
 				className={`box-drop ${over_class} ${can_drop_class}`}
 			>
-				<div
-					className={`box-drop__area`}
-				></div>
+				<div className={`box-drop__area`} />
 			</div>
 		);
 	}
@@ -67,11 +66,6 @@ BoxDrop.propTypes = {
 	container_index: PropTypes.number.isRequired,
 	slot_index:PropTypes.number.isRequired,
 	index: PropTypes.number.isRequired,
-	
-	/**
-	 * state
-	 */
-	isOver: PropTypes.bool,
 	
 	/**
 	 * if new box from outside was added

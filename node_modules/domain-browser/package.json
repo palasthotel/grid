@@ -16,7 +16,6 @@
   "_from": "domain-browser@>=1.1.1 <2.0.0",
   "_id": "domain-browser@1.1.7",
   "_inCache": true,
-  "_installable": true,
   "_location": "/domain-browser",
   "_nodeVersion": "5.2.0",
   "_npmUser": {

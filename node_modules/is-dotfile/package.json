@@ -16,7 +16,6 @@
   "_from": "is-dotfile@>=1.0.0 <2.0.0",
   "_id": "is-dotfile@1.0.2",
   "_inCache": true,
-  "_installable": true,
   "_location": "/is-dotfile",
   "_nodeVersion": "4.2.1",
   "_npmUser": {

@@ -1,20 +1,22 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-exports['default'] = dragOperation;
+exports.default = dragOperation;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _without = require('lodash/without');
 
-var _actionsDragDrop = require('../actions/dragDrop');
+var _without2 = _interopRequireDefault(_without);
 
-var _actionsRegistry = require('../actions/registry');
+var _dragDrop = require('../actions/dragDrop');
 
-var _lodashWithout = require('lodash/without');
+var _registry = require('../actions/registry');
 
-var _lodashWithout2 = _interopRequireDefault(_lodashWithout);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var initialState = {
   itemType: null,
@@ -26,11 +28,12 @@ var initialState = {
   isSourcePublic: null
 };
 
-function dragOperation(state, action) {
-  if (state === undefined) state = initialState;
+function dragOperation() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
 
   switch (action.type) {
-    case _actionsDragDrop.BEGIN_DRAG:
+    case _dragDrop.BEGIN_DRAG:
       return _extends({}, state, {
         itemType: action.itemType,
         item: action.item,
@@ -39,28 +42,28 @@ function dragOperation(state, action) {
         dropResult: null,
         didDrop: false
       });
-    case _actionsDragDrop.PUBLISH_DRAG_SOURCE:
+    case _dragDrop.PUBLISH_DRAG_SOURCE:
       return _extends({}, state, {
         isSourcePublic: true
       });
-    case _actionsDragDrop.HOVER:
+    case _dragDrop.HOVER:
       return _extends({}, state, {
         targetIds: action.targetIds
       });
-    case _actionsRegistry.REMOVE_TARGET:
+    case _registry.REMOVE_TARGET:
       if (state.targetIds.indexOf(action.targetId) === -1) {
         return state;
       }
       return _extends({}, state, {
-        targetIds: _lodashWithout2['default'](state.targetIds, action.targetId)
+        targetIds: (0, _without2.default)(state.targetIds, action.targetId)
       });
-    case _actionsDragDrop.DROP:
+    case _dragDrop.DROP:
       return _extends({}, state, {
         dropResult: action.dropResult,
         didDrop: true,
         targetIds: []
       });
-    case _actionsDragDrop.END_DRAG:
+    case _dragDrop.END_DRAG:
       return _extends({}, state, {
         itemType: null,
         item: null,
@@ -74,5 +77,3 @@ function dragOperation(state, action) {
       return state;
   }
 }
-
-module.exports = exports['default'];

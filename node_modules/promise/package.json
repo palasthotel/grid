@@ -16,7 +16,6 @@
   "_from": "promise@>=7.1.1 <8.0.0",
   "_id": "promise@7.1.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/promise",
   "_nodeVersion": "1.6.2",
   "_npmUser": {

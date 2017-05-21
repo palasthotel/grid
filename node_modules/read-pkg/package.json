@@ -16,7 +16,6 @@
   "_from": "read-pkg@>=1.0.0 <2.0.0",
   "_id": "read-pkg@1.1.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/read-pkg",
   "_nodeVersion": "3.0.0",
   "_npmUser": {

@@ -16,7 +16,6 @@
   "_from": "anymatch@>=1.3.0 <2.0.0",
   "_id": "anymatch@1.3.0",
   "_inCache": true,
-  "_installable": true,
   "_location": "/anymatch",
   "_nodeVersion": "1.6.2",
   "_npmUser": {

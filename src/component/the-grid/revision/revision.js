@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class Revision extends Component {
 	
@@ -31,7 +32,7 @@ class Revision extends Component {
 				Preview
 			</button>
 		);
-		if(state == "draft"){
+		if(state === "draft"){
 			controls.push(
 				<button
 					key="delete"
@@ -41,7 +42,7 @@ class Revision extends Component {
 					Delete
 				</button>
 			);
-		} else if(state == "deprecated"){
+		} else if(state === "deprecated"){
 			controls.push(
 				<button
 					key="revert"
@@ -101,6 +102,7 @@ Revision.propTypes = {
 	
 	onPreview: PropTypes.func,
 	onRevert: PropTypes.func,
+	onDelete: PropTypes.func,
 };
 
 /**

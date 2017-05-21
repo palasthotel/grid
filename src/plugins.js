@@ -1,24 +1,22 @@
 "use strict";
 
-import {EventEmitter} from 'events';
-
 /**
  * import default widgets
  */
-import TextWidget from "./component/box-editor/widgets/text.js";
-import NumberWidget from "./component/box-editor/widgets/number.js";
-import HiddenWidget from "./component/box-editor/widgets/hidden.js";
-import TextareaWidget from './component/box-editor/widgets/textarea.js';
-import HtmlWidget from './component/box-editor/widgets/html.js';
-import CheckboxWidget from './component/box-editor/widgets/checkbox.js';
-import SelectWidget from './component/box-editor/widgets/select.js';
-import InfoWidget from './component/box-editor/widgets/info.js';
-import ListWidget from './component/box-editor/widgets/list.js';
-import DividerWidget from './component/box-editor/widgets/divider.js';
-import AutocompleteWidget from './component/box-editor/widgets/autocomplete.js';
-import MultiAutocompleteWidget from './component/box-editor/widgets/multi-autocomplete.js';
-import FileWidget from './component/box-editor/widgets/file.js';
-import WPMediaselectWidget from './component/box-editor/widgets/wp_mediaselect.js';
+import TextWidget from "./component/input-widgets/text.js";
+import NumberWidget from "./component/input-widgets/number.js";
+import HiddenWidget from "./component/input-widgets/hidden.js";
+import TextareaWidget from './component/input-widgets/textarea.js';
+import HtmlWidget from './component/input-widgets/html.js';
+import CheckboxWidget from './component/input-widgets/checkbox.js';
+import SelectWidget from './component/input-widgets/select.js';
+import InfoWidget from './component/input-widgets/info.js';
+import ListWidget from './component/input-widgets/list.js';
+import DividerWidget from './component/input-widgets/divider.js';
+import AutocompleteWidget from './component/input-widgets/autocomplete.js';
+import MultiAutocompleteWidget from './component/input-widgets/multi-autocomplete.js';
+import FileWidget from './component/input-widgets/file.js';
+import WPMediaselectWidget from './component/input-widgets/wp_mediaselect.js';
 
 /**
  *
@@ -34,21 +32,18 @@ import WPMediaselectWidget from './component/box-editor/widgets/wp_mediaselect.j
  */
 var GRID = window.GRID = {
 	id: null,
-	events: new EventEmitter(),
 	toobar_buttons: [],
 	toolbar_buttons_editor: [],
 	overlays: [],
 	overlays_editor: [],
 };
 
-GRID.events.setMaxListeners(0);
-
 
 
 /**
  * collect all plugin information for grid here
  */
-if(typeof window.GRID != typeof {}) throw new Exception("GRID is missing");
+if(typeof window.GRID !== typeof {}) throw new Exception("GRID is missing");
 
 GRID.box_editor_widgets = {
 	"text": TextWidget,

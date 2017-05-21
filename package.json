@@ -1,15 +1,24 @@
 {
   "name": "grid-lib",
   "dependencies": {
-    "ampersand-collection": "^2.0.0",
-    "ampersand-model": "^8.0.0",
     "axios": "^0.15.3",
+    "babel-polyfill": "^6.23.0",
+    "es6-promise": "^4.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "node-uuid": "^1.4.7",
+    "prop-types": "^15.5.10",
     "react": "^15.4.2",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.4.2",
     "react-dropzone": "^3.6.0",
+    "react-redux": "^5.0.4",
+    "react-tinymce": "^0.5.1",
+    "redux": "^3.2.0",
+    "redux-thunk": "^2.2.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "webpack": "^2.5.1"
   }
 }

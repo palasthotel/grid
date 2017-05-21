@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import Grid from './grid.js';
 import TabView from './sidebar/tab-view.js';
@@ -14,38 +15,43 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 
 class TheGrid extends React.Component{
+
 	constructor(props) {
 		super(props);
-		
 		this.state = {
-			show_revisions: false,
-		}
+			show_revisions: false
+		};
 	}
 	
 	render(){
-		const {isDraft,container,container_types,box_types, revisions} = this.props;
+
+		const { id, isDraft, container } = this.props.grid;
+		const { container_types, box_types, revisions } = this.props;
+
 		const {show_revisions} = this.state;
+
 		return (
 			<div
 				className="the-grid"
 			>
+				<p>{(isDraft)? "Draft": "Published"}</p>
 				<div
 					className="grid__toolbar"
 				>
 					<ToolbarButton
 						label="Publish"
 					    identifier="publish"
-					    onClick={this.onClickPublish.bind(this)}
+					    onClick={this.props.onPublish.bind(this, id)}
 					/>
 					<ToolbarButton
 						label="Preview"
 						identifier="preview"
-						onClick={this.props.onPreview}
+						onClick={this.props.onPreview.bind(this, id)}
 					/>
 					<ToolbarButton
 						label="Revert"
 						identifier="revert"
-						onClick={this.onClickRevert.bind(this)}
+						onClick={this.props.onRevertDraft.bind(this, id)}
 					/>
 					<ToolbarButton
 						label="Revisions"
@@ -59,32 +65,32 @@ class TheGrid extends React.Component{
 					className="grid-revisions"
 				>
 					{show_revisions && revisions.map((item)=>{
-						return	(
+						return (
 							<Revision
 								key={item.revision}
 								{...item}
-								onPreview={this.props.onPreview.bind(this,item)}
-							    onRevert={this.onClickRevert.bind(this,item)}
+								onPreview={this.props.onPreview.bind(this, id, item.revision)}
+							    onRevert={this.props.onRevertToRevision.bind(this, item.revision )}
 							/>
 						)
 					} )}
 				</div>
 				
 				<Grid
-					container={container}
 					draft={isDraft}
-					
-				    onStateChange={this.onGridStateChange.bind(this)}
-				    
-					onContainerAdd={this.props.onContainerAdd.bind(this)}
-					onContainerMove={this.props.onContainerMove.bind(this)}
-				    onContainerDelete={this.props.onContainerDelete.bind(this)}
-				    onContainerReuse={this.props.onContainerReuse.bind(this)}
-				    
-				    onBoxAdd={this.props.onBoxAdd}
-				    onBoxMove={this.props.onBoxMove}
-					onBoxEdit={this.props.onBoxEdit}
-				    onBoxDelete={this.props.onBoxDelete}
+					container={container}
+
+					onContainerEdit={this.props.onContainerEdit.bind(this, this.props.grid.id )}
+					onContainerAdd={this.props.onContainerAdd.bind(this, this.props.grid.id)}
+					onContainerMove={this.props.onContainerMove.bind(this, this.props.grid.id)}
+				    onContainerDelete={this.props.onContainerDelete.bind(this, this.props.grid.id)}
+				    onContainerReuse={this.props.onContainerReuse.bind(this, this.props.grid.id)}
+
+					onBoxEdit={this.props.onBoxEdit.bind(this, this.props.grid.id)}
+				    onBoxAdd={this.props.onBoxAdd.bind(this, this.props.grid.id)}
+				    onBoxMove={this.props.onBoxMove.bind(this, this.props.grid.id)}
+				    onBoxDelete={this.props.onBoxDelete.bind(this, this.props.grid.id)}
+					onBoxReuse={this.props.onBoxReuse.bind(this, this.props.grid.id)}
 				    
 				/>
 				
@@ -112,36 +118,12 @@ class TheGrid extends React.Component{
 	 * events
 	 * ---------------------
 	 */
-	onGridStateChange(container){
-		this.props.onUpdateState({"container":container});
-	}
-	onClickPublish(){
-		console.log("publish grid!");
-		this.props.onPublish((error, success)=>{
-			
-		});
-	}
-	onClickRevert(revision){
-		this.props.onRevert((error, data)=>{
-			console.log("onReverted", data);
-		},revision);
-	}
 	onClickRevisions(){
 		this.setState({show_revisions: !this.state.show_revisions})
 	}
-	onBoxTypeSearch(done, type, criteria, query){
-		console.log("on box type search");
-		this.props.onBoxTypeSearch((boxes)=>{
-			console.log("found boxes", boxes);
-			const box_types = this.props.box_types;
-			for(let index in box_types){
-				if(!box_types.hasOwnProperty(index)) continue;
-				if(box_types[index].type == type){
-					box_types[index].boxes = boxes;
-					this.props.onUpdateState({"box_types":box_types});
-				}
-			}
-		},type,criteria,query);
+
+	onBoxTypeSearch(type, item, criteria, query){
+		this.props.onBoxTypeSearch(this.props.grid.id, type, item, criteria, query);
 	}
 	
 	/**
@@ -161,34 +143,64 @@ TheGrid.defaultProps = {
 	container_styles: [],
 	slot_styles: [],
 	box_styles: [],
+
+	onPublish: (grid_id)=>{ console.info("onPublish is not implemented") },
+	onPreview: (grid_id)=>{ console.info("onPreview is not implemented") },
+	onRevertDraft: (grid_id)=>{ console.info("onRevertDraft is not implemented"); },
+	onRevertToRevision: () => { console.info("onRevertToRevision is not implemented") },
+
+
+	onContainerEdit: ()=>{console.info("onContainerEdit is not implemented") },
+	onContainerAdd: ()=>{console.info("onContainerAdd is not implemented") },
+	onContainerDelete: ()=>{console.info("onContainerDelete is not implemented") },
+	onContainerMove: ()=>{console.info("onContainerMove is not implemented") },
+	onContainerReuse: ()=>{console.info("onContainerReuse is not implemented") },
+
+	onBoxEdit: ()=>{console.info("onBoxEdit is not implemented") },
+	onBoxCreate: ()=>{console.info("onBoxCreate is not implemented") },
+	onBoxDelete: ()=>{console.info("onBoxDelete is not implemented") },
+	onBoxMove: ()=>{console.info("onBoxMove is not implemented") },
+	onBoxReuse: ()=>{console.info("onBoxReuse is not implemented") },
 	
-	onRevert: (done)=>{ done() },
-	onPublish: (done)=>{ done() },
-	onPreview: ()=>{ },
-	
-	onBoxTypeSearch: (done, type, criteria, query)=>{ done([]) },
-	onUpdateState: ()=>{},
+	onBoxTypeSearch: (done, type, criteria, query)=>{ console.log("onBoxTypeSearch not implemented", type, criteria, query) },
+
 };
 
 /**
  * define property types
  */
 TheGrid.propTypes = {
-	
-	isDraft: PropTypes.bool.isRequired,
-	
-	container: PropTypes.array.isRequired,
+
+	// the grid state
+	grid: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+	}).isRequired,
+
+	// other toolbox states
 	revisions: PropTypes.array.isRequired,
-	
-	container_types: PropTypes.array,
-	box_types: PropTypes.array,
-	
+	container_types: PropTypes.array.isRequired,
+	box_types: PropTypes.array.isRequired,
 	container_styles: PropTypes.array,
 	slot_styles: PropTypes.array,
 	box_styles: PropTypes.array,
-	
-	onUpdateState: PropTypes.func,
-	
+
+	// event functions
+	onPublish: PropTypes.func,
+	onPreview: PropTypes.func,
+	onRevertDraft: PropTypes.func,
+	onRevertToRevision: PropTypes.func,
+
+	onContainerEdit:PropTypes.func,
+	onContainerAdd: PropTypes.func,
+	onContainerDelete: PropTypes.func,
+	onContainerMove: PropTypes.func,
+	onContainerReuse: PropTypes.func,
+
+	onBoxCreate: PropTypes.func,
+	onBoxDelete: PropTypes.func,
+	onBoxMove: PropTypes.func,
+	onBoxEdit: PropTypes.func,
+
 };
 
 

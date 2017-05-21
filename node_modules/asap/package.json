@@ -16,7 +16,6 @@
   "_from": "asap@>=2.0.3 <2.1.0",
   "_id": "asap@2.0.5",
   "_inCache": true,
-  "_installable": true,
   "_location": "/asap",
   "_nodeVersion": "0.10.32",
   "_npmOperationalInternal": {

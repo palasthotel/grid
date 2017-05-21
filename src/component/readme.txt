@@ -1,0 +1,1 @@
+agnostic react components that should not use any state. Always depend on props. they will be handled by redux store

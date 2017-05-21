@@ -19,10 +19,6 @@ events.setMaxListeners(0);
  */
 const container = require('./dummy-data/grid').container;
 
-/**
- * add drag and drop context to grid. Normally TheGrid holds context.
- * @type {__ReactDnd.ContextComponentClass<P>}
- */
 const DNDGrid = DragDropContext(HTML5Backend)(Grid);
 
 

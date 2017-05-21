@@ -21,6 +21,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('./React');
 var ReactTransitionChildMapping = require('./ReactTransitionChildMapping');
 
+var propTypesFactory = require('prop-types/factory');
+var PropTypes = propTypesFactory(React.isValidElement);
+
 var emptyFunction = require('fbjs/lib/emptyFunction');
 
 /**
@@ -216,8 +219,8 @@ var ReactTransitionGroup = function (_React$Component) {
 
 ReactTransitionGroup.displayName = 'ReactTransitionGroup';
 ReactTransitionGroup.propTypes = {
-  component: React.PropTypes.any,
-  childFactory: React.PropTypes.func
+  component: PropTypes.any,
+  childFactory: PropTypes.func
 };
 ReactTransitionGroup.defaultProps = {
   component: 'span',

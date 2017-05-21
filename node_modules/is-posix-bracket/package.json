@@ -16,7 +16,6 @@
   "_from": "is-posix-bracket@>=0.1.0 <0.2.0",
   "_id": "is-posix-bracket@0.1.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/is-posix-bracket",
   "_nodeVersion": "5.5.0",
   "_npmOperationalInternal": {

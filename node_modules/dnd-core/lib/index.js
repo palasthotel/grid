@@ -1,21 +1,43 @@
 'use strict';
 
-exports.__esModule = true;
-
-function _interopRequire(obj) { return obj && obj.__esModule ? obj['default'] : obj; }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _DragDropManager = require('./DragDropManager');
 
-exports.DragDropManager = _interopRequire(_DragDropManager);
+Object.defineProperty(exports, 'DragDropManager', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DragDropManager).default;
+  }
+});
 
 var _DragSource = require('./DragSource');
 
-exports.DragSource = _interopRequire(_DragSource);
+Object.defineProperty(exports, 'DragSource', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DragSource).default;
+  }
+});
 
 var _DropTarget = require('./DropTarget');
 
-exports.DropTarget = _interopRequire(_DropTarget);
+Object.defineProperty(exports, 'DropTarget', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DropTarget).default;
+  }
+});
 
-var _backendsCreateTestBackend = require('./backends/createTestBackend');
+var _createTestBackend = require('./backends/createTestBackend');
 
-exports.createTestBackend = _interopRequire(_backendsCreateTestBackend);
+Object.defineProperty(exports, 'createTestBackend', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_createTestBackend).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

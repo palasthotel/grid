@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {Events} from '../../../constants.js';
 
@@ -18,19 +19,15 @@ class BoxTypeList extends Component {
 		super(props);
 		this.key_incrementation = 0;
 		this.state = {
-			loading: false,
 			query: "",
 		};
 	}
 	componentDidMount(){
-		if(!this.props.item.boxes){
+		if(typeof this.props.item.boxes !== typeof []){
 			this.onSearch();
 		}
 	}
-	
-	componentWillReceiveProps(nextProps){
-		this.setState({loading: false });
-	}
+
 	/**
 	 * ------------------------------------------------
 	 * rendering
@@ -39,7 +36,7 @@ class BoxTypeList extends Component {
 	render() {
 		return (<div>
 			{this.renderCriteria()}
-			{(this.state.loading)? <p>loading</p>:null}
+			{(this.props.loading)? <p>loading</p>:null}
 			{this.renderBoxes()}
 		</div>);
 	}
@@ -56,6 +53,7 @@ class BoxTypeList extends Component {
 					type="text"
 					value={this.state.query}
 				    onChange={this.onQueryChange.bind(this)}
+					ref={ (input)=> { this.input_query = input } }
 				/>
 			</div>
 		)
@@ -94,10 +92,8 @@ class BoxTypeList extends Component {
 	 * ------------------------------------------------
 	 */
 	onSearch(){
-		this.setState({loading: true});
-		this.props.onSearch((boxes)=>{
-			// is updated via properties from parent because of possible unmounting problem
-		},this.props.item.type, this.props.item.criteria, this.state.query);
+		const {type, criteria } = this.props.item;
+		this.props.onSearch( type, criteria, "");
 	}
 }
 
@@ -106,8 +102,8 @@ class BoxTypeList extends Component {
  */
 BoxTypeList.propTypes = {
 	item: PropTypes.object.isRequired,
-	
 	onSearch: PropTypes.func.isRequired,
+	is_loading: PropTypes.bool,
 };
 
 /**

@@ -1,0 +1,1 @@
+The reducer is responsible for creating a new immutable object depending on triggered actions.

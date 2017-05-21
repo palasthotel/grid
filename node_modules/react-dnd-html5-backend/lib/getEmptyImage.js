@@ -1,9 +1,10 @@
 'use strict';
 
-exports.__esModule = true;
-exports['default'] = getEmptyImage;
-var emptyImage = undefined;
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getEmptyImage;
+var emptyImage = void 0;
 function getEmptyImage() {
   if (!emptyImage) {
     emptyImage = new Image();
@@ -12,5 +13,3 @@ function getEmptyImage() {
 
   return emptyImage;
 }
-
-module.exports = exports['default'];

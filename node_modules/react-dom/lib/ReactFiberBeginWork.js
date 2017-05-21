@@ -346,7 +346,7 @@ module.exports = function (config, getScheduler) {
         }
         return null;
       case HostComponent:
-        if (workInProgress.stateNode && config.beginUpdate) {
+        if (workInProgress.stateNode && typeof config.beginUpdate === 'function') {
           config.beginUpdate(workInProgress.stateNode);
         }
         return updateHostComponent(current, workInProgress);

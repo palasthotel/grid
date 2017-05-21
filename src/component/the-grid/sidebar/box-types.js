@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import BoxTypeList from './box-type-list.jsx';
 import Collapsible from '../../utils/collapsible.js';

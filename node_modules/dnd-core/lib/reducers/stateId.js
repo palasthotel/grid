@@ -1,12 +1,11 @@
 "use strict";
 
-exports.__esModule = true;
-exports["default"] = stateId;
-
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = stateId;
 function stateId() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
   return state + 1;
 }
-
-module.exports = exports["default"];
