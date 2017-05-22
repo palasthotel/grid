@@ -25,7 +25,7 @@ export function findContainer(container, container_id){
 export function findSlot(container, container_id, slot_id){
 	const c = findContainer(container, container_id)
 	if(typeof c === typeof {}){
-		for(const s of container.slots){
+		for(const s of c.slots){
 			if(s.id === slot_id){
 				return s;
 			}
