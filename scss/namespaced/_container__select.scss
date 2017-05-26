@@ -3,7 +3,6 @@
  * @modified 26.05.2017
  */
 
-
 .grid-container__select {
 
   width: 50%;
@@ -14,24 +13,21 @@
 
 }
 
-
 .grid-container__select--types {
 
   transition: all .3s ease-in-out;
 
-
-  .is-opend &{
-    transform: scale(1);
+  .is-opend & {
+    //transform: scale(1) rotateZ(0);
     max-height: none;
   }
 
-  .is-closed &{
-    transform: scale(0);
+  .is-closed & {
+    //transform: scale(0) rotateZ(90deg);
     max-height: 0;
   }
 
 }
-
 
 .grid-container__select--toggle {
   background: none;
@@ -42,14 +38,19 @@
   color: $color__app--foreground;
   width: 100%;
 
-
   transition: all .3s;
 
   text-align: center;
 
-  .is-opened &{
+  .is-opened & {
     text-align: right
   }
+
+
+  animation: fadein .5s;
+
+
+
 
 }
 
@@ -70,33 +71,39 @@
 
   font-weight: bold;
 
-  .is-opened &{
+  .is-opened & {
     transform: rotate(45deg);
   }
 
-  .is-closed &{
+  .is-closed & {
     //transform: scale(0);
   }
 }
 
-
 .grid-container__select--close-text {
-  .is-opened &{
+  .is-opened & {
     display: inline;
   }
 
-  .is-closed &{
+  .is-closed & {
     display: none;
   }
 }
 
 .grid-container__select--open-text {
-  .is-opened &{
+  .is-opened & {
     display: none;
   }
 
-  .is-closed &{
+  .is-closed & {
     display: inline;
 
   }
+}
+
+
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
