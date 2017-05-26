@@ -15,12 +15,29 @@
 
 .grid-menu__item {
   display: inline-block;
+  line-height: 60px;
+  font-size: 14px;
 }
 
 .grid-menu__button {
   border: none;
   background-color: $color__menu--background;
 
+
+  padding-bottom: 17px;
+  padding-left: 1px;
+  padding-right: 1px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  &:hover, &:active, &:focus {
+    outline: none;
+
+    border-bottom: 5px solid black;
+
+
+
+  }
 
 }
 
@@ -31,12 +48,13 @@
 
  */
 
- {
+grid-menu__item--has-childmenu
+grid-menu__button
 
-}
+grid-childmenu
 
 /* Dropdown Button */
-.dropbtn {
+.grid-menu__item--has-childmenu  .grid-menu__button {
   background-color: #4CAF50;
   color: white;
   padding: 16px;
@@ -46,7 +64,7 @@
 }
 
 /* The container <div> - needed to position the dropdown content */
-.dropdown {
+.grid-menu__item--has-childmenu {
   position: relative;
   display: inline-block;
 }
@@ -62,22 +80,30 @@
 }
 
 /* Links inside the dropdown */
-.grid-childmenu a {
+.grid-childmenu .grid-menu__item {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
-
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+.grid-menu__item--has-childmenu:hover .grid-childmenu {
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+
+
+.grid-menu__item--has-childmenu > .grid-menu__button {
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+
+    background-image: url( "../svg/ic_expand_more_black_24px.svg" );
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transform: translateY(2px);
+  }
 }
