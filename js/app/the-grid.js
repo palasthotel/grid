@@ -5335,7 +5335,10 @@ var REQUEST_GRID_BOX_EDITING_MOVE = exports.REQUEST_GRID_BOX_EDITING_MOVE = 'REQ
 var REQUEST_GRID_BOX_EDITING_REMOVE = exports.REQUEST_GRID_BOX_EDITING_REMOVE = 'REQUEST-GRID_BOX_EDITING-REMOVE';
 var REQUEST_GRID_BOX_EDITING_UPDATE = exports.REQUEST_GRID_BOX_EDITING_UPDATE = 'REQUEST-GRID_BOX_EDITING-UPDATE';
 
+var GRID_UI_STATE = exports.GRID_UI_STATE = "GRID-UI-STATE";
 var GRID_LOADING = exports.GRID_LOADING = 'GRID_LOADING';
+
+var GRID_CONTAINER_IN_PLACE_DIALOG = exports.GRID_CONTAINER_IN_PLACE_DIALOG = "GRID-CONTAINER-IN-PLACE-DIALOG";
 
 var GRID_CONTAINER_EDIT = exports.GRID_CONTAINER_EDIT = "GRID-CONTAINER-EDIT";
 var GRID_BOX_EDIT = exports.GRID_BOX_EDIT = "GRID-BOX-EDIT";
@@ -7705,7 +7708,13 @@ module.exports = baseRest;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.actionUiStateChange = actionUiStateChange;
 exports.actionSetGridLoading = actionSetGridLoading;
+exports.actionContainerHideInPlaceDialog = actionContainerHideInPlaceDialog;
+exports.actionContainerShowInPlaceDialog = actionContainerShowInPlaceDialog;
 exports.actionEditGridContainerClose = actionEditGridContainerClose;
 exports.actionEditGridContainer = actionEditGridContainer;
 exports.actionCloseGridBoxEdit = actionCloseGridBoxEdit;
@@ -7713,8 +7722,31 @@ exports.actionEditGridBox = actionEditGridBox;
 
 var _types = __webpack_require__(46);
 
+/**
+ * genereal ui state change
+ * @param key
+ * @param value
+ * @return {{type: string, payload: {key: string, value: * }}}
+ */
+function actionUiStateChange(key, value) {
+	return { type: _types.GRID_UI_STATE, payload: { key: key, value: value } };
+}
+
 function actionSetGridLoading(is_loading) {
 	return { type: _types.GRID_LOADING, payload: { is_loading: is_loading } };
+}
+
+function actionContainerHideInPlaceDialog() {
+	return actionContainerShowInPlaceDialog();
+}
+
+/**
+ *
+ * @param args
+ * @return {{type, payload: { index:, others} }}
+ */
+function actionContainerShowInPlaceDialog(args) {
+	return { type: _types.GRID_CONTAINER_IN_PLACE_DIALOG, payload: _extends({}, args) };
 }
 
 function actionEditGridContainerClose() {
@@ -32881,6 +32913,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(4);
@@ -32936,13 +32970,10 @@ function collect(connect, monitor) {
 var ContainerDrop = function (_Component) {
 	_inherits(ContainerDrop, _Component);
 
-	function ContainerDrop(props) {
+	function ContainerDrop() {
 		_classCallCheck(this, ContainerDrop);
 
-		var _this = _possibleConstructorReturn(this, (ContainerDrop.__proto__ || Object.getPrototypeOf(ContainerDrop)).call(this, props));
-
-		_this.state = { is_opened: false };
-		return _this;
+		return _possibleConstructorReturn(this, (ContainerDrop.__proto__ || Object.getPrototypeOf(ContainerDrop)).apply(this, arguments));
 	}
 
 	_createClass(ContainerDrop, [{
@@ -32972,24 +33003,20 @@ var ContainerDrop = function (_Component) {
 			var _this2 = this;
 
 			var container_types = this.props.container_types;
+			var container_edit_index = this.props.ui_state.container_edit_index;
 
 			if (container_types.length < 1) return null;
-			var is_opened = this.state.is_opened;
-
-			// const collapsed = (!is_opened)? true: undefined;
 
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'grid-container__select ' + (is_opened ? "is-opened" : "is-closed")
+					className: 'grid-container__select ' + (container_edit_index === this.props.index ? "is-opened" : "is-closed")
 				},
 				_react2.default.createElement(
 					'button',
 					{
 						className: 'grid-container__select--toggle',
-						onClick: function onClick() {
-							_this2.setState({ is_opened: !is_opened });
-						}
+						onClick: this.onClickToggle.bind(this)
 					},
 					_react2.default.createElement(
 						'span',
@@ -33012,7 +33039,11 @@ var ContainerDrop = function (_Component) {
 					{ className: 'grid-container__select--types' },
 					_react2.default.createElement(
 						_collapsible2.default,
-						{ title: 'Containers' },
+						{
+							title: 'Containers',
+							collapsed: !this.isOpenType("c"),
+							onStateChanged: this.onCollapsedStateChange.bind(this, "c")
+						},
 						container_types.map(function (container, index) {
 							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("s-") === 0) return;
 							return _this2.renderContainer(container);
@@ -33020,7 +33051,11 @@ var ContainerDrop = function (_Component) {
 					),
 					_react2.default.createElement(
 						_collapsible2.default,
-						{ title: 'Sidebars' },
+						{
+							title: 'Sidebars',
+							collapsed: !this.isOpenType("s"),
+							onStateChanged: this.onCollapsedStateChange.bind(this, "s")
+						},
 						container_types.map(function (container, index) {
 							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("c-") === 0) return;
 							return _this2.renderContainer(container);
@@ -33028,7 +33063,11 @@ var ContainerDrop = function (_Component) {
 					),
 					_react2.default.createElement(
 						_collapsible2.default,
-						{ title: 'Reusable' },
+						{
+							title: 'Reusable',
+							collapsed: !this.isOpenType("r"),
+							onStateChanged: this.onCollapsedStateChange.bind(this, "r")
+						},
 						_react2.default.createElement(
 							'p',
 							null,
@@ -33073,13 +33112,41 @@ var ContainerDrop = function (_Component) {
 			this.props.onAdd(container, this.props.index);
 			this.setState({ is_opend: false });
 		}
+	}, {
+		key: 'onClickToggle',
+		value: function onClickToggle() {
+			this.props.onUiStateChange("container_edit_index", this.props.index === this.props.ui_state.container_edit_index ? undefined : this.props.index);
+		}
+	}, {
+		key: 'onCollapsedStateChange',
+		value: function onCollapsedStateChange(type) {
+			var open_types = this.getOpenTypes();
+
+			if (open_types.hasOwnProperty(type)) {
+				delete open_types[type];
+			} else {
+				open_types[type] = 1;
+			}
+			this.props.onUiStateChange("container_edit_open_types", open_types);
+		}
+	}, {
+		key: 'getOpenTypes',
+		value: function getOpenTypes() {
+			return _extends({}, this.props.ui_state.container_edit_open_types);
+		}
+	}, {
+		key: 'isOpenType',
+		value: function isOpenType(type) {
+			return this.getOpenTypes().hasOwnProperty(type);
+		}
 	}]);
 
 	return ContainerDrop;
 }(_react.Component);
 
 ContainerDrop.defaultProps = {
-	container_types: []
+	container_types: [],
+	ui_state: {}
 };
 ContainerDrop.propTypes = {
 	index: _propTypes2.default.number.isRequired,
@@ -33090,7 +33157,10 @@ ContainerDrop.propTypes = {
   */
 	onAdd: _propTypes2.default.func,
 
-	container_types: _propTypes2.default.array
+	container_types: _propTypes2.default.array,
+
+	onUiStateChange: _propTypes2.default.func.isRequired,
+	ui_state: _propTypes2.default.object.isRequired
 };
 
 exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);
@@ -33568,11 +33638,15 @@ var Grid = function (_Component) {
 		key: 'renderContainerDrop',
 		value: function renderContainerDrop(index) {
 			var drop_key = "container-drop_" + index;
+			var dialog_open = this.props.ui_state.container;
 			return _react2.default.createElement(_containerDrop2.default, {
 				key: drop_key,
 				index: index,
 				onAdd: this.onContainerAdd.bind(this),
-				container_types: this.props.container_types
+				container_types: this.props.container_types,
+
+				ui_state: this.props.ui_state,
+				onUiStateChange: this.props.onUiStateChange
 			});
 		}
 
@@ -33755,10 +33829,19 @@ Grid.defaultProps = {
 	edit_container: null,
 	edit_box: null,
 	box_types: [],
-	container_types: []
+	container_types: [],
+
+	ui_state: {},
+	onUiStateChange: function onUiStateChange() {
+		console.log("onUiStateChange not implemented");
+	}
+
 };
 
 Grid.propTypes = {
+
+	ui_state: _propTypes2.default.object,
+
 	/**
   * initial state
   */
@@ -33784,12 +33867,14 @@ Grid.propTypes = {
 	onContainerEditCancel: _propTypes2.default.func.isRequired,
 	onContainerDelete: _propTypes2.default.func.isRequired,
 	onContainerUpdate: _propTypes2.default.func.isRequired,
+	onContainerShowInPlaceDialog: _propTypes2.default.func.isRequired,
 
 	onBoxAdd: _propTypes2.default.func.isRequired,
 	onBoxMove: _propTypes2.default.func.isRequired,
 	onBoxEdit: _propTypes2.default.func.isRequired,
-	onBoxDelete: _propTypes2.default.func.isRequired
+	onBoxDelete: _propTypes2.default.func.isRequired,
 
+	onUiStateChange: _propTypes2.default.func.isRequired
 };
 
 /***/ }),
@@ -35271,6 +35356,10 @@ var TheGrid = function (_React$Component) {
 					})
 				),
 				_react2.default.createElement(_grid2.default, {
+
+					ui_state: this.props.ui,
+					onUiStateChange: this.props.onUiStateChange,
+
 					draft: isDraft,
 					container: container,
 
@@ -35287,6 +35376,7 @@ var TheGrid = function (_React$Component) {
 					onContainerReuse: this.props.onContainerReuse.bind(this, this.props.grid.id),
 					onContainerUpdate: this.props.onContainerEditUpdate.bind(this, this.props.grid.id),
 					onContainerEditCancel: this.props.onContainerEditCancel.bind(this, this.props.grid.id),
+					onContainerShowInPlaceDialog: this.props.onContainerShowInPlaceDialog,
 
 					onBoxEdit: this.props.onBoxEdit.bind(this, this.props.grid.id),
 					onBoxAdd: this.props.onBoxAdd.bind(this, this.props.grid.id),
@@ -35399,6 +35489,10 @@ TheGrid.defaultProps = {
 
 	onBoxTypeSearch: function onBoxTypeSearch(done, type, criteria, query) {
 		console.log("onBoxTypeSearch not implemented", type, criteria, query);
+	},
+
+	onUiStateChange: function onUiStateChange(key, value) {
+		console.log("ui state change not implemented", key, value);
 	}
 
 };
@@ -35437,7 +35531,9 @@ TheGrid.propTypes = {
 	onBoxCreate: _propTypes2.default.func,
 	onBoxDelete: _propTypes2.default.func,
 	onBoxMove: _propTypes2.default.func,
-	onBoxEdit: _propTypes2.default.func
+	onBoxEdit: _propTypes2.default.func,
+
+	onUiStateChange: _propTypes2.default.func
 
 };
 
@@ -35610,6 +35706,9 @@ function (dispatch) {
 		// -----------
 		// ui events
 		// -----------
+		onUiStateChange: function onUiStateChange(key, value) {
+			dispatch((0, _ui.actionUiStateChange)(key, value));
+		},
 
 
 		// -----------
@@ -35629,6 +35728,9 @@ function (dispatch) {
 		// -----------
 		// container events
 		// -----------
+		onContainerShowInPlaceDialog: function onContainerShowInPlaceDialog(args) {
+			dispatch((0, _ui.actionContainerShowInPlaceDialog)(args));
+		},
 		onContainerAdd: function onContainerAdd(grid_id, container, to_index) {
 			dispatch((0, _gridContainer.actionGridContainerEditingAdd)({ grid_id: grid_id, container_type: container.type, to_index: to_index }));
 		},
@@ -35646,7 +35748,6 @@ function (dispatch) {
 			dispatch((0, _ui.actionEditGridContainer)(container_id));
 		},
 		onContainerEditCancel: function onContainerEditCancel() {
-			console.log("CANCEL");
 			dispatch((0, _ui.actionEditGridContainerClose)());
 		},
 		onContainerEditUpdate: function onContainerEditUpdate(grid_id, container_id, container) {
@@ -36021,6 +36122,12 @@ var _types = __webpack_require__(46);
 
 function updateUI(state, action) {
 	switch (action.type) {
+
+		case _types.GRID_UI_STATE:
+			var new_state = _extends({}, state);
+			new_state[action.payload.key] = action.payload.value;
+			return new_state;
+
 		case _types.GRID_LOADING:
 			return _extends({}, state, {
 				is_loading: action.payload.is_loading
@@ -36033,6 +36140,15 @@ function updateUI(state, action) {
 		case _types.GRID_BOX_EDIT:
 			return _extends({}, state, {
 				edit_box: action.payload.box
+			});
+		case _types.GRID_CONTAINER_IN_PLACE_DIALOG:
+
+			var container_dialog = _extends({}, state.container_dialog, action.payload, {
+				index: action.payload.index
+			});
+
+			return _extends({}, state, {
+				container_dialog: container_dialog
 			});
 		default:
 			return state;

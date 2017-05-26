@@ -3,8 +3,6 @@
 import { connect } from 'react-redux'
 import AppGrid from '../component/app-grid'
 
-
-
 import {
 	actionGridDocumentPublishDraft,
 	actionGridDocumentRevertDraft,
@@ -27,10 +25,12 @@ import {
 } from '../actions/grid.box.editing'
 
 import {
+	actionUiStateChange,
 	actionEditGridBox,
 	actionCloseGridBoxEdit,
 	actionEditGridContainer,
 	actionEditGridContainerClose,
+	actionContainerShowInPlaceDialog
 } from '../actions/ui'
 
 function grid_is_ready(state){
@@ -53,7 +53,9 @@ export default connect(
 			// -----------
 			// ui events
 			// -----------
-
+			onUiStateChange(key, value){
+				dispatch(actionUiStateChange(key, value))
+			},
 
 			// -----------
 			// grid events
@@ -71,6 +73,9 @@ export default connect(
 			// -----------
 			// container events
 			// -----------
+			onContainerShowInPlaceDialog(args){
+				dispatch(actionContainerShowInPlaceDialog(args))
+			},
 			onContainerAdd(grid_id, container, to_index){
 				dispatch(actionGridContainerEditingAdd({grid_id, container_type: container.type, to_index }))
 			},
@@ -87,7 +92,6 @@ export default connect(
 				dispatch(actionEditGridContainer(container_id))
 			},
 			onContainerEditCancel: ()=>{
-				console.log("CANCEL")
 				dispatch(actionEditGridContainerClose())
 			},
 			onContainerEditUpdate: (grid_id, container_id, container)=>{

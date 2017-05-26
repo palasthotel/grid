@@ -160,6 +160,11 @@ class TheGrid extends React.Component{
 				</div>
 				
 				<Grid
+
+					ui_state={this.props.ui}
+					onUiStateChange={this.props.onUiStateChange}
+
+
 					draft={isDraft}
 					container={container}
 
@@ -176,6 +181,7 @@ class TheGrid extends React.Component{
 				    onContainerReuse={this.props.onContainerReuse.bind(this, this.props.grid.id)}
 					onContainerUpdate={this.props.onContainerEditUpdate.bind(this, this.props.grid.id)}
 					onContainerEditCancel={this.props.onContainerEditCancel.bind(this, this.props.grid.id)}
+					onContainerShowInPlaceDialog={this.props.onContainerShowInPlaceDialog}
 
 					onBoxEdit={this.props.onBoxEdit.bind(this, this.props.grid.id)}
 				    onBoxAdd={this.props.onBoxAdd.bind(this, this.props.grid.id)}
@@ -255,6 +261,9 @@ TheGrid.defaultProps = {
 	
 	onBoxTypeSearch: (done, type, criteria, query)=>{ console.log("onBoxTypeSearch not implemented", type, criteria, query) },
 
+
+	onUiStateChange: (key, value)=>{ console.log("ui state change not implemented", key, value) }
+
 };
 
 /**
@@ -292,6 +301,9 @@ TheGrid.propTypes = {
 	onBoxDelete: PropTypes.func,
 	onBoxMove: PropTypes.func,
 	onBoxEdit: PropTypes.func,
+
+
+	onUiStateChange: PropTypes.func,
 
 };
 

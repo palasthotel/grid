@@ -30,10 +30,6 @@ function collect(connect, monitor) {
 }
 
 class ContainerDrop extends Component {
-	constructor(props){
-		super(props);
-		this.state = { is_opened: false }
-	}
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
 
@@ -52,18 +48,16 @@ class ContainerDrop extends Component {
 
 	renderInPlace(){
 		const {container_types} = this.props;
+		const {container_edit_index} = this.props.ui_state;
 		if(container_types.length < 1) return null;
-		const {is_opened} = this.state;
-
-		// const collapsed = (!is_opened)? true: undefined;
 
 		return (
 			<div
-				className={`grid-container__select ${(is_opened)? "is-opened":"is-closed" }`}
+				className={`grid-container__select ${(container_edit_index === this.props.index)? "is-opened":"is-closed" }`}
 			>
 				<button
 					className="grid-container__select--toggle"
-					onClick={()=>{this.setState({is_opened:!is_opened})}}
+					onClick={this.onClickToggle.bind(this)}
 				>
 					<span className="grid-container__select--icon">+</span>
 					<span className="grid-container__select--open-text">Add Container</span>
@@ -72,7 +66,11 @@ class ContainerDrop extends Component {
 
 
 				<div className="grid-container__select--types">
-					<Collapsible title="Containers">
+					<Collapsible
+						title="Containers"
+						collapsed={!this.isOpenType("c")}
+						onStateChanged={this.onCollapsedStateChange.bind(this, "c")}
+					>
 						{container_types.map((container,index)=>{
 							if(container.type.indexOf("i-") === 0
 								|| container.type.indexOf("sc-") === 0
@@ -82,7 +80,11 @@ class ContainerDrop extends Component {
 							return this.renderContainer(container);
 						})}
 					</Collapsible>
-					<Collapsible title="Sidebars">
+					<Collapsible
+						title="Sidebars"
+						collapsed={!this.isOpenType("s")}
+						onStateChanged={this.onCollapsedStateChange.bind(this, "s")}
+					>
 						{container_types.map((container,index)=>{
 							if(container.type.indexOf("i-") === 0
 								|| container.type.indexOf("sc-") === 0
@@ -92,7 +94,11 @@ class ContainerDrop extends Component {
 							return this.renderContainer(container);
 						})}
 					</Collapsible>
-					<Collapsible title="Reusable">
+					<Collapsible
+						title="Reusable"
+						collapsed={!this.isOpenType("r")}
+						onStateChanged={this.onCollapsedStateChange.bind(this, "r")}
+					>
 						<p>Reusable list!</p>
 					</Collapsible>
 
@@ -134,14 +140,35 @@ class ContainerDrop extends Component {
 		this.props.onAdd(container, this.props.index)
 		this.setState({is_opend: false});
 	}
+	onClickToggle(){
+		this.props.onUiStateChange("container_edit_index", (this.props.index === this.props.ui_state.container_edit_index)? undefined: this.props.index);
+	}
+	onCollapsedStateChange(type){
+		const open_types = this.getOpenTypes();
+
+		if( open_types.hasOwnProperty(type) ){
+			delete open_types[type];
+		} else {
+			open_types[type] = 1;
+		}
+		this.props.onUiStateChange("container_edit_open_types", open_types);
+	}
+	getOpenTypes(){
+		return {...this.props.ui_state.container_edit_open_types}
+	}
+	isOpenType(type){
+		return (this.getOpenTypes().hasOwnProperty(type))
+	}
 
 }
 ContainerDrop.defaultProps = {
 	container_types: [],
+	ui_state: {},
 }
 ContainerDrop.propTypes = {
 	index: PropTypes.number.isRequired,
 	isOver: PropTypes.bool,
+
 	
 	/**
 	 * if new container from outside was added
@@ -149,6 +176,9 @@ ContainerDrop.propTypes = {
 	onAdd: PropTypes.func,
 
 	container_types: PropTypes.array,
+
+	onUiStateChange: PropTypes.func.isRequired,
+	ui_state: PropTypes.object.isRequired,
 };
 
 export default DropTarget(ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);

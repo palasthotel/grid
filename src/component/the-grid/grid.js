@@ -104,12 +104,16 @@ export default class Grid extends Component{
 	}
 	renderContainerDrop(index){
 		const drop_key = "container-drop_"+index;
+		const dialog_open = (this.props.ui_state.container)
 		return(
 			<ContainerDrop
 				key={drop_key}
 				index={index}
 				onAdd={this.onContainerAdd.bind(this)}
 				container_types={this.props.container_types}
+
+				ui_state={this.props.ui_state}
+				onUiStateChange={this.props.onUiStateChange}
 			/>
 		);
 	}
@@ -264,9 +268,16 @@ Grid.defaultProps = {
 	edit_box: null,
 	box_types: [],
 	container_types: [],
+
+	ui_state: { },
+	onUiStateChange: ()=>{ console.log("onUiStateChange not implemented") }
+
 };
 
 Grid.propTypes = {
+
+	ui_state: PropTypes.object,
+
 	/**
 	 * initial state
 	 */
@@ -294,11 +305,14 @@ Grid.propTypes = {
 	onContainerEditCancel: PropTypes.func.isRequired,
 	onContainerDelete: PropTypes.func.isRequired,
 	onContainerUpdate: PropTypes.func.isRequired,
+	onContainerShowInPlaceDialog: PropTypes.func.isRequired,
 
 
 	onBoxAdd: PropTypes.func.isRequired,
 	onBoxMove: PropTypes.func.isRequired,
 	onBoxEdit: PropTypes.func.isRequired,
 	onBoxDelete: PropTypes.func.isRequired,
-	
+
+
+	onUiStateChange: PropTypes.func.isRequired,
 };
