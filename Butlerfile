@@ -1,0 +1,43 @@
+{
+	"tasks" : [
+		{
+			"output" : "css/the-grid.css",
+			"input" : "scss_react/the-grid.scss",
+			"title" : "The Grid",
+			"type" : "watch",
+			"observe" : {
+				"path" : "scss_react"
+			},
+			"buildchain" : [
+				{
+					"providecompass" : false,
+					"args" : [
+						"-t",
+						"compact",
+						"-m"
+					],
+					"type" : "builtin",
+					"compiler" : "sassc",
+					"version" : "3.3.0"
+				},
+				{
+					"args" : [
+						"--autoprefixer.browsers",
+						"> 1%, last 2 versions"
+					],
+					"type" : "builtin",
+					"compiler" : "autoprefixer",
+					"version" : "6.3.3"
+				},
+				{
+					"args" : [
+						"-f"
+					],
+					"type" : "builtin",
+					"compiler" : "blessc",
+					"version" : "3.0.3"
+				}
+			]
+		}
+	]
+}
