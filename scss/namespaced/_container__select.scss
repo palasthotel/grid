@@ -8,24 +8,26 @@
   width: 30vw;
   margin: 0 auto;
 
-  //background-color: white;
-  //border: 1px solid black;
-
 }
 
 .grid-container__select--types {
 
   transition: all .3s ease-in-out;
+  overflow: hidden;
 
-  .is-opend & {
-    transform: scaleY(1);
+  .is-opened & {
     max-height: none;
+    //height: auto;
   }
 
   .is-closed & {
-    transform: scaleY(0);
     max-height: 0;
+    //height: 0;
   }
+
+
+
+
 
 }
 
@@ -112,3 +114,4 @@
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
