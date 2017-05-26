@@ -33054,7 +33054,7 @@ var ContainerDrop = function (_Component) {
 
 				slots.push(_react2.default.createElement('div', {
 					key: i,
-					className: 'grid-slot-with__' + parts[0]
+					className: 'grid-container-preview__slot grid-slot__width--' + parts[0]
 				}));
 			}
 
