@@ -7704,21 +7704,25 @@ module.exports = baseRest;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.setGridLoading = setGridLoading;
-exports.closeGridBoxEdit = closeGridBoxEdit;
-exports.editGridBox = editGridBox;
+exports.actionSetGridLoading = actionSetGridLoading;
+exports.actionCloseGridBoxEdit = actionCloseGridBoxEdit;
+exports.actionEditGridBox = actionEditGridBox;
+exports.actionEditGridContainer = actionEditGridContainer;
 
 var _types = __webpack_require__(46);
 
-function setGridLoading(is_loading) {
+function actionSetGridLoading(is_loading) {
 	return { type: _types.GRID_LOADING, payload: { is_loading: is_loading } };
 }
 
-function closeGridBoxEdit() {
-	return editGridBox(undefined);
+function actionCloseGridBoxEdit() {
+	return actionEditGridBox(undefined);
 }
-function editGridBox(box) {
+function actionEditGridBox(box) {
 	return { type: _types.GRID_BOX_EDIT, payload: { box: box } };
+}
+function actionEditGridContainer(container_id) {
+	return { type: _types.GRID_CONTAINER_EDIT, payload: { container_id: container_id } };
 }
 
 /***/ }),
@@ -14174,12 +14178,12 @@ var _backend = __webpack_require__(123);
 function actionGridBoxEditingMetaTypes(grid_id) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingBoxMetaTypes.bind(this, grid_id),
 		then: function then(dispatch, result) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_BOX_EDITING_META_TYPES,
@@ -14216,12 +14220,12 @@ function actionGridBoxEditingBoxSearch(args) {
 function actionGridBoxEditingCreate(args) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingBoxCreate.bind(this, args),
 		then: function then(dispatch, result) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_BOX_EDITING_CREATE,
@@ -14238,12 +14242,12 @@ function actionGridBoxEditingCreate(args) {
 function actionGridBoxEditingMove(args) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingBoxMove.bind(this, args),
 		then: function then(dispatch, success) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_BOX_EDITING_MOVE,
@@ -14261,12 +14265,12 @@ function actionGridBoxEditingMove(args) {
 function actionGridBoxEditingRemove(args) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingBoxRemove.bind(this, args),
 		then: function then(dispatch, success) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_BOX_EDITING_REMOVE,
@@ -14284,17 +14288,19 @@ function actionGridBoxEditingRemove(args) {
 function actionGridBoxEditingUpdate(args) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingBoxUpdate.bind(this, args),
 		then: function then(dispatch, box) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_BOX_EDITING_UPDATE,
 				payload: _extends({}, args, { box: box })
 			});
+
+			dispatch((0, _ui.actionCloseGridBoxEdit)());
 		}
 	});
 }
@@ -14332,11 +14338,11 @@ var _backend = __webpack_require__(123);
 function actionGridDocumentLoad(grid_id) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridDocumentLoad.bind(this, grid_id),
 		then: function then(dispatch, grid) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_DOCUMENT_LOAD, payload: { grid: grid } });
 		}
 	});
@@ -14345,11 +14351,11 @@ function actionGridDocumentLoad(grid_id) {
 function actionGridDocumentCheckDraftState(grid_id) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridDocumentCheckDraftState.bind(this, grid_id),
 		then: function then(dispatch, isDraft) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_DOCUMENT_CHECK_DRAFT_STATE, payload: { isDraft: isDraft } });
 		}
 	});
@@ -14358,11 +14364,11 @@ function actionGridDocumentCheckDraftState(grid_id) {
 function actionGridDocumentPublishDraft(grid_id) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridDocumentPublishDraft.bind(this, grid_id),
 		then: function then(dispatch, success) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_DOCUMENT_PUBLISH_DRAFT, payload: { success: success } });
 		}
 	});
@@ -14371,11 +14377,11 @@ function actionGridDocumentPublishDraft(grid_id) {
 function actionGridDocumentRevertDraft(grid_id) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridDocumentRevertDraft.bind(this, grid_id),
 		then: function then(dispatch, grid) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_DOCUMENT_REVERT_DRAFT, payload: { grid: grid } });
 		}
 	});
@@ -14384,11 +14390,11 @@ function actionGridDocumentRevertDraft(grid_id) {
 function actionGridDocumentRevertToRevision(args) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridDocumentRevertToRevision.bind(this, args),
 		then: function then(dispatch, grid) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_DOCUMENT_REVERT_TO_REVISION, payload: _extends({}, args, { grid: grid }) });
 		}
 	});
@@ -14397,11 +14403,11 @@ function actionGridDocumentRevertToRevision(args) {
 function actionGridDocumentRevisions(grid_id) {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridDocumentRevisions.bind(this, grid_id),
 		then: function then(dispatch, revisions) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_DOCUMENT_REVISIONS, payload: { revisions: revisions } });
 		}
 	});
@@ -14410,11 +14416,11 @@ function actionGridDocumentRevisions(grid_id) {
 function actionGridStylesGet() {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridStylesGetAll,
 		then: function then(dispatch, styles) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_STYLES_GET, payload: { styles: styles } });
 		}
 	});
@@ -14423,11 +14429,11 @@ function actionGridStylesGet() {
 function actionGridPermissionRights() {
 	return (0, _async.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridPermissionRights,
 		then: function then(dispatch, rights) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_PERMISSION_RIGHTS, payload: { rights: rights } });
 		}
 	});
@@ -29015,11 +29021,11 @@ var _backend = __webpack_require__(123);
 function actionGridContainerEditingGetTypes(grid_id) {
 	return (0, _index.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingContainerGetTypes.bind(this, grid_id),
 		then: function then(dispatch, result) {
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 			dispatch({ type: _types.REQUEST_GRID_CONTAINER_EDITING_GET_TYPES, payload: { container_types: result } });
 		}
 	});
@@ -29033,12 +29039,12 @@ function actionGridContainerEditingGetTypes(grid_id) {
 function actionGridContainerEditingAdd(args) {
 	return (0, _index.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingContainerAdd.bind(this, args),
 		then: function then(dispatch, result) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_CONTAINER_EDITING_ADD,
@@ -29061,12 +29067,12 @@ function actionGridContainerEditingMove(args) {
 
 	return (0, _index.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingContainerMove.bind(this, args),
 		then: function then(dispatch, result) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_CONTAINER_EDITING_MOVE,
@@ -29085,12 +29091,12 @@ function actionGridContainerEditingDelete(args) {
 
 	return (0, _index.actionAsyncExecute)({
 		before: function before(dispatch) {
-			dispatch((0, _ui.setGridLoading)(true));
+			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingContainerDelete.bind(this, args),
 		then: function then(dispatch, result) {
 
-			dispatch((0, _ui.setGridLoading)(false));
+			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_CONTAINER_EDITING_DELETE,
@@ -35293,7 +35299,9 @@ var TheGrid = function (_React$Component) {
 						),
 						_react2.default.createElement(
 							'ul',
-							null,
+							{
+								className: 'grid-notifications__list'
+							},
 							_react2.default.createElement(
 								'li',
 								{
@@ -35691,7 +35699,7 @@ function (dispatch) {
 		// -----------
 		onEditContainer: function onEditContainer(container_id) {},
 		onEditBox: function onEditBox(grid_id, box) {
-			dispatch((0, _ui.editGridBox)(box));
+			dispatch(editGridBox(box));
 		},
 
 
@@ -35725,6 +35733,9 @@ function (dispatch) {
 		onContainerReuse: function onContainerReuse() {
 			console.log("onContainerReuse not implemented");
 		},
+		onContainerEdit: function onContainerEdit(grid_id, container_id) {
+			dispatch((0, _ui.actionEditGridContainer)());
+		},
 
 		// -----------
 		// box events
@@ -35736,7 +35747,7 @@ function (dispatch) {
 			dispatch((0, _gridBox.actionGridBoxEditingMove)({ grid_id: grid_id, from_container_id: from_container_id, from_slot_id: from_slot_id, from_box_index: from_box_index, to_container_id: to_container_id, to_slot_id: to_slot_id, to_box_index: to_box_index }));
 		},
 		onBoxEdit: function onBoxEdit(grid_id, box) {
-			dispatch((0, _ui.editGridBox)(box));
+			dispatch((0, _ui.actionEditGridBox)(box));
 		},
 		onBoxDelete: function onBoxDelete(grid_id, container_id, slot_id, index) {
 			dispatch((0, _gridBox.actionGridBoxEditingRemove)({ grid_id: grid_id, container_id: container_id, slot_id: slot_id, index: index }));

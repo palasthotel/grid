@@ -9,7 +9,8 @@ import {
 } from './types'
 
 import {
-	setGridLoading,
+	actionSetGridLoading,
+	actionCloseGridBoxEdit,
 } from './ui'
 
 import {actionAsyncExecute} from './async'
@@ -31,12 +32,12 @@ import {
 export function actionGridBoxEditingMetaTypes(grid_id) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingBoxMetaTypes.bind(this,grid_id),
 		then: (dispatch, result)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_BOX_EDITING_META_TYPES,
@@ -77,12 +78,12 @@ export function actionGridBoxEditingBoxSearch(args) {
 export function actionGridBoxEditingCreate(args) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingBoxCreate.bind(this,args),
 		then: (dispatch, result)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_BOX_EDITING_CREATE,
@@ -100,12 +101,12 @@ export function actionGridBoxEditingCreate(args) {
 export function actionGridBoxEditingMove(args) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingBoxMove.bind(this, args),
 		then: (dispatch, success)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_BOX_EDITING_MOVE,
@@ -124,12 +125,12 @@ export function actionGridBoxEditingMove(args) {
 export function actionGridBoxEditingRemove(args) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingBoxRemove.bind(this, args),
 		then: (dispatch, success)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_BOX_EDITING_REMOVE,
@@ -148,17 +149,19 @@ export function actionGridBoxEditingRemove(args) {
 export function actionGridBoxEditingUpdate(args) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingBoxUpdate.bind(this, args),
 		then: (dispatch, box)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_BOX_EDITING_UPDATE,
 				payload: { ...args, box  },
 			});
+
+			dispatch(actionCloseGridBoxEdit())
 
 		}
 	});

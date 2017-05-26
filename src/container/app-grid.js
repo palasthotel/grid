@@ -26,7 +26,8 @@ import {
 } from '../actions/grid.box.editing'
 
 import {
-	editGridBox,
+	actionEditGridBox,
+	actionEditGridContainer,
 } from '../actions/ui'
 
 function grid_is_ready(state){
@@ -84,6 +85,9 @@ export default connect(
 			onContainerReuse: ()=>{
 				console.log("onContainerReuse not implemented")
 			},
+			onContainerEdit: (grid_id, container_id)=>{
+				dispatch(actionEditGridContainer())
+			},
 
 			// -----------
 			// box events
@@ -95,7 +99,7 @@ export default connect(
 				dispatch(actionGridBoxEditingMove({grid_id, from_container_id, from_slot_id, from_box_index, to_container_id, to_slot_id, to_box_index}));
 			},
 			onBoxEdit(grid_id, box){
-				dispatch(editGridBox(box))
+				dispatch(actionEditGridBox(box))
 			},
 			onBoxDelete(grid_id, container_id, slot_id, index){
 				dispatch(actionGridBoxEditingRemove({grid_id,container_id,slot_id, index}));

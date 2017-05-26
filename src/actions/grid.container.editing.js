@@ -7,7 +7,7 @@ import {
 } from './types'
 
 import {
-	setGridLoading,
+	actionSetGridLoading,
 } from './ui'
 
 import { actionAsyncExecute } from './index'
@@ -27,11 +27,11 @@ import {
 export function actionGridContainerEditingGetTypes(grid_id) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingContainerGetTypes.bind(this,grid_id),
 		then: (dispatch, result)=>{
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 			dispatch({ type: REQUEST_GRID_CONTAINER_EDITING_GET_TYPES, payload: { container_types: result} } );
 		}
 	});
@@ -45,12 +45,12 @@ export function actionGridContainerEditingGetTypes(grid_id) {
 export function actionGridContainerEditingAdd(args) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingContainerAdd.bind(this,args),
 		then: (dispatch, result)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_CONTAINER_EDITING_ADD,
@@ -76,12 +76,12 @@ export function actionGridContainerEditingMove(args) {
 
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingContainerMove.bind(this,args),
 		then: (dispatch, result)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_CONTAINER_EDITING_MOVE,
@@ -102,12 +102,12 @@ export function actionGridContainerEditingDelete(args) {
 
 	return actionAsyncExecute({
 		before: (dispatch)=>{
-			dispatch(setGridLoading(true));
+			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingContainerDelete.bind(this,args),
 		then: (dispatch, result)=>{
 
-			dispatch(setGridLoading(false));
+			dispatch(actionSetGridLoading(false));
 
 			dispatch({
 				type: REQUEST_GRID_CONTAINER_EDITING_DELETE,

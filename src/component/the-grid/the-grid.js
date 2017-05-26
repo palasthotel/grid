@@ -99,7 +99,9 @@ class TheGrid extends React.Component{
 						className="grid-notifications"
 					>
 						<div>svg</div>
-						<ul>
+						<ul
+							className="grid-notifications__list"
+						>
 							<li
 								className="grid-notification__item grid-notification__item--is-published"
 							>
