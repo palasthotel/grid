@@ -7,6 +7,9 @@
 .grid-menu {
   margin: 0;
   padding: 0;
+
+
+
 }
 
 
@@ -28,6 +31,10 @@
 
  */
 
+ {
+
+}
+
 /* Dropdown Button */
 .dropbtn {
   background-color: #4CAF50;
@@ -45,7 +52,7 @@
 }
 
 /* Dropdown Content (Hidden by Default) */
-.dropdown-content {
+.grid-childmenu {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
@@ -55,7 +62,7 @@
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.grid-childmenu a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
