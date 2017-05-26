@@ -5,7 +5,6 @@
 
 .grid-collapsible {
   background-color: white;
-
   box-shadow: 0 15px 15px 0 rgba(0, 0, 0, .2);
 }
 
@@ -19,10 +18,16 @@
 
   &:after {
     content: "";
-
     background-image: url( "../svg/ic_expand_more_black_24px.svg" );
     background-repeat: no-repeat;
     background-size: 100%;
     transform: translateY(2px);
   }
+}
+
+
+.grid-collapsible__content {
+  padding-left: 1vw;
+  padding-right: 1vw;
+
 }

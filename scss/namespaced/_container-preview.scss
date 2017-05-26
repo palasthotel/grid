@@ -6,16 +6,18 @@
 
 .grid-container-preview {
   display: flex;
+  padding-bottom: 10px;
 }
 
 .grid-container-preview__slot {
-  height: 20px;
+  height: 35px;
   background-color: white;
 
-  border: .5vw solid $color__app--background;
+  box-shadow: 0 0 0 4px $color__app--background;
 
   .grid-container-preview:hover & {
-    border-color: $color__container-preview--highlight;
+    box-shadow: 0 0 0 4px $color__container-preview--highlight;
+    cursor: pointer;
   }
 }
 
