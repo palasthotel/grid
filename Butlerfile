@@ -2,18 +2,18 @@
 	"tasks" : [
 		{
 			"output" : "css/the-grid.css",
-			"input" : "scss_react/the-grid.scss",
+			"input" : "scss/the-grid.scss",
 			"title" : "The Grid",
 			"type" : "watch",
 			"observe" : {
-				"path" : "scss_react"
+				"path" : "scss"
 			},
 			"buildchain" : [
 				{
 					"providecompass" : false,
 					"args" : [
 						"-t",
-						"compact",
+						"compressed",
 						"-m"
 					],
 					"type" : "builtin",
