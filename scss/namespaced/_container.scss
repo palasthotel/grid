@@ -5,10 +5,13 @@
 
 
 .grid-container {
-  border: 1px dotted rgba( 33, 33, 33, 0.8 );
+  //border: 1px dotted rgba( 33, 33, 33, 0.8 );
 
   margin-left: 10px;
   margin-right: 10px;
+
+  background-color: $color__container--background;
+  color: $color__container--foreground;
 
 }
 
@@ -18,16 +21,13 @@
 
 .grid-container__drop--area {
   height: 20px;
-  background-color: white;
+  //background-color: white;
   border: 10px solid $color__app--background;
 }
 
 
 
-.grid-container__slots {
-  display: flex;
-  border: 2px solid black;
-}
+
 
 .grid-container__controls {
 

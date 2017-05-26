@@ -3,13 +3,23 @@
  * @modified 26.05.2017
  */
 
+$color__app--background: rgba(40, 60, 70, 1);
+$color__app--foreground: white;
 
-
-$color__app--background: rgba( 33, 33, 33, 0.1 );
-
-$color__status--success: limegreen;
-$color__status--published: limegreen;
-$color__status--unpublished: yellow;
-$color__status--error: red;
+$color__status--success: rgb(136, 205, 0);
+$color__status--published: rgb(136, 205, 0);
+$color__status--unpublished: rgb(241, 196, 15);
+$color__status--error: rgb(216, 94, 47);
 
 $color__menu--background: white;
+
+$color__container--background: rgb(98, 124, 130);
+$color__container--foreground: white;
+
+$color__slot--background: rgb(235, 240, 242);
+$color__slot--border: white;
+$color__slot--foreground: rgb(98, 124, 130);
+
+$color__box--background: white;
+$color__box--foreground: rgb(33, 33, 33);
+$color__box--border: rgb(33, 33, 33);
