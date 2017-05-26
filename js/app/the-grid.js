@@ -33280,7 +33280,7 @@ var Container = function (_Component) {
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'grid-container__slots' },
+						{ className: 'grid-slots' },
 						this.props.children
 					),
 					_react2.default.createElement(

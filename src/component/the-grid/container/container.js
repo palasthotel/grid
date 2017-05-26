@@ -109,7 +109,7 @@ class Container extends Component{
 						{this.renderIf("prolog")}
 					</div>
 					
-					<div className="grid-container__slots">{this.props.children}</div>
+					<div className="grid-slots">{this.props.children}</div>
 					
 					<div className="grid-container__after">
 						{this.renderIf("epilog")}
