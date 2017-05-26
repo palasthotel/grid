@@ -16,9 +16,6 @@ class AppGrid extends Component {
 
 	}
 
-	componentWillUnmount() {
-	}
-
 	/**
 	 * ------------------------------------------------
 	 * rendering

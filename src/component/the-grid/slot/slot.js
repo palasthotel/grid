@@ -18,13 +18,13 @@ class Slot extends Component{
 	render(){
 		return(
 			<div
-				className="slot"
+				className="grid-slot"
 			    style={{
 			    	width: this.props.dimension+"%",
 			    }}
 			>
 				<StyleChanger />
-				<div className="grid-boxes-wrapper boxes-wrapper">{this.props.children}</div>
+				<div className="grid-boxes">{this.props.children}</div>
 			</div>
 		)
 	}

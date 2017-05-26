@@ -235,18 +235,6 @@ export default class Grid extends Component{
  * property defaults
  */
 Grid.defaultProps = {
-	onStateChange: (container)=>{ },
-	
-	onContainerAdd: (done, container)=> { done(false, container) },
-	onContainerMove: (done)=> { done(); },
-	onContainerEdit: (done)=>{ done(); },
-	onContainerDelete: (done)=>{ done(); },
-	onContainerReuse: (done)=>{ done(); },
-	
-	onBoxAdd: (done, box)=> { done(false, box) },
-	onBoxMove: (done)=>{ done(); },
-	onBoxEdit: (done)=>{ done(); },
-	onBoxDelete: (done)=>{ done(); },
 
 };
 
@@ -267,6 +255,8 @@ Grid.propTypes = {
 	onContainerMove: PropTypes.func,
 	onContainerEdit: PropTypes.func,
 	onContainerDelete: PropTypes.func,
+
+	// onContainer
 	
 	onBoxAdd: PropTypes.func,
 	onBoxMove: PropTypes.func,
