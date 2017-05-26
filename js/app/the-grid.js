@@ -29130,18 +29130,19 @@ function actionGridContainerEditingDelete(args) {
  * @return {Promise}
  */
 function actionGridContainerEditingUpdate(args) {
+	console.log(args);
 	return (0, _index.actionAsyncExecute)({
 		before: function before(dispatch) {
 			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingContainerUpdate.bind(this, args),
-		then: function then(dispatch, box) {
+		then: function then(dispatch, container) {
 
 			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
-				type: REQUEST_GRID_BOX_EDITING_UPDATE,
-				payload: _extends({}, args, { box: box })
+				type: _types.REQUEST_GRID_CONTAINER_EDITING_UPDATE,
+				payload: _extends({}, args, { container: container })
 			});
 
 			dispatch((0, _ui.actionEditGridContainerClose)());
@@ -31790,11 +31791,10 @@ function initGrid(settings, root) {
 		})
 	), root);
 
-	store.dispatch((0, _grid.actionGridDocumentLoad)(1)).then(function () {
-		return Promise.all([store.dispatch((0, _grid.actionGridDocumentRevisions)(1)), store.dispatch((0, _grid.actionGridStylesGet)()), store.dispatch((0, _grid.actionGridPermissionRights)())]);
-	}).then(function () {
-		store.dispatch((0, _gridContainer.actionGridContainerEditingGetTypes)(1));
-		store.dispatch((0, _gridBox.actionGridBoxEditingMetaTypes)(1));
+	Promise.all([store.dispatch((0, _grid.actionGridDocumentRevisions)(1)), store.dispatch((0, _grid.actionGridStylesGet)()), store.dispatch((0, _grid.actionGridPermissionRights)()), store.dispatch((0, _gridContainer.actionGridContainerEditingGetTypes)(1)), store.dispatch((0, _gridBox.actionGridBoxEditingMetaTypes)(1))]).then(function () {
+
+		// if the dependencies are loaded load the grid
+		store.dispatch((0, _grid.actionGridDocumentLoad)(1));
 	});
 
 	// watch state of draft
