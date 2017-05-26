@@ -33541,7 +33541,8 @@ var Grid = function (_Component) {
 					$containers.push(_react2.default.createElement(_containerEditor2.default, {
 						key: container.id,
 						container: container,
-						onSave: this.props.onContainerUpdate
+						onSave: this.props.onContainerUpdate,
+						onCancel: this.props.onContainerEditCancel
 					}));
 				} else {
 					$containers.push(_react2.default.createElement(
@@ -33780,6 +33781,7 @@ Grid.propTypes = {
 	onContainerAdd: _propTypes2.default.func.isRequired,
 	onContainerMove: _propTypes2.default.func.isRequired,
 	onContainerEdit: _propTypes2.default.func.isRequired,
+	onContainerEditCancel: _propTypes2.default.func.isRequired,
 	onContainerDelete: _propTypes2.default.func.isRequired,
 	onContainerUpdate: _propTypes2.default.func.isRequired,
 
@@ -35284,6 +35286,7 @@ var TheGrid = function (_React$Component) {
 					onContainerDelete: this.props.onContainerDelete.bind(this, this.props.grid.id),
 					onContainerReuse: this.props.onContainerReuse.bind(this, this.props.grid.id),
 					onContainerUpdate: this.props.onContainerEditUpdate.bind(this, this.props.grid.id),
+					onContainerEditCancel: this.props.onContainerEditCancel.bind(this, this.props.grid.id),
 
 					onBoxEdit: this.props.onBoxEdit.bind(this, this.props.grid.id),
 					onBoxAdd: this.props.onBoxAdd.bind(this, this.props.grid.id),
@@ -35643,6 +35646,7 @@ function (dispatch) {
 			dispatch((0, _ui.actionEditGridContainer)(container_id));
 		},
 		onContainerEditCancel: function onContainerEditCancel() {
+			console.log("CANCEL");
 			dispatch((0, _ui.actionEditGridContainerClose)());
 		},
 		onContainerEditUpdate: function onContainerEditUpdate(grid_id, container_id, container) {
@@ -45073,6 +45077,7 @@ var ContainerEditor = function (_Component) {
 	}, {
 		key: 'onCancel',
 		value: function onCancel() {
+			console.log("cancel");
 			this.props.onCancel();
 		}
 
