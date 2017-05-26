@@ -16,21 +16,29 @@
 .grid-notifications__list {
   position: absolute;
   right: 0;
+  width: 350px;
 }
 
 
 .grid-notification__item {
-  padding: 10px;
+  padding: 5px 10px;
   margin-bottom: 5px;
-
   background-color: $color__status--unpublished;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 
 .grid-notification__button {
   border-radius: 50%;
-  background-color: rgba( 255, 255, 255, 0.4 );
+  background-color: rgba( 255, 255, 255, 0.9 );
   color: $color__status--error;
   border: none;
 
+}
+
+
+.grid-notification__icon {
+  align-self: center;
 }
