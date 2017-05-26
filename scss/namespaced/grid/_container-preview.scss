@@ -6,7 +6,7 @@
 
 .grid-container-preview {
   display: flex;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 
 .grid-container-preview__slot {
@@ -18,6 +18,12 @@
   .grid-container-preview:hover & {
     box-shadow: 0 0 0 4px $color__container-preview--highlight;
     cursor: pointer;
+  }
+
+  &.is-space {
+    background-color: $color__app--background;
+    //background-color: white;
+    //box-shadow: none;
   }
 }
 
