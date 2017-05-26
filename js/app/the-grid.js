@@ -35220,12 +35220,12 @@ var TheGrid = function (_React$Component) {
 			var show_revisions = this.state.show_revisions;
 
 
-			var draft_class = isDraft ? "is-draft" : "is-pubished";
+			var draft_class = isDraft ? "is-draft" : "is-published";
 
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'the-grid ' + draft_class
+					className: 'grid-app ' + draft_class
 				},
 				_react2.default.createElement(
 					'header',
@@ -35272,7 +35272,9 @@ var TheGrid = function (_React$Component) {
 								},
 								_react2.default.createElement(
 									'ul',
-									null,
+									{
+										className: 'grid-childmenu'
+									},
 									_react2.default.createElement(_toolbarButton2.default, {
 										label: 'Option 2',
 										identifier: 'opt-1',
@@ -35543,6 +35545,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(4);
@@ -35587,13 +35591,13 @@ var ToolbarButton = function (_Component) {
 		value: function render() {
 			var _props = this.props,
 			    identifier = _props.identifier,
-			    label = _props.label,
-			    icon = _props.icon;
+			    label = _props.label;
 
+			var child_class = _typeof(this.props.children) !== ( true ? 'undefined' : _typeof(undefined)) ? "grid-menu__item--has-childmenu" : "";
 			return _react2.default.createElement(
 				'li',
 				{
-					className: 'grid-menu__item grid-adminbar__item--' + identifier
+					className: 'grid-menu__item grid-adminbar__item--' + identifier + ' ' + child_class
 				},
 				_react2.default.createElement(
 					'button',
@@ -35734,8 +35738,13 @@ function (dispatch) {
 			console.log("onContainerReuse not implemented");
 		},
 		onContainerEdit: function onContainerEdit(grid_id, container_id) {
-			dispatch((0, _ui.actionEditGridContainer)());
+			dispatch((0, _ui.actionEditGridContainer)(container_id));
 		},
+
+		// -----------
+		// container editor events
+		// -----------
+
 
 		// -----------
 		// box events
@@ -35758,10 +35767,13 @@ function (dispatch) {
 
 
 		// -----------
-		// boxeditor events
+		// box editor events
 		// -----------
 		onSaveBoxeditor: function onSaveBoxeditor(grid_id, container_id, slot_id, box_index, box) {
 			dispatch((0, _gridBox.actionGridBoxEditingUpdate)({ grid_id: grid_id, container_id: container_id, slot_id: slot_id, index: box_index, box: box }));
+		},
+		onDiscardBoxeditor: function onDiscardBoxeditor() {
+			dispatch((0, _ui.actionCloseGridBoxEdit)());
 		}
 	};
 })(_appGrid2.default);
