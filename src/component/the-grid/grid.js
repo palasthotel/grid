@@ -32,6 +32,104 @@ export default class Grid extends Component{
 	 * rendering
 	 * ---------------------
 	 */
+
+	/**
+	 * render the whole grid
+	 * @returns {XML}
+	 */
+	render(){
+		return (
+			<div
+				className="grid"
+				ref={(element)=> this.state.dom = element}
+			>
+				{this.renderContainers(this.props.container)}
+			</div>
+		);
+	}
+
+	/**
+	 * render containers
+	 * @param containers
+	 * @returns {Array}
+	 */
+	renderContainers(containers){
+		const $containers = [];
+
+		const {edit_container} = this.props;
+
+		/**
+		 * render drop area for containers
+		 * @type {string}
+		 */
+		$containers.push(this.renderContainerDrop(0));
+
+		for(let i = 0; i < containers.length; i++ ){
+			let container = containers[i];
+
+			/**
+			 * render container
+			 */
+			let dimensions = container.type.split("-").slice(1);
+
+			if(edit_container === container.id){
+				$containers.push(<p>Container Editor</p>)
+			} else {
+				$containers.push((
+					<Container
+						key={container.id}
+						{...container}
+						index={i}
+						onMove={this.onContainerMove.bind(this)}
+						onDelete={this.props.onContainerDelete}
+						onReuse={this.onContainerReuse.bind(this)}
+						onEdit={this.onContainerEdit.bind(this)}
+					>
+						{this.renderSlots(container.slots, dimensions, i)}
+					</Container>
+				));
+			}
+
+			$containers.push(this.renderContainerDrop(i+1));
+
+		}
+		return $containers;
+	}
+	renderContainerDrop(index){
+		const drop_key = "container-drop_"+index;
+		return(
+			<ContainerDrop
+				key={drop_key}
+				index={index}
+				onAdd={this.onContainerAdd.bind(this)}
+			/>
+		);
+	}
+
+	/**
+	 * render slots
+	 * @param slots
+	 * @param dimensions array
+	 * @param container_index
+	 * @returns {*}
+	 */
+	renderSlots(slots, dimensions, container_index){
+		return slots.map((slot, index)=>{
+			let parts = dimensions[index].split("d");
+			let width = (parts[0]/parts[1])*100;
+			return(
+				<Slot
+					key={container_index+"-"+index}
+					index={index}
+					container_index={container_index}
+					{...slot}
+					dimension={width}
+				>
+					{this.renderBoxes(slot.boxes, container_index, index)}
+				</Slot>
+			)
+		});
+	}
 	
 	/**
 	 * render boxes
@@ -84,94 +182,8 @@ export default class Grid extends Component{
 		);
 	}
 	
-	/**
-	 * render slots
-	 * @param slots
-	 * @param dimensions array
-	 * @param container_index
-	 * @returns {*}
-	 */
-	renderSlots(slots, dimensions, container_index){
-		return slots.map((slot, index)=>{
-			let parts = dimensions[index].split("d");
-			let width = (parts[0]/parts[1])*100;
-			return(
-				<Slot
-					key={container_index+"-"+index}
-					index={index}
-					container_index={container_index}
-					{...slot}
-					dimension={width}
-				>
-					{this.renderBoxes(slot.boxes, container_index, index)}
-				</Slot>
-			)
-		});
-	}
-	
-	/**
-	 * render containers
-	 * @param containers
-	 * @returns {Array}
-	 */
-	renderContainers(containers){
-		const $containers = [];
-		
-		/**
-		 * render drop area for containers
-		 * @type {string}
-		 */
-		$containers.push(this.renderContainerDrop(0));
-		
-		for(let i = 0; i < containers.length; i++ ){
-			let container = containers[i];
-			
-			/**
-			 * render container
-			 */
-			let dimensions = container.type.split("-").slice(1);
-			$containers.push((
-				<Container
-					key={container.id}
-					{...container}
-					index={i}
-				    onMove={this.onContainerMove.bind(this)}
-				    onDelete={this.props.onContainerDelete}
-				    onReuse={this.onContainerReuse.bind(this)}
-				>
-					{this.renderSlots(container.slots, dimensions, i)}
-				</Container>
-			));
-			
-			$containers.push(this.renderContainerDrop(i+1));
-			
-		}
-		return $containers;
-	}
-	renderContainerDrop(index){
-		const drop_key = "container-drop_"+index;
-		return(
-			<ContainerDrop
-				key={drop_key}
-				index={index}
-			    onAdd={this.onContainerAdd.bind(this)}
-			/>
-		);
-	}
-	/**
-	 * render the whole grid
-	 * @returns {XML}
-	 */
-	render(){
-		return (
-			<div
-				className="grid"
-				ref={(element)=> this.state.dom = element}
-			>
-				{this.renderContainers(this.props.container)}
-			</div>
-		);
-	}
+
+
 	
 	/**
 	 * ---------------------
@@ -196,6 +208,9 @@ export default class Grid extends Component{
 	}
 	onContainerReuse(container_index,title){
 		this.props.onContainerReuse(container_index, title);
+	}
+	onContainerEdit(container_id){
+		this.props.onContainerEdit(container_id);
 	}
 	
 	onBoxAdd(box, drop){
@@ -235,7 +250,8 @@ export default class Grid extends Component{
  * property defaults
  */
 Grid.defaultProps = {
-
+	edit_container: null,
+	edit_box: null,
 };
 
 Grid.propTypes = {
@@ -245,22 +261,28 @@ Grid.propTypes = {
 	container: PropTypes.arrayOf(
 		PropTypes.object.isRequired
 	).isRequired,
+
+	edit_container: PropTypes.number,
+	edit_box: PropTypes.shape({
+		container_id: PropTypes.number.isRequired,
+		slot_id: PropTypes.number.isRequired,
+		box_id: PropTypes.number.isRequired,
+	}),
 	
 	/**
 	 * callback handlers
 	 */
 	onStateChange: PropTypes.func,
 	
-	onContainerAdd: PropTypes.func,
-	onContainerMove: PropTypes.func,
-	onContainerEdit: PropTypes.func,
-	onContainerDelete: PropTypes.func,
+	onContainerAdd: PropTypes.func.isRequired,
+	onContainerMove: PropTypes.func.isRequired,
+	onContainerEdit: PropTypes.func.isRequired,
+	onContainerDelete: PropTypes.func.isRequired,
 
-	// onContainer
-	
-	onBoxAdd: PropTypes.func,
-	onBoxMove: PropTypes.func,
-	onBoxEdit: PropTypes.func,
-	onBoxDelete: PropTypes.func,
+
+	onBoxAdd: PropTypes.func.isRequired,
+	onBoxMove: PropTypes.func.isRequired,
+	onBoxEdit: PropTypes.func.isRequired,
+	onBoxDelete: PropTypes.func.isRequired,
 	
 };

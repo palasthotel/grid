@@ -144,7 +144,7 @@ class Container extends Component{
 		this.buildDragPreview();
 	}
 	onEdit(){
-		this.props.onEdit(this.props);
+		this.props.onEdit(this.props.id);
 	}
 	onDelete(){
 		this.props.onDelete(this.props.id);
@@ -185,8 +185,8 @@ Container.propTypes = {
 	id: PropTypes.any.isRequired,
 	
 	onMove: PropTypes.func.isRequired,
-	onEdit: PropTypes.func,
-	onDelete: PropTypes.func,
+	onEdit: PropTypes.func.isRequired,
+	onDelete: PropTypes.func.isRequired,
 	onReuse: PropTypes.func,
 };
 

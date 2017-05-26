@@ -52,8 +52,8 @@ export default connect(
 			// -----------
 			// ui events
 			// -----------
-			onEditContainer(container_id){
-
+			onEditContainer(grid_id, container_id){
+				dispatch(actionEditGridContainer(container_id))
 			},
 			onEditBox(grid_id, box){
 				dispatch(editGridBox(box))

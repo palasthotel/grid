@@ -117,18 +117,18 @@ class Box extends Component{
 						className="grid-box__control--button grid-box__edit"
 					    onClick={this.onEdit.bind(this)}
 					>
-						<div className="grid-box__control-wrapper">
+						<div className="grid-box__control--wrapper">
 							<i className="icon-edit" />
-							<span className="grid-box-control-text">Edit</span>
+							<span className="grid-box__control--text">Edit</span>
 						</div>
 					</div>
 					<div
-						className="grid-box-control-button grid-box-delete"
+						className="grid-box__control--button grid-box__delete"
 					    onClick={this.onDelete.bind(this)}
 					>
-						<div className="grid-box-control-wrapper">
+						<div className="grid-box__control--wrapper">
 							<TrashIcon/>
-							<span className="grid-box-control-text">Delete</span>
+							<span className="grid-box__control--text">Delete</span>
 						</div>
 					</div>
 				</div>)}

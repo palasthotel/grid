@@ -50,9 +50,9 @@ class BoxDrop extends Component {
 		
 		return connectDropTarget(
 			<div
-				className={`box-drop ${over_class} ${can_drop_class}`}
+				className={`grid-box__drop ${over_class} ${can_drop_class}`}
 			>
-				<div className={`box-drop__area`} />
+				<div className={`grid-box__drop--area`} />
 			</div>
 		);
 	}

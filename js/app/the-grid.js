@@ -32752,9 +32752,9 @@ var BoxDrop = function (_Component) {
 			return connectDropTarget(_react2.default.createElement(
 				'div',
 				{
-					className: 'box-drop ' + over_class + ' ' + can_drop_class
+					className: 'grid-box__drop ' + over_class + ' ' + can_drop_class
 				},
-				_react2.default.createElement('div', { className: 'box-drop__area' })
+				_react2.default.createElement('div', { className: 'grid-box__drop--area' })
 			));
 		}
 	}]);
@@ -33013,11 +33013,11 @@ var Box = function (_Component) {
 						},
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-box__control-wrapper' },
+							{ className: 'grid-box__control--wrapper' },
 							_react2.default.createElement('i', { className: 'icon-edit' }),
 							_react2.default.createElement(
 								'span',
-								{ className: 'grid-box-control-text' },
+								{ className: 'grid-box__control--text' },
 								'Edit'
 							)
 						)
@@ -33025,16 +33025,16 @@ var Box = function (_Component) {
 					_react2.default.createElement(
 						'div',
 						{
-							className: 'grid-box-control-button grid-box-delete',
+							className: 'grid-box__control--button grid-box__delete',
 							onClick: this.onDelete.bind(this)
 						},
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-box-control-wrapper' },
+							{ className: 'grid-box__control--wrapper' },
 							_react2.default.createElement(_trash2.default, null),
 							_react2.default.createElement(
 								'span',
-								{ className: 'grid-box-control-text' },
+								{ className: 'grid-box__control--text' },
 								'Delete'
 							)
 						)
@@ -33466,7 +33466,7 @@ var Container = function (_Component) {
 	}, {
 		key: 'onEdit',
 		value: function onEdit() {
-			this.props.onEdit(this.props);
+			this.props.onEdit(this.props.id);
 		}
 	}, {
 		key: 'onDelete',
@@ -33520,8 +33520,8 @@ Container.propTypes = {
 	id: _propTypes2.default.any.isRequired,
 
 	onMove: _propTypes2.default.func.isRequired,
-	onEdit: _propTypes2.default.func,
-	onDelete: _propTypes2.default.func,
+	onEdit: _propTypes2.default.func.isRequired,
+	onDelete: _propTypes2.default.func.isRequired,
 	onReuse: _propTypes2.default.func
 };
 
@@ -33605,15 +33605,132 @@ var Grid = function (_Component) {
   */
 
 	/**
-  * render boxes
-  * @param boxes
-  * @param container_index
-  * @param slot_index
-  * @returns {Array}
+  * render the whole grid
+  * @returns {XML}
   */
 
 
 	_createClass(Grid, [{
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: 'grid',
+					ref: function ref(element) {
+						return _this2.state.dom = element;
+					}
+				},
+				this.renderContainers(this.props.container)
+			);
+		}
+
+		/**
+   * render containers
+   * @param containers
+   * @returns {Array}
+   */
+
+	}, {
+		key: 'renderContainers',
+		value: function renderContainers(containers) {
+			var $containers = [];
+
+			var edit_container = this.props.edit_container;
+
+			/**
+    * render drop area for containers
+    * @type {string}
+    */
+
+			$containers.push(this.renderContainerDrop(0));
+
+			for (var i = 0; i < containers.length; i++) {
+				var container = containers[i];
+
+				/**
+     * render container
+     */
+				var dimensions = container.type.split("-").slice(1);
+
+				if (edit_container === container.id) {
+					$containers.push(_react2.default.createElement(
+						'p',
+						null,
+						'Container Editor'
+					));
+				} else {
+					$containers.push(_react2.default.createElement(
+						_container2.default,
+						_extends({
+							key: container.id
+						}, container, {
+							index: i,
+							onMove: this.onContainerMove.bind(this),
+							onDelete: this.props.onContainerDelete,
+							onReuse: this.onContainerReuse.bind(this),
+							onEdit: this.onContainerEdit.bind(this)
+						}),
+						this.renderSlots(container.slots, dimensions, i)
+					));
+				}
+
+				$containers.push(this.renderContainerDrop(i + 1));
+			}
+			return $containers;
+		}
+	}, {
+		key: 'renderContainerDrop',
+		value: function renderContainerDrop(index) {
+			var drop_key = "container-drop_" + index;
+			return _react2.default.createElement(_containerDrop2.default, {
+				key: drop_key,
+				index: index,
+				onAdd: this.onContainerAdd.bind(this)
+			});
+		}
+
+		/**
+   * render slots
+   * @param slots
+   * @param dimensions array
+   * @param container_index
+   * @returns {*}
+   */
+
+	}, {
+		key: 'renderSlots',
+		value: function renderSlots(slots, dimensions, container_index) {
+			var _this3 = this;
+
+			return slots.map(function (slot, index) {
+				var parts = dimensions[index].split("d");
+				var width = parts[0] / parts[1] * 100;
+				return _react2.default.createElement(
+					_slot2.default,
+					_extends({
+						key: container_index + "-" + index,
+						index: index,
+						container_index: container_index
+					}, slot, {
+						dimension: width
+					}),
+					_this3.renderBoxes(slot.boxes, container_index, index)
+				);
+			});
+		}
+
+		/**
+   * render boxes
+   * @param boxes
+   * @param container_index
+   * @param slot_index
+   * @returns {Array}
+   */
+
+	}, {
 		key: 'renderBoxes',
 		value: function renderBoxes(boxes, container_index, slot_index) {
 			var container_id = this.props.container[container_index].id;
@@ -33659,109 +33776,6 @@ var Grid = function (_Component) {
 		}
 
 		/**
-   * render slots
-   * @param slots
-   * @param dimensions array
-   * @param container_index
-   * @returns {*}
-   */
-
-	}, {
-		key: 'renderSlots',
-		value: function renderSlots(slots, dimensions, container_index) {
-			var _this2 = this;
-
-			return slots.map(function (slot, index) {
-				var parts = dimensions[index].split("d");
-				var width = parts[0] / parts[1] * 100;
-				return _react2.default.createElement(
-					_slot2.default,
-					_extends({
-						key: container_index + "-" + index,
-						index: index,
-						container_index: container_index
-					}, slot, {
-						dimension: width
-					}),
-					_this2.renderBoxes(slot.boxes, container_index, index)
-				);
-			});
-		}
-
-		/**
-   * render containers
-   * @param containers
-   * @returns {Array}
-   */
-
-	}, {
-		key: 'renderContainers',
-		value: function renderContainers(containers) {
-			var $containers = [];
-
-			/**
-    * render drop area for containers
-    * @type {string}
-    */
-			$containers.push(this.renderContainerDrop(0));
-
-			for (var i = 0; i < containers.length; i++) {
-				var container = containers[i];
-
-				/**
-     * render container
-     */
-				var dimensions = container.type.split("-").slice(1);
-				$containers.push(_react2.default.createElement(
-					_container2.default,
-					_extends({
-						key: container.id
-					}, container, {
-						index: i,
-						onMove: this.onContainerMove.bind(this),
-						onDelete: this.props.onContainerDelete,
-						onReuse: this.onContainerReuse.bind(this)
-					}),
-					this.renderSlots(container.slots, dimensions, i)
-				));
-
-				$containers.push(this.renderContainerDrop(i + 1));
-			}
-			return $containers;
-		}
-	}, {
-		key: 'renderContainerDrop',
-		value: function renderContainerDrop(index) {
-			var drop_key = "container-drop_" + index;
-			return _react2.default.createElement(_containerDrop2.default, {
-				key: drop_key,
-				index: index,
-				onAdd: this.onContainerAdd.bind(this)
-			});
-		}
-		/**
-   * render the whole grid
-   * @returns {XML}
-   */
-
-	}, {
-		key: 'render',
-		value: function render() {
-			var _this3 = this;
-
-			return _react2.default.createElement(
-				'div',
-				{
-					className: 'grid',
-					ref: function ref(element) {
-						return _this3.state.dom = element;
-					}
-				},
-				this.renderContainers(this.props.container)
-			);
-		}
-
-		/**
    * ---------------------
    * events
    * ---------------------
@@ -33791,6 +33805,11 @@ var Grid = function (_Component) {
 		key: 'onContainerReuse',
 		value: function onContainerReuse(container_index, title) {
 			this.props.onContainerReuse(container_index, title);
+		}
+	}, {
+		key: 'onContainerEdit',
+		value: function onContainerEdit(container_id) {
+			this.props.onContainerEdit(container_id);
 		}
 	}, {
 		key: 'onBoxAdd',
@@ -33846,7 +33865,10 @@ var Grid = function (_Component) {
 
 
 exports.default = Grid;
-Grid.defaultProps = {};
+Grid.defaultProps = {
+	edit_container: null,
+	edit_box: null
+};
 
 Grid.propTypes = {
 	/**
@@ -33854,22 +33876,27 @@ Grid.propTypes = {
   */
 	container: _propTypes2.default.arrayOf(_propTypes2.default.object.isRequired).isRequired,
 
+	edit_container: _propTypes2.default.number,
+	edit_box: _propTypes2.default.shape({
+		container_id: _propTypes2.default.number.isRequired,
+		slot_id: _propTypes2.default.number.isRequired,
+		box_id: _propTypes2.default.number.isRequired
+	}),
+
 	/**
   * callback handlers
   */
 	onStateChange: _propTypes2.default.func,
 
-	onContainerAdd: _propTypes2.default.func,
-	onContainerMove: _propTypes2.default.func,
-	onContainerEdit: _propTypes2.default.func,
-	onContainerDelete: _propTypes2.default.func,
+	onContainerAdd: _propTypes2.default.func.isRequired,
+	onContainerMove: _propTypes2.default.func.isRequired,
+	onContainerEdit: _propTypes2.default.func.isRequired,
+	onContainerDelete: _propTypes2.default.func.isRequired,
 
-	// onContainer
-
-	onBoxAdd: _propTypes2.default.func,
-	onBoxMove: _propTypes2.default.func,
-	onBoxEdit: _propTypes2.default.func,
-	onBoxDelete: _propTypes2.default.func
+	onBoxAdd: _propTypes2.default.func.isRequired,
+	onBoxMove: _propTypes2.default.func.isRequired,
+	onBoxEdit: _propTypes2.default.func.isRequired,
+	onBoxDelete: _propTypes2.default.func.isRequired
 
 };
 
@@ -35193,14 +35220,17 @@ var TheGrid = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			var _props$grid = this.props.grid,
-			    id = _props$grid.id,
-			    isDraft = _props$grid.isDraft,
-			    container = _props$grid.container;
 			var _props = this.props,
 			    container_types = _props.container_types,
 			    box_types = _props.box_types,
 			    revisions = _props.revisions;
+			var _props$grid = this.props.grid,
+			    id = _props$grid.id,
+			    isDraft = _props$grid.isDraft,
+			    container = _props$grid.container;
+			var _props$ui = this.props.ui,
+			    edit_container = _props$ui.edit_container,
+			    edit_box = _props$ui.edit_box;
 			var show_revisions = this.state.show_revisions;
 
 
@@ -35693,7 +35723,9 @@ function (dispatch) {
 		// -----------
 		// ui events
 		// -----------
-		onEditContainer: function onEditContainer(container_id) {},
+		onEditContainer: function onEditContainer(grid_id, container_id) {
+			dispatch((0, _ui.actionEditGridContainer)(container_id));
+		},
 		onEditBox: function onEditBox(grid_id, box) {
 			dispatch(editGridBox(box));
 		},
@@ -44762,16 +44794,16 @@ var Grid = function (_Component) {
                 { x: "0px", y: "0px",
                     viewBox: "0 0 120 62.3"
                 },
-                _react2.default.createElement("rect", { x: "0.8", y: "16.6", "class": "st0", width: "37.2", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "0.8", y: "32.9", "class": "st0", width: "37.2", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "82.2", y: "16.6", "class": "st0", width: "37.2", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "82.2", y: "32.9", "class": "st0", width: "37.2", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "17.2", y: "49.2", "class": "st0", width: "20.8", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "41.5", y: "16.6", "class": "st0", width: "20.7", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "66", y: "0.3", "class": "st0", width: "12.7", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "41.5", y: "32.9", "class": "st0", width: "12.7", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "106.7", y: "0.3", "class": "st0", width: "12.7", height: "12.7" }),
-                _react2.default.createElement("rect", { x: "66", y: "16.6", "class": "st0", width: "12.7", height: "29" })
+                _react2.default.createElement("rect", { x: "0.8", y: "16.6", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "0.8", y: "32.9", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "82.2", y: "16.6", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "82.2", y: "32.9", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "17.2", y: "49.2", width: "20.8", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "41.5", y: "16.6", width: "20.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "66", y: "0.3", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "41.5", y: "32.9", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "106.7", y: "0.3", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "66", y: "16.6", width: "12.7", height: "29" })
             );
         }
     }]);
