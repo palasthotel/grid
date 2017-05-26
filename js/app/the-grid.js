@@ -32853,6 +32853,10 @@ var _reactDnd = __webpack_require__(54);
 
 var _constants = __webpack_require__(37);
 
+var _collapsible = __webpack_require__(152);
+
+var _collapsible2 = _interopRequireDefault(_collapsible);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32886,10 +32890,13 @@ function collect(connect, monitor) {
 var ContainerDrop = function (_Component) {
 	_inherits(ContainerDrop, _Component);
 
-	function ContainerDrop() {
+	function ContainerDrop(props) {
 		_classCallCheck(this, ContainerDrop);
 
-		return _possibleConstructorReturn(this, (ContainerDrop.__proto__ || Object.getPrototypeOf(ContainerDrop)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (ContainerDrop.__proto__ || Object.getPrototypeOf(ContainerDrop)).call(this, props));
+
+		_this.state = { is_opend: false };
+		return _this;
 	}
 
 	_createClass(ContainerDrop, [{
@@ -32899,6 +32906,7 @@ var ContainerDrop = function (_Component) {
 			    connectDropTarget = _props.connectDropTarget,
 			    isOver = _props.isOver,
 			    canDrop = _props.canDrop;
+			var is_opend = this.state.is_opend;
 
 
 			var can_drop_class = canDrop ? 'can-drop' : '';
@@ -32909,7 +32917,51 @@ var ContainerDrop = function (_Component) {
 				{
 					className: 'grid-container__drop ' + over_class + ' ' + can_drop_class
 				},
-				_react2.default.createElement('div', { className: 'grid-container__drop--area' })
+				_react2.default.createElement('div', { className: 'grid-container__drop--area' }),
+				_react2.default.createElement(
+					'div',
+					{
+						className: 'grid-container__select ' + (is_opend ? "is-opend" : "is-closed")
+					},
+					_react2.default.createElement(
+						'button',
+						{
+							className: 'grid-container__select--toggle'
+						},
+						'Add Container | close'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'grid-container__select--types' },
+						_react2.default.createElement(
+							_collapsible2.default,
+							{ title: 'Containers' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'Container list!'
+							)
+						),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{ title: 'Sidebars' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'Sidebars list!'
+							)
+						),
+						_react2.default.createElement(
+							_collapsible2.default,
+							{ title: 'Reusable' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'Reusable list!'
+							)
+						)
+					)
+				)
 			));
 		}
 	}]);

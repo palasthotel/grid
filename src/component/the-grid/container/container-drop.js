@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { ItemTypes } from '../../../constants.js';
 
+import Collapsible from '../../utils/collapsible.js';
+
 const containerTarget = {
 	drop(props, monitor) {
 		const dragged_container = monitor.getItem();
@@ -26,8 +28,14 @@ function collect(connect, monitor) {
 }
 
 class ContainerDrop extends Component {
+	constructor(props){
+		super(props);
+		this.state = { is_opend: false }
+	}
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
+
+		const {is_opend } = this.state;
 		
 		const can_drop_class = (canDrop)? 'can-drop': '';
 		const over_class = (isOver)? 'is-over': '';
@@ -37,6 +45,27 @@ class ContainerDrop extends Component {
 				className={`grid-container__drop ${over_class} ${can_drop_class}`}
 			>
 				<div className="grid-container__drop--area" />
+				<div
+					className={`grid-container__select ${(is_opend)? "is-opend":"is-closed" }`}
+				>
+					<button
+						className="grid-container__select--toggle"
+					>
+						Add Container | close
+					</button>
+					<div className="grid-container__select--types">
+						<Collapsible title="Containers">
+							<p>Container list!</p>
+						</Collapsible>
+						<Collapsible title="Sidebars">
+							<p>Sidebars list!</p>
+						</Collapsible>
+						<Collapsible title="Reusable">
+							<p>Reusable list!</p>
+						</Collapsible>
+
+					</div>
+				</div>
 			</div>
 		);
 	}
