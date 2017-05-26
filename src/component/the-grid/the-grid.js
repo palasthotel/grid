@@ -29,8 +29,11 @@ class TheGrid extends React.Component{
 	
 	render(){
 
-		const { id, isDraft, container } = this.props.grid;
 		const { container_types, box_types, revisions } = this.props;
+
+		const { id, isDraft, container } = this.props.grid;
+
+		const {edit_container, edit_box} = this.props.ui;
 
 		const {show_revisions} = this.state;
 
