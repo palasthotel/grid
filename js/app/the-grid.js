@@ -32205,51 +32205,47 @@ var BoxEditor = function (_Component) {
 					className: 'grid-box-editor'
 				},
 				_react2.default.createElement(
-					'nav',
-					null,
+					'div',
+					{
+						className: 'grid-box-editor__menu'
+					},
 					_react2.default.createElement(
-						'ul',
+						'div',
 						{
-							className: 'grid-box-editor__menu'
+							className: 'grid-box-editor__menu--item'
 						},
 						_react2.default.createElement(
-							'li',
+							'button',
 							{
-								className: 'grid-box-editor__menu--item'
+								onClick: this.onSave.bind(this)
 							},
-							_react2.default.createElement(
-								'button',
-								{
-									onClick: this.onSave.bind(this)
-								},
-								'Save'
-							)
-						),
+							'Save'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-box-editor__menu--item'
+						},
 						_react2.default.createElement(
-							'li',
+							'button',
 							{
-								className: 'grid-box-editor__menu--item'
+								onClick: this.props.onDiscardBoxeditor
 							},
-							_react2.default.createElement(
-								'button',
-								{
-									onClick: this.props.onDiscardBoxeditor
-								},
-								'Discard'
-							)
-						),
+							'Discard'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-box-editor__menu--item'
+						},
 						_react2.default.createElement(
-							'li',
+							'button',
 							{
-								className: 'grid-box-editor__menu--item'
+								onClick: this.props.onReuseBoxeditor
 							},
-							_react2.default.createElement(
-								'button',
-								{
-									onClick: this.props.onReuseBoxeditor
-								},
-								'Reuse'
-							)
+							'Reuse'
 						)
 					)
 				),
@@ -32929,6 +32925,8 @@ var _reactDnd = __webpack_require__(54);
 
 var _constants = __webpack_require__(37);
 
+var _dimensions = __webpack_require__(670);
+
 var _containerTypes = __webpack_require__(415);
 
 var _containerTypes2 = _interopRequireDefault(_containerTypes);
@@ -33083,16 +33081,14 @@ var ContainerDrop = function (_Component) {
 
 			var slots = [];
 
-			var dimensions = container.type.split("-");
-
-			for (var i = 1; i < dimensions.length; i++) {
-				var dim = dimensions[i];
-				if (dim === "0") continue;
-				var parts = dim.split("d");
-
+			var items = (0, _dimensions.get_slot_weights)(container);
+			console.log(container.type, container);
+			for (var i in items) {
+				var item = items[i];
+				console.log(item);
 				slots.push(_react2.default.createElement('div', {
 					key: i,
-					className: 'grid-container-preview__slot grid-slot__width--' + parts[0]
+					className: 'grid-container-preview__slot grid-slot__width--' + item.weight + ' ' + (item.space ? "is-space" : "")
 				}));
 			}
 
@@ -45080,37 +45076,31 @@ var ContainerEditor = function (_Component) {
 						className: 'grid-container-editor__menu'
 					},
 					_react2.default.createElement(
-						'nav',
-						null,
+						'div',
+						{
+							className: 'grid-container-editor__menu--item'
+						},
 						_react2.default.createElement(
-							'ul',
-							null,
-							_react2.default.createElement(
-								'li',
-								{
-									className: 'grid-container-editor__menu--item'
-								},
-								_react2.default.createElement(
-									'button',
-									{
-										onClick: this.onSave.bind(this)
-									},
-									'Save'
-								)
-							),
-							_react2.default.createElement(
-								'li',
-								{
-									className: 'grid-container-editor__menu--item'
-								},
-								_react2.default.createElement(
-									'button',
-									{
-										onClick: this.onCancel.bind(this)
-									},
-									'Discard'
-								)
-							)
+							'button',
+							{
+								className: 'grid-button grid-button__save',
+								onClick: this.onSave.bind(this)
+							},
+							'Save'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-container-editor__menu--item'
+						},
+						_react2.default.createElement(
+							'button',
+							{
+								className: 'grid-button grid-button__cancel',
+								onClick: this.onCancel.bind(this)
+							},
+							'Discard'
 						)
 					)
 				),
@@ -45560,6 +45550,58 @@ NotificationItem.propTypes = {
  * export component to public
  */
 exports.default = NotificationItem;
+
+/***/ }),
+/* 670 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.get_slot_weights = get_slot_weights;
+function get_slot_weights(container) {
+
+	var dimensions = container.type.split("-");
+
+	function get_weigth(dim) {
+		return dim.split("d")[0];
+	}
+
+	function get_item(weight) {
+		var space = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+		return {
+			weight: weight,
+			space: space
+		};
+	}
+
+	var weights = [];
+
+	console.log(container.space_to_left);
+	if (container.space_to_left === _typeof("")) {
+		console.log("SPACEEE");
+		weights.push(get_item(get_weigth(container.space_to_left), true));
+	}
+
+	for (var i = 1; i < dimensions.length; i++) {
+		var dim = dimensions[i];
+		if (dim === "0") continue;
+		weights.push(get_item(get_weigth(dim)));
+	}
+
+	if (container.space_to_right === _typeof("")) {
+		weights.push(get_item(get_weigth(container.space_to_right), true));
+	}
+
+	return weights;
+}
 
 /***/ })
 /******/ ]);

@@ -33,28 +33,28 @@ class ContainerEditor extends Component {
 				<div
 					className="grid-container-editor__menu"
 				>
-					<nav>
-						<ul>
-							<li
-								className="grid-container-editor__menu--item"
-							>
-								<button
-									onClick={this.onSave.bind(this)}
-								>
-									Save
-								</button>
-							</li>
-							<li
-								className="grid-container-editor__menu--item"
-							>
-								<button
-									onClick={this.onCancel.bind(this)}
-								>
-									Discard
-								</button>
-							</li>
-						</ul>
-					</nav>
+
+					<div
+						className="grid-container-editor__menu--item"
+					>
+						<button
+							className="grid-button grid-button__save"
+							onClick={this.onSave.bind(this)}
+						>
+							Save
+						</button>
+					</div>
+					<div
+						className="grid-container-editor__menu--item"
+					>
+						<button
+							className="grid-button grid-button__cancel"
+							onClick={this.onCancel.bind(this)}
+						>
+							Discard
+						</button>
+					</div>
+
 				</div>
 
 				<div className="grid-container-editor__header">

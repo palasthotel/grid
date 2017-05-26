@@ -35,39 +35,39 @@ class BoxEditor extends Component{
 			<div
 				className="grid-box-editor"
 			>
-				<nav>
-					<ul
-						className="grid-box-editor__menu"
+
+				<div
+					className="grid-box-editor__menu"
+				>
+					<div
+						className="grid-box-editor__menu--item"
 					>
-						<li
-							className="grid-box-editor__menu--item"
+						<button
+							onClick={this.onSave.bind(this)}
 						>
-							<button
-								onClick={this.onSave.bind(this)}
-							>
-								Save
-							</button>
-						</li>
-						<li
-							className="grid-box-editor__menu--item"
+							Save
+						</button>
+					</div>
+					<div
+						className="grid-box-editor__menu--item"
+					>
+						<button
+							onClick={this.props.onDiscardBoxeditor}
 						>
-							<button
-								onClick={this.props.onDiscardBoxeditor}
-							>
-								Discard
-							</button>
-						</li>
-						<li
-							className="grid-box-editor__menu--item"
+							Discard
+						</button>
+					</div>
+					<div
+						className="grid-box-editor__menu--item"
+					>
+						<button
+							onClick={this.props.onReuseBoxeditor}
 						>
-							<button
-								onClick={this.props.onReuseBoxeditor}
-							>
-								Reuse
-							</button>
-						</li>
-					</ul>
-				</nav>
+							Reuse
+						</button>
+					</div>
+				</div>
+
 				
 				<div
 					className="grid-box-editor__content"

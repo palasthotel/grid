@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { ItemTypes } from '../../../constants.js';
 
+import {
+	get_slot_weights
+} from '../../../helper/dimensions';
+
 import ContainerTypes from '../sidebar/container-types';
 
 import Collapsible from '../../utils/collapsible.js';
@@ -112,16 +116,14 @@ class ContainerDrop extends Component {
 
 		const slots = [];
 
-		let dimensions = container.type.split("-");
-
-		for(let i = 1; i < dimensions.length; i++){
-			const dim = dimensions[i]
-			if(dim === "0") continue;
-			let parts = dim.split("d");
-
+		const items = get_slot_weights(container);
+		console.log(container.type, container);
+		for(const i in items){
+			const item = items[i];
+			console.log(item);
 			slots.push(<div
 				key={i}
-				className={`grid-container-preview__slot grid-slot__width--${parts[0]}`}
+				className={`grid-container-preview__slot grid-slot__width--${item.weight} ${(item.space)? "is-space": ""}`}
 			/>);
 		}
 
