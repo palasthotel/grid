@@ -8,6 +8,7 @@ import {
 
 import {
 	actionSetGridLoading,
+	actionEditGridContainerClose,
 } from './ui'
 
 import { actionAsyncExecute } from './index'
@@ -17,6 +18,7 @@ import {
 	requestGridEditingContainerAdd,
 	requestGridEditingContainerDelete,
 	requestGridEditingContainerMove,
+	requestGridEditingContainerUpdate,
 } from '../connection/backend'
 
 /**
@@ -117,4 +119,30 @@ export function actionGridContainerEditingDelete(args) {
 		}
 	});
 
+}
+
+/**
+ *
+ * @param {{grid_id, container_id, container}} args
+ * @return {Promise}
+ */
+export function actionGridContainerEditingUpdate(args) {
+	return actionAsyncExecute({
+		before: (dispatch)=>{
+			dispatch(actionSetGridLoading(true));
+		},
+		request: requestGridEditingContainerUpdate.bind(this, args),
+		then: (dispatch, box)=>{
+
+			dispatch(actionSetGridLoading(false));
+
+			dispatch({
+				type: REQUEST_GRID_BOX_EDITING_UPDATE,
+				payload: { ...args, box  },
+			});
+
+			dispatch(actionEditGridContainerClose())
+
+		}
+	});
 }

@@ -13,6 +13,9 @@ class Collapsible extends Component{
 			collapsed: props.collapsed,
 		}
 	}
+	componentWillReceiveProps(nextProps){
+		this.setState({collapsed: nextProps.collapsed});
+	}
 	/**
 	 * ---------------------
 	 * render
@@ -50,7 +53,7 @@ class Collapsible extends Component{
 	 */
 	onToggle(){
 		this.setState({collapsed: !this.state.collapsed});
-		if(typeof this.props.onStateChanged != typeof undefined) this.props.onStateChanged(this.state.collapsed);
+		if(typeof this.props.onStateChanged !== typeof undefined) this.props.onStateChanged(this.state.collapsed);
 	}
 	/**
 	 * ---------------------

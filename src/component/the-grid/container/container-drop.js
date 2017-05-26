@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { ItemTypes } from '../../../constants.js';
 
+import ContainerTypes from '../sidebar/container-types';
+
 import Collapsible from '../../utils/collapsible.js';
 
 const containerTarget = {
@@ -35,8 +37,6 @@ class ContainerDrop extends Component {
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
 
-		const {is_opened } = this.state;
-		
 		const can_drop_class = (canDrop)? 'can-drop': '';
 		const over_class = (isOver)? 'is-over': '';
 		
@@ -45,35 +45,82 @@ class ContainerDrop extends Component {
 				className={`grid-container__drop ${over_class} ${can_drop_class}`}
 			>
 				<div className="grid-container__drop--area" />
-				<div
-					className={`grid-container__select ${(is_opened)? "is-opened":"is-closed" }`}
-				>
-					<button
-						className="grid-container__select--toggle"
-						onClick={()=>{this.setState({is_opened:!is_opened})}}
-					>
-						<span className="grid-container__select--icon">+</span>
-						<span className="grid-container__select--open-text">Add Container</span>
-						<span className="grid-container__select--close-text">Close</span>
-					</button>
-					<div className="grid-container__select--types">
-						<Collapsible title="Containers">
-							<p>Container list!</p>
-						</Collapsible>
-						<Collapsible title="Sidebars">
-							<p>Sidebars list!</p>
-						</Collapsible>
-						<Collapsible title="Reusable">
-							<p>Reusable list!</p>
-						</Collapsible>
-
-					</div>
-				</div>
+				{this.renderInPlace()}
 			</div>
 		);
 	}
-}
 
+	renderInPlace(){
+		const {container_types} = this.props;
+		if(container_types.length < 1) return null;
+		const {is_opened} = this.state;
+
+		const collapsed = (!is_opened)? true: undefined;
+
+		return (
+			<div
+				className={`grid-container__select ${(is_opened)? "is-opened":"is-closed" }`}
+			>
+				<button
+					className="grid-container__select--toggle"
+					onClick={()=>{this.setState({is_opened:!is_opened})}}
+				>
+					<span className="grid-container__select--icon">+</span>
+					<span className="grid-container__select--open-text">Add Container</span>
+					<span className="grid-container__select--close-text">Close</span>
+				</button>
+
+
+				<div className="grid-container__select--types">
+					<Collapsible title="Containers" collapsed={collapsed}>
+						{container_types.map((container,index)=>{
+							if(container.type.indexOf("i-") === 0
+								|| container.type.indexOf("sc-") === 0
+								|| container.type.indexOf("s-") === 0
+							)
+								return;
+							return (
+								<div
+									key={container.type}
+									onClick={this.onClickAdd.bind(this, container)}
+								>{container.type}</div>
+							)
+						})}
+					</Collapsible>
+					<Collapsible title="Sidebars" collapsed={collapsed}>
+						{container_types.map((container,index)=>{
+							if(container.type.indexOf("i-") === 0
+								|| container.type.indexOf("sc-") === 0
+								|| container.type.indexOf("c-") === 0
+							)
+								return;
+							return (
+								<div
+									key={container.type}
+									onClick={this.onClickAdd.bind(this, container)}
+								>{container.type}</div>
+							)
+						})}
+					</Collapsible>
+					<Collapsible title="Reusable">
+						<p>Reusable list!</p>
+					</Collapsible>
+
+				</div>
+			</div>
+		)
+
+	}
+
+	onClickAdd(container){
+		this.props.onAdd(container, this.props.index)
+		this.setState({is_opend: false});
+	}
+
+}
+ContainerDrop.defaultProps = {
+	container_types: [],
+}
 ContainerDrop.propTypes = {
 	index: PropTypes.number.isRequired,
 	isOver: PropTypes.bool,
@@ -82,6 +129,8 @@ ContainerDrop.propTypes = {
 	 * if new container from outside was added
 	 */
 	onAdd: PropTypes.func,
+
+	container_types: PropTypes.array,
 };
 
 export default DropTarget(ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);

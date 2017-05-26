@@ -139,6 +139,12 @@ export const requestGridEditingContainerReuse =
 		"reuseContainer",
 		[ grid_id, container_id, title ]
 	)
+export const requestGridEditingContainerUpdate =
+	({grid_id, container_id, container} ) => requestBackend(
+		"grid.editing.container",
+		"updateContainer",
+		[ grid_id, container_id, container ]
+	)
 
 // -------------------------
 // box requests

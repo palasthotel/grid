@@ -26,8 +26,6 @@ class TextWithLink extends Component {
 			title_placeholder,
 			text,
 			url,
-			onTextChange,
-			onUrlChange,
 			urlDeleteText,
 			urlAddText,
 			className,
@@ -38,10 +36,10 @@ class TextWithLink extends Component {
 		
 		return (
 			<div
-				className={`${className} editor__text-with-link`}
+				className={`${className} widget__text-with-link`}
 			>
 				<label
-					className="text-with-link__label">
+					className="widget__text-with-link--label">
 					{title}
 				</label>
 
@@ -50,24 +48,24 @@ class TextWithLink extends Component {
 					placeholder={title_placeholder}
 					type="text"
 					value={text}
-					className="text-with-link__input"
-					onChange={onTextChange}
+					className="widget__text-with-link--input"
+					onChange={this.onTextChange.bind(this)}
 				/>
 				
 				<div
-					className={`editor__url-builder ${(show_link_input)? "is-active": "is-inactive" }`}
+					className={`widget__url-builder ${(show_link_input)? "is-active": "is-inactive" }`}
 				>
 					<input
 						placeholder="Title URL (for internals links, please use a relative path starting with '/'):"
 						type="text"
 						value={url}
-						className="url-builder__title-url"
-						onChange={onUrlChange}
+						className="widget__url-builder--url"
+						onChange={this.onUrlChange.bind(this)}
 						disabled={!show_link_input}
 					/>
 					
 					<button
-						className="url-builder__button"
+						className="widget__url-builder--button"
 					    onClick={this.onToggleLink.bind(this)}
 					>
 						{(show_link_input)? urlDeleteText: urlAddText}
@@ -83,10 +81,14 @@ class TextWithLink extends Component {
 	 * ------------------------------------------------
 	 */
 	onToggleLink(){
-		if(this.state.show_link_input){
-			this.state.value = '';
-		}
 		this.setState({show_link_input: !this.state.show_link_input});
+		this.props.onUrlChange("");
+	}
+	onTextChange(e){
+		this.props.onTextChange(e.target.value);
+	}
+	onUrlChange(e){
+		this.props.onUrlChange(e.target.value);
 	}
 	/**
 	 * ------------------------------------------------

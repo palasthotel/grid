@@ -170,11 +170,15 @@ class TheGrid extends React.Component{
 					edit_container={edit_container}
 					edit_box={edit_box}
 
+					container_types={container_types}
+					box_types={box_types}
+
 					onContainerEdit={this.props.onContainerEdit.bind(this, this.props.grid.id )}
 					onContainerAdd={this.props.onContainerAdd.bind(this, this.props.grid.id)}
 					onContainerMove={this.props.onContainerMove.bind(this, this.props.grid.id)}
 				    onContainerDelete={this.props.onContainerDelete.bind(this, this.props.grid.id)}
 				    onContainerReuse={this.props.onContainerReuse.bind(this, this.props.grid.id)}
+					onContainerUpdate={this.props.onContainerUpdate.bind(this, this.props.grid.id)}
 
 					onBoxEdit={this.props.onBoxEdit.bind(this, this.props.grid.id)}
 				    onBoxAdd={this.props.onBoxAdd.bind(this, this.props.grid.id)}

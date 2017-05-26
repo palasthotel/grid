@@ -74,11 +74,11 @@ export default class Grid extends Component{
 			 * render container
 			 */
 			let dimensions = container.type.split("-").slice(1);
-			console.log("edit container", edit_container, container.id);
 			if(edit_container === container.id){
 				$containers.push(<ContainerEditor
 					key={container.id}
 					container={container}
+					onSave={this.props.onContainerUpdate}
 				/>)
 			} else {
 				$containers.push((
@@ -108,6 +108,7 @@ export default class Grid extends Component{
 				key={drop_key}
 				index={index}
 				onAdd={this.onContainerAdd.bind(this)}
+				container_types={this.props.container_types}
 			/>
 		);
 	}
@@ -256,8 +257,12 @@ export default class Grid extends Component{
  * property defaults
  */
 Grid.defaultProps = {
+
+	// if in inline edit mode
 	edit_container: null,
 	edit_box: null,
+	box_types: [],
+	container_types: [],
 };
 
 Grid.propTypes = {
@@ -274,6 +279,8 @@ Grid.propTypes = {
 		slot_id: PropTypes.string.isRequired,
 		box_id: PropTypes.string.isRequired,
 	}),
+
+	// TODO: show container types from ui state (container, sidebars, reusable), same for boxes
 	
 	/**
 	 * callback handlers
@@ -284,6 +291,7 @@ Grid.propTypes = {
 	onContainerMove: PropTypes.func.isRequired,
 	onContainerEdit: PropTypes.func.isRequired,
 	onContainerDelete: PropTypes.func.isRequired,
+	onContainerUpdate: PropTypes.func.isRequired,
 
 
 	onBoxAdd: PropTypes.func.isRequired,
