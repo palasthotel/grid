@@ -13,6 +13,11 @@
   background-color: $color__container--background;
   color: $color__container--foreground;
 
+  transition: all .3s;
+  &.is-deleted {
+    transform: scale(0);
+  }
+
 }
 
 
