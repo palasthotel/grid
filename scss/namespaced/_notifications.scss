@@ -27,3 +27,12 @@
 
   background-color: $color__status--unpublished;
 }
+
+
+.grid-notification__button {
+  border-radius: 50%;
+  background-color: rgba( 255, 255, 255, 0.4 );
+  color: $color__status--error;
+  border: none;
+
+}
