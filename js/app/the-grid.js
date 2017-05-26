@@ -44776,20 +44776,19 @@ var Grid = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 "svg",
-                {
-                    x: "0px", y: "0px",
-                    viewBox: "0 0 120 120"
+                { x: "0px", y: "0px",
+                    viewBox: "0 0 120 62.3"
                 },
-                _react2.default.createElement("rect", { x: "33", y: "53.3", "class": "st0", width: "17", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "33", y: "60.8", "class": "st0", width: "17", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "70.1", y: "53.3", "class": "st0", width: "17", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "70.1", y: "60.8", "class": "st0", width: "17", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "40.5", y: "68.2", "class": "st0", width: "9.5", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "51.6", y: "53.3", "class": "st0", width: "9.4", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "62.8", y: "45.9", "class": "st0", width: "5.8", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "51.6", y: "60.8", "class": "st0", width: "5.8", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "81.3", y: "45.9", "class": "st0", width: "5.8", height: "5.8" }),
-                _react2.default.createElement("rect", { x: "62.8", y: "53.3", "class": "st0", width: "5.8", height: "13.2" })
+                _react2.default.createElement("rect", { x: "0.8", y: "16.6", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "0.8", y: "32.9", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "82.2", y: "16.6", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "82.2", y: "32.9", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "17.2", y: "49.2", "class": "st0", width: "20.8", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "41.5", y: "16.6", "class": "st0", width: "20.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "66", y: "0.3", "class": "st0", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "41.5", y: "32.9", "class": "st0", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "106.7", y: "0.3", "class": "st0", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "66", y: "16.6", "class": "st0", width: "12.7", height: "29" })
             );
         }
     }]);
