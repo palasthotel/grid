@@ -8,6 +8,12 @@
   width: 100px;
   height: 60px;
 
+  padding: 15px;
+  box-sizing: border-box;
+
+
+  transition: all .3s ease-in-out;
+
   background-color: $color__status--unpublished;
 
   .is-draft & {

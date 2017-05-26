@@ -8,8 +8,6 @@
   margin: 0;
   padding: 0;
 
-
-
 }
 
 
@@ -22,8 +20,6 @@
 .grid-menu__button {
   border: none;
   background-color: $color__menu--background;
-
-
   padding-bottom: 17px;
   padding-left: 1px;
   padding-right: 1px;
@@ -32,10 +28,8 @@
 
   &:hover, &:active, &:focus {
     outline: none;
-
     border-bottom: 5px solid black;
-
-
+    cursor: pointer;
 
   }
 
@@ -44,23 +38,14 @@
 
 
 
-/**
-
- */
-
-grid-menu__item--has-childmenu
-grid-menu__button
-
-grid-childmenu
-
 /* Dropdown Button */
 .grid-menu__item--has-childmenu  .grid-menu__button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+  //background-color: #4CAF50;
+  //color: white;
+  //padding: 16px;
+  //font-size: 16px;
+  //border: none;
+  //cursor: pointer;
 }
 
 /* The container <div> - needed to position the dropdown content */
