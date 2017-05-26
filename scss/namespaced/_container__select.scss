@@ -1,0 +1,63 @@
+/**
+ * @author Stephan Kroppenstedt <stephan.kroppenstedt@palasthotel.de>
+ * @modified 26.05.2017
+ */
+
+
+.grid-container__select {
+
+  width: 50%;
+  margin: 0 auto;
+
+  background-color: white;
+  border: 1px solid black;
+
+}
+
+
+.grid-container__select--types {
+
+  transition: all .3s ease-in-out;
+
+
+  .is-opend &{
+    transform: scale(1);
+    max-height: none;
+  }
+
+  .is-closed &{
+    transform: scale(0);
+    max-height: 0;
+  }
+
+}
+
+
+.grid-container__select--toggle {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.grid-container__select--icon {
+
+  transition: all .3s ease-in-out;
+  border: 2px solid black;
+  border-radius: 50%;
+  line-height: 16px;
+  font-size: 16px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  font-weight: bold;
+
+  .is-opened &{
+    transform: rotate(45deg);
+  }
+
+  .is-closed &{
+    //transform: scale(0);
+  }
+}
