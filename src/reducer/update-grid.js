@@ -12,6 +12,7 @@ import {
 	REQUEST_GRID_CONTAINER_EDITING_ADD,
 	REQUEST_GRID_CONTAINER_EDITING_DELETE,
 	REQUEST_GRID_CONTAINER_EDITING_MOVE,
+	REQUEST_GRID_CONTAINER_EDITING_UPDATE,
 
 	REQUEST_GRID_BOX_EDITING_CREATE,
 	REQUEST_GRID_BOX_EDITING_REMOVE,
@@ -40,12 +41,12 @@ export default function updateGrid(state, action){
 		default:
 			return {
 				...state,
-				container: updateContainer(state.container, action),
+				container: updateContainerList(state.container, action),
 			};
 	}
 }
 
-function updateContainer(state = [], action) {
+function updateContainerList(state = [], action) {
 	switch( action.type){
 		case REQUEST_GRID_CONTAINER_EDITING_ADD:
 		case GRID_CONTAINER_ADD:
@@ -54,6 +55,8 @@ function updateContainer(state = [], action) {
 			return deleteContainer(state, action)
 		case REQUEST_GRID_CONTAINER_EDITING_MOVE:
 			return moveContainer(state, action)
+		case REQUEST_GRID_CONTAINER_EDITING_UPDATE:
+			return updateContainer(state, action);
 		default:
 			return updateBoxes(state, action);
 	}
@@ -79,6 +82,28 @@ function moveContainer(state, action){
 	const new_list = state.filter( (c)=> c.id !== container_id );
 	new_list.splice(to_index, 0, target_container)
 	return new_list;
+}
+
+/**
+ * update single container element
+ * @param state
+ * @param action
+ * @return {Array}
+ */
+function updateContainer(state, action) {
+	const container = [];
+	for(const c of state){
+		if(c.id === action.payload.container_id){
+			container.push({
+				...action.payload.container
+			})
+		} else {
+			container.push({
+				...c,
+			});
+		}
+	}
+	return container;
 }
 
 function updateBoxes(state, action){

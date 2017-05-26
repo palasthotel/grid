@@ -29130,19 +29130,18 @@ function actionGridContainerEditingDelete(args) {
  * @return {Promise}
  */
 function actionGridContainerEditingUpdate(args) {
-	console.log(args);
 	return (0, _index.actionAsyncExecute)({
 		before: function before(dispatch) {
 			dispatch((0, _ui.actionSetGridLoading)(true));
 		},
 		request: _backend.requestGridEditingContainerUpdate.bind(this, args),
-		then: function then(dispatch, container) {
+		then: function then(dispatch, success) {
 
 			dispatch((0, _ui.actionSetGridLoading)(false));
 
 			dispatch({
 				type: _types.REQUEST_GRID_CONTAINER_EDITING_UPDATE,
-				payload: _extends({}, args, { container: container })
+				payload: _extends({}, args, { success: success })
 			});
 
 			dispatch((0, _ui.actionEditGridContainerClose)());
@@ -33017,14 +33016,7 @@ var ContainerDrop = function (_Component) {
 						{ title: 'Containers', collapsed: collapsed },
 						container_types.map(function (container, index) {
 							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("s-") === 0) return;
-							return _react2.default.createElement(
-								'div',
-								{
-									key: container.type,
-									onClick: _this2.onClickAdd.bind(_this2, container)
-								},
-								container.type
-							);
+							return _this2.renderContainer(container);
 						})
 					),
 					_react2.default.createElement(
@@ -33032,14 +33024,7 @@ var ContainerDrop = function (_Component) {
 						{ title: 'Sidebars', collapsed: collapsed },
 						container_types.map(function (container, index) {
 							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("c-") === 0) return;
-							return _react2.default.createElement(
-								'div',
-								{
-									key: container.type,
-									onClick: _this2.onClickAdd.bind(_this2, container)
-								},
-								container.type
-							);
+							return _this2.renderContainer(container);
 						})
 					),
 					_react2.default.createElement(
@@ -33052,6 +33037,35 @@ var ContainerDrop = function (_Component) {
 						)
 					)
 				)
+			);
+		}
+	}, {
+		key: 'renderContainer',
+		value: function renderContainer(container) {
+
+			var slots = [];
+
+			var dimensions = container.type.split("-");
+
+			for (var i = 1; i < dimensions.length; i++) {
+				var dim = dimensions[i];
+				if (dim === "0") continue;
+				var parts = dim.split("d");
+
+				slots.push(_react2.default.createElement('div', {
+					key: i,
+					className: 'grid-slot-with__' + parts[0]
+				}));
+			}
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: 'grid-container-preview',
+					key: container.type,
+					onClick: this.onClickAdd.bind(this, container)
+				},
+				slots
 			);
 		}
 	}, {
@@ -35633,7 +35647,6 @@ function (dispatch) {
 			dispatch((0, _ui.actionEditGridContainerClose)());
 		},
 		onContainerEditUpdate: function onContainerEditUpdate(grid_id, container_id, container) {
-			console.log(grid_id, container_id, container);
 			dispatch((0, _gridContainer.actionGridContainerEditingUpdate)({ grid_id: grid_id, container_id: container_id, container: container }));
 		},
 
@@ -35824,12 +35837,12 @@ function updateGrid(state, action) {
 			});
 		default:
 			return _extends({}, state, {
-				container: updateContainer(state.container, action)
+				container: updateContainerList(state.container, action)
 			});
 	}
 }
 
-function updateContainer() {
+function updateContainerList() {
 	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	var action = arguments[1];
 
@@ -35841,6 +35854,8 @@ function updateContainer() {
 			return deleteContainer(state, action);
 		case _types.REQUEST_GRID_CONTAINER_EDITING_MOVE:
 			return moveContainer(state, action);
+		case _types.REQUEST_GRID_CONTAINER_EDITING_UPDATE:
+			return updateContainer(state, action);
 		default:
 			return updateBoxes(state, action);
 	}
@@ -35869,6 +35884,46 @@ function moveContainer(state, action) {
 	});
 	new_list.splice(to_index, 0, target_container);
 	return new_list;
+}
+
+/**
+ * update single container element
+ * @param state
+ * @param action
+ * @return {Array}
+ */
+function updateContainer(state, action) {
+	var container = [];
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = state[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var c = _step.value;
+
+			if (c.id === action.payload.container_id) {
+				container.push(_extends({}, action.payload.container));
+			} else {
+				container.push(_extends({}, c));
+			}
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+
+	return container;
 }
 
 function updateBoxes(state, action) {

@@ -79,12 +79,7 @@ class ContainerDrop extends Component {
 								|| container.type.indexOf("s-") === 0
 							)
 								return;
-							return (
-								<div
-									key={container.type}
-									onClick={this.onClickAdd.bind(this, container)}
-								>{container.type}</div>
-							)
+							return this.renderContainer(container);
 						})}
 					</Collapsible>
 					<Collapsible title="Sidebars" collapsed={collapsed}>
@@ -94,12 +89,7 @@ class ContainerDrop extends Component {
 								|| container.type.indexOf("c-") === 0
 							)
 								return;
-							return (
-								<div
-									key={container.type}
-									onClick={this.onClickAdd.bind(this, container)}
-								>{container.type}</div>
-							)
+							return this.renderContainer(container);
 						})}
 					</Collapsible>
 					<Collapsible title="Reusable">
@@ -110,6 +100,34 @@ class ContainerDrop extends Component {
 			</div>
 		)
 
+	}
+
+	renderContainer(container){
+
+		const slots = [];
+
+		let dimensions = container.type.split("-");
+
+		for(let i = 1; i < dimensions.length; i++){
+			const dim = dimensions[i]
+			if(dim === "0") continue;
+			let parts = dim.split("d");
+
+			slots.push(<div
+				key={i}
+				className={`grid-slot-with__${parts[0]}`}
+			/>);
+		}
+
+		return (
+			<div
+				className="grid-container-preview"
+				key={container.type}
+				onClick={this.onClickAdd.bind(this, container)}
+			>
+				{slots}
+			</div>
+		)
 	}
 
 	onClickAdd(container){
