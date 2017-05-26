@@ -5326,6 +5326,7 @@ var REQUEST_GRID_CONTAINER_EDITING_GET_TYPES = exports.REQUEST_GRID_CONTAINER_ED
 var REQUEST_GRID_CONTAINER_EDITING_ADD = exports.REQUEST_GRID_CONTAINER_EDITING_ADD = 'REQUEST-GRID_CONTAINER_EDITING-ADD';
 var REQUEST_GRID_CONTAINER_EDITING_DELETE = exports.REQUEST_GRID_CONTAINER_EDITING_DELETE = 'REQUEST-GRID_CONTAINER_EDITING-DELETE';
 var REQUEST_GRID_CONTAINER_EDITING_MOVE = exports.REQUEST_GRID_CONTAINER_EDITING_MOVE = 'REQUEST-GRID_CONTAINER_EDITING-MOVE';
+var REQUEST_GRID_CONTAINER_EDITING_UPDATE = exports.REQUEST_GRID_CONTAINER_EDITING_UPDATE = 'REQUEST-GRID_CONTAINER_EDITING-UPDATE';
 
 var REQUEST_GRID_BOX_EDITING_META_TYPES = exports.REQUEST_GRID_BOX_EDITING_META_TYPES = 'REQUEST-GRID_BOX_EDITING-META_TYPES';
 var REQUEST_GRID_BOX_EDITING_SEARCH = exports.REQUEST_GRID_BOX_EDITING_SEARCH = 'REQUEST-GRID_BOX_EDITING-SEARCH';
@@ -11408,7 +11409,7 @@ exports.default = ErrorWidget;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.requestGridWidgetsTypeAheadGetText = exports.requestGridWidgetsTypeAheadSearch = exports.requestGridEditingBoxUpdate = exports.requestGridEditingBoxFetch = exports.requestGridEditingBoxRemove = exports.requestGridEditingBoxMove = exports.requestGridEditingBoxCreate = exports.requestGridEditingBoxSearch = exports.requestGridEditingBoxMetaTypes = exports.requestGridEditingContainerReuse = exports.requestGridEditingContainerDelete = exports.requestGridEditingContainerMove = exports.requestGridEditingContainerAdd = exports.requestGridEditingContainerGetTypes = exports.requestGridDocumentRevertToRevision = exports.requestGridDocumentRevertDraft = exports.requestGridDocumentPublishDraft = exports.requestGridStylesGetBox = exports.requestGridStylesGetSlot = exports.requestGridStylesGetContainer = exports.requestGridStylesGetAll = exports.requestGridPermissionRights = exports.requestGridDocumentRevisions = exports.requestGridDocumentCheckDraftState = exports.requestGridDocumentLoad = exports.init = undefined;
+exports.requestGridWidgetsTypeAheadGetText = exports.requestGridWidgetsTypeAheadSearch = exports.requestGridEditingBoxUpdate = exports.requestGridEditingBoxFetch = exports.requestGridEditingBoxRemove = exports.requestGridEditingBoxMove = exports.requestGridEditingBoxCreate = exports.requestGridEditingBoxSearch = exports.requestGridEditingBoxMetaTypes = exports.requestGridEditingContainerUpdate = exports.requestGridEditingContainerReuse = exports.requestGridEditingContainerDelete = exports.requestGridEditingContainerMove = exports.requestGridEditingContainerAdd = exports.requestGridEditingContainerGetTypes = exports.requestGridDocumentRevertToRevision = exports.requestGridDocumentRevertDraft = exports.requestGridDocumentPublishDraft = exports.requestGridStylesGetBox = exports.requestGridStylesGetSlot = exports.requestGridStylesGetContainer = exports.requestGridStylesGetAll = exports.requestGridPermissionRights = exports.requestGridDocumentRevisions = exports.requestGridDocumentCheckDraftState = exports.requestGridDocumentLoad = exports.init = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -11521,6 +11522,12 @@ var requestGridEditingContainerReuse = exports.requestGridEditingContainerReuse 
 	    title = _ref5.title;
 	return requestBackend("grid.editing.container", "reuseContainer", [grid_id, container_id, title]);
 };
+var requestGridEditingContainerUpdate = exports.requestGridEditingContainerUpdate = function requestGridEditingContainerUpdate(_ref6) {
+	var grid_id = _ref6.grid_id,
+	    container_id = _ref6.container_id,
+	    container = _ref6.container;
+	return requestBackend("grid.editing.container", "updateContainer", [grid_id, container_id, container]);
+};
 
 // -------------------------
 // box requests
@@ -11529,74 +11536,74 @@ var requestGridEditingContainerReuse = exports.requestGridEditingContainerReuse 
 var requestGridEditingBoxMetaTypes = exports.requestGridEditingBoxMetaTypes = function requestGridEditingBoxMetaTypes(grid_id) {
 	return requestBackend("grid.editing.box", "getMetaTypesAndSearchCriteria", [grid_id]);
 };
-var requestGridEditingBoxSearch = exports.requestGridEditingBoxSearch = function requestGridEditingBoxSearch(_ref6) {
-	var grid_id = _ref6.grid_id,
-	    box_meta_type = _ref6.box_meta_type,
-	    query = _ref6.query,
-	    criteria = _ref6.criteria;
+var requestGridEditingBoxSearch = exports.requestGridEditingBoxSearch = function requestGridEditingBoxSearch(_ref7) {
+	var grid_id = _ref7.grid_id,
+	    box_meta_type = _ref7.box_meta_type,
+	    query = _ref7.query,
+	    criteria = _ref7.criteria;
 	return requestBackend("grid.editing.box", "Search", [grid_id, box_meta_type, query, criteria]);
 };
-var requestGridEditingBoxCreate = exports.requestGridEditingBoxCreate = function requestGridEditingBoxCreate(_ref7) {
-	var grid_id = _ref7.grid_id,
-	    to_container_id = _ref7.to_container_id,
-	    to_slot_id = _ref7.to_slot_id,
-	    to_box_index = _ref7.to_box_index,
-	    box_type = _ref7.box_type,
-	    box_content = _ref7.box_content;
-	return requestBackend("grid.editing.box", "CreateBox", [grid_id, to_container_id, to_slot_id, to_box_index, box_type, box_content]);
-};
-var requestGridEditingBoxMove = exports.requestGridEditingBoxMove = function requestGridEditingBoxMove(_ref8) {
+var requestGridEditingBoxCreate = exports.requestGridEditingBoxCreate = function requestGridEditingBoxCreate(_ref8) {
 	var grid_id = _ref8.grid_id,
-	    from_container_id = _ref8.from_container_id,
-	    from_slot_id = _ref8.from_slot_id,
-	    from_box_index = _ref8.from_box_index,
 	    to_container_id = _ref8.to_container_id,
 	    to_slot_id = _ref8.to_slot_id,
-	    to_box_index = _ref8.to_box_index;
+	    to_box_index = _ref8.to_box_index,
+	    box_type = _ref8.box_type,
+	    box_content = _ref8.box_content;
+	return requestBackend("grid.editing.box", "CreateBox", [grid_id, to_container_id, to_slot_id, to_box_index, box_type, box_content]);
+};
+var requestGridEditingBoxMove = exports.requestGridEditingBoxMove = function requestGridEditingBoxMove(_ref9) {
+	var grid_id = _ref9.grid_id,
+	    from_container_id = _ref9.from_container_id,
+	    from_slot_id = _ref9.from_slot_id,
+	    from_box_index = _ref9.from_box_index,
+	    to_container_id = _ref9.to_container_id,
+	    to_slot_id = _ref9.to_slot_id,
+	    to_box_index = _ref9.to_box_index;
 	return requestBackend("grid.editing.box", "moveBox", [grid_id, from_container_id, from_slot_id, from_box_index, to_container_id, to_slot_id, to_box_index]);
 };
-var requestGridEditingBoxRemove = exports.requestGridEditingBoxRemove = function requestGridEditingBoxRemove(_ref9) {
-	var grid_id = _ref9.grid_id,
-	    container_id = _ref9.container_id,
-	    slot_id = _ref9.slot_id,
-	    index = _ref9.index;
-	return requestBackend("grid.editing.box", "removeBox", [grid_id, container_id, slot_id, index]);
-};
-var requestGridEditingBoxFetch = exports.requestGridEditingBoxFetch = function requestGridEditingBoxFetch(_ref10) {
+var requestGridEditingBoxRemove = exports.requestGridEditingBoxRemove = function requestGridEditingBoxRemove(_ref10) {
 	var grid_id = _ref10.grid_id,
 	    container_id = _ref10.container_id,
 	    slot_id = _ref10.slot_id,
 	    index = _ref10.index;
-	return requestBackend("grid.editing.box", "fetchBox", [grid_id, container_id, slot_id, index]);
+	return requestBackend("grid.editing.box", "removeBox", [grid_id, container_id, slot_id, index]);
 };
-var requestGridEditingBoxUpdate = exports.requestGridEditingBoxUpdate = function requestGridEditingBoxUpdate(_ref11) {
+var requestGridEditingBoxFetch = exports.requestGridEditingBoxFetch = function requestGridEditingBoxFetch(_ref11) {
 	var grid_id = _ref11.grid_id,
 	    container_id = _ref11.container_id,
 	    slot_id = _ref11.slot_id,
-	    index = _ref11.index,
-	    box = _ref11.box;
+	    index = _ref11.index;
+	return requestBackend("grid.editing.box", "fetchBox", [grid_id, container_id, slot_id, index]);
+};
+var requestGridEditingBoxUpdate = exports.requestGridEditingBoxUpdate = function requestGridEditingBoxUpdate(_ref12) {
+	var grid_id = _ref12.grid_id,
+	    container_id = _ref12.container_id,
+	    slot_id = _ref12.slot_id,
+	    index = _ref12.index,
+	    box = _ref12.box;
 	return requestBackend("grid.editing.box", "UpdateBox", [grid_id, container_id, slot_id, index, box]);
 };
 
 // -------------------------
 // grid widget requests
 // -------------------------
-var requestGridWidgetsTypeAheadSearch = exports.requestGridWidgetsTypeAheadSearch = function requestGridWidgetsTypeAheadSearch(_ref12) {
-	var grid_id = _ref12.grid_id,
-	    container_id = _ref12.container_id,
-	    slot_id = _ref12.slot_id,
-	    box_index = _ref12.box_index,
-	    field = _ref12.field,
-	    query = _ref12.query;
-	return requestBackend("grid.widgets.typeahead", "typeAheadSearch", [grid_id, container_id, slot_id, box_index, field, query]);
-};
-var requestGridWidgetsTypeAheadGetText = exports.requestGridWidgetsTypeAheadGetText = function requestGridWidgetsTypeAheadGetText(_ref13) {
+var requestGridWidgetsTypeAheadSearch = exports.requestGridWidgetsTypeAheadSearch = function requestGridWidgetsTypeAheadSearch(_ref13) {
 	var grid_id = _ref13.grid_id,
 	    container_id = _ref13.container_id,
 	    slot_id = _ref13.slot_id,
 	    box_index = _ref13.box_index,
-	    path = _ref13.path,
-	    id = _ref13.id;
+	    field = _ref13.field,
+	    query = _ref13.query;
+	return requestBackend("grid.widgets.typeahead", "typeAheadSearch", [grid_id, container_id, slot_id, box_index, field, query]);
+};
+var requestGridWidgetsTypeAheadGetText = exports.requestGridWidgetsTypeAheadGetText = function requestGridWidgetsTypeAheadGetText(_ref14) {
+	var grid_id = _ref14.grid_id,
+	    container_id = _ref14.container_id,
+	    slot_id = _ref14.slot_id,
+	    box_index = _ref14.box_index,
+	    path = _ref14.path,
+	    id = _ref14.id;
 	return requestBackend("grid.widgets.typeahead", "typeAheadGetText", [grid_id, container_id, slot_id, box_index, path, id]);
 };
 
@@ -14659,14 +14666,19 @@ var Collapsible = function (_Component) {
 		};
 		return _this;
 	}
-	/**
-  * ---------------------
-  * render
-  * ---------------------
-  */
-
 
 	_createClass(Collapsible, [{
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			this.setState({ collapsed: nextProps.collapsed });
+		}
+		/**
+   * ---------------------
+   * render
+   * ---------------------
+   */
+
+	}, {
 		key: 'render',
 		value: function render() {
 			var _props = this.props,
@@ -14711,7 +14723,7 @@ var Collapsible = function (_Component) {
 		key: 'onToggle',
 		value: function onToggle() {
 			this.setState({ collapsed: !this.state.collapsed });
-			if (_typeof(this.props.onStateChanged) != ( true ? 'undefined' : _typeof(undefined))) this.props.onStateChanged(this.state.collapsed);
+			if (_typeof(this.props.onStateChanged) !== ( true ? 'undefined' : _typeof(undefined))) this.props.onStateChanged(this.state.collapsed);
 		}
 		/**
    * ---------------------
@@ -29009,6 +29021,7 @@ exports.actionGridContainerEditingGetTypes = actionGridContainerEditingGetTypes;
 exports.actionGridContainerEditingAdd = actionGridContainerEditingAdd;
 exports.actionGridContainerEditingMove = actionGridContainerEditingMove;
 exports.actionGridContainerEditingDelete = actionGridContainerEditingDelete;
+exports.actionGridContainerEditingUpdate = actionGridContainerEditingUpdate;
 
 var _types = __webpack_require__(46);
 
@@ -29107,6 +29120,31 @@ function actionGridContainerEditingDelete(args) {
 				type: _types.REQUEST_GRID_CONTAINER_EDITING_DELETE,
 				payload: _extends({}, args, { result: result })
 			});
+		}
+	});
+}
+
+/**
+ *
+ * @param {{grid_id, container_id, container}} args
+ * @return {Promise}
+ */
+function actionGridContainerEditingUpdate(args) {
+	return (0, _index.actionAsyncExecute)({
+		before: function before(dispatch) {
+			dispatch((0, _ui.actionSetGridLoading)(true));
+		},
+		request: _backend.requestGridEditingContainerUpdate.bind(this, args),
+		then: function then(dispatch, box) {
+
+			dispatch((0, _ui.actionSetGridLoading)(false));
+
+			dispatch({
+				type: REQUEST_GRID_BOX_EDITING_UPDATE,
+				payload: _extends({}, args, { box: box })
+			});
+
+			dispatch((0, _ui.actionEditGridContainerClose)());
 		}
 	});
 }
@@ -32136,46 +32174,51 @@ var BoxEditor = function (_Component) {
 					className: 'grid-box-editor'
 				},
 				_react2.default.createElement(
-					'ul',
-					{
-						className: 'grid-box-editor__controls'
-					},
+					'nav',
+					null,
 					_react2.default.createElement(
-						'li',
+						'ul',
 						{
-							className: 'grid-box-editor__control'
+							className: 'grid-box-editor__menu'
 						},
 						_react2.default.createElement(
-							'button',
+							'li',
 							{
-								onClick: this.onSave.bind(this),
-								className: 'control__button control__type_save' },
-							_react2.default.createElement('i', { className: 'icon-ok' }),
-							'Save'
-						)
-					),
-					_react2.default.createElement(
-						'li',
-						null,
+								className: 'grid-box-editor__menu--item'
+							},
+							_react2.default.createElement(
+								'button',
+								{
+									onClick: this.onSave.bind(this)
+								},
+								'Save'
+							)
+						),
 						_react2.default.createElement(
-							'button',
+							'li',
 							{
-								onClick: this.props.onDiscardBoxeditor,
-								className: 'control__button control__type_discard' },
-							_react2.default.createElement('i', { className: 'icon-cancel' }),
-							'Discard'
-						)
-					),
-					_react2.default.createElement(
-						'li',
-						null,
+								className: 'grid-box-editor__menu--item'
+							},
+							_react2.default.createElement(
+								'button',
+								{
+									onClick: this.props.onDiscardBoxeditor
+								},
+								'Discard'
+							)
+						),
 						_react2.default.createElement(
-							'button',
+							'li',
 							{
-								onClick: this.props.onReuseBoxeditor,
-								className: 'control__button control__type_reuse' },
-							_react2.default.createElement('i', { className: 'icon-reuse' }),
-							'Reuse'
+								className: 'grid-box-editor__menu--item'
+							},
+							_react2.default.createElement(
+								'button',
+								{
+									onClick: this.props.onReuseBoxeditor
+								},
+								'Reuse'
+							)
 						)
 					)
 				),
@@ -32853,6 +32896,10 @@ var _reactDnd = __webpack_require__(54);
 
 var _constants = __webpack_require__(37);
 
+var _containerTypes = __webpack_require__(415);
+
+var _containerTypes2 = _interopRequireDefault(_containerTypes);
+
 var _collapsible = __webpack_require__(152);
 
 var _collapsible2 = _interopRequireDefault(_collapsible);
@@ -32902,13 +32949,10 @@ var ContainerDrop = function (_Component) {
 	_createClass(ContainerDrop, [{
 		key: 'render',
 		value: function render() {
-			var _this2 = this;
-
 			var _props = this.props,
 			    connectDropTarget = _props.connectDropTarget,
 			    isOver = _props.isOver,
 			    canDrop = _props.canDrop;
-			var is_opened = this.state.is_opened;
 
 
 			var can_drop_class = canDrop ? 'can-drop' : '';
@@ -32920,74 +32964,110 @@ var ContainerDrop = function (_Component) {
 					className: 'grid-container__drop ' + over_class + ' ' + can_drop_class
 				},
 				_react2.default.createElement('div', { className: 'grid-container__drop--area' }),
+				this.renderInPlace()
+			));
+		}
+	}, {
+		key: 'renderInPlace',
+		value: function renderInPlace() {
+			var _this2 = this;
+
+			var container_types = this.props.container_types;
+
+			if (container_types.length < 1) return null;
+			var is_opened = this.state.is_opened;
+
+
+			var collapsed = !is_opened ? true : undefined;
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: 'grid-container__select ' + (is_opened ? "is-opened" : "is-closed")
+				},
 				_react2.default.createElement(
-					'div',
+					'button',
 					{
-						className: 'grid-container__select ' + (is_opened ? "is-opened" : "is-closed")
+						className: 'grid-container__select--toggle',
+						onClick: function onClick() {
+							_this2.setState({ is_opened: !is_opened });
+						}
 					},
 					_react2.default.createElement(
-						'button',
-						{
-							className: 'grid-container__select--toggle',
-							onClick: function onClick() {
-								_this2.setState({ is_opened: !is_opened });
-							}
-						},
-						_react2.default.createElement(
-							'span',
-							{ className: 'grid-container__select--icon' },
-							'+'
-						),
-						_react2.default.createElement(
-							'span',
-							{ className: 'grid-container__select--open-text' },
-							'Add Container'
-						),
-						_react2.default.createElement(
-							'span',
-							{ className: 'grid-container__select--close-text' },
-							'Close'
-						)
+						'span',
+						{ className: 'grid-container__select--icon' },
+						'+'
 					),
 					_react2.default.createElement(
-						'div',
-						{ className: 'grid-container__select--types' },
+						'span',
+						{ className: 'grid-container__select--open-text' },
+						'Add Container'
+					),
+					_react2.default.createElement(
+						'span',
+						{ className: 'grid-container__select--close-text' },
+						'Close'
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'grid-container__select--types' },
+					_react2.default.createElement(
+						_collapsible2.default,
+						{ title: 'Containers', collapsed: collapsed },
+						container_types.map(function (container, index) {
+							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("s-") === 0) return;
+							return _react2.default.createElement(
+								'div',
+								{
+									key: container.type,
+									onClick: _this2.onClickAdd.bind(_this2, container)
+								},
+								container.type
+							);
+						})
+					),
+					_react2.default.createElement(
+						_collapsible2.default,
+						{ title: 'Sidebars', collapsed: collapsed },
+						container_types.map(function (container, index) {
+							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("c-") === 0) return;
+							return _react2.default.createElement(
+								'div',
+								{
+									key: container.type,
+									onClick: _this2.onClickAdd.bind(_this2, container)
+								},
+								container.type
+							);
+						})
+					),
+					_react2.default.createElement(
+						_collapsible2.default,
+						{ title: 'Reusable' },
 						_react2.default.createElement(
-							_collapsible2.default,
-							{ title: 'Containers' },
-							_react2.default.createElement(
-								'p',
-								null,
-								'Container list!'
-							)
-						),
-						_react2.default.createElement(
-							_collapsible2.default,
-							{ title: 'Sidebars' },
-							_react2.default.createElement(
-								'p',
-								null,
-								'Sidebars list!'
-							)
-						),
-						_react2.default.createElement(
-							_collapsible2.default,
-							{ title: 'Reusable' },
-							_react2.default.createElement(
-								'p',
-								null,
-								'Reusable list!'
-							)
+							'p',
+							null,
+							'Reusable list!'
 						)
 					)
 				)
-			));
+			);
+		}
+	}, {
+		key: 'onClickAdd',
+		value: function onClickAdd(container) {
+			this.props.onAdd(container, this.props.index);
+			this.setState({ is_opend: false });
 		}
 	}]);
 
 	return ContainerDrop;
 }(_react.Component);
 
+ContainerDrop.defaultProps = {
+	container_types: []
+};
 ContainerDrop.propTypes = {
 	index: _propTypes2.default.number.isRequired,
 	isOver: _propTypes2.default.bool,
@@ -32995,7 +33075,9 @@ ContainerDrop.propTypes = {
 	/**
   * if new container from outside was added
   */
-	onAdd: _propTypes2.default.func
+	onAdd: _propTypes2.default.func,
+
+	container_types: _propTypes2.default.array
 };
 
 exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);
@@ -33442,11 +33524,11 @@ var Grid = function (_Component) {
      * render container
      */
 				var dimensions = container.type.split("-").slice(1);
-				console.log("edit container", edit_container, container.id);
 				if (edit_container === container.id) {
 					$containers.push(_react2.default.createElement(_containerEditor2.default, {
 						key: container.id,
-						container: container
+						container: container,
+						onSave: this.props.onContainerUpdate
 					}));
 				} else {
 					$containers.push(_react2.default.createElement(
@@ -33475,7 +33557,8 @@ var Grid = function (_Component) {
 			return _react2.default.createElement(_containerDrop2.default, {
 				key: drop_key,
 				index: index,
-				onAdd: this.onContainerAdd.bind(this)
+				onAdd: this.onContainerAdd.bind(this),
+				container_types: this.props.container_types
 			});
 		}
 
@@ -33653,8 +33736,12 @@ var Grid = function (_Component) {
 
 exports.default = Grid;
 Grid.defaultProps = {
+
+	// if in inline edit mode
 	edit_container: null,
-	edit_box: null
+	edit_box: null,
+	box_types: [],
+	container_types: []
 };
 
 Grid.propTypes = {
@@ -33670,6 +33757,8 @@ Grid.propTypes = {
 		box_id: _propTypes2.default.string.isRequired
 	}),
 
+	// TODO: show container types from ui state (container, sidebars, reusable), same for boxes
+
 	/**
   * callback handlers
   */
@@ -33679,6 +33768,7 @@ Grid.propTypes = {
 	onContainerMove: _propTypes2.default.func.isRequired,
 	onContainerEdit: _propTypes2.default.func.isRequired,
 	onContainerDelete: _propTypes2.default.func.isRequired,
+	onContainerUpdate: _propTypes2.default.func.isRequired,
 
 	onBoxAdd: _propTypes2.default.func.isRequired,
 	onBoxMove: _propTypes2.default.func.isRequired,
@@ -35186,11 +35276,15 @@ var TheGrid = function (_React$Component) {
 					edit_container: edit_container,
 					edit_box: edit_box,
 
+					container_types: container_types,
+					box_types: box_types,
+
 					onContainerEdit: this.props.onContainerEdit.bind(this, this.props.grid.id),
 					onContainerAdd: this.props.onContainerAdd.bind(this, this.props.grid.id),
 					onContainerMove: this.props.onContainerMove.bind(this, this.props.grid.id),
 					onContainerDelete: this.props.onContainerDelete.bind(this, this.props.grid.id),
 					onContainerReuse: this.props.onContainerReuse.bind(this, this.props.grid.id),
+					onContainerUpdate: this.props.onContainerUpdate.bind(this, this.props.grid.id),
 
 					onBoxEdit: this.props.onBoxEdit.bind(this, this.props.grid.id),
 					onBoxAdd: this.props.onBoxAdd.bind(this, this.props.grid.id),
@@ -35513,12 +35607,6 @@ function (dispatch) {
 		// -----------
 		// ui events
 		// -----------
-		onEditContainer: function onEditContainer(grid_id, container_id) {
-			dispatch((0, _ui.actionEditGridContainer)(container_id));
-		},
-		onEditBox: function onEditBox(grid_id, box) {
-			dispatch(editGridBox(box));
-		},
 
 
 		// -----------
@@ -35554,8 +35642,12 @@ function (dispatch) {
 		onContainerEdit: function onContainerEdit(grid_id, container_id) {
 			dispatch((0, _ui.actionEditGridContainer)(container_id));
 		},
-		onContainerDiscard: function onContainerDiscard() {
+		onContainerEditCancel: function onContainerEditCancel() {
 			dispatch((0, _ui.actionEditGridContainerClose)());
+		},
+		onContainerUpdate: function onContainerUpdate(grid_id, container_id, container) {
+			console.log(grid_id, container_id, container);
+			dispatch((0, _gridContainer.actionGridContainerEditingUpdate)(grid_id, container_id, container));
 		},
 
 		// -----------
@@ -44809,14 +44901,76 @@ var ContainerEditor = function (_Component) {
 		value: function render() {
 			var _state = this.state,
 			    title = _state.title,
+			    titleurl = _state.titleurl,
+			    readmore = _state.readmore,
+			    readmoreurl = _state.readmoreurl,
 			    prolog = _state.prolog,
-			    epilog = _state.epilog;
+			    epilog = _state.epilog,
+			    type = _state.type;
 
 			return _react2.default.createElement(
 				'div',
 				{
 					className: 'grid-container-editor'
 				},
+				_react2.default.createElement(
+					'div',
+					{
+						className: 'grid-container-editor__menu'
+					},
+					_react2.default.createElement(
+						'nav',
+						null,
+						_react2.default.createElement(
+							'ul',
+							null,
+							_react2.default.createElement(
+								'li',
+								{
+									className: 'grid-container-editor__menu--item'
+								},
+								_react2.default.createElement(
+									'button',
+									{
+										onClick: this.onSave.bind(this)
+									},
+									'Save'
+								)
+							),
+							_react2.default.createElement(
+								'li',
+								{
+									className: 'grid-container-editor__menu--item'
+								},
+								_react2.default.createElement(
+									'button',
+									{
+										onClick: this.onCancel.bind(this)
+									},
+									'Discard'
+								)
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'grid-container-editor__header' },
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-container-editor__type' },
+						type
+					),
+					_react2.default.createElement(_textWithLink2.default, {
+						className: 'grid-container-editor__title',
+						title: 'Conatinertitle',
+						text: title,
+						url: titleurl,
+						onTextChange: this.onChangeState.bind(this, "title"),
+						onUrlChange: this.onChangeState.bind(this, "titleurl")
+					})
+				),
 				_react2.default.createElement(
 					_collapsible2.default,
 					{
@@ -44829,6 +44983,11 @@ var ContainerEditor = function (_Component) {
 					})
 				),
 				_react2.default.createElement(
+					'div',
+					null,
+					'Slot Styles?'
+				),
+				_react2.default.createElement(
 					_collapsible2.default,
 					{
 						title: 'Epilog'
@@ -44839,11 +44998,14 @@ var ContainerEditor = function (_Component) {
 						onChange: this.onChangeState.bind(this, "epilog")
 					})
 				),
-				_react2.default.createElement(
-					'div',
-					null,
-					title
-				)
+				_react2.default.createElement(_textWithLink2.default, {
+					className: 'grid-container-editor__readmore',
+					title: 'Readmore',
+					text: readmore,
+					url: readmoreurl,
+					onTextChange: this.onChangeState.bind(this, "readmore"),
+					onUrlChange: this.onChangeState.bind(this, "readmoreurl")
+				})
 			);
 		}
 
@@ -44858,6 +45020,19 @@ var ContainerEditor = function (_Component) {
 		value: function onChangeState(key, value) {
 			this.state[key] = value;
 			this.setState(this.state);
+		}
+	}, {
+		key: 'onSave',
+		value: function onSave() {
+			var id = this.props.container.id;
+
+			console.log(id, this.state);
+			this.props.onSave(id, this.state);
+		}
+	}, {
+		key: 'onCancel',
+		value: function onCancel() {
+			this.props.onCancel();
 		}
 
 		/**
@@ -44876,7 +45051,17 @@ var ContainerEditor = function (_Component) {
  */
 
 
-ContainerEditor.defaultProps = {};
+ContainerEditor.defaultProps = {
+	onSave: function onSave() {
+		console.log("onSave is not implemented");
+	},
+	onCancel: function onCancel() {
+		console.log("onCancel is not implemented");
+	},
+	onReuse: function onReuse() {
+		console.log("onReuse is not implemented");
+	}
+};
 
 /**
  * define property types
@@ -44884,7 +45069,12 @@ ContainerEditor.defaultProps = {};
 ContainerEditor.propTypes = {
 	container: _propTypes2.default.shape({
 		id: _propTypes2.default.any.isRequired
-	}).isRequired
+	}).isRequired,
+
+	onSave: _propTypes2.default.func.isRequired,
+	onCancel: _propTypes2.default.func.isRequired,
+	onReuse: _propTypes2.default.func
+
 };
 
 /**
@@ -44955,8 +45145,6 @@ var TextWithLink = function (_Component) {
 			    title_placeholder = _props.title_placeholder,
 			    text = _props.text,
 			    url = _props.url,
-			    onTextChange = _props.onTextChange,
-			    onUrlChange = _props.onUrlChange,
 			    urlDeleteText = _props.urlDeleteText,
 			    urlAddText = _props.urlAddText,
 			    className = _props.className;
@@ -44966,38 +45154,38 @@ var TextWithLink = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{
-					className: className + ' editor__text-with-link'
+					className: className + ' widget__text-with-link'
 				},
 				_react2.default.createElement(
 					'label',
 					{
-						className: 'text-with-link__label' },
+						className: 'widget__text-with-link--label' },
 					title
 				),
 				_react2.default.createElement('input', {
 					placeholder: title_placeholder,
 					type: 'text',
 					value: text,
-					className: 'text-with-link__input',
-					onChange: onTextChange
+					className: 'widget__text-with-link--input',
+					onChange: this.onTextChange.bind(this)
 				}),
 				_react2.default.createElement(
 					'div',
 					{
-						className: 'editor__url-builder ' + (show_link_input ? "is-active" : "is-inactive")
+						className: 'widget__url-builder ' + (show_link_input ? "is-active" : "is-inactive")
 					},
 					_react2.default.createElement('input', {
 						placeholder: 'Title URL (for internals links, please use a relative path starting with \'/\'):',
 						type: 'text',
 						value: url,
-						className: 'url-builder__title-url',
-						onChange: onUrlChange,
+						className: 'widget__url-builder--url',
+						onChange: this.onUrlChange.bind(this),
 						disabled: !show_link_input
 					}),
 					_react2.default.createElement(
 						'button',
 						{
-							className: 'url-builder__button',
+							className: 'widget__url-builder--button',
 							onClick: this.onToggleLink.bind(this)
 						},
 						show_link_input ? urlDeleteText : urlAddText
@@ -45015,10 +45203,18 @@ var TextWithLink = function (_Component) {
 	}, {
 		key: 'onToggleLink',
 		value: function onToggleLink() {
-			if (this.state.show_link_input) {
-				this.state.value = '';
-			}
 			this.setState({ show_link_input: !this.state.show_link_input });
+			this.props.onUrlChange("");
+		}
+	}, {
+		key: 'onTextChange',
+		value: function onTextChange(e) {
+			this.props.onTextChange(e.target.value);
+		}
+	}, {
+		key: 'onUrlChange',
+		value: function onUrlChange(e) {
+			this.props.onUrlChange(e.target.value);
 		}
 		/**
    * ------------------------------------------------

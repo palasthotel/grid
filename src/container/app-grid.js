@@ -15,6 +15,7 @@ import {
 	actionGridContainerEditingAdd,
 	actionGridContainerEditingDelete,
 	actionGridContainerEditingMove,
+	actionGridContainerEditingUpdate,
 } from '../actions/grid.container.editing'
 
 import {
@@ -52,12 +53,7 @@ export default connect(
 			// -----------
 			// ui events
 			// -----------
-			onEditContainer(grid_id, container_id){
-				dispatch(actionEditGridContainer(container_id))
-			},
-			onEditBox(grid_id, box){
-				dispatch(editGridBox(box))
-			},
+
 
 			// -----------
 			// grid events
@@ -90,8 +86,12 @@ export default connect(
 			onContainerEdit: (grid_id, container_id)=>{
 				dispatch(actionEditGridContainer(container_id))
 			},
-			onContainerDiscard: ()=>{
+			onContainerEditCancel: ()=>{
 				dispatch(actionEditGridContainerClose())
+			},
+			onContainerUpdate: (grid_id, container_id, container)=>{
+				console.log(grid_id, container_id, container);
+				dispatch(actionGridContainerEditingUpdate(grid_id, container_id, container))
 			},
 
 			// -----------
