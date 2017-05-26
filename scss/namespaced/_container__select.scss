@@ -18,12 +18,12 @@
   transition: all .3s ease-in-out;
 
   .is-opend & {
-    //transform: scale(1) rotateZ(0);
+    transform: scale(1) rotateZ(0);
     max-height: none;
   }
 
   .is-closed & {
-    //transform: scale(0) rotateZ(90deg);
+    transform: scale(0) rotateZ(90deg);
     max-height: 0;
   }
 
