@@ -10,7 +10,13 @@
 
 .grid-container-preview__slot {
   height: 20px;
-  background-color: $color__container-preview--slot;
+  background-color: white;
+
+  border: .5vw solid $color__app--background;
+
+  .grid-container-preview:hover & {
+    border-color: $color__container-preview--highlight;
+  }
 }
 
 @for $i from 1 through 20 {
