@@ -11,8 +11,9 @@ import Revision from './revision/revision';
 import ToolbarButton from './toolbar/toolbar-button';
 
 import GridLogoIcon from '../icon/grid'
-import WarningIcon from '../icon/warning'
 import NotificationIcon from '../icon/notification'
+
+import NotificationItem from './notification/notification-item';
 
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -114,35 +115,30 @@ class TheGrid extends React.Component{
 						<ul
 							className="grid-notifications__list"
 						>
-							<li
-								className="grid-notification__item grid-notification__item--is-published"
+							<NotificationItem
+								auto_hide={true}
+								hide_after={1}
+								type="published"
 							>
-								<span
-									className="grid-notification__icon"
-								/>
 								<p>Version (XXX) wurde erfolgreich gespeichert.</p>
-							</li>
-							<li
-								className="grid-notification__item grid-notification__item--is-success"
+							</NotificationItem>
+
+							<NotificationItem
+								auto_hide={true}
+								hide_after={2}
+								type="success"
 							>
-								<span
-									className="grid-notification__icon"
-								/>
-								<p>Revision (XXX) wurde wiederhergestellt.</p>
-							</li>
-							<li
-								className="grid-notification__item grid-notification__item--is-error"
+								<p>Erfolg.</p>
+							</NotificationItem>
+
+							<NotificationItem
+								auto_hide={true}
+								hide_after={3}
+								type="error"
 							>
-								<span
-									className="grid-notification__icon"
-								>
-									<WarningIcon />
-								</span>
 								<p>Es ist ein Fehler aufgetreten.</p>
-								<button
-									className="grid-notification__button"
-								>&times;</button>
-							</li>
+							</NotificationItem>
+
 						</ul>
 					</div>
 

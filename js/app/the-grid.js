@@ -35056,13 +35056,13 @@ var _grid3 = __webpack_require__(664);
 
 var _grid4 = _interopRequireDefault(_grid3);
 
-var _warning = __webpack_require__(665);
-
-var _warning2 = _interopRequireDefault(_warning);
-
 var _notification = __webpack_require__(666);
 
 var _notification2 = _interopRequireDefault(_notification);
+
+var _notificationItem = __webpack_require__(669);
+
+var _notificationItem2 = _interopRequireDefault(_notificationItem);
 
 var _reactDnd = __webpack_require__(54);
 
@@ -35200,13 +35200,12 @@ var TheGrid = function (_React$Component) {
 								className: 'grid-notifications__list'
 							},
 							_react2.default.createElement(
-								'li',
+								_notificationItem2.default,
 								{
-									className: 'grid-notification__item grid-notification__item--is-published'
+									auto_hide: true,
+									hide_after: 1,
+									type: 'published'
 								},
-								_react2.default.createElement('span', {
-									className: 'grid-notification__icon'
-								}),
 								_react2.default.createElement(
 									'p',
 									null,
@@ -35214,42 +35213,29 @@ var TheGrid = function (_React$Component) {
 								)
 							),
 							_react2.default.createElement(
-								'li',
+								_notificationItem2.default,
 								{
-									className: 'grid-notification__item grid-notification__item--is-success'
+									auto_hide: true,
+									hide_after: 2,
+									type: 'success'
 								},
-								_react2.default.createElement('span', {
-									className: 'grid-notification__icon'
-								}),
 								_react2.default.createElement(
 									'p',
 									null,
-									'Revision (XXX) wurde wiederhergestellt.'
+									'Erfolg.'
 								)
 							),
 							_react2.default.createElement(
-								'li',
+								_notificationItem2.default,
 								{
-									className: 'grid-notification__item grid-notification__item--is-error'
+									auto_hide: true,
+									hide_after: 3,
+									type: 'error'
 								},
-								_react2.default.createElement(
-									'span',
-									{
-										className: 'grid-notification__icon'
-									},
-									_react2.default.createElement(_warning2.default, null)
-								),
 								_react2.default.createElement(
 									'p',
 									null,
 									'Es ist ein Fehler aufgetreten.'
-								),
-								_react2.default.createElement(
-									'button',
-									{
-										className: 'grid-notification__button'
-									},
-									'\xD7'
 								)
 							)
 						)
@@ -45252,6 +45238,153 @@ TextWithLink.propTypes = {
 };
 
 exports.default = TextWithLink;
+
+/***/ }),
+/* 669 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(6);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _warning = __webpack_require__(665);
+
+var _warning2 = _interopRequireDefault(_warning);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NotificationItem = function (_Component) {
+	_inherits(NotificationItem, _Component);
+
+	/**
+  * ------------------------------------------------
+  * lifecycle
+  * ------------------------------------------------
+  */
+	function NotificationItem(props) {
+		_classCallCheck(this, NotificationItem);
+
+		var _this = _possibleConstructorReturn(this, (NotificationItem.__proto__ || Object.getPrototypeOf(NotificationItem)).call(this, props));
+
+		_this.state = { is_hidden: _this.props.is_hidden };
+		return _this;
+	}
+
+	_createClass(NotificationItem, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			if (this.props.auto_hide === true) {
+				setTimeout(function () {
+					_this2.setState({ is_hidden: true });
+				}, this.props.hide_after * 1000);
+			}
+		}
+		/**
+   * ------------------------------------------------
+   * rendering
+   * ------------------------------------------------
+   */
+
+	}, {
+		key: 'render',
+		value: function render() {
+			var type = this.props.type;
+			var is_hidden = this.state.is_hidden;
+
+			return _react2.default.createElement(
+				'li',
+				{
+					className: 'grid-notification__item grid-notification__item--is-' + type + ' ' + (is_hidden ? "is-hidden" : "")
+				},
+				_react2.default.createElement(
+					'span',
+					{
+						className: 'grid-notification__icon'
+					},
+					this.renderIcon()
+				),
+				_react2.default.createElement('span', {
+					className: 'grid-notification__icon'
+				}),
+				this.props.children
+			);
+		}
+	}, {
+		key: 'renderIcon',
+		value: function renderIcon() {
+			var type = this.props.type;
+
+			switch (type) {
+				case "error":
+					return _react2.default.createElement(_warning2.default, null);
+			}
+		}
+
+		/**
+   * ------------------------------------------------
+   * events
+   * ------------------------------------------------
+   */
+
+		/**
+   * ------------------------------------------------
+   * other functions
+   * ------------------------------------------------
+   */
+
+	}]);
+
+	return NotificationItem;
+}(_react.Component);
+
+/**
+ * property defaults
+ */
+
+
+NotificationItem.defaultProps = {
+	is_hidden: false,
+	auto_hide: false,
+	hide_after: 5,
+	type: "notice"
+};
+
+/**
+ * define property types
+ */
+NotificationItem.propTypes = {
+	is_hidden: _propTypes2.default.bool,
+	auto_hide: _propTypes2.default.bool,
+	hide_after: _propTypes2.default.number,
+	type: _propTypes2.default.string,
+	children: _propTypes2.default.element.isRequired
+};
+
+/**
+ * export component to public
+ */
+exports.default = NotificationItem;
 
 /***/ })
 /******/ ]);
