@@ -87,6 +87,7 @@ export default connect(
 				dispatch(actionEditGridContainer(container_id))
 			},
 			onContainerEditCancel: ()=>{
+				console.log("CANCEL")
 				dispatch(actionEditGridContainerClose())
 			},
 			onContainerEditUpdate: (grid_id, container_id, container)=>{

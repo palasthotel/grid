@@ -79,6 +79,7 @@ export default class Grid extends Component{
 					key={container.id}
 					container={container}
 					onSave={this.props.onContainerUpdate}
+					onCancel={this.props.onContainerEditCancel}
 				/>)
 			} else {
 				$containers.push((
@@ -290,6 +291,7 @@ Grid.propTypes = {
 	onContainerAdd: PropTypes.func.isRequired,
 	onContainerMove: PropTypes.func.isRequired,
 	onContainerEdit: PropTypes.func.isRequired,
+	onContainerEditCancel: PropTypes.func.isRequired,
 	onContainerDelete: PropTypes.func.isRequired,
 	onContainerUpdate: PropTypes.func.isRequired,
 

@@ -128,6 +128,7 @@ class ContainerEditor extends Component {
 		this.props.onSave(id, this.state);
 	}
 	onCancel(){
+		console.log("cancel");
 		this.props.onCancel();
 	}
 

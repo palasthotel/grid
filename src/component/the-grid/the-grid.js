@@ -175,6 +175,7 @@ class TheGrid extends React.Component{
 				    onContainerDelete={this.props.onContainerDelete.bind(this, this.props.grid.id)}
 				    onContainerReuse={this.props.onContainerReuse.bind(this, this.props.grid.id)}
 					onContainerUpdate={this.props.onContainerEditUpdate.bind(this, this.props.grid.id)}
+					onContainerEditCancel={this.props.onContainerEditCancel.bind(this, this.props.grid.id)}
 
 					onBoxEdit={this.props.onBoxEdit.bind(this, this.props.grid.id)}
 				    onBoxAdd={this.props.onBoxAdd.bind(this, this.props.grid.id)}
