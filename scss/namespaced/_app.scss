@@ -5,7 +5,29 @@
 
 
 .grid-app {
-  //background-color: $color__app--background;
+  background-color: $color__app--background;
 
   font-family: $font__sans-serif;
+
+  border-left: 5px solid $color__status--published;
+  border-right: 5px solid $color__status--published;
+
+  transition: all .3s ease-in-out;
+
+  &.is-draft  {
+    border-color: $color__status--unpublished;
+  }
+
+  &.is-success {
+    border-color: $color__status--success;
+  }
+
+  &.is-published {
+    border-color: $color__status--published;
+  }
+
+  &.is-error {
+    border-color: $color__status--error;
+  }
+
 }

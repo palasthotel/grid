@@ -30,6 +30,10 @@
 
   .is-error & {
     background-color: $color__status--error;
+  }
 
+
+  svg {
+    fill: white;
   }
 }
