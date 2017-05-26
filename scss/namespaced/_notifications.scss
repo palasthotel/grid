@@ -16,7 +16,10 @@
 .grid-notifications__list {
   position: absolute;
   right: 0;
+  top: 60px;
   width: 350px;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -41,4 +44,18 @@
 
 .grid-notification__icon {
   align-self: center;
+}
+
+
+.grid-notification__item--is-success {
+  background-color: $color__status--success;
+}
+
+.grid-notification__item--is-published {
+  background-color: $color__status--published;
+}
+
+.grid-notification__item--is-error {
+  background-color: $color__status--error;
+
 }
