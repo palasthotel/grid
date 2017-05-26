@@ -35257,11 +35257,28 @@ var TheGrid = function (_React$Component) {
 								identifier: 'revisions',
 								onClick: this.onClickRevisions.bind(this)
 							}),
-							_react2.default.createElement(_toolbarButton2.default, {
-								label: 'Options',
-								identifier: 'options',
-								onClick: function onClick() {}
-							})
+							_react2.default.createElement(
+								_toolbarButton2.default,
+								{
+									label: 'Options',
+									identifier: 'options',
+									onClick: function onClick() {}
+								},
+								_react2.default.createElement(
+									'ul',
+									null,
+									_react2.default.createElement(_toolbarButton2.default, {
+										label: 'Option 2',
+										identifier: 'opt-1',
+										onClick: function onClick() {}
+									}),
+									_react2.default.createElement(_toolbarButton2.default, {
+										label: 'Option 2',
+										identifier: 'opt-2',
+										onClick: function onClick() {}
+									})
+								)
+							)
 						)
 					),
 					_react2.default.createElement(

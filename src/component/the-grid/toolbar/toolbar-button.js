@@ -31,7 +31,6 @@ export default class ToolbarButton extends Component{
 				>
 					{label}
 				</button>
-
 				{this.props.children}
 			</li>
 		);

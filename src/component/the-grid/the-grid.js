@@ -77,7 +77,20 @@ class TheGrid extends React.Component{
 								label="Options"
 								identifier="options"
 								onClick={()=>{}}
-							/>
+							>
+								<ul>
+									<ToolbarButton
+										label="Option 2"
+										identifier="opt-1"
+										onClick={()=>{}}
+									/>
+									<ToolbarButton
+										label="Option 2"
+										identifier="opt-2"
+										onClick={()=>{}}
+									/>
+								</ul>
+							</ToolbarButton>
 
 						</ul>
 					</nav>
