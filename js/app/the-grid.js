@@ -7705,9 +7705,10 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.actionSetGridLoading = actionSetGridLoading;
+exports.actionEditGridContainerClose = actionEditGridContainerClose;
+exports.actionEditGridContainer = actionEditGridContainer;
 exports.actionCloseGridBoxEdit = actionCloseGridBoxEdit;
 exports.actionEditGridBox = actionEditGridBox;
-exports.actionEditGridContainer = actionEditGridContainer;
 
 var _types = __webpack_require__(46);
 
@@ -7715,14 +7716,18 @@ function actionSetGridLoading(is_loading) {
 	return { type: _types.GRID_LOADING, payload: { is_loading: is_loading } };
 }
 
-function actionCloseGridBoxEdit() {
-	return actionEditGridBox(undefined);
-}
-function actionEditGridBox(box) {
-	return { type: _types.GRID_BOX_EDIT, payload: { box: box } };
+function actionEditGridContainerClose() {
+	return actionEditGridContainer();
 }
 function actionEditGridContainer(container_id) {
 	return { type: _types.GRID_CONTAINER_EDIT, payload: { container_id: container_id } };
+}
+
+function actionCloseGridBoxEdit() {
+	return actionEditGridBox();
+}
+function actionEditGridBox(box) {
+	return { type: _types.GRID_BOX_EDIT, payload: { box: box } };
 }
 
 /***/ }),
@@ -31900,17 +31905,14 @@ var AppGrid = function (_Component) {
 		return _possibleConstructorReturn(this, (AppGrid.__proto__ || Object.getPrototypeOf(AppGrid)).call(this, props));
 	}
 
+	/**
+  * ------------------------------------------------
+  * rendering
+  * ------------------------------------------------
+  */
+
+
 	_createClass(AppGrid, [{
-		key: 'componentWillUnmount',
-		value: function componentWillUnmount() {}
-
-		/**
-   * ------------------------------------------------
-   * rendering
-   * ------------------------------------------------
-   */
-
-	}, {
 		key: 'render',
 		value: function render() {
 			var is_ready = this.props.is_ready;
@@ -32932,7 +32934,7 @@ var Box = function (_Component) {
 			return connectDragPreview(_react2.default.createElement(
 				'div',
 				{
-					className: 'box' + (isDragging ? " is-dragged" : ""),
+					className: 'grid-box' + (isDragging ? " is-dragged" : ""),
 					style: {
 						opacity: isDragging ? 0.3 : 1
 					},
@@ -32942,7 +32944,7 @@ var Box = function (_Component) {
 				},
 				_react2.default.createElement(
 					'div',
-					{ className: 'box__content' },
+					{ className: 'grid-box__content' },
 					isSaving ? _react2.default.createElement(
 						'p',
 						null,
@@ -32970,18 +32972,18 @@ var Box = function (_Component) {
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'box__prolog' },
+						{ className: 'grid-box__prolog' },
 						prolog
 					),
-					_react2.default.createElement('div', { className: 'box__html', dangerouslySetInnerHTML: { __html: html } }),
+					_react2.default.createElement('div', { className: 'grid-box__html', dangerouslySetInnerHTML: { __html: html } }),
 					_react2.default.createElement(
 						'div',
-						{ className: 'box__epilog' },
+						{ className: 'grid-box__epilog' },
 						epilog
 					),
 					_react2.default.createElement(
 						'p',
-						{ className: 'box__readmore' },
+						{ className: 'grid-box__readmore' },
 						_react2.default.createElement(
 							'a',
 							{ href: readmoreurl },
@@ -32991,27 +32993,27 @@ var Box = function (_Component) {
 				),
 				connectDragSource(_react2.default.createElement(
 					'div',
-					{ className: 'box__controls grid-box-movable' },
-					_react2.default.createElement('i', { className: 'grid-box-drag icon-drag' }),
+					{ className: 'grid-box__controls' },
+					_react2.default.createElement('i', { className: 'grid-box__drag grid-icon__drag' }),
 					function () {
 						if (false) {
 							return _react2.default.createElement(
 								'div',
-								{ className: 'grid-box-reused' },
+								{ className: 'grid-box__reused' },
 								'Reused box ',
-								_react2.default.createElement('i', { className: 'icon-reuse' })
+								_react2.default.createElement('i', { className: 'grid-icon__reuse' })
 							);
 						}
 					},
 					_react2.default.createElement(
 						'div',
 						{
-							className: 'grid-box-control-button grid-box-edit',
+							className: 'grid-box__control--button grid-box__edit',
 							onClick: this.onEdit.bind(this)
 						},
 						_react2.default.createElement(
 							'div',
-							{ className: 'grid-box-control-wrapper' },
+							{ className: 'grid-box__control-wrapper' },
 							_react2.default.createElement('i', { className: 'icon-edit' }),
 							_react2.default.createElement(
 								'span',
@@ -33192,9 +33194,9 @@ var ContainerDrop = function (_Component) {
 			return connectDropTarget(_react2.default.createElement(
 				'div',
 				{
-					className: 'container-drop ' + over_class + ' ' + can_drop_class
+					className: 'grid-container__drop ' + over_class + ' ' + can_drop_class
 				},
-				_react2.default.createElement('div', { className: 'container-drop__area' })
+				_react2.default.createElement('div', { className: 'grid-container__drop--area' })
 			));
 		}
 	}]);
@@ -33324,7 +33326,7 @@ var Container = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'container contaner__' + type,
+					className: 'grid-container container__' + type,
 					style: {
 						opacity: isDragging ? 0.3 : 1
 					},
@@ -33334,10 +33336,10 @@ var Container = function (_Component) {
 				},
 				_react2.default.createElement(
 					'div',
-					{ className: 'container__controls' },
+					{ className: 'grid-container__controls' },
 					_react2.default.createElement(
 						'span',
-						{ className: 'container__title' },
+						{ className: 'grid-container__title' },
 						this.props.title,
 						' ',
 						reused ? reusetitle + "__" : ""
@@ -33348,45 +33350,45 @@ var Container = function (_Component) {
 							style: {
 								cursor: "move"
 							},
-							className: 'container__drag' },
-						_react2.default.createElement('i', { className: 'icon-drag' })
+							className: 'grid-container__drag' },
+						_react2.default.createElement('i', { className: 'grid-icon__drag' })
 					)),
 					_react2.default.createElement(
 						'div',
-						{ className: 'container__options' },
+						{ className: 'grid-container__options' },
 						_react2.default.createElement(
 							'span',
-							{ className: 'container__options-icon' },
+							{ className: 'grid-container__options--icon' },
 							'Options ',
-							_react2.default.createElement('i', { className: 'icon-options' })
+							_react2.default.createElement('i', { className: 'grid-icon__options' })
 						),
 						_react2.default.createElement(
 							'ul',
-							{ className: 'container__options-list' },
+							{ className: 'grid-container__options--list' },
 							_react2.default.createElement(
 								'li',
 								{
-									className: 'container__options-list-item',
+									className: 'grid-container__options--list-item',
 									onClick: this.onEdit.bind(this)
 								},
-								_react2.default.createElement('i', { className: 'icon-edit' }),
+								_react2.default.createElement('i', { className: 'grid-icon__edit' }),
 								' Edit'
 							),
 							this.renderReuse(),
 							_react2.default.createElement(
 								'li',
-								{ className: 'container__options-list-item', role: 'toggleslotstyles' },
-								_react2.default.createElement('i', { className: 'icon-style' }),
+								{ className: 'grid-container__options--list-item' },
+								_react2.default.createElement('i', { className: 'grid-icon__style' }),
 								' Slot-styles'
 							),
 							_react2.default.createElement(
 								'li',
 								{
-									className: 'container__options-list-item',
+									className: 'grid-container__options--list-item',
 									role: 'delete',
 									onClick: this.onDelete.bind(this)
 								},
-								_react2.default.createElement('i', { className: 'icon-trash' }),
+								_react2.default.createElement('i', { className: 'grid-icon__trash' }),
 								' Delete'
 							)
 						)
@@ -33394,7 +33396,7 @@ var Container = function (_Component) {
 				),
 				_react2.default.createElement(
 					'div',
-					{ className: 'container__content' },
+					{ className: 'grid-container__content' },
 					this.props.isMoving ? _react2.default.createElement(
 						'p',
 						null,
@@ -33407,17 +33409,17 @@ var Container = function (_Component) {
 					) : null,
 					_react2.default.createElement(
 						'div',
-						{ className: 'container__before' },
+						{ className: 'grid-container__before' },
 						this.renderIf("prolog")
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'container__slots' },
+						{ className: 'grid-container__slots' },
 						this.props.children
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'container__after' },
+						{ className: 'grid-container__after' },
 						this.renderIf("epilog")
 					)
 				)
@@ -33429,7 +33431,7 @@ var Container = function (_Component) {
 			if (this.props[prop]) return null;
 			return _react2.default.createElement(
 				'div',
-				{ className: 'container__' + prop },
+				{ className: 'grid-container__' + prop },
 				this.props[prop]
 			);
 		}
@@ -33442,10 +33444,10 @@ var Container = function (_Component) {
 			return _react2.default.createElement(
 				'li',
 				{
-					className: 'container__options-list-item',
+					className: 'grid-container__options--list-item',
 					onClick: this.onReuse.bind(this)
 				},
-				_react2.default.createElement('i', { className: 'icon-reuse' }),
+				_react2.default.createElement('i', { className: 'grid-icon__reuse' }),
 				' Reuse'
 			);
 		}
@@ -33844,39 +33846,7 @@ var Grid = function (_Component) {
 
 
 exports.default = Grid;
-Grid.defaultProps = {
-	onStateChange: function onStateChange(container) {},
-
-	onContainerAdd: function onContainerAdd(done, container) {
-		done(false, container);
-	},
-	onContainerMove: function onContainerMove(done) {
-		done();
-	},
-	onContainerEdit: function onContainerEdit(done) {
-		done();
-	},
-	onContainerDelete: function onContainerDelete(done) {
-		done();
-	},
-	onContainerReuse: function onContainerReuse(done) {
-		done();
-	},
-
-	onBoxAdd: function onBoxAdd(done, box) {
-		done(false, box);
-	},
-	onBoxMove: function onBoxMove(done) {
-		done();
-	},
-	onBoxEdit: function onBoxEdit(done) {
-		done();
-	},
-	onBoxDelete: function onBoxDelete(done) {
-		done();
-	}
-
-};
+Grid.defaultProps = {};
 
 Grid.propTypes = {
 	/**
@@ -33893,6 +33863,8 @@ Grid.propTypes = {
 	onContainerMove: _propTypes2.default.func,
 	onContainerEdit: _propTypes2.default.func,
 	onContainerDelete: _propTypes2.default.func,
+
+	// onContainer
 
 	onBoxAdd: _propTypes2.default.func,
 	onBoxMove: _propTypes2.default.func,
@@ -35051,7 +35023,7 @@ var Slot = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'slot',
+					className: 'grid-slot',
 					style: {
 						width: this.props.dimension + "%"
 					}
@@ -35059,7 +35031,7 @@ var Slot = function (_Component) {
 				_react2.default.createElement(StyleChanger, null),
 				_react2.default.createElement(
 					'div',
-					{ className: 'grid-boxes-wrapper boxes-wrapper' },
+					{ className: 'grid-boxes' },
 					this.props.children
 				)
 			);
@@ -35760,6 +35732,9 @@ function (dispatch) {
 		onContainerEdit: function onContainerEdit(grid_id, container_id) {
 			dispatch((0, _ui.actionEditGridContainer)(container_id));
 		},
+		onContainerDiscard: function onContainerDiscard() {
+			dispatch((0, _ui.actionEditGridContainerClose)());
+		},
 
 		// -----------
 		// container editor events
@@ -36092,6 +36067,10 @@ function updateUI(state, action) {
 				is_loading: action.payload.is_loading
 			});
 			break;
+		case _types.GRID_CONTAINER_EDIT:
+			return _extends({}, state, {
+				edit_container: action.payload.container_id
+			});
 		case _types.GRID_BOX_EDIT:
 			return _extends({}, state, {
 				edit_box: action.payload.box

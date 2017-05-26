@@ -34,9 +34,9 @@ class ContainerDrop extends Component {
 		
 		return connectDropTarget(
 			<div
-				className={`container-drop ${over_class} ${can_drop_class}`}
+				className={`grid-container__drop ${over_class} ${can_drop_class}`}
 			>
-				<div className="container-drop__area"></div>
+				<div className="grid-container__drop--area" />
 			</div>
 		);
 	}

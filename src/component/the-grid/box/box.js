@@ -87,37 +87,37 @@ class Box extends Component{
 		}
 		return connectDragPreview(
 			<div
-				className={`box${(isDragging)?" is-dragged":""}`}
+				className={`grid-box${(isDragging)?" is-dragged":""}`}
 				style={{
 					opacity: isDragging? 0.3: 1,
 				}}
 				ref={ (element) => this.box_element = element }
 			>
-				<div className="box__content">
+				<div className="grid-box__content">
 					{(isSaving)? <p>Box is saving</p>: null}
 					{(isDeleting)? <p>Box is deleting</p>: null}
 					{(isMoving)? <p>Box is Moving</p>: null}
 					{(state === States.LOADING)? <p>{state}</p>: null}
 					<span>{title}</span>
-					<div className="box__prolog">{prolog}</div>
-					<div className="box__html" dangerouslySetInnerHTML={{__html: html}} ></div>
-					<div className="box__epilog">{epilog}</div>
-					<p className="box__readmore">
+					<div className="grid-box__prolog">{prolog}</div>
+					<div className="grid-box__html" dangerouslySetInnerHTML={{__html: html}} ></div>
+					<div className="grid-box__epilog">{epilog}</div>
+					<p className="grid-box__readmore">
 						<a href={readmoreurl} >{readmore}</a>
 					</p>
 				</div>
-				{connectDragSource(<div className="box__controls grid-box-movable">
-					<i className="grid-box-drag icon-drag" />
+				{connectDragSource(<div className="grid-box__controls">
+					<i className="grid-box__drag grid-icon__drag" />
 					{() => {
 						if(false){
-							return <div className="grid-box-reused">Reused box <i className="icon-reuse" /></div>;
+							return <div className="grid-box__reused">Reused box <i className="grid-icon__reuse" /></div>;
 						}
 					}}
 					<div
-						className="grid-box-control-button grid-box-edit"
+						className="grid-box__control--button grid-box__edit"
 					    onClick={this.onEdit.bind(this)}
 					>
-						<div className="grid-box-control-wrapper">
+						<div className="grid-box__control-wrapper">
 							<i className="icon-edit" />
 							<span className="grid-box-control-text">Edit</span>
 						</div>

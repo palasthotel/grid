@@ -29,6 +29,7 @@ import {
 	actionEditGridBox,
 	actionCloseGridBoxEdit,
 	actionEditGridContainer,
+	actionEditGridContainerClose,
 } from '../actions/ui'
 
 function grid_is_ready(state){
@@ -88,6 +89,9 @@ export default connect(
 			},
 			onContainerEdit: (grid_id, container_id)=>{
 				dispatch(actionEditGridContainer(container_id))
+			},
+			onContainerDiscard: ()=>{
+				dispatch(actionEditGridContainerClose())
 			},
 
 			// -----------

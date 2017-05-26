@@ -58,60 +58,60 @@ class Container extends Component{
 		const { connectDragSource, isDragging, type, reused, reusetitle } = this.props;
 		return (
 			<div
-				className={`container contaner__${type}`}
+				className={`grid-container container__${type}`}
 			     style={{
 				     opacity: isDragging? 0.3: 1,
 			     }}
 			     ref={ (element) => this.state.dom = element }
 			>
 				
-				<div className="container__controls">
-					<span className="container__title">{this.props.title} {(reused)? reusetitle+"__":""}</span>
+				<div className="grid-container__controls">
+					<span className="grid-container__title">{this.props.title} {(reused)? reusetitle+"__":""}</span>
 					{connectDragSource(
 						<span
 							style={{
 								cursor: "move"
 							}}
-							className="container__drag">
-						  <i className="icon-drag" />
+							className="grid-container__drag">
+						  <i className="grid-icon__drag" />
 					  </span>
 					)}
-					<div className="container__options">
-						<span className="container__options-icon">Options <i className="icon-options" /></span>
-						<ul className="container__options-list">
+					<div className="grid-container__options">
+						<span className="grid-container__options--icon">Options <i className="grid-icon__options" /></span>
+						<ul className="grid-container__options--list">
 							<li
-								className="container__options-list-item"
+								className="grid-container__options--list-item"
 							    onClick={this.onEdit.bind(this)}
 							>
-								<i className="icon-edit" /> Edit
+								<i className="grid-icon__edit" /> Edit
 							</li>
 							
 							{this.renderReuse()}
 							
-							<li className="container__options-list-item" role="toggleslotstyles">
-								<i className="icon-style" /> Slot-styles
+							<li className="grid-container__options--list-item">
+								<i className="grid-icon__style" /> Slot-styles
 							</li>
 							<li
-								className="container__options-list-item"
+								className="grid-container__options--list-item"
 								role="delete"
 							    onClick={this.onDelete.bind(this)}
 							>
-								<i className="icon-trash" /> Delete
+								<i className="grid-icon__trash" /> Delete
 							</li>
 						</ul>
 					</div>
 				</div>
 				
-				<div className="container__content">
+				<div className="grid-container__content">
 					{(this.props.isMoving)? <p>Moving</p>: null}
 					{(this.props.isDeleting)? <p>Deleting</p>: null}
-					<div className="container__before">
+					<div className="grid-container__before">
 						{this.renderIf("prolog")}
 					</div>
 					
-					<div className="container__slots">{this.props.children}</div>
+					<div className="grid-container__slots">{this.props.children}</div>
 					
-					<div className="container__after">
+					<div className="grid-container__after">
 						{this.renderIf("epilog")}
 					</div>
 				</div>
@@ -120,17 +120,17 @@ class Container extends Component{
 	}
 	renderIf(prop){
 		if(this.props[prop]) return null;
-		return <div className={`container__${prop}`}>{this.props[prop]}</div>
+		return <div className={`grid-container__${prop}`}>{this.props[prop]}</div>
 	}
 	renderReuse(){
 		const {reused} = this.props;
 		if(reused) return null;
 		return (
 			<li
-				className="container__options-list-item"
+				className="grid-container__options--list-item"
 				onClick={this.onReuse.bind(this)}
 			>
-				<i className="icon-reuse" /> Reuse
+				<i className="grid-icon__reuse" /> Reuse
 			</li>
 		)
 	}

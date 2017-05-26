@@ -47,8 +47,7 @@ class TheGrid extends React.Component{
 					<div
 						className="grid-logo"
 					>
-						<GridLogoIcon
-						/>
+						<GridLogoIcon />
 					</div>
 					<nav>
 						<ul
