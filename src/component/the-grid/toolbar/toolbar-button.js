@@ -20,10 +20,11 @@ export default class ToolbarButton extends Component{
 	 * ---------------------
 	 */
 	render(){
-		const {identifier, label, icon} = this.props;
+		const {identifier, label} = this.props;
+		const child_class = (typeof this.props.children !== typeof undefined)? "grid-menu__item--has-childmenu": "";
 		return (
 			<li
-				className={`grid-menu__item grid-adminbar__item--${identifier}`}
+				className={`grid-menu__item grid-adminbar__item--${identifier} ${child_class}`}
 			>
 				<button
 					className="grid-menu__button"

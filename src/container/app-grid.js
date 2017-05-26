@@ -27,6 +27,7 @@ import {
 
 import {
 	actionEditGridBox,
+	actionCloseGridBoxEdit,
 	actionEditGridContainer,
 } from '../actions/ui'
 
@@ -86,8 +87,13 @@ export default connect(
 				console.log("onContainerReuse not implemented")
 			},
 			onContainerEdit: (grid_id, container_id)=>{
-				dispatch(actionEditGridContainer())
+				dispatch(actionEditGridContainer(container_id))
 			},
+
+			// -----------
+			// container editor events
+			// -----------
+
 
 			// -----------
 			// box events
@@ -109,10 +115,13 @@ export default connect(
 			},
 
 			// -----------
-			// boxeditor events
+			// box editor events
 			// -----------
 			onSaveBoxeditor(grid_id, container_id, slot_id, box_index, box){
 				dispatch(actionGridBoxEditingUpdate({grid_id, container_id, slot_id, index:box_index, box}))
+			},
+			onDiscardBoxeditor(){
+				dispatch(actionCloseGridBoxEdit())
 			}
 
 		}

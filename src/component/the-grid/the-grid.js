@@ -30,11 +30,11 @@ class TheGrid extends React.Component{
 
 		const {show_revisions} = this.state;
 
-		const draft_class = (isDraft)? "is-draft": "is-pubished";
+		const draft_class = (isDraft)? "is-draft": "is-published";
 
 		return (
 			<div
-				className={`the-grid ${draft_class}`}
+				className={`grid-app ${draft_class}`}
 			>
 
 				<header
@@ -78,7 +78,9 @@ class TheGrid extends React.Component{
 								identifier="options"
 								onClick={()=>{}}
 							>
-								<ul>
+								<ul
+									className="grid-childmenu"
+								>
 									<ToolbarButton
 										label="Option 2"
 										identifier="opt-1"
