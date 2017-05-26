@@ -10,5 +10,6 @@
 
 .grid-box__drop--area {
   height: 30px;
-  background-color: blue;
+  background-color: $color__slot--background;
+  color: $color__slot--foreground;
 }
