@@ -1,0 +1,31 @@
+/**
+ * @author Stephan Kroppenstedt <stephan.kroppenstedt@palasthotel.de>
+ * @modified 26.05.2017
+ */
+
+
+.grid-container {
+
+}
+
+
+.grid-container__drop {
+  //height: 20px;
+}
+
+.grid-container__drop--area {
+  height: 20px;
+  background-color: magenta;
+  border: 10px solid white;
+}
+
+
+
+.grid-container__slots {
+  display: flex;
+  border: 2px solid black;
+}
+
+.grid-container__controls {
+
+}
