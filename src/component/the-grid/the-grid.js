@@ -10,6 +10,10 @@ import Revision from './revision/revision';
 
 import ToolbarButton from './toolbar/toolbar-button';
 
+import GridLogoIcon from '../icon/grid'
+import WarningIcon from '../icon/warning'
+import NotificationIcon from '../icon/notification'
+
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -43,6 +47,8 @@ class TheGrid extends React.Component{
 					<div
 						className="grid-logo"
 					>
+						<GridLogoIcon
+						/>
 					</div>
 					<nav>
 						<ul
@@ -100,7 +106,9 @@ class TheGrid extends React.Component{
 					<div
 						className="grid-notifications"
 					>
-						<div>svg</div>
+						<div>
+							<NotificationIcon/>
+						</div>
 						<ul
 							className="grid-notifications__list"
 						>
@@ -125,7 +133,9 @@ class TheGrid extends React.Component{
 							>
 								<span
 									className="grid-notification__icon"
-								/>
+								>
+									<WarningIcon />
+								</span>
 								<p>Es ist ein Fehler aufgetreten.</p>
 								<button
 									className="grid-notification__button"

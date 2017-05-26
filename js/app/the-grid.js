@@ -35176,6 +35176,18 @@ var _toolbarButton = __webpack_require__(421);
 
 var _toolbarButton2 = _interopRequireDefault(_toolbarButton);
 
+var _grid3 = __webpack_require__(664);
+
+var _grid4 = _interopRequireDefault(_grid3);
+
+var _warning = __webpack_require__(665);
+
+var _warning2 = _interopRequireDefault(_warning);
+
+var _notification = __webpack_require__(666);
+
+var _notification2 = _interopRequireDefault(_notification);
+
 var _reactDnd = __webpack_require__(54);
 
 var _reactDndHtml5Backend = __webpack_require__(612);
@@ -35232,9 +35244,13 @@ var TheGrid = function (_React$Component) {
 					{
 						className: 'grid-adminbar'
 					},
-					_react2.default.createElement('div', {
-						className: 'grid-logo'
-					}),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-logo'
+						},
+						_react2.default.createElement(_grid4.default, null)
+					),
 					_react2.default.createElement(
 						'nav',
 						null,
@@ -35297,7 +35313,7 @@ var TheGrid = function (_React$Component) {
 						_react2.default.createElement(
 							'div',
 							null,
-							'svg'
+							_react2.default.createElement(_notification2.default, null)
 						),
 						_react2.default.createElement(
 							'ul',
@@ -35337,9 +35353,13 @@ var TheGrid = function (_React$Component) {
 								{
 									className: 'grid-notification__item grid-notification__item--is-error'
 								},
-								_react2.default.createElement('span', {
-									className: 'grid-notification__icon'
-								}),
+								_react2.default.createElement(
+									'span',
+									{
+										className: 'grid-notification__icon'
+									},
+									_react2.default.createElement(_warning2.default, null)
+								),
 								_react2.default.createElement(
 									'p',
 									null,
@@ -44714,6 +44734,206 @@ function symbolObservablePonyfill(root) {
 	}
 
 	return result;
+};
+
+/***/ }),
+/* 659 */,
+/* 660 */,
+/* 661 */,
+/* 662 */,
+/* 663 */,
+/* 664 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Grid = function (_Component) {
+    _inherits(Grid, _Component);
+
+    function Grid() {
+        _classCallCheck(this, Grid);
+
+        return _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).apply(this, arguments));
+    }
+
+    _createClass(Grid, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "svg",
+                { x: "0px", y: "0px",
+                    viewBox: "0 0 120 62.3"
+                },
+                _react2.default.createElement("rect", { x: "0.8", y: "16.6", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "0.8", y: "32.9", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "82.2", y: "16.6", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "82.2", y: "32.9", "class": "st0", width: "37.2", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "17.2", y: "49.2", "class": "st0", width: "20.8", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "41.5", y: "16.6", "class": "st0", width: "20.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "66", y: "0.3", "class": "st0", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "41.5", y: "32.9", "class": "st0", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "106.7", y: "0.3", "class": "st0", width: "12.7", height: "12.7" }),
+                _react2.default.createElement("rect", { x: "66", y: "16.6", "class": "st0", width: "12.7", height: "29" })
+            );
+        }
+    }]);
+
+    return Grid;
+}(_react.Component);
+
+exports.default = Grid;
+
+/***/ }),
+/* 665 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * source: https://github.com/google/material-design-icons/blob/eae603ae946b6f813b7edc5611226d8ceae327ff/action/svg/production/ic_delete_24px.svg
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var Add = function (_Component) {
+    _inherits(Add, _Component);
+
+    function Add() {
+        _classCallCheck(this, Add);
+
+        return _possibleConstructorReturn(this, (Add.__proto__ || Object.getPrototypeOf(Add)).apply(this, arguments));
+    }
+
+    _createClass(Add, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "svg",
+                { fill: "#000000", height: "24", viewBox: "0 0 24 24", width: "24" },
+                _react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" }),
+                _react2.default.createElement("path", { d: "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" })
+            );
+        }
+    }]);
+
+    return Add;
+}(_react.Component);
+
+exports.default = Add;
+
+/***/ }),
+/* 666 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(6);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * source: https://github.com/google/material-design-icons/blob/eae603ae946b6f813b7edc5611226d8ceae327ff/action/svg/production/ic_delete_24px.svg
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var Notification = function (_Component) {
+    _inherits(Notification, _Component);
+
+    function Notification() {
+        _classCallCheck(this, Notification);
+
+        return _possibleConstructorReturn(this, (Notification.__proto__ || Object.getPrototypeOf(Notification)).apply(this, arguments));
+    }
+
+    _createClass(Notification, [{
+        key: 'render',
+        value: function render() {
+            return this.props.is_active ? this.renderActive() : this.renderInActive();
+        }
+    }, {
+        key: 'renderInActive',
+        value: function renderInActive() {
+            return _react2.default.createElement(
+                'svg',
+                { height: '24', viewBox: '0 0 24 24', width: '24' },
+                _react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+                _react2.default.createElement('path', { d: 'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z' })
+            );
+        }
+    }, {
+        key: 'renderActive',
+        value: function renderActive() {
+            return _react2.default.createElement(
+                'svg',
+                { height: '24', viewBox: '0 0 24 24', width: '24' },
+                _react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+                _react2.default.createElement('path', { d: 'M7.58 4.08L6.15 2.65C3.75 4.48 2.17 7.3 2.03 10.5h2c.15-2.65 1.51-4.97 3.55-6.42zm12.39 6.42h2c-.15-3.2-1.73-6.02-4.12-7.85l-1.42 1.43c2.02 1.45 3.39 3.77 3.54 6.42zM18 11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2v-5zm-6 11c.14 0 .27-.01.4-.04.65-.14 1.18-.58 1.44-1.18.1-.24.15-.5.15-.78h-4c.01 1.1.9 2 2.01 2z' })
+            );
+        }
+    }]);
+
+    return Notification;
+}(_react.Component);
+
+exports.default = Notification;
+
+
+Notification.defaultProps = {
+    is_active: false
+};
+
+Notification.propTypes = {
+    is_active: _propTypes2.default.bool
 };
 
 /***/ })
