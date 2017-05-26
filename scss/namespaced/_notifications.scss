@@ -30,6 +30,10 @@
 
   display: flex;
   justify-content: space-between;
+
+  &.is-hidden {
+    @include visuallyhidden;
+  }
 }
 
 
