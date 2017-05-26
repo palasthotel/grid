@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import EditorInput from './editor-input.js';
-
 class TextWithLink extends Component {
 	
 	/**
@@ -40,31 +38,32 @@ class TextWithLink extends Component {
 		
 		return (
 			<div
-				className={`${className} box-editor__text-with-link`}
+				className={`${className} editor__text-with-link`}
 			>
 				<label
 					className="text-with-link__label">
 					{title}
 				</label>
-				
-				<EditorInput
+
+
+				<input
 					placeholder={title_placeholder}
 					type="text"
 					value={text}
-					classname="text-with-link__input"
-				    onChange={onTextChange}
+					className="text-with-link__input"
+					onChange={onTextChange}
 				/>
 				
 				<div
-					className={`box-editor__url-builder ${(show_link_input)? "is-active": "is-inactive" }`}
+					className={`editor__url-builder ${(show_link_input)? "is-active": "is-inactive" }`}
 				>
-					<EditorInput
+					<input
 						placeholder="Title URL (for internals links, please use a relative path starting with '/'):"
 						type="text"
 						value={url}
-						classname="url-builder__title-url"
-					    onChange={onUrlChange}
-					    disabled={!show_link_input}
+						className="url-builder__title-url"
+						onChange={onUrlChange}
+						disabled={!show_link_input}
 					/>
 					
 					<button

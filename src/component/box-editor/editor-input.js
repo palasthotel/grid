@@ -28,7 +28,7 @@ class EditorInput extends Component {
 				placeholder={placeholder}
 				type={type}
 				value={value}
-				className={`box-editor__input ${classname}`}
+				className={`editor__input ${classname}`}
 				onChange={this.onChange.bind(this)}
 			    disabled={disabled}
 			/>

@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 
 import Container from './container/container.js';
 import ContainerDrop from './container/container-drop.js';
+
+import ContainerEditor from '../container-editor/container-editor';
+
 import Slot from './slot/slot.js';
 import BoxDrop from './box/box-drop.js';
 import Box from './box/box.js';
@@ -71,9 +74,12 @@ export default class Grid extends Component{
 			 * render container
 			 */
 			let dimensions = container.type.split("-").slice(1);
-
+			console.log("edit container", edit_container, container.id);
 			if(edit_container === container.id){
-				$containers.push(<p>Container Editor</p>)
+				$containers.push(<ContainerEditor
+					key={container.id}
+					container={container}
+				/>)
 			} else {
 				$containers.push((
 					<Container
@@ -262,11 +268,11 @@ Grid.propTypes = {
 		PropTypes.object.isRequired
 	).isRequired,
 
-	edit_container: PropTypes.number,
+	edit_container: PropTypes.string,
 	edit_box: PropTypes.shape({
-		container_id: PropTypes.number.isRequired,
-		slot_id: PropTypes.number.isRequired,
-		box_id: PropTypes.number.isRequired,
+		container_id: PropTypes.string.isRequired,
+		slot_id: PropTypes.string.isRequired,
+		box_id: PropTypes.string.isRequired,
 	}),
 	
 	/**

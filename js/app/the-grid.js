@@ -32066,7 +32066,7 @@ var _propTypes = __webpack_require__(6);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _textWithLink = __webpack_require__(405);
+var _textWithLink = __webpack_require__(668);
 
 var _textWithLink2 = _interopRequireDefault(_textWithLink);
 
@@ -32133,17 +32133,17 @@ var BoxEditor = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'box-editor'
+					className: 'grid-box-editor'
 				},
 				_react2.default.createElement(
 					'ul',
 					{
-						className: 'box-editor__controls'
+						className: 'grid-box-editor__controls'
 					},
 					_react2.default.createElement(
 						'li',
 						{
-							className: 'control__save'
+							className: 'grid-box-editor__control'
 						},
 						_react2.default.createElement(
 							'button',
@@ -32182,19 +32182,19 @@ var BoxEditor = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{
-						className: 'box-editor__content'
+						className: 'grid-box-editor__content'
 					},
 					_react2.default.createElement(
 						'div',
-						{ className: 'box-editor__header' },
+						{ className: 'grid-box-editor__header' },
 						_react2.default.createElement(
 							'div',
 							{
-								className: 'box-editor__type' },
+								className: 'grid-box-editor__type' },
 							type
 						),
 						_react2.default.createElement(_textWithLink2.default, {
-							className: 'box-editor__title',
+							className: 'grid-box-editor__title',
 							title: 'Boxtitle',
 							text: title,
 							url: titleurl,
@@ -32318,295 +32318,8 @@ BoxEditor.defaultProps = {
 exports.default = BoxEditor;
 
 /***/ }),
-/* 404 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(6);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var EditorInput = function (_Component) {
-	_inherits(EditorInput, _Component);
-
-	/**
-  * ------------------------------------------------
-  * lifecycle
-  * ------------------------------------------------
-  */
-	function EditorInput(props) {
-		_classCallCheck(this, EditorInput);
-
-		var _this = _possibleConstructorReturn(this, (EditorInput.__proto__ || Object.getPrototypeOf(EditorInput)).call(this, props));
-
-		_this.state = {
-			value: props.value
-		};
-		return _this;
-	}
-
-	/**
-  * ------------------------------------------------
-  * rendering
-  * ------------------------------------------------
-  */
-
-
-	_createClass(EditorInput, [{
-		key: 'render',
-		value: function render() {
-			var _props = this.props,
-			    placeholder = _props.placeholder,
-			    type = _props.type,
-			    classname = _props.classname,
-			    disabled = _props.disabled;
-			var value = this.state.value;
-
-			return _react2.default.createElement('input', {
-				placeholder: placeholder,
-				type: type,
-				value: value,
-				className: 'box-editor__input ' + classname,
-				onChange: this.onChange.bind(this),
-				disabled: disabled
-			});
-		}
-		/**
-   * ------------------------------------------------
-   * events
-   * ------------------------------------------------
-   */
-
-	}, {
-		key: 'onChange',
-		value: function onChange(event) {
-			this.setState({ value: event.target.value });
-			this.props.onChange(this.state.value);
-		}
-	}]);
-
-	return EditorInput;
-}(_react.Component);
-
-/**
- * property defaults
- */
-
-
-EditorInput.defaultProps = {
-	value: "",
-	placeholder: "",
-	type: "text",
-	classname: "",
-	disabeld: false
-};
-
-/**
- * define property types
- */
-EditorInput.propTypes = {
-	value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
-	placeholder: _propTypes2.default.string,
-	type: _propTypes2.default.string,
-	classname: _propTypes2.default.string,
-	onChange: _propTypes2.default.func.isRequired,
-	disabled: _propTypes2.default.bool
-};
-
-/**
- * export component to public
- */
-exports.default = EditorInput;
-
-/***/ }),
-/* 405 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(6);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _editorInput = __webpack_require__(404);
-
-var _editorInput2 = _interopRequireDefault(_editorInput);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TextWithLink = function (_Component) {
-	_inherits(TextWithLink, _Component);
-
-	/**
-  * ------------------------------------------------
-  * lifecycle
-  * ------------------------------------------------
-  */
-	function TextWithLink(props) {
-		_classCallCheck(this, TextWithLink);
-
-		var _this = _possibleConstructorReturn(this, (TextWithLink.__proto__ || Object.getPrototypeOf(TextWithLink)).call(this, props));
-
-		_this.state = {
-			show_link_input: props.showLinkInput
-		};
-		return _this;
-	}
-
-	/**
-  * ------------------------------------------------
-  * rendering
-  * ------------------------------------------------
-  */
-
-
-	_createClass(TextWithLink, [{
-		key: 'render',
-		value: function render() {
-			var _props = this.props,
-			    title = _props.title,
-			    title_placeholder = _props.title_placeholder,
-			    text = _props.text,
-			    url = _props.url,
-			    onTextChange = _props.onTextChange,
-			    onUrlChange = _props.onUrlChange,
-			    urlDeleteText = _props.urlDeleteText,
-			    urlAddText = _props.urlAddText,
-			    className = _props.className;
-			var show_link_input = this.state.show_link_input;
-
-
-			return _react2.default.createElement(
-				'div',
-				{
-					className: className + ' box-editor__text-with-link'
-				},
-				_react2.default.createElement(
-					'label',
-					{
-						className: 'text-with-link__label' },
-					title
-				),
-				_react2.default.createElement(_editorInput2.default, {
-					placeholder: title_placeholder,
-					type: 'text',
-					value: text,
-					classname: 'text-with-link__input',
-					onChange: onTextChange
-				}),
-				_react2.default.createElement(
-					'div',
-					{
-						className: 'box-editor__url-builder ' + (show_link_input ? "is-active" : "is-inactive")
-					},
-					_react2.default.createElement(_editorInput2.default, {
-						placeholder: 'Title URL (for internals links, please use a relative path starting with \'/\'):',
-						type: 'text',
-						value: url,
-						classname: 'url-builder__title-url',
-						onChange: onUrlChange,
-						disabled: !show_link_input
-					}),
-					_react2.default.createElement(
-						'button',
-						{
-							className: 'url-builder__button',
-							onClick: this.onToggleLink.bind(this)
-						},
-						show_link_input ? urlDeleteText : urlAddText
-					)
-				)
-			);
-		}
-
-		/**
-   * ------------------------------------------------
-   * events
-   * ------------------------------------------------
-   */
-
-	}, {
-		key: 'onToggleLink',
-		value: function onToggleLink() {
-			if (this.state.show_link_input) {
-				this.state.value = '';
-			}
-			this.setState({ show_link_input: !this.state.show_link_input });
-		}
-		/**
-   * ------------------------------------------------
-   * other functions
-   * ------------------------------------------------
-   */
-
-	}]);
-
-	return TextWithLink;
-}(_react.Component);
-
-TextWithLink.defaultProps = {
-	title: null,
-	title_placeholder: "Title",
-	text: "",
-	url: "",
-	showLinkInput: false,
-	urlDeleteText: "Delete Link",
-	urlAddText: "Add Link",
-	className: ""
-};
-
-TextWithLink.propTypes = {
-	title: _propTypes2.default.string,
-	title_placeholder: _propTypes2.default.string,
-	text: _propTypes2.default.string,
-	url: _propTypes2.default.string,
-	onTextChange: _propTypes2.default.func.isRequired,
-	onUrlChange: _propTypes2.default.func.isRequired,
-	showLinkInput: _propTypes2.default.bool,
-	urlDeleteText: _propTypes2.default.string,
-	urlAddText: _propTypes2.default.string
-};
-
-exports.default = TextWithLink;
-
-/***/ }),
+/* 404 */,
+/* 405 */,
 /* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33558,6 +33271,10 @@ var _containerDrop = __webpack_require__(409);
 
 var _containerDrop2 = _interopRequireDefault(_containerDrop);
 
+var _containerEditor = __webpack_require__(667);
+
+var _containerEditor2 = _interopRequireDefault(_containerEditor);
+
 var _slot = __webpack_require__(419);
 
 var _slot2 = _interopRequireDefault(_slot);
@@ -33654,13 +33371,12 @@ var Grid = function (_Component) {
      * render container
      */
 				var dimensions = container.type.split("-").slice(1);
-
+				console.log("edit container", edit_container, container.id);
 				if (edit_container === container.id) {
-					$containers.push(_react2.default.createElement(
-						'p',
-						null,
-						'Container Editor'
-					));
+					$containers.push(_react2.default.createElement(_containerEditor2.default, {
+						key: container.id,
+						container: container
+					}));
 				} else {
 					$containers.push(_react2.default.createElement(
 						_container2.default,
@@ -33876,11 +33592,11 @@ Grid.propTypes = {
   */
 	container: _propTypes2.default.arrayOf(_propTypes2.default.object.isRequired).isRequired,
 
-	edit_container: _propTypes2.default.number,
+	edit_container: _propTypes2.default.string,
 	edit_box: _propTypes2.default.shape({
-		container_id: _propTypes2.default.number.isRequired,
-		slot_id: _propTypes2.default.number.isRequired,
-		box_id: _propTypes2.default.number.isRequired
+		container_id: _propTypes2.default.string.isRequired,
+		slot_id: _propTypes2.default.string.isRequired,
+		box_id: _propTypes2.default.string.isRequired
 	}),
 
 	/**
@@ -35395,6 +35111,9 @@ var TheGrid = function (_React$Component) {
 				_react2.default.createElement(_grid2.default, {
 					draft: isDraft,
 					container: container,
+
+					edit_container: edit_container,
+					edit_box: edit_box,
 
 					onContainerEdit: this.props.onContainerEdit.bind(this, this.props.grid.id),
 					onContainerAdd: this.props.onContainerAdd.bind(this, this.props.grid.id),
@@ -44946,6 +44665,325 @@ Notification.defaultProps = {
 Notification.propTypes = {
     is_active: _propTypes2.default.bool
 };
+
+/***/ }),
+/* 667 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(6);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _textWithLink = __webpack_require__(668);
+
+var _textWithLink2 = _interopRequireDefault(_textWithLink);
+
+var _collapsible = __webpack_require__(152);
+
+var _collapsible2 = _interopRequireDefault(_collapsible);
+
+var _html = __webpack_require__(145);
+
+var _html2 = _interopRequireDefault(_html);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ContainerEditor = function (_Component) {
+	_inherits(ContainerEditor, _Component);
+
+	/**
+  * ------------------------------------------------
+  * lifecycle
+  * ------------------------------------------------
+  */
+	function ContainerEditor(props) {
+		_classCallCheck(this, ContainerEditor);
+
+		var _this = _possibleConstructorReturn(this, (ContainerEditor.__proto__ || Object.getPrototypeOf(ContainerEditor)).call(this, props));
+
+		_this.state = _extends({}, _this.props.container);
+		return _this;
+	}
+
+	/**
+  * ------------------------------------------------
+  * rendering
+  * ------------------------------------------------
+  */
+
+
+	_createClass(ContainerEditor, [{
+		key: 'render',
+		value: function render() {
+			var _state = this.state,
+			    title = _state.title,
+			    prolog = _state.prolog,
+			    epilog = _state.epilog;
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: 'grid-container-editor'
+				},
+				_react2.default.createElement(
+					_collapsible2.default,
+					{
+						title: 'Prolog'
+					},
+					_react2.default.createElement(_html2.default, {
+						label: 'Prolog',
+						value: prolog,
+						onChange: this.onChangeState.bind(this, "prolog")
+					})
+				),
+				_react2.default.createElement(
+					_collapsible2.default,
+					{
+						title: 'Epilog'
+					},
+					_react2.default.createElement(_html2.default, {
+						label: 'Epilog',
+						value: epilog,
+						onChange: this.onChangeState.bind(this, "epilog")
+					})
+				),
+				_react2.default.createElement(
+					'div',
+					null,
+					title
+				)
+			);
+		}
+
+		/**
+   * ------------------------------------------------
+   * events
+   * ------------------------------------------------
+   */
+
+	}, {
+		key: 'onChangeState',
+		value: function onChangeState(key, value) {
+			this.state[key] = value;
+			this.setState(this.state);
+		}
+
+		/**
+   * ------------------------------------------------
+   * other functions
+   * ------------------------------------------------
+   */
+
+	}]);
+
+	return ContainerEditor;
+}(_react.Component);
+
+/**
+ * property defaults
+ */
+
+
+ContainerEditor.defaultProps = {};
+
+/**
+ * define property types
+ */
+ContainerEditor.propTypes = {
+	container: _propTypes2.default.shape({
+		id: _propTypes2.default.any.isRequired
+	}).isRequired
+};
+
+/**
+ * export component to public
+ */
+exports.default = ContainerEditor;
+
+/***/ }),
+/* 668 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(6);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TextWithLink = function (_Component) {
+	_inherits(TextWithLink, _Component);
+
+	/**
+  * ------------------------------------------------
+  * lifecycle
+  * ------------------------------------------------
+  */
+	function TextWithLink(props) {
+		_classCallCheck(this, TextWithLink);
+
+		var _this = _possibleConstructorReturn(this, (TextWithLink.__proto__ || Object.getPrototypeOf(TextWithLink)).call(this, props));
+
+		_this.state = {
+			show_link_input: props.showLinkInput
+		};
+		return _this;
+	}
+
+	/**
+  * ------------------------------------------------
+  * rendering
+  * ------------------------------------------------
+  */
+
+
+	_createClass(TextWithLink, [{
+		key: 'render',
+		value: function render() {
+			var _props = this.props,
+			    title = _props.title,
+			    title_placeholder = _props.title_placeholder,
+			    text = _props.text,
+			    url = _props.url,
+			    onTextChange = _props.onTextChange,
+			    onUrlChange = _props.onUrlChange,
+			    urlDeleteText = _props.urlDeleteText,
+			    urlAddText = _props.urlAddText,
+			    className = _props.className;
+			var show_link_input = this.state.show_link_input;
+
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: className + ' editor__text-with-link'
+				},
+				_react2.default.createElement(
+					'label',
+					{
+						className: 'text-with-link__label' },
+					title
+				),
+				_react2.default.createElement('input', {
+					placeholder: title_placeholder,
+					type: 'text',
+					value: text,
+					className: 'text-with-link__input',
+					onChange: onTextChange
+				}),
+				_react2.default.createElement(
+					'div',
+					{
+						className: 'editor__url-builder ' + (show_link_input ? "is-active" : "is-inactive")
+					},
+					_react2.default.createElement('input', {
+						placeholder: 'Title URL (for internals links, please use a relative path starting with \'/\'):',
+						type: 'text',
+						value: url,
+						className: 'url-builder__title-url',
+						onChange: onUrlChange,
+						disabled: !show_link_input
+					}),
+					_react2.default.createElement(
+						'button',
+						{
+							className: 'url-builder__button',
+							onClick: this.onToggleLink.bind(this)
+						},
+						show_link_input ? urlDeleteText : urlAddText
+					)
+				)
+			);
+		}
+
+		/**
+   * ------------------------------------------------
+   * events
+   * ------------------------------------------------
+   */
+
+	}, {
+		key: 'onToggleLink',
+		value: function onToggleLink() {
+			if (this.state.show_link_input) {
+				this.state.value = '';
+			}
+			this.setState({ show_link_input: !this.state.show_link_input });
+		}
+		/**
+   * ------------------------------------------------
+   * other functions
+   * ------------------------------------------------
+   */
+
+	}]);
+
+	return TextWithLink;
+}(_react.Component);
+
+TextWithLink.defaultProps = {
+	title: null,
+	title_placeholder: "Title",
+	text: "",
+	url: "",
+	showLinkInput: false,
+	urlDeleteText: "Delete Link",
+	urlAddText: "Add Link",
+	className: ""
+};
+
+TextWithLink.propTypes = {
+	title: _propTypes2.default.string,
+	title_placeholder: _propTypes2.default.string,
+	text: _propTypes2.default.string,
+	url: _propTypes2.default.string,
+	onTextChange: _propTypes2.default.func.isRequired,
+	onUrlChange: _propTypes2.default.func.isRequired,
+	showLinkInput: _propTypes2.default.bool,
+	urlDeleteText: _propTypes2.default.string,
+	urlAddText: _propTypes2.default.string
+};
+
+exports.default = TextWithLink;
 
 /***/ })
 /******/ ]);

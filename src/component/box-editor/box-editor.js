@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import TextWithLink from './text-with-link.js';
+import TextWithLink from '../input-widgets/text-with-link.js';
 import Collapsible from '../utils/collapsible.js';
 
 import Widgets from '../input-widgets/widgets.js';
@@ -33,14 +33,14 @@ class BoxEditor extends Component{
 
 		return (
 			<div
-				className="box-editor"
+				className="grid-box-editor"
 			>
 
 				<ul
-					className="box-editor__controls"
+					className="grid-box-editor__controls"
 				>
 					<li
-						className="control__save"
+						className="grid-box-editor__control"
 					>
 						<button
 							onClick={this.onSave.bind(this)}
@@ -68,16 +68,16 @@ class BoxEditor extends Component{
 				</ul>
 				
 				<div
-					className="box-editor__content"
+					className="grid-box-editor__content"
 				>
-					<div className="box-editor__header">
+					<div className="grid-box-editor__header">
 						<div
-							className="box-editor__type">
+							className="grid-box-editor__type">
 							{type}
 						</div>
 						
 						<TextWithLink
-							className="box-editor__title"
+							className="grid-box-editor__title"
 							title="Boxtitle"
 							text={title}
 							url={titleurl}

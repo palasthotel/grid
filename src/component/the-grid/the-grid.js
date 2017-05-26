@@ -167,6 +167,9 @@ class TheGrid extends React.Component{
 					draft={isDraft}
 					container={container}
 
+					edit_container={edit_container}
+					edit_box={edit_box}
+
 					onContainerEdit={this.props.onContainerEdit.bind(this, this.props.grid.id )}
 					onContainerAdd={this.props.onContainerAdd.bind(this, this.props.grid.id)}
 					onContainerMove={this.props.onContainerMove.bind(this, this.props.grid.id)}
