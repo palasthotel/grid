@@ -113,14 +113,10 @@ class ContainerDrop extends Component {
 	}
 
 	renderContainer(container){
-
 		const slots = [];
-
 		const items = get_slot_weights(container);
-		console.log(container.type, container);
 		for(const i in items){
 			const item = items[i];
-			console.log(item);
 			slots.push(<div
 				key={i}
 				className={`grid-container-preview__slot grid-slot__width--${item.weight} ${(item.space)? "is-space": ""}`}

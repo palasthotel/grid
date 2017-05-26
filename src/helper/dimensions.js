@@ -17,9 +17,7 @@ export function get_slot_weights(container){
 
 	const weights = [];
 
-	console.log(container.space_to_left)
-	if(container.space_to_left === typeof ""){
-		console.log("SPACEEE")
+	if(typeof container.space_to_left === typeof ""){
 		weights.push( get_item( get_weigth(container.space_to_left), true) )
 	}
 
@@ -29,7 +27,7 @@ export function get_slot_weights(container){
 		weights.push(get_item(get_weigth(dim)));
 	}
 
-	if(container.space_to_right === typeof ""){
+	if(typeof container.space_to_right === typeof ""){
 		weights.push( get_item( get_weigth(container.space_to_right), true) )
 	}
 

@@ -33078,14 +33078,10 @@ var ContainerDrop = function (_Component) {
 	}, {
 		key: 'renderContainer',
 		value: function renderContainer(container) {
-
 			var slots = [];
-
 			var items = (0, _dimensions.get_slot_weights)(container);
-			console.log(container.type, container);
 			for (var i in items) {
 				var item = items[i];
-				console.log(item);
 				slots.push(_react2.default.createElement('div', {
 					key: i,
 					className: 'grid-container-preview__slot grid-slot__width--' + item.weight + ' ' + (item.space ? "is-space" : "")
@@ -45584,9 +45580,7 @@ function get_slot_weights(container) {
 
 	var weights = [];
 
-	console.log(container.space_to_left);
-	if (container.space_to_left === _typeof("")) {
-		console.log("SPACEEE");
+	if (_typeof(container.space_to_left) === _typeof("")) {
 		weights.push(get_item(get_weigth(container.space_to_left), true));
 	}
 
@@ -45596,7 +45590,7 @@ function get_slot_weights(container) {
 		weights.push(get_item(get_weigth(dim)));
 	}
 
-	if (container.space_to_right === _typeof("")) {
+	if (_typeof(container.space_to_right) === _typeof("")) {
 		weights.push(get_item(get_weigth(container.space_to_right), true));
 	}
 
