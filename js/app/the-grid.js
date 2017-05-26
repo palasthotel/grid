@@ -32895,18 +32895,20 @@ var ContainerDrop = function (_Component) {
 
 		var _this = _possibleConstructorReturn(this, (ContainerDrop.__proto__ || Object.getPrototypeOf(ContainerDrop)).call(this, props));
 
-		_this.state = { is_opend: false };
+		_this.state = { is_opened: false };
 		return _this;
 	}
 
 	_createClass(ContainerDrop, [{
 		key: 'render',
 		value: function render() {
+			var _this2 = this;
+
 			var _props = this.props,
 			    connectDropTarget = _props.connectDropTarget,
 			    isOver = _props.isOver,
 			    canDrop = _props.canDrop;
-			var is_opend = this.state.is_opend;
+			var is_opened = this.state.is_opened;
 
 
 			var can_drop_class = canDrop ? 'can-drop' : '';
@@ -32921,14 +32923,31 @@ var ContainerDrop = function (_Component) {
 				_react2.default.createElement(
 					'div',
 					{
-						className: 'grid-container__select ' + (is_opend ? "is-opend" : "is-closed")
+						className: 'grid-container__select ' + (is_opened ? "is-opened" : "is-closed")
 					},
 					_react2.default.createElement(
 						'button',
 						{
-							className: 'grid-container__select--toggle'
+							className: 'grid-container__select--toggle',
+							onClick: function onClick() {
+								_this2.setState({ is_opened: !is_opened });
+							}
 						},
-						'Add Container | close'
+						_react2.default.createElement(
+							'span',
+							{ className: 'grid-container__select--icon' },
+							'+'
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'grid-container__select--open-text' },
+							'Add Container'
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'grid-container__select--close-text' },
+							'Close'
+						)
 					),
 					_react2.default.createElement(
 						'div',

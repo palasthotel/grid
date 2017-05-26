@@ -30,12 +30,12 @@ function collect(connect, monitor) {
 class ContainerDrop extends Component {
 	constructor(props){
 		super(props);
-		this.state = { is_opend: false }
+		this.state = { is_opened: false }
 	}
 	render() {
 		const { connectDropTarget, isOver, canDrop } = this.props;
 
-		const {is_opend } = this.state;
+		const {is_opened } = this.state;
 		
 		const can_drop_class = (canDrop)? 'can-drop': '';
 		const over_class = (isOver)? 'is-over': '';
@@ -46,12 +46,15 @@ class ContainerDrop extends Component {
 			>
 				<div className="grid-container__drop--area" />
 				<div
-					className={`grid-container__select ${(is_opend)? "is-opend":"is-closed" }`}
+					className={`grid-container__select ${(is_opened)? "is-opened":"is-closed" }`}
 				>
 					<button
 						className="grid-container__select--toggle"
+						onClick={()=>{this.setState({is_opened:!is_opened})}}
 					>
-						Add Container | close
+						<span className="grid-container__select--icon">+</span>
+						<span className="grid-container__select--open-text">Add Container</span>
+						<span className="grid-container__select--close-text">Close</span>
 					</button>
 					<div className="grid-container__select--types">
 						<Collapsible title="Containers">
