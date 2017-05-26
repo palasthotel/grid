@@ -1,0 +1,22 @@
+/**
+ * Hide an element in the most unobstrusive way,
+ * while keeping it accessible and SEO-friendly
+ *
+ * Originally investigated by Jonathan Snook:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ * Now part of the HTML5 Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/fea7f22aef9146a1effc469c3371fbc2a75e0049/src/css/main.css#L119
+ *
+ * @author Arne Seemann <arne.seemann@palasthotel.de>
+ */
+@mixin visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}

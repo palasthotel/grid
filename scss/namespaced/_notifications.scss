@@ -1,0 +1,29 @@
+/**
+ * @author Stephan Kroppenstedt <stephan.kroppenstedt@palasthotel.de>
+ * @modified 26.05.2017
+ */
+
+
+.grid-notifications {
+  width: 50px;
+  height: 60px;
+  margin-left: auto;
+
+  background-color: red;
+
+  position: relative;
+}
+
+
+.grid-notifications__list {
+  position: absolute;
+  right: 0;
+}
+
+
+.grid-notification__item {
+  padding: 10px;
+  margin-bottom: 5px;
+
+  background-color: $color__status--unpublished;
+}

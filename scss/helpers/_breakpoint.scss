@@ -1,0 +1,43 @@
+/**
+ * Breakpoint mixin. Example use:
+ * @include bp($breakpoint-tablet) {
+ *    // content;
+ * };
+ *
+ * @author Kim-Christian Meyer <kim.meyer@palasthotel.de>
+ */
+
+
+$bp-print-queries: true !default;
+$bp-print-ie-layout: false !default;
+$bp-use-ie-selector: false !default;
+$bp-ie-layout-breakpoint: 980px !default;
+// This is a standard media query mixin,
+// with the option to add a layout for ie8 or lower
+// It will bring in all min-width styles without a max constraint
+// As well as any styles that meet the 980 threshold.
+// @url https://drupal.org/node/1539682#comment-6481394
+@mixin breakpoint($min-width, $max-width: false) {
+  @if ($bp-print-queries) {
+    @if ($max-width) {
+      @media all and (min-width: $min-width) and (max-width: $max-width) {
+        @content;
+      }
+    }
+    @else {
+      @media all and (min-width: $min-width) {
+        @content;
+      }
+    }
+  }
+  @if ($bp-print-ie-layout) {
+    @if ($bp-use-ie-selector) {
+      .lt-ie9 & {
+        @content;
+      }
+    }
+    @else {
+      @content;
+    }
+  }
+}

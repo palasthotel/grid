@@ -1,0 +1,17 @@
+// https://css-tricks.com/snippets/sass/maintain-aspect-ratio-mixin/
+@mixin aspect-ratio($width, $height, $class) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    //width: 1px;
+    padding-top: ($height / $width) * 100%;
+  }
+  > #{$class} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
