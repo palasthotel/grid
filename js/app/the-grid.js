@@ -32976,8 +32976,7 @@ var ContainerDrop = function (_Component) {
 			if (container_types.length < 1) return null;
 			var is_opened = this.state.is_opened;
 
-
-			var collapsed = !is_opened ? true : undefined;
+			// const collapsed = (!is_opened)? true: undefined;
 
 			return _react2.default.createElement(
 				'div',
@@ -33013,7 +33012,7 @@ var ContainerDrop = function (_Component) {
 					{ className: 'grid-container__select--types' },
 					_react2.default.createElement(
 						_collapsible2.default,
-						{ title: 'Containers', collapsed: collapsed },
+						{ title: 'Containers' },
 						container_types.map(function (container, index) {
 							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("s-") === 0) return;
 							return _this2.renderContainer(container);
@@ -33021,7 +33020,7 @@ var ContainerDrop = function (_Component) {
 					),
 					_react2.default.createElement(
 						_collapsible2.default,
-						{ title: 'Sidebars', collapsed: collapsed },
+						{ title: 'Sidebars' },
 						container_types.map(function (container, index) {
 							if (container.type.indexOf("i-") === 0 || container.type.indexOf("sc-") === 0 || container.type.indexOf("c-") === 0) return;
 							return _this2.renderContainer(container);

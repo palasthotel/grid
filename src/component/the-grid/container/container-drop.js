@@ -55,7 +55,7 @@ class ContainerDrop extends Component {
 		if(container_types.length < 1) return null;
 		const {is_opened} = this.state;
 
-		const collapsed = (!is_opened)? true: undefined;
+		// const collapsed = (!is_opened)? true: undefined;
 
 		return (
 			<div
@@ -72,7 +72,7 @@ class ContainerDrop extends Component {
 
 
 				<div className="grid-container__select--types">
-					<Collapsible title="Containers" collapsed={collapsed}>
+					<Collapsible title="Containers">
 						{container_types.map((container,index)=>{
 							if(container.type.indexOf("i-") === 0
 								|| container.type.indexOf("sc-") === 0
@@ -82,7 +82,7 @@ class ContainerDrop extends Component {
 							return this.renderContainer(container);
 						})}
 					</Collapsible>
-					<Collapsible title="Sidebars" collapsed={collapsed}>
+					<Collapsible title="Sidebars">
 						{container_types.map((container,index)=>{
 							if(container.type.indexOf("i-") === 0
 								|| container.type.indexOf("sc-") === 0
