@@ -115,7 +115,7 @@ class ContainerDrop extends Component {
 
 			slots.push(<div
 				key={i}
-				className={`grid-slot-with__${parts[0]}`}
+				className={`grid-container-preview__slot grid-slot__width--${parts[0]}`}
 			/>);
 		}
 
