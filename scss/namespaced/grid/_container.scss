@@ -7,8 +7,8 @@
 .grid-container {
   //border: 1px dotted rgba( 33, 33, 33, 0.8 );
 
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: .5vw;
+  margin-right: .5vw;
 
   background-color: $color__container--background;
   color: $color__container--foreground;
@@ -63,12 +63,12 @@
 }
 
 
-
-.grid-container-editor__menu--item {
-  display: inline;
-  button {
-    border-radius: 3px;
-    border: none;
-    background-color: limegreen;
-  }
-}
+//
+//.grid-container-editor__menu--item {
+//  display: inline;
+//  button {
+//    border-radius: 3px;
+//    border: none;
+//    background-color: limegreen;
+//  }
+//}
