@@ -14690,12 +14690,12 @@ var Collapsible = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'collapsible ' + (collapsed ? "" : "is-active")
+					className: 'grid-collapsible ' + (collapsed ? "" : "is-active")
 				},
 				_react2.default.createElement(
 					'div',
 					{
-						className: 'collapsible__title',
+						className: 'grid-collapsible__title',
 						onClick: this.onToggle.bind(this)
 					},
 					_react2.default.createElement('span', { className: 'icon-arrow' }),
@@ -14707,7 +14707,7 @@ var Collapsible = function (_Component) {
 						style: {
 							display: collapsed ? "none" : "block"
 						},
-						className: 'collapsible__content'
+						className: 'grid-collapsible__content'
 					},
 					removeChildrenFromDom && collapsed ? null : children
 				)
@@ -35284,7 +35284,7 @@ var TheGrid = function (_React$Component) {
 					onContainerMove: this.props.onContainerMove.bind(this, this.props.grid.id),
 					onContainerDelete: this.props.onContainerDelete.bind(this, this.props.grid.id),
 					onContainerReuse: this.props.onContainerReuse.bind(this, this.props.grid.id),
-					onContainerUpdate: this.props.onContainerUpdate.bind(this, this.props.grid.id),
+					onContainerUpdate: this.props.onContainerEditUpdate.bind(this, this.props.grid.id),
 
 					onBoxEdit: this.props.onBoxEdit.bind(this, this.props.grid.id),
 					onBoxAdd: this.props.onBoxAdd.bind(this, this.props.grid.id),
@@ -35430,6 +35430,7 @@ TheGrid.propTypes = {
 	onContainerDelete: _propTypes2.default.func,
 	onContainerMove: _propTypes2.default.func,
 	onContainerReuse: _propTypes2.default.func,
+	onContainerEditUpdate: _propTypes2.default.func,
 
 	onBoxCreate: _propTypes2.default.func,
 	onBoxDelete: _propTypes2.default.func,
@@ -35645,7 +35646,7 @@ function (dispatch) {
 		onContainerEditCancel: function onContainerEditCancel() {
 			dispatch((0, _ui.actionEditGridContainerClose)());
 		},
-		onContainerUpdate: function onContainerUpdate(grid_id, container_id, container) {
+		onContainerEditUpdate: function onContainerEditUpdate(grid_id, container_id, container) {
 			console.log(grid_id, container_id, container);
 			dispatch((0, _gridContainer.actionGridContainerEditingUpdate)(grid_id, container_id, container));
 		},

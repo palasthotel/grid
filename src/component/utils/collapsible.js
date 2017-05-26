@@ -26,10 +26,10 @@ class Collapsible extends Component{
 		const {collapsed} = this.state;
 		return (
 			<div
-				className={`collapsible ${(collapsed)? "": "is-active"}`}
+				className={`grid-collapsible ${(collapsed)? "": "is-active"}`}
 			>
 				<div
-					className="collapsible__title"
+					className="grid-collapsible__title"
 				    onClick={this.onToggle.bind(this)}
 				>
 					<span className="icon-arrow" />
@@ -39,7 +39,7 @@ class Collapsible extends Component{
 					style={{
 						display: (collapsed) ? "none": "block",
 					}}
-					className="collapsible__content"
+					className="grid-collapsible__content"
 				>
 					{(removeChildrenFromDom && collapsed)? null:children}
 				</div>
