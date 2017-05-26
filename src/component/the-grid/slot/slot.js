@@ -62,7 +62,7 @@ class StyleChanger extends Component{
 	 */
 	render(){
 		return (
-			<div className="grid-slot-style-changer style-changer">
+			<div className="grid-slot__style-changer">
 			</div>
 		)
 	}

@@ -34986,7 +34986,7 @@ var StyleChanger = function (_Component2) {
 	_createClass(StyleChanger, [{
 		key: 'render',
 		value: function render() {
-			return _react2.default.createElement('div', { className: 'grid-slot-style-changer style-changer' });
+			return _react2.default.createElement('div', { className: 'grid-slot__style-changer' });
 		}
 		/**
    * ---------------------
@@ -35648,7 +35648,7 @@ function (dispatch) {
 		},
 		onContainerEditUpdate: function onContainerEditUpdate(grid_id, container_id, container) {
 			console.log(grid_id, container_id, container);
-			dispatch((0, _gridContainer.actionGridContainerEditingUpdate)(grid_id, container_id, container));
+			dispatch((0, _gridContainer.actionGridContainerEditingUpdate)({ grid_id: grid_id, container_id: container_id, container: container }));
 		},
 
 		// -----------

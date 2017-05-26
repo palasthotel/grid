@@ -91,7 +91,7 @@ export default connect(
 			},
 			onContainerEditUpdate: (grid_id, container_id, container)=>{
 				console.log(grid_id, container_id, container);
-				dispatch(actionGridContainerEditingUpdate(grid_id, container_id, container))
+				dispatch(actionGridContainerEditingUpdate({grid_id, container_id, container}))
 			},
 
 			// -----------
