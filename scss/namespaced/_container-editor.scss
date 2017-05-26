@@ -1,0 +1,24 @@
+/**
+ * @author Stephan Kroppenstedt <stephan.kroppenstedt@palasthotel.de>
+ * @modified 26.05.2017
+ */
+
+.grid-container-editor {
+  background-color: $color__container--background;
+  color: $color__container--foreground;
+
+  animation: editor-zoomin .3s;
+  animation-timing-function: ease-in-out;
+  animation-direction:alternate;
+
+}
+
+@keyframes editor-zoomin {
+  from {
+    transform: scale(.7);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+

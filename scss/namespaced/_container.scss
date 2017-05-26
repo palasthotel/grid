@@ -13,6 +13,11 @@
   background-color: $color__container--background;
   color: $color__container--foreground;
 
+  transition: all .3s;
+  &.is-deleted {
+    transform: scale(0);
+  }
+
 }
 
 
@@ -30,5 +35,40 @@
 
 
 .grid-container__controls {
+  display: flex;
+}
 
+.grid-container__options {
+  margin-left: auto;
+  position: relative;
+}
+
+.grid-container__options--list {
+  display: inline-block;
+}
+
+.grid-container__options--list-item {
+  display: inline-block;
+  padding: 5px;
+
+  cursor: pointer;
+
+}
+
+
+.grid-container__title {
+  font-size: 18px;
+  font-weight: 400;
+  padding: 20px;
+}
+
+
+
+.grid-container-editor__menu--item {
+  display: inline;
+  button {
+    border-radius: 3px;
+    border: none;
+    background-color: limegreen;
+  }
 }
