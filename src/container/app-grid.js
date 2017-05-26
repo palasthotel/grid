@@ -30,7 +30,8 @@ import {
 	actionCloseGridBoxEdit,
 	actionEditGridContainer,
 	actionEditGridContainerClose,
-	actionContainerShowInPlaceDialog
+	actionContainerShowInPlaceDialog,
+	actionBoxShowInPlaceDialog,
 } from '../actions/ui'
 
 function grid_is_ready(state){
@@ -59,6 +60,9 @@ export default connect(
 			onContainerShowInPlaceDialog(index){
 				console.log(index);
 				dispatch(actionContainerShowInPlaceDialog(index))
+			},
+			onBoxShowInPlaceDialog(container_id, slot_id, index){
+				dispatch(actionBoxShowInPlaceDialog(container_id, slot_id, index))
 			},
 
 			// -----------

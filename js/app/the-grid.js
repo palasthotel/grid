@@ -5339,6 +5339,7 @@ var GRID_UI_STATE = exports.GRID_UI_STATE = "GRID-UI-STATE";
 var GRID_LOADING = exports.GRID_LOADING = 'GRID_LOADING';
 
 var GRID_CONTAINER_IN_PLACE_DIALOG = exports.GRID_CONTAINER_IN_PLACE_DIALOG = "GRID-CONTAINER-IN-PLACE-DIALOG";
+var GRID_BOX_IN_PLACE_DIALOG = exports.GRID_BOX_IN_PLACE_DIALOG = "GRID-BOX-IN-PLACE-DIALOG";
 
 var GRID_CONTAINER_EDIT = exports.GRID_CONTAINER_EDIT = "GRID-CONTAINER-EDIT";
 var GRID_BOX_EDIT = exports.GRID_BOX_EDIT = "GRID-BOX-EDIT";
@@ -7713,6 +7714,7 @@ exports.actionSetGridLoading = actionSetGridLoading;
 exports.actionContainerShowInPlaceDialog = actionContainerShowInPlaceDialog;
 exports.actionEditGridContainerClose = actionEditGridContainerClose;
 exports.actionEditGridContainer = actionEditGridContainer;
+exports.actionBoxShowInPlaceDialog = actionBoxShowInPlaceDialog;
 exports.actionCloseGridBoxEdit = actionCloseGridBoxEdit;
 exports.actionEditGridBox = actionEditGridBox;
 
@@ -7741,6 +7743,15 @@ function actionEditGridContainerClose() {
 }
 function actionEditGridContainer(container_id) {
 	return { type: _types.GRID_CONTAINER_EDIT, payload: { container_id: container_id } };
+}
+
+/**
+ *
+ * @param args
+ * @return {{type, payload: {container_id,slot_id, index} }}
+ */
+function actionBoxShowInPlaceDialog(args) {
+	return { type: _types.GRID_BOX_IN_PLACE_DIALOG, payload: args };
 }
 
 function actionCloseGridBoxEdit() {
@@ -33187,6 +33198,8 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(4);
@@ -33198,6 +33211,14 @@ var _propTypes = __webpack_require__(5);
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactDnd = __webpack_require__(54);
+
+var _collapsible = __webpack_require__(79);
+
+var _collapsible2 = _interopRequireDefault(_collapsible);
+
+var _boxTypes = __webpack_require__(419);
+
+var _boxTypes2 = _interopRequireDefault(_boxTypes);
 
 var _constants = __webpack_require__(37);
 
@@ -33267,8 +33288,80 @@ var BoxDrop = function (_Component) {
 				{
 					className: 'grid-box__drop ' + over_class + ' ' + can_drop_class
 				},
-				_react2.default.createElement('div', { className: 'grid-box__drop--area' })
+				_react2.default.createElement('div', { className: 'grid-box__drop--area' }),
+				this.renderInPlace()
 			));
+		}
+	}, {
+		key: 'renderInPlace',
+		value: function renderInPlace() {
+			var box_types = this.props.box_types;
+			var box_dialog = this.props.ui_state.box_dialog;
+
+			if (box_types.length < 1) return null;
+
+			var is_active = (typeof box_dialog === 'undefined' ? 'undefined' : _typeof(box_dialog)) === _typeof({}) && box_dialog.container_id === this.props.container_id && box_dialog.slot_id === this.props.slot_id && box_dialog.index === this.props.index;
+
+			console.log(is_active, box_dialog);
+
+			return _react2.default.createElement(
+				'div',
+				{
+					className: 'grid-box__select ' + (is_active ? "is-opened" : "is-closed")
+				},
+				_react2.default.createElement(
+					'button',
+					{
+						className: 'grid-box__select--toggle',
+						onClick: this.onClickToggle.bind(this)
+					},
+					_react2.default.createElement(
+						'span',
+						{ className: 'grid-box__select--icon' },
+						'+'
+					),
+					_react2.default.createElement(
+						'span',
+						{ className: 'grid-box__select--open-text' },
+						'Add Box'
+					),
+					_react2.default.createElement(
+						'span',
+						{ className: 'grid-box__select--close-text' },
+						'Close'
+					)
+				),
+				is_active ? this.renderBoxes() : null
+			);
+		}
+	}, {
+		key: 'renderBoxes',
+		value: function renderBoxes() {
+			console.log("RENDER BOXEDS");
+			var box_types = this.props.box_types;
+
+			return _react2.default.createElement(
+				'div',
+				{ className: 'grid-box__select--types' },
+				_react2.default.createElement(_boxTypes2.default, {
+					items: box_types,
+					onSearch: this.props.onSearch
+				})
+			);
+		}
+	}, {
+		key: 'onClickToggle',
+		value: function onClickToggle() {
+			var _props2 = this.props,
+			    container_id = _props2.container_id,
+			    slot_id = _props2.slot_id,
+			    index = _props2.index;
+
+			this.props.onBoxShowInPlaceDialog({
+				container_id: container_id,
+				slot_id: slot_id,
+				index: index
+			});
 		}
 	}]);
 
@@ -33287,7 +33380,10 @@ BoxDrop.propTypes = {
 	/**
   * if new box from outside was added
   */
-	onAdd: _propTypes2.default.func
+	onAdd: _propTypes2.default.func,
+	onSearch: _propTypes2.default.func,
+
+	onBoxShowInPlaceDialog: _propTypes2.default.func.isRequired
 };
 
 exports.default = (0, _reactDnd.DropTarget)(_constants.ItemTypes.BOX, boxTarget, collect)(BoxDrop);
@@ -34454,7 +34550,13 @@ var Grid = function (_Component) {
 				container_id: container_id,
 				slot_index: slot_index,
 				slot_id: slot_id,
-				onAdd: this.onBoxAdd.bind(this)
+				onAdd: this.onBoxAdd.bind(this),
+				box_types: this.props.box_types,
+				onSearch: this.props.onBoxSearch,
+
+				ui_state: this.props.ui_state,
+				onUiStateChange: this.props.onUiStateChange,
+				onBoxShowInPlaceDialog: this.props.onBoxShowInPlaceDialog
 			});
 		}
 
@@ -34567,9 +34669,6 @@ Grid.propTypes = {
 
 	ui_state: _propTypes2.default.object,
 
-	/**
-  * initial state
-  */
 	container: _propTypes2.default.arrayOf(_propTypes2.default.object.isRequired).isRequired,
 
 	edit_container: _propTypes2.default.string,
@@ -36101,12 +36200,13 @@ var TheGrid = function (_React$Component) {
 					ui_state: this.props.ui,
 					onUiStateChange: this.props.onUiStateChange,
 					onContainerShowInPlaceDialog: this.props.onContainerShowInPlaceDialog,
+					onBoxShowInPlaceDialog: this.props.onBoxShowInPlaceDialog,
 
 					draft: isDraft,
 					container: container,
 
-					edit_container: edit_container,
 					edit_box: edit_box,
+					edit_container: edit_container,
 
 					container_types: container_types,
 					box_types: box_types,
@@ -36123,7 +36223,8 @@ var TheGrid = function (_React$Component) {
 					onBoxAdd: this.props.onBoxAdd.bind(this, this.props.grid.id),
 					onBoxMove: this.props.onBoxMove.bind(this, this.props.grid.id),
 					onBoxDelete: this.props.onBoxDelete.bind(this, this.props.grid.id),
-					onBoxReuse: this.props.onBoxReuse.bind(this, this.props.grid.id)
+					onBoxReuse: this.props.onBoxReuse.bind(this, this.props.grid.id),
+					onBoxSearch: this.onBoxTypeSearch.bind(this)
 
 				}),
 				_react2.default.createElement(
@@ -36275,7 +36376,8 @@ TheGrid.propTypes = {
 	onBoxEdit: _propTypes2.default.func,
 
 	onUiStateChange: _propTypes2.default.func,
-	onContainerShowInPlaceDialog: _propTypes2.default.func.isRequired
+	onContainerShowInPlaceDialog: _propTypes2.default.func.isRequired,
+	onBoxShowInPlaceDialog: _propTypes2.default.func.isRequired
 
 };
 
@@ -36454,6 +36556,9 @@ function (dispatch) {
 		onContainerShowInPlaceDialog: function onContainerShowInPlaceDialog(index) {
 			console.log(index);
 			dispatch((0, _ui.actionContainerShowInPlaceDialog)(index));
+		},
+		onBoxShowInPlaceDialog: function onBoxShowInPlaceDialog(container_id, slot_id, index) {
+			dispatch((0, _ui.actionBoxShowInPlaceDialog)(container_id, slot_id, index));
 		},
 
 
@@ -36940,9 +37045,12 @@ function updateUI(state, action) {
 				edit_box: action.payload.box
 			});
 		case _types.GRID_CONTAINER_IN_PLACE_DIALOG:
-			console.log(action);
 			return _extends({}, state, {
 				container_dialog_index: action.payload.index
+			});
+		case _types.GRID_BOX_IN_PLACE_DIALOG:
+			return _extends({}, state, {
+				box_dialog: _extends({}, action.payload)
 			});
 		default:
 			return state;

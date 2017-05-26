@@ -5,6 +5,7 @@ import {
 	GRID_BOX_EDIT,
 	GRID_CONTAINER_EDIT,
 	GRID_CONTAINER_IN_PLACE_DIALOG,
+	GRID_BOX_IN_PLACE_DIALOG,
 
 } from '../actions/types';
 
@@ -35,10 +36,16 @@ export default function updateUI(state, action){
 				edit_box: action.payload.box,
 			}
 		case GRID_CONTAINER_IN_PLACE_DIALOG:
-			console.log(action)
 			return {
 				...state,
 				container_dialog_index: action.payload.index,
+			}
+		case GRID_BOX_IN_PLACE_DIALOG:
+			return {
+				...state,
+				box_dialog: {
+					...action.payload,
+				}
 			}
 		default:
 			return state;

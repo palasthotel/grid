@@ -2,11 +2,16 @@
 
 
 import {
+
 	GRID_UI_STATE,
 	GRID_LOADING,
+
 	GRID_CONTAINER_EDIT,
 	GRID_BOX_EDIT,
+
 	GRID_CONTAINER_IN_PLACE_DIALOG,
+	GRID_BOX_IN_PLACE_DIALOG,
+
 } from './types';
 
 /**
@@ -33,6 +38,15 @@ export function actionEditGridContainerClose(){
 }
 export function actionEditGridContainer(container_id){
 	return { type : GRID_CONTAINER_EDIT, payload: { container_id } }
+}
+
+/**
+ *
+ * @param args
+ * @return {{type, payload: {container_id,slot_id, index} }}
+ */
+export function actionBoxShowInPlaceDialog( args ){
+	return {type:GRID_BOX_IN_PLACE_DIALOG, payload: args }
 }
 
 export function actionCloseGridBoxEdit(){

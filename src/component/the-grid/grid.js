@@ -191,6 +191,13 @@ export default class Grid extends Component{
 				slot_index={slot_index}
 				slot_id={slot_id}
 			    onAdd={this.onBoxAdd.bind(this)}
+				box_types={this.props.box_types}
+				onSearch={this.props.onBoxSearch}
+
+
+				ui_state={this.props.ui_state}
+				onUiStateChange={this.props.onUiStateChange}
+				onBoxShowInPlaceDialog={this.props.onBoxShowInPlaceDialog}
 			/>
 		);
 	}
@@ -270,7 +277,7 @@ Grid.defaultProps = {
 	box_types: [],
 	container_types: [],
 
-	ui_state: { },
+	ui_state: {},
 	onUiStateChange: ()=>{ console.log("onUiStateChange not implemented") }
 
 };
@@ -279,9 +286,6 @@ Grid.propTypes = {
 
 	ui_state: PropTypes.object,
 
-	/**
-	 * initial state
-	 */
 	container: PropTypes.arrayOf(
 		PropTypes.object.isRequired
 	).isRequired,
