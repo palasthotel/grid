@@ -22,16 +22,18 @@ export default class ToolbarButton extends Component{
 	render(){
 		const {identifier, label, icon} = this.props;
 		return (
-			<div
-				className={`toolbar-button toolbar-button__${identifier}`}
+			<li
+				className={`grid-menu__item grid-adminbar__item--${identifier}`}
 			>
 				<button
+					className="grid-menu__button"
 					onClick={this.onClick.bind(this)}
 				>
-					{this.props.children}
-					<div className="toolbar-button__label">{label}</div>
+					{label}
 				</button>
-			</div>
+
+				{this.props.children}
+			</li>
 		);
 	}
 	

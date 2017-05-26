@@ -30,36 +30,94 @@ class TheGrid extends React.Component{
 
 		const {show_revisions} = this.state;
 
+		const draft_class = (isDraft)? "is-draft": "is-pubished";
+
 		return (
 			<div
-				className="the-grid"
+				className={`the-grid ${draft_class}`}
 			>
-				<p>{(isDraft)? "Draft": "Published"}</p>
-				<div
-					className="grid__toolbar"
+
+				<header
+					className="grid-adminbar"
 				>
-					<ToolbarButton
-						label="Publish"
-					    identifier="publish"
-					    onClick={this.props.onPublish.bind(this, id)}
-					/>
-					<ToolbarButton
-						label="Preview"
-						identifier="preview"
-						onClick={this.props.onPreview.bind(this, id)}
-					/>
-					<ToolbarButton
-						label="Revert"
-						identifier="revert"
-						onClick={this.props.onRevertDraft.bind(this, id)}
-					/>
-					<ToolbarButton
-						label="Revisions"
-						identifier="revisions"
-						onClick={this.onClickRevisions.bind(this)}
-					/>
-					
-				</div>
+					<div
+						className="grid-logo"
+					>
+					</div>
+					<nav>
+						<ul
+							className="grid-menu"
+						>
+
+							<ToolbarButton
+								label="Publish"
+								identifier="publish"
+								onClick={this.props.onPublish.bind(this, id)}
+							/>
+
+							<ToolbarButton
+								label="Preview"
+								identifier="preview"
+								onClick={this.props.onPreview.bind(this, id)}
+							/>
+
+							<ToolbarButton
+								label="Revert"
+								identifier="revert"
+								onClick={this.props.onRevertDraft.bind(this, id)}
+							/>
+
+							<ToolbarButton
+								label="Revisions"
+								identifier="revisions"
+								onClick={this.onClickRevisions.bind(this)}
+							/>
+
+							<ToolbarButton
+								label="Options"
+								identifier="options"
+								onClick={()=>{}}
+							/>
+
+						</ul>
+					</nav>
+
+					<div
+						className="grid-notifications"
+					>
+						<div>svg</div>
+						<ul>
+							<li
+								className="grid-notification__item grid-notification__item--is-published"
+							>
+								<span
+									className="grid-notification__icon"
+								/>
+								<p>Version (XXX) wurde erfolgreich gespeichert.</p>
+							</li>
+							<li
+								className="grid-notification__item grid-notification__item--is-success"
+							>
+								<span
+									className="grid-notification__icon"
+								/>
+								<p>Revision (XXX) wurde wiederhergestellt.</p>
+							</li>
+							<li
+								className="grid-notification__item grid-notification__item--is-error"
+							>
+								<span
+									className="grid-notification__icon"
+								/>
+								<p>Es ist ein Fehler aufgetreten.</p>
+								<button
+									className="grid-notification__button"
+								>&times;</button>
+							</li>
+						</ul>
+					</div>
+
+				</header>
 				
 				<div
 					className="grid-revisions"

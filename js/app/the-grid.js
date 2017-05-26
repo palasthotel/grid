@@ -35214,41 +35214,120 @@ var TheGrid = function (_React$Component) {
 			var show_revisions = this.state.show_revisions;
 
 
+			var draft_class = isDraft ? "is-draft" : "is-pubished";
+
 			return _react2.default.createElement(
 				'div',
 				{
-					className: 'the-grid'
+					className: 'the-grid ' + draft_class
 				},
 				_react2.default.createElement(
-					'p',
-					null,
-					isDraft ? "Draft" : "Published"
-				),
-				_react2.default.createElement(
-					'div',
+					'header',
 					{
-						className: 'grid__toolbar'
+						className: 'grid-adminbar'
 					},
-					_react2.default.createElement(_toolbarButton2.default, {
-						label: 'Publish',
-						identifier: 'publish',
-						onClick: this.props.onPublish.bind(this, id)
+					_react2.default.createElement('div', {
+						className: 'grid-logo'
 					}),
-					_react2.default.createElement(_toolbarButton2.default, {
-						label: 'Preview',
-						identifier: 'preview',
-						onClick: this.props.onPreview.bind(this, id)
-					}),
-					_react2.default.createElement(_toolbarButton2.default, {
-						label: 'Revert',
-						identifier: 'revert',
-						onClick: this.props.onRevertDraft.bind(this, id)
-					}),
-					_react2.default.createElement(_toolbarButton2.default, {
-						label: 'Revisions',
-						identifier: 'revisions',
-						onClick: this.onClickRevisions.bind(this)
-					})
+					_react2.default.createElement(
+						'nav',
+						null,
+						_react2.default.createElement(
+							'ul',
+							{
+								className: 'grid-menu'
+							},
+							_react2.default.createElement(_toolbarButton2.default, {
+								label: 'Publish',
+								identifier: 'publish',
+								onClick: this.props.onPublish.bind(this, id)
+							}),
+							_react2.default.createElement(_toolbarButton2.default, {
+								label: 'Preview',
+								identifier: 'preview',
+								onClick: this.props.onPreview.bind(this, id)
+							}),
+							_react2.default.createElement(_toolbarButton2.default, {
+								label: 'Revert',
+								identifier: 'revert',
+								onClick: this.props.onRevertDraft.bind(this, id)
+							}),
+							_react2.default.createElement(_toolbarButton2.default, {
+								label: 'Revisions',
+								identifier: 'revisions',
+								onClick: this.onClickRevisions.bind(this)
+							}),
+							_react2.default.createElement(_toolbarButton2.default, {
+								label: 'Options',
+								identifier: 'options',
+								onClick: function onClick() {}
+							})
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{
+							className: 'grid-notifications'
+						},
+						_react2.default.createElement(
+							'div',
+							null,
+							'svg'
+						),
+						_react2.default.createElement(
+							'ul',
+							null,
+							_react2.default.createElement(
+								'li',
+								{
+									className: 'grid-notification__item grid-notification__item--is-published'
+								},
+								_react2.default.createElement('span', {
+									className: 'grid-notification__icon'
+								}),
+								_react2.default.createElement(
+									'p',
+									null,
+									'Version (XXX) wurde erfolgreich gespeichert.'
+								)
+							),
+							_react2.default.createElement(
+								'li',
+								{
+									className: 'grid-notification__item grid-notification__item--is-success'
+								},
+								_react2.default.createElement('span', {
+									className: 'grid-notification__icon'
+								}),
+								_react2.default.createElement(
+									'p',
+									null,
+									'Revision (XXX) wurde wiederhergestellt.'
+								)
+							),
+							_react2.default.createElement(
+								'li',
+								{
+									className: 'grid-notification__item grid-notification__item--is-error'
+								},
+								_react2.default.createElement('span', {
+									className: 'grid-notification__icon'
+								}),
+								_react2.default.createElement(
+									'p',
+									null,
+									'Es ist ein Fehler aufgetreten.'
+								),
+								_react2.default.createElement(
+									'button',
+									{
+										className: 'grid-notification__button'
+									},
+									'\xD7'
+								)
+							)
+						)
+					)
 				),
 				_react2.default.createElement(
 					'div',
@@ -35487,22 +35566,19 @@ var ToolbarButton = function (_Component) {
 			    icon = _props.icon;
 
 			return _react2.default.createElement(
-				'div',
+				'li',
 				{
-					className: 'toolbar-button toolbar-button__' + identifier
+					className: 'grid-menu__item grid-adminbar__item--' + identifier
 				},
 				_react2.default.createElement(
 					'button',
 					{
+						className: 'grid-menu__button',
 						onClick: this.onClick.bind(this)
 					},
-					this.props.children,
-					_react2.default.createElement(
-						'div',
-						{ className: 'toolbar-button__label' },
-						label
-					)
-				)
+					label
+				),
+				this.props.children
 			);
 		}
 
