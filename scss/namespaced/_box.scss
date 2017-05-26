@@ -3,6 +3,16 @@
  * @modified 26.05.2017
  */
 
+.grid-box {
+  background-color: $color__box--background;
+  color: $color__box--foreground;
+
+  box-sizing: border-box;
+
+  border: 1px solid $color__box--border;
+}
+
+
 .grid-box__drop {
 
 }

@@ -5,7 +5,7 @@
 
 .grid-container__select {
 
-  width: 50%;
+  width: 30vw;
   margin: 0 auto;
 
   //background-color: white;
@@ -18,12 +18,12 @@
   transition: all .3s ease-in-out;
 
   .is-opend & {
-    transform: scale(1) rotateZ(0);
+    transform: scaleY(1);
     max-height: none;
   }
 
   .is-closed & {
-    transform: scale(0) rotateZ(90deg);
+    transform: scaleY(0);
     max-height: 0;
   }
 
@@ -64,7 +64,7 @@
   line-height: 14px;
   font-size: 14px;
 
-  margin-right: 10px;
+  margin-right: .7vw;
 
   width: 15px;
   height: 15px;
@@ -77,6 +77,11 @@
 
   .is-closed & {
     //transform: scale(0);
+  }
+
+
+  .grid-container__select--toggle:hover & {
+    transform: scale( 1.1 );
   }
 }
 

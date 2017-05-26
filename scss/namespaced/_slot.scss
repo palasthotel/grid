@@ -11,8 +11,8 @@
 .grid-slot {
   box-sizing: border-box;
 
-  border-left: 5px solid $color__slot--border;
-  border-right: 5px solid $color__slot--border;
+  border-left: 0.5vw solid $color__slot--border;
+  border-right: 0.5vw solid $color__slot--border;
 
-  //background-color: red;
+  background-color: $color__slot--background;
 }

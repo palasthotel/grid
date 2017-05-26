@@ -8,3 +8,21 @@
 
   box-shadow: 0 15px 15px 0 rgba(0, 0, 0, .2);
 }
+
+
+
+.grid-collapsible__title {
+  color: $color__collapsible--title;
+  font-weight: bold;
+
+  padding: 1vw;
+
+  &:after {
+    content: "";
+
+    background-image: url( "../svg/ic_expand_more_black_24px.svg" );
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transform: translateY(2px);
+  }
+}
