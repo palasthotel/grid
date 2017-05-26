@@ -4,6 +4,7 @@ import {
 	REQUEST_GRID_CONTAINER_EDITING_ADD,
 	REQUEST_GRID_CONTAINER_EDITING_DELETE,
 	REQUEST_GRID_CONTAINER_EDITING_MOVE,
+	REQUEST_GRID_CONTAINER_EDITING_UPDATE,
 } from './types'
 
 import {
@@ -127,18 +128,19 @@ export function actionGridContainerEditingDelete(args) {
  * @return {Promise}
  */
 export function actionGridContainerEditingUpdate(args) {
+	console.log(args);
 	return actionAsyncExecute({
 		before: (dispatch)=>{
 			dispatch(actionSetGridLoading(true));
 		},
 		request: requestGridEditingContainerUpdate.bind(this, args),
-		then: (dispatch, box)=>{
+		then: (dispatch, container)=>{
 
 			dispatch(actionSetGridLoading(false));
 
 			dispatch({
-				type: REQUEST_GRID_BOX_EDITING_UPDATE,
-				payload: { ...args, box  },
+				type: REQUEST_GRID_CONTAINER_EDITING_UPDATE,
+				payload: { ...args, container  },
 			});
 
 			dispatch(actionEditGridContainerClose())

@@ -62,16 +62,18 @@ export function initGrid(settings, root){
 		root
 	)
 
-
-	store.dispatch( actionGridDocumentLoad(1) ).then(()=>{
-		return Promise.all([
+	Promise.all(
+		[
 			store.dispatch( actionGridDocumentRevisions(1) ),
 			store.dispatch( actionGridStylesGet() ),
 			store.dispatch( actionGridPermissionRights() ),
-		]);
-	}).then(()=>{
-		store.dispatch( actionGridContainerEditingGetTypes(1) )
-		store.dispatch( actionGridBoxEditingMetaTypes(1) )
+			store.dispatch( actionGridContainerEditingGetTypes(1) ),
+			store.dispatch( actionGridBoxEditingMetaTypes(1) )
+		]
+	).then(()=>{
+
+		// if the dependencies are loaded load the grid
+		store.dispatch( actionGridDocumentLoad(1) );
 	})
 
 
