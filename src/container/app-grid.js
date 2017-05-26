@@ -56,6 +56,10 @@ export default connect(
 			onUiStateChange(key, value){
 				dispatch(actionUiStateChange(key, value))
 			},
+			onContainerShowInPlaceDialog(index){
+				console.log(index);
+				dispatch(actionContainerShowInPlaceDialog(index))
+			},
 
 			// -----------
 			// grid events
@@ -73,9 +77,6 @@ export default connect(
 			// -----------
 			// container events
 			// -----------
-			onContainerShowInPlaceDialog(args){
-				dispatch(actionContainerShowInPlaceDialog(args))
-			},
 			onContainerAdd(grid_id, container, to_index){
 				dispatch(actionGridContainerEditingAdd({grid_id, container_type: container.type, to_index }))
 			},

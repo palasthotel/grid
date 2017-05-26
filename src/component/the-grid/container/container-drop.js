@@ -52,12 +52,12 @@ class ContainerDrop extends Component {
 
 	renderInPlace(){
 		const {container_types} = this.props;
-		const {container_edit_index} = this.props.ui_state;
+		const {container_dialog_index} = this.props.ui_state;
 		if(container_types.length < 1) return null;
 
 		return (
 			<div
-				className={`grid-container__select ${(container_edit_index === this.props.index)? "is-opened":"is-closed" }`}
+				className={`grid-container__select ${(container_dialog_index === this.props.index)? "is-opened":"is-closed" }`}
 			>
 				<button
 					className="grid-container__select--toggle"
@@ -119,7 +119,7 @@ class ContainerDrop extends Component {
 			const item = items[i];
 			slots.push(<div
 				key={i}
-				className={`grid-container-preview__slot grid-slot__width--${item.weight} ${(item.space)? "is-space": ""}`}
+				className={`grid-container-preview__slot grid-slot__width--${item.weight} ${(item.is_space)? "is-space": ""}`}
 			/>);
 		}
 
@@ -136,10 +136,10 @@ class ContainerDrop extends Component {
 
 	onClickAdd(container){
 		this.props.onAdd(container, this.props.index)
-		this.setState({is_opend: false});
+		this.props.onContainerShowInPlaceDialog(undefined);
 	}
 	onClickToggle(){
-		this.props.onUiStateChange("container_edit_index", (this.props.index === this.props.ui_state.container_edit_index)? undefined: this.props.index);
+		this.props.onContainerShowInPlaceDialog((this.props.ui_state.container_dialog_index === this.props.index)? undefined: this.props.index );
 	}
 	onCollapsedStateChange(type){
 		const open_types = this.getOpenTypes();
@@ -177,6 +177,8 @@ ContainerDrop.propTypes = {
 
 	onUiStateChange: PropTypes.func.isRequired,
 	ui_state: PropTypes.object.isRequired,
+
+	onContainerShowInPlaceDialog: PropTypes.func.isRequired,
 };
 
 export default DropTarget(ItemTypes.CONTAINER, containerTarget, collect)(ContainerDrop);

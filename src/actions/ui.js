@@ -24,17 +24,8 @@ export function actionSetGridLoading(is_loading) {
 	return {type: GRID_LOADING, payload: { is_loading }};
 }
 
-export function actionContainerHideInPlaceDialog(){
-	return actionContainerShowInPlaceDialog();
-}
-
-/**
- *
- * @param args
- * @return {{type, payload: { index:, others} }}
- */
-export function actionContainerShowInPlaceDialog( args ){
-	return {type:GRID_CONTAINER_IN_PLACE_DIALOG, payload: { ...args } }
+export function actionContainerShowInPlaceDialog( index ){
+	return {type:GRID_CONTAINER_IN_PLACE_DIALOG, payload: { index } }
 }
 
 export function actionEditGridContainerClose(){

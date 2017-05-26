@@ -35,16 +35,10 @@ export default function updateUI(state, action){
 				edit_box: action.payload.box,
 			}
 		case GRID_CONTAINER_IN_PLACE_DIALOG:
-
-			const container_dialog = {
-				...state.container_dialog,
-				...action.payload,
-				index: action.payload.index,
-			}
-
+			console.log(action)
 			return {
 				...state,
-				container_dialog,
+				container_dialog_index: action.payload.index,
 			}
 		default:
 			return state;

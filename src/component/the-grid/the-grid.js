@@ -163,6 +163,7 @@ class TheGrid extends React.Component{
 
 					ui_state={this.props.ui}
 					onUiStateChange={this.props.onUiStateChange}
+					onContainerShowInPlaceDialog={this.props.onContainerShowInPlaceDialog}
 
 
 					draft={isDraft}
@@ -181,7 +182,6 @@ class TheGrid extends React.Component{
 				    onContainerReuse={this.props.onContainerReuse.bind(this, this.props.grid.id)}
 					onContainerUpdate={this.props.onContainerEditUpdate.bind(this, this.props.grid.id)}
 					onContainerEditCancel={this.props.onContainerEditCancel.bind(this, this.props.grid.id)}
-					onContainerShowInPlaceDialog={this.props.onContainerShowInPlaceDialog}
 
 					onBoxEdit={this.props.onBoxEdit.bind(this, this.props.grid.id)}
 				    onBoxAdd={this.props.onBoxAdd.bind(this, this.props.grid.id)}
@@ -304,6 +304,7 @@ TheGrid.propTypes = {
 
 
 	onUiStateChange: PropTypes.func,
+	onContainerShowInPlaceDialog: PropTypes.func.isRequired,
 
 };
 

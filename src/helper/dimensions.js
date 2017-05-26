@@ -1,5 +1,8 @@
-
-
+/**
+ * get weights for container slots
+ * @param container
+ * @return {[ {weight: int, is_space: bool} ]}
+ */
 export function get_slot_weights(container){
 
 	const dimensions = container.type.split("-");
@@ -8,10 +11,10 @@ export function get_slot_weights(container){
 		return dim.split("d")[0];
 	}
 
-	function get_item(weight, space = false) {
+	function get_item(weight, is_space = false) {
 		return {
 			weight,
-			space,
+			is_space,
 		}
 	}
 

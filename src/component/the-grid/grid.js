@@ -114,6 +114,7 @@ export default class Grid extends Component{
 
 				ui_state={this.props.ui_state}
 				onUiStateChange={this.props.onUiStateChange}
+				onContainerShowInPlaceDialog={this.props.onContainerShowInPlaceDialog}
 			/>
 		);
 	}

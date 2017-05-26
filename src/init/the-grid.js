@@ -87,13 +87,13 @@ export function initGrid(settings, root){
 			// check a little after the initial action
 			setTimeout(()=>{
 				store.dispatch(actionGridDocumentCheckDraftState(1))
-			},300)
+			},10000)
 		} else if(draft_state_timeout === null){
 			draft_state_timeout = setTimeout(()=>{
 				console.log(" |||| check state timeout ||| ")
 				draft_check_needed=true;
 				draft_state_timeout=null;
-			},1000)
+			},10000)
 		}
 	});
 

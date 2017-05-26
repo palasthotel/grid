@@ -10,6 +10,7 @@ import {
 import {
 	actionSetGridLoading,
 	actionEditGridContainerClose,
+	actionContainerShowInPlaceDialog,
 } from './ui'
 
 import { actionAsyncExecute } from './index'
@@ -49,6 +50,7 @@ export function actionGridContainerEditingAdd(args) {
 	return actionAsyncExecute({
 		before: (dispatch)=>{
 			dispatch(actionSetGridLoading(true));
+			dispatch(actionContainerShowInPlaceDialog())
 		},
 		request: requestGridEditingContainerAdd.bind(this,args),
 		then: (dispatch, result)=>{
