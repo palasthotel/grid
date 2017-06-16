@@ -75,12 +75,14 @@ class grid_post_box extends grid_box {
 					include dirname( __FILE__ ).'/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output = ob_get_clean();
-				wp_reset_postdata();
+
 				/**
 				 * post publish flag to hide from frontend
 				 */
 				$this->content->publish = get_post_status();
 				$this->content->output = $output;
+
+				wp_reset_postdata();
 				return $this->content;
 			}
 		}

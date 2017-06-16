@@ -42,5 +42,5 @@ if ( isset( $content ) && isset( $content->publish ) && 'publish' == $content->p
         <?php endif; ?>
     </div>
 <?php else : ?>
-    <p>No Content found!</p>
+    <p>No Content found or is not published yet!</p>
 <?php endif; ?>
