@@ -3,7 +3,7 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.7.3
+Tested up to: 4.8.1
 Stable tag: 1.6.15
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
