@@ -13,7 +13,7 @@ boxEditorControls['html']=GridBackbone.View.extend({
     render:function(){
         var text=this.model.container[this.model.structure.key];
         if(!text)text="";
-        this.$el.html("<label>"+this.model.structure.label+"</label><textarea name='"+this.cid+"' class='dynamic-value form-html'>"+text+"</textarea>");
+        this.$el.html("<label>"+this.model.structure.label+"</label><textarea name='"+this.cid+"' class='dynamic-value form-html'>"+text.replace(/\'/g, "&#39;")+"</textarea>");
         return this;
     },
     fetchValue:function(){
