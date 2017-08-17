@@ -573,7 +573,7 @@ class grid_library
 					),
 				),
 				'primary key'=>array('id'),
-				'unique key' =>array(
+				'unique keys' =>array(
 					"slug" => array( 'slug' ),
 				),
 				'mysql_engine'=>'InnoDB',
@@ -624,7 +624,7 @@ class grid_library
 					),
 				),
 				'primary key'=>array('id'),
-				'unique key' =>array(
+				'unique keys' =>array(
 					"slug" => array( 'slug' ),
 				),
 				'mysql_engine'=>'InnoDB',
@@ -692,7 +692,7 @@ class grid_library
 					),
 				),
 				'primary key'=>array('id'),
-				'unique key' =>array(
+				'unique keys' =>array(
 					"slug" => array( 'slug' ),
 				),
 				'mysql_engine'=>'InnoDB',
