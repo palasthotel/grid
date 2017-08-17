@@ -569,10 +569,17 @@ class grid_library
 						'description'=>t('slug'),
 						'type'=>'varchar',
 						'size'=>'normal',
-						'length'=>255,
+						'length'=>100,
 					),
 				),
 				'primary key'=>array('id'),
+				'keys' =>array(
+					array(
+						'name' => 'slug',
+						'columns' => array('slug'),
+						'unique' => true,
+					)
+				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
 			),
@@ -617,10 +624,17 @@ class grid_library
 						'description'=>t('slug'),
 						'type'=>'varchar',
 						'size'=>'normal',
-						'length'=>255,
+						'length'=>100,
 					),
 				),
 				'primary key'=>array('id'),
+				'keys' =>array(
+					array(
+						'name' => 'slug',
+						'columns' => array('slug'),
+						'unique' => true,
+					)
+				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
 			),
@@ -682,10 +696,17 @@ class grid_library
 						'description'=>t('slug'),
 						'type'=>'varchar',
 						'size'=>'normal',
-						'length'=>255,
+						'length'=>100,
 					),
 				),
 				'primary key'=>array('id'),
+				'keys' =>array(
+					array(
+						'name' => 'slug',
+						'columns' => array('slug'),
+						'unique' => true,
+					)
+				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
 			),
