@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 1.6.14
+Stable tag: 1.6.15
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -75,10 +75,15 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.6.15 =
+ * Sometimes boxes cannot be moved on grid load fix
+ * Use of apostroph in box editor text and html fields bugfix
+ * getRaw() method grid_rss_box_item
+ * Fixed warnings with PHP 7.*
+ * grid style tables slug key added
+
 = 1.6.14 =
-
  * Posts Box and Post Box with fallback to first viewmode if none set or found
-
 
 = 1.6.13 =
  * Shortcode box
