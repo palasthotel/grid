@@ -112,11 +112,21 @@ class grid_rss_box_item {
 			"grid-rss-item",
 		);
 	}
+
+	/**
+	 * @return SimplePie_Item
+	 */
+	public function getRaw(){
+		return $this->raw;
+	}
 	
 	public function addClass( $class ) {
 		$this->classes[] = $class;
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	public function getClasses() {
 		return $this->classes;
 	}
