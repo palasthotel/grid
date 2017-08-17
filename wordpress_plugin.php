@@ -3,11 +3,11 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid-wordpress
  * Description: Helps layouting pages with containerist.
- * Version: 1.6.14
+ * Version: 1.6.15
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
- * Tested up to: 4.7.3
+ * Tested up to: 4.8.1
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @copyright Copyright (c) 2014, Palasthotel
  * @package Palasthotel\Grid-WordPress
@@ -665,6 +665,14 @@ function grid_wp_activate() {
 			}
 			if ( isset( $data['primary key'] ) ) {
 				$query .= ',constraint primary key ('.implode( ',', $data['primary key'] ).')';
+			}
+			if( isset($data["keys"]) && is_array($data["keys"])){
+				foreach($data["keys"] as $key){
+					$key_name = $key["name"];
+					$key_columns = $key["columns"];
+					$unique = (isset($key["unique"]) && $key["unique"] == true)? " UNIQUE ": "";
+					$query .= ','.$unique.' key '.$key_name.' ('.implode(',', $key_columns).')';
+				}
 			}
 			$query .= ') ';
 			if ( isset( $data['mysql_engine'] ) ) {
