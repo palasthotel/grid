@@ -573,12 +573,8 @@ class grid_library
 					),
 				),
 				'primary key'=>array('id'),
-				'keys' =>array(
-					array(
-						'name' => 'slug',
-						'columns' => array('slug'),
-						'unique' => true,
-					)
+				'unique key' =>array(
+					"slug" => array( 'slug' ),
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
@@ -628,12 +624,8 @@ class grid_library
 					),
 				),
 				'primary key'=>array('id'),
-				'keys' =>array(
-					array(
-						'name' => 'slug',
-						'columns' => array('slug'),
-						'unique' => true,
-					)
+				'unique key' =>array(
+					"slug" => array( 'slug' ),
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
@@ -700,12 +692,8 @@ class grid_library
 					),
 				),
 				'primary key'=>array('id'),
-				'keys' =>array(
-					array(
-						'name' => 'slug',
-						'columns' => array('slug'),
-						'unique' => true,
-					)
+				'unique key' =>array(
+					"slug" => array( 'slug' ),
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
