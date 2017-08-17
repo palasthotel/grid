@@ -57,48 +57,11 @@ class BoxDrop extends Component {
 				className={`grid-box__drop ${over_class} ${can_drop_class}`}
 			>
 				<div className={`grid-box__drop--area`} />
-
-				{this.renderInPlace()}
 			</div>
 		);
 	}
 
 
-	renderInPlace(){
-		const {box_types} = this.props;
-		const {box_dialog} = this.props.ui_state;
-		if(box_types.length < 1) return null;
-
-		const is_active = (
-			typeof box_dialog === typeof {}
-			&& box_dialog.container_id === this.props.container_id
-			&& box_dialog.slot_id === this.props.slot_id
-			&& box_dialog.index === this.props.index
-		);
-
-		console.log(is_active, box_dialog)
-
-		return (
-			<div
-				className={`grid-box__select ${(is_active)? "is-opened":"is-closed" }`}
-			>
-				<button
-					className="grid-box__select--toggle"
-					onClick={this.onClickToggle.bind(this)}
-				>
-					<span className="grid-box__select--icon">+</span>
-					<span className="grid-box__select--open-text">Add Box</span>
-					<span className="grid-box__select--close-text">Close</span>
-				</button>
-
-				{(is_active)? this.renderBoxes(): null}
-
-
-
-			</div>
-		)
-
-	}
 
 	renderBoxes(){
 		console.log("RENDER BOXEDS");
@@ -116,13 +79,19 @@ class BoxDrop extends Component {
 	}
 
 	onClickToggle(){
-		const {container_id, slot_id, index} = this.props;
-		this.props.onBoxShowInPlaceDialog({
-			container_id,
-			slot_id,
-			index,
-		});
+		if(this.isInPlaceActive()){
+			this.props.onBoxShowInPlaceDialog({});
+		} else {
+			const {container_id, slot_id, index} = this.props;
+			this.props.onBoxShowInPlaceDialog({
+				container_id,
+				slot_id,
+				index,
+			});
+		}
+
 	}
+
 }
 
 BoxDrop.propTypes = {
@@ -138,9 +107,7 @@ BoxDrop.propTypes = {
 	 * if new box from outside was added
 	 */
 	onAdd: PropTypes.func,
-	onSearch: PropTypes.func,
 
-	onBoxShowInPlaceDialog: PropTypes.func.isRequired,
 };
 
 export default DropTarget(ItemTypes.BOX, boxTarget, collect)(BoxDrop);

@@ -10,6 +10,7 @@ import ContainerEditor from '../container-editor/container-editor';
 
 import Slot from './slot/slot.js';
 import BoxDrop from './box/box-drop.js';
+import BoxInPlaceList from './box/box-in-place-list';
 import Box from './box/box.js';
 
 import { States } from '../../constants.js';
@@ -176,6 +177,7 @@ export default class Grid extends Component{
 			$boxes.push(this.renderBoxDrop(i+1, container_index, slot_index));
 			
 		}
+		boxes.push(this.renderBoxInPlaceList(container_index, slot_index))
 		return $boxes;
 	}
 	renderBoxDrop(index, container_index, slot_index){
@@ -191,15 +193,29 @@ export default class Grid extends Component{
 				slot_index={slot_index}
 				slot_id={slot_id}
 			    onAdd={this.onBoxAdd.bind(this)}
+			/>
+		);
+
+	}
+	renderBoxInPlaceList(container_index, slot_index){
+		const container_id = this.props.container[container_index].id;
+		const slot_id = this.props.container[container_index].slots[slot_index].id;
+		return (
+			<BoxInPlaceList
+				container_index={container_index}
+				container_id={container_id}
+				slot_index={slot_index}
+				slot_id={slot_id}
+
 				box_types={this.props.box_types}
 				onSearch={this.props.onBoxSearch}
-
 
 				ui_state={this.props.ui_state}
 				onUiStateChange={this.props.onUiStateChange}
 				onBoxShowInPlaceDialog={this.props.onBoxShowInPlaceDialog}
-			/>
-		);
+				/>
+		)
+
 	}
 	
 
