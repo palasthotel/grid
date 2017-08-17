@@ -75,7 +75,6 @@ GRID = {
 		GRID.$loading.addClass("grid-init-loading");
 
 		// load all model classes for grid works
-		this.getRights().fetch();
 		this.getBoxTypes().fetch();
 		this.getContainerTypes().fetch();
 		this.getReusableContainers().fetch();
@@ -92,15 +91,20 @@ GRID = {
 		this.async.addObserver(this);
 		this.async.addObserver(this.authors);
 
+		this.getRights().fetch({
+			success:function(){
 
-		// load the grid + view
-		this.grid = new Grid({
-        	id:this.ID,
-			SERVER: this.SERVER,
-			PREVIEW_URL: this.PREVIEW_URL,
-			DEBUGGING: this.DEBUGGING,
-			fn_success: GRID.new_grid_success
-        });
+				// load the grid + view
+				GRID.grid = new Grid({
+					id:GRID.ID,
+					SERVER: GRID.SERVER,
+					PREVIEW_URL: GRID.PREVIEW_URL,
+					DEBUGGING: GRID.DEBUGGING,
+					fn_success: GRID.new_grid_success
+				});
+
+			}
+		});
 
 		return this;
 	},

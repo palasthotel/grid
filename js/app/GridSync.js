@@ -287,6 +287,9 @@ var GridRequest = {
 						rights.set(value,true);
 					});
 					//rights.setNoRights();
+					if(typeof options == typeof {} && typeof options.success == "function"){
+						options.success(data);
+					}
 				},
 			   	checkIsDraft: false
 			}
