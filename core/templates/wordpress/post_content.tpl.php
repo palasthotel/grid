@@ -8,11 +8,10 @@
 ?>
 <h3><?php the_title(); ?></h3>
 <?php
-if ( 'full' == $this->content->viewmode ) {
+if ( 'full' === $this->content->viewmode ) {
 	the_content();
-} elseif ( 'excerpt' == $this->content->viewmode ) {
+} elseif ( 'excerpt' === $this->content->viewmode ) {
 	the_excerpt();
 } else {
-  ?><p>Unsupported Viewmode: <?php echo $this->content->viewmode; ?></p><?php
-}
-?>
+?><p>Unsupported Viewmode: <?php echo $this->content->viewmode; ?></p><?php
+} ?>
