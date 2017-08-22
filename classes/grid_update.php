@@ -188,12 +188,9 @@ class grid_update extends base_update
 	}
 
 	public function update_4(){
-		db_query("alter table {grid_box_style} MODIFY slug VARCHAR(100)");
-		db_query("alter table {grid_box_style} add unique key slug (slug)");
-		db_query("alter table {grid_slot_style} MODIFY slug VARCHAR(100)");
-		db_query("alter table {grid_slot_style} add unique key slug (slug)");
-		db_query("alter table {grid_container_style} MODIFY slug VARCHAR(100)");
-		db_query("alter table {grid_container_style} add unique key slug (slug)");
+		db_query("alter table {grid_box_style} MODIFY slug VARCHAR(100) unique key");
+		db_query("alter table {grid_slot_style} MODIFY slug VARCHAR(100) unique key");
+		db_query("alter table {grid_container_style} MODIFY slug VARCHAR(100) unique key");
 	}
 
 }
