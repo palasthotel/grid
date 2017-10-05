@@ -136,6 +136,11 @@ class grid_posts_box extends grid_list_box {
 			$args['post_type'] = $this->content->post_type;
 			
 			/**
+			 * if not set fall back to default (fist viewmode)
+			 */
+			$this->content->viewmode = $this->getViewmode();
+			
+			/**
 			 * if avoid doublets plugin is activated
 			 */
 			if(function_exists('grid_avoid_doublets_get_placed')){
@@ -267,12 +272,28 @@ class grid_posts_box extends grid_list_box {
 		return $cs;
 	}
 	
+	/**
+	 * get selected viewmode
+	 */
+	public function getViewmode(){
+		if(!empty($this->content->viewmode)){
+			return $this->content->viewmode;
+		}
+		$viewmodes = $this->getViewmodes();
+		return (count($viewmodes) > 0 )? $viewmodes[0]['key']: "";
+	}
+	
+	/**
+	 * get available viewmodes
+	 * @return mixed
+	 */
 	public function getViewmodes(){
 		$viewmodes = array(
 			array('key' => 'excerpt', 'text' => t('Excerpt') ),
 			array('key' => 'full', 'text' => t('Full') ),
 		);
-		return apply_filters('grid_post_viewmodes',$viewmodes);
+		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
+		return (is_array($viewmodes))? $viewmodes: array();
 	}
 	
 	/**

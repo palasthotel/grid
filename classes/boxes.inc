@@ -46,11 +46,11 @@ class boxes
 	}
 
 	/**
-	 * @param $where
-	 * @param $wp_query
+	 * @param string $where
+	 * @param \WP_Query $wp_query
 	 * @return string
 	 */
-	function posts_where( $where, &$wp_query )
+	function posts_where( $where, $wp_query )
 	{
 		global $wpdb;
 		if ( $grid_title = $wp_query->get( 'grid_title' ) ) {
