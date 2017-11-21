@@ -33,9 +33,9 @@ boxEditorControls['file']=GridBackbone.View.extend({
 		this.$progress_bar_wrapper = jQuery("<div class='progress-bar-wrapper'><div class='bar'></div>");
 		this.$progress_bar_status = this.$progress_bar_wrapper.children(".bar");
 		if(this.model.container[this.model.structure.key] === "" || this.model.container[this.model.structure.key] === undefined){
-			this.$progress_display.text("Please choose a picture...");
+			this.$progress_display.text(this.getFileChooseHelp());
 		} else {
-			this.$progress_display.text("Choose another picture to override the old one.");
+			this.$progress_display.text(this.getFileReplaceHelp());
 			this.$progress_bar_status.addClass("done");
 		}
 		$upload_form_item.append(this.$progress_display).append(this.$progress_bar_wrapper);
@@ -118,5 +118,23 @@ boxEditorControls['file']=GridBackbone.View.extend({
     },
     fetchValue:function(){
         return this.$key_field.val();
+    },
+    getFileReplaceHelp(){
+        var text;
+        if (typeof (this.model.structure.fileReplacementHelp) !== 'undefined'){
+            text = this.model.structure.fileReplacementHelp;
+        } else {
+            text = "Choose another picture to override the old one.";
+        }
+        return text;
+    },
+    getFileChooseHelp(){
+        var text;
+        if (typeof (this.model.structure.fileChooseHelp) !== 'undefined'){
+            text = this.model.structure.fileChooseHelp;
+        } else {
+            text = "Please choose a picture...";
+        }
+        return text;
     }
 });
