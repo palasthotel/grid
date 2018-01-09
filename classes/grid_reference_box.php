@@ -50,7 +50,8 @@ class grid_reference_box extends grid_box {
 	public function render($editmode) {
 		$box=$this->storage->loadReuseBox($this->content->boxid);
 		$box->classes=$this->classes;
-		$box->grid = $this->grid;
+		// TODO: quick fix for #91 should be refactored soon
+		$box->grid = ($this->grid !== null)? $this->grid: 1;
 		return $box->render($editmode);
 	}
 	
