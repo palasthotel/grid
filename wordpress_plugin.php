@@ -269,6 +269,7 @@ class grid_plugin {
 			$storage->templatesPath = get_template_directory().'/grid/';
 
 			$templatesPaths = array();
+			$templatesPaths[] = get_stylesheet_directory().'/grid/';
 			$templatesPaths[] = get_template_directory().'/grid/';
 			$templatesPaths = apply_filters( 'grid_templates_paths', $templatesPaths );
 			$templatesPaths[] = dirname(__FILE__)."/core/templates/wordpress";
