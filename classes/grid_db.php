@@ -56,11 +56,13 @@ class grid_db {
 		$id++;
 		$query="insert into ".$this->prefix."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
 		$this->connection->query($query);
+		$this->fireHook("createGrid", $id);
 		return $id;
 	}
 	
 	public function destroyGrid($grid_id)
 	{
+		$this->fireHook("destroyGrid", $grid_id);
 		$query="delete from ".$this->prefix."grid_box where grid_id=$grid_id";
 		$this->connection->query($query);
 		$query="delete from ".$this->prefix."grid_container where grid_id=$grid_id";
@@ -75,6 +77,7 @@ class grid_db {
 		$this->connection->query($query);
 		$query="delete from ".$this->prefix."grid_slot2box where grid_id=$grid_id";
 		$this->connection->query($query);
+
 	}
 	
 	public function cloneGrid($grid)
@@ -101,6 +104,12 @@ class grid_db {
 		$this->connection->query($query) or die($this->connection->error);
 		$query="insert into ".$this->prefix."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) select slot_id,$cloneid,grid_revision,box_id,weight from ".$this->prefix."grid_slot2box where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
+
+		$this->fireHook("cloneGrid", array(
+			"original_id" => $gridid,
+			"clone_id" => $cloneid,
+		));
+
 		return $this->loadGrid($cloneid);
 	}
 
@@ -745,6 +754,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			}
 		}
 		$this->persistContainer($container);
+
+		$this->fireHook("createContainer",$container );
+
 		return $container;
 	}
 
@@ -819,6 +831,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$this->connection->query($query) or die($this->connection->error);
 		$query="update ".$this->prefix."grid_grid set published=1 where id=$id and revision=$revision";
 		$this->connection->query($query) or die($this->connection->error);
+
+		$this->fireHook("publishGrid", $id);
+
 		return true;
 	}
 	
@@ -853,6 +868,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$this->connection->query($query) or die($this->connection->error);
 		$query="delete from ".$this->prefix."grid_grid where id=$id and revision=$revision";
 		$this->connection->query($query) or die($this->connection->error);
+
 		return true;
 	}
 
