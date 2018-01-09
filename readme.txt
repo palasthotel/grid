@@ -78,6 +78,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 = 1.7.1 =
  * templates in child theme support
  * grid/default-frontend.css support in child theme
+ * reusable boxes are rendered in sidebar like in grid
 
 = 1.7.0 =
  * added new actions grid_createGrid, grid_publishGrid, grid_destroyGrid, grid_cloneGrid, grid_createContainer
