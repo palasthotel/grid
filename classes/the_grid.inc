@@ -107,7 +107,11 @@ class the_grid
 			$async_service = get_option("grid_async_url",'');
 			if(''==$async_service)
 			{
-				$async_service="http://async.the-grid.ws";
+				$secure = "";
+				if(isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on'){
+					$secure = "s";
+				}
+				$async_service = "http".$secure."://async.the-grid.ws";
 			}
 			$async_domain= get_home_url();
 			$async_author=$user->display_name;
