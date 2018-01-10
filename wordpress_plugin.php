@@ -199,7 +199,7 @@ class grid_plugin {
 	function wp_head() {
 		if ( file_exists( get_stylesheet_directory().'/grid/default-frontend.css' ) ) {
 			// childtheme
-			wp_enqueue_style( 'grid_frontend', get_template_directory_uri().'/grid/default-frontend.css' );
+			wp_enqueue_style( 'grid_frontend', get_stylesheet_directory_uri().'/grid/default-frontend.css' );
 		} else	if ( file_exists( get_template_directory().'/grid/default-frontend.css' ) ) {
 			// parent theme
 			wp_enqueue_style( 'grid_frontend', get_template_directory_uri().'/grid/default-frontend.css' );
