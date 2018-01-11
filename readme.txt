@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.9.1
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -79,6 +79,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
  * templates in child theme support
  * grid/default-frontend.css support in child theme
  * reusable boxes are rendered in sidebar like in grid
+ * grid async features fix
 
 = 1.7.0 =
  * added new actions grid_createGrid, grid_publishGrid, grid_destroyGrid, grid_cloneGrid, grid_createContainer
