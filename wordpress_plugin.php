@@ -271,7 +271,7 @@ class grid_plugin {
 			$storage->ajaxEndpoint->storage = $storage;
 
 			// for old versions
-			$storage->templatesPath = get_template_directory().'/grid/';
+			$storage->templatesPath = get_stylesheet_directory().'/grid/';
 
 			$templatesPaths = array();
 			$templatesPaths[] = get_stylesheet_directory().'/grid/';
