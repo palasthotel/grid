@@ -193,4 +193,19 @@ class grid_update extends base_update
 		db_query("alter table {grid_container_style} MODIFY slug VARCHAR(100) unique key");
 	}
 
+	public function update_5(){
+		db_query("alter table {grid_container} drop foreign key {fk_container_style}");
+		db_query("alter table {grid_container} add constraint {fk_container_style} foreign key (style) references {grid_container_style} (id) on update cascade ON DELETE SET NULL");
+
+		db_query("alter table {grid_slot} drop foreign key {fk_slot_style}");
+		db_query("alter table {grid_slot} add constraint {fk_slot_style} foreign key (style) references {grid_slot_style} (id) on update cascade ON DELETE SET NULL");
+
+		db_query("alter table {grid_box} drop foreign key {fk_box_style}");
+		db_query("alter table {grid_box} add constraint {fk_box_style} foreign key (style) references {grid_box_style} (id) on update cascade ON DELETE SET NULL");
+
+		db_query("alter table {grid_box} drop foreign key {fk_box_type}");
+		db_query("alter table {grid_box} add constraint {fk_box_type} foreign key (type) references {grid_box_type} (id) on update cascade ON DELETE SET NULL");
+
+	}
+
 }
