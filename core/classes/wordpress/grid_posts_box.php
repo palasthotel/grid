@@ -49,7 +49,7 @@ class grid_posts_box extends grid_list_box {
 	 *
 	 * @param boolean $editmode
 	 *
-	 * @return string
+	 * @return array|\stdClass|string
 	 */
 	public function build( $editmode ) {
 		if ( $editmode ) {
@@ -139,6 +139,32 @@ class grid_posts_box extends grid_list_box {
 			 * if not set fall back to default (fist viewmode)
 			 */
 			$this->content->viewmode = $this->getViewmode();
+
+			/**
+			 * before and after date
+			 */
+			$date_query = array();
+			if(isset($this->content->before) && !empty($this->content->before)){
+				$before_parts = explode("-",$this->content->before);
+				if(count($before_parts) >= 3){
+					$date_query["before"] = array(
+						'year' => $before_parts[0],
+						'month' => $before_parts[1],
+						'day' => $before_parts[2],
+					);
+				}
+			}
+			if(isset($this->content->after) && !empty($this->content->after)){
+				$before_parts = explode("-",$this->content->after);
+				if(count($before_parts) >= 3){
+					$date_query["after"] = array(
+						'year' => $before_parts[0],
+						'month' => $before_parts[1],
+						'day' => $before_parts[2],
+					);
+				}
+			}
+			if(count($date_query) > 0) $args["date_query"] = $date_query;
 			
 			/**
 			 * if avoid doublets plugin is activated
@@ -265,8 +291,22 @@ class grid_posts_box extends grid_list_box {
 			'type' => 'select',
 			'selections' => $post_types,
 		);
-		
-		
+
+		/**
+		 * before and after
+		 */
+		$cs[] = array(
+			'key' => 'before',
+			'label' => t('Before'),
+			'type' => 'input',
+			'inputType' => 'date',
+		);
+		$cs[] = array(
+			'key' => 'after',
+			'label' => t('After'),
+			'type' => 'input',
+			'inputType' => 'date',
+		);
 		
 		
 		return $cs;

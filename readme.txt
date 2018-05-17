@@ -76,6 +76,8 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 == Changelog ==
 
 = 1.7.3 =
+ * date query configuration for posts box. before and after date restriction possibility added.
+ * new box widget type input that allows to use all kings of HTML input types
  * async bug fix: empty user display_name were not locking multiple edited grids
 
 = 1.7.2 =
