@@ -297,13 +297,13 @@ class grid_posts_box extends grid_list_box {
 		 */
 		$cs[] = array(
 			'key' => 'before',
-			'label' => t('Before'),
+			'label' => t('Show only posts before'),
 			'type' => 'input',
 			'inputType' => 'date',
 		);
 		$cs[] = array(
 			'key' => 'after',
-			'label' => t('After'),
+			'label' => t('Show only posts after'),
 			'type' => 'input',
 			'inputType' => 'date',
 		);
