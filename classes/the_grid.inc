@@ -114,7 +114,7 @@ class the_grid
 				$async_service = "http".$secure."://async.the-grid.ws";
 			}
 			$async_domain= get_home_url();
-			$async_author=$user->display_name;
+			$async_author= (!empty($user->display_name))? $user->display_name : $user->user_login;
 			$async_path="grid-post-id-".$postid;
 
 			$async_timeout = get_option("grid_async_timeout",5*60);
