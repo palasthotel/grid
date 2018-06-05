@@ -64,6 +64,7 @@ class grid_slot extends grid_base {
 	
 	public function addBox($idx,$box)
 	{
+		$this->storage->fireHook( Hook::SAVE_SLOT, (object)array("operation" => "addBox", "box" => $box, "index" => $idx,  "slot" => $this) );
 		$list=$this->boxes;
 		array_splice($list, $idx,0,array($box));
 		$this->boxes=$list;
@@ -73,6 +74,7 @@ class grid_slot extends grid_base {
 	
 	public function removeBox($idx)
 	{
+		$this->storage->fireHook( Hook::SAVE_SLOT, (object)array("operation" => "removeBox", "index" => $idx, "slot" => $this) );
 		$list=$this->boxes;
 		array_splice($list, $idx,1);
 		$this->boxes=$list;
@@ -82,6 +84,7 @@ class grid_slot extends grid_base {
 	
 	public function setStyle($style)
 	{
+		$this->storage->fireHook( Hook::SAVE_SLOT, (object)array("operation" => "setStyle", "style" => $style, "slot" => $this) );
 		$this->style=$style;
 		return $this->storage->persistSlot($this);
 	}

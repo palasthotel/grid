@@ -147,6 +147,7 @@ class grid_container extends grid_base {
 	
 	public function update($data)
 	{
+		$this->storage->fireHook( Hook::SAVE_CONTAINER, (object) array("container" => $this, "data" => $data ));
 		$this->style=$data->style;
 		$this->title=$data->title;
 		$this->titleurl=$data->titleurl;

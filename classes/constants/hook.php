@@ -20,5 +20,13 @@ class Hook{
 	
 	const WILL_RENDER_BOX = "will_render_box";
 	const DID_RENDER_BOX = "did_render_box";
-	
+
+	const SAVE_BOX = "save_box";
+	const SAVE_SLOT = "save_slot";
+	const SAVE_CONTAINER = "save_container";
+
+	const DELETE_BOX = "delete_box";
+	const DELETE_CONTAINER = "delete_container";
+
+	const PUBLISH_GRID = "publish";
 }

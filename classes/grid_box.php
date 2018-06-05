@@ -262,6 +262,7 @@ class grid_box extends grid_base {
 	* @return boolean
 	*/
 	public function delete() {
+		$this->storage->fireHook( Hook::DELETE_BOX, $this );
 		return $this->storage->deleteBox($this);
 	}
 	
@@ -271,6 +272,7 @@ class grid_box extends grid_base {
 	* @return boolean
 	*/
 	public function updateBox($boxdata)	{
+		$this->storage->fireHook( Hook::SAVE_BOX, (object)array("box" => $this, "data" => $boxdata) );
 		$this->style=$boxdata->style;
 		$this->title=$boxdata->title;
 		$this->titleurl=$boxdata->titleurl;

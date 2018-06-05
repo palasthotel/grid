@@ -67,6 +67,7 @@ class grid_grid extends grid_base {
 
 	public function publish()
 	{
+		$this->storage->fireHook( Hook::PUBLISH_GRID, $this);
 		return $this->storage->publishGrid($this);
 	}
 	
@@ -160,6 +161,7 @@ class grid_grid extends grid_base {
 			return false;
 		}
 		$container=$this->container[$idx];
+		$this->storage->fireHook( Hook::DELETE_CONTAINER, (object) array("container" => $container, "index" => $idx ));
 		array_splice($this->container, $idx,1);
 		$this->storeContainerOrder();
 		$this->storage->destroyContainer($container);
