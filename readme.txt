@@ -3,8 +3,8 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.9.5
-Stable tag: 1.7.3
+Tested up to: 4.9.6
+Stable tag: 1.7.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -74,6 +74,11 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.7.4 =
+
+* new actions grid_publishGrid, grid_destroyGrid, grid_save_container, grid_delete_container, grid_save_slot, grid_save_box, grid_delete_box
+* epilog and prolog script safe
 
 = 1.7.3 =
  * date query configuration for posts box. before and after date restriction possibility added.
