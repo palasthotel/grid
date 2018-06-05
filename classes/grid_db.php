@@ -1,4 +1,7 @@
 <?php
+
+use Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -56,13 +59,13 @@ class grid_db {
 		$id++;
 		$query="insert into ".$this->prefix."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
 		$this->connection->query($query);
-		$this->fireHook("createGrid", $id);
+		$this->fireHook(Hook::CREATE_GRID, $id);
 		return $id;
 	}
 	
 	public function destroyGrid($grid_id)
 	{
-		$this->fireHook("destroyGrid", $grid_id);
+		$this->fireHook(Hook::DESTROY_GRID, $grid_id);
 		$query="delete from ".$this->prefix."grid_box where grid_id=$grid_id";
 		$this->connection->query($query);
 		$query="delete from ".$this->prefix."grid_container where grid_id=$grid_id";
@@ -105,7 +108,7 @@ class grid_db {
 		$query="insert into ".$this->prefix."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) select slot_id,$cloneid,grid_revision,box_id,weight from ".$this->prefix."grid_slot2box where grid_id=$gridid";
 		$this->connection->query($query) or die($this->connection->error);
 
-		$this->fireHook("cloneGrid", array(
+		$this->fireHook(Hook::CLONE_GRID, array(
 			"original_id" => $gridid,
 			"clone_id" => $cloneid,
 		));
@@ -755,7 +758,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		$this->persistContainer($container);
 
-		$this->fireHook("createContainer",$container );
+		$this->fireHook(Hook::CREATE_CONTAINER,$container );
 
 		return $container;
 	}
@@ -825,6 +828,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function publishGrid($grid)
 	{
+
 		$id=$grid->gridid;
 		$revision=$grid->gridrevision;
 		$query="update ".$this->prefix."grid_grid set published=0 where id=$id";
@@ -832,7 +836,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$query="update ".$this->prefix."grid_grid set published=1 where id=$id and revision=$revision";
 		$this->connection->query($query) or die($this->connection->error);
 
-		$this->fireHook("publishGrid", $id);
+		$this->fireHook(Hook::PUBLISH_GRID, $id);
 
 		return true;
 	}

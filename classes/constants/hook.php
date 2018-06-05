@@ -8,6 +8,13 @@ namespace Grid\Constants;
  */
 
 class Hook{
+
+	const CREATE_GRID = "createGrid";
+	const CLONE_GRID = "cloneGrid";
+	const PUBLISH_GRID = "publishGrid";
+	const DESTROY_GRID = "destroyGrid";
+
+	const CREATE_CONTAINER = "createContainer";
 	
 	const WILL_RENDER_GRID = "will_render_grid";
 	const DID_RENDER_GRID = "did_render_grid";
@@ -28,5 +35,4 @@ class Hook{
 	const DELETE_BOX = "delete_box";
 	const DELETE_CONTAINER = "delete_container";
 
-	const PUBLISH_GRID = "publish";
 }
