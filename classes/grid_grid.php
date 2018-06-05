@@ -67,7 +67,6 @@ class grid_grid extends grid_base {
 
 	public function publish()
 	{
-		$this->storage->fireHook( Hook::PUBLISH_GRID, $this);
 		return $this->storage->publishGrid($this);
 	}
 	
