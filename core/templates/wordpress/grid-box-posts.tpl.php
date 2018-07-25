@@ -44,11 +44,14 @@ if ( ! empty( $this->style ) ) {
 
 		$found = false;
 		// Checks if WordPress has a template for post content ...
-		if ( $this->storage->templatesPath != null ) {
-			$template_path = trailingslashit( $this->storage->templatesPath );
-			if ( file_exists( $template_path . 'post_content.tpl.php' ) ) {
-				$found = true;
-				include $template_path . 'post_content.tpl.php';
+		if(is_array($this->storage->templatesPaths))
+		{
+			foreach($this->storage->templatesPaths as $templatesPath) {
+				if(file_exists($templatesPath.'/post_content.tpl.php')) {
+					$found=true;
+					include $templatesPath.'/post_content.tpl.php';
+				}
+				if($found) break;
 			}
 		}
 		// ... if not, uses Grid template for post content
