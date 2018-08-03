@@ -47,7 +47,6 @@ class settings
 	function render_settings_form() {
 		?>
 		<div class="wrap">
-			<?php screen_icon(); ?>
 			<h2><?php _e('Grid Settings', 'grid'); ?></h2>
 			<form method="post" action="options.php">
 				<?php
