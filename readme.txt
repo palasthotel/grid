@@ -75,6 +75,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.7.6 =
+* deprecated icon function fix on settings page
+
 = 1.7.5 =
 * posts box in child theme fix
 
