@@ -761,6 +761,7 @@ function grid_wp_perform_uninstall()
 		$query = 'drop table '.$wpdb->prefix.$tablename;
 		$grid_connection->query( $query );
 	}
+	$grid_connection->close();
 }
 function grid_wp_uninstall() {
 	if(is_multisite())
