@@ -3,8 +3,8 @@ Contributors: edwardbock,mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.9.7
-Stable tag: 1.7.5
+Tested up to: 4.9.8
+Stable tag: 1.7.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -77,6 +77,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 = 1.7.6 =
 * deprecated icon function fix on settings page
+* expose queries on error fix
 
 = 1.7.5 =
 * posts box in child theme fix
