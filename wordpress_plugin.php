@@ -426,33 +426,40 @@ if ( ! function_exists( 't' ) ) {
 /**
  * Drupal db_query function
  * @param $querystring
- * @param bool|true $die
- * @return array
+ * @return array|boolean
  * @throws Exception
  */
 // TODO: implement grid query function
-function db_query( $querystring, $die = true ) {
+function db_query( $querystring ) {
 	global $wpdb;
 	$querystring = str_replace( '{', $wpdb->prefix, $querystring );
 	$querystring = str_replace( '}', '', $querystring );
+	/**
+	 * @var mysqli $grid_connection
+	 */
 	global $grid_connection;
-	if ( $die ) {
-		$result = $grid_connection->query( $querystring ) or die( $querystring.' failed: '.$grid_connection->error );
-	} else
-	{
+	/**
+	 * @var array|boolean $result
+	 */
+	try{
 		$result = $grid_connection->query( $querystring );
 		if ( false === $result ) {
 			throw new Exception( $querystring.' failed: '.$grid_connection->error );
 		}
-	}
-	if ( is_object( $result ) ) {
-		$return = array();
-		while ( $row = $result->fetch_object() ) {
-			$return[] = $row;
+
+		if ( is_object( $result ) ) {
+			$return = array();
+			while ( $row = $result->fetch_object() ) {
+				$return[] = $row;
+			}
+			return $return;
 		}
-		return $return;
+	} catch (Exception $e){
+		error_log($e->getMessage(), 4);
+		wp_die("Error with grid db_query");
 	}
-	return $result;
+
+	return false;
 }
 
 /**
@@ -692,7 +699,16 @@ function grid_wp_activate() {
 				}
 				$query .= 'CHARACTER SET '.$data['mysql_character_set'];
 			}
-			$grid_connection->query( $query ) or die( $grid_connection->error.' '.$query );
+			try{
+				$result = $grid_connection->query( $query );
+				if($result === false){
+					throw new Exception($query.' failed: '.$grid_connection->error );
+				}
+			} catch (Exception $e){
+				error_log($e->getMessage(), 4);
+				wp_die("Error with grid db_query");
+			}
+
 
 		}
 
