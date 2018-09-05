@@ -76,7 +76,7 @@ boxEditorControls['file']=GridBackbone.View.extend({
 
 		var self = this;
 		var box=this.model.box;
-		var params = [box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),path,fileid];
+		var params = [box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),path,fileid];
 		console.log("getFileInfo", params);
 		GridAjax("getFileInfo",params,{
 			success_fn:function(data)

@@ -44,7 +44,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;
             var self=this;
-            GridAjax("typeAheadGetText",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key],{
+            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key],{
                 success_fn:function(data)
                 {
                     self.$el.find("input.i-autocomplete").val(data.result);
@@ -87,7 +87,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         var self = this;
         var box=this.model.box;
         console.log("doSearch "+search);
-        GridAjax("typeAheadSearch",[box.getGrid().get("id"),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
+        GridAjax("typeAheadSearch",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
             success_fn:function(data){
                 console.log("result");
                 console.log(data);

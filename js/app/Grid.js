@@ -120,7 +120,7 @@ GRID = {
 	newGrid: function(){
 		// load the grid + view
 		this.grid = new Grid({
-        	id:this.ID,
+        	id:GRID.ID,
 			SERVER: this.SERVER,
 			PREVIEW_URL: this.PREVIEW_URL,
 			DEBUGGING: this.DEBUGGING,

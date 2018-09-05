@@ -56,8 +56,9 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
                 GridAjax(
                     "typeAheadGetText",
                     [
-                        box.getGrid().get("id"),
-                        box.getContainer().get("id"),box.getSlot().get("id"),
+                        box.getGrid().getGridID(),
+                        box.getContainer().get("id"),
+                        box.getSlot().get("id"),
                         box.getIndex(),
                         self.model.parentpath+self.model.structure.key,
                         key
@@ -125,7 +126,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
         GridAjax(
             "typeAheadSearch",
             [
-                box.getGrid().get("id"),
+                box.getGrid().getGridID(),
                 box.getContainer().get("id"),
                 box.getSlot().get("id"),
                 box.getIndex(),
