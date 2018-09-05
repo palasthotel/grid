@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.7.6
+Stable tag: 1.7.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -74,6 +74,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.7.7 =
+* Bugfix: autocomplete fields in reusable boxes or boxes in reusable containers not working
 
 = 1.7.6 =
 * deprecated icon function fix on settings page
