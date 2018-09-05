@@ -444,7 +444,7 @@ function db_query( $querystring ) {
 	try{
 		$result = $grid_connection->query( $querystring );
 		if ( false === $result ) {
-			throw new Exception( $querystring.' failed: '.$grid_connection->error );
+			throw new Exception($grid_connection->error );
 		}
 
 		if ( is_object( $result ) ) {
@@ -455,7 +455,7 @@ function db_query( $querystring ) {
 			return $return;
 		}
 	} catch (Exception $e){
-		error_log($e->getMessage(), 4);
+		error_log($e->getMessage()."\nQuerystring: $querystring\n", 4);
 		wp_die("Error with grid db_query");
 	}
 
