@@ -77,6 +77,7 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 = 1.7.7 =
 * Bugfix: autocomplete fields in reusable boxes or boxes in reusable containers not working
+* Additional information in db_query error_log
 
 = 1.7.6 =
 * deprecated icon function fix on settings page
