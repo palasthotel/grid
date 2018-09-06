@@ -114,7 +114,6 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	get_json_from_input: function(){
 		var json = null;
 		if(this.$input.val() != "object"){
-            console.log(json);
             try{
                 json = JSON.parse(this.$input.val());
             } catch(e){
@@ -128,8 +127,6 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	buildImagePreview: function(){
 
 		var json = this.get_json_from_input();
-
-		console.log(json);
 
         if( json == null
 	        || json == ''

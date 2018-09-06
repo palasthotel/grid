@@ -137,7 +137,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
             success_fn:function(data){
                 self.$el.find(".suggestion-list").empty();
                 _.each(data.result,function(elem){
-                    self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
+                    self.$el.find(".suggestion-list").append(jQuery("<li/>").text(elem.value).attr("data-key",elem.key));
                 });
                 self.$el.find(".loading").removeClass("go");
             }

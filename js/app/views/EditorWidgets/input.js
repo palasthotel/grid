@@ -11,14 +11,16 @@ boxEditorControls['input']=GridBackbone.View.extend({
 
     },
     render:function(){
+        this.$el.empty();
         const val = this.model.container[this.model.structure.key];
-        this.$el.html(`
-            <label>${this.model.structure.label}</label>
-            <input type='${this.model.structure.inputType}' 
-                class='dynamic-value' 
-                value='${(typeof val === typeof undefined)? "": val}'
-            />
-        `);
+
+        this.$el.append(jQuery("<label />").text(this.model.structure.label));
+        this.$el.append(
+            jQuery("<input />")
+                .addClass("dynamic-value")
+                .attr("type", this.model.structure.inputType)
+                .val((typeof val === typeof undefined)? "": val)
+        );
         this.$el.addClass("grid-editor-widget-input__"+this.model.structure.inputType);
         return this;
     },

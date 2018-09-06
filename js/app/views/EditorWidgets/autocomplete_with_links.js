@@ -20,9 +20,10 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         var classes="autocomplete-wrapper form-autocomplete dynamic-value";
         var readonly="";
         var fetch=false;
-        if(this.model.container[this.model.structure.key]!='' ||
-            this.model.container[this.model.structure.key]===0)
-        {
+	    const key = this.model.structure.key;
+	    const value = this.model.container[this.model.structure.key];
+	    if(typeof value !== typeof undefined && value !== '')
+	    {
             classes+=" locked";
             readonly="readonly";
             fetch=true;
@@ -40,7 +41,6 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
 
         jQuery(this.$el).html(html);
         if(fetch) {
-            var key=this.model.container[this.model.structure.key];
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;
             var self=this;
@@ -94,7 +94,7 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
                 self.old_search_string=search;
                 self.$el.find(".suggestion-list").empty();
                 _.each(data.result,function(elem){
-                    self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
+                    self.$el.find(".suggestion-list").append(jQuery("<li/>").text(elem.value).attr("data-key",elem.key));
                 });
                 self.$el.find(".loading").hide();
             }

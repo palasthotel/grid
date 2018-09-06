@@ -20,11 +20,13 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         var classes="autocomplete-wrapper form-autocomplete dynamic-value";
         var readonly="";
         var fetch=false;
-        console.log(this.model.container[this.model.structure.key]);
-        if(typeof this.model.container[this.model.structure.key] != "undefined" &&
-            (this.model.container[this.model.structure.key]!='' ||
-            this.model.container[this.model.structure.key]===0))
-        {
+        const key = this.model.structure.key;
+	    const value = this.model.container[this.model.structure.key];
+
+        GRID.log(this.model.structure,value);
+
+	    if(typeof value !== typeof undefined && value !== '')
+	    {
             classes+=" locked";
             readonly="readonly=readonly";
             fetch=true;
@@ -33,11 +35,10 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         html+="<div class='loading'></div>";
         html+="<div class='cancel icon-cancel'></div>";
         html+="<ul class='suggestion-list'></ul>";
-        jQuery(this.$el).html(html);
+        this.$el.html(html);
         if(fetch)
         {
             this.$el.find(".loading").addClass("go");
-            var key=this.model.container[this.model.structure.key];
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;
             var self=this;
@@ -78,7 +79,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
             success_fn:function(data){
                 self.$el.find(".suggestion-list").empty();
                 _.each(data.result,function(elem){
-                    self.$el.find(".suggestion-list").append(jQuery("<li>"+elem.value+"</li>").attr("data-key",elem.key));
+                    self.$el.find(".suggestion-list").append(jQuery("<li/>").text(elem.value).attr("data-key",elem.key));
                 });
                 self.$el.find(".loading").removeClass("go");
             }
