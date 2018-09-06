@@ -34,6 +34,10 @@ class grid_db {
 		}
 
 		$this->connection=new mysqli($host,$user,$password,$database, $port);
+		if($this->connection->connect_errno){
+			error_log("Grid: ".$this->connection->connect_error, 4);
+			die("Grid could not connect to database.");
+		}
 		$this->connection->set_charset("utf8");
 		$this->author=$author;
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
