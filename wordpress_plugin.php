@@ -398,7 +398,12 @@ class grid_plugin {
 			$host = $db_host[0];
 			$port = intval($db_host[1]);
 		}
-		return new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
+		$connection = new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
+		if($connection->connect_errno){
+			error_log("WP Grid: ".$connection->connect_error, 4);
+			wp_die("WP Grid could not connect to database.");
+		}
+		return $connection;
 	}
 }
 
