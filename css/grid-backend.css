@@ -278,7 +278,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-box-controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
 
-.grid-box:hover .grid-box-controls { height: auto; overflow: visible; display: block; opacity: 1; }
+.grid-box:hover .grid-box-controls { height: auto; overflow: visible; display: block; opacity: 1; direction: ltr; }
 
 .grid-box-type-content { margin: 0; border-bottom: 1px solid #f3f5f7; }
 
@@ -348,7 +348,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-container-title { position: absolute; top: 9px; left: 20px; font-weight: bold; font-size: 90%; }
 
-.grid-container-sorthandle { position: absolute; top: 0; left: 0; width: 100%; height: 40px; cursor: move; }
+.grid-container-sorthandle { position: absolute; top: 0; left: 0; width: 100%; height: 40px; cursor: move; direction: ltr; }
 
 .grid-container-sorthandle .icon-drag { position: absolute; top: 9px; }
 
@@ -372,7 +372,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .dragger-helper { display: block; height: 50px; width: 38px; max-width: 38px; max-height: 50px; min-width: 38px; min-height: 50px; border: 1px solid #ccc; background-color: #fff; z-index: 1000; /*@include box-shadow (	4px 4px 0 #fff, 5px 5px 0 #ccc, 9px 9px 0 #fff, 10px 10px 0 #ccc, 14px 14px 0 #fff);*/ }
 
-.grid-editor-controls { list-style: none; position: fixed; z-index: 90; margin: 0; box-sizing: border-box; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; width: 100%; height: 0; }
+.grid-editor-controls { list-style: none; position: fixed; z-index: 90; margin: 0; direction: ltr; left: 0; box-sizing: border-box; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; width: 100%; height: 0; }
 
 .grid-editor-controls button { background-color: black; color: white; padding: 10px; }
 
@@ -422,7 +422,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-element-box-lists .grid-new-element { padding-left: 20px; }
 
-.grid-element-box-lists .grid-new-element .grid-new-box { border: 1px solid #eceff3; padding-bottom: 10px; padding-left: 10px; }
+.grid-element-box-lists .grid-new-element .grid-new-box { border: 1px solid #eceff3; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; }
 
 .grid-element-box-lists .grid-new-element .grid-element-title { padding-left: 0; }
 
@@ -594,7 +594,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-toolbar { -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; border-top: 4px solid #ed7b3d; position: relative; background-color: white; box-sizing: border-box; width: 100%; height: 0; }
 
-.grid-toolbar .grid-tool-list { list-style: none; position: fixed; z-index: 90; margin: 0; width: 40px; }
+.grid-toolbar .grid-tool-list { list-style: none; position: fixed; z-index: 90; margin: 0; width: 40px; direction: ltr; }
 
 .grid-toolbar .grid-tool-list li { width: 135px; right: 90px; position: relative; margin: 0; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; }
 
