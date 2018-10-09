@@ -372,7 +372,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .dragger-helper { display: block; height: 50px; width: 38px; max-width: 38px; max-height: 50px; min-width: 38px; min-height: 50px; border: 1px solid #ccc; background-color: #fff; z-index: 1000; /*@include box-shadow (	4px 4px 0 #fff, 5px 5px 0 #ccc, 9px 9px 0 #fff, 10px 10px 0 #ccc, 14px 14px 0 #fff);*/ }
 
-.grid-editor-controls { list-style: none; position: fixed; z-index: 90; margin: 0; direction: ltr; left: 0; box-sizing: border-box; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; width: 100%; height: 0; }
+.grid-editor-controls { list-style: none; position: fixed; z-index: 90; margin: 0; direction: ltr; box-sizing: border-box; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; width: 100%; height: 0; }
 
 .grid-editor-controls button { background-color: black; color: white; padding: 10px; }
 
