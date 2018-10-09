@@ -20,10 +20,9 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         let classes="autocomplete-wrapper form-autocomplete dynamic-value";
         let readonly="";
         let fetch=false;
-        const key = this.model.structure.key;
-	    const value = this.model.container[this.model.structure.key];
+	    const key_value = this.model.container[this.model.structure.key];
 
-	    if(typeof value !== typeof undefined && value !== '')
+	    if(typeof key_value !== typeof undefined && key_value !== '')
 	    {
             classes+=" locked";
             readonly="readonly=readonly";
@@ -37,10 +36,10 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         if(fetch)
         {
             this.$el.find(".loading").addClass("go");
-            this.$el.find("input.i-autocomplete").data("key",key);
+            this.$el.find("input.i-autocomplete").data("key",key_value);
             const box=this.model.box;
             const self=this;
-            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,value],{
+            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key_value],{
                 success_fn:function(data)
                 {
                     self.$el.find(".loading").removeClass("go");
@@ -84,13 +83,13 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         });
     },
     selectItem:function($item){
-        const key=$item.data("key");
-        const value=$item.text();
+        const key_value=$item.data("key");
+        const name=$item.text();
         this.$el.find(".autocomplete-wrapper").addClass("locked");
         this.$el.find("input.i-autocomplete")
-            .val(value)
+            .val(name)
             .attr("readonly","readonly")
-            .data("key",key);
+            .data("key",key_value);
         this.$el.find(".suggestion-list").empty();
     },
     listItemSelected:function(e){

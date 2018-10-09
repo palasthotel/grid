@@ -20,9 +20,8 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         let classes="autocomplete-wrapper form-autocomplete dynamic-value";
         let readonly="";
         let fetch=false;
-	    const key = this.model.structure.key;
-	    const value = this.model.container[this.model.structure.key];
-	    if(typeof value !== typeof undefined && value !== '')
+	    const key_value = this.model.container[this.model.structure.key];
+	    if(typeof key_value !== typeof undefined && key_value !== '')
 	    {
             classes+=" locked";
             readonly="readonly";
@@ -41,17 +40,17 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
 
         jQuery(this.$el).html(html);
         if(fetch) {
-            this.$el.find("input.i-autocomplete").data("key",key);
-            var box=this.model.box;
-            var self=this;
-            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,value],{
+            this.$el.find("input.i-autocomplete").data("key",key_value);
+            const box=this.model.box;
+            const self=this;
+            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key_value],{
                 success_fn:function(data)
                 {
                     self.$el.find("input.i-autocomplete").val(data.result);
                 }
             });
-	        var $linkurl=this.$el.find("a.full");
-	        $linkurl.attr('href',$linkurl.data('raw').replace('%',value));
+	        const $linkUrl=this.$el.find("a.full");
+	        $linkUrl.attr('href',$linkUrl.data('raw').replace('%',key_value));
         }
         return this;
     },
@@ -97,16 +96,16 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         });
     },
     selectItem:function($item){
-        const key=$item.data("key");
-        const value=$item.text();
+        const key_value=$item.data("key");
+        const name=$item.text();
         this.$el.find(".autocomplete-wrapper").addClass("locked");
         this.$el.find("input.i-autocomplete")
-            .val(value)
+            .val(name)
             .attr("readonly","readonly")
-            .data("key",key);
+            .data("key",key_value);
         this.$el.find(".suggestion-list").empty();
         const $linkUrl=this.$el.find("a.full");
-        $linkUrl.attr('href',$linkUrl.data('raw').replace('%',key));
+        $linkUrl.attr('href',$linkUrl.data('raw').replace('%',key_value));
     },
     listItemSelected:function(e){
         this.selectItem(jQuery(e.target));
