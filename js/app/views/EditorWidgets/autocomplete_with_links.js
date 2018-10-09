@@ -44,14 +44,14 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
             this.$el.find("input.i-autocomplete").data("key",key);
             var box=this.model.box;
             var self=this;
-            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key],{
+            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,value],{
                 success_fn:function(data)
                 {
                     self.$el.find("input.i-autocomplete").val(data.result);
                 }
             });
 	        var $linkurl=this.$el.find("a.full");
-	        $linkurl.attr('href',$linkurl.data('raw').replace('%',key));
+	        $linkurl.attr('href',$linkurl.data('raw').replace('%',value));
         }
         return this;
     },
