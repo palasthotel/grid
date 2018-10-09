@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.7.8
+Stable tag: 1.7.9
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -75,26 +75,31 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.7.9 =
+* Bugfix: sidebars not editable or assignable
+* Bugfix: autocomplate with links
+* Optimization: Debug box with autocomplete with links placeholder
+
 = 1.7.8 =
-* new grid box: debug! Only available if WP_DEBUG is true. Has all input types.
-* mysql connection error handling
+* Feature: new grid box: debug! Only available if WP_DEBUG is true. Has all input types.
+* Optimization: mysql connection error handling
 
 = 1.7.7 =
 * Bugfix: autocomplete fields in reusable boxes or boxes in reusable containers not working
-* Additional information in db_query error_log
+* Optimization: additional information in db_query error_log
 
 = 1.7.6 =
-* deprecated icon function fix on settings page
-* expose queries on error fix
-* close mysql connection on uninstall fix
+* Refactoring: deprecated icon function fix on settings page
+* Optimization: do not expose queries on mysql error
+* Bugfix: close mysql connection on uninstall
 
 = 1.7.5 =
-* posts box in child theme fix
+* Bugfix: posts box in child theme fix
 
 = 1.7.4 =
 
-* new actions grid_publishGrid, grid_destroyGrid, grid_save_container, grid_delete_container, grid_save_slot, grid_save_box, grid_delete_box
-* epilog and prolog script safe
+* Feature: new actions grid_publishGrid, grid_destroyGrid, grid_save_container, grid_delete_container, grid_save_slot, grid_save_box, grid_delete_box
+* Bugfix: epilog and prolog script safe
 
 = 1.7.3 =
  * date query configuration for posts box. before and after date restriction possibility added.

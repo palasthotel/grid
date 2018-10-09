@@ -147,7 +147,7 @@ class grid_debug_box extends grid_static_base_box {
       );
 	}
 	public function getElementValue($key,$id){
-		if($id == null) return '';
-		return "DEBUG";
+		if($id === null) return '';
+		return "DEBUG: id is not null so its ok -> $id";
 	}
 }
