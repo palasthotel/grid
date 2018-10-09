@@ -16,10 +16,10 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
 
     },
     render:function(){
-        var html="<label>"+this.model.structure.label+"</label>";
-        var classes="autocomplete-wrapper form-autocomplete dynamic-value";
-        var readonly="";
-        var fetch=false;
+        let html="<label>"+this.model.structure.label+"</label>";
+        let classes="autocomplete-wrapper form-autocomplete dynamic-value";
+        let readonly="";
+        let fetch=false;
 	    const key = this.model.structure.key;
 	    const value = this.model.container[this.model.structure.key];
 	    if(typeof value !== typeof undefined && value !== '')
@@ -60,22 +60,21 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
     },
 
     keyup:function(e) {
-        var $input = this.$el.find("input.i-autocomplete");
+        const $input = this.$el.find("input.i-autocomplete");
         if(typeof $input.attr('readonly') !== 'undefined' || $input.attr('readonly') === false ) return;
-        if(e.which==13)
+        if(e.which===13)
         {
             this.selectItem(this.$el.find(".suggestion-list li").first());
         }
         else
         {
-            var search=this.$el.find("input.i-autocomplete").val();
+            const search=this.$el.find("input.i-autocomplete").val();
             if(search==this.old_search_string)return;
-            var self=this;
+            const self=this;
 
             this.$el.find(".loading").show();
 
             clearTimeout(this.searching);
-            var self = this;
             this.searching = setTimeout(function(){
                 self.doSearch(search);
             }, 1000);
@@ -84,13 +83,10 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         }
     },
     doSearch: function(search){
-        var self = this;
-        var box=this.model.box;
-        console.log("doSearch "+search);
+        const self = this;
+        const box=this.model.box;
         GridAjax("typeAheadSearch",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
             success_fn:function(data){
-                console.log("result");
-                console.log(data);
                 self.old_search_string=search;
                 self.$el.find(".suggestion-list").empty();
                 _.each(data.result,function(elem){
@@ -101,16 +97,16 @@ boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({
         });
     },
     selectItem:function($item){
-        var key=$item.data("key");
-        var value=$item.text();
+        const key=$item.data("key");
+        const value=$item.text();
         this.$el.find(".autocomplete-wrapper").addClass("locked");
         this.$el.find("input.i-autocomplete")
             .val(value)
             .attr("readonly","readonly")
             .data("key",key);
         this.$el.find(".suggestion-list").empty();
-        var $linkurl=this.$el.find("a.full");
-        $linkurl.attr('href',$linkurl.data('raw').replace('%',key));
+        const $linkUrl=this.$el.find("a.full");
+        $linkUrl.attr('href',$linkUrl.data('raw').replace('%',key));
     },
     listItemSelected:function(e){
         this.selectItem(jQuery(e.target));

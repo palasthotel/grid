@@ -16,14 +16,12 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
 
     },
     render:function(){
-        var html="<label>"+this.model.structure.label+"</label>";
-        var classes="autocomplete-wrapper form-autocomplete dynamic-value";
-        var readonly="";
-        var fetch=false;
+        let html="<label>"+this.model.structure.label+"</label>";
+        let classes="autocomplete-wrapper form-autocomplete dynamic-value";
+        let readonly="";
+        let fetch=false;
         const key = this.model.structure.key;
 	    const value = this.model.container[this.model.structure.key];
-
-        GRID.log(this.model.structure,value);
 
 	    if(typeof value !== typeof undefined && value !== '')
 	    {
@@ -40,9 +38,9 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         {
             this.$el.find(".loading").addClass("go");
             this.$el.find("input.i-autocomplete").data("key",key);
-            var box=this.model.box;
-            var self=this;
-            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key],{
+            const box=this.model.box;
+            const self=this;
+            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,value],{
                 success_fn:function(data)
                 {
                     self.$el.find(".loading").removeClass("go");
@@ -62,10 +60,10 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         }
         else
         {
-            var search=this.$el.find("input.i-autocomplete").val();
+            const search=this.$el.find("input.i-autocomplete").val();
             this.$el.find(".loading").addClass("go");
             clearTimeout(this.searching);
-            var self = this;
+            const self = this;
             this.searching = setTimeout(function(){
                 self.doSearch(search);
             }, 1000);
@@ -73,8 +71,8 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         }
     },
     doSearch: function(search){
-        var self = this;
-        var box=this.model.box;
+        const self = this;
+        const box=this.model.box;
         GridAjax("typeAheadSearch",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
             success_fn:function(data){
                 self.$el.find(".suggestion-list").empty();
@@ -86,8 +84,8 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
         });
     },
     selectItem:function($item){
-        var key=$item.data("key");
-        var value=$item.text();
+        const key=$item.data("key");
+        const value=$item.text();
         this.$el.find(".autocomplete-wrapper").addClass("locked");
         this.$el.find("input.i-autocomplete")
             .val(value)
