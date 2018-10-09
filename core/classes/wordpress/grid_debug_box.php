@@ -111,7 +111,7 @@ class grid_debug_box extends grid_static_base_box {
 					"type" => "autocomplete-with-links",
 					"emptyurl" => "https://palasthotel.de/",
 					"emptylinktext" => "No autocompletion value",
-					"url" => "https://digitale-pracht.de/",
+					"url" => "https://digitale-pracht.de/%",
 					"linktext" => "Value exists"
 				),
 				array(
