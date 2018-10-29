@@ -63,30 +63,19 @@ class grid_soundcloud_box extends grid_static_base_box {
                 $oembed_maxheight = 300;
             }
 
-            $query_iframe = "&format=json&maxheight=$iframe_maxheight&auto_play=false&url=$url";
-            $query_oembed = "&format=json&maxheight=$oembed_maxheight&auto_play=false&url=$url&iframe=false";
-
-            $request_url_iframe = "http://soundcloud.com/oembed?url=" . $this->content->url . $query_iframe;
-            $request_url_oembed = "http://soundcloud.com/oembed?url=" . $this->content->url . $query_oembed;
-
+            $query_iframe = "&format=json&maxheight=$iframe_maxheight&auto_play=false";
+            $query_oembed = "&format=json&maxheight=$oembed_maxheight&auto_play=false&iframe=false";
+            
             if ($this->content->color != "" && strlen($this->content->color) == 6) {
-                $request_url_iframe .=  "&color=" . $this->content->color;
-                $request_url_oembed .=  "&color=" . $this->content->color;
+                $request_iframe .=  "&color=" . $this->content->color;
+                $request_oembed .=  "&color=" . $this->content->color;
             }
 
-            // First request with iframe format:
-            $curl_iframe = curl_init($request_url_iframe);
-            curl_setopt($curl_iframe, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl_iframe, CURLOPT_TIMEOUT, 30);
-            $return_iframe = curl_exec($curl_iframe);
-            curl_close($curl_iframe);
-
-            // Second request without iframe format for ie9 and below
-            $curl_oembed = curl_init($request_url_oembed);
-            curl_setopt($curl_oembed, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl_oembed, CURLOPT_TIMEOUT, 30);
-            $return_oembed = curl_exec($curl_oembed);
-            curl_close($curl_oembed);
+            $request_url_iframe = "https://soundcloud.com/oembed?url=" . urlencode($this->content->url . $query_iframe);
+            $request_url_oembed = "https://soundcloud.com/oembed?url=" . urlencode($this->content->url . $query_oembed);
+            
+            $return_iframe = $this->executeRequest($request_url_iframe);
+            $return_oembed = $this->executeRequest($request_url_oembed);
 
             if (empty($return_iframe) || empty($return_oembed)) {
                 return "<p>" . t("Please provide a valid Soundcloud URL") . "</p>";
@@ -107,6 +96,15 @@ $html_oembed
 <![endif]-->
 EOT;
         }
+    }
+    
+    private function executeRequest($url){
+	    $curl = curl_init($url);
+	    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+	    $content = curl_exec($curl);
+	    curl_close($curl);
+	    return $content;
     }
 
     /**
