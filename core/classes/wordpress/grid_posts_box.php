@@ -187,7 +187,7 @@ class grid_posts_box extends grid_list_box {
 			global $post;
 			$args['post__not_in'][] = $post->ID;
 
-			return apply_filters( 'grid_posts_box_query_args', $args );
+			return apply_filters( 'grid_posts_box_query_args', $args, $this->content );
 		}
 	}
 
