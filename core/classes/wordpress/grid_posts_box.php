@@ -11,7 +11,7 @@
  * In the Grid selection menu, Posts-Box is named "List Of Contents".
  */
 class grid_posts_box extends grid_list_box {
-	
+
 	/**
 	 * Class contructor
 	 *
@@ -19,14 +19,14 @@ class grid_posts_box extends grid_list_box {
 	 */
 	function __construct() {
 		parent::__construct();
-		
+
 		$viewmodes = $this->getViewmodes();
 		if(count($viewmodes)>0 && !empty($viewmodes[0]) && !empty($viewmodes[0]['key'])){
 			$this->content->viewmode = $viewmodes[0]['key'];
 		} else {
 			$this->content->viewmode = 'excerpt';
 		}
-		
+
 		$this->content->posts_per_page = 5;
 		$this->content->offset = 0;
 		$this->content->post_type = 'post';
@@ -34,7 +34,7 @@ class grid_posts_box extends grid_list_box {
 		$this->content->post_format = '';
 		// $this->content->tax_* is used by dynamic taxonomies
 	}
-	
+
 	/**
 	 * Sets box type
 	 *
@@ -43,7 +43,7 @@ class grid_posts_box extends grid_list_box {
 	public function type() {
 		return 'posts';
 	}
-	
+
 	/**
 	 * Box renders its menu label and its content in here.
 	 *
@@ -68,7 +68,7 @@ class grid_posts_box extends grid_list_box {
 			 * generate taxonomy
 			 */
 			$tax_query = array();
-			
+
 			/**
 			 * post format
 			 */
@@ -79,7 +79,7 @@ class grid_posts_box extends grid_list_box {
 					'terms' => array( 'post-format-'.$this->content->post_format),
 				);
 			}
-			
+
 			/**
 			 * all other taxonomies
 			 */
@@ -108,7 +108,7 @@ class grid_posts_box extends grid_list_box {
 				if(count($value) > 1 && $relation == "AND") $tax["operator"] = $relation;
 				$tax_query[] = $tax;
 			}
-			
+
 			/**
 			 * add relation if more than one term was selected
 			 */
@@ -121,20 +121,21 @@ class grid_posts_box extends grid_list_box {
 			if(count($tax_query)>0){
 				$args['tax_query'] = $tax_query;
 			}
-			
+
 			// START legacy support for category
 			if ( isset( $this->content->category ) && $this->content->category != '' ) {
 				$args['cat'] = $this->content->category;
 			}
 			// ENDE legacy support for category
-			
+
 			/**
 			 * add other stuff to args
 			 */
 			$args['posts_per_page'] = $this->content->posts_per_page;
 			$args['offset'] = $this->content->offset;
 			$args['post_type'] = $this->content->post_type;
-			
+			$args["post__not_in"] = array();
+
 			/**
 			 * if not set fall back to default (fist viewmode)
 			 */
@@ -165,17 +166,21 @@ class grid_posts_box extends grid_list_box {
 				}
 			}
 			if(count($date_query) > 0) $args["date_query"] = $date_query;
-			
+
 			/**
 			 * if avoid doublets plugin is activated
 			 */
 			if(function_exists('grid_avoid_doublets_get_placed')){
 				$args["post__not_in"] = grid_avoid_doublets_get_placed();
 			}
+
+			// avoid recursion: never allow current post in listbox
+			global $post;
+			$args['post__not_in'][] = $post->ID;
 			return $args;
 		}
 	}
-	
+
 	/**
 	 * Determines editor widgets used in backend
 	 *
@@ -183,7 +188,7 @@ class grid_posts_box extends grid_list_box {
 	 */
 	public function contentStructure() {
 		$cs = parent::contentStructure();
-		
+
 		$viewmodes = $this->getViewmodes();
 		if(count($viewmodes) > 0){
 			$cs[] = array(
@@ -193,7 +198,7 @@ class grid_posts_box extends grid_list_box {
 				'selections' => $viewmodes,
 			);
 		}
-		
+
 		/**
 		 * posts per page
 		 */
@@ -202,7 +207,7 @@ class grid_posts_box extends grid_list_box {
 			'label' => t( 'Posts per page' ),
 			'type' => 'number',
 		);
-		
+
 		/**
 		 * offset
 		 */
@@ -211,7 +216,7 @@ class grid_posts_box extends grid_list_box {
 			'label' => t( 'Offset' ),
 			'type' => 'number',
 		);
-		
+
 		/**
 		 * taxonomies
 		 */
@@ -223,7 +228,7 @@ class grid_posts_box extends grid_list_box {
 			 * post format is a special case so ignore
 			 */
 			if('post_format'==$tax->name) continue;
-			
+
 			/**
 			 * add taxonomy to content structure
 			 */
@@ -233,18 +238,18 @@ class grid_posts_box extends grid_list_box {
 				'type' => 'multi-autocomplete',
 			);
 		}
-		
+
 		/**
 		 * post format taxonomy
 		 */
 		if ( current_theme_supports( 'post-formats' ) ) {
-			
+
 			$formats = array();
 			$formats[] = array(
 				'key' => '',
 				'text' => __('All post formats'),
 			);
-			
+
 			$post_formats = get_theme_support( 'post-formats' );
 			$available = $post_formats[0];
 			foreach ($available as $slug){
@@ -253,16 +258,16 @@ class grid_posts_box extends grid_list_box {
 					'text' => get_post_format_string($slug),
 				);
 			}
-			
+
 			$cs[] = array(
 				'key' => 'post_format',
 				'label' => __('Post format'),
 				'type' => 'select',
 				'selections' => $formats,
 			);
-			
+
 		}
-		
+
 		/**
 		 * relation type
 		 */
@@ -275,7 +280,7 @@ class grid_posts_box extends grid_list_box {
 				array('key' => 'AND', 'text' => 'AND: all posts that have all of these terms'),
 			),
 		);
-		
+
 		/**
 		 * post type select
 		 */
@@ -307,11 +312,11 @@ class grid_posts_box extends grid_list_box {
 			'type' => 'input',
 			'inputType' => 'date',
 		);
-		
-		
+
+
 		return $cs;
 	}
-	
+
 	/**
 	 * get selected viewmode
 	 */
@@ -322,7 +327,7 @@ class grid_posts_box extends grid_list_box {
 		$viewmodes = $this->getViewmodes();
 		return (count($viewmodes) > 0 )? $viewmodes[0]['key']: "";
 	}
-	
+
 	/**
 	 * get available viewmodes
 	 * @return mixed
@@ -335,7 +340,7 @@ class grid_posts_box extends grid_list_box {
 		$viewmodes = apply_filters('grid_post_viewmodes',$viewmodes);
 		return (is_array($viewmodes))? $viewmodes: array();
 	}
-	
+
 	/**
 	 * content structure key for taxonomy
 	 * @param $taxonomy
@@ -344,7 +349,7 @@ class grid_posts_box extends grid_list_box {
 	public function getTaxonomyKey($taxonomy){
 		return 'tax_'.$taxonomy->name;
 	}
-	
+
 	/**
 	 * taxonomyname from constent structure key
 	 * @param $key
@@ -353,7 +358,7 @@ class grid_posts_box extends grid_list_box {
 	public function getTaxonomyNameByKey($key){
 		return str_replace("tax_","", $key);
 	}
-	
+
 	/**
 	 * Implements search for categories
 	 *
@@ -383,7 +388,7 @@ class grid_posts_box extends grid_list_box {
 		}
 		return $results;
 	}
-	
+
 	/**
 	 * Gets categories
 	 *
