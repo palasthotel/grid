@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.7.9
+Stable tag: 1.7.10
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -76,6 +76,8 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 == Changelog ==
 
 = 1.7.10 =
+* Feature: Extendable posts box with two new filter grid_posts_box_content_structure and grid_posts_box_query_args
+* Bugfix: Recursion fix with posts placed on posts that are placed on these posts
 * Bugfix: Prevent rendering grid in case of empty get_the_excerpt call
 
 = 1.7.9 =
