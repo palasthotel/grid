@@ -178,13 +178,6 @@ class grid_posts_box extends grid_list_box {
 			$args["date_query"] = $date_query;
 		}
 
-		/**
-		 * if avoid doublets plugin is activated
-		 */
-		if ( function_exists( 'grid_avoid_doublets_get_placed' ) && version_compare( get_plugin_data( WP_PLUGIN_DIR . '/grid-avoid-doublets/grid_avoid_doublets.php' )['Version'], '1.1.1', '<=' ) ) {
-			$args["post__not_in"] = grid_avoid_doublets_get_placed();
-		}
-
 		// avoid recursion: never allow current post in listbox
 		global $post;
 		$args['post__not_in'][] = $post->ID;

@@ -75,6 +75,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.7.11 =
+* Bugfix: avoid doublets backwards compatibility broke with admin only function. it's not backwards compatible now. See upgrade notice!
+
 = 1.7.10 =
 * Feature: Extendable posts box with two new filter grid_posts_box_content_structure and grid_posts_box_query_args
 * Bugfix: Recursion fix with posts placed on posts that are placed on these posts
@@ -329,6 +332,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 * First release
 
 == Upgrade Notice ==
+
+= 1.7.11 =
+If you use our avoid doublets plugin make sure you update it to version 1.1.2 at least
 
 = 1.7.2 =
 Database constraint bug fix.
