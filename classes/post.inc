@@ -12,8 +12,22 @@ namespace grid_plugin;
 class post
 {
 	function __construct(){
+		/**
+		 * load grid object to post
+		 */
 		add_action( 'the_post', array( $this, 'grid_load' ) );
+		/**
+		 * render the grid content
+		 */
 		add_filter( 'the_content', array( $this, 'grid_render'), 99 );
+		/**
+		 * prevent rendering grid content in excerpt
+		 * if excerpt is empty get_the_excerpt filter will call wp_trim_excerpt code
+		 * which will call the_content to extract the first part of it
+		 * in this case grid may not be rendered
+		 */
+		add_filter( 'get_the_excerpt', array($this, 'no_grid_please'), 1);
+		add_filter( 'get_the_excerpt', array($this, 'grid_again_please'), 99);
 	}
 
 	/**
@@ -106,6 +120,20 @@ class post
 			return $content;
 		}
 		return "<div class='".implode(" ",$content_wrapper_class)."'>".$content."</div>";
+	}
+
+	/**
+	 * remove filter for grid_render on the_content
+	 */
+	function no_grid_please(){
+		remove_filter('the_content', array( $this, 'grid_render'), 99 );
+	}
+
+	/**
+	 * add filter for grid_render on the_content
+	 */
+	function grid_again_please(){
+		add_filter( 'the_content', array( $this, 'grid_render'), 99 );
 	}
 
 }

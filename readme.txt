@@ -75,6 +75,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.7.10 =
+* Bugfix: Prevent rendering grid in case of empty get_the_excerpt call
+
 = 1.7.9 =
 * Bugfix: sidebars not editable or assignable
 * Bugfix: autocomplate with links
