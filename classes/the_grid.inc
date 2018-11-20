@@ -9,6 +9,8 @@
 namespace grid_plugin;
 
 
+use Grid\Constants\Hook;
+
 class the_grid
 {
 	function __construct(){
@@ -19,6 +21,8 @@ class the_grid
 
 		add_filter( 'post_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
 		add_filter( 'page_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
+
+		add_action('grid_'.Hook::PUBLISH_GRID, array($this, 'clear_cache'));
 	}
 
 	/**
@@ -168,5 +172,18 @@ class the_grid
 		$storage = grid_wp_get_storage();
 		$storage->handleAjaxCall();
 		die();
+	}
+
+	/**
+	 * save post with fresh modification time
+	 * @param $grid_id
+	 */
+	public function clear_cache($grid_id){
+		$post_id = grid_wp_get_postid_by_grid($grid_id);
+		$post = array(
+			'ID' => $post_id,
+			'post_modified_gmt' => date( 'Y:m:d H:i:s' ),
+		);
+		wp_update_post( $post );
 	}
 }
