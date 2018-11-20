@@ -32,7 +32,10 @@ class post
 
 	/**
 	 * add grid to post
+	 *
 	 * @param $post
+	 *
+	 * @return bool
 	 */
 	function grid_load( $post ) {
 		global $wpdb;
@@ -124,6 +127,10 @@ class post
 
 	/**
 	 * remove filter for grid_render on the_content
+	 *
+	 * @param $content
+	 *
+	 * @return string
 	 */
 	function no_grid_please($content){
 		remove_filter('the_content', array( $this, 'grid_render'), 99 );
@@ -132,6 +139,10 @@ class post
 
 	/**
 	 * add filter for grid_render on the_content
+	 *
+	 * @param $content
+	 *
+	 * @return string
 	 */
 	function grid_again_please($content){
 		add_filter( 'the_content', array( $this, 'grid_render'), 99 );
