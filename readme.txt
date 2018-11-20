@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.7.12
+Stable tag: 1.7.13
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -74,6 +74,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.7.13 =
+* Optimization: Saving post with updated modification date on grid publish action so cache plugins can do their job.
 
 = 1.7.12 =
 * Bugfix: Missing excerpt text.
