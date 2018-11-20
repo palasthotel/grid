@@ -125,15 +125,17 @@ class post
 	/**
 	 * remove filter for grid_render on the_content
 	 */
-	function no_grid_please(){
+	function no_grid_please($content){
 		remove_filter('the_content', array( $this, 'grid_render'), 99 );
+		return $content;
 	}
 
 	/**
 	 * add filter for grid_render on the_content
 	 */
-	function grid_again_please(){
+	function grid_again_please($content){
 		add_filter( 'the_content', array( $this, 'grid_render'), 99 );
+		return $content;
 	}
 
 }
