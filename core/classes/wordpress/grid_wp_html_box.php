@@ -27,9 +27,7 @@ class grid_wp_html_box extends grid_html_box {
 	* @return string
 	*/
 	public function build($editmode) {
-		if($editmode && empty($this->content->html)) {
-			return t("Static HTML-Content");
-		} else if($editmode){
+		if($editmode){
 			return $this->content->html;
 		} else {
 			return do_shortcode($this->content->html);
