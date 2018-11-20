@@ -75,6 +75,9 @@ Have a look at wordpress.org for plugins that provide new grid boxes or you can 
 
 == Changelog ==
 
+= 1.7.14 =
+* Bugfix: Using <script> in html box was crashing the grid editor.
+
 = 1.7.13 =
 * Optimization: Saving post with updated modification date on grid publish action so cache plugins can do their job.
 
