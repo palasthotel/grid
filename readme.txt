@@ -67,6 +67,12 @@ Goto Settings->Grid and choose which post types should be able to use Grid. Than
 
 Have a look at wordpress.org for plugins that provide new grid boxes or you can create your own plugin and use the `grid_load_classes` action to add new box classes. You can find a documentation at doc.the-grid.ws
 
+= What about Grid an caching? =
+
+Grid works fine with a varnish configuration and the comet cache plugin. If you use another caching that does not work with grid please contact us on github.com or wordpress.org.
+
+
+
 == Screenshots ==
 
 1. Grid editor with Container list
