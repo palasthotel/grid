@@ -49,9 +49,9 @@ class grid_db {
 		$this->connection->close();
 	}
 
-	public function fireHook($subject,$arguments) {
+	public function fireHook($subject, $value, $argument = null) {
 		if($this->hook_gateway==NULL) return;
-		return call_user_func($this->hook_gateway,$subject,$arguments);
+		return call_user_func($this->hook_gateway, $subject, $value, $argument);
 	}
 
 	public function createGrid()
