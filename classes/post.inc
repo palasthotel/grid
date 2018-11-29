@@ -13,6 +13,10 @@ class post
 {
 	function __construct(){
 		/**
+		 * add body class
+		 */
+		add_filter('body_class', array($this, 'body_class'));
+		/**
 		 * load grid object to post
 		 */
 		add_action( 'the_post', array( $this, 'grid_load' ) );
@@ -28,6 +32,47 @@ class post
 		 */
 		add_filter( 'get_the_excerpt', array($this, 'no_grid_please'), 1);
 		add_filter( 'get_the_excerpt', array($this, 'grid_again_please'), 99);
+	}
+
+	/**
+	 * @param $cls
+	 *
+	 * @return mixed
+	 */
+	function body_class($cls){
+		if($this->post_has_grid(get_the_ID()) && $this->post_should_show_grid(get_the_ID())){
+			$cls[] = "has-grid";
+		}
+		return $cls;
+	}
+
+	/**
+	 * @param $post_id
+	 *
+	 * @return bool
+	 */
+	function post_has_grid($post_id){
+		global $wpdb;
+		$count = $wpdb->get_var( 'select count(grid_id) from '.$wpdb->prefix."grid_nodes where nid=$post_id" );
+		return( $count > 0 );
+	}
+
+	/**
+	 * @param $post_id
+	 *
+	 * @return bool
+	 */
+	function post_should_show_grid($post_id){
+		if ( get_option( 'grid_'.get_post_type($post_id).'_enabled', false ) ) {
+
+			/**
+			 * don't load grid if it is disabled
+			 */
+			if ( get_post_meta( $post_id, PositionInPost::META_KEY, true ) != PositionInPost::POSITION_NONE ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

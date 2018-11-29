@@ -82,6 +82,7 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 == Changelog ==
 
 = 1.7.14 =
+* Optimization: Add body class if grid should be rende.
 * Bugfix: Using <script> in html box was crashing the grid editor.
 
 = 1.7.13 =
