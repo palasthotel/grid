@@ -82,7 +82,8 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 == Changelog ==
 
 = 1.7.14 =
-* Optimization: Add body class if grid should be rende.
+* Feature: Added new filter grid_box_alter_content_structure to modify content structure in box editor.
+* Optimization: Add body class if grid should be rendered.
 * Bugfix: Using <script> in html box was crashing the grid editor.
 
 = 1.7.13 =
