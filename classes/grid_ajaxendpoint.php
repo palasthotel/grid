@@ -1,4 +1,7 @@
 <?php
+
+use Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -29,7 +32,13 @@ class grid_ajaxendpoint {
 		$bx['html']=$box->render(true);
 		$bx['type']=$box->type();
 		$bx['content']=$box->content;
-		$bx['contentstructure']=$box->contentStructure();
+
+		$bx['contentstructure']= $this->storage->fireHook(
+			Hook::ALTER_BOX_CONTENT_STRUCTURE,
+			$box->contentStructure(),
+			$box->type()
+		);
+
 		return $bx;
 	}
 
