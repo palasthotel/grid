@@ -51,7 +51,7 @@ class grid_db {
 
 	public function fireHook($subject, $argument) {
 		if($this->hook_gateway==NULL) return;
-		call_user_func($this->hook_gateway, Hook::TYPE_HOOK, $subject, $argument);
+		call_user_func($this->hook_gateway, Hook::TYPE_HOOK, $subject, $argument, null);
 	}
 	public function fireHookAlter($subject, $value, $argument = null) {
 		if($this->hook_gateway==NULL) return $value;
