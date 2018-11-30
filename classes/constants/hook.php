@@ -9,6 +9,9 @@ namespace Grid\Constants;
 
 class Hook{
 
+	const TYPE_HOOK = "hook";
+	const TYPE_HOOK_ALTER = "hook_alter";
+
 	const CREATE_GRID = "createGrid";
 	const CLONE_GRID = "cloneGrid";
 	const PUBLISH_GRID = "publishGrid";

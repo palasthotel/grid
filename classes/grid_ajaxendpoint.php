@@ -33,7 +33,7 @@ class grid_ajaxendpoint {
 		$bx['type']=$box->type();
 		$bx['content']=$box->content;
 
-		$bx['contentstructure']= $this->storage->fireHook(
+		$bx['contentstructure']= $this->storage->fireHookAlter(
 			Hook::ALTER_BOX_CONTENT_STRUCTURE,
 			$box->contentStructure(),
 			$box->type()
