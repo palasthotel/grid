@@ -250,9 +250,11 @@ class grid_plugin {
 		return false;
 	}
 
-	function fire_hook($subject, $value, $argument = null) {
+	function fire_hook($type, $subject, $value, $argument = null) {
+		if(\Grid\Constants\Hook::TYPE_HOOK_ALTER == $type){
+			return apply_filters('grid_'.$subject, $value, $argument);
+		}
 		do_action('grid_'.$subject, $value, $argument);
-		return apply_filters('grid_'.$subject, $value, $argument);
 	}
 
 	/**

@@ -81,6 +81,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 
 == Changelog ==
 
+= 1.7.15 =
+* Optimization: jQuery File Upload update because of security fix in library
+
 = 1.7.14 =
 * Feature: Added new filter grid_box_alter_content_structure to modify content structure in box editor.
 * Optimization: Add body class if grid should be rendered.
