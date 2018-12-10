@@ -28,7 +28,7 @@ class settings
 		 */
 		global $wp_admin_bar;
 		global $post;
-		if ( isset( $post->grid ) ) {
+		if ( isset( $post->grid ) || (is_admin() && grid_wp_get_grid_by_postid($post->ID)  )) {
 			$wp_admin_bar->add_node( array(
 				'id' => 'grid_wp_thegrid',
 				'title' => __('Edit Grid', 'grid'),
