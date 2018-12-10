@@ -43,7 +43,7 @@ class privileges
 			return;
 		}
 		$privileges = grid_wp_get_privs();
-		wp_enqueue_style( 'grid_css_wordpress', $grid_plugin->url. 'grid-wordpress.css' );
+		wp_enqueue_style( 'grid_css_wordpress', $grid_plugin->url. 'css/grid-wordpress.css' );
 
 		?>
 		<form method="post" action="<?php echo add_query_arg( array( 'noheader' => true, 'page' => 'grid_privileges' ), admin_url( 'tools.php' ) );?>">

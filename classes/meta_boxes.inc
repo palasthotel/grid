@@ -11,12 +11,16 @@ namespace grid_plugin;
 
 class meta_boxes
 {
-	function __construct(){
+
+	const CSS_HANDLE = "grid-meta-box-style";
+
+	function __construct(\grid_plugin $plugin){
+		$this->plugin = $plugin;
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action('save_post', array($this, 'save_post'));
 	}
+
 	function add_meta_boxes() {
-		
 		$post_types = get_post_types( array(), 'objects' );
 		foreach ( $post_types as $key => $post_type ) {
 			if ( get_option( 'grid_'.$key.'_enabled', false ) ) {
@@ -32,7 +36,7 @@ class meta_boxes
 	 * @return bool
 	 */
 	function render_meta_box( $post ) {
-		
+		wp_enqueue_style(self::CSS_HANDLE, $this->plugin->url."/css/meta-box.css");
 		if( get_post_status($post->ID) == 'auto-draft' ){
 			?>
 			<input type="hidden" name="grid[<?php echo PositionInPost::META_KEY ?>]" value="<?php echo PositionInPost::POSITION_BOTTOM ?>" />
@@ -42,7 +46,9 @@ class meta_boxes
 			$url = add_query_arg( array( 'page' => 'grid', 'postid' => $post->ID ), admin_url( 'admin.php' ) );
 			
 			?>
-			<a class="button" href="<?php echo $url?>"><?php _e('Switch to the Grid', 'grid'); ?></a>
+			<p>
+				<a class="button" href="<?php echo $url?>"><?php _e('Switch to the Grid', 'grid'); ?></a>
+			</p>
 			<?php
 				/**
 				 * - oben drüber
@@ -54,20 +60,22 @@ class meta_boxes
 				$val = get_post_meta($post->ID, PositionInPost::META_KEY, true);
 				
 				?>
-				<p><strong><?php _e('Position of grid', 'grid'); ?></strong></p>
-				<label
-					for="grid-position"
-					class="screen-reader-text"
-				><?php _e('Position of grid', 'grid'); ?></label>
-				<select
-					id="grid-position"
-					name="grid[<?php echo PositionInPost::META_KEY ?>]"
-				>
-					<?php $this->render_position_option(__('Append to content', 'grid'), PositionInPost::POSITION_BOTTOM, $val); ?>
-					<?php $this->render_position_option(__('Prepend to content', 'grid'), PositionInPost::POSITION_TOP, $val); ?>
-					<?php $this->render_position_option(__('Grid only, no content', 'grid'), PositionInPost::POSITION_ONLY, $val); ?>
-					<?php $this->render_position_option(__('Disable grid rendering', 'grid'), PositionInPost::POSITION_NONE, $val); ?>
-				</select>
+				<p>
+					<strong><?php _e('Position of grid', 'grid'); ?></strong>
+					<label
+						for="grid-position"
+						class="screen-reader-text"
+					><?php _e('Position of grid', 'grid'); ?></label>
+					<select
+						id="grid-position"
+						name="grid[<?php echo PositionInPost::META_KEY ?>]"
+					>
+						<?php $this->render_position_option(__('Append to content', 'grid'), PositionInPost::POSITION_BOTTOM, $val); ?>
+						<?php $this->render_position_option(__('Prepend to content', 'grid'), PositionInPost::POSITION_TOP, $val); ?>
+						<?php $this->render_position_option(__('Grid only, no content', 'grid'), PositionInPost::POSITION_ONLY, $val); ?>
+						<?php $this->render_position_option(__('Disable grid rendering', 'grid'), PositionInPost::POSITION_NONE, $val); ?>
+					</select>
+				</p>
 				<?php
 			
 			do_action('grid_post_edit_meta_box');
