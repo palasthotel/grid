@@ -82,6 +82,7 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 == Changelog ==
 
 = 1.7.15 =
+* Optimization: Clean hook distinction between notify and alter
 * Optimization: jQuery File Upload update because of security fix in library
 
 = 1.7.14 =
