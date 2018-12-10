@@ -16,7 +16,14 @@ class styles
 	}
 
 	function admin_menu(){
-		add_submenu_page( 'tools.php', 'grid styles', 'Grid Styles', 'edit_posts', 'grid_styles', array( $this, 'styles') );
+		add_submenu_page(
+			'grid_settings',
+			'grid styles',
+			'Styles',
+			'edit_posts',
+			'grid_styles',
+			array( $this, 'styles')
+		);
 	}
 
 	function styles() {

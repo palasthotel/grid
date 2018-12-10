@@ -15,7 +15,7 @@ class reuse_box
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 	}
 	function admin_menu(){
-		add_submenu_page( 'tools.php', 'Reusable grid boxes', 'Reusable grid boxes', 'edit_posts', 'grid_reuse_boxes', array( $this, 'render_reuse_boxes' ) );
+		add_submenu_page( 'grid_settings', 'Reusable boxes', 'Reusable boxes', 'edit_posts', 'grid_reuse_boxes', array( $this, 'render_reuse_boxes' ) );
 		add_submenu_page( null,'edit reuse box', 'edit reuse box', 'edit_posts', 'grid_edit_reuse_box', array( $this, 'edit_reuse_box' ) );
 		add_submenu_page( null, 'delete reuse box', 'delete reuse box', 'edit_posts', 'grid_delete_reuse_box', array( $this, 'delete_reuse_box' ) );
 	}

@@ -23,6 +23,9 @@ class settings
 	 * add adminbar button
 	 */
 	function admin_bar() {
+		/**
+		 * @var \WP_Admin_Bar $wp_admin_bar
+		 */
 		global $wp_admin_bar;
 		global $post;
 		if ( isset( $post->grid ) ) {
@@ -38,7 +41,16 @@ class settings
 	 * register admin menu page for settings
 	 */
 	function admin_menu(){
-		add_submenu_page( 'options-general.php', 'Grid', 'Grid', 'manage_options', 'grid_settings', array( $this, 'render_settings_form' ) );
+		add_menu_page(
+				'Grid',
+				'Grid',
+				"manage_options",
+				'grid_settings',
+				null,
+				plugins_url( '../images/post-type-icon.png', __FILE__),
+				35
+		);
+		add_submenu_page( 'grid_settings', 'Settings', 'Settings', 'manage_options', 'grid_settings', array( $this, 'render_settings_form' ) );
 	}
 
 	/**

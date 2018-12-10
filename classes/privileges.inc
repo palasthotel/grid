@@ -16,7 +16,7 @@ class privileges
 	}
 
 	function admin_menu(){
-		add_submenu_page( 'tools.php', 'grid privileges', 'Grid Privileges', 'edit_users', 'grid_privileges', array( $this, 'privileges') );
+		add_submenu_page( 'grid_settings', 'Grid Privileges', 'Privileges', 'edit_users', 'grid_privileges', array( $this, 'privileges') );
 	}
 
 	function privileges() {

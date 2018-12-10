@@ -15,7 +15,7 @@ class reuse_container
 		add_action( 'admin_menu', array($this, 'admin_menu' ) );
 	}
 	function admin_menu(){
-		add_submenu_page( 'tools.php', 'reusable grid container', 'Reusable grid container', 'edit_posts', 'grid_reuse_containers', array( $this, 'reuse_containers' ) );
+		add_submenu_page( 'grid_settings', 'reusable container', 'Reusable container', 'edit_posts', 'grid_reuse_containers', array( $this, 'reuse_containers' ) );
 		add_submenu_page( null, 'edit reuse container', 'edit reuse container', 'edit_posts', 'grid_edit_reuse_container', array( $this, 'edit_reuse_container' ) );
 		add_submenu_page( null, 'delete reuse container', 'delete reuse container', 'edit_posts', 'grid_delete_reuse_container', array( $this, 'delete_reuse_container') );
 	}
