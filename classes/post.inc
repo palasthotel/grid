@@ -40,7 +40,14 @@ class post
 	 * @return mixed
 	 */
 	function body_class($cls){
-		if($this->post_has_grid(get_the_ID()) && $this->post_should_show_grid(get_the_ID())){
+				
+		if( 
+			get_the_ID() != false 
+			&& 
+		    	$this->post_has_grid(get_the_ID()) 
+			&& 
+		    	$this->post_should_show_grid(get_the_ID()) 
+		){
 			$cls[] = "has-grid";
 		}
 		return $cls;
