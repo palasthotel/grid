@@ -136,6 +136,26 @@ class grid_post_box extends grid_box {
 				$types[] = $post_type;
 			}
 		}
+		// make search by ID possible
+		if ( is_numeric( $search ) ) {
+			$posts = get_posts(
+				array(
+					'posts_per_page' => 1,
+					'post_type' => $types,
+					'p' => $search,
+				)
+			);
+			if ( ! empty( $posts ) ) {
+				$post = $posts[0];
+				$box = new grid_post_box();
+				$box->storage = $this->storage;
+				$box->content = new StdClass();
+				$box->content->viewmode = $this->getViewmode();
+				$box->content->postid = $post->ID;
+				$box->content->publish = $post->post_status;
+				$results[] = $box;
+			}
+		}
 		$query = new WP_Query( array(
 			'post_type' => $types,
 			'grid_title' => $search 
