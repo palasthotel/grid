@@ -75,7 +75,7 @@ class grid_media_box extends grid_static_base_box {
 			$this->content->rendered_html = $a_pre.$img_tag.$a_post;
 			return $this->content;
 		}
-		$this->content->rendered_html = 'Media-Box';
+		$this->content->rendered_html = ($editmode || WP_DEBUG) ? 'Media-Box': '';
 		return $this->content;
 	}
 
