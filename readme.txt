@@ -1,10 +1,10 @@
 === Grid ===
-Contributors: edwardbock,mkernel
+Contributors: edwardbock, mkernel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 4.9.8
-Stable tag: 1.7.14
+Tested up to: 5.0.1
+Stable tag: 1.8.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -80,6 +80,15 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.8.0 =
+* WordPress 5.0 support
+* Optimization: Reorganized admin menu items
+* Optimization: Meta Box appearance
+* Optimization: Reusable Containers list appearance
+* Feature: Find posts by id in content boxes
+* Fix: Database error with body_class filter on page without post context like 404 page
+
 
 = 1.7.15 =
 * Optimization: Clean hook distinction between notify and alter

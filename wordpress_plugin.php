@@ -3,7 +3,7 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid-wordpress
  * Description: Helps layouting pages with containerist.
- * Version: 1.7.14
+ * Version: 1.7.15
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers, Jana Marie Eggebrecht)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
@@ -69,7 +69,7 @@ class grid_plugin {
 		 * meta boxes
 		 */
 		require( $this->dir .'/classes/meta_boxes.inc' );
-		new \grid_plugin\meta_boxes();
+		new \grid_plugin\meta_boxes($this);
 
 		/**
 		 * wp ajax endpoint
@@ -159,6 +159,7 @@ class grid_plugin {
 							: false,
 						'supports' 			=> array( 'title', 'custom-fields', 'thumbnail', 'excerpt', 'comments', 'revisions', 'page-attributes' ),
 						'show_in_nav_menus' => true,
+						'show_in_menu' => 'grid_settings',
 					)
 				)
 			);
@@ -180,6 +181,7 @@ class grid_plugin {
 						'show_ui'           => true,
 						'hierarchical'      => false, // Hierarchical causes memory issues - WP loads all records!
 						'show_in_nav_menus' => false,
+						'show_in_menu' => 'grid_settings',
 					)
 				)
 			);
@@ -321,7 +323,7 @@ class grid_plugin {
 		foreach ( $css as $idx => $file ) {
 			wp_enqueue_style( 'grid_css_lib_'.$idx,plugins_url( 'lib/'.$file, __FILE__ ) );
 		}
-		wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'grid-wordpress.css', __FILE__ ) );
+		wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'css/grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wordpress_container_slots_css', add_query_arg( array( 'noheader' => true, 'page' => 'grid_wp_container_slots_css' ), admin_url( 'admin.php' ) ) );
 
 		/**
