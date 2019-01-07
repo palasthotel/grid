@@ -67,8 +67,8 @@ class grid_soundcloud_box extends grid_static_base_box {
             $query_oembed = "&format=json&maxheight=$oembed_maxheight&auto_play=false&iframe=false";
             
             if ($this->content->color != "" && strlen($this->content->color) == 6) {
-                $request_iframe .=  "&color=" . $this->content->color;
-                $request_oembed .=  "&color=" . $this->content->color;
+                $query_iframe .=  "&color=" . $this->content->color;
+                $query_oembed .=  "&color=" . $this->content->color;
             }
 
             $request_url_iframe = "https://soundcloud.com/oembed?url=" . urlencode($this->content->url . $query_iframe);
