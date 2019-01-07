@@ -81,6 +81,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 
 == Changelog ==
 
+= 1.8.1 =
+* Fix: Soundcloud box color support
+
 = 1.8.0 =
 * WordPress 5.0 support
 * Optimization: Reorganized admin menu items
