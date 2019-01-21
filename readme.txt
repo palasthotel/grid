@@ -1,5 +1,5 @@
 === Grid ===
-Contributors: edwardbock, mkernel
+Contributors: edwardbock, mkernel, palasthotel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
