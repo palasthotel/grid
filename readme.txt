@@ -3,8 +3,8 @@ Contributors: edwardbock, mkernel, palasthotel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 5.0.1
-Stable tag: 1.8.0
+Tested up to: 5.1
+Stable tag: 1.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -82,6 +82,7 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 == Changelog ==
 
 = 1.8.1 =
+* Hook: position of grid is hookable
 * Fix: Soundcloud box color support
 
 = 1.8.0 =
