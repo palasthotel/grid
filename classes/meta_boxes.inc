@@ -33,7 +33,6 @@ class meta_boxes
 	 * render the metabox content
 	 * @param $post
 	 *
-	 * @return bool
 	 */
 	function render_meta_box( $post ) {
 		wp_enqueue_style(self::CSS_HANDLE, $this->plugin->url."/css/meta-box.css");
@@ -50,25 +49,28 @@ class meta_boxes
 				<a class="button" href="<?php echo $url?>"><?php _e('Switch to the Grid', 'grid'); ?></a>
 			</p>
 			<?php
+			// get from hook
+			$position = apply_filters(PositionInPost::FILTER_OVERWRITE, null, $post);
+			if($position == null){
 				/**
-				 * - oben drüber
-				 * - unten drunter
-				 * - nur grid
-				 * - nur the content
+				 * - to top of content
+				 * - to bottom of content
+				 * - grid only
+				 * - no grid - content only
 				 * SHORTCODE
 				 */
 				$val = get_post_meta($post->ID, PositionInPost::META_KEY, true);
-				
+
 				?>
 				<p>
 					<strong><?php _e('Position of grid', 'grid'); ?></strong>
 					<label
-						for="grid-position"
-						class="screen-reader-text"
+							for="grid-position"
+							class="screen-reader-text"
 					><?php _e('Position of grid', 'grid'); ?></label>
 					<select
-						id="grid-position"
-						name="grid[<?php echo PositionInPost::META_KEY ?>]"
+							id="grid-position"
+							name="grid[<?php echo PositionInPost::META_KEY ?>]"
 					>
 						<?php $this->render_position_option(__('Append to content', 'grid'), PositionInPost::POSITION_BOTTOM, $val); ?>
 						<?php $this->render_position_option(__('Prepend to content', 'grid'), PositionInPost::POSITION_TOP, $val); ?>
@@ -77,10 +79,8 @@ class meta_boxes
 					</select>
 				</p>
 				<?php
-			
+			}
 			do_action('grid_post_edit_meta_box');
-		} else {
-			return false;
 		}
 	}
 	

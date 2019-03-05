@@ -10,6 +10,9 @@ namespace grid_plugin;
 
 
 class PositionInPost {
+
+	const FILTER_OVERWRITE = "grid_position_in_post";
+
 	/**
 	 * post meta key
 	 */

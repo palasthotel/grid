@@ -87,7 +87,6 @@ class post
 	 *
 	 * @param $post
 	 *
-	 * @return bool
 	 */
 	function grid_load( $post ) {
 		global $wpdb;
@@ -98,7 +97,7 @@ class post
 			/**
 			 * don't load grid if it is disabled
 			 */
-			if(get_post_meta($post->ID, PositionInPost::META_KEY,true) == PositionInPost::POSITION_NONE) return false;
+			if(get_post_meta($post->ID, PositionInPost::META_KEY,true) == PositionInPost::POSITION_NONE) return;
 			
 			/**
 			 * look for grid id
@@ -134,7 +133,12 @@ class post
 		$content = $this->get_the_content_wrapper($content);
 		
 		if ( isset( $post->grid ) ) {
-			$position = get_post_meta($post->ID, PositionInPost::META_KEY, true);
+
+			// get from hook
+			$position = apply_filters(PositionInPost::FILTER_OVERWRITE, null, $post);
+			// else get from meta
+			if($position == null) $position = get_post_meta($post->ID, PositionInPost::META_KEY, true);
+
 			switch ($position){
 				/**
 				 * render grid only
