@@ -27,6 +27,8 @@ class grid_plugin {
 
 	const DOMAIN = "grid";
 
+	const FILTER_POST_BOX_META_SEARCH = "grid_post_box_meta_search_results";
+	
 	/**
 	 * construct grid plugin
 	 */
