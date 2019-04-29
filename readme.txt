@@ -3,7 +3,7 @@ Contributors: edwardbock, mkernel, palasthotel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 5.1
+Tested up to: 5.1.1
 Stable tag: 1.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
@@ -30,6 +30,11 @@ Types of Boxes
 
 * Ordered and filtered Lists of Contents
 * Number of Items as well as criteria for sorting and filtering are configurable
+
+- List-Boxes -
+
+* Container configuration
+* Slot configuration
 
 - Content-Boxes -
 
