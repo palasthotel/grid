@@ -19,6 +19,8 @@ include dirname(__FILE__).'/grid_html_box.php';
 include dirname(__FILE__).'/grid_video_box.php';
 include dirname(__FILE__).'/grid_soundcloud_box.php';
 include dirname(__FILE__).'/grid_plaintext_box.php';
+include dirname(__FILE__).'/grid_container_configuration_box.php';
+include dirname(__FILE__).'/grid_slot_configuration_box.php';
 
 include dirname(__FILE__).'/grid_list_box.php';
 include dirname(__FILE__).'/grid_rss_box.php';

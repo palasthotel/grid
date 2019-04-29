@@ -15,6 +15,7 @@ class grid_slot extends grid_base {
 	public $classes = array();
 	public $boxes;
 	public $dimension;
+	public $config = NULL;
 
 	public function __construct()
 	{

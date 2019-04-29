@@ -32,6 +32,7 @@ class grid_container extends grid_base {
 	public $lastcontentcontainer;
 	public $sidebarleft = false;
 	public $slots;
+	public $config = null;
 
 	public function __construct()
 	{
@@ -45,6 +46,44 @@ class grid_container extends grid_base {
 		$this->classes[] = "grid-container-".$this->type;
 		
 		$this->storage->fireHook(Hook::WILL_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+
+		if(!$editmode){
+
+			foreach ( $this->slots as $slot ) {
+
+				// iterate over boxes to find configuration boxes
+				foreach ( $slot->boxes as $box ) {
+
+					if ( $box instanceof grid_container_configuration_box || $box instanceof grid_slot_configuration_box ) {
+						foreach ( $box->build( false ) as $key => $value ) {
+
+							if ( $box instanceof grid_container_configuration_box ) {
+								if ( ! is_array( $this->config ) ) {
+									$this->config = array();
+								}
+								$this->config[ $key ] = $value;
+
+							}
+							if ( $box instanceof grid_slot_configuration_box ) {
+								if ( ! is_array( $slot->config ) ) {
+									$slot->config = array();
+								}
+								$slot->config[ $key ] = $value;
+							}
+
+						}
+
+					}
+
+				}
+
+				// remove from grid to prevent rendering in frontend
+				$slot->boxes = array_filter( $slot->boxes, function ( $box ) {
+					return ! ( $box instanceof \grid_container_configuration_box || $box instanceof \grid_slot_configuration_box );
+				} );
+			}
+
+		}
 		
 		switch (count($this->slots)) 
 		{
@@ -63,8 +102,7 @@ class grid_container extends grid_base {
 		$counter = 0;
 		$slots_dimension = array_slice($type_arr,1);
 		if($slots_dimension[$counter] == "0") $counter++;
-		
-		
+
 
 		if( $type_arr[0] == "s" && $editmode==FALSE)
 		{	
