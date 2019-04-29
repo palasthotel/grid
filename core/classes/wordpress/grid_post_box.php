@@ -172,7 +172,8 @@ class grid_post_box extends grid_box {
 			$results[] = $box;
 		}
 		wp_reset_postdata();
-		return $results;
+		
+		return apply_filters(grid_plugin::FILTER_POST_BOX_META_SEARCH, $results, $search, $criteria);
 		// END of WordPress Loop
 	}
 

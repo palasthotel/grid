@@ -84,6 +84,7 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 = 1.8.1 =
 * Hook: position of grid is hookable
 * Fix: Soundcloud box color support
+* Feature: added filter for grid_post_box metaSearch results
 
 = 1.8.0 =
 * WordPress 5.0 support
