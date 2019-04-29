@@ -6,7 +6,7 @@
  * Time: 15:21
  */
 
-class grid_slot_configuration_box extends grid_static_base_box{
+class grid_slot_configuration_box extends grid_structure_configuration_base_box{
 
 	public function type() {
 		return "slot_configuration";
