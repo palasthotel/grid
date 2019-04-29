@@ -38,6 +38,7 @@ class Hook{
 	const DELETE_BOX = "delete_box";
 	const DELETE_CONTAINER = "delete_container";
 
+	const ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE = "configuration_box_alter_content_structure";
 	const ALTER_BOX_CONTENT_STRUCTURE = "box_alter_content_structure";
 
 }
