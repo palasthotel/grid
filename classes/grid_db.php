@@ -1243,6 +1243,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			if(is_subclass_of($class,"grid_box"))
 			{
 				$obj=new $class();
+				$obj->storage = $this;
 				if($obj->isMetaType())
 				{
 					$metaboxes[]=$obj;
