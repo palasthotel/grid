@@ -44,6 +44,12 @@ class boxes
 	function grid_boxes_search($result, $grid_id, $post_id){
 		for ($i=0; $i < count($result) ; $i++) {
 			if($result[$i]["type"] == "html") array_splice($result,$i,1);
+			if($result[$i]["type"] == "container_configuration" && count($result[$i]["contentstructure"]) == 0 ){
+				array_splice($result,$i,1);
+			}
+			if($result[$i]["type"] == "slot_configuration" && count($result[$i]["contentstructure"]) == 0 ){
+				array_splice($result,$i,1);
+			}
 		}
 		return $result;
 	}
