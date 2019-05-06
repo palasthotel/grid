@@ -428,11 +428,19 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-element-drag-icon { position: absolute; top: 50%; margin-top: -10px; left: -6px; font-size: 120%; }
 
+.grid-element-duplicate { position: absolute; top: 0; left: 0; right: 0; text-transform: uppercase; height: 0; overflow: hidden; background-color: #b0bac2; color: white; box-sizing: border-box; vertical-align: baseline; z-index: 90; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; }
+
+.grid-element-duplicate > div { position: absolute; top: 0; bottom: 10px; left: 10px; right: 10px; border: 3px dashed white; border-top: none; text-align: center; opacity: 100%; padding-top: 20px; }
+
+.grid-element-duplicate.grid-active { height: 45%; }
+
+.grid-element-duplicate.grid-hover { background-color: #3ac5d9; }
+
 .grid-element-trash { position: absolute; bottom: 0; left: 0; right: 0; text-transform: uppercase; height: 0; overflow: hidden; background-color: #b0bac2; color: white; box-sizing: border-box; vertical-align: baseline; z-index: 90; -webkit-transition: all 0.1337s ease; transition: all 0.1337s ease; }
 
 .grid-element-trash > div { padding-top: 25px; padding-bottom: 100%; height: 100%; border: 3px dashed white; border-bottom: none; text-align: center; }
 
-.grid-element-trash.grid-active { padding: 10px 10px 0 10px; height: 50%; }
+.grid-element-trash.grid-active { padding: 10px 10px 0 10px; height: 45%; }
 
 .grid-element-trash.grid-hover { background-color: #ed5032; }
 
