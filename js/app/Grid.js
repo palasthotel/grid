@@ -482,8 +482,10 @@ GRID = {
 		new_box_index,
 		new_slot_id,
 		new_container_id,
-		box_deleted;
+		box_deleted,
+		box_duplicated;
 		box_deleted=false;
+		box_duplicated=false;
 		this.getView().$el.find(".grid-container-type-c[data-reused=false] .grid-boxes-wrapper, .grid-container-type-sc .grid-boxes-wrapper").sortable({
 			items: ".grid-box",
 			handle: ".grid-box-controls",
@@ -521,6 +523,7 @@ GRID = {
 					accept: '.grid-slot .grid-box',
 					hoverClass: 'grid-hover',
 					drop:function(e,ui) {
+						box_duplicated = true;
 						const box = GRID.getModel().getContainers()
 							.get(old_container_id)
 							.getSlots()
@@ -534,7 +537,7 @@ GRID = {
 				//jQuery(".grid-box-trash").hide();
 				jQuery(".grid-element-trash").removeClass("grid-active");
 				jQuery(".grid-element-duplicate").removeClass("grid-active");
-				if(box_deleted)	return;
+				if(box_deleted || box_duplicated) return;
 
 				new_container_id = ui.item.parents(".grid-container").data("id");
 				new_slot_id = ui.item.parents(".grid-slot").data("id");
