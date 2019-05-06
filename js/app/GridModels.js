@@ -156,6 +156,15 @@ var Grid = GridBackbone.Model.extend({
             new_slot.addBox(clone, new_box_index);
         });
     },
+	duplicateBox: function(box, toIndex){
+		const clone = box.clone();
+		GridRequest.box.create(clone, {
+			index: toIndex,
+			success: function(){
+				box.getSlot().addBox(clone, toIndex);
+			}
+		});
+	},
     checkIsDraft: function(){
         GridRequest.grid.read(this, {action: "checkdraft"});
     },

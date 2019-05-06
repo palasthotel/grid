@@ -516,10 +516,24 @@ GRID = {
 						box_deleted=true;
 					}
 				});
+
+				jQuery(".grid-element-duplicate").addClass("grid-active").droppable({
+					accept: '.grid-slot .grid-box',
+					hoverClass: 'grid-hover',
+					drop:function(e,ui) {
+						const box = GRID.getModel().getContainers()
+							.get(old_container_id)
+							.getSlots()
+							.get(old_slot_id).getBox(old_box_index);
+
+						GRID.getModel().duplicateBox(box,old_box_index+1);
+					}
+				});
 			},
 			stop: function(e, ui){
 				//jQuery(".grid-box-trash").hide();
 				jQuery(".grid-element-trash").removeClass("grid-active");
+				jQuery(".grid-element-duplicate").removeClass("grid-active");
 				if(box_deleted)	return;
 
 				new_container_id = ui.item.parents(".grid-container").data("id");
