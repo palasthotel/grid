@@ -264,6 +264,11 @@ var BoxView = GridBackbone.View.extend({
 			json.prolog = json.prolog.replace(SCRIPT_REGEX, "");
 		}
 
+		if(this.model.isDuplicated()){
+		    this.model.unsetDuplicated();
+		    this.$el.addClass("is-duplicated");
+        }
+
         this.$el.html(ich.tpl_box( json ));
         return this;
 	},

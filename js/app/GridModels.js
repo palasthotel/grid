@@ -161,7 +161,7 @@ var Grid = GridBackbone.Model.extend({
 		GridRequest.box.create(clone, {
 			index: toIndex,
 			success: function(){
-				clone.set("isDuplicated", true);
+				clone.setDuplicated();
 				box.getSlot().addBox(clone, toIndex);
 			}
 		});
@@ -299,6 +299,15 @@ var Slot = GridBackbone.Model.extend({
     }
 });
 var Box = GridBackbone.Model.extend({
+	unsetDuplicated: function(){
+		this.unset("isDuplicated");
+	},
+	setDuplicated: function(){
+		this.set("isDuplicated", true);
+	},
+	isDuplicated: function(){
+		return this.get("isDuplicated") === true;
+	},
     getGrid: function(){
         return this.get("parent").getGrid();
     },
