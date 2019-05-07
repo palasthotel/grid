@@ -91,10 +91,16 @@
 		bottom: 0;
 		background-color: $color-warning;
 	}
+	.grid-box-duplicate{
+		top: 50%;
+		bottom: 0;
+		background-color: $color-edit;
+	}
 	.grid-box-drag{
 		position: absolute;
 		top: 35%;
 		left: 10px;
+		display: none;
 	}
 }
 .grid-box:hover .grid-box-controls{
@@ -103,6 +109,17 @@
 	display: block;
 	opacity:1;
 	direction: ltr;
+}
+.grid-box:hover .grid-box-controls .grid-box-duplicate{
+	display: none;
+}
+.is-alt-pressed .grid-box:hover .grid-box-controls .grid-box-delete{
+	display: none;
+}
+.is-alt-pressed{
+	.grid-box:hover .grid-box-controls .grid-box-duplicate{
+		display: block;
+	}
 }
 
 
