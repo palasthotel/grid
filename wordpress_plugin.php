@@ -22,6 +22,8 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * @property string dir
  * @property string url
+ * @property array grid_ids
+ * @property array post_ids
  */
 class grid_plugin {
 
@@ -38,6 +40,9 @@ class grid_plugin {
 		 */
 		$this->dir = plugin_dir_path( __FILE__ );
 		$this->url = plugin_dir_url( __FILE__ );
+
+		$this->grid_ids = array();
+		$this->post_ids = array();
 
 		/**
 		 * load constants
@@ -250,15 +255,19 @@ class grid_plugin {
 	/**
 	 * returns postid of grid
 	 *
-	 * @param $gridid
+	 * @param int $gridid
+	 *
+	 * @param bool $force_reload
 	 *
 	 * @return mixed
 	 */
-	function get_postid_by_grid( $gridid ) {
+	function get_postid_by_grid( $gridid, $force_reload = false ) {
 		global $wpdb;
+		if(!$force_reload && isset($this->post_ids[$gridid])) return $this->post_ids[$gridid];
 		$rows = $wpdb->get_results( 'select nid from ' . $wpdb->prefix . 'grid_nodes where grid_id=' . $gridid );
 		if ( count( $rows ) > 0 ) {
-			return $rows[0]->nid;
+			$this->post_ids[$gridid] =  $rows[0]->nid;
+			return $this->post_ids[$gridid];
 		}
 
 		return false;
@@ -267,15 +276,19 @@ class grid_plugin {
 	/**
 	 * return grid id of post
 	 *
-	 * @param $postid
+	 * @param int $postid
+	 *
+	 * @param bool $force_reload
 	 *
 	 * @return bool
 	 */
-	function get_grid_by_postid( $postid ) {
+	function get_grid_by_postid( $postid, $force_reload = false ) {
 		global $wpdb;
+		if(!$force_reload && isset($this->grid_ids[$postid])) return $this->grid_ids[$postid];
 		$rows = $wpdb->get_results( 'select grid_id from ' . $wpdb->prefix . "grid_nodes where nid=$postid" );
 		if ( count( $rows ) > 0 ) {
-			return $rows[0]->grid_id;
+			$this->grid_ids[$postid] = $rows[0]->grid_id;
+			return $this->grid_ids[$postid];
 		}
 
 		return false;
