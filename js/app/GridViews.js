@@ -221,7 +221,8 @@ var BoxView = GridBackbone.View.extend({
     className: "grid-box box",
     events: {
         'click .grid-box-edit' : 'edit',
-        'click .grid-box-delete' : 'deleteBox'
+        'click .grid-box-delete' : 'deleteBox',
+        'click .grid-box-duplicate' : 'duplicateBox'
     },
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
@@ -243,6 +244,7 @@ var BoxView = GridBackbone.View.extend({
 
         json.right_move = GRID.getRights().get("move-box");
         json.right_edit = GRID.getRights().get("edit-box");
+        json.right_create = GRID.getRights().get("create-box");
         json.right_delete = GRID.getRights().get("delete-box");
 
         json.right_none = false;
@@ -273,6 +275,9 @@ var BoxView = GridBackbone.View.extend({
     },
     deleteBox: function(){
         this.model.destroy();
+    },
+    duplicateBox: function(){
+        this.model.duplicate();
     },
     selfdestruct: function(){
         this.remove();

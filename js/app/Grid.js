@@ -35,6 +35,7 @@ window.GRID = {};
 var GRID = window.GRID;
 
 GRID = {
+	$body: null,
 	dom_root: "#new-grid-wrapper",
 	$root: null,
 	dom_root_editor: "#new-grid-editor-wrapper",
@@ -105,6 +106,21 @@ GRID = {
 
 			}
 		});
+
+		const $body = this.$body;
+		$body.on("keydown", function(e){
+			altModificationClass(e.altKey);
+		}).on("keyup", function(e){
+			altModificationClass(e.altKey);
+		});
+
+		function altModificationClass(isPressed) {
+			if(isPressed){
+				$body.addClass("is-alt-pressed");
+			} else {
+				$body.removeClass("is-alt-pressed");
+			}
+		}
 
 		return this;
 	},
@@ -238,6 +254,7 @@ GRID = {
 	// initializes the constatns
 	_initConstants: function(){
 		// root elements
+		this.$body = jQuery("body");
 		this.$root = jQuery(this.dom_root);
 		this.$root_editor = jQuery(this.dom_root_editor);
 		this.$root_authors = jQuery(this.dom_root_authors);
@@ -500,7 +517,9 @@ GRID = {
 			},
 			cursorAt: { left: 30, top:30 },
 			start: function(e, ui){
-				// jQuery(".grid-box-trash").show();
+				box_duplicated = false;
+				box_deleted = false;
+
 				old_box_index = ui.item.index();
 				old_slot_id = ui.item.parents(".grid-slot").data("id");
 				old_container_id = ui.item.parents(".grid-container").data("id");
@@ -509,6 +528,12 @@ GRID = {
 				jQuery(".grid-element-trash").addClass("grid-active").droppable({
 					accept: '.grid-slot .grid-box',
 					hoverClass: 'grid-hover',
+					over: function(){
+						box_deleted = true;
+					},
+					out: function(){
+						box_deleted = false;
+					},
 					drop:function(e,ui) {
 						var box = GRID.getModel().getContainers()
 											     .get(old_container_id)
@@ -522,23 +547,30 @@ GRID = {
 				jQuery(".grid-element-duplicate").addClass("grid-active").droppable({
 					accept: '.grid-slot .grid-box',
 					hoverClass: 'grid-hover',
+					over: function(){
+						box_duplicated = true;
+					},
+					out: function(){
+						box_duplicated = false;
+					},
 					drop:function(e,ui) {
 						box_duplicated = true;
 						const box = GRID.getModel().getContainers()
 							.get(old_container_id)
 							.getSlots()
 							.get(old_slot_id).getBox(old_box_index);
-
 						GRID.getModel().duplicateBox(box,old_box_index+1);
 					}
 				});
 			},
-			stop: function(e, ui){
-				//jQuery(".grid-box-trash").hide();
+			beforeStop: function(e, ui){
 				jQuery(".grid-element-trash").removeClass("grid-active");
 				jQuery(".grid-element-duplicate").removeClass("grid-active");
-				if(box_deleted || box_duplicated) return;
-
+				if(box_deleted || box_duplicated){
+					e.preventDefault();
+				}
+			},
+			stop: function(e, ui){
 				new_container_id = ui.item.parents(".grid-container").data("id");
 				new_slot_id = ui.item.parents(".grid-slot").data("id");
 				new_box_index = ui.item.index();
