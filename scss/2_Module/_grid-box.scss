@@ -21,8 +21,8 @@
 	}
 
 	&.is-duplicated{
-		animation-name:background-falsh;
-		animation-duration: 1s;
+		animation-name:background-flash;
+		animation-duration: 5s;
 		animation-timing-function: ease-out;
 	}
 }
@@ -98,8 +98,8 @@
 		background-color: $color-warning;
 	}
 	.grid-box-duplicate{
-		top: 50%;
-		bottom: 0;
+		top: 0;
+		bottom: 50%;
 		background-color: $color-edit;
 	}
 	.grid-box-drag{
@@ -119,7 +119,7 @@
 .grid-box:hover .grid-box-controls .grid-box-duplicate{
 	display: none;
 }
-.is-alt-pressed .grid-box:hover .grid-box-controls .grid-box-delete{
+.is-alt-pressed .grid-box:hover .grid-box-controls .grid-box-edit{
 	display: none;
 }
 .is-alt-pressed{
