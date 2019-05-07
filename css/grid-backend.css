@@ -276,9 +276,17 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-box-controls .grid-box-delete { top: 50%; bottom: 0; background-color: #ed5032; }
 
-.grid-box-controls .grid-box-drag { position: absolute; top: 35%; left: 10px; }
+.grid-box-controls .grid-box-duplicate { top: 50%; bottom: 0; background-color: #3ac5d9; }
+
+.grid-box-controls .grid-box-drag { position: absolute; top: 35%; left: 10px; display: none; }
 
 .grid-box:hover .grid-box-controls { height: auto; overflow: visible; display: block; opacity: 1; direction: ltr; }
+
+.grid-box:hover .grid-box-controls .grid-box-duplicate { display: none; }
+
+.is-alt-pressed .grid-box:hover .grid-box-controls .grid-box-delete { display: none; }
+
+.is-alt-pressed .grid-box:hover .grid-box-controls .grid-box-duplicate { display: block; }
 
 .grid-box-type-content { margin: 0; border-bottom: 1px solid #f3f5f7; }
 
@@ -462,7 +470,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .gridmode-container .grid-tool-list, .gridmode-container .grid-element-type[data-type=container], .gridmode-container .grid-container-sorthandle, .gridmode-container .grid-container-options-list [role=reuse], .gridmode-container .grid-container-options-list [role=trash], .gridmode-box .grid-tool-list, .gridmode-box .grid-element-type[data-type=container], .gridmode-box .grid-container-sorthandle, .gridmode-box .grid-container-options-list [role=reuse], .gridmode-box .grid-container-options-list [role=trash] { display: none; }
 
-.gridmode-box .grid-toolbar, .gridmode-box .grid-container-controls, .gridmode-box .grid-box-delete { display: none; }
+.gridmode-box .grid-toolbar, .gridmode-box .grid-container-controls, .gridmode-box .grid-box-delete, .gridmode-box .grid-box-duplicate { display: none; }
 
 .gridmode-box .grid-box-edit { bottom: 0; width: 100%; }
 
