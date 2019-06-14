@@ -410,7 +410,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-editor-content { box-sizing: border-box; padding: 15px 35px 100px 15px; margin: 20px 10%; background-color: white; border: 1px solid #eceff3; }
 
-.grid-editor-content .grid-editor-fieldset { border: none; border-bottom: 1px solid #eceff3; padding: 0; margin: -1px -35px 0 -35px; }
+.grid-editor-content .grid-editor-fieldset { border: none; border-bottom: 1px solid #eceff3; padding: 0; margin: -1px -35px 0 -15px; }
 
 .grid-editor-content .grid-editor-fieldset .grid-editor-field-wrapper { display: none; }
 
