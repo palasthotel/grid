@@ -88,6 +88,7 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 
 = 1.8.3 =
 * Bugfix: Visual fix in container and box editor
+* Library Bugfix: Problems with slots in reusable containers
 
 = 1.8.2 =
 * Feature: Duplicate boxes
