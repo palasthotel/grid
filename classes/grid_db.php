@@ -407,6 +407,7 @@ left join ".$this->prefix."grid_box_type grid_box_type
 left join ".$this->prefix."grid_box_style grid_box_style
 	 on grid_box.style=grid_box_style.id
 where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_container.id=$container
+order by grid_container2slot.weight asc, grid_slot2box.weight asc
 ";
 		$result=$this->connection->query($query);
 		$currentcontainer=NULL;
