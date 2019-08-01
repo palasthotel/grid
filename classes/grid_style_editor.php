@@ -99,7 +99,7 @@ class grid_style_editor
 <table>
 <tr>
 	<th>Slug</th>
-	<th>Style</th>
+	<th>Style label</th>
 	<th>Delete</th>
 </tr>
 <?php
@@ -108,18 +108,18 @@ class grid_style_editor
 ?>
 <tr>
 	<td>
-		<input type="hidden" name="container_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>">
-		<input class="form-text" name="container_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>">
+		<input type="hidden" name="container_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>" />
+		<input class="form-text" name="container_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>" maxlength="190" />
 	</td>
-	<td><input class="form-text" name="container_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
-	<td><input type="checkbox" name="container_styles[<?php echo $style->id;?>][delete]" value="1"></td>
+	<td><input class="form-text" name="container_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"/></td>
+	<td><input type="checkbox" name="container_styles[<?php echo $style->id;?>][delete]" value="1" /></td>
 </tr>
 <?php
 	}
 ?>
 <tr>
-	<td><input class="form-text" name="container_styles[-1][slug]" type="text"></td>
-	<td><input class="form-text" name="container_styles[-1][style]" type="text"></td>
+	<td><input class="form-text" name="container_styles[-1][slug]" type="text" maxlength="190" /></td>
+	<td><input class="form-text" name="container_styles[-1][style]" type="text"/></td>
 	<td></td>
 </tr>
 </table>
@@ -130,7 +130,7 @@ class grid_style_editor
 <table>
 <tr>
 	<th>Slug</th>
-	<th>Style</th>
+	<th>Style label</th>
 	<th>Delete</th>
 </tr>
 <?php
@@ -139,18 +139,18 @@ class grid_style_editor
 ?>
 <tr>
 	<td>
-		<input type="hidden" name="slot_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>">
-		<input class="form-text" name="slot_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>">
+		<input type="hidden" name="slot_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>" />
+		<input class="form-text" name="slot_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>" maxlength="190" />
 	</td>
-	<td><input class="form-text" name="slot_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
-	<td><input type="checkbox" name="slot_styles[<?php echo $style->id;?>][delete]" value="1"></td>
+	<td><input class="form-text" name="slot_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>" /></td>
+	<td><input type="checkbox" name="slot_styles[<?php echo $style->id;?>][delete]" value="1" /></td>
 </tr>
 <?php
 	}
 ?>
 <tr>
-	<td><input class="form-text" name="slot_styles[-1][slug]" type="text"></td>
-	<td><input class="form-text" name="slot_styles[-1][style]" type="text"></td>
+	<td><input class="form-text" name="slot_styles[-1][slug]" type="text" maxlength="190" /></td>
+	<td><input class="form-text" name="slot_styles[-1][style]" type="text" /></td>
 	<td></td>
 </tr>
 </table>
@@ -161,7 +161,7 @@ class grid_style_editor
 <table>
 <tr>
 	<th>Slug</th>
-	<th>Style</th>
+	<th>Style label</th>
 	<th>Delete</th>
 </tr>
 <?php
@@ -170,22 +170,22 @@ class grid_style_editor
 ?>
 <tr>
 	<td>
-		<input type="hidden" name="box_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>">
-		<input class="form-text" name="box_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>">
+		<input type="hidden" name="box_styles[<?php echo $style->id?>][id]" value="<?php echo $style->id?>" />
+		<input class="form-text" name="box_styles[<?php echo $style->id;?>][slug]" type="text" value="<?php echo $style->slug;?>" maxlength="190" />
 	</td>
-	<td><input class="form-text" name="box_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>"></td>
-	<td><input type="checkbox" name="box_styles[<?php echo $style->id;?>][delete]" value="1"></td>
+	<td><input class="form-text" name="box_styles[<?php echo $style->id;?>][style]" type="text" value="<?php echo $style->style;?>" /></td>
+	<td><input type="checkbox" name="box_styles[<?php echo $style->id;?>][delete]" value="1" /></td>
 </tr>
 <?php
 	}
 ?>
 <tr>
-	<td><input class="form-text" name="box_styles[-1][slug]" type="text"></td>
-	<td><input class="form-text" name="box_styles[-1][style]" type="text"></td>
+	<td><input class="form-text" name="box_styles[-1][slug]" type="text" maxlength="190" /></td>
+	<td><input class="form-text" name="box_styles[-1][style]" type="text" /></td>
 	<td></td>
 </tr>
 </table>
-<input class="form-submit" type="submit">
+<input class="form-submit" type="submit" />
 </form>
 </div>
 <?php
