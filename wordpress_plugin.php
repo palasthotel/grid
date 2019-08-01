@@ -3,11 +3,11 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid-wordpress
  * Description: Helps layouting pages with containerist.
- * Version: 1.8.3
+ * Version: 1.8.4
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers, Jana Marie Eggebrecht)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
- * Tested up to: 5.2.1
+ * Tested up to: 5.2.2
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  *
  * @copyright Copyright (c) 2014, Palasthotel
@@ -131,6 +131,7 @@ class grid_plugin {
 		add_action( 'admin_head-options-reading.php', 'grid_modify_front_pages_dropdown' );
 		add_action( 'pre_get_posts', 'grid_enable_front_page_landing_page' );
 
+		register_activation_hook( __FILE__, 'grid_wp_activate' );
 		register_uninstall_hook( __FILE__, 'grid_wp_uninstall' );
 	}
 

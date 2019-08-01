@@ -3,8 +3,8 @@ Contributors: edwardbock, mkernel, palasthotel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 5.2.1
-Stable tag: 1.8.3
+Tested up to: 5.2.2
+Stable tag: 1.8.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -85,6 +85,11 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.8.4 =
+* Style slugs extended to 190 chars
+* Style editor input limited to max chars
+* Bugfix: Emojies broke grid
 
 = 1.8.3 =
 * Bugfix: Visual fix in container and box editor
