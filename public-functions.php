@@ -252,10 +252,16 @@ function grid_wp_activate() {
 					$query .= 'int ';
 				} elseif ( 'text' == $fielddata['type'] ) {
 					$query .= 'text ';
+					if(isset($data['collate'])){
+						$query .= ' COLLATE='.$data['collate'];
+					}
 				} elseif ( 'serial' == $fielddata['type'] ) {
 					$query .= 'int ';
 				} elseif ( 'varchar' == $fielddata['type'] ) {
 					$query .= 'varchar('.$fielddata['length'].') ';
+					if(isset($data['collate'])){
+						$query .= ' COLLATE='.$data['collate'];
+					}
 				} else {
 					die( 'unknown type '.$fielddata['type'] );
 				}
@@ -268,6 +274,7 @@ function grid_wp_activate() {
 				if ( 'serial' == $fielddata['type'] ) {
 					$query .= ' auto_increment';
 				}
+
 			}
 			if ( isset( $data['primary key'] ) ) {
 				$query .= ',constraint primary key ('.implode( ',', $data['primary key'] ).')';
@@ -287,10 +294,10 @@ function grid_wp_activate() {
 				$query .= 'ENGINE = '.$data['mysql_engine'];
 			}
 			if ( isset( $data['mysql_character_set'] ) ) {
-				if(isset( $data['mysql_engine'] ) ) {
-					$query.=' , ';
-				}
-				$query .= 'CHARACTER SET '.$data['mysql_character_set'];
+				$query .= ' CHARSET '.$data['mysql_character_set'];
+			}
+			if( isset($data['collate'])){
+				$query.= ' COLLATE='.$data['collate'];
 			}
 			try{
 				$result = $grid_connection->query( $query );
