@@ -253,14 +253,14 @@ function grid_wp_activate() {
 				} elseif ( 'text' == $fielddata['type'] ) {
 					$query .= 'text ';
 					if(isset($data['collate'])){
-						$query .= ' COLLATE='.$data['collate'];
+						$query .= ' COLLATE '.$data['collate'];
 					}
 				} elseif ( 'serial' == $fielddata['type'] ) {
 					$query .= 'int ';
 				} elseif ( 'varchar' == $fielddata['type'] ) {
 					$query .= 'varchar('.$fielddata['length'].') ';
 					if(isset($data['collate'])){
-						$query .= ' COLLATE='.$data['collate'];
+						$query .= ' COLLATE '.$data['collate'];
 					}
 				} else {
 					die( 'unknown type '.$fielddata['type'] );
@@ -343,7 +343,6 @@ function grid_wp_activate() {
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules();
 }
-register_activation_hook( __FILE__, 'grid_wp_activate' );
 
 /**
  * plugin deleted by admin interface do this
