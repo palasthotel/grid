@@ -38,7 +38,7 @@ class grid_db {
 			error_log("Grid: ".$this->connection->connect_error, 4);
 			die("Grid could not connect to database.");
 		}
-		$this->connection->set_charset("utf8");
+		$this->connection->set_charset("utf8mb4");
 		$this->author=$author;
 		$this->ajaxEndpoint=new grid_ajaxendpoint();
 		$this->prefix=$prefix;
