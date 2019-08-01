@@ -208,4 +208,14 @@ class grid_update extends base_update
 
 	}
 
+	public function update_6(){
+		db_query("alter table {grid_container_style} MODIFY COLUMN slug VARCHAR(190) NOT NULL");
+		db_query("alter table {grid_slot_style} MODIFY COLUMN slug VARCHAR(190) NOT NULL");
+		db_query("alter table {grid_box_style} MODIFY COLUMN slug VARCHAR(190) NOT NULL");
+
+		db_query("alter table {grid_container_style} MODIFY COLUMN style TEXT NOT NULL");
+		db_query("alter table {grid_slot_style} MODIFY COLUMN style TEXT NOT NULL");
+		db_query("alter table {grid_box_style} MODIFY COLUMN style TEXT NOT NULL");
+	}
+
 }
