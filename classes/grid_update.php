@@ -217,17 +217,17 @@ class grid_update extends base_update
 		db_query("alter table {grid_slot_style} MODIFY COLUMN style TEXT NOT NULL");
 		db_query("alter table {grid_box_style} MODIFY COLUMN style TEXT NOT NULL");
 
-		db_query("alter table {grid_container} MODIFY COLUMN title text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_container} MODIFY COLUMN prolog text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_container} MODIFY COLUMN epilog text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_container} MODIFY COLUMN readmore text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_container} MODIFY COLUMN reuse_title text COLLATE utf8mb4_unicode_520_ci");
+		db_query("alter table {grid_container} MODIFY COLUMN title text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_container} MODIFY COLUMN prolog text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_container} MODIFY COLUMN epilog text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_container} MODIFY COLUMN readmore text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_container} MODIFY COLUMN reuse_title text COLLATE utf8mb4_unicode_ci");
 
-		db_query("alter table {grid_box} MODIFY COLUMN title text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_box} MODIFY COLUMN prolog text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_box} MODIFY COLUMN epilog text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_box} MODIFY COLUMN content text COLLATE utf8mb4_unicode_520_ci");
-		db_query("alter table {grid_box} MODIFY COLUMN readmore text COLLATE utf8mb4_unicode_520_ci");
+		db_query("alter table {grid_box} MODIFY COLUMN title text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_box} MODIFY COLUMN prolog text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_box} MODIFY COLUMN epilog text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_box} MODIFY COLUMN content text COLLATE utf8mb4_unicode_ci");
+		db_query("alter table {grid_box} MODIFY COLUMN readmore text COLLATE utf8mb4_unicode_ci");
 
 
 
