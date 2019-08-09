@@ -228,7 +228,7 @@ class grid_library
 				'primary key'=>array('id','revision'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_container'=>array(
 				'description'=>t('Stores all container'),
@@ -311,7 +311,7 @@ class grid_library
 				'primary key'=>array('id','grid_id','grid_revision'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_slot'=>array(
 				'description'=>t('stores all slots'),
@@ -346,7 +346,7 @@ class grid_library
 				'primary key'=>array('id','grid_id','grid_revision'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_box'=>array(
 				'description'=>t('stores all boxes'),
@@ -422,7 +422,7 @@ class grid_library
 				'primary key'=>array('id','grid_id','grid_revision'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_grid2container'=>array(
 				'description'=>t('links grid to container'),
@@ -462,7 +462,7 @@ class grid_library
 				'primary key'=>array('id'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_container2slot'=>array(
 				'description'=>t('links container to slot'),
@@ -508,7 +508,7 @@ class grid_library
 				'primary key'=>array('id'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_slot2box'=>array(
 				'description'=>t('links box to slot'),
@@ -554,7 +554,7 @@ class grid_library
 				'primary key'=>array('id'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_box_style'=>array(
 				'description'=> t('Box Styles'),
@@ -585,7 +585,7 @@ class grid_library
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_box_type'=>array(
 				'description'=>t('Box types'),
@@ -607,7 +607,7 @@ class grid_library
 				'primary key'=>array('id'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_container_style'=>array(
 				'description'=>t('Container Styles'),
@@ -638,7 +638,7 @@ class grid_library
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_container_type'=>array(
 				'description'=>t('Container Types'),
@@ -677,7 +677,7 @@ class grid_library
 				'primary key'=>array('id'),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_slot_style'=>array(
 				'description'=>t('slot styles'),
@@ -708,7 +708,7 @@ class grid_library
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 			'grid_schema'=>array(
 				'description'=>t('global schema info'),
@@ -726,7 +726,7 @@ class grid_library
 				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
-				'collate'=> 'utf8mb4_unicode_520_ci'
+				'collate'=> 'utf8mb4_unicode_ci'
 			),
 		);
 	}
