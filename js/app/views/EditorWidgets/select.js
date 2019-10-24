@@ -11,11 +11,26 @@ boxEditorControls['select']=GridBackbone.View.extend({
 
     },
     render:function(){
-        var html="<label>"+this.model.structure.label+"</label><select>";
-        var self=this;
-        _.each(this.model.structure.selections,function(elem){
+
+        const structure = this.model.structure;
+        const container = this.model.container;
+
+        const isMultiple = (typeof structure.multiple !== typeof undefined && structure.multiple);
+        const values = container[structure.key];
+        const hasMultipleValues = (typeof values === typeof []);
+        const selections = structure.selections;
+
+        const multiple = (isMultiple)? "multiple='multiple'": "";
+        const size = (!isMultiple || selections.size < 8)? "": (selections.length < 12)? "size='6'": "size='8'";
+
+        let html="<label>"+this.model.structure.label+"</label><select "+multiple+" "+size+">";
+        _.each(selections,function(elem){
             var selected="";
-            if(self.model.container[self.model.structure.key]==elem.key)selected="selected";
+            if(
+                (!hasMultipleValues && values === elem.key)
+                ||
+                (hasMultipleValues && _.indexOf(values, elem.key) > -1)
+            ) selected="selected";
             html+="<option "+selected+" value='"+elem.key+"'>"+elem.text+"</option>";
         });
         html=html+"</select>";
