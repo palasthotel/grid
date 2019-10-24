@@ -39,8 +39,31 @@
 			} else if ( ! empty( $value ) && is_string( $value ) ) {
 				if ( $field === 'post_format' ) {
 					echo '<br><i>' . $field . ':</i> ' . get_post_format_string( $value );
+				} else if ( $field === 'post_type' ) {
+					if($value === "any"){
+						echo "<br/><i>$field:</i> ".__('Any post type');
+					} else {
+						$post_type = get_post_type_object($value);
+						if($post_type !== null) echo '<br><i>' . $field . ':</i> ' . $post_type->label;
+					}
 				} else {
 					echo '<br><i>' . $field . ':</i> ' . $value;
+				}
+			} else if(! empty($value) && is_array($value)){
+				if($field === "post_type"){
+					$post_types = array_filter(array_map(function($slug){
+						if($slug === "any"){
+							return __('Any post type');
+						}
+						return get_post_type_object($slug);
+					}, $value), function($post_type){ return null != $post_type; });
+					$labels = array_map(function($post_type){
+						if(is_string($post_type)) return $post_type;
+						return $post_type->label;
+					}, $post_types);
+					echo '<br><i>' . $field . ':</i> ' . implode(", ", $labels);
+				} else {
+					echo '<br><i>' . $field . ':</i> ' . implode(", ", $value);
 				}
 			}
 		}

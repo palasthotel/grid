@@ -303,6 +303,7 @@ class grid_posts_box extends grid_list_box {
 			'label'      => t( 'Post type' ),
 			'type'       => 'select',
 			'selections' => $post_types,
+			'multiple'   => true,
 		);
 
 		/**
