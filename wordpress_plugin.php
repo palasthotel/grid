@@ -3,11 +3,11 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid-wordpress
  * Description: Helps layouting pages with containerist.
- * Version: 1.8.5
+ * Version: 1.8.6
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers, Jana Marie Eggebrecht)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
- * Tested up to: 5.2.2
+ * Tested up to: 5.2.4
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  *
  * @copyright Copyright (c) 2014, Palasthotel
