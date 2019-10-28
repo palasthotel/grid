@@ -53,7 +53,11 @@ class Copy {
 				),
 				admin_url( 'admin-ajax.php' )
 			);
-			$temp['copy-grid'] = sprintf( '<a href="%s">%s</a>', $copyGridUrl, __( 'Copy Grid', Plugin::DOMAIN ) );
+			$temp['copy-grid'] = sprintf(
+				'<a href="%s">%s</a>',
+				$copyGridUrl,
+				__( 'Copy Grid', Plugin::DOMAIN )
+			);
 			$actions           = array_merge( $temp, $actions );
 		}
 
