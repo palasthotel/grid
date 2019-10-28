@@ -129,6 +129,10 @@ class Copy {
 		$format = get_post_format($source_post_id);
 		set_post_format($new_post_id, $format);
 
+		// page template
+		$page_template = get_page_template_slug($source_post_id);
+		update_post_meta( $new_post_id, '_wp_page_template', $page_template );
+
 		// Copy post metadata
 		//		$data = get_post_custom($post_id);
 		//		foreach ( $data as $key => $values) {
