@@ -384,6 +384,8 @@ class Plugin {
 
 	/**
 	 * enqueue editor files
+	 *
+	 * @param null|\stdClass $editor
 	 */
 	function enqueue_editor_files( $editor = NULL ) {
 		global $grid_lib;
