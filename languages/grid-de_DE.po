@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Grid\n"
-"POT-Creation-Date: 2019-10-28 13:32+0100\n"
-"PO-Revision-Date: 2019-10-28 13:33+0100\n"
+"POT-Creation-Date: 2019-10-28 15:43+0100\n"
+"PO-Revision-Date: 2019-10-28 15:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -21,202 +21,202 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: classes/Copy.php:50
+#: classes/Copy.php:67
 msgid "Copy Grid"
 msgstr "Grid kopieren"
 
-#: classes/Copy.php:59
+#: classes/Copy.php:80
 msgid "You have no permission to copy a grid."
 msgstr "Du hast keine Berechtigung zum Kopieren eines Grids."
 
-#: classes/Copy.php:63
+#: classes/Copy.php:84
 msgid "You have no permission to copy this grid."
 msgstr "Du hast keine Berechtigung zum Kopieren dieses Grids."
 
-#: classes/Copy.php:64
+#: classes/Copy.php:85
 msgid "This post has no grid to copy."
 msgstr "Dieser Beitrag hat kein Raster zum Kopieren."
 
-#: classes/Copy.php:68
+#: classes/Copy.php:89
 msgid "Could not find grid."
 msgstr "Das Grid konnte nicht gefunden werden."
 
-#: classes/Copy.php:71
+#: classes/Copy.php:98
 msgid " - Copy"
 msgstr "- Kopie"
 
 #. Plugin Name of the plugin/theme
-#: classes/meta_boxes.php:35 classes/settings.php:170
+#: classes/MetaBoxes.php:35 classes/Settings.php:170
 msgid "Grid"
 msgstr "Grid"
 
-#: classes/meta_boxes.php:50
+#: classes/MetaBoxes.php:50
 msgid "Save post before you can use grid."
 msgstr "Du musst speichern damit Grid verfügbar ist."
 
-#: classes/meta_boxes.php:57
+#: classes/MetaBoxes.php:57
 msgid "Switch to the Grid"
 msgstr "Zum Grid wechseln"
 
-#: classes/meta_boxes.php:74 classes/meta_boxes.php:78
+#: classes/MetaBoxes.php:74 classes/MetaBoxes.php:78
 msgid "Position of grid"
 msgstr "Position des Grid"
 
-#: classes/meta_boxes.php:83
+#: classes/MetaBoxes.php:83
 msgid "Append to content"
 msgstr "Nach dem Inhalt"
 
-#: classes/meta_boxes.php:84
+#: classes/MetaBoxes.php:84
 msgid "Prepend to content"
 msgstr "Vor dem Inhalt"
 
-#: classes/meta_boxes.php:85
+#: classes/MetaBoxes.php:85
 msgid "Grid only, no content"
 msgstr "Nur Grid, kein Inhalt"
 
-#: classes/meta_boxes.php:86
+#: classes/MetaBoxes.php:86
 msgid "Disable grid rendering"
 msgstr "Grid nicht rendern"
 
-#: classes/settings.php:34 classes/the_grid.php:49
+#: classes/Settings.php:34 classes/TheGrid.php:57
 msgid "Edit Grid"
 msgstr "Grid bearbeiten"
 
-#: classes/settings.php:62
+#: classes/Settings.php:62
 msgid "Grid Settings"
 msgstr "Grid Einstellungen"
 
-#: classes/settings.php:81
+#: classes/Settings.php:81
 msgid "Default Styles"
 msgstr "Standard Styles"
 
-#: classes/settings.php:82
+#: classes/Settings.php:82
 msgid "Container Style"
 msgstr "Container Style"
 
-#: classes/settings.php:84
+#: classes/Settings.php:84
 msgid "Slot Style"
 msgstr "Slot Style"
 
-#: classes/settings.php:86
+#: classes/Settings.php:86
 msgid "Box Style"
 msgstr "Box Style"
 
-#: classes/settings.php:92
+#: classes/Settings.php:92
 msgid "Post Types"
 msgstr "Post Typen"
 
-#: classes/settings.php:103 wordpress_plugin.php:174
+#: classes/Settings.php:103 wordpress_plugin.php:200
 msgid "Landing Pages"
 msgstr "Übersichtsseiten"
 
-#: classes/settings.php:105 wordpress_plugin.php:212
+#: classes/Settings.php:105 wordpress_plugin.php:238
 msgid "Sidebars"
 msgstr "Seitenleisten"
 
-#: classes/settings.php:111
+#: classes/Settings.php:111
 msgid "Post Types for content search"
 msgstr "Post-Typen für die Inhaltssuche"
 
-#: classes/settings.php:122
+#: classes/Settings.php:122
 msgid "Which post type to use as sidebar content"
 msgstr "Welche Post Type soll für Seitenleisten verwendet werden?"
 
-#: classes/settings.php:128
+#: classes/Settings.php:128
 msgid "New Grids"
 msgstr "Neue Grids"
 
-#: classes/settings.php:129
+#: classes/Settings.php:129
 msgid "Which container should be placed automatically"
 msgstr ""
 "Welcher Container Typ soll automatisch beim Anlegen eines neuen Grid "
 "hinzugefügt werden?"
 
-#: classes/settings.php:135
+#: classes/Settings.php:135
 msgid "Debug Mode"
 msgstr "Entwickler Modus"
 
-#: classes/settings.php:136
+#: classes/Settings.php:136
 msgid "Turn debug mode on/off"
 msgstr "Schalte Entwickermodus ein/aus"
 
-#: classes/settings.php:142
+#: classes/Settings.php:142
 msgid "Async"
 msgstr "Async"
 
-#: classes/settings.php:144
+#: classes/Settings.php:144
 msgctxt "grid_async"
 msgid "Enable"
 msgstr "Einschalten"
 
-#: classes/settings.php:147
+#: classes/Settings.php:147
 msgid "Service url (leave empty to use default url)"
 msgstr "Service URL"
 
-#: classes/settings.php:150
+#: classes/Settings.php:150
 msgid ""
 "After how many seconds an author loses the lock on a grid when not active?"
 msgstr ""
 "Nach wie vielen Sekunden verliert ein Autor die Sperre für ein Grid, wenn er "
 "nicht aktiv ist?"
 
-#: classes/settings.php:156
+#: classes/Settings.php:156
 msgid "Mediaselect Info"
 msgstr "Medienauswahlinformationen"
 
-#: classes/settings.php:157
+#: classes/Settings.php:157
 msgid "Set an info text for media in the WordPress media-box"
 msgstr "Infotext für die Medien Grid-Box"
 
-#: classes/settings.php:163
+#: classes/Settings.php:163
 msgid "Mediaselect Types"
 msgstr "Mediaselect-Typen"
 
-#: classes/settings.php:164
+#: classes/Settings.php:164
 msgid "Choose types for media-box"
 msgstr "Wähle die Dateitypen für die Medien Grid-Box"
 
-#: classes/settings.php:171
+#: classes/Settings.php:171
 msgid "Landing Page base"
 msgstr "Übersichtsseiten URL Basis"
 
-#: classes/settings.php:176
+#: classes/Settings.php:176
 msgid "Set which default styles should be applied."
 msgstr "Definiere die Standard Styles."
 
-#: classes/settings.php:185 classes/settings.php:203 classes/settings.php:221
+#: classes/Settings.php:185 classes/Settings.php:203 classes/Settings.php:221
 msgctxt "grid_styles"
 msgid "None"
 msgstr "Keiner"
 
-#: classes/settings.php:242
+#: classes/Settings.php:242
 msgid "Which post types should have grid support?"
 msgstr "Welche Post Typen sollen Grid Support haben?"
 
-#: classes/settings.php:254
+#: classes/Settings.php:254
 msgid "Which post types should be found in grid content search?"
 msgstr "Welche Post Typen sollen in der Grid Inhaltssuche gefunden werden?"
 
-#: classes/settings.php:283
+#: classes/Settings.php:283
 msgctxt "default_container"
 msgid "Empty"
 msgstr "Leer"
 
-#: classes/the_grid.php:49
+#: classes/TheGrid.php:57
 msgid "Create Grid"
 msgstr "Grid erstellen"
 
-#: classes/the_grid.php:74
+#: classes/TheGrid.php:81
 msgid "Ups! I cannot find a Grid without an Post ID."
 msgstr "Ups! Ich konnte für die Post ID kein Grid finden."
 
-#: classes/the_grid.php:107
-msgid "View Post"
-msgstr "Beitrag ansehen"
-
-#: classes/the_grid.php:111
+#: classes/TheGrid.php:116
 msgid "Edit Post"
 msgstr "Beitrag bearbeiten"
+
+#: classes/TheGrid.php:118
+msgid "View Grid"
+msgstr "Grid ansehen"
 
 #: core/classes/wordpress/grid_posts_box.php:260
 msgid "All post formats"
@@ -248,24 +248,24 @@ msgstr "Name"
 msgid "Value"
 msgstr "Wert"
 
-#: wordpress_plugin.php:165
+#: wordpress_plugin.php:191
 msgctxt "slug"
 msgid "landing_page"
 msgstr "Übersichtsseite"
 
-#: wordpress_plugin.php:175
+#: wordpress_plugin.php:201
 msgid "Landing Page"
 msgstr "Übersichtsseite"
 
-#: wordpress_plugin.php:179
+#: wordpress_plugin.php:205
 msgid "This is where you can add new landing pages to your site."
 msgstr "Hier kannst du neue Übersichtsseiten erstellen."
 
-#: wordpress_plugin.php:213
+#: wordpress_plugin.php:239
 msgid "Sidebar"
 msgstr "Seitenleiste"
 
-#: wordpress_plugin.php:217
+#: wordpress_plugin.php:243
 msgid "This is where you can add new sidebars to your site."
 msgstr "Hier kannst du neue Seitenleisten erstellen."
 
@@ -288,6 +288,9 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.palasthotel.de"
 msgstr ""
+
+#~ msgid "View Post"
+#~ msgstr "Beitrag ansehen"
 
 #~ msgid "Add Grid"
 #~ msgstr "Zum Grid wechseln"

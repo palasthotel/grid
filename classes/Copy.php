@@ -32,6 +32,21 @@ class Copy {
 	}
 
 	/**
+	 * @param int $post_id
+	 *
+	 * @return string
+	 */
+	function getCopyActionUrl($post_id){
+		return add_query_arg(
+			array(
+				'action' => self::AJAX_ACTION_COPY,
+				self::AJAX_PARAM_POST_ID => $post_id
+			),
+			admin_url( 'admin-ajax.php' )
+		);
+	}
+
+	/**
 	 * add the grid action to post types
 	 *
 	 * @param array $actions
@@ -46,16 +61,9 @@ class Copy {
 			$this->plugin->post->post_has_grid($entity->ID)
 		) {
 			$temp              = array();
-			$copyGridUrl       = add_query_arg(
-				array(
-					'action' => self::AJAX_ACTION_COPY,
-					self::AJAX_PARAM_POST_ID => $entity->ID
-				),
-				admin_url( 'admin-ajax.php' )
-			);
 			$temp['copy-grid'] = sprintf(
 				'<a href="%s">%s</a>',
-				$copyGridUrl,
+				$this->getCopyActionUrl($entity->ID),
 				__( 'Copy Grid', Plugin::DOMAIN )
 			);
 			$actions           = array_merge( $temp, $actions );
