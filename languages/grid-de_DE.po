@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Grid\n"
-"POT-Creation-Date: 2019-10-28 12:45+0100\n"
-"PO-Revision-Date: 2019-10-28 12:46+0100\n"
+"POT-Creation-Date: 2019-10-28 13:32+0100\n"
+"PO-Revision-Date: 2019-10-28 13:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -21,9 +21,29 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: classes/Copy.php:39
+#: classes/Copy.php:50
 msgid "Copy Grid"
 msgstr "Grid kopieren"
+
+#: classes/Copy.php:59
+msgid "You have no permission to copy a grid."
+msgstr "Du hast keine Berechtigung zum Kopieren eines Grids."
+
+#: classes/Copy.php:63
+msgid "You have no permission to copy this grid."
+msgstr "Du hast keine Berechtigung zum Kopieren dieses Grids."
+
+#: classes/Copy.php:64
+msgid "This post has no grid to copy."
+msgstr "Dieser Beitrag hat kein Raster zum Kopieren."
+
+#: classes/Copy.php:68
+msgid "Could not find grid."
+msgstr "Das Grid konnte nicht gefunden werden."
+
+#: classes/Copy.php:71
+msgid " - Copy"
+msgstr "- Kopie"
 
 #. Plugin Name of the plugin/theme
 #: classes/meta_boxes.php:35 classes/settings.php:170
@@ -190,13 +210,13 @@ msgstr "Grid erstellen"
 msgid "Ups! I cannot find a Grid without an Post ID."
 msgstr "Ups! Ich konnte für die Post ID kein Grid finden."
 
-#: classes/the_grid.php:109
-msgid "Edit Post"
-msgstr "Beitrag bearbeiten"
-
-#: classes/the_grid.php:111
+#: classes/the_grid.php:107
 msgid "View Post"
 msgstr "Beitrag ansehen"
+
+#: classes/the_grid.php:111
+msgid "Edit Post"
+msgstr "Beitrag bearbeiten"
 
 #: core/classes/wordpress/grid_posts_box.php:260
 msgid "All post formats"

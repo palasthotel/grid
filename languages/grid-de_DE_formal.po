@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Grid\n"
-"POT-Creation-Date: 2019-10-28 12:58+0100\n"
-"PO-Revision-Date: 2019-10-28 13:09+0100\n"
+"POT-Creation-Date: 2019-10-28 13:31+0100\n"
+"PO-Revision-Date: 2019-10-28 13:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE@formal\n"
@@ -21,9 +21,29 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: classes/Copy.php:39
+#: classes/Copy.php:50
 msgid "Copy Grid"
 msgstr "Grid kopieren"
+
+#: classes/Copy.php:59
+msgid "You have no permission to copy a grid."
+msgstr "Sie haben keine Berechtigung zum Kopieren eines Grids."
+
+#: classes/Copy.php:63
+msgid "You have no permission to copy this grid."
+msgstr "Sie sind nicht berechtigt, dieses Grid zu kopieren."
+
+#: classes/Copy.php:64
+msgid "This post has no grid to copy."
+msgstr "Dieser Beitrag hat kein Grid zum Kopieren."
+
+#: classes/Copy.php:68
+msgid "Could not find grid."
+msgstr "Das Grid konnte nicht gefunden werden."
+
+#: classes/Copy.php:71
+msgid " - Copy"
+msgstr "- Kopie"
 
 #. Plugin Name of the plugin/theme
 #: classes/meta_boxes.php:35 classes/settings.php:170
