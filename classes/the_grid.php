@@ -46,7 +46,7 @@ class the_grid
 			$temp = array();
 			$editGridUrl = add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) );
 
-			$label = ($this->plugin->post->post_has_grid($entity->ID)) ? __("Edit Grid", Plugin::DOMAIN): __("Add Grid", Plugin::DOMAIN);
+			$label = ($this->plugin->post->post_has_grid($entity->ID)) ? __("Edit Grid", Plugin::DOMAIN): __("Create Grid", Plugin::DOMAIN);
 
 			$temp['grid'] = sprintf('<a href="%s">%s</a>', $editGridUrl, $label);
 			$actions = array_merge( $temp, $actions );

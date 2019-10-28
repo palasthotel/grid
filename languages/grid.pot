@@ -1,0 +1,264 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Grid\n"
+"POT-Creation-Date: 2019-10-28 12:40+0100\n"
+"PO-Revision-Date: 2019-10-28 12:40+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wordpress_plugin.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: classes/Copy.php:39
+msgid "Copy Grid"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: classes/meta_boxes.php:35 classes/settings.php:170
+msgid "Grid"
+msgstr ""
+
+#: classes/meta_boxes.php:50
+msgid "Save post before you can use grid."
+msgstr ""
+
+#: classes/meta_boxes.php:57
+msgid "Switch to the Grid"
+msgstr ""
+
+#: classes/meta_boxes.php:74 classes/meta_boxes.php:78
+msgid "Position of grid"
+msgstr ""
+
+#: classes/meta_boxes.php:83
+msgid "Append to content"
+msgstr ""
+
+#: classes/meta_boxes.php:84
+msgid "Prepend to content"
+msgstr ""
+
+#: classes/meta_boxes.php:85
+msgid "Grid only, no content"
+msgstr ""
+
+#: classes/meta_boxes.php:86
+msgid "Disable grid rendering"
+msgstr ""
+
+#: classes/settings.php:34 classes/the_grid.php:49
+msgid "Edit Grid"
+msgstr ""
+
+#: classes/settings.php:62
+msgid "Grid Settings"
+msgstr ""
+
+#: classes/settings.php:81
+msgid "Default Styles"
+msgstr ""
+
+#: classes/settings.php:82
+msgid "Container Style"
+msgstr ""
+
+#: classes/settings.php:84
+msgid "Slot Style"
+msgstr ""
+
+#: classes/settings.php:86
+msgid "Box Style"
+msgstr ""
+
+#: classes/settings.php:92
+msgid "Post Types"
+msgstr ""
+
+#: classes/settings.php:103 wordpress_plugin.php:174
+msgid "Landing Pages"
+msgstr ""
+
+#: classes/settings.php:105 wordpress_plugin.php:212
+msgid "Sidebars"
+msgstr ""
+
+#: classes/settings.php:111
+msgid "Post Types for content search"
+msgstr ""
+
+#: classes/settings.php:122
+msgid "Which post type to use as sidebar content"
+msgstr ""
+
+#: classes/settings.php:128
+msgid "New Grids"
+msgstr ""
+
+#: classes/settings.php:129
+msgid "Which container should be placed automatically"
+msgstr ""
+
+#: classes/settings.php:135
+msgid "Debug Mode"
+msgstr ""
+
+#: classes/settings.php:136
+msgid "Turn debug mode on/off"
+msgstr ""
+
+#: classes/settings.php:142
+msgid "Async"
+msgstr ""
+
+#: classes/settings.php:144
+msgctxt "grid_async"
+msgid "Enable"
+msgstr ""
+
+#: classes/settings.php:147
+msgid "Service url (leave empty to use default url)"
+msgstr ""
+
+#: classes/settings.php:150
+msgid ""
+"After how many seconds an author loses the lock on a grid when not active?"
+msgstr ""
+
+#: classes/settings.php:156
+msgid "Mediaselect Info"
+msgstr ""
+
+#: classes/settings.php:157
+msgid "Set an info text for media in the WordPress media-box"
+msgstr ""
+
+#: classes/settings.php:163
+msgid "Mediaselect Types"
+msgstr ""
+
+#: classes/settings.php:164
+msgid "Choose types for media-box"
+msgstr ""
+
+#: classes/settings.php:171
+msgid "Landing Page base"
+msgstr ""
+
+#: classes/settings.php:176
+msgid "Set which default styles should be applied."
+msgstr ""
+
+#: classes/settings.php:185 classes/settings.php:203 classes/settings.php:221
+msgctxt "grid_styles"
+msgid "None"
+msgstr ""
+
+#: classes/settings.php:242
+msgid "Which post types should have grid support?"
+msgstr ""
+
+#: classes/settings.php:254
+msgid "Which post types should be found in grid content search?"
+msgstr ""
+
+#: classes/settings.php:283
+msgctxt "default_container"
+msgid "Empty"
+msgstr ""
+
+#: classes/the_grid.php:49
+msgid "Add Grid"
+msgstr ""
+
+#: classes/the_grid.php:74
+msgid "Ups! I cannot find a Grid without an Post ID."
+msgstr ""
+
+#: classes/the_grid.php:109
+msgid "Edit Post"
+msgstr ""
+
+#: classes/the_grid.php:111
+msgid "View Post"
+msgstr ""
+
+#: core/classes/wordpress/grid_posts_box.php:260
+msgid "All post formats"
+msgstr ""
+
+#: core/classes/wordpress/grid_posts_box.php:274
+msgid "Post format"
+msgstr ""
+
+#: core/classes/wordpress/grid_posts_box.php:302
+#: core/templates/wordpress/grid-box-posts-editmode.tpl.php:46
+#: core/templates/wordpress/grid-box-posts-editmode.tpl.php:58
+msgid "Any post type"
+msgstr ""
+
+#: core/classes/wordpress/grid_wp_shortcode_box.php:70
+msgid "Shortcode"
+msgstr ""
+
+#: core/classes/wordpress/grid_wp_shortcode_box.php:75
+msgid "Attributes"
+msgstr ""
+
+#: core/classes/wordpress/grid_wp_shortcode_box.php:81
+msgid "Name"
+msgstr ""
+
+#: core/classes/wordpress/grid_wp_shortcode_box.php:86
+msgid "Value"
+msgstr ""
+
+#: wordpress_plugin.php:165
+msgctxt "slug"
+msgid "landing_page"
+msgstr ""
+
+#: wordpress_plugin.php:175
+msgid "Landing Page"
+msgstr ""
+
+#: wordpress_plugin.php:179
+msgid "This is where you can add new landing pages to your site."
+msgstr ""
+
+#: wordpress_plugin.php:213
+msgid "Sidebar"
+msgstr ""
+
+#: wordpress_plugin.php:217
+msgid "This is where you can add new sidebars to your site."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/palasthotel/grid-wordpress"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Helps layouting pages with containerist."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid ""
+"Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, "
+"Edward Bock, Enno Welbers, Jana Marie Eggebrecht)"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.palasthotel.de"
+msgstr ""

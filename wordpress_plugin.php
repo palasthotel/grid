@@ -6,6 +6,9 @@
  * Version: 1.9.0
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers, Jana Marie Eggebrecht)
  * Author URI: http://www.palasthotel.de
+ * Text Domain: grid
+ * Domain Path: /languages
+ *
  * Requires at least: 4.0
  * Tested up to: 5.2.4
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
