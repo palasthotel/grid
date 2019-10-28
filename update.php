@@ -1,4 +1,7 @@
 <?php
+
+namespace Palasthotel\Grid\WordPress;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -7,7 +10,7 @@
  */
 
 
-class grid_wordpress_update extends base_update
+class Update extends \base_update
 {
 	public $schemakey = "_wordpress";
 

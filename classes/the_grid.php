@@ -6,14 +6,24 @@
  * Time: 19:58
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
 use Grid\Constants\Hook;
 
+/**
+ * @property Plugin $plugin
+ */
 class the_grid
 {
-	function __construct(){
+
+	/**
+	 * the_grid constructor.
+	 *
+	 * @param Plugin $plugin
+	 */
+	function __construct($plugin){
+		$this->plugin = $plugin;
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
 
 		add_action( 'wp_ajax_gridfrontendCSS', array($this, 'container_slots_css') );
@@ -34,7 +44,11 @@ class the_grid
 	function grid_wp_actions( $actions, $entity ) {
 		if ( true == get_option( 'grid_'.get_post_type().'_enabled', false ) ) {
 			$temp = array();
-			$temp['grid'] = '<a href="'.add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) ).'">'.__('Edit Grid', 'grid').'</a>';
+			$editGridUrl = add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) );
+
+			$label = ($this->plugin->post->post_has_grid($entity->ID)) ? __("Edit Grid", Plugin::DOMAIN): __("Add Grid", Plugin::DOMAIN);
+
+			$temp['grid'] = sprintf('<a href="%s">%s</a>', $editGridUrl, $label);
 			$actions = array_merge( $temp, $actions );
 		}
 		return $actions;
@@ -92,9 +106,9 @@ class the_grid
 
 		echo '<div class="wrap"><h2>'.$post->post_title.
 			' <a title="Return to the post-edit page" class="add-new-h2"'.
-			' href="'.admin_url("post.php?post=$postid&action=edit").'" >'.__('Edit Post').'</a'.
+			' href="'.admin_url("post.php?post=$postid&action=edit").'" >'.__('Edit Post', Plugin::DOMAIN).'</a'.
 			'><a class="add-new-h2" href="'.
-			get_permalink( $postid ).'">'.__('View Post').'</a></h2> </div>';
+			get_permalink( $postid ).'">'.__('View Post', Plugin::DOMAIN).'</a></h2> </div>';
 
 		/**
 		 * async parameters

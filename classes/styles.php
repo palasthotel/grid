@@ -6,7 +6,7 @@
  * Time: 12:52
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
 class styles

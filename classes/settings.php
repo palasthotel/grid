@@ -6,7 +6,7 @@
  * Time: 12:09
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
 class settings
@@ -31,7 +31,7 @@ class settings
 		if ( isset( $post->grid ) || (is_admin() && isset($post->ID) && grid_wp_get_grid_by_postid($post->ID)  )) {
 			$wp_admin_bar->add_node( array(
 				'id' => 'grid_wp_thegrid',
-				'title' => __('Edit Grid', 'grid'),
+				'title' => __('Edit Grid', Plugin::DOMAIN),
 				'href' => add_query_arg( array( 'page' => 'grid', 'postid' => $post->ID ), admin_url( 'admin.php' ) ),
 			) );
 		}
@@ -59,7 +59,7 @@ class settings
 	function render_settings_form() {
 		?>
 		<div class="wrap">
-			<h2><?php _e('Grid Settings', 'grid'); ?></h2>
+			<h2><?php _e('Grid Settings', Plugin::DOMAIN); ?></h2>
 			<form method="post" action="options.php">
 				<?php
 				settings_fields( 'grid_settings' );
@@ -78,18 +78,18 @@ class settings
 		/**
 		 * default styles
 		 */
-		add_settings_section( 'grid_default_styles', __('Default Styles', 'grid'), array( $this, 'default_styles_settings_section' ), 'grid_settings' );
-		add_settings_field( 'grid_default_container_style', __('Container Style', 'grid'), array( $this, 'default_container_style_html' ), 'grid_settings', 'grid_default_styles' );
+		add_settings_section( 'grid_default_styles', __('Default Styles', Plugin::DOMAIN), array( $this, 'default_styles_settings_section' ), 'grid_settings' );
+		add_settings_field( 'grid_default_container_style', __('Container Style', Plugin::DOMAIN), array( $this, 'default_container_style_html' ), 'grid_settings', 'grid_default_styles' );
 		register_setting( 'grid_settings', 'grid_default_container_style' );
-		add_settings_field( 'grid_default_slot_style', __('Slot Style', 'grid'), array( $this, 'default_slot_style_html' ), 'grid_settings', 'grid_default_styles' );
+		add_settings_field( 'grid_default_slot_style', __('Slot Style', Plugin::DOMAIN), array( $this, 'default_slot_style_html' ), 'grid_settings', 'grid_default_styles' );
 		register_setting( 'grid_settings', 'grid_default_slot_style' );
-		add_settings_field( 'grid_default_box_style', __('Box Style','grid'), array( $this, 'default_box_style_html' ), 'grid_settings', 'grid_default_styles' );
+		add_settings_field( 'grid_default_box_style', __('Box Style',Plugin::DOMAIN), array( $this, 'default_box_style_html' ), 'grid_settings', 'grid_default_styles' );
 		register_setting( 'grid_settings', 'grid_default_box_style' );
 
 		/**
 		 * enabled post types for grid
 		 */
-		add_settings_section( 'grid_post_types', __('Post Types', 'grid'), array( $this, 'post_type_settings_section' ), 'grid_settings' );
+		add_settings_section( 'grid_post_types', __('Post Types', Plugin::DOMAIN), array( $this, 'post_type_settings_section' ), 'grid_settings' );
 		$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
 		foreach ( $post_types as $key => $post_type ) {
 			// ignore landing_page and sidebar because we check them seperately
@@ -100,15 +100,15 @@ class settings
 		/**
 		 * check manually because disabling this will unregister post types
 		 */
-		add_settings_field( 'grid_landing_page_enabled', __("Landing Pages", 'grid'), array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => 'landing_page') );
+		add_settings_field( 'grid_landing_page_enabled', __("Landing Pages", Plugin::DOMAIN), array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => 'landing_page') );
 		register_setting( 'grid_settings', 'grid_landing_page_enabled' );
-		add_settings_field( 'grid_sidebar_enabled', __("Sidebars", 'grid'), array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => 'sidebar') );
+		add_settings_field( 'grid_sidebar_enabled', __("Sidebars", Plugin::DOMAIN), array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => 'sidebar') );
 		register_setting( 'grid_settings', 'grid_sidebar_enabled' );
 
 		/**
 		 * post types for search
 		 */
-		add_settings_section( 'grid_post_types_search', __('Post Types for content search', 'grid'), array( $this, 'post_type_search_settings_section' ), 'grid_settings' );
+		add_settings_section( 'grid_post_types_search', __('Post Types for content search', Plugin::DOMAIN), array( $this, 'post_type_search_settings_section' ), 'grid_settings' );
 		$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
 		foreach ( $post_types as $key => $post_type ) {
 			add_settings_field( 'grid_'.$key.'_search_enabled', $post_type->labels->name, array( $this, 'post_type_search_html' ), 'grid_settings', 'grid_post_types_search', array( 'type' => $key ) );
@@ -119,61 +119,61 @@ class settings
 		/**
 		 * sidebar post type
 		 */
-		add_settings_field( 'grid_sidebar_post_type', __('Which post type to use as sidebar content', 'grid'), array( $this, 'sidebar_html' ), 'grid_settings', 'grid_post_types' );
+		add_settings_field( 'grid_sidebar_post_type', __('Which post type to use as sidebar content', Plugin::DOMAIN), array( $this, 'sidebar_html' ), 'grid_settings', 'grid_post_types' );
 		register_setting( 'grid_settings', 'grid_sidebar_post_type' );
 
 		/**
 		 * default grid container
 		 */
-		add_settings_section( 'grid_default_container', __('New Grids', 'grid'), array( $this, 'default_container_section' ), 'grid_settings' );
-		add_settings_field( 'grid_default_container', __('Which container should be placed automatically', 'grid'), array( $this, 'default_container_html' ), 'grid_settings', 'grid_default_container' );
+		add_settings_section( 'grid_default_container', __('New Grids', Plugin::DOMAIN), array( $this, 'default_container_section' ), 'grid_settings' );
+		add_settings_field( 'grid_default_container', __('Which container should be placed automatically', Plugin::DOMAIN), array( $this, 'default_container_html' ), 'grid_settings', 'grid_default_container' );
 		register_setting( 'grid_settings', 'grid_default_container' );
 
 		/**
 		 * debug mode
 		 */
-		add_settings_section( 'grid_debug_mode', __('Debug Mode', 'grid'), array( $this, 'debug_mode_section' ), 'grid_settings' );
-		add_settings_field( 'grid_debug_mode', __('Turn debug mode on/off', 'grid'), array( $this, 'debug_mode_html' ), 'grid_settings', 'grid_debug_mode' );
+		add_settings_section( 'grid_debug_mode', __('Debug Mode', Plugin::DOMAIN), array( $this, 'debug_mode_section' ), 'grid_settings' );
+		add_settings_field( 'grid_debug_mode', __('Turn debug mode on/off', Plugin::DOMAIN), array( $this, 'debug_mode_html' ), 'grid_settings', 'grid_debug_mode' );
 		register_setting( 'grid_settings', 'grid_debug_mode' );
 
 		/**
 		 * async settings
 		 */
-		add_settings_section( 'grid_async_service', __('Async', 'grid'), array( $this, 'async_section' ), 'grid_settings' );
+		add_settings_section( 'grid_async_service', __('Async', Plugin::DOMAIN), array( $this, 'async_section' ), 'grid_settings' );
 
-		add_settings_field( 'grid_async', _x('Enable', 'grid_async', 'grid'), array( $this, 'async_enable_html' ), 'grid_settings', 'grid_async_service' );
+		add_settings_field( 'grid_async', _x('Enable', 'grid_async', Plugin::DOMAIN), array( $this, 'async_enable_html' ), 'grid_settings', 'grid_async_service' );
 		register_setting( 'grid_settings', 'grid_async' );
 
-		add_settings_field( 'grid_async_url', __('Service url (leave empty to use default url)', 'grid'), array( $this, 'async_url_html' ), 'grid_settings', 'grid_async_service' );
+		add_settings_field( 'grid_async_url', __('Service url (leave empty to use default url)', Plugin::DOMAIN), array( $this, 'async_url_html' ), 'grid_settings', 'grid_async_service' );
 		register_setting( 'grid_settings', 'grid_async_url' );
 
-		add_settings_field( 'grid_async_timeout', __('After how many seconds an author loses the lock on a grid when not active?', 'grid'), array( $this, 'async_timeout_html' ), 'grid_settings', 'grid_async_service' );
+		add_settings_field( 'grid_async_timeout', __('After how many seconds an author loses the lock on a grid when not active?', Plugin::DOMAIN), array( $this, 'async_timeout_html' ), 'grid_settings', 'grid_async_service' );
 		register_setting( 'grid_settings', 'grid_async_timeout' );
 
 		/**
 		 * mediaselect info
 		 */
-		add_settings_section( 'grid_mediaselect_info', __('Mediaselect Info', 'grid'), array( $this, 'mediaselect_info_section' ), 'grid_settings' );
-		add_settings_field( 'grid_mediaselect_info', __('Set an info text for media in the WordPress media-box', 'grid'), array( $this, 'mediaselect_info_html' ), 'grid_settings', 'grid_mediaselect_info' );
+		add_settings_section( 'grid_mediaselect_info', __('Mediaselect Info', Plugin::DOMAIN), array( $this, 'mediaselect_info_section' ), 'grid_settings' );
+		add_settings_field( 'grid_mediaselect_info', __('Set an info text for media in the WordPress media-box', Plugin::DOMAIN), array( $this, 'mediaselect_info_html' ), 'grid_settings', 'grid_mediaselect_info' );
 		register_setting( 'grid_settings', 'grid_mediaselect_info' );
 
 		/**
 		* mediaselect types
 		*/
-		add_settings_section( 'grid_mediaselect_types', __('Mediaselect Types', 'grid'), array( $this, 'mediaselect_types_section' ), 'grid_settings' );
-		add_settings_field( 'grid_mediaselect_types', __('Choose types for media-box', 'grid'), array( $this, 'mediaselect_types_html' ), 'grid_settings', 'grid_mediaselect_types' );
+		add_settings_section( 'grid_mediaselect_types', __('Mediaselect Types', Plugin::DOMAIN), array( $this, 'mediaselect_types_section' ), 'grid_settings' );
+		add_settings_field( 'grid_mediaselect_types', __('Choose types for media-box', Plugin::DOMAIN), array( $this, 'mediaselect_types_html' ), 'grid_settings', 'grid_mediaselect_types' );
 		register_setting( 'grid_settings', 'grid_mediaselect_types' );
 
 		/**
 		 * permalinks
 		 */
-		add_settings_section( 'grid_permalinks', __('Grid', 'grid'), array( $this, 'permalinks_section' ), 'grid_settings' );
-		add_settings_field( 'grid_permalinks', __('Landing Page base', 'grid'), array( $this, 'permalinks_html' ), 'grid_settings', 'grid_permalinks' );
+		add_settings_section( 'grid_permalinks', __('Grid', Plugin::DOMAIN), array( $this, 'permalinks_section' ), 'grid_settings' );
+		add_settings_field( 'grid_permalinks', __('Landing Page base', Plugin::DOMAIN), array( $this, 'permalinks_html' ), 'grid_settings', 'grid_permalinks' );
 		register_setting( 'grid_settings', 'grid_permalinks' );
 	}
 
 	function default_styles_settings_section() {
-		_e('Set which default styles should be applied.','grid');
+		_e('Set which default styles should be applied.',Plugin::DOMAIN);
 	}
 
 	function default_container_style_html() {
@@ -182,7 +182,7 @@ class settings
 		$setting = get_option( 'grid_default_container_style', '__NONE__' );
 		?>
 		<select id="grid_default_container_style" name="grid_default_container_style">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' ) ?>><?php _ex('None', 'grid_styles', 'grid'); ?></option>
+			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' ) ?>><?php _ex('None', 'grid_styles', Plugin::DOMAIN); ?></option>
 			<?php
 			foreach ( $types as $idx => $elem ) {
 				?>
@@ -200,7 +200,7 @@ class settings
 		$setting = get_option( 'grid_default_slot_style', '__NONE__' );
 		?>
 		<select id="grid_default_slot_style" name="grid_default_slot_style">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>><?php _ex('None', 'grid_styles', 'grid'); ?></option>
+			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>><?php _ex('None', 'grid_styles', Plugin::DOMAIN); ?></option>
 			<?php
 			foreach ( $types as $idx => $elem ) {
 				?>
@@ -218,7 +218,7 @@ class settings
 		$setting = get_option( 'grid_default_box_style', '__NONE__' );
 		?>
 		<select id="grid_default_box_style" name="grid_default_box_style">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '');?>><?php _ex('None', 'grid_styles', 'grid'); ?></option>
+			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '');?>><?php _ex('None', 'grid_styles', Plugin::DOMAIN); ?></option>
 			<?php
 			foreach ( $types as $idx => $elem ) {
 				?>
@@ -239,7 +239,7 @@ class settings
 	}
 
 	function post_type_settings_section() {
-		echo __('Which post types should have grid support?', 'grid');
+		echo __('Which post types should have grid support?', Plugin::DOMAIN);
 	}
 
 	function post_type_search_html( $args ) {

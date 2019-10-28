@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 5.2.4
-Stable tag: 1.8.6
+Stable tag: 1.9.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -85,6 +85,10 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 1.9.0 =
+* Refactoring: Reorganized namespaces. BIG CHANGE, please double check!
+* Feature: Copy grid
 
 = 1.8.6 =
 * Feature: Posts box with multiselect for post types.

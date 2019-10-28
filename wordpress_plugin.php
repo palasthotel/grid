@@ -3,16 +3,18 @@
  * Plugin Name: Grid
  * Plugin URI: https://github.com/palasthotel/grid-wordpress
  * Description: Helps layouting pages with containerist.
- * Version: 1.8.6
+ * Version: 1.9.0
  * Author: Palasthotel <rezeption@palasthotel.de> (in person: Benjamin Birkenhake, Edward Bock, Enno Welbers, Jana Marie Eggebrecht)
  * Author URI: http://www.palasthotel.de
  * Requires at least: 4.0
  * Tested up to: 5.2.4
  * License: http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  *
- * @copyright Copyright (c) 2014, Palasthotel
- * @package Palasthotel\Grid-WordPress
+ * @copyright Copyright (c) 2019, Palasthotel
+ * @package Palasthotel\Grid\WordPress
  */
+
+namespace Palasthotel\Grid\WordPress;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -25,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @property array grid_ids
  * @property array post_ids
  */
-class grid_plugin {
+class Plugin {
 
 	const DOMAIN = "grid";
 
@@ -53,7 +55,11 @@ class grid_plugin {
 		/**
 		 * load translations
 		 */
-		load_plugin_textdomain( self::DOMAIN, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain(
+			Plugin::DOMAIN,
+			false,
+			dirname(__FILE__). '/languages'
+		);
 
 		global $grid_loaded;
 		$grid_loaded = false;
@@ -61,26 +67,26 @@ class grid_plugin {
 		/**
 		 * do stuff for wordpress spezific boxes
 		 */
-		require_once dirname( __FILE__ ) . '/classes/boxes.inc';
-		new \grid_plugin\boxes();
+		require_once dirname( __FILE__ ) . '/classes/boxes.php';
+		new boxes();
 
 		/**
 		 * the grid itself!
 		 */
-		require_once dirname( __FILE__ ) . '/classes/the_grid.inc';
-		new \grid_plugin\the_grid();
+		require_once dirname( __FILE__ ) . '/classes/the_grid.php';
+		new the_grid($this);
 
 		/**
 		 * Styles
 		 */
-		require_once dirname( __FILE__ ) . '/classes/post.inc';
-		$this->post = new \grid_plugin\post();
+		require_once dirname( __FILE__ ) . '/classes/post.php';
+		$this->post = new post();
 
 		/**
 		 * meta boxes
 		 */
-		require_once dirname( __FILE__ ) . '/classes/meta_boxes.inc';
-		new \grid_plugin\meta_boxes( $this );
+		require_once dirname( __FILE__ ) . '/classes/meta_boxes.php';
+		new meta_boxes( $this );
 
 		/**
 		 * wp ajax endpoint
@@ -90,38 +96,41 @@ class grid_plugin {
 		/**
 		 *  Grid settings pages
 		 */
-		require_once dirname( __FILE__ ) . '/classes/settings.inc';
-		new \grid_plugin\settings();
+		require_once dirname( __FILE__ ) . '/classes/settings.php';
+		new settings();
 
 		/**
 		 *  gird container factory
 		 */
-		require_once dirname( __FILE__ ) . '/classes/container_factory.inc';
-		new \grid_plugin\container_factory();
+		require_once dirname( __FILE__ ) . '/classes/container_factory.php';
+		new container_factory();
 
 		/**
 		 *  gird container reuse
 		 */
-		require_once dirname( __FILE__ ) . '/classes/reuse_container.inc';
-		new \grid_plugin\reuse_container();
+		require_once dirname( __FILE__ ) . '/classes/reuse_container.php';
+		new reuse_container();
 
 		/**
 		 *  gird box reuse
 		 */
-		require_once dirname( __FILE__ ) . '/classes/reuse_box.inc';
-		new \grid_plugin\reuse_box();
+		require_once dirname( __FILE__ ) . '/classes/reuse_box.php';
+		new reuse_box();
 
 		/**
 		 *  gird privileges
 		 */
-		require_once dirname( __FILE__ ) . '/classes/privileges.inc';
-		new \grid_plugin\privileges();
+		require_once dirname( __FILE__ ) . '/classes/privileges.php';
+		new privileges($this);
 
 		/**
 		 * Styles
 		 */
-		require_once dirname( __FILE__ ) . '/classes/styles.inc';
-		new \grid_plugin\styles();
+		require_once dirname( __FILE__ ) . '/classes/styles.php';
+		new styles();
+
+		require_once dirname(__FILE__). '/classes/Copy.php';
+		new Copy($this);
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_head' ) );
 
@@ -142,8 +151,7 @@ class grid_plugin {
 
 		$options = get_option( 'grid', array() );
 		if ( isset( $options['installed'] ) ) {
-			global $grid_plugin;
-			$grid_plugin->update();
+			$this->update();
 		}
 
 		do_action( 'grid_register_post_type' );
@@ -160,12 +168,12 @@ class grid_plugin {
 				apply_filters( 'grid_register_post_type_landing_page',
 					array(
 						'labels'            => array(
-							'name'          => __( 'Landing Pages', self::DOMAIN ),
-							'singular_name' => __( 'Landing Page', self::DOMAIN ),
+							'name'          => __( 'Landing Pages', Plugin::DOMAIN ),
+							'singular_name' => __( 'Landing Page', Plugin::DOMAIN ),
 							// labels to be continued
 						),
 						'menu_icon'         => plugins_url( 'images/post-type-icon.png', __FILE__ ),
-						'description'       => __( 'This is where you can add new landing pages to your site.', self::DOMAIN ),
+						'description'       => __( 'This is where you can add new landing pages to your site.', Plugin::DOMAIN ),
 						'public'            => true,
 						'show_ui'           => true,
 						'hierarchical'      => false,
@@ -198,12 +206,12 @@ class grid_plugin {
 				apply_filters( 'grid_register_post_type_landing_page',
 					array(
 						'labels'            => array(
-							'name'          => __( 'Sidebars', self::DOMAIN ),
-							'singular_name' => __( 'Sidebar', self::DOMAIN ),
+							'name'          => __( 'Sidebars', Plugin::DOMAIN ),
+							'singular_name' => __( 'Sidebar', Plugin::DOMAIN ),
 							// labels to be continued
 						),
 						'menu_icon'         => plugins_url( 'images/post-type-icon.png', __FILE__ ),
-						'description'       => __( 'This is where you can add new sidebars to your site.', self::DOMAIN ),
+						'description'       => __( 'This is where you can add new sidebars to your site.', Plugin::DOMAIN ),
 						'public'            => true,
 						'show_ui'           => true,
 						'hierarchical'      => false,
@@ -248,9 +256,9 @@ class grid_plugin {
 		/**
 		 * grid ajax endpoint once
 		 */
-		require_once dirname(__FILE__). '/classes/ajaxendpoint.inc';
+		require_once dirname(__FILE__). '/classes/ajaxendpoint.php';
 
-		return new \grid_plugin\ajaxendpoint();
+		return new ajaxendpoint();
 	}
 
 	/**
@@ -315,11 +323,11 @@ class grid_plugin {
 		global $grid_storage;
 		if ( ! isset( $grid_storage ) ) {
 			$user                           = wp_get_current_user();
-			$storage                        = new grid_db( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, $user->user_login, $wpdb->prefix, array(
+			$storage                        = new \grid_db( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, $user->user_login, $wpdb->prefix, array(
 				$this,
 				'fire_hook',
 			) );
-			$storage->ajaxEndpoint          = new \grid_plugin\ajaxendpoint();
+			$storage->ajaxEndpoint          = new ajaxendpoint();
 			$storage->ajaxEndpoint->storage = $storage;
 
 			// for old versions
@@ -422,8 +430,8 @@ class grid_plugin {
 		$grid_connection = grid_wp_get_mysqli();
 
 		$grid_lib->update();
-		require_once dirname(__FILE__) . '/grid-wordpress-update.inc';
-		$wp_update = new grid_wordpress_update();
+		require_once dirname(__FILE__) . '/update.php';
+		$wp_update = new Update();
 		$wp_update->performUpdates();
 		$grid_connection->close();
 	}
@@ -445,7 +453,7 @@ class grid_plugin {
 	/**
 	 * get connection to database
 	 *
-	 * @return mysqli
+	 * @return \mysqli
 	 */
 	function get_db_connection() {
 		$host = DB_HOST;
@@ -455,13 +463,26 @@ class grid_plugin {
 			$host    = $db_host[0];
 			$port    = intval( $db_host[1] );
 		}
-		$connection = new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
+		$connection = new \mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
 		if ( $connection->connect_errno ) {
 			error_log( "WP Grid: " . $connection->connect_error, 4 );
 			wp_die( "WP Grid could not connect to database." );
 		}
 
 		return $connection;
+	}
+
+	/**
+	 * @var null|Plugin $instance
+	 */
+	private static $instance;
+
+	/**
+	 * @return \Palasthotel\Grid\WordPress\Plugin|null
+	 */
+	public static function instance(){
+		if(self::$instance == null) self::$instance = new Plugin();
+		return self::$instance;
 	}
 
 }
@@ -471,12 +492,15 @@ class grid_plugin {
  */
 require_once dirname( __FILE__ ) . '/lib/grid.php';
 global $grid_lib;
-$grid_lib = new grid_library();
+$grid_lib = new \grid_library();
 
 /**
  * init grid
  */
-global $grid_plugin;
-$grid_plugin = new grid_plugin();
+Plugin::instance();
 
 require_once dirname( __FILE__ ) . "/public-functions.php";
+
+// deprecated functions
+require_once dirname(__FILE__). "/deprecated.php";
+require_once dirname(__FILE__). "/deprecated-namespace.php";

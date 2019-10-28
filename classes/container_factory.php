@@ -6,7 +6,7 @@
  * Time: 12:42
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
 class container_factory

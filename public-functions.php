@@ -1,10 +1,13 @@
 <?php
+
+use Palasthotel\Grid\WordPress\Plugin;
+
 /**
- * Created by PhpStorm.
- * User: edward
- * Date: 2019-03-05
- * Time: 15:22
+ * @return \Palasthotel\Grid\Wordpress\Plugin
  */
+function grid_plugin(){
+	return Plugin::instance();
+}
 
 /**
  * drupal t function
@@ -13,7 +16,7 @@
 // TODO: use grid translate function
 if ( ! function_exists( 't' ) ) {
 	function t( $str ) {
-		return __( $str, 'grid' );
+		return __( $str, Plugin::DOMAIN );
 	}
 }
 
@@ -22,7 +25,6 @@ if ( ! function_exists( 't' ) ) {
  * Drupal db_query function
  * @param $querystring
  * @return array|boolean
- * @throws Exception
  */
 // TODO: implement grid query function
 function db_query( $querystring ) {
@@ -65,8 +67,7 @@ function db_query( $querystring ) {
  * @return mixed
  */
 function grid_wp_get_postid_by_grid($gridid) {
-	global $grid_plugin;
-	return $grid_plugin->get_postid_by_grid($gridid);
+	return grid_plugin()->get_postid_by_grid($gridid);
 }
 
 /**
@@ -77,8 +78,7 @@ function grid_wp_get_postid_by_grid($gridid) {
  * @return bool
  */
 function grid_wp_get_grid_by_postid( $postid ) {
-	global $grid_plugin;
-	return $grid_plugin->get_grid_by_postid($postid);
+	return grid_plugin()->get_grid_by_postid($postid);
 }
 
 /**
@@ -88,8 +88,7 @@ function grid_wp_get_grid_by_postid( $postid ) {
  * @param $post
  */
 function grid_wp_load($post){
-	global $grid_plugin;
-	$grid_plugin->grid_load($post);
+	grid_plugin()->grid_load($post);
 }
 
 /**
@@ -125,8 +124,7 @@ function grid_wp_get_privs() {
  * @return grid_db grid_storage
  */
 function grid_wp_get_storage() {
-	global $grid_plugin;
-	return $grid_plugin->get_storage();
+	return grid_plugin()->get_storage();
 }
 
 
@@ -150,8 +148,7 @@ function grid_wp_load_js() {
  * @return mysqli
  */
 function grid_wp_get_mysqli() {
-	global $grid_plugin;
-	return $grid_plugin->get_db_connection();
+	return grid_plugin()->get_db_connection();
 }
 
 
@@ -190,8 +187,7 @@ function grid_get_additional_editor_widgets(){
  * enqueue js and css files for editor
  */
 function grid_enqueue_editor_files($editor = null){
-	global $grid_plugin;
-	$grid_plugin->enqueue_editor_files($editor);
+	grid_plugin()->enqueue_editor_files($editor);
 }
 
 /**
@@ -201,8 +197,7 @@ function grid_enqueue_editor_files($editor = null){
  * @return string
  */
 function grid_get_lang(){
-	global $grid_plugin;
-	return $grid_plugin->get_lang();
+	return grid_plugin()->get_lang();
 }
 
 /**
@@ -338,8 +333,7 @@ function grid_wp_activate() {
 		update_option( 'grid_default_container', 'c-1d1' );
 	}
 	// for initial content type registration
-	global $grid_plugin;
-	$grid_plugin->init();
+	grid_plugin()->init();
 	global $wp_rewrite;
 	$wp_rewrite->flush_rules();
 }

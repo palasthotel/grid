@@ -6,6 +6,8 @@
  * @package Palasthotel\Grid-WordPress
  */
 
+use Palasthotel\Grid\WordPress\Plugin;
+
 /**
  * Posts-Box is considered a list
  *
@@ -255,7 +257,7 @@ class grid_posts_box extends grid_list_box {
 			$formats   = array();
 			$formats[] = array(
 				'key'  => '',
-				'text' => __( 'All post formats' ),
+				'text' => __( 'All post formats', Plugin::DOMAIN ),
 			);
 
 			$post_formats = get_theme_support( 'post-formats' );
@@ -269,7 +271,7 @@ class grid_posts_box extends grid_list_box {
 
 			$cs[] = array(
 				'key'        => 'post_format',
-				'label'      => __( 'Post format' ),
+				'label'      => __( 'Post format', Plugin::DOMAIN ),
 				'type'       => 'select',
 				'selections' => $formats,
 			);
@@ -297,7 +299,7 @@ class grid_posts_box extends grid_list_box {
 		foreach ( $input as $post_type => $info ) {
 			$post_types[] = array( 'key' => $post_type, 'text' => $info->labels->name );
 		}
-		$post_types[] = array( 'key' => 'any', 'text' => __( 'Any post type' ) );
+		$post_types[] = array( 'key' => 'any', 'text' => __( 'Any post type', Plugin::DOMAIN ) );
 		$cs[]         = array(
 			'key'        => 'post_type',
 			'label'      => t( 'Post type' ),

@@ -6,7 +6,7 @@
  * Time: 15:15
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
 class PositionInPost {

@@ -5,6 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  */
+
+use Palasthotel\Grid\WordPress\Plugin;
+
 /**
 * HTML-Box contents is considered a static content.
 */
@@ -64,23 +67,23 @@ class grid_wp_shortcode_box extends grid_static_base_box {
 		$cs[] = array(
 			'key' => 'slug',
 			'type' => 'text',
-			'label' => __('Shortcode'),
+			'label' => __('Shortcode', Plugin::DOMAIN),
 		);
 		
 		$cs[] = array(
 			'key' => 'attributes',
-			'label' => __('Attributes'),
+			'label' => __('Attributes', Plugin::DOMAIN),
 			'type' => 'list',
 			'contentstructure' => array(
 				array(
 					'key' => 'name',
 					'type' => 'text',
-					'label' => __('Name'),
+					'label' => __('Name', Plugin::DOMAIN),
 				),
 				array(
 					'key' => 'value',
 					'type' => 'text',
-					'label' => __('Value'),
+					'label' => __('Value', Plugin::DOMAIN),
 				)
 			),
 		);

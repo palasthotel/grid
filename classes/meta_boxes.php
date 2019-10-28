@@ -6,15 +6,23 @@
  * Time: 20:18
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
+/**
+ * @property Plugin plugin
+ */
 class meta_boxes
 {
 
 	const CSS_HANDLE = "grid-meta-box-style";
 
-	function __construct(\grid_plugin $plugin){
+	/**
+	 * meta_boxes constructor.
+	 *
+	 * @param Plugin $plugin
+	 */
+	function __construct($plugin){
 		$this->plugin = $plugin;
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action('save_post', array($this, 'save_post'));
@@ -24,7 +32,7 @@ class meta_boxes
 		$post_types = get_post_types( array(), 'objects' );
 		foreach ( $post_types as $key => $post_type ) {
 			if ( get_option( 'grid_'.$key.'_enabled', false ) ) {
-				add_meta_box( 'grid', __( 'Grid', 'grid' ), array( $this, 'render_meta_box' ) , $key, 'side', 'high' );
+				add_meta_box( 'grid', __( 'Grid', Plugin::DOMAIN ), array( $this, 'render_meta_box' ) , $key, 'side', 'high' );
 			}
 		}
 	}
@@ -72,10 +80,10 @@ class meta_boxes
 							id="grid-position"
 							name="grid[<?php echo PositionInPost::META_KEY ?>]"
 					>
-						<?php $this->render_position_option(__('Append to content', 'grid'), PositionInPost::POSITION_BOTTOM, $val); ?>
-						<?php $this->render_position_option(__('Prepend to content', 'grid'), PositionInPost::POSITION_TOP, $val); ?>
-						<?php $this->render_position_option(__('Grid only, no content', 'grid'), PositionInPost::POSITION_ONLY, $val); ?>
-						<?php $this->render_position_option(__('Disable grid rendering', 'grid'), PositionInPost::POSITION_NONE, $val); ?>
+						<?php $this->render_position_option(__('Append to content', Plugin::DOMAIN), PositionInPost::POSITION_BOTTOM, $val); ?>
+						<?php $this->render_position_option(__('Prepend to content', Plugin::DOMAIN), PositionInPost::POSITION_TOP, $val); ?>
+						<?php $this->render_position_option(__('Grid only, no content', Plugin::DOMAIN), PositionInPost::POSITION_ONLY, $val); ?>
+						<?php $this->render_position_option(__('Disable grid rendering', Plugin::DOMAIN), PositionInPost::POSITION_NONE, $val); ?>
 					</select>
 				</p>
 				<?php

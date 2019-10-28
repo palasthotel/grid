@@ -3,10 +3,12 @@
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
- * @package Palasthotel\Grid-Wordpress
+ * @package Palasthotel\Grid\Wordpress
  *
  * @var $content object
  */
+
+use Palasthotel\Grid\WordPress\Plugin;
 
 ?>
 <div class="grid-box-editmode">
@@ -41,7 +43,7 @@
 					echo '<br><i>' . $field . ':</i> ' . get_post_format_string( $value );
 				} else if ( $field === 'post_type' ) {
 					if($value === "any"){
-						echo "<br/><i>$field:</i> ".__('Any post type');
+						echo "<br/><i>$field:</i> ".__('Any post type', Plugin::DOMAIN);
 					} else {
 						$post_type = get_post_type_object($value);
 						if($post_type !== null) echo '<br><i>' . $field . ':</i> ' . $post_type->label;
@@ -53,7 +55,7 @@
 				if($field === "post_type"){
 					$post_types = array_filter(array_map(function($slug){
 						if($slug === "any"){
-							return __('Any post type');
+							return __('Any post type', Plugin::DOMAIN);
 						}
 						return get_post_type_object($slug);
 					}, $value), function($post_type){ return null != $post_type; });

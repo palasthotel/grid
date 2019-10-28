@@ -6,12 +6,22 @@
  * Time: 12:50
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
+/**
+ * @property Plugin plugin
+ */
 class privileges
 {
-	function __construct(){
+
+	/**
+	 * privileges constructor.
+	 *
+	 * @param Plugin $plugin
+	 */
+	function __construct($plugin){
+		$this->plugin = $plugin;
 		add_action( 'admin_menu', array($this, 'admin_menu') );
 	}
 
@@ -21,7 +31,6 @@ class privileges
 
 	function privileges() {
 		global $wp_roles;
-		global $grid_plugin;
 		$names = $wp_roles->get_names();
 
 		$ajaxendpoint = new ajaxendpoint();
@@ -43,7 +52,7 @@ class privileges
 			return;
 		}
 		$privileges = grid_wp_get_privs();
-		wp_enqueue_style( 'grid_css_wordpress', $grid_plugin->url. 'css/grid-wordpress.css' );
+		wp_enqueue_style( 'grid_css_wordpress', $this->plugin->url. 'css/grid-wordpress.css' );
 
 		?>
 		<form method="post" action="<?php echo add_query_arg( array( 'noheader' => true, 'page' => 'grid_privileges' ), admin_url( 'tools.php' ) );?>">

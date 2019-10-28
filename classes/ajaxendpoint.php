@@ -1,6 +1,6 @@
 <?php
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 class ajaxendpoint extends \grid_ajaxendpoint {
 

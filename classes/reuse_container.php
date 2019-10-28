@@ -6,7 +6,7 @@
  * Time: 20:39
  */
 
-namespace grid_plugin;
+namespace Palasthotel\Grid\WordPress;
 
 
 class reuse_container
