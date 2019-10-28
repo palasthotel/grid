@@ -104,11 +104,13 @@ class the_grid
 
 		grid_enqueue_editor_files();
 
+		$labelViewPost = __('View Post', Plugin::DOMAIN);
+
 		echo '<div class="wrap"><h2>'.$post->post_title.
 			' <a title="Return to the post-edit page" class="add-new-h2"'.
 			' href="'.admin_url("post.php?post=$postid&action=edit").'" >'.__('Edit Post', Plugin::DOMAIN).'</a'.
 			'><a class="add-new-h2" href="'.
-			get_permalink( $postid ).'">'.__('View Post', Plugin::DOMAIN).'</a></h2> </div>';
+			get_permalink( $postid ).'">'.$labelViewPost.'</a></h2> </div>';
 
 		/**
 		 * async parameters

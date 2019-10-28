@@ -61,7 +61,7 @@ class Plugin {
 		load_plugin_textdomain(
 			Plugin::DOMAIN,
 			false,
-			dirname(__FILE__). '/languages'
+			dirname( plugin_basename( __FILE__ ) ) . '/languages'
 		);
 
 		global $grid_loaded;
