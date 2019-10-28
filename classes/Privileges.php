@@ -12,7 +12,7 @@ namespace Palasthotel\Grid\WordPress;
 /**
  * @property Plugin plugin
  */
-class privileges
+class Privileges
 {
 
 	/**
@@ -33,7 +33,7 @@ class privileges
 		global $wp_roles;
 		$names = $wp_roles->get_names();
 
-		$ajaxendpoint = new ajaxendpoint();
+		$ajaxendpoint = new Ajax();
 		$rights = $ajaxendpoint->Rights();
 
 		if ( ! empty( $_POST ) ) {

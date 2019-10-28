@@ -30,14 +30,26 @@ if ( ! defined( 'WPINC' ) ) {
  * @property array grid_ids
  * @property array post_ids
  * @property StorageHelper storageHelper
- * @property the_grid the_grid
+ * @property TheGrid $theGrid
+ * @property PositionInPost positionInPost
+ * @property Post post
+ * @property Ajax ajax
  */
 class Plugin {
 
+	// ------------------------------------
+	// constants
+	// ------------------------------------
 	const DOMAIN = "grid";
 
+	// ------------------------------------
+	// filters
+	// ------------------------------------
 	const FILTER_POST_BOX_META_SEARCH = "grid_post_box_meta_search_results";
 
+	// ------------------------------------
+	// actions
+	// ------------------------------------
 	const ACTION_COPY_BEFORE = "grid_copy_before";
 	const ACTION_COPY_AFTER = "grid_copy_after";
 	
@@ -45,19 +57,23 @@ class Plugin {
 	 * construct grid plugin
 	 */
 	function __construct() {
+
 		/**
 		 * base paths
 		 */
 		$this->dir = plugin_dir_path( __FILE__ );
 		$this->url = plugin_dir_url( __FILE__ );
 
+		// ------------------------------------
+		// autoloader
+		// ------------------------------------
+		require_once dirname(__FILE__). "/vendor/autoload.php";
+
+		// ------------------------------------
+		// cache properties
+		// ------------------------------------
 		$this->grid_ids = array();
 		$this->post_ids = array();
-
-		/**
-		 * load constants
-		 */
-		require_once dirname( __FILE__ ) . '/constants/position_in_post.php';
 
 		/**
 		 * load translations
@@ -71,85 +87,88 @@ class Plugin {
 		global $grid_loaded;
 		$grid_loaded = false;
 
-		require_once dirname(__FILE__). '/classes/StorageHelper.php';
+		// ------------------------------------
+		// construct component classes
+		// ------------------------------------
+
+		/**
+		 * wrapper for grid library storage
+		 */
 		$this->storageHelper = new StorageHelper($this);
 
 		/**
 		 * do stuff for wordpress spezific boxes
 		 */
-		require_once dirname( __FILE__ ) . '/classes/boxes.php';
-		new boxes();
+		new Boxes();
 
 		/**
 		 * the grid itself!
 		 */
-		require_once dirname( __FILE__ ) . '/classes/the_grid.php';
-		$this->the_grid = new the_grid($this);
+		$this->theGrid = new TheGrid($this);
 
 		/**
 		 * Styles
 		 */
-		require_once dirname( __FILE__ ) . '/classes/post.php';
-		$this->post = new post();
+		$this->post = new Post();
 
 		/**
 		 * meta boxes
 		 */
-		require_once dirname( __FILE__ ) . '/classes/meta_boxes.php';
-		new meta_boxes( $this );
+		new MetaBoxes( $this );
 
 		/**
 		 * wp ajax endpoint
 		 */
-		$this->get_ajax_endpoint();
+		$this->ajax = new Ajax();
 
 		/**
 		 *  Grid settings pages
 		 */
-		require_once dirname( __FILE__ ) . '/classes/settings.php';
-		new settings();
+		new Settings();
 
 		/**
 		 *  gird container factory
 		 */
-		require_once dirname( __FILE__ ) . '/classes/container_factory.php';
-		new container_factory();
+		new ContainerFactory();
 
 		/**
 		 *  gird container reuse
 		 */
-		require_once dirname( __FILE__ ) . '/classes/reuse_container.php';
-		new reuse_container();
+		new ReuseContainer();
 
 		/**
 		 *  gird box reuse
 		 */
-		require_once dirname( __FILE__ ) . '/classes/reuse_box.php';
-		new reuse_box();
+		new ReuseBox();
 
 		/**
 		 *  gird privileges
 		 */
-		require_once dirname( __FILE__ ) . '/classes/privileges.php';
-		new privileges($this);
+		new Privileges($this);
 
 		/**
 		 * Styles
 		 */
-		require_once dirname( __FILE__ ) . '/classes/styles.php';
-		new styles();
+		new Styles();
 
-		require_once dirname(__FILE__). '/classes/Copy.php';
+		/**
+		 * copy grids
+		 */
 		new Copy($this);
 
+		// ------------------------------------------------------
+		// other stuff that should better be refactored
+		// ------------------------------------------------------
 		add_action( 'wp_enqueue_scripts', array( $this, 'wp_head' ) );
 
 		add_action( 'init', array( $this, 'init' ) );
 
-
 		add_action( 'admin_head-options-reading.php', 'grid_modify_front_pages_dropdown' );
 		add_action( 'pre_get_posts', 'grid_enable_front_page_landing_page' );
 
+		// ------------------------------------
+		// activate, deactivate and uninstall
+		// ------------------------------------
 		register_activation_hook( __FILE__, 'grid_wp_activate' );
 		register_uninstall_hook( __FILE__, 'grid_wp_uninstall' );
 	}
@@ -263,12 +282,7 @@ class Plugin {
 	 * register wp grid endpoint
 	 */
 	function get_ajax_endpoint() {
-		/**
-		 * grid ajax endpoint once
-		 */
-		require_once dirname(__FILE__). '/classes/ajaxendpoint.php';
-
-		return new ajaxendpoint();
+		return $this->ajax;
 	}
 
 	/**
@@ -337,7 +351,7 @@ class Plugin {
 				$this,
 				'fire_hook',
 			) );
-			$storage->ajaxEndpoint          = new ajaxendpoint();
+			$storage->ajaxEndpoint          = new Ajax();
 			$storage->ajaxEndpoint->storage = $storage;
 
 			// for old versions
@@ -440,7 +454,7 @@ class Plugin {
 		$grid_connection = grid_wp_get_mysqli();
 
 		$grid_lib->update();
-		require_once dirname(__FILE__) . '/update.php';
+		require_once dirname(__FILE__) . '/classes/Update.php';
 		$wp_update = new Update();
 		$wp_update->performUpdates();
 		$grid_connection->close();
@@ -497,6 +511,10 @@ class Plugin {
 
 }
 
+// ----------------------------
+// init grid plugin and library
+// ----------------------------
+
 /**
  * init grid library for global use
  */
@@ -509,8 +527,13 @@ $grid_lib = new \grid_library();
  */
 Plugin::instance();
 
+// ----------------------------
+// public usable functions
+// ----------------------------
 require_once dirname( __FILE__ ) . "/public-functions.php";
 
-// deprecated functions
+// ----------------------------
+// deprecation wrappers
+// ----------------------------
 require_once dirname(__FILE__). "/deprecated.php";
 require_once dirname(__FILE__). "/deprecated-namespace.php";

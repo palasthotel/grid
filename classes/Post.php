@@ -9,7 +9,7 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class post
+class Post
 {
 	function __construct(){
 		/**

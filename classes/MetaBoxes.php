@@ -12,7 +12,7 @@ namespace Palasthotel\Grid\WordPress;
 /**
  * @property Plugin plugin
  */
-class meta_boxes
+class MetaBoxes
 {
 
 	const CSS_HANDLE = "grid-meta-box-style";

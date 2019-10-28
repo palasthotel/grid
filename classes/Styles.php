@@ -9,7 +9,7 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class styles
+class Styles
 {
 	function __construct(){
 		add_action( 'admin_menu', array($this, 'admin_menu') );

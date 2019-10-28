@@ -2,7 +2,7 @@
 
 namespace Palasthotel\Grid\WordPress;
 
-class ajaxendpoint extends \grid_ajaxendpoint {
+class Ajax extends \grid_ajaxendpoint {
 
 	public function loadGrid( $gridid )
 	{

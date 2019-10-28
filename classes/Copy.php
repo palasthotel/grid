@@ -104,7 +104,7 @@ class Copy {
 		do_action(Plugin::ACTION_COPY_AFTER, $new_post_id, $clone, $post_id, $grid_id);
 
 		// redirect to brand new grid copy
-		$url = $this->plugin->the_grid->getEditorUrl($new_post_id);
+		$url = $this->plugin->theGrid->getEditorUrl($new_post_id);
 		wp_redirect($url );
 		exit;
 	}

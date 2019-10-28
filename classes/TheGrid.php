@@ -14,7 +14,7 @@ use Grid\Constants\Hook;
 /**
  * @property Plugin $plugin
  */
-class the_grid
+class TheGrid
 {
 
 	/**

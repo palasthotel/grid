@@ -9,7 +9,7 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class settings
+class Settings
 {
 	function __construct(){
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar' ), 999 );

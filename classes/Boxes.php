@@ -9,7 +9,7 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class boxes
+class Boxes
 {
 	function __construct(){
 		$dir = dirname(__FILE__);
