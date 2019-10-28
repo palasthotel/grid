@@ -398,6 +398,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 
 == Upgrade Notice ==
 
+= 1.9.0 =
+There was a bigger refactoring. If you use global variables or classes in your theme or third party plugins please check if they are still working.
+
 = 1.7.11 =
 If you use our avoid doublets plugin make sure you update it to version 1.1.2 at least
 
