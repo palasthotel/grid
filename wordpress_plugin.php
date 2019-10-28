@@ -29,12 +29,17 @@ if ( ! defined( 'WPINC' ) ) {
  * @property string url
  * @property array grid_ids
  * @property array post_ids
+ * @property StorageHelper storageHelper
+ * @property the_grid the_grid
  */
 class Plugin {
 
 	const DOMAIN = "grid";
 
 	const FILTER_POST_BOX_META_SEARCH = "grid_post_box_meta_search_results";
+
+	const ACTION_COPY_BEFORE = "grid_copy_before";
+	const ACTION_COPY_AFTER = "grid_copy_after";
 	
 	/**
 	 * construct grid plugin
@@ -54,7 +59,6 @@ class Plugin {
 		 */
 		require_once dirname( __FILE__ ) . '/constants/position_in_post.php';
 
-
 		/**
 		 * load translations
 		 */
@@ -67,6 +71,9 @@ class Plugin {
 		global $grid_loaded;
 		$grid_loaded = false;
 
+		require_once dirname(__FILE__). '/classes/StorageHelper.php';
+		$this->storageHelper = new StorageHelper($this);
+
 		/**
 		 * do stuff for wordpress spezific boxes
 		 */
@@ -77,7 +84,7 @@ class Plugin {
 		 * the grid itself!
 		 */
 		require_once dirname( __FILE__ ) . '/classes/the_grid.php';
-		new the_grid($this);
+		$this->the_grid = new the_grid($this);
 
 		/**
 		 * Styles

@@ -36,6 +36,15 @@ class the_grid
 	}
 
 	/**
+	 * @param int $postId
+	 *
+	 * @return string
+	 */
+	function getEditorUrl($postId){
+		return add_query_arg( array( 'page' => 'grid', 'postid' => $postId ), admin_url( 'admin.php' ) );
+	}
+
+	/**
 	 * add the grid action to post types
 	 * @param $actions
 	 * @param $entity
@@ -44,10 +53,8 @@ class the_grid
 	function grid_wp_actions( $actions, $entity ) {
 		if ( true == get_option( 'grid_'.get_post_type().'_enabled', false ) ) {
 			$temp = array();
-			$editGridUrl = add_query_arg( array( 'page' => 'grid', 'postid' => $entity->ID ), admin_url( 'admin.php' ) );
-
+			$editGridUrl = $this->getEditorUrl($entity->ID);
 			$label = ($this->plugin->post->post_has_grid($entity->ID)) ? __("Edit Grid", Plugin::DOMAIN): __("Create Grid", Plugin::DOMAIN);
-
 			$temp['grid'] = sprintf('<a href="%s">%s</a>', $editGridUrl, $label);
 			$actions = array_merge( $temp, $actions );
 		}
@@ -91,7 +98,7 @@ class the_grid
 			} else if ( '__NONE__' != get_option( 'grid_default_container', '__NONE__' ) ) {
 				$grid->insertContainer( get_option( 'grid_default_container' ), 0 );
 			}
-			$wpdb->query( 'insert into '.$wpdb->prefix."grid_nodes (nid,grid_id) values ($postid,$id)" );
+			$this->plugin->storageHelper->setPostGrid($postid, $id);
 			$grid_id = $id;
 		} else{
 			$grid_id = $rows[0]->grid_id;
@@ -104,13 +111,11 @@ class the_grid
 
 		grid_enqueue_editor_files();
 
-		$labelViewPost = __('View Post', Plugin::DOMAIN);
-
 		echo '<div class="wrap"><h2>'.$post->post_title.
 			' <a title="Return to the post-edit page" class="add-new-h2"'.
 			' href="'.admin_url("post.php?post=$postid&action=edit").'" >'.__('Edit Post', Plugin::DOMAIN).'</a'.
 			'><a class="add-new-h2" href="'.
-			get_permalink( $postid ).'">'.$labelViewPost.'</a></h2> </div>';
+			get_permalink( $postid ).'">'.__('View Post', Plugin::DOMAIN).'</a></h2> </div>';
 
 		/**
 		 * async parameters
