@@ -90,6 +90,12 @@ class grid_db {
 		$this->connection->query($query);
 
 	}
+
+	public function cloneGridById($gridId){
+		$grid = new stdClass();
+		$grid->gridid = $gridId;
+		return $this->cloneGrid($grid);
+	}
 	
 	public function cloneGrid($grid)
 	{
