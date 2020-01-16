@@ -81,11 +81,11 @@ var ContainerView = GridBackbone.View.extend({
             json.title_short = ( json.title.length <= cut ? json.title : json.title.substring(0,cut)+"&hellip;" );
         }
         if(json.prolog){
-            var prolog = jQuery(json.prolog).text();
+            var prolog = jQuery("<div>"+json.prolog+"</div>").text();
             json.prolog_short = "<p>"+( prolog.length <= cut ? prolog : prolog.substring(0,cut)+"&hellip;" )+"</p>";
         }
         if(json.epilog){
-            var epilog = jQuery(json.epilog).text();
+            var epilog = jQuery("<div>"+json.epilog+"</div>").text();
             json.epilog_short = "<p>"+( epilog.length <= cut ? epilog : epilog.substring(0,cut)+"&hellip;" )+"</p>";
         }
 
