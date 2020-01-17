@@ -9,6 +9,8 @@
 namespace Palasthotel\Grid\WordPress;
 
 
+use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
+use Grid\Constants\GridCSSVariant;
 use Grid\Constants\Hook;
 
 /**
@@ -184,8 +186,13 @@ class TheGrid
 	function container_slots_css() {
 		global $grid_lib;
 		global $wpdb;
-		$rows = $wpdb->get_results( 'select * from '.$wpdb->prefix.'grid_container_type' );
-		echo $grid_lib->getContainerSlotCSS( $rows );
+		$variant = (isset($_GET["variant"]))? sanitize_text_field($_GET["variant"]): GRID_CSS_VARIANT_TABLE;
+
+		echo $grid_lib->getContainerSlotCSS(
+			$wpdb->get_results('select * from '.$wpdb->prefix.'grid_container_type'),
+			GridCSSVariant::getVariant($variant)
+		);
+
 		die();
 	}
 

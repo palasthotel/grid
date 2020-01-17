@@ -76,6 +76,13 @@ class Settings
 	 */
 	function admin_init() {
 		/**
+		 * grid frontend css version
+		 */
+		add_settings_section( 'grid_frontend_css', __('Frontend CSS', Plugin::DOMAIN), array( $this, 'frontend_css_settings_section' ), 'grid_settings' );
+		add_settings_field( Plugin::OPTION_FRONTEND_CSS_VARIANT, __('Variant', Plugin::DOMAIN), array( $this, 'frontend_css_html' ), 'grid_settings', 'grid_frontend_css' );
+		register_setting( 'grid_settings', Plugin::OPTION_FRONTEND_CSS_VARIANT );
+
+		/**
 		 * default styles
 		 */
 		add_settings_section( 'grid_default_styles', __('Default Styles', Plugin::DOMAIN), array( $this, 'default_styles_settings_section' ), 'grid_settings' );
@@ -170,6 +177,36 @@ class Settings
 		add_settings_section( 'grid_permalinks', __('Grid', Plugin::DOMAIN), array( $this, 'permalinks_section' ), 'grid_settings' );
 		add_settings_field( 'grid_permalinks', __('Landing Page base', Plugin::DOMAIN), array( $this, 'permalinks_html' ), 'grid_settings', 'grid_permalinks' );
 		register_setting( 'grid_settings', 'grid_permalinks' );
+	}
+
+	function frontend_css_settings_section(){
+		_e('Choose the css variant for frontend grid rendering.', Plugin::DOMAIN);
+	}
+
+	function frontend_css_html(){
+		$frontendCssVariant = get_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, \Grid\Constants\GRID_CSS_VARIANT_TABLE);
+		$variants = [
+			[
+				"key"   => \Grid\Constants\GRID_CSS_VARIANT_NONE,
+				"label" => _x( "None", "Frontend css variant settings", Plugin::DOMAIN ),
+			],
+			[
+				"key"   => \Grid\Constants\GRID_CSS_VARIANT_TABLE,
+				"label" => _x( "Table", "Frontend css variant settings", Plugin::DOMAIN ),
+			],
+			[
+				"key"   => \Grid\Constants\GRID_CSS_VARIANT_FLEXBOX,
+				"label" => _x( "Flexbox", "Frontend css variant settings", Plugin::DOMAIN ),
+			],
+		];
+		echo "<select name='".Plugin::OPTION_FRONTEND_CSS_VARIANT."'>";
+		foreach ($variants as $variant){
+			$key = $variant["key"];
+			$label = $variant["label"];
+			$selected = ($frontendCssVariant == $key)? "selected='selected'":"";
+			echo "<option value='$key' $selected>$label</option>";
+		}
+		echo "</select>";
 	}
 
 	function default_styles_settings_section() {

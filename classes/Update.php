@@ -14,6 +14,9 @@ class Update extends \base_update
 {
 	public $schemakey = "_wordpress";
 
+	// ------------------------------------------------
+	// updates
+	// ------------------------------------------------
 	public function update_1()
 	{
 		db_query("insert into {grid_schema} (propkey) values ('schema_version".$this->schemakey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->schemakey."';");
@@ -22,6 +25,14 @@ class Update extends \base_update
 
 	}
 
+	public function update_2(){
+		// default variant before update
+		update_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, \Grid\Constants\GRID_CSS_VARIANT_TABLE);
+	}
+
+	// ------------------------------------------------
+	// update notices
+	// ------------------------------------------------
 	public function notice_1(){
 		/**
 		 * install button for plugin
@@ -29,14 +40,14 @@ class Update extends \base_update
 		$action = 'install-plugin';
 		$slug = 'grid-social-boxes';
 		$url = wp_nonce_url(
-		    add_query_arg(
-		        array(
-		            'action' => $action,
-		            'plugin' => $slug
-		        ),
-		        admin_url( 'update.php' )
-		    ),
-		    $action.'_'.$slug
+			add_query_arg(
+				array(
+					'action' => $action,
+					'plugin' => $slug
+				),
+				admin_url( 'update.php' )
+			),
+			$action.'_'.$slug
 		);
 
 		$button = "<a href='$url' class='install-now button'>Install</a>";
@@ -45,7 +56,6 @@ class Update extends \base_update
 			<p>'.$button.'</p>
 		</div>';
 	}
-
 }
 
 

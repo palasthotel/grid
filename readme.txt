@@ -86,6 +86,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 
 == Changelog ==
 
+= X.X.X =
+* Optimization: Added flexbox version for default grid css. Can be chosen in grid settings.
+
 = 1.9.1 =
 * Update: CKEditor 4.13.1
 * Bugfix: Question mark in containers epilog or prolog source code view crashed the grid

@@ -20,6 +20,9 @@
 namespace Palasthotel\Grid\WordPress;
 
 // If this file is called directly, abort.
+use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
+use const Grid\Constants\GRID_CSS_VARIANT_NONE;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -52,6 +55,12 @@ class Plugin {
 	// ------------------------------------
 	const ACTION_COPY_BEFORE = "grid_copy_before";
 	const ACTION_COPY_AFTER = "grid_copy_after";
+
+	// ------------------------------------
+	// options
+	// ------------------------------------
+	const OPTION_FRONTEND_CSS_VARIANT = "grid_frontend_css_variant";
+
 	
 	/**
 	 * construct grid plugin
@@ -274,7 +283,13 @@ class Plugin {
 			wp_enqueue_style( 'grid_frontend', get_template_directory_uri() . '/grid/default-frontend.css' );
 		} else {
 			// default
-			wp_enqueue_style( 'grid_frontend', admin_url( 'admin-ajax.php' ) . '?action=gridfrontendCSS' );
+			$variant = get_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, GRID_CSS_VARIANT_TABLE);
+			if($variant != GRID_CSS_VARIANT_NONE){
+				wp_enqueue_style(
+					'grid_frontend',
+					admin_url( 'admin-ajax.php' ) . '?action=gridfrontendCSS&variant='.$variant
+				);
+			}
 		}
 	}
 
