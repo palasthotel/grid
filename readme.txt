@@ -4,7 +4,7 @@ Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
 Tested up to: 5.3.2
-Stable tag: 1.9.2
+Stable tag: 2.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -85,6 +85,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 2.0.0 =
+* IMPORTANT: we removed support for sidebar.
 
 = 1.9.2 =
 * Optimization: Added flexbox version for default grid css. Can be chosen in grid settings.
@@ -404,6 +407,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 * First release
 
 == Upgrade Notice ==
+
+= 2.0.0 =
+We removed support for sidebars. If you use grid sidebars they cannot be used anymore.
 
 = 1.9.0 =
 There was a bigger refactoring. If you use global variables or classes in your theme or third party plugins please check if they are still working.
