@@ -9,6 +9,7 @@
 * Initializes Grid boxes
 */
 include dirname(__FILE__).'/constants/hook.php';
+include dirname(__FILE__).'/constants/GridCSSVariant.php';
 include dirname(__FILE__).'/grid_base.php';
 include dirname(__FILE__).'/grid_box.php';
 

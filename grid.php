@@ -1,4 +1,9 @@
 <?php
+
+use Grid\Constants\GridCssVariantFlexbox;
+use Grid\Constants\GridCssVariantTable;
+use Grid\Constants\GridCssVariantNone;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -121,13 +126,24 @@ class grid_library
 		}
 		return $return;
 	}
-	// renderes css for avaiable container slots
-	public function getContainerSlotCSS($container_types){
-		// $container_types = db_query("SELECT * FROM {grid_container_type}");
+
+	/**
+	 * @param object[] $container_types
+	 * @param \Grid\Constants\GridCSSVariant $variant
+	 *
+	 * @return string
+	 */
+	public function getContainerSlotCSS($container_types, $variant){
+
+		header('Content-Type: text/css');
+		if($variant instanceof GridCssVariantNone) return "";
+
 		ob_start();
-		require $this->getHome()."css/grid-container-slots.css.php";
+		if( $variant instanceof GridCssVariantTable)	require $this->getHome() . "css/grid-frontend/table.css.php";
+		if($variant instanceof GridCssVariantFlexbox)	require $this->getHome()."css/grid-frontend/flexbox.css.php";
 		$return = ob_get_contents();
 		ob_end_clean();
+
 		return $return;
 	}
 	private function calculateSpace($space){
