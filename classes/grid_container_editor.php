@@ -27,7 +27,7 @@ class grid_container_editor
 		if(isset($_POST) && !empty($_POST))
 		{
 			//save the new container
-			$support=$_POST['sidebar_support'];
+			$support=$_POST['space_around'];
 			$new_denominator=doubleval($_POST['denominator']);
 			$slots = str_replace(" ", "", $_POST['slots']);
 			$slots=explode(",", $slots);
@@ -96,7 +96,7 @@ class grid_container_editor
 	<table cellspacing="0" cellpadding="0" class="grid-container-editor-table">
 		<tr>
 			<th>Identifier</th>
-			<th>Sidebar-Support</th>
+			<th>Space around</th>
 			<th>Denominator</th>
 			<th>Slots (Relative Sizes)</th>
 		</tr>
@@ -107,9 +107,11 @@ class grid_container_editor
 		$components=explode("-", $container['type']);
 		array_splice($components, 0,1);
 		$denominator=0;
-		$places_sidebar=strpos($container['type'],"s-")===0;
+
+		$places_space=strpos($container['type'],"s-")===0;
 		$placeholder=strpos($container['type'],"i-")===0;
-		$sidebar=strpos($container['type'],"sc-")===0;
+		$space=strpos($container['type'],"sc-")===0;
+
 		foreach($components as $elem)
 		{
 			if(strpos($elem,"d")!==FALSE)
@@ -123,7 +125,7 @@ class grid_container_editor
 			<td><?php echo $container['type'];?></td>
 			<td>
 			<?php
-				if($places_sidebar)echo "places sidebar";
+				if($places_space) echo "places space";
 				else if(isset($container['space_to_left']) && !isset($container['space_to_right']))echo "left";
 				else if(!isset($container['space_to_left']) && isset($container['space_to_right']))echo "right";
 				else if(isset($container['space_to_left']) && isset($container['space_to_right']))echo "both";
@@ -133,7 +135,7 @@ class grid_container_editor
 			<td><?php echo $denominator;?></td>
 			<td>
 				<?php
-				if($placeholder || $sidebar)
+				if($placeholder || $space)
 				{
 					echo "N/A (internal use)";
 				}
@@ -148,10 +150,10 @@ class grid_container_editor
 						$first=false;
 						if($slot=="0")
 						{
-							if($places_sidebar)
+							if($places_space)
 								echo "Content";
 							else
-								echo "Sidebar";
+								echo "Space";
 						}
 						else
 						{
@@ -172,12 +174,12 @@ class grid_container_editor
 		<h3>Create a new container</h3>
 		<div class="grid-new-container-values">
 			<div>
-				<label for="grid-container-editor-sidebar_support">Support for Sidebars:</label><br/>
-				<select id="grid-container-editor-sidebar_support" name="sidebar_support">
+				<label for="grid-container-editor-space_around">Space around</label><br/>
+				<select id="grid-container-editor-space_around" name="space_around">
 					<option value="none" <?php if($support=="none")echo "selected";?>>None</option>
 					<option value="left" <?php if($support=="left")echo "selected";?>>Left</option>
 					<option value="right" <?php if($support=="right")echo "selected";?>>Right</option>
-					<option value="both" <?php if($support=="both")echo "selected";?>>Both</option>
+					<option value="both" <?php if($support=="both")echo "selected";?>>Both (container will be centered)</option>
 				</select>
 			</div>
 			<div>
