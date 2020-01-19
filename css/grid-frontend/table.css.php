@@ -67,34 +67,3 @@ foreach ($container_types as $key => $type) {
     print "}\n\n";
   }
 }
-
-// For frontend only
-?>
-.grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0 .grid-container,
-.grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3 .grid-container {
-  width: 100%;
-  padding: 0;
-}
-
-.grid-frontend .grid-content-container-wrapper.grid-container-c-2d3-0 {
-  padding: 0;
-  float: left;
-}
-
-.grid-frontend .grid-content-container-wrapper.grid-container-c-0-2d3 {
-  padding: 0;
-  float: right;
-}
-
-.grid-frontend .grid-slot-sidebar {
-  display: block;
-  width: 33.3%;
-}
-
-.grid-frontend .grid-slot-sidebar.grid-right-sidebar {
-  float: right;
-}
-
-.grid-frontend .grid-slot-sidebar.grid-left-sidebar {
-  float: left;
-}
