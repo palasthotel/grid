@@ -25,7 +25,6 @@ document.lang_values = {
 
 	// Titles
 	"title-tab-containers": "New container",
-	"title-tab-sidebars": "New sidebar",
 	"title-tab-reuse-container": "Reusable container",
 	"title-wp-media": "Choose an image",
 
@@ -51,7 +50,6 @@ document.lang_values = {
 	"err_box_trash": "Could not delete box.",
 	"err_move_container": "Could not move containers. Site will reload!",
 	"err-move-box": "Error while moving box!",
-	"err-box-reuse-sidebar": "Sidebar boxes are not allowed for reuse.",
 	"err-box-reuse": "Could not make box reusable. Please reload the page and try again.",
 	"err-box-save": "Could not save the box. Please reload the page and try again.",
 

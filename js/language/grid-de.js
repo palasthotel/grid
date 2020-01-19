@@ -25,7 +25,6 @@ document.lang_values = {
 
 	// Titles
 	"title-tab-containers": "Neuer Container",
-	"title-tab-sidebars": "Neue Seitenspalte",
 	"title-tab-reuse-container": "Wiederverwendbarer Container",
 	"title-wp-media": "Bild auswählen",
 
@@ -51,7 +50,6 @@ document.lang_values = {
 	"err_box_trash": "Konnte Box nicht entfernen.",
 	"err_move_container": "Der Container konnte nicht verschoben werden. Seite lädt neu!",
 	"err-move-box": "Fehler beim Umsortieren der Box!",
-	"err-box-reuse-sidebar": "Sidebar-Boxen können nicht wiederverwendbar gemacht werden.",
 	"err-box-reuse": "Die Box konnte nicht wiederverwendbar gemacht werden. Seite bitte neu laden.",
 	"err-box-save": "Die Box konnte nicht gespeichert werden. Seite bitte neu laden.",
 

@@ -45,7 +45,7 @@ var GridToolbarView = GridBackbone.View.extend({
 
         }
         var type = "container";
-        if(GRID.mode == "container" || GRID.IS_SIDEBAR || !GRID.getRights().get("create-container")){
+        if(GRID.mode == "container" || !GRID.getRights().get("create-container")){
             this.$tab_container.remove();
             type = "box";
         }

@@ -39,7 +39,6 @@ var ContainersView = GridBackbone.View.extend({
     		self.$el.append(containerview.render().el);
     	});
         GRID._initializeBoxSortable();
-        GRID.onSidebarCalculation();
     	return this;
 	}
 });
@@ -99,7 +98,8 @@ var ContainerView = GridBackbone.View.extend({
 
         json.right_move = GRID.getRights().get("move-container");
 
-        json.isSidebarGrid = GRID.IS_SIDEBAR;
+        json.isSidebar = json.type.startsWith("s");
+
         this.$el.empty();
     	this.$el.append(ich.tpl_container( json));
 

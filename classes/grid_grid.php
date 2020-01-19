@@ -9,21 +9,39 @@
 use Grid\Constants\Hook;
 
 class grid_grid extends grid_base {
+
+	/**
+	 * @var \grid_container[]
+	 */
 	public $container;
+	/**
+	 * @var int
+	 */
 	public $gridid;
+	/**
+	 * @var int
+	 */
 	public $gridrevision;
+	/**
+	 * @var bool
+	 */
 	public $isPublished;
+	/**
+	 * @var bool
+	 */
 	public $isDraft;
 
+	/**
+	 * @param bool $editmode
+	 *
+	 * @return string
+	 */
 	public function render($editmode)
 	{
 		$this->storage->fireHook(Hook::WILL_RENDER_GRID, (object) array('grid'=>$this,'editmode'=>$editmode));
 		
 		$containermap=array();
 		$containerlist=array();
-		
-		$this->preprocessContainer();
-		
 		
 		foreach($this->container as $container)
 		{
@@ -183,73 +201,6 @@ class grid_grid extends grid_base {
 		}
 		$container=$this->container[$idx];
 		return $container->update($containerdata);
-	}
-	
-	public function preprocessContainer(){
-		// Start Container Preprocessing by ben_
-		// optimized by edward
-		$precontainer = false;
-		$nextcontainer = false;
-		
-		$withincontentcontainers = false;
-		$contentcontaineropencounter = 0;
-		$contentcontainerclosecounter = 0;
-		$i = 0;
-		foreach($this->container as $container){
-			/**
-			 * @var $container grid_container
-			 */
-			$mycontainer = $container;
-			$this->container[$i]->position = $i;
-			
-			if($i == 0){
-				$prevcontainer = new grid_container();
-			}else{
-				$prevcontainer = $this->container[$i-1];
-			}
-			
-			if($i == count($this->container) -1){
-				$nextcontainer = new grid_container();
-			}else{
-				$nextcontainer = $this->container[$i+1];
-			}
-			
-			// if container with sidebarspace and previous was none or was last one, than start wrapper
-			if($mycontainer->is_content_container() && (!$prevcontainer->is_content_container() || $prevcontainer->lastcontentcontainer) ){
-				$this->container[$i]->firstcontentcontainer = true;
-				$withincontentcontainers = true;
-				$contentcontaineropencounter ++;
-			}else{
-				$this->container[$i]->firstcontentcontainer = false;
-			}
-			
-
-			if(
-				$withincontentcontainers && 
-				$mycontainer->is_content_container() && 
-				$nextcontainer->is_content_container() &&
-				$mycontainer->space_to_right == $nextcontainer->space_to_right &&
-				$mycontainer->space_to_left == $nextcontainer->space_to_left
-				){
-				$this->container[$i]->lastcontentcontainer = false;
-			}elseif(
-				$withincontentcontainers && 
-				$mycontainer->is_content_container() && 
-				
-				( !$nextcontainer->is_content_container() || 
-				$mycontainer->space_to_right != $nextcontainer->space_to_right ||
-				$mycontainer->space_to_left != $nextcontainer->space_to_left ) ){
-
-				$this->container[$i]->lastcontentcontainer = true;
-				$withincontentcontainers = false;
-				$contentcontainerclosecounter ++;
-			}else{
-				$this->container[$i]->lastcontentcontainer = false;
-			}
-			$i++;
-		}
-		// End Container Preprocessing by ben_
-		// optimized by edward
 	}
 	
 }

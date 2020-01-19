@@ -20,13 +20,11 @@ var BoxEditor = GridBackbone.View.extend({
         var styles=GRID.getBoxStyles().toJSON();
         var self=this;
         _.each(styles,function(elem){
-            if(elem.slug==self.model.get("style"))
+            if(elem.slug===self.model.get("style"))
                 elem.selected="selected";
             else
                 elem.selected="";
         });
-
-        var isSidebarBox = (this.model.get("type") == "sidebar");
 
         this.$el.html(ich.tpl_boxeditor({
             'lang_values':document.lang_values,
@@ -35,7 +33,6 @@ var BoxEditor = GridBackbone.View.extend({
             'c_id':this.model.getContainer().get("id"),
             's_id':this.model.getSlot().get("id"),
             'styles':styles,
-            'isSidebarBox': isSidebarBox
         }));
         var contentstructure=this.model.get("contentstructure");
         var fieldcontainer=this.$el.find(".grid-dynamic-fields .grid-editor-field-wrapper");

@@ -23,12 +23,12 @@ var GridToolContainersView = GridBackbone.View.extend({
         $type.toggleClass('active');
         var role = $type.attr("role");
         var list = "";
-        if(role == "reusable"){
+        if(role === "reusable"){
             // reusables
             var reusables = this.getReusable();
             list = this.getRenderedContainerList(reusables);
         } else {
-            // containers and sidebars
+            // containers
             var containers = this.getContainers(role);
             list = this.getRenderedContainerList(containers);
         }
@@ -48,12 +48,11 @@ var GridToolContainersView = GridBackbone.View.extend({
     },
     getContainers: function(type){
         var scope_type = "c-";
-        if(type == "sidebar"){ scope_type = "s-"; }
         var collection = this.collection;
         var containers = { containers: this.collection.toJSON() };
         _.each(containers.containers, function(value, key, list){
 
-            if( value.type.indexOf(scope_type) != 0 ){
+            if( value.type.indexOf(scope_type) !== 0 ){
                 delete containers.containers[key];
             } else {
                 value.slots = [];

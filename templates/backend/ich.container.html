@@ -1,36 +1,41 @@
-{{^isSidebarGrid}}
 <div class="grid-container-controls">
 
-	<span class="grid-container-title">
-		{{title_short}}
-		{{#titleurl}}<span class="icon-link" title="{{titleurl}}"></span>{{/titleurl}}
-		{{#style}}<span class="grid-container-style">({{style_label}})</span>{{/style}}
-	</span>
-	{{#right_move}}
-	<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
-	{{/right_move}}
-	{{#reused}}<span class="grid-container-reused" title="${reusetitle}"><i class="icon-reused"></i></span>{{/reused}}
-	{{#right_options}}
-	<div class="grid-container-options">
-		<span class="grid-container-options-icon">Options <i class="icon-options"></i></span>
-        <ul class="grid-container-options-list">
-			{{^reused}}
-			{{#right_edit}}
-			<li class="grid-container-options-list-item" role="edit"><i class="icon-edit"></i> Edit</li>
-			<li class="grid-container-options-list-item" role="reuse"><i class="icon-reuse"></i> Reuse</li>
-			<li class="grid-container-options-list-item" role="toggleslotstyles"><i class="icon-style"></i> Slot styles</li>
-			{{/right_edit}}
-			{{/reused}}
-			{{#right_delete}}
-			<li class="grid-container-options-list-item" role="trash"><i class="icon-trash"></i> Delete</li>
-			{{/right_delete}}
-        </ul>
-    </div>
-    {{/right_options}}
+	{{^isSidebar}}
+		<span class="grid-container-title">
+			{{title_short}}
+			{{#titleurl}}<span class="icon-link" title="{{titleurl}}"></span>{{/titleurl}}
+			{{#style}}<span class="grid-container-style">({{style_label}})</span>{{/style}}
+		</span>
+		{{#right_move}}
+		<span class="grid-container-sorthandle hide-grid-container-editor"><i class="icon-drag"></i></span>
+		{{/right_move}}
+		{{#reused}}<span class="grid-container-reused" title="${reusetitle}"><i class="icon-reused"></i></span>{{/reused}}
+		{{#right_options}}
+		<div class="grid-container-options">
+			<span class="grid-container-options-icon">Options <i class="icon-options"></i></span>
+	        <ul class="grid-container-options-list">
+				{{^reused}}
+				{{#right_edit}}
+				<li class="grid-container-options-list-item" role="edit"><i class="icon-edit"></i> Edit</li>
+				<li class="grid-container-options-list-item" role="reuse"><i class="icon-reuse"></i> Reuse</li>
+				<li class="grid-container-options-list-item" role="toggleslotstyles"><i class="icon-style"></i> Slot styles</li>
+				{{/right_edit}}
+				{{/reused}}
+				{{#right_delete}}
+				<li class="grid-container-options-list-item" role="trash"><i class="icon-trash"></i> Delete</li>
+				{{/right_delete}}
+	        </ul>
+	    </div>
+	    {{/right_options}}
+	{{/isSidebar}}
+
+	{{#isSidebar}}
+		<span class="grid-container-title">Sidebars are not supported anymore since Grid Version 2.x <button role="trash"><i class="icon-trash"></i> Delete sidebar container</button></span>
+	{{/isSidebar}}
 
 </div>
-{{/isSidebarGrid}}
 
+{{^isSidebar}}
 <div class="grid-container-content">
 	{{#prolog_short}}
 	<div class="grid-container-before">
@@ -53,3 +58,4 @@
 	</div>
 	{{/reused}}
 </div>
+{{/isSidebar}}

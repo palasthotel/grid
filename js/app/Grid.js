@@ -148,7 +148,6 @@ GRID = {
 	new_grid_success: function(data){
 		GRID.$root.empty();
 		GRID.$root.append(GRID.$loading);
-		GRID.IS_SIDEBAR = GRID.getModel().get("isSidebar");
 
 		GRID.gridview = new GridView({model: GRID.getModel() });
 		// handle rights
@@ -156,15 +155,7 @@ GRID = {
 
 		GRID.$root.append( GRID.getView().render().el );
 
-		jQuery(GRID.dom_root).mutate('height',function (element,info){
-			GRID.onSidebarCalculation();
-		});
-
-		GRID.$root
-			.data("isSidebar",GRID.IS_SIDEBAR)
-			.addClass('grid-is-sidebar-'+GRID.IS_SIDEBAR);
-
-		if(!GRID.IS_SIDEBAR) GRID._initializeContainerSortable();
+		GRID._initializeContainerSortable();
 		GRID._initializeBoxSortable();
 		// load the revisions
 		GRID.revisions = new Revisions({grid: GRID.getModel() });
@@ -176,7 +167,6 @@ GRID = {
 		GRID.async.addObserver(GRID.toolbar);
 		GRID.$root.prepend(GRID.toolbar.render().el);
 
-		GRID.onSidebarCalculation();
 		GRID.$loading.removeClass("grid-init-loading");
 
 		/**
@@ -284,61 +274,6 @@ GRID = {
 		}
 		this.PREVIEW_PATTERN=PREVIEW_PATTERN;
 	},
-	// calculates Sidebar
-	onSidebarCalculation: function($root){
-		if(typeof $root == "undefined") $root = GRID.$root;
-		$root.find(".grid-containers-wrapper > .grid-container-type-s")
-					.css("padding-top", "0px");
-		$root.find(".grid-containers-wrapper > .grid-container-type-s .grid-slot")
-					.css("padding-bottom", "0px")
-					.css("bottom", "0px");
-
-		jQuery.each($root.find('*:not(.grid-box) .grid-containers-wrapper > .grid-container-type-s'), function(index, sidebar) {
-			GRID.makeSidebarPuffer(jQuery(sidebar));
-		});
-	},
-	makeSidebarPuffer: function($sidebar){
-		var $sidebar_slot = $sidebar.find('.grid-slot').first();
-		var c_height = GRID.calculateSidebarableContainerHeight($sidebar);
-		$sidebar_slot.css("bottom", $sidebar.outerHeight()+"px");
-		if(c_height < $sidebar_slot.outerHeight(true)){
-			// if sidebar is taller than containers make puffer margin top
-			var needed_margin_top = $sidebar_slot.outerHeight();
-			needed_margin_top -= c_height;
-			$sidebar.css("padding-top", needed_margin_top);
-		} else if(c_height > $sidebar_slot.outerHeight(true)){
-			// if sidebar is smaller than containers expend sidebar slot
-			var need_bottom_offset = c_height-$sidebar_slot.outerHeight();
-			$sidebar_slot.css("padding-bottom",need_bottom_offset+"px");
-		}
-
-	},
-	calculateSidebarableContainerHeight: function($sidebar){
-		var c_height = 0;
-		var container_side = null;
-		var sidebar_space = 0;
-		if($sidebar.data("space-left") > 0){
-			container_side = "right";
-			sidebar_space = $sidebar.data("space-left");
-		} else if($sidebar.data("space-right")>0){
-			container_side = "left";
-			sidebar_space = $sidebar.data("space-right");
-		} else {
-			GRID.log(["sidebar with no space?", $sidebar]);
-			return c_height;
-		}
-		var $container = $sidebar.prev();
-		while( $container.length > 0 &&
-				(
-					Math.abs( 1-($container.data("space-"+container_side)+sidebar_space)) < 0.005
-					||  $container.hasClass('grid-container-sort-placeholder')
-				)
-			){
-			c_height += $container.outerHeight(true);
-			$container = $container.prev();
-		}
-		return c_height;
-	},
 	// CKEDITOR functions
 	useCKEDITOR: function(selector){
 		CKEDITOR.replace(
@@ -397,7 +332,6 @@ GRID = {
 			GRID.$root.show();
 			GRID.$root.animate({width:"100%"},220,function(){
 				callback();
-				GRID.onSidebarCalculation();
 			});
 			window.scrollTo(0,0);
 		},50);

@@ -27,10 +27,6 @@ class grid_container extends grid_base {
 	public $epilog;
 	public $reused;
 	public $position;
-	public $iscontentcontainer;
-	public $firstcontentcontainer;
-	public $lastcontentcontainer;
-	public $sidebarleft = false;
 	public $slots;
 	public $config = null;
 
@@ -97,90 +93,61 @@ class grid_container extends grid_base {
 				$this->classes[] = "grid-container-has-multiple-slots";
 				break;
 		}
+
 		// prepare slot dimensions
 		$type_arr = explode("-", $this->type);
 		$counter = 0;
 		$slots_dimension = array_slice($type_arr,1);
 		if($slots_dimension[$counter] == "0") $counter++;
 
-
-		if( $type_arr[0] == "s" && $editmode==FALSE)
-		{	
-			$side = "right";
-			if($this->space_to_right){
-				$side = "left";
-			}
-			$slot=$this->slots[0];
-			$slot->dimension = $slots_dimension[$counter++];
-			array_push( $slot->classes, 
-							"grid-slot-sidebar", 
-							"grid-slot-first", 
-							"grid-slot-last", 
-							"grid-slot-has-one-box",
-							"grid-$side-sidebar");
-			
-			$output=$slot->render($editmode, $this);
-			
-			$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
-			
-			return $output;
-		}
-		else
+		foreach($this->slots as $slot)
 		{
-			if($this->space_to_right){
-				$this->sidebarleft = true;
-			} else if($this->space_to_left){
-				$this->sidebarright = true;
+			$slot->dimension = $slots_dimension[$counter++];
+		    switch (count($slot->boxes)) {
+		        case 0:
+		            $slot->classes[] = "grid-slot-has-no-box";
+		            break;
+		        case 1:
+		            $slot->classes[] = "grid-slot-has-one-box";
+		            break;
+		        default:
+		            $slot->classes[] = "grid-slot-has-multiple-boxes";
+		            break;
+		    }
+			if ($slot == end($this->slots)){
+				$slot->classes[] = "grid-slot-last";
 			}
-			
-			foreach($this->slots as $slot)
-			{
-				$slot->dimension = $slots_dimension[$counter++];			  
-			  	switch (count($slot->boxes)) {
-			  		case 0:
-			  			$slot->classes[] = "grid-slot-has-no-box";
-			  			break;
-			  		case 1:
-			  			$slot->classes[] = "grid-slot-has-one-box";
-			  			break;
-			  		default:
-			  			$slot->classes[] = "grid-slot-has-multiple-boxes";
-			  			break;
-			  	}
-				if ($slot == end($this->slots)){
-					$slot->classes[] = "grid-slot-last";
-				}
-				if ($slot == reset($this->slots)){
-					$slot->classes[] = "grid-slot-first";
-				}
-				$slots[]=$slot->render($editmode, $this);
+			if ($slot == reset($this->slots)){
+				$slot->classes[] = "grid-slot-first";
 			}
-			ob_start();
-			$found = FALSE;
-			if( is_array( $this->storage->templatesPaths ) )
-			{
-				foreach ($this->storage->templatesPaths as $templatesPath) 
-				{
-					$template_path = rtrim($templatesPath."/grid-container.tpl.php", "/");
-					if( file_exists($template_path) ){
-						include $template_path;
-						$found = TRUE;
-						break;
-					}
-				}
-				
-			}
-			if(!$found)
-			{
-				include dirname(__FILE__).'/../templates/frontend/grid-container.tpl.php';
-			}
-			$output=ob_get_clean();
-			
-			$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
-			
-			return $output;
-			
+			$slots[]=$slot->render($editmode, $this);
 		}
+		ob_start();
+		$found = FALSE;
+		if( is_array( $this->storage->templatesPaths ) )
+		{
+			foreach ($this->storage->templatesPaths as $templatesPath)
+			{
+				$template_path = rtrim($templatesPath."/grid-container.tpl.php", "/");
+				if( file_exists($template_path) ){
+					include $template_path;
+					$found = TRUE;
+					break;
+				}
+			}
+
+		}
+		if(!$found)
+		{
+			include dirname(__FILE__).'/../templates/frontend/grid-container.tpl.php';
+		}
+		$output=ob_get_clean();
+
+		$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+
+		return $output;
+
+
 	}
 	
 	public function update($data)
@@ -194,16 +161,6 @@ class grid_container extends grid_base {
 		$this->prolog=$data->prolog;
 		$this->epilog=$data->epilog;
 		return $this->storage->persistContainer($this);
-	}
-	
-	public function is_content_container(){
-		if( strpos($this->type, "c") !== false && ($this->space_to_left != null || $this->space_to_right != null) ){
-			$this->iscontentcontainer = true;
-			return true;
-		}else{
-			$this->iscontentcontainer = false;
-			return false;
-		}
 	}
 	
 }
