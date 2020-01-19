@@ -4,6 +4,8 @@
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
+ *
+ * @var \grid_container $this
  */
 
 $classes = $this->classes;
@@ -20,29 +22,19 @@ if (!empty($this->title)) {
   array_push($classes, 'has-title');
 }
 
-if ($this->firstcontentcontainer):
-  if ($this->space_to_right != NULL) {
-    $math = explode("d", $this->space_to_right);
-  }
-  else {
-    $math = explode("d", $this->space_to_left);
-  }
-  $width = $math[1] - $math[0];
-  $class = ($this->space_to_right) ? "c-" . $width . "d" . $math[1] . "-0" : "c-0-" . $width . "d" . $math[1];
-  $class = "grid-container-" . $class;
-  $str   = "grid-container-right-space-" . $this->space_to_right;
-  $stl   = "grid-container-left-space-" . $this->space_to_left;
-
-  $container_wrapper_classes = array(
-    'grid-content-container-wrapper',
-    'grid-first-content-container',
-    $class,
-    $str,
-    $stl
-  );
+$hasSpaceAround = false;
+if ($this->space_to_right != NULL) {
+	$hasSpaceAround = true;
+	$classes[] = "grid-container-right-space-".$this->space_to_right;
+}
+if($this->space_to_left != NULL) {
+	$hasSpaceAround = true;
+	$classes[] = "grid-container-left-space-".$this->space_to_left;
+}
+if($hasSpaceAround){
+	$classes[] = "grid-container-has-space-around";
+}
 ?>
-<div class="<?php echo implode($container_wrapper_classes, ' '); ?>">
-<?php endif; ?>
 
   <div class="<?php echo implode($classes, ' '); ?>">
     <div class="grid-container-content">
@@ -85,6 +77,3 @@ if ($this->firstcontentcontainer):
     </div>
   </div>
 
-<?php if ($this->lastcontentcontainer): ?>
-</div>
-<?php endif; ?>
