@@ -320,7 +320,7 @@ function grid_wp_activate() {
 		 * default post types for grids
 		 */
 		update_option( 'grid_landing_page_enabled', true );
-		update_option( 'grid_sidebar_enabled', true );
+
 		/**
 		 * default searchable post types in grid
 		 */
@@ -329,7 +329,6 @@ function grid_wp_activate() {
 		/**
 		 * othter defaults
 		 */
-		update_option( 'grid_sidebar_post_type', 'sidebar' );
 		update_option( 'grid_default_container', 'c-1d1' );
 	}
 	// for initial content type registration
@@ -347,10 +346,6 @@ function grid_wp_perform_uninstall()
 	foreach($posts as $post) {
 		wp_delete_post($post->ID);
 	}
-	$posts=get_posts(array('post_type'=>'sidebar','posts_per_page'=>-1));
-	foreach($posts as $post) {
-		wp_delete_post($post->ID);
-	}
 
 	global $wpdb;
 	global $grid_connection;
@@ -359,8 +354,6 @@ function grid_wp_perform_uninstall()
 
 	delete_option('grid');
 	delete_option('grid_landing_page_enabled');
-	delete_option('grid_sidebar_enabled');
-	delete_option('grid_sidebar_post_type');
 	delete_option('grid_default_container');
 	$schema = $grid_lib->getDatabaseSchema();
 	$schema['grid_nodes']=array();

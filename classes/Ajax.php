@@ -4,23 +4,6 @@ namespace Palasthotel\Grid\WordPress;
 
 class Ajax extends \grid_ajaxendpoint {
 
-	public function loadGrid( $gridid )
-	{
-		global $wpdb;
-		$return = parent::loadGrid( $gridid );
-		if ( 0 != strncmp( 'box:', $gridid, strlen( 'box:' ) ) && 0 != strncmp( 'container:', $gridid, strlen( 'container:' ) ) ) {
-			$rows = $wpdb->get_results( 'select nid from '.$wpdb->prefix."grid_nodes where grid_id=$gridid" );
-			$post = get_post( $rows[0]->nid );
-			$type = $post->post_type;
-			if ( $type == get_option( 'grid_sidebar_post_type' ) ) {
-				$return['isSidebar'] = true;
-			} else {
-				$return['isSidebar'] = false;
-			}
-		}
-		return $return;
-	}
-
 	public function Rights()
 	{
 		$privs = grid_wp_get_privs();
