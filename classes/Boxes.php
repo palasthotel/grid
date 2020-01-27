@@ -13,7 +13,6 @@ class Boxes
 {
 	function __construct(){
 		$dir = dirname(__FILE__);
-		require( $dir.'/../core/classes/wordpress/grid_sidebar_box.php' );
 		require( $dir.'/../core/classes/wordpress/grid_post_box.php' );
 		require( $dir.'/../core/classes/wordpress/grid_media_box.php' );
 		require( $dir.'/../core/classes/wordpress/grid_posts_box.php' );

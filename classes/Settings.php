@@ -100,7 +100,7 @@ class Settings
 		$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
 		foreach ( $post_types as $key => $post_type ) {
 			// ignore landing_page and sidebar because we check them seperately
-			if($key == 'landing_page' || $key == "sidebar") continue;
+			if($key == 'landing_page') continue;
 			add_settings_field( 'grid_'.$key.'_enabled', $post_type->labels->name, array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => $key ) );
 			register_setting( 'grid_settings', 'grid_'.$key.'_enabled' );
 		}
@@ -109,8 +109,6 @@ class Settings
 		 */
 		add_settings_field( 'grid_landing_page_enabled', __("Landing Pages", Plugin::DOMAIN), array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => 'landing_page') );
 		register_setting( 'grid_settings', 'grid_landing_page_enabled' );
-		add_settings_field( 'grid_sidebar_enabled', __("Sidebars", Plugin::DOMAIN), array( $this, 'post_type_html' ), 'grid_settings', 'grid_post_types', array( 'type' => 'sidebar') );
-		register_setting( 'grid_settings', 'grid_sidebar_enabled' );
 
 		/**
 		 * post types for search
@@ -121,13 +119,6 @@ class Settings
 			add_settings_field( 'grid_'.$key.'_search_enabled', $post_type->labels->name, array( $this, 'post_type_search_html' ), 'grid_settings', 'grid_post_types_search', array( 'type' => $key ) );
 			register_setting( 'grid_settings', 'grid_'.$key.'_search_enabled' );
 		}
-
-
-		/**
-		 * sidebar post type
-		 */
-		add_settings_field( 'grid_sidebar_post_type', __('Which post type to use as sidebar content', Plugin::DOMAIN), array( $this, 'sidebar_html' ), 'grid_settings', 'grid_post_types' );
-		register_setting( 'grid_settings', 'grid_sidebar_post_type' );
 
 		/**
 		 * default grid container
@@ -289,23 +280,6 @@ class Settings
 
 	function post_type_search_settings_section() {
 		_e('Which post types should be found in grid content search?', 'grid');
-	}
-
-	function sidebar_html() {
-		$post_types = get_post_types( array('public' => true, 'show_ui' => true), 'objects' );
-		$setting = get_option( 'grid_sidebar_post_type', '__NONE__' );
-		?>
-		<select id="grid_sidebar_post_type" name="grid_sidebar_post_type">
-			<option value="__NONE__" <?php echo ( $setting == '__NONE__' ? 'selected' : '' );?>>Disable sidebar support</option>
-			<?php
-			foreach ( $post_types as $key => $post_type ) {
-				?>
-				<option value="<?php echo $key?>" <?php echo ( $key == $setting ? 'selected' : '' );?>><?php echo $post_type->labels->name?></option>
-				<?php
-			}
-			?>
-		</select>
-		<?php
 	}
 
 	function default_container_section() {

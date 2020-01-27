@@ -94,10 +94,7 @@ class TheGrid
 			$storage = grid_wp_get_storage();
 			$id = $storage->createGrid();
 			$grid = $storage->loadGrid( $id );
-			$post = get_post( $postid );
-			if ( $post->post_type == get_option( 'grid_sidebar_post_type' ) ) {
-				$grid->insertContainer( 'sc-1d3', 0 );
-			} else if ( '__NONE__' != get_option( 'grid_default_container', '__NONE__' ) ) {
+			if ( '__NONE__' != get_option( 'grid_default_container', '__NONE__' ) ) {
 				$grid->insertContainer( get_option( 'grid_default_container' ), 0 );
 			}
 			$this->plugin->storageHelper->setPostGrid($postid, $id);

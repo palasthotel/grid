@@ -237,29 +237,6 @@ class Plugin {
 				)
 			);
 		}
-		// TODO enable sidebar post type if enabled
-		if ( get_option( "grid_sidebar_enabled", false ) ) {
-
-			register_post_type( 'sidebar',
-				apply_filters( 'grid_register_post_type_landing_page',
-					array(
-						'labels'            => array(
-							'name'          => __( 'Sidebars', Plugin::DOMAIN ),
-							'singular_name' => __( 'Sidebar', Plugin::DOMAIN ),
-							// labels to be continued
-						),
-						'menu_icon'         => plugins_url( 'images/post-type-icon.png', __FILE__ ),
-						'description'       => __( 'This is where you can add new sidebars to your site.', Plugin::DOMAIN ),
-						'public'            => true,
-						'show_ui'           => true,
-						'hierarchical'      => false,
-						// Hierarchical causes memory issues - WP loads all records!
-						'show_in_nav_menus' => false,
-						'show_in_menu'      => 'grid_settings',
-					)
-				)
-			);
-		}
 	}
 
 	/**
