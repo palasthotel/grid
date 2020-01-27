@@ -86,7 +86,6 @@ var Grid = GridBackbone.Model.extend({
             PREVIEW_URL: window.location.pathname+'/preview',
             // 0 == false == unknown, 1 published, 2 draft
             isDraft: true,
-            isSidebar: false
         }
     },
 	getGridID: function(){

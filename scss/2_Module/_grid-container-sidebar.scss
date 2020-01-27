@@ -35,11 +35,6 @@
 		box-sizing: border-box;
 		z-index: $idx-container;
 	}
-	&[data-type*=s-0] .grid-slot{
-		// sidebar to right
-		left: auto;
-		right: 0;
-	}
 
 	.grid{
 		.grid-container,

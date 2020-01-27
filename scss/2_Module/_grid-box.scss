@@ -145,19 +145,4 @@
 	}
 }
 
-// sidebar boxes
-.grid-container-type-s *:not(.grid) .grid-box{
-	.grid-box-controls{
-		cursor: default;
-	}
-	.grid-box-delete{
-		display: none;
-	}
-	.grid-box-edit{
-		bottom: 0;
-	}
-	.grid-box-drag{
-		display: none;
-	}
-}
 

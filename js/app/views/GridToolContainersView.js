@@ -81,10 +81,7 @@ var GridToolContainersView = GridBackbone.View.extend({
                 var $ = jQuery;
                 var $grid = GRID.getView().$el;
 
-                // only first layer of .grid-containers (needed if sidebar with nested grid)
-                var $containers = $grid.find('.grid-container').filter(function(){
-                   return !jQuery(this).parent().closest(".grid-container").length;
-                });
+                var $containers = $grid.find('.grid-container');
 
                 var $dropArea = jQuery(document.createElement("div"))
                                 .addClass("container-drop-area-wrapper")
