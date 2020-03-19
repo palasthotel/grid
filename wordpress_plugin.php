@@ -20,6 +20,7 @@
 namespace Palasthotel\Grid\WordPress;
 
 // If this file is called directly, abort.
+use Exception;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 use const Grid\Constants\GRID_CSS_VARIANT_NONE;
 
@@ -178,8 +179,8 @@ class Plugin {
 		// ------------------------------------
 		// activate, deactivate and uninstall
 		// ------------------------------------
-		register_activation_hook( __FILE__, 'grid_wp_activate' );
-		register_uninstall_hook( __FILE__, 'grid_wp_uninstall' );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
 	/**
@@ -439,25 +440,210 @@ class Plugin {
 	}
 
 	/**
+	 * on plugin activation
+	 */
+	function activate(){
+		global $wpdb;
+		global $grid_connection;
+		global $grid_lib;
+		$grid_connection = grid_wp_get_mysqli();
+		$options = get_option( 'grid', array() );
+		if ( ! isset( $options['installed'] ) ) {
+			$schema = $grid_lib->getDatabaseSchema();
+			$schema['grid_nodes'] = array(
+				'description' => t( 'references nodes' ),
+				'fields' => array(
+					'nid' => array(
+						'description' => t( 'node id' ),
+						'type' => 'int',
+						'unsigned' => true,
+						'not null' => true,
+					),
+					'grid_id' => array(
+						'description' => t( 'grid id' ),
+						'type' => 'int',
+						'size' => 'normal',
+						'unsigned' => true,
+						'not null' => true,
+					),
+				),
+				'primary key' => array( 'nid' ),
+				'mysql_engine' => 'InnoDB',
+			);
+
+			foreach ( $schema as $tablename => $data ) {
+				$query = 'create table if not exists '.$wpdb->prefix."$tablename (";
+				$first = true;
+				foreach ( $data['fields'] as $fieldname => $fielddata ) {
+					if ( ! $first ) {
+						$query .= ',';
+					} else {
+						$first = false;
+					}
+					$query .= "$fieldname ";
+					if ( 'int' == $fielddata['type'] ) {
+						$query .= 'int ';
+					} elseif ( 'text' == $fielddata['type'] ) {
+						$query .= 'text ';
+						if(isset($data['collate'])){
+							$query .= ' COLLATE '.$data['collate'];
+						}
+					} elseif ( 'serial' == $fielddata['type'] ) {
+						$query .= 'int ';
+					} elseif ( 'varchar' == $fielddata['type'] ) {
+						$query .= 'varchar('.$fielddata['length'].') ';
+						if(isset($data['collate'])){
+							$query .= ' COLLATE '.$data['collate'];
+						}
+					} else {
+						die( 'unknown type '.$fielddata['type'] );
+					}
+					if ( isset( $fielddata['unsigned'] ) && $fielddata['unsigned'] ) {
+						$query .= ' unsigned';
+					}
+					if ( isset($fielddata['not null']) && $fielddata['not null'] ) {
+						$query .= ' not null';
+					}
+					if ( 'serial' == $fielddata['type'] ) {
+						$query .= ' auto_increment';
+					}
+
+				}
+				if ( isset( $data['primary key'] ) ) {
+					$query .= ',constraint primary key ('.implode( ',', $data['primary key'] ).')';
+				}
+				if( isset($data["unique keys"]) && is_array($data["unique keys"])){
+					foreach($data["unique keys"] as $key_name => $key_columns){
+						$query .= ', UNIQUE KEY '.$key_name.' ('.implode(', ', $key_columns).')';
+					}
+				}
+				if( isset($data["indexes"]) && is_array($data["indexes"])){
+					foreach($data["indexes"] as $key_name => $key_columns){
+						$query .= ', INDEX '.$key_name.' ('.implode(', ', $key_columns).')';
+					}
+				}
+				$query .= ') ';
+				if ( isset( $data['mysql_engine'] ) ) {
+					$query .= 'ENGINE = '.$data['mysql_engine'];
+				}
+				if ( isset( $data['mysql_character_set'] ) ) {
+					$query .= ' CHARSET '.$data['mysql_character_set'];
+				}
+				if( isset($data['collate'])){
+					$query.= ' COLLATE='.$data['collate'];
+				}
+				try{
+					$result = $grid_connection->query( $query );
+					if($result === false){
+						throw new Exception($query.' failed: '.$grid_connection->error );
+					}
+				} catch (Exception $e){
+					error_log($e->getMessage(), 4);
+					wp_die("Error with grid db_query");
+				}
+
+
+			}
+
+			$grid_lib->install();
+			$update = new Update();
+			$update->install();
+
+			$options['installed'] = true;
+			update_option( 'grid', $options );
+
+			/**
+			 * default post types for grids
+			 */
+			update_option( 'grid_landing_page_enabled', true );
+
+			/**
+			 * default searchable post types in grid
+			 */
+			update_option( 'grid_post_search_enabled', true );
+			update_option( 'grid_page_search_enabled', true );
+			/**
+			 * othter defaults
+			 */
+			update_option( 'grid_default_container', 'c-1d1' );
+		}
+		// for initial content type registration
+		$this->init();
+		global $wp_rewrite;
+		$wp_rewrite->flush_rules();
+	}
+
+	/**
 	 * update plugin
 	 */
 	function update() {
 		global $grid_lib;
 		global $grid_connection;
-
 		$grid_connection = grid_wp_get_mysqli();
 
 		$grid_lib->update();
-		require_once dirname(__FILE__) . '/classes/Update.php';
 		$wp_update = new Update();
 		$wp_update->performUpdates();
-		$grid_connection->close();
+	}
+
+	/**
+	 * uninstall plugin
+	 */
+	static function uninstall()
+	{
+		if(is_multisite())
+		{
+			global $wpdb;
+			$blogids=$wpdb->get_col("SELECT blog_id FROM {$wpdb->blogs}");
+			foreach($blogids as $blog_id)
+			{
+				switch_to_blog($blog_id);
+				$grid=get_option('grid',array());
+				if(isset($grid['installed']))
+				{
+					self::perform_uninstall();
+				}
+			}
+		}
+		else
+		{
+			self::perform_uninstall();
+		}
+	}
+
+	/**
+	 * plugin deleted by admin interface do this
+	 */
+	private static function perform_uninstall()
+	{
+		$posts=get_posts(array('post_type'=>'landing_page','posts_per_page'=>-1));
+		foreach($posts as $post) {
+			wp_delete_post($post->ID);
+		}
+
+		global $wpdb;
+		global $grid_connection;
+		global $grid_lib;
+		$grid_connection = grid_wp_get_mysqli();
+
+		delete_option('grid');
+		delete_option('grid_landing_page_enabled');
+		delete_option('grid_default_container');
+		$schema = $grid_lib->getDatabaseSchema();
+		$schema['grid_nodes']=array();
+		$grid_lib->uninstall();
+		foreach($schema as $tablename=>$data)
+		{
+			$query = 'drop table '.$wpdb->prefix.$tablename;
+			$grid_connection->query( $query );
+		}
 	}
 
 	/**
 	 * get language
 	 */
-	function get_lang() {
+	function get_lang()
+	{
 		if ( defined( 'WPLANG' ) ) {
 			$lang = WPLANG;
 		}
@@ -469,11 +655,17 @@ class Plugin {
 	}
 
 	/**
+	 * @var \mysqli
+	 */
+	private $connection = null;
+
+	/**
 	 * get connection to database
 	 *
 	 * @return \mysqli
 	 */
 	function get_db_connection() {
+		if($this->connection != null) return $this->connection;
 		$host = DB_HOST;
 		$port = 3306;
 		if ( strpos( DB_HOST, ':' ) !== false ) {
@@ -486,7 +678,7 @@ class Plugin {
 			error_log( "WP Grid: " . $connection->connect_error, 4 );
 			wp_die( "WP Grid could not connect to database." );
 		}
-
+		$this->connection = $connection;
 		return $connection;
 	}
 

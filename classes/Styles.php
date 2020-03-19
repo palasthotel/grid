@@ -34,7 +34,6 @@ class Styles
 		$editor = $grid_lib->getStyleEditor();
 		$html = $editor->run( $storage );
 		echo $html;
-		$grid_connection->close();
 	}
 
 }
