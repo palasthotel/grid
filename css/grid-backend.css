@@ -527,6 +527,16 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-new-element .grid-reuseable-container { display: block; padding: 5px 10px; }
 
+.grid-reuse-box-list { position: relative; }
+
+.grid-reuse-box-list .grid-container { margin-bottom: 40px; }
+
+.grid-reuse-box-list img { max-width: 100%; height: auto; }
+
+.grid-reuse-box-list .grid-box-editmode { background-color: white; padding: 8px; }
+
+.grid-reuse-box-list .grid-container__readmore { padding: 4px 8px; font-size: 1rem; background-color: white; border: 5px solid #eaeaea; border-top: 1px; border-bottom: 1px; }
+
 /* reuse container list */
 .grid-reuse-container-list .grid-reuse-container-edit { border: 1px solid rgba(176, 186, 194, 0.7); border-bottom: none; position: relative; margin-bottom: 0; }
 

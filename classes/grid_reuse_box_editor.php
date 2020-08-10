@@ -1,4 +1,7 @@
 <?php
+
+use Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -22,22 +25,30 @@ class grid_reuse_box_editor
 	
 	public function run($grid_db,$editlinkfunction,$deletelinkfunction)
 	{
-		$usedIds=$grid_db->getReusedBoxIds();
-		$boxids=$grid_db->getReuseableBoxIds();
-		$boxes=array();
-		foreach($boxids as $boxid)
-		{
-			$boxes[]=$grid_db->loadReuseBox($boxid);
-		}
 		$grid=new grid_grid();
 		$grid->storage=$grid_db;
+		$boxIds=$grid_db->getReuseableBoxIds();
+		$usedIds=$grid_db->getReusedBoxIds();
+
+		$boxIds = $grid_db->fireHookAlter(
+			Hook::ALTER_REUSE_BOX_IDS,
+			$boxIds
+		);
+
+		$boxes=array();
+		foreach($boxIds as $boxid)
+		{
+			$box = $grid_db->loadReuseBox($boxid);
+			$box->grid = $grid;
+			$boxes[]=$box;
+		}
+
 		$grid->container=array();
 		foreach($boxes as $box)
 		{
 			$container=new grid_container();
 			$container->storage=$grid_db;
 			$container->type="c-1d1";
-			$container->stype="container";
 			$container->readmore=t("edit");
 			$container->readmoreurl=$editlinkfunction($box->boxid);
 			if(!in_array($box->boxid, $usedIds))
@@ -53,7 +64,7 @@ class grid_reuse_box_editor
 			$grid->container[]=$container;
 		}
 		$html=$grid->render(TRUE);
-		return $html;
+		return "<div class='grid-reuse-box-list'>".$html."</div>";
 	}
 	
 	public function runEditor($grid_db,$id,$ckeditor,$ajax,$debugmode,$preview)
