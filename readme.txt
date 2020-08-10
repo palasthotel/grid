@@ -3,8 +3,8 @@ Contributors: edwardbock, mkernel, palasthotel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 5.3.2
-Stable tag: 2.0.1
+Tested up to: 5.4.2
+Stable tag: 2.0.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -85,6 +85,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 2.0.2 =
+* Feature: Added new hooks for reusable containers and boxes
 
 = 2.0.1 =
 * Bugfix: Plugin installation error
