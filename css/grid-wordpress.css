@@ -14,6 +14,13 @@
 	z-index: 99;
 }
 
+/**
+ * reuse containers
+ */
+.grid-reuse-container-list{
+	margin: 20px 20px 20px 0;
+}
+
 /*
 * Privileges page
 */
@@ -40,44 +47,4 @@
 }
 .grid-privileges-editor td:nth-child(n+2){
 	text-align: center;
-}
-
-/*
-reuse container list
- */
-.grid-container-factory-preview:first-child{
-	margin-top: 15px;
-}
-.grid-container-factory-preview{
-	margin-bottom: 0;
-	border: 1px solid rgba(176, 186, 194, 0.7);
-	border-bottom: none;
-}
-.grid-container-factory-preview .grid-container-content{
-	border: none;
-}
-.grid-container-factory-preview .grid-container-title{
-	position: relative;
-	left: 10px;
-}
-.grid-container-factory-preview .grid-container-title-text{
-	margin-top: 0;
-}
-.grid-container-factory-edit{
-	border-top: 1px solid #efefef;
-}
-.grid-container-factory-edit .grid-container-epilog a{
-	color: #c92c2c;
-}
-.grid-container-factory-edit .grid-container-epilog{
-	padding: 0;
-	display: inline;
-	margin-right: 10px;
-}
-.grid-container-factory-edit .grid-container-after{
-	margin: 10px;
-}
-.grid-container-factory-edit .grid-container-prolog{
-	font-weight: bold;
-	font-size: 1.3rem;
 }
