@@ -41,4 +41,6 @@ class Hook{
 	const ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE = "configuration_box_alter_content_structure";
 	const ALTER_BOX_CONTENT_STRUCTURE = "box_alter_content_structure";
 
+	const ALTER_REUSE_CONTAINER_IDS = "reuse_container_ids";
+
 }

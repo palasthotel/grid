@@ -302,14 +302,6 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-box-type.active + dl .grid-box-type-search { display: block; }
 
-.grid-container-type-s *:not(.grid) .grid-box .grid-box-controls { cursor: default; }
-
-.grid-container-type-s *:not(.grid) .grid-box .grid-box-delete { display: none; }
-
-.grid-container-type-s *:not(.grid) .grid-box .grid-box-edit { bottom: 0; }
-
-.grid-container-type-s *:not(.grid) .grid-box .grid-box-drag { display: none; }
-
 .grid-boxes-wrapper { min-height: 60px; position: relative; padding: 10px 0; }
 
 .container-drop-area-wrapper { position: relative; }
@@ -321,8 +313,6 @@ h3 { word-break: break-all; font-size: 12px; }
 .grid-wrapper .grid-container-type-s .grid-box .grid .sc-4 .grid-slot { position: relative; top: auto; left: auto; width: auto; float: none; }
 
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid-slot { position: absolute; width: 32%; bottom: 0; padding-bottom: 4px; left: 0; padding-right: 4px; padding-left: 4px; box-sizing: border-box; z-index: 60; }
-
-.grid-wrapper .grid-containers-wrapper .grid-container-type-s[data-type*=s-0] .grid-slot { left: auto; right: 0; }
 
 .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-container, .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-slot, .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-box, .grid-wrapper .grid-containers-wrapper .grid-container-type-s .grid .grid-container-content { padding: 0; margin: 0; border: none; background-color: transparent; width: auto; position: relative; z-index: inherit; }
 
@@ -536,6 +526,31 @@ h3 { word-break: break-all; font-size: 12px; }
 .grid-new-element:hover .grid-new-container-slots, .grid-new-element:hover .grid-new-box { border-color: #b0bac2; }
 
 .grid-new-element .grid-reuseable-container { display: block; padding: 5px 10px; }
+
+/* reuse container list */
+.grid-reuse-container-list .grid-reuse-container-edit { border: 1px solid rgba(176, 186, 194, 0.7); border-bottom: none; position: relative; margin-bottom: 0; }
+
+.grid-reuse-container-list .grid-reuse-container-edit .grid-container__prolog { font-size: 1.4rem; padding: 8px; }
+
+.grid-reuse-container-list .grid-reuse-container-edit .grid-container__readmore { font-size: 1rem; position: absolute; right: 8px; top: 8px; }
+
+.grid-reuse-container-list .grid-reuse-container { border: 1px solid rgba(176, 186, 194, 0.7); }
+
+.grid-reuse-container-list .grid-reuse-container .grid-container__title { display: block; background-color: white; margin: 0; padding: 8px; }
+
+.grid-reuse-container-list .grid-reuse-container .grid-container__content { background-color: #eaeaea; }
+
+.grid-reuse-container-list .grid-reuse-container .grid-container__content img { max-width: 200px; height: auto; }
+
+.grid-reuse-container-list .grid-container-title-text { margin-top: 0; }
+
+.grid-reuse-container-edit { border-top: 1px solid #efefef; }
+
+.grid-reuse-container-edit .grid-container-epilog a { color: #c92c2c; }
+
+.grid-reuse-container-edit .grid-container-epilog { padding: 0; display: inline; margin-right: 10px; }
+
+.grid-reuse-container-edit .grid-container-prolog { font-weight: bold; font-size: 1.3rem; }
 
 .grid-revisions { list-style: none; box-sizing: border-box; display: block; overflow-x: scroll; margin-right: 260px; padding: 0 0 15px 50px; }
 

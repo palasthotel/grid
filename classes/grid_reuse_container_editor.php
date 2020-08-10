@@ -1,4 +1,7 @@
 <?php
+
+use Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -22,7 +25,12 @@ class grid_reuse_container_editor
 	
 	public function run($grid_db,$editorlinkfunction,$deletelinkfunction)
 	{
+
 		$containerIds=$grid_db->getReuseContainerIds();
+		$containerIds = $grid_db->fireHookAlter(
+		    Hook::ALTER_REUSE_CONTAINER_IDS,
+            $containerIds
+        );
 		$usedIds=$grid_db->getReusedContainerIds();
 		
 		$grid=new grid_grid();
@@ -35,7 +43,7 @@ class grid_reuse_container_editor
 			 */
 			$container=$grid_db->loadReuseContainer($id);
 			$container->grid=$grid;
-			$container->classes[] = "grid-container-factory-preview";
+			$container->classes[] = "grid-reuse-container";
 
 
 			$edit=new grid_container();
@@ -46,10 +54,10 @@ class grid_reuse_container_editor
 			$edit->slots=array();
 			$edit->prolog=$container->reusetitle;
 			$edit->readmoreurl=$editorlinkfunction($id);
-			$edit->classes[] = "grid-container-factory-edit";
+			$edit->classes[] = "grid-reuse-container-edit";
 			if(!in_array($id, $usedIds))
 			{
-				$edit->epilog="<a href=\"".$deletelinkfunction($id)."\">delete</a>";
+				$edit->epilog="<a class='btn-delete' href=\"".$deletelinkfunction($id)."\">delete</a>";
 			}
 
 			/**
@@ -57,10 +65,11 @@ class grid_reuse_container_editor
 			 * 1. reuse container with edit and container title
 			 * 2. the original container to preview contents
 			 */
-			$grid->container[]=$container;
 			$grid->container[]=$edit;
+			$grid->container[]=$container;
+
 		}
-		return $grid->render(TRUE);
+		return "<div class='grid-reuse-container-list'>".$grid->render(TRUE)."</div>";
 	}
 	
 	public function runEditor($grid_db,$id,$ckeditor,$ajax,$debugmode,$preview)
