@@ -3,8 +3,8 @@ Contributors: edwardbock, mkernel, palasthotel
 Donate link: http://palasthotel.de/
 Tags: landingpage, editor, admin, page, containerist, grid
 Requires at least: 4.0
-Tested up to: 5.4.2
-Stable tag: 2.0.2
+Tested up to: 5.5
+Stable tag: 2.0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl
 
@@ -85,6 +85,9 @@ Grid works fine with a varnish configuration and the comet cache plugin. If you 
 2. Grid editor with Box list
 
 == Changelog ==
+
+= 2.0.3 =
+* Bugfix: WordPress 5.5 and jQuery related problems with multi-autocomplete box widgets
 
 = 2.0.2 =
 * Feature: Added new hooks for reusable containers and boxes
