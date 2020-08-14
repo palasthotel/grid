@@ -1,5 +1,6 @@
 <?php
 
+use Grid\Constants\GridCSSVariant;
 use Grid\Constants\GridCssVariantFlexbox;
 use Grid\Constants\GridCssVariantTable;
 use Grid\Constants\GridCssVariantNone;
@@ -129,14 +130,14 @@ class grid_library
 
 	/**
 	 * @param object[] $container_types
-	 * @param \Grid\Constants\GridCSSVariant $variant
+	 * @param null|GridCSSVariant $variant
 	 *
 	 * @return string
 	 */
-	public function getContainerSlotCSS($container_types, $variant){
+	public function getContainerSlotCSS($container_types, $variant = null){
 
 		header('Content-Type: text/css');
-		if($variant instanceof GridCssVariantNone) return "";
+		if(null == $variant || $variant instanceof GridCssVariantNone) return "";
 
 		ob_start();
 		if( $variant instanceof GridCssVariantTable)	require $this->getHome() . "css/grid-frontend/table.css.php";
