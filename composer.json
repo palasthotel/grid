@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "classmap": [
+      "classes"
+    ],
+    "psr-4": {
+      "Palasthotel\\Grid\\": "classes"
+    }
+  }
+}

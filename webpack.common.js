@@ -1,11 +1,40 @@
 const path = require('path');
 
-module.exports = {
+const editorConfig = {
     entry: {
-        reuseContainerList: path.resolve(__dirname, './src/scripts/reuseContainerList.js'),
+        ["grid-editor"]: path.resolve(__dirname, './src/grid-editor/grid-editor.js'),
     },
     output: {
-        path: path.resolve(__dirname)+'/dist/scripts/.',
+        path: path.resolve(__dirname)+'/dist/.',
+        filename: '[name].js',
+        sourceMapFilename: '[name].map',
+    },
+    devtool: 'source-map',
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules|bower_components/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            "@babel/preset-env",
+                            "@babel/preset-react",
+                        ],
+                    }
+                },
+            }
+        ]
+    },
+};
+
+const reuseContainerListConfig = {
+    entry: {
+        reuseContainerList: path.resolve(__dirname, './src/reuseContainerList.js'),
+    },
+    output: {
+        path: path.resolve(__dirname)+'/dist/.',
         filename: '[name].js',
         sourceMapFilename: '[name].map',
     },
@@ -30,5 +59,11 @@ module.exports = {
                 },
             }
         ]
+    },
+    externals:{
+        "react": "React",
+        "react-dom": "ReactDOM",
     }
 };
+
+module.exports = [editorConfig, reuseContainerListConfig]

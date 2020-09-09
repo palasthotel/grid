@@ -30,5 +30,11 @@
     "webpack-cli": "^3.3.12",
     "webpack-merge": "^5.1.1",
     "webpack": "^4.44.1"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "ckeditor4": "^4.15.0",
+    "jquery": "^3.5.1",
+    "underscore": "^1.11.0"
   }
 }

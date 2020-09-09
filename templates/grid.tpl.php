@@ -24,52 +24,52 @@ document.grid.async.path = "<?php echo $async_path; ?>";
 document.grid.async.timeout = <?php echo $async_timeout; ?>;
 </script>
 <script id="tpl_toolbar" type="text/grid-icanhaz">
-<?php require('ich.toolbar.html'); ?>
+<?php require( 'ich.toolbar.html' ); ?>
 </script>
 <script id="tpl_toolContainers" type="text/grid-icanhaz">
-<?php require("ich.toolContainers.html"); ?>
+<?php require( "ich.toolContainers.html" ); ?>
 </script>
 <script id="tpl_toolContainersContainer" type="text/grid-icanhaz">
-<?php require("ich.toolContainersContainer.html"); ?>
+<?php require( "ich.toolContainersContainer.html" ); ?>
 </script>
 <script id="tpl_toolBoxes" type="text/grid-icanhaz">
-<?php require('ich.toolBoxes.html');?>
+<?php require( 'ich.toolBoxes.html' );?>
 </script>
 <script id="tpl_toolBoxesBlueprint" type="text/grid-icanhaz">
-<?php require('ich.toolBoxesBlueprint.html');?>
+<?php require( 'ich.toolBoxesBlueprint.html' );?>
 </script>
 <script id="tpl_grid" type="text/grid-icanhaz">
-<?php require('ich.grid.html');?>
+<?php require( 'ich.grid.html' );?>
 </script>
 <script id="tpl_container" type="text/grid-icanhaz">
-<?php require('ich.container.html');?>
+<?php require( 'ich.container.html' );?>
 </script>
 <script id="tpl_containereditor" type="text/grid-icanhaz">
-<?php require('ich.containereditor.html');?>
+<?php require( 'ich.containereditor.html' );?>
 </script>
 <script id="tpl_slot" type="text/grid-icanhaz">
-<?php require('ich.slot.html');?>
+<?php require( 'ich.slot.html' );?>
 </script>
 <script id="tpl_slotstylechanger" type="text/grid-icanhaz">
-<?php require('ich.slotstylechanger.html');?>
+<?php require( 'ich.slotstylechanger.html' );?>
 </script>
 <script id="tpl_box" type="text/grid-icanhaz">
-<?php require('ich.box.html');?>
+<?php require( 'ich.box.html' );?>
 </script>
 <script id="tpl_boxeditor" type="text/grid-icanhaz">
-<?php require('ich.boxeditor.html');?>
+<?php require( 'ich.boxeditor.html' );?>
 </script>
 <script id="tpl_revisions" type="text/grid-icanhaz">
-<?php require('ich.revisions.html');?>
+<?php require( 'ich.revisions.html' );?>
 </script>
 <script id="tpl_authors" type="text/grid-icanhaz">
-<?php require('ich.authors.html');?>
+<?php require( 'ich.authors.html' );?>
 </script>
 <script id="tpl_author" type="text/grid-icanhaz">
-<?php require('ich.author.html');?>
+<?php require( 'ich.author.html' );?>
 </script>
 <script id="tpl_loading" type="text/grid-icanhaz">
-<?php require('ich.loading.html');?>
+<?php require( 'ich.loading.html' );?>
 </script>
 
 <div id="grid-authors-wrapper" class="grid-authors-wrapper"></div>
