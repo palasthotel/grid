@@ -2,7 +2,7 @@
 	path = lib
 	url = git@github.com:palasthotel/grid.git
 [submodule "public/grid-api"]
-	path = public/lib
+	path = public/grid-api
 	url = git@github.com:palasthotel/grid.git
 [submodule "src/grid-components"]
 	path = src/grid-components
