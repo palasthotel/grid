@@ -13,18 +13,18 @@ class Boxes
 {
 	function __construct(){
 		$dir = dirname(__FILE__);
-		require( $dir.'/../core/classes/wordpress/grid_post_box.php' );
-		require( $dir.'/../core/classes/wordpress/grid_media_box.php' );
-		require( $dir.'/../core/classes/wordpress/grid_posts_box.php' );
-		require( $dir.'/../core/classes/wordpress/grid_wp_shortcode_box.php' );
+		require( $dir . '/../core/classes/wordpress/grid_post_box.php' );
+		require( $dir . '/../core/classes/wordpress/grid_media_box.php' );
+		require( $dir . '/../core/classes/wordpress/grid_posts_box.php' );
+		require( $dir . '/../core/classes/wordpress/grid_wp_shortcode_box.php' );
 
 		// box with all input types for debugging and checking if inputs are working as expected
-		if(WP_DEBUG) require( $dir.'/../core/classes/wordpress/grid_debug_box.php' );
+		if(WP_DEBUG) require( $dir . '/../core/classes/wordpress/grid_debug_box.php' );
 
 		/**
 		 * override html box
 		 */
-		require( $dir.'/../core/classes/wordpress/grid_wp_html_box.php' );
+		require( $dir . '/../core/classes/wordpress/grid_wp_html_box.php' );
 		add_filter('grid_boxes_search', array( $this, 'grid_boxes_search' ), 10, 3);
 
 		add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );

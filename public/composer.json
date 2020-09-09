@@ -1,7 +1,7 @@
 {
 	"autoload": {
 		"classmap": [
-			"classes"
+          "classes"
 		],
 		"psr-4": {
 			"Palasthotel\\Grid\\WordPress\\": "classes"

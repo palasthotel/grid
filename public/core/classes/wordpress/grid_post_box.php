@@ -72,7 +72,7 @@ class grid_post_box extends grid_box {
 					}
 				}
 				if ( ! $found ) {
-					include dirname( __FILE__ ).'/../../templates/wordpress/post_content.tpl.php';
+					include dirname( __FILE__ ) . '/../../templates/wordpress/post_content.tpl.php';
 				}
 				$output = ob_get_clean();
 
