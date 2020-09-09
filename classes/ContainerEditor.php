@@ -1,4 +1,6 @@
 <?php
+namespace Palasthotel\Grid;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -6,7 +8,7 @@
  * @package Palasthotel\Grid
  */
 
-class grid_container_editor
+class ContainerEditor
 {
 	public function getCSS($absolute=FALSE)
 	{

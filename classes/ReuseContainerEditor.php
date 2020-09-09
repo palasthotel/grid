@@ -1,6 +1,8 @@
 <?php
 
-use Grid\Constants\Hook;
+namespace Palasthotel\Grid;
+
+use Palasthotel\Grid\Constants\Hook;
 
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
@@ -9,7 +11,7 @@ use Grid\Constants\Hook;
  * @package Palasthotel\Grid
  */
 
-class grid_reuse_container_editor
+class ReuseContainerEditor
 {
 	public function getCSS($absolute=FALSE)
 	{
@@ -33,7 +35,7 @@ class grid_reuse_container_editor
         );
 		$usedIds=$grid_db->getReusedContainerIds();
 		
-		$grid=new grid_grid();
+		$grid=new Storage();
 		$grid->storage=$grid_db;
 		$grid->container=array();
 		foreach($containerIds as $id)

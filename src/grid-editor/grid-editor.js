@@ -2,10 +2,10 @@
 // ----------------------------------------------------
 // frameworks
 // ----------------------------------------------------
-import "./frameworks/jquery-ui-1.10.2.custom.js"
+import "jquery-ui"
 import "./frameworks/jquery.ui.touch-punch.js"
 import "./frameworks/jquery.iframe-transport.js"
-import "./frameworks/jquery.fileupload.js"
+import "blueimp-file-upload"
 import "./frameworks/mutate.events.js"
 import "./frameworks/mutate.min.js"
 import "./frameworks/underscore.js"
@@ -57,3 +57,5 @@ import "./lib/collections/GridAuthors.js";
 import "./lib/GridSync.js";
 import "./lib/GridAsync.js";
 import "./lib/Grid.js";
+
+import "./language/grid-en.js";

@@ -1,32 +1,38 @@
 <?php
 
+namespace Palasthotel\Grid;
+
 use Grid\Constants\Hook;
 
 /**
+ * @property Editor editor
  * @author Palasthotel <rezeption@palasthotel.de>
- * @copyright Copyright (c) 2014, Palasthotel
+ * @copyright Copyright (c) 2020, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  */
 
-class grid_reuse_box_editor
+class ReuseBoxEditor
 {
+
+    public function __construct(Editor $editor){
+        $this->editor = $editor;
+    }
+
 	public function getCSS($absolute=FALSE)
 	{
-		$lib=new grid_library();
-		return $lib->getEditorCSS($absolute);
+		return $this->editor->getEditorCSS($absolute);
 	}
 	
 	public function getJS($language='en',$absolute=FALSE)
 	{
-		$lib=new grid_library();
-		return $lib->getEditorJS($language,$absolute);
+		return $this->editor->getEditorJS($language,$absolute);
 	}
 	
 	public function run($grid_db,$editlinkfunction,$deletelinkfunction)
 	{
-		$grid=new grid_grid();
-		$grid->storage=$grid_db;
+		$grid=new Grid();
+		$grid->storage=$this->editor->storage;
 		$boxIds=$grid_db->getReuseableBoxIds();
 		$usedIds=$grid_db->getReusedBoxIds();
 

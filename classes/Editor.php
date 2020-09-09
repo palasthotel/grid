@@ -4,10 +4,18 @@
 namespace Palasthotel\Grid;
 
 
+use Grid\Constants\GridCSSVariant;
+use Grid\Constants\GridCssVariantFlexbox;
+use Grid\Constants\GridCssVariantNone;
+use Grid\Constants\GridCssVariantTable;
+
+/**
+ * @property Storage $storage
+ */
 class Editor {
 
-	public function __construct(){
-
+	public function __construct(Storage $storage){
+		$this->storage = $storage;
 	}
 
 	private function getHome()
@@ -29,60 +37,9 @@ class Editor {
 	public function getEditorJS($language="en",$absolute=FALSE, $need_jquery = TRUE)
 	{
 		$home=$this->getHome();
-		$editorfields=glob($home."js/app/views/EditorWidgets/*.js");
-
-		$editorwidgets=array();
-		foreach($editorfields as $idx=>$file)
-		{
-			$path=$file;
-			$editorwidgets[]=$path;
-		}
-
-		$framework_dir=$home."js/frameworks/";
-		$app_dir=$home."js/app/";
-
-		$scripts=array();
-		if($need_jquery) $scripts[]=$framework_dir."jquery-1.8.3.min.js";
-		$scripts[]=$framework_dir."jquery-ui-1.10.2.custom.js";
-		$scripts[]=$framework_dir."jquery.ui.touch-punch.js";
-		$scripts[]=$framework_dir."jquery.iframe-transport.js";
-		$scripts[]=$framework_dir."jquery.fileupload.js";
-		$scripts[]=$framework_dir."mutate.events.js";
-		$scripts[]=$framework_dir."mutate.min.js";
-		$scripts[]=$framework_dir."underscore.js";
-		$scripts[]=$framework_dir."GridBackbone.js";
-		$scripts[]=$framework_dir."GridICanHaz.js";
-		$scripts[]=$framework_dir."Socket.io.js";
-		$scripts[]=$home."js/ckeditor/ckeditor.js";
-		$scripts[]=$app_dir."GridViews.js";
-		$scripts[]=$app_dir."views/GridContainerEditorView.js";
-		$scripts[]=$app_dir."views/GridBoxEditorView.js";
-		foreach($editorwidgets as $idx=>$path)
-		{
-			$scripts[]=$path;
-		}
-		$scripts[]=$app_dir."views/GridRevisionsView.js";
-		$scripts[]=$app_dir."views/GridToolbarView.js";
-		$scripts[]=$app_dir."views/GridToolContainersView.js";
-		$scripts[]=$app_dir."views/GridToolBoxTypesView.js";
-		$scripts[]=$app_dir."views/GridToolBoxBlueprintsView.js";
-		$scripts[]=$app_dir."views/GridSlotStyleChangerView.js";
-		$scripts[]=$app_dir."views/GridAuthorsView.js";
-		$scripts[]=$app_dir."views/GridAuthorView.js";
-		$scripts[]=$app_dir."GridModels.js";
-		$scripts[]=$app_dir."models/GridBoxBlueprint.js";
-		$scripts[]=$app_dir."models/GridRights.js";
-		$scripts[]=$app_dir."models/GridAuthor.js";
-		$scripts[]=$app_dir."GridCollections.js";
-		$scripts[]=$app_dir."collections/GridBoxBlueprints.js";
-		$scripts[]=$app_dir."collections/GridAuthors.js";
-		$scripts[]=$app_dir."GridSync.js";
-		$scripts[]=$app_dir."GridAsync.js";
-		$scripts[]=$app_dir."Grid.js";
-		if(is_file($home."/js/language/grid-".$language.".js")){
-			$scripts[]=$home."/js/language/grid-".$language.".js";
-		}
-		$scripts[]=$home."/js/language/grid-en.js";
+		$scripts = [
+			$home."/dist/grid-editor"
+		];
 
 		if($absolute)
 		{
@@ -183,14 +140,13 @@ class Editor {
 
 	public function getStyleEditor()
 	{
-		require_once(dirname(__FILE__)."/classes/grid_style_editor.php");
-		return new grid_style_editor();
+		return new StyleEditor();
 	}
 
 	public function getReuseContainerEditor()
 	{
 		require_once(dirname(__FILE__)."/classes/grid_reuse_container_editor.php");
-		return new grid_reuse_container_editor();
+		return new ReuseContainerEditor();
 	}
 
 	public function getReuseBoxEditor()
@@ -202,6 +158,6 @@ class Editor {
 	public function getContainerEditor()
 	{
 		require_once(dirname(__FILE__)."/classes/grid_container_editor.php");
-		return new grid_container_editor();
+		return new ContainerEditor();
 	}
 }

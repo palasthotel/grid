@@ -22,7 +22,3 @@ abstract class GridCSSVariant {
 		}
 	}
 }
-
-class GridCssVariantNone extends GridCSSVariant{}
-class GridCssVariantTable extends GridCSSVariant{}
-class GridCssVariantFlexbox extends GridCSSVariant{}
