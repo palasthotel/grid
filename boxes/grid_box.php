@@ -8,7 +8,10 @@
 /**
 * Grid-Box is parent to all Grid boxes.
 */
-use Grid\Constants\Hook;
+
+use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\GridBase;
+use Palasthotel\Grid\Store;
 
 class grid_box extends GridBase {
 
@@ -20,7 +23,7 @@ class grid_box extends GridBase {
 
 	/**
 	* Reference to the Grid itself
-	* @var grid_grid
+	* @var Store
 	*/
 	public $grid;
 

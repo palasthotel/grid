@@ -80,11 +80,9 @@ class UpdateBase {
 	{
 		try
 		{
-			$result=grid_query("select value from {grid_schema} where propkey='schema_version".$this->schemaKey . "'");
-			foreach($result as $entry)
-			{
-				return $entry->value;
-			}
+			$result=$this->query->execute("select value from {grid_schema} where propkey='schema_version".$this->schemaKey . "'");
+			$row = $result->fetch_object();
+			return $row->value;
 		}
 		catch(Exception $ex){}
 		return 0;

@@ -31,6 +31,11 @@ class API {
 	private $endpoint;
 
 	/**
+	 * @var UpdateGrid
+	 */
+	private $update;
+
+	/**
 	 * API constructor.
 	 *
 	 * @param iQuery $query
@@ -44,6 +49,7 @@ class API {
 
 		$this->requireBoxes();
 
+		$this->update = new UpdateGrid($query);
 		$this->store = new Store($query, $hook, $author);
 		$this->endpoint = new Endpoint();
 	}
@@ -662,7 +668,7 @@ class API {
 		$this->query->execute("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
 		$this->query->execute("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-2d3-0',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
 
-		$this->getUpdater()->install();
+		$this->update->install();
 	}
 
 	public function uninstall()
@@ -680,16 +686,8 @@ class API {
 		$this->query->execute("alter table {grid_slot2box} drop foreign key {fk_slot_box}");
 	}
 
-
-	private function getUpdater()
-	{
-		require_once(dirname(__FILE__)."/classes/grid_update.php");
-		return new grid_update();
-	}
-
 	public function update()
 	{
-		$update=$this->getUpdater();
-		$update->performUpdates();
+		$this->update->performUpdates();
 	}
 }
