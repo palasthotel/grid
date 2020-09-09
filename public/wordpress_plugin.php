@@ -21,6 +21,8 @@ namespace Palasthotel\Grid\WordPress;
 
 // If this file is called directly, abort.
 use Exception;
+use Palasthotel\Grid\API;
+use Palasthotel\Grid\Store;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -76,6 +78,7 @@ class Plugin {
 		// autoloader
 		// ------------------------------------
 		require_once dirname( __FILE__ ) . "/vendor/autoload.php";
+		require_once dirname(__FILE__). "/grid-api/vendor/autoload.php";
 
 		// ------------------------------------
 		// cache properties
@@ -98,6 +101,11 @@ class Plugin {
 		// ------------------------------------
 		// construct component classes
 		// ------------------------------------
+
+		$this->gridQuery = new GridQuery();
+		$this->gridHook = new GridHook();
+		// TODO: maybe move to later action for author name
+		$this->gridAPI = new API($this->gridQuery, $this->gridHook, "");
 
 		/**
 		 * wrapper for grid library storage
@@ -318,18 +326,10 @@ class Plugin {
 		return false;
 	}
 
-	function fire_hook( $type, $subject, $value, $argument = NULL ) {
-		if ( \Grid\Constants\Hook::TYPE_HOOK_ALTER == $type ) {
-			return apply_filters( 'grid_' . $subject, $value, $argument );
-		}
-		do_action( 'grid_' . $subject, $value, $argument );
-	}
-
 	/**
 	 * get grid storage
 	 */
 	function get_storage() {
-		global $wpdb;
 		global $grid_loaded;
 		if ( ! $grid_loaded ) {
 			do_action( 'grid_load_classes' );
@@ -338,10 +338,7 @@ class Plugin {
 		global $grid_storage;
 		if ( ! isset( $grid_storage ) ) {
 			$user                           = wp_get_current_user();
-			$storage                        = new \grid_db( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, $user->user_login, $wpdb->prefix, array(
-				$this,
-				'fire_hook',
-			) );
+			$storage                        = new Store( $this->gridQuery,$this->gridHook, $user->user_login);
 			$storage->ajaxEndpoint          = new Ajax();
 			$storage->ajaxEndpoint->storage = $storage;
 
@@ -441,13 +438,9 @@ class Plugin {
 	 * on plugin activation
 	 */
 	function activate(){
-		global $wpdb;
-		global $grid_connection;
-		global $grid_lib;
-		$grid_connection = grid_wp_get_mysqli();
 		$options = get_option( 'grid', array() );
 		if ( ! isset( $options['installed'] ) ) {
-			$schema = $grid_lib->getDatabaseSchema();
+			$schema = $this->gridAPI->getDatabaseSchema();
 			$schema['grid_nodes'] = array(
 				'description' => t( 'references nodes' ),
 				'fields' => array(
@@ -470,7 +463,7 @@ class Plugin {
 			);
 
 			foreach ( $schema as $tablename => $data ) {
-				$query = 'create table if not exists '.$wpdb->prefix."$tablename (";
+				$query = "create table if not exists {".$tablename."} (";
 				$first = true;
 				foreach ( $data['fields'] as $fieldname => $fielddata ) {
 					if ( ! $first ) {
@@ -531,7 +524,7 @@ class Plugin {
 					$query.= ' COLLATE='.$data['collate'];
 				}
 				try{
-					$result = $grid_connection->query( $query );
+					$result = $this->gridQuery->execute( $query );
 					if($result === false){
 						throw new Exception($query.' failed: '.$grid_connection->error );
 					}
@@ -543,8 +536,8 @@ class Plugin {
 
 			}
 
-			$grid_lib->install();
-			$update = new Update();
+			$this->gridAPI->install();
+			$update = new Update($this->gridQuery);
 			$update->install();
 
 			$options['installed'] = true;
@@ -567,20 +560,15 @@ class Plugin {
 		}
 		// for initial content type registration
 		$this->init();
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules();
+		flush_rewrite_rules();
 	}
 
 	/**
 	 * update plugin
 	 */
 	function update() {
-		global $grid_lib;
-		global $grid_connection;
-		$grid_connection = grid_wp_get_mysqli();
-
-		$grid_lib->update();
-		$wp_update = new Update();
+		$this->gridAPI->update();
+		$wp_update = new Update($this->gridQuery);
 		$wp_update->performUpdates();
 	}
 
@@ -619,21 +607,16 @@ class Plugin {
 			wp_delete_post($post->ID);
 		}
 
-		global $wpdb;
-		global $grid_connection;
-		global $grid_lib;
-		$grid_connection = grid_wp_get_mysqli();
-
 		delete_option('grid');
 		delete_option('grid_landing_page_enabled');
 		delete_option('grid_default_container');
-		$schema = $grid_lib->getDatabaseSchema();
+		$schema = self::instance()->api->getDatabaseSchema();
 		$schema['grid_nodes']=array();
-		$grid_lib->uninstall();
+		self::instance()->api->uninstall();
 		foreach($schema as $tablename=>$data)
 		{
-			$query = 'drop table '.$wpdb->prefix.$tablename;
-			$grid_connection->query( $query );
+			$query = "drop table {$tablename}";
+			self::instance()->gridQuery->execute( $query );
 		}
 	}
 
@@ -653,40 +636,12 @@ class Plugin {
 	}
 
 	/**
-	 * @var \mysqli
-	 */
-	private $connection = null;
-
-	/**
-	 * get connection to database
-	 *
-	 * @return \mysqli
-	 */
-	function get_db_connection() {
-		if($this->connection != null) return $this->connection;
-		$host = DB_HOST;
-		$port = 3306;
-		if ( strpos( DB_HOST, ':' ) !== false ) {
-			$db_host = explode( ':', DB_HOST );
-			$host    = $db_host[0];
-			$port    = intval( $db_host[1] );
-		}
-		$connection = new \mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
-		if ( $connection->connect_errno ) {
-			error_log( "WP Grid: " . $connection->connect_error, 4 );
-			wp_die( "WP Grid could not connect to database." );
-		}
-		$this->connection = $connection;
-		return $connection;
-	}
-
-	/**
 	 * @var null|Plugin $instance
 	 */
 	private static $instance;
 
 	/**
-	 * @return \Palasthotel\Grid\WordPress\Plugin|null
+	 * @return Plugin
 	 */
 	public static function instance(){
 		if(self::$instance == null) self::$instance = new Plugin();
@@ -698,14 +653,6 @@ class Plugin {
 // ----------------------------
 // init grid plugin and library
 // ----------------------------
-
-/**
- * init grid library for global use
- */
-require_once dirname( __FILE__ ) . '/lib/grid.php';
-global $grid_lib;
-$grid_lib = new \grid_library();
-
 /**
  * init grid
  */

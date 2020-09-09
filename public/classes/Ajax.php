@@ -2,7 +2,9 @@
 
 namespace Palasthotel\Grid\WordPress;
 
-class Ajax extends \grid_ajaxendpoint {
+use Palasthotel\Grid\Endpoint;
+
+class Ajax extends Endpoint {
 
 	public function Rights()
 	{

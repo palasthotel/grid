@@ -9,6 +9,8 @@
 namespace Palasthotel\Grid\WordPress;
 
 
+use grid_rss_box;
+
 class Boxes
 {
 	function __construct(){
@@ -30,7 +32,7 @@ class Boxes
 		add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );
 	  
 		$dirs = wp_upload_dir();
-		\grid_rss_box::$CACHE_DIR = $dirs["basedir"]."/grid_rss_cache/";
+		grid_rss_box::$CACHE_DIR = $dirs["basedir"]."/grid_rss_cache/";
 	}
 
 	/**

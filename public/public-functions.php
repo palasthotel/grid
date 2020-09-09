@@ -20,45 +20,6 @@ if ( ! function_exists( 't' ) ) {
 	}
 }
 
-
-/**
- * Drupal db_query function
- * @param $querystring
- * @return array|boolean
- */
-// TODO: implement grid query function
-function db_query( $querystring ) {
-	global $wpdb;
-	$querystring = str_replace( '{', $wpdb->prefix, $querystring );
-	$querystring = str_replace( '}', '', $querystring );
-	/**
-	 * @var mysqli $grid_connection
-	 */
-	global $grid_connection;
-	/**
-	 * @var array|boolean $result
-	 */
-	try{
-		$result = $grid_connection->query( $querystring );
-		if ( false === $result ) {
-			throw new Exception($grid_connection->error );
-		}
-
-		if ( is_object( $result ) ) {
-			$return = array();
-			while ( $row = $result->fetch_object() ) {
-				$return[] = $row;
-			}
-			return $return;
-		}
-	} catch (Exception $e){
-		error_log($e->getMessage()."\nQuerystring: $querystring\n", 4);
-		wp_die("Error with grid db_query");
-	}
-
-	return false;
-}
-
 /**
  * get postid by grid id
  * deprecated use
@@ -98,7 +59,7 @@ function grid_wp_load($post){
 function grid_wp_get_privs() {
 	global $wp_roles;
 	$names = $wp_roles->get_names();
-	$ajaxendpoint = new grid_ajaxendpoint();
+	$ajaxendpoint = new Endpoint();
 	$rights = $ajaxendpoint->Rights();
 	$default = array();
 	foreach ( $rights as $right ) {
@@ -148,7 +109,7 @@ function grid_wp_load_js() {
  * @return mysqli
  */
 function grid_wp_get_mysqli() {
-	return grid_plugin()->get_db_connection();
+	return grid_plugin()->gridQuery->connection;
 }
 
 

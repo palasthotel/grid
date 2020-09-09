@@ -2,6 +2,9 @@
 
 namespace Palasthotel\Grid\WordPress;
 
+use Palasthotel\Grid\UpdateBase;
+use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -10,16 +13,16 @@ namespace Palasthotel\Grid\WordPress;
  */
 
 
-class Update extends \base_update
+class Update extends UpdateBase
 {
-	public $schemakey = "_wordpress";
+	public $schemaKey = "_wordpress";
 
 	// ------------------------------------------------
 	// updates
 	// ------------------------------------------------
 	public function update_1()
 	{
-		db_query("insert into {grid_schema} (propkey) values ('schema_version".$this->schemakey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->schemakey."';");
+		$this->query->execute("insert into {grid_schema} (propkey) values ('schema_version".$this->schemaKey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->schemaKey."';");
 		
 		add_action('admin_notices', array($this, 'notice_1'));
 
@@ -27,7 +30,7 @@ class Update extends \base_update
 
 	public function update_2(){
 		// default variant before update
-		update_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, \Grid\Constants\GRID_CSS_VARIANT_TABLE);
+		update_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, GRID_CSS_VARIANT_TABLE);
 	}
 
 	// ------------------------------------------------
