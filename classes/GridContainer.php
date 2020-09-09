@@ -1,4 +1,7 @@
 <?php
+
+namespace Palasthotel\Grid;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -8,7 +11,7 @@
 
 use Grid\Constants\Hook;
 
-class grid_container extends grid_base {
+class GridContainer extends GridBase {
 	public $grid;
 	public $containerid;
 	public $reusetitle;

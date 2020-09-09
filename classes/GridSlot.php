@@ -1,4 +1,7 @@
 <?php
+
+namespace Palasthotel\Grid;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -6,9 +9,7 @@
  * @package Palasthotel\Grid
  */
 
-use Grid\Constants\Hook;
-
-class grid_slot extends grid_base {
+class GridSlot extends GridBase {
 	public $grid;
 	public $slotid;
 	public $style;

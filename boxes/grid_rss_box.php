@@ -7,7 +7,7 @@
  */
 
 if ( ! class_exists( "SimplePie" ) ) {
-	require dirname( __FILE__ ) . "/libs/simplepie_1.5.2.mini.php";
+	require dirname( __FILE__ ) . "/../libs/simplepie_1.5.2.mini.php";
 }
 
 class grid_rss_box extends grid_list_box {

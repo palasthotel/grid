@@ -1,5 +1,7 @@
 <?php
 
+namespace Palasthotel\Grid;
+
 use Grid\Constants\Hook;
 
 /**
@@ -9,8 +11,9 @@ use Grid\Constants\Hook;
  * @package Palasthotel\Grid
  */
 
-class grid_ajaxendpoint {
-	/** @var grid_db $storage */
+class Endpoint {
+
+	/** @var Store $storage */
 	public $storage;
 
 	//only a test method to check that our ajax management works

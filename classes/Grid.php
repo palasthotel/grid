@@ -1,4 +1,7 @@
 <?php
+
+namespace Palasthotel\Grid;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -6,9 +9,7 @@
  * @package Palasthotel\Grid
  */
 
-use Grid\Constants\Hook;
-
-class grid_grid extends grid_base {
+class Grid extends GridBase {
 
 	/**
 	 * @var \grid_container[]
@@ -46,7 +47,7 @@ class grid_grid extends grid_base {
 		foreach($this->container as $container)
 		{
 			/**
-			 * @var $container grid_container
+			 * @var $container GridContainer
 			 */
 			$html=$container->render($editmode);
 			$containermap[$container->containerid]=$html;

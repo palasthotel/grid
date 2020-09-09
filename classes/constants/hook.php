@@ -1,10 +1,10 @@
 <?php
-namespace Grid\Constants;
+namespace Palasthotel\Grid\Constants;
 
 /**
  * Class Hooks
  * all hook names for grid
- * @package Grid\Constants
+ * @package Palasthotel\Grid\Constants
  */
 
 class Hook{

@@ -1,4 +1,7 @@
 <?php
+
+namespace Palasthotel\Grid;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -6,9 +9,9 @@
  * @package Palasthotel\Grid
  */
 
-class grid_base {
+class GridBase {
 	/**
-	 * @var grid_db
+	 * @var Store
 	 */
 	public $storage;
 }

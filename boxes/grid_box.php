@@ -10,7 +10,7 @@
 */
 use Grid\Constants\Hook;
 
-class grid_box extends grid_base {
+class grid_box extends GridBase {
 
 	/**
 	* Contains id of boxes
