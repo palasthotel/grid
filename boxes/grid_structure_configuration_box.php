@@ -6,6 +6,8 @@
  * @package Palasthotel\Grid
  */
 
+use Palasthotel\Grid\Constants\Hook;
+
 /** 
 * Meta type "Configuration"
 *
@@ -121,7 +123,7 @@ class grid_structure_configuration_base_box extends grid_structure_configuration
 	 *
 	 * @param mixed $query
 	 *
-	 * @return \grid_structure_configuration_base_box[]
+	 * @return grid_structure_configuration_base_box[]
 	 */
 	public function metaSearch($criteria,$query) {
 		if(get_class($this)!=get_class())
@@ -131,7 +133,7 @@ class grid_structure_configuration_base_box extends grid_structure_configuration
 
 	public function contentStructure() {
 		return $this->storage->fireHookAlter(
-			\Grid\Constants\Hook::ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE,
+			Hook::ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE,
 			parent::contentStructure(),
 			$this->type()
 		);

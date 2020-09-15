@@ -7,13 +7,14 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Palasthotel\\Grid\\API' => $baseDir . '/classes/API.php',
+    'Palasthotel\\Grid\\AbstractQuery' => $baseDir . '/classes/AbstractQuery.php',
     'Palasthotel\\Grid\\Constants\\Hook' => $baseDir . '/classes/Constants/Hook.php',
     'Palasthotel\\Grid\\Endpoint' => $baseDir . '/classes/Endpoint.php',
     'Palasthotel\\Grid\\Grid' => $baseDir . '/classes/Grid.php',
     'Palasthotel\\Grid\\GridBase' => $baseDir . '/classes/GridBase.php',
     'Palasthotel\\Grid\\GridContainer' => $baseDir . '/classes/GridContainer.php',
     'Palasthotel\\Grid\\GridSlot' => $baseDir . '/classes/GridSlot.php',
-    'Palasthotel\\Grid\\Store' => $baseDir . '/classes/Store.php',
+    'Palasthotel\\Grid\\Storage' => $baseDir . '/classes/Storage.php',
     'Palasthotel\\Grid\\UpdateBase' => $baseDir . '/classes/UpdateBase.php',
     'Palasthotel\\Grid\\UpdateGrid' => $baseDir . '/classes/UpdateGrid.php',
     'Palasthotel\\Grid\\iHook' => $baseDir . '/classes/iHook.php',

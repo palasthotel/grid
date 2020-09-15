@@ -2,6 +2,10 @@
 
 namespace Palasthotel\Grid;
 
+use grid_container_configuration_box;
+use grid_slot_configuration_box;
+use Palasthotel\Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -9,7 +13,6 @@ namespace Palasthotel\Grid;
  * @package Palasthotel\Grid
  */
 
-use Grid\Constants\Hook;
 
 class GridContainer extends GridBase {
 	public $grid;
@@ -78,7 +81,7 @@ class GridContainer extends GridBase {
 
 				// remove from grid to prevent rendering in frontend
 				$slot->boxes = array_filter( $slot->boxes, function ( $box ) {
-					return ! ( $box instanceof \grid_container_configuration_box || $box instanceof \grid_slot_configuration_box );
+					return ! ( $box instanceof grid_container_configuration_box || $box instanceof grid_slot_configuration_box );
 				} );
 			}
 
@@ -142,7 +145,7 @@ class GridContainer extends GridBase {
 		}
 		if(!$found)
 		{
-			include dirname(__FILE__).'/../templates/frontend/grid-container.tpl.php';
+			include dirname(__FILE__).'/../templates/grid-container.tpl.php';
 		}
 		$output=ob_get_clean();
 

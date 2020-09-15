@@ -13,7 +13,7 @@ use Grid\Constants\Hook;
 
 class Endpoint {
 
-	/** @var Store $storage */
+	/** @var Storage $storage */
 	public $storage;
 
 	//only a test method to check that our ajax management works

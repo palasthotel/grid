@@ -11,7 +11,7 @@ namespace Palasthotel\Grid;
 
 class GridBase {
 	/**
-	 * @var Store
+	 * @var Storage
 	 */
 	public $storage;
 }

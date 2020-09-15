@@ -2,6 +2,8 @@
 
 namespace Palasthotel\Grid;
 
+use Palasthotel\Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -12,7 +14,7 @@ namespace Palasthotel\Grid;
 class Grid extends GridBase {
 
 	/**
-	 * @var \grid_container[]
+	 * @var GridContainer[]
 	 */
 	public $container;
 	/**
@@ -71,7 +73,7 @@ class Grid extends GridBase {
 		}
 		if(!$found)
 		{
-			include dirname(__FILE__).'/../templates/frontend/grid.tpl.php';
+			include dirname( __FILE__ ) . '/../templates/grid.tpl.php';
 		}
 		
 		$output=ob_get_clean();

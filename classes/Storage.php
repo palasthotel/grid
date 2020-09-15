@@ -11,7 +11,7 @@ use stdClass;
  * @package Palasthotel\Grid
  */
 
-class Store {
+class Storage {
 
 	public $templatesPaths= NULL;
 	public $templatesPath = NULL;
@@ -585,7 +585,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			{
 				if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
 				{
-					$currentslot=new grid_slot();
+					$currentslot=new GridSlot();
 					$currentslot->grid=$grid;
 					$currentslot->slotid=$row['slot_id'];
 					$currentslot->style=$row['slot_style'];
@@ -622,10 +622,10 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 			$this->ajaxEndpoint->storage=$this;
 			try {
-				$reflectionMethod=new reflectionMethod($this->ajaxEndpoint,$method);
+				$reflectionMethod=new \ReflectionMethod($this->ajaxEndpoint,$method);
 				$retval=$reflectionMethod->invokeArgs($this->ajaxEndpoint,$params);
 				echo json_encode(array('result'=>$retval));
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				echo json_encode(array('error'=>$e->getMessage()));
 			}
 		}

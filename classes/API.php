@@ -4,10 +4,13 @@ namespace Palasthotel\Grid;
 
 /**
  * Class API
+
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2020, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
+ *
+ * @property Storage store
  *
  */
 class API {
@@ -20,10 +23,6 @@ class API {
 	 * @var iHook
 	 */
 	private $hook;
-	/**
-	 * @var Store
-	 */
-	private $store;
 
 	/**
 	 * @var Endpoint
@@ -50,7 +49,7 @@ class API {
 		$this->requireBoxes();
 
 		$this->update = new UpdateGrid($query);
-		$this->store = new Store($query, $hook, $author);
+		$this->store = new Storage($query, $hook, $author);
 		$this->endpoint = new Endpoint();
 	}
 

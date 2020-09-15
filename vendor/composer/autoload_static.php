@@ -22,13 +22,14 @@ class ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a
 
     public static $classMap = array (
         'Palasthotel\\Grid\\API' => __DIR__ . '/../..' . '/classes/API.php',
+        'Palasthotel\\Grid\\AbstractQuery' => __DIR__ . '/../..' . '/classes/AbstractQuery.php',
         'Palasthotel\\Grid\\Constants\\Hook' => __DIR__ . '/../..' . '/classes/Constants/Hook.php',
         'Palasthotel\\Grid\\Endpoint' => __DIR__ . '/../..' . '/classes/Endpoint.php',
         'Palasthotel\\Grid\\Grid' => __DIR__ . '/../..' . '/classes/Grid.php',
         'Palasthotel\\Grid\\GridBase' => __DIR__ . '/../..' . '/classes/GridBase.php',
         'Palasthotel\\Grid\\GridContainer' => __DIR__ . '/../..' . '/classes/GridContainer.php',
         'Palasthotel\\Grid\\GridSlot' => __DIR__ . '/../..' . '/classes/GridSlot.php',
-        'Palasthotel\\Grid\\Store' => __DIR__ . '/../..' . '/classes/Store.php',
+        'Palasthotel\\Grid\\Storage' => __DIR__ . '/../..' . '/classes/Storage.php',
         'Palasthotel\\Grid\\UpdateBase' => __DIR__ . '/../..' . '/classes/UpdateBase.php',
         'Palasthotel\\Grid\\UpdateGrid' => __DIR__ . '/../..' . '/classes/UpdateGrid.php',
         'Palasthotel\\Grid\\iHook' => __DIR__ . '/../..' . '/classes/iHook.php',

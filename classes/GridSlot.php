@@ -2,6 +2,8 @@
 
 namespace Palasthotel\Grid;
 
+use Palasthotel\Grid\Constants\Hook;
+
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
@@ -55,7 +57,7 @@ class GridSlot extends GridBase {
 		}
 		if(!$found)
 		{
-			include dirname(__FILE__).'/../templates/frontend/grid-slot.tpl.php';
+			include dirname( __FILE__ ) . '/../templates/grid-slot.tpl.php';
 		}
 		$output=ob_get_clean();
 		

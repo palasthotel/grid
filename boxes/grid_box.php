@@ -11,7 +11,7 @@
 
 use Palasthotel\Grid\Constants\Hook;
 use Palasthotel\Grid\GridBase;
-use Palasthotel\Grid\Store;
+use Palasthotel\Grid\Storage;
 
 class grid_box extends GridBase {
 
@@ -23,7 +23,7 @@ class grid_box extends GridBase {
 
 	/**
 	* Reference to the Grid itself
-	* @var Store
+	* @var Storage
 	*/
 	public $grid;
 
@@ -155,7 +155,7 @@ class grid_box extends GridBase {
 			}
 			if(!$found)
 			{
-				$found=$this->renderTemplate(dirname(__FILE__).'/../templates/frontend',$editmode,$type);
+				$found=$this->renderTemplate(dirname(__FILE__).'/../templates',$editmode,$type);
 			}
 			if($found) break;
 		}
