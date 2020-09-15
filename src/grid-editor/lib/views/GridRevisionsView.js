@@ -5,6 +5,9 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
 var GridRevisionsView = GridBackbone.View.extend({
 	tagName: 'div',
 	className: 'grid-revisions',

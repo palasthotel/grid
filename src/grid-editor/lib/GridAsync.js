@@ -1,4 +1,6 @@
-function GridAsync(){
+import _ from 'underscore'
+
+export function GridAsync(){
 
 	var self = this;
 

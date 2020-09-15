@@ -5,7 +5,9 @@
 * @package Palasthotel\Grid
 */
 
-var Revisions = GridBackbone.Collection.extend({
+import GridBackbone from 'backbone'
+
+window.Revisions = GridBackbone.Collection.extend({
 	model: Revision,
 	initialize: function(spec){
 		if(!spec || !spec.grid ||!(spec.grid instanceof Grid )){
@@ -23,25 +25,25 @@ var Revisions = GridBackbone.Collection.extend({
 });
 
 // type collections
-var ContainerTypes = GridBackbone.Collection.extend({
+window.ContainerTypes = GridBackbone.Collection.extend({
 	model: ContainerType,
 	sync: function(method, collection, options){
 		GridRequest.containertypes(collection, options);
 	}
 });
-var ReusableContainers = GridBackbone.Collection.extend({
+window.ReusableContainers = GridBackbone.Collection.extend({
 	model: ContainerType,
 	sync: function(method, collection, options){
 		GridRequest.reusablecontainers(collection, options);
 	}
 });
-var BoxTypes = GridBackbone.Collection.extend({
+window.BoxTypes = GridBackbone.Collection.extend({
 	model: BoxType,
 	sync: function(method, collection, options){
 		GridRequest.boxtypes(collection, options);
 	}
 });
-var Styles = GridBackbone.Collection.extend({
+window.Styles = GridBackbone.Collection.extend({
 	model: StyleType,
 	initialize: function(spec){
 		if (!spec || !spec.type ) {
@@ -55,7 +57,7 @@ var Styles = GridBackbone.Collection.extend({
 });
 
 // element collections
-var Containers = GridBackbone.Collection.extend({
+window.Containers = GridBackbone.Collection.extend({
 	model: Container,
 	move: function(container, to_index){
 		var self = this;
@@ -70,10 +72,10 @@ var Containers = GridBackbone.Collection.extend({
 		return this;
 	}
 });
-var Slots = GridBackbone.Collection.extend({
+window.Slots = GridBackbone.Collection.extend({
 	model: Slot
 });
-var Boxes = GridBackbone.Collection.extend({
+window.Boxes = GridBackbone.Collection.extend({
 	model: Box
 });
 

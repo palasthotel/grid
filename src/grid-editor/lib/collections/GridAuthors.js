@@ -5,7 +5,10 @@
 * @package Palasthotel\Grid
 */
 
-var GridAuthors = GridBackbone.Collection.extend({
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
+window.GridAuthors = GridBackbone.Collection.extend({
     model: GridAuthor,
     async_authors_list: function(data){
     	var self = this;

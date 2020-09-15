@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 var Author = GridBackbone.View.extend({
     tagName: "li",
     className: "grid-author",

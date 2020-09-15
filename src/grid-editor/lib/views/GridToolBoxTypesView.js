@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 var GridToolBoxTypesView = GridBackbone.View.extend({
     className: "grid-tool grid-element-box",
     events:{

@@ -1,9 +1,13 @@
+
 /**
 * @author Palasthotel <rezeption@palasthotel.de>
 * @copyright Copyright (c) 2014, Palasthotel
 * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
 * @package Palasthotel\Grid
 */
+
+import ich from 'icanhaz'
+import {GridAsync} from "./GridAsync";
 
 /**
 *	IE JS console fix
@@ -32,9 +36,7 @@
 
 /** public object */
 window.GRID = {};
-var GRID = window.GRID;
-
-GRID = {
+const GRID = window.GRID = {
 	$body: null,
 	dom_root: "#new-grid-wrapper",
 	$root: null,

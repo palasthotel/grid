@@ -5,6 +5,9 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
 boxEditorControls['list']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-list",
     initialize:function(){

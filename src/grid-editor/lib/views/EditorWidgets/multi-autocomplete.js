@@ -5,6 +5,9 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
 boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-multi-autocomplete",
     events:{

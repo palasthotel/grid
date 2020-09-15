@@ -5,7 +5,11 @@
 * @package Palasthotel\Grid
 */
 
-var GridView = GridBackbone.View.extend({
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+import 'icanhaz'
+
+window.GridView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-wrapper',
     initialize: function() {
@@ -24,7 +28,7 @@ var GridView = GridBackbone.View.extend({
 
 });
 
-var ContainersView = GridBackbone.View.extend({
+window.ContainersView = GridBackbone.View.extend({
 	tagName: 'div',
 	className: 'grid-containers-wrapper containers-wrapper',
 	initialize: function(){
@@ -43,7 +47,7 @@ var ContainersView = GridBackbone.View.extend({
 	}
 });
 
-var ContainerView = GridBackbone.View.extend({
+window.ContainerView = GridBackbone.View.extend({
 	className: 'grid-container',
     events:{
         "click [role=trash]": "selfdestruct",
@@ -151,7 +155,7 @@ var ContainerView = GridBackbone.View.extend({
     }
 });
 
-var SlotsView = GridBackbone.View.extend({
+window.SlotsView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-slots-wrapper slots-wrapper',
     initialize: function(){
@@ -170,7 +174,7 @@ var SlotsView = GridBackbone.View.extend({
     }
 });
 
-var SlotView = GridBackbone.View.extend({
+window.SlotView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-slot',
 	initialize: function(){
@@ -199,7 +203,7 @@ var SlotView = GridBackbone.View.extend({
 	}
 });
 
-var BoxesView = GridBackbone.View.extend({
+window.BoxesView = GridBackbone.View.extend({
     tagName: 'div',
     className: 'grid-boxes-wrapper boxes-wrapper',
     initialize: function(){
@@ -217,7 +221,7 @@ var BoxesView = GridBackbone.View.extend({
     }
 });
 
-var BoxView = GridBackbone.View.extend({
+window.BoxView = GridBackbone.View.extend({
     className: "grid-box box",
     events: {
         'click .grid-box-edit' : 'edit',
@@ -289,7 +293,7 @@ var BoxView = GridBackbone.View.extend({
     }
 });
 
-var BoxEditor = GridBackbone.View.extend({
+window.BoxEditor = GridBackbone.View.extend({
     events: {
         'click .btn-cancel' : 'onCancel',
         'click .grid-editor-legend' : 'onToggle',
@@ -390,4 +394,4 @@ var BoxEditor = GridBackbone.View.extend({
     }
 });
 
-boxEditorControls={};
+window.boxEditorControls={};

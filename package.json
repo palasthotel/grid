@@ -19,22 +19,24 @@
   },
   "homepage": "https://github.com/palasthotel/grid#readme",
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "compression-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^6.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "webpack-cli": "^3.3.12",
-    "webpack-merge": "^5.1.1",
+    "webpack-merge": "^5.1.4",
     "webpack": "^4.44.1"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.11.5",
+    "backbone": "^1.4.0",
     "blueimp-file-upload": "^10.31.0",
     "ckeditor4": "^4.15.0",
+    "icanhaz": "^0.10.3",
     "jquery": "^3.5.1",
     "jquery-ui": "^1.12.1",
     "underscore": "^1.11.0"

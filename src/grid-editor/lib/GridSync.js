@@ -5,10 +5,12 @@
 * @package Palasthotel\Grid
 */
 
+import _ from 'underscore'
+
 // ------------------------------------
 // ajax Object
 // -----------------------------------
-var GridAjax = function(method, params_array, settings){
+window.GridAjax = function(method, params_array, settings){
 	// two required variables
 	var json={};
 	json["method"] = method;
@@ -76,7 +78,7 @@ var GridAjax = function(method, params_array, settings){
 // -------------------
 // Method-map that uses the GridAjax object for server communication
 // ------------------
-var GridRequest = {
+window.GridRequest = {
 	grid: {
 		create: function(grid, options){
 			GRID.log("Request grid create");

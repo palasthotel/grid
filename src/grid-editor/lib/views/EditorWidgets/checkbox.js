@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 boxEditorControls['checkbox']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-checkbox",
     initialize:function(){

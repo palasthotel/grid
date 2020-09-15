@@ -5,7 +5,10 @@
 * @package Palasthotel\Grid
 */
 
-var GridRights = GridBackbone.Model.extend({
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
+window.GridRights = GridBackbone.Model.extend({
     initialize: function(spec){
 
     },

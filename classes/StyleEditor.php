@@ -1,7 +1,7 @@
 <?php
 namespace Palasthotel\Grid;
 /**
- * @property Storage store
+ * @property Storage $storage
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2020, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
@@ -13,10 +13,10 @@ class StyleEditor {
 	/**
 	 * StyleEditor constructor.
 	 *
-	 * @param Storage $store
+	 * @param Storage $storage
 	 */
-    public function __construct(Storage $store){
-        $this->store = $store;
+    public function __construct(Storage $storage){
+        $this->storage = $storage;
     }
 
 	public function run()
@@ -29,21 +29,18 @@ class StyleEditor {
 				{
 					if(!empty($data['slug']) && !empty($data['style']))
 					{
-						$this->store->createContainerStyle($data['slug'],$data['style']);
-//						db_query("insert into {grid_container_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
+						$this->storage->createContainerStyle($data['slug'],$data['style']);
 					}
 				}
 				else
 				{
 					if(isset($data['delete']))
 					{
-						$this->store->deleteContainerStyle($data['id']);
-//						db_query("delete from {grid_container_style} where id=".$data['id']);
+						$this->storage->deleteContainerStyle($data['id']);
 					}
 					else
 					{
-						$this->store->updateContainerStyle($data['id'],$data['slug'],$data['style']);
-//						db_query("update {grid_container_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
+						$this->storage->updateContainerStyle($data['id'],$data['slug'],$data['style']);
 					}
 				}
 			}
@@ -53,21 +50,18 @@ class StyleEditor {
 				{
 					if(!empty($data['slug']) && !empty($data['style']))
 					{
-						$this->store->createSlotStyle($data['slug'],$data['style']);
-//						db_query("insert into {grid_slot_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
+						$this->storage->createSlotStyle($data['slug'],$data['style']);
 					}
 				}
 				else
 				{
 					if(isset($data['delete']))
 					{
-						$this->store->deleteSlotStyle($data['id']);
-//						db_query("delete from {grid_slot_style} where id=".$data['id']);
+						$this->storage->deleteSlotStyle($data['id']);
 					}
 					else
 					{
-						$this->store->updateSlotStyle($data['id'],$data['slug'],$data['style']);
-//						db_query("update {grid_slot_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
+						$this->storage->updateSlotStyle($data['id'],$data['slug'],$data['style']);
 					}
 				}
 			}
@@ -77,26 +71,23 @@ class StyleEditor {
 				{
 					if(!empty($data['slug']) && !empty($data['style']))
 					{
-						$this->store->createBoxStyle($data['slug'],$data['style']);
-//						db_query("insert into {grid_box_style} (style,slug) values ('".$data['style']."','".$data['slug']."')");
+						$this->storage->createBoxStyle($data['slug'],$data['style']);
 					}
 				}
 				else
 				{
 					if(isset($data['delete']))
 					{
-						$this->store->deleteBoxStyle($data['id']);
-//						db_query("delete from {grid_box_style} where id=".$data['id']);
+						$this->storage->deleteBoxStyle($data['id']);
 					}
 					else
 					{
-						$this->store->updateBoxStyle($data['id'],$data['slug'],$data['style']);
-//						db_query("update {grid_box_style} set style='".$data['style']."', slug='".$data['slug']."' where id=".$data['id']);
+						$this->storage->updateBoxStyle($data['id'],$data['slug'],$data['style']);
 					}
 				}
 			}
 		}
-		$styles=$this->store->containerStyles();//db_query("select id,style,slug from {grid_container_style} order by id asc");
+		$styles=$this->storage->containerStyles();
 		ob_start();
 ?>
 <style type="text/css">
@@ -135,7 +126,7 @@ class StyleEditor {
 </tr>
 </table>
 <?php
-	$styles=$this->store->slotStyles();//db_query("select id,style,slug from {grid_slot_style} order by id asc");
+	$styles=$this->storage->slotStyles();//db_query("select id,style,slug from {grid_slot_style} order by id asc");
 ?>
 <p>Slot Styles</p>
 <table>
@@ -166,7 +157,7 @@ class StyleEditor {
 </tr>
 </table>
 <?php
-	$styles=$this->store->boxStyles();//db_query("select id,style,slug from {grid_box_style} order by id asc");
+	$styles=$this->storage->boxStyles();//db_query("select id,style,slug from {grid_box_style} order by id asc");
 ?>
 <p>Box Styles</p>
 <table>

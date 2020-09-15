@@ -5,6 +5,10 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
+
 var GridContainerEditor = GridBackbone.View.extend({
     className: "grid-container-editor",
     events: {

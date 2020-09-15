@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 var GridToolBoxBlueprintsView = GridBackbone.View.extend({
     className: "grid-box-blueprints",
     timer:null,

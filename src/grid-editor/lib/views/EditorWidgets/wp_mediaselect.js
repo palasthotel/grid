@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-wp-mediaselect",
     events:{

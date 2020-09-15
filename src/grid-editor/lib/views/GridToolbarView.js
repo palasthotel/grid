@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 var GridToolbarView = GridBackbone.View.extend({
     id:"grid-toolbar",
     _toolContainersView: null,

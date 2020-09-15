@@ -5,10 +5,13 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+import _ from 'underscore'
+
 // ----------------------
 // type models
 // ---------------------
-var ContainerType = GridBackbone.Model.extend({
+window.ContainerType = GridBackbone.Model.extend({
     getDimension:function(){
         var dimension = "";
         var i = 0;
@@ -22,7 +25,7 @@ var ContainerType = GridBackbone.Model.extend({
         return this.get("type").split("-")[0];
     }
 });
-var BoxType = GridBackbone.Model.extend({
+window.BoxType = GridBackbone.Model.extend({
     defaults: function(){
         return {
             type: null,
@@ -57,13 +60,13 @@ var BoxType = GridBackbone.Model.extend({
         return blueprints;
     }
 });
-var StyleType = GridBackbone.Model.extend({});
+window.StyleType = GridBackbone.Model.extend({});
 
 // --------------------------
 // Revisions model
 //  -----------------------
 
-var Revision = GridBackbone.Model.extend({
+window.Revision = GridBackbone.Model.extend({
     initialize: function(spec){
         this.set("id",spec.revision);
     }
@@ -74,7 +77,7 @@ var Revision = GridBackbone.Model.extend({
 // this is the wrapper of the grid elements
 //
 // -----------------------------------------
-var Grid = GridBackbone.Model.extend({
+window.Grid = GridBackbone.Model.extend({
 	defaults: function(){
         return {
             id: -1,
@@ -182,7 +185,7 @@ var Grid = GridBackbone.Model.extend({
 //---------------------
 // element models
 // -------------------
-var Container =  ContainerType.extend({
+window.Container =  ContainerType.extend({
     getGrid: function(){
         return this.get("parent");
     },
@@ -231,15 +234,12 @@ var Container =  ContainerType.extend({
     getSlot: function(index){
         return this.getSlots().at(index);
     },
-    getGrid: function(){
-        return this.get("parent");
-    },
     // handles all Server communication
     sync: function(method, model, options){
     	GridRequest.container[method](model, options);
     }
 });
-var Slot = GridBackbone.Model.extend({
+window.Slot = GridBackbone.Model.extend({
     getGrid: function(){
         return this.get("parent").getGrid();
     },
@@ -297,7 +297,7 @@ var Slot = GridBackbone.Model.extend({
     	GridRequest.slot[method](model, options);
     }
 });
-var Box = GridBackbone.Model.extend({
+window.Box = GridBackbone.Model.extend({
 	unsetDuplicated: function(){
 		this.unset("isDuplicated");
 	},

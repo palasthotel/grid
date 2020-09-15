@@ -5,6 +5,8 @@
 * @package Palasthotel\Grid
 */
 
+import GridBackbone from 'backbone'
+
 var GridSlotStyleChangerView = GridBackbone.View.extend({
     className:"grid-slot-style-changer style-changer",
     tagName: "div",

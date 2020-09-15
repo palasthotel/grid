@@ -5,7 +5,9 @@
 * @package Palasthotel\Grid
 */
 
-var GridAuthor = GridBackbone.Model.extend({
+import GridBackbone from 'backbone'
+
+window.GridAuthor = GridBackbone.Model.extend({
 	defaults: function(){
 		return {
 			has_lock: false,
