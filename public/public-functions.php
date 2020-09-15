@@ -1,5 +1,6 @@
 <?php
 
+use Palasthotel\Grid\Storage;
 use Palasthotel\Grid\WordPress\Plugin;
 
 /**
@@ -82,7 +83,7 @@ function grid_wp_get_privs() {
 /**
  * deprecated function
  * use global $grid_plugin->get_storage()
- * @return grid_db grid_storage
+ * @return Storage grid_storage
  */
 function grid_wp_get_storage() {
 	return grid_plugin()->get_storage();

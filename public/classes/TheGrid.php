@@ -9,23 +9,16 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 use Grid\Constants\GridCSSVariant;
-use Grid\Constants\Hook;
+use Palasthotel\Grid\Constants\Hook;
+use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
 /**
  * @property Plugin $plugin
  */
-class TheGrid
-{
+class TheGrid extends _Component {
 
-	/**
-	 * the_grid constructor.
-	 *
-	 * @param Plugin $plugin
-	 */
-	function __construct($plugin){
-		$this->plugin = $plugin;
+	function onCreate(){
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
 
 		add_action( 'wp_ajax_gridfrontendCSS', array($this, 'container_slots_css') );
@@ -145,7 +138,7 @@ class TheGrid
 		}
 
 
-		$html = $grid_lib->getEditorHTML(
+		$html = $this->plugin->gridEditor->getEditorHTML(
 			$grid_id,
 			'grid',
 			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
@@ -181,11 +174,13 @@ class TheGrid
 	}
 
 	function container_slots_css() {
-		global $grid_lib;
 		global $wpdb;
-		$variant = (isset($_GET["variant"]))? sanitize_text_field($_GET["variant"]): GRID_CSS_VARIANT_TABLE;
+		$defaultVariant = GridCSSVariant::getVariant(GRID_CSS_VARIANT_TABLE);
+		$variant = (isset($_GET["variant"]))? sanitize_text_field($_GET["variant"]): $defaultVariant->slug();
 
-		echo $grid_lib->getContainerSlotCSS(
+
+
+		echo $this->plugin->gridEditor->getContainerSlotCSS(
 			$wpdb->get_results('select * from '.$wpdb->prefix.'grid_container_type'),
 			GridCSSVariant::getVariant($variant)
 		);

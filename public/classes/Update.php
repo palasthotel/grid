@@ -2,6 +2,7 @@
 
 namespace Palasthotel\Grid\WordPress;
 
+use Palasthotel\Grid\iQuery;
 use Palasthotel\Grid\UpdateBase;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
@@ -15,7 +16,9 @@ use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
 class Update extends UpdateBase
 {
-	public $schemaKey = "_wordpress";
+	public function __construct( iQuery $query ) {
+		parent::__construct( $query, "_wordpress" );
+	}
 
 	// ------------------------------------------------
 	// updates

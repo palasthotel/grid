@@ -9,7 +9,8 @@ use mysqli_result;
 use Palasthotel\Grid\AbstractQuery;
 
 /**
- * @property mysqli connection
+ * Class GridQuery
+ * @package Palasthotel\Grid\WordPress
  */
 class GridQuery extends AbstractQuery {
 
@@ -20,6 +21,11 @@ class GridQuery extends AbstractQuery {
 		global $wpdb;
 		return $wpdb->prefix;
 	}
+
+	/**
+	 * @var mysqli
+	 */
+	var $connection;
 
 	/**
 	 * @return mysqli

@@ -21,8 +21,13 @@ namespace Palasthotel\Grid\WordPress;
 
 // If this file is called directly, abort.
 use Exception;
+use Grid\Constants\GridCSSVariant;
+use Grid\Constants\GridCssVariantFlexbox;
 use Palasthotel\Grid\API;
-use Palasthotel\Grid\Store;
+use Palasthotel\Grid\Editor;
+use Palasthotel\Grid\Storage;
+use const Grid\Constants\GRID_CSS_VARIANT_NONE;
+use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -38,6 +43,8 @@ if ( ! defined( 'WPINC' ) ) {
  * @property PositionInPost positionInPost
  * @property Post post
  * @property Ajax ajax
+ * @property API gridAPI
+ * @property Editor gridEditor
  */
 class Plugin {
 
@@ -79,6 +86,7 @@ class Plugin {
 		// ------------------------------------
 		require_once dirname( __FILE__ ) . "/vendor/autoload.php";
 		require_once dirname(__FILE__). "/grid-api/vendor/autoload.php";
+		require_once dirname(__FILE__). "/grid-editor/vendor/autoload.php";
 
 		// ------------------------------------
 		// cache properties
@@ -106,6 +114,7 @@ class Plugin {
 		$this->gridHook = new GridHook();
 		// TODO: maybe move to later action for author name
 		$this->gridAPI = new API($this->gridQuery, $this->gridHook, "");
+		$this->gridEditor = new Editor($this->gridAPI->store);
 
 		/**
 		 * wrapper for grid library storage
@@ -267,7 +276,8 @@ class Plugin {
 			wp_enqueue_style( 'grid_frontend', get_template_directory_uri() . '/grid/default-frontend.css' );
 		} else {
 			// default
-			$variant = get_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, GRID_CSS_VARIANT_TABLE);
+			$css = GridCSSVariant::getVariant(GRID_CSS_VARIANT_TABLE);
+			$variant = get_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, $css->slug());
 			if($variant != GRID_CSS_VARIANT_NONE){
 				wp_enqueue_style(
 					'grid_frontend',
@@ -338,7 +348,7 @@ class Plugin {
 		global $grid_storage;
 		if ( ! isset( $grid_storage ) ) {
 			$user                           = wp_get_current_user();
-			$storage                        = new Store( $this->gridQuery,$this->gridHook, $user->user_login);
+			$storage                        = new Storage( $this->gridQuery,$this->gridHook, $user->user_login);
 			$storage->ajaxEndpoint          = new Ajax();
 			$storage->ajaxEndpoint->storage = $storage;
 
@@ -376,21 +386,20 @@ class Plugin {
 	 * @param null|\stdClass $editor
 	 */
 	function enqueue_editor_files( $editor = NULL ) {
-		global $grid_lib;
 		/**
 		 * get editor or default
 		 */
 		$css = array();
 		if ( NULL != $editor ) {
-			$css = $editor->getCSS( false );
+			$css = $this->gridEditor->getEditorCSS( );
 		} else {
-			$css = $grid_lib->getEditorCSS( false );
+			$css = $this->gridEditor->getEditorCSS();
 		}
 		/**
 		 * enqueue the css array
 		 */
 		foreach ( $css as $idx => $file ) {
-			wp_enqueue_style( 'grid_css_lib_' . $idx, plugins_url( 'lib/' . $file, __FILE__ ) );
+			wp_enqueue_style( 'grid_css_lib_' . $idx, plugins_url( 'grid-editor/' . $file, __FILE__ ) );
 		}
 		wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'css/grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wordpress_container_slots_css', add_query_arg( array(
@@ -406,13 +415,13 @@ class Plugin {
 		if ( NULL != $editor ) {
 			$js = $editor->getJS( $lang, false );
 		} else {
-			$js = $grid_lib->getEditorJS( $lang, false, false );
+			$js = $this->gridEditor->getEditorJS( $lang, false, false );
 		}
 		/**
 		 * enqueue the js array
 		 */
 		foreach ( $js as $idx => $file ) {
-			wp_enqueue_script( 'grid_js_lib_' . $idx, plugins_url( 'lib/' . $file, __FILE__ ) );
+			wp_enqueue_script( 'grid_js_lib_' . $idx, plugins_url( 'grid-editor/' . $file, __FILE__ ) );
 		}
 		wp_enqueue_script( 'grid_wordpress_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
 
