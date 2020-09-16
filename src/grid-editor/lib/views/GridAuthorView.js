@@ -6,8 +6,9 @@
 */
 
 import GridBackbone from 'backbone'
+import ich from 'icanhaz'
 
-var Author = GridBackbone.View.extend({
+window.Author = GridBackbone.View.extend({
     tagName: "li",
     className: "grid-author",
     events: {

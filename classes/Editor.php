@@ -112,7 +112,7 @@ class Editor {
 	//renders the CKEditor configuration
 	public function getCKEditorConfig( $styles, $formats, $ckeditor_plugins = array() ) {
 		ob_start();
-		require( $this->getHome() . "js/grid_htmlbox_ckeditor_config.js.php" );
+		require( $this->getHome() . "/../js/grid_htmlbox_ckeditor_config.js.php" );
 		$str = ob_get_contents();
 		ob_end_clean();
 

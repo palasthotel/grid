@@ -6,8 +6,9 @@
 */
 import GridBackbone from 'backbone'
 import _ from 'underscore'
+import ich from 'icanhaz'
 
-var GridToolContainersView = GridBackbone.View.extend({
+window.GridToolContainersView = GridBackbone.View.extend({
     className: "grid-tool grid-element-container",
     events:{
         "click .grid-container-type": "renderContainerType"
@@ -70,7 +71,7 @@ var GridToolContainersView = GridBackbone.View.extend({
         return { containers: GRID.getReusableContainers().toJSON() };
     },
     initializesDraggable: function(){
-        this.$el.find(".grid-new-element").draggable({
+        jQuery(this.el).find(".grid-new-element").draggable({
             helper: function(event, element){
                 return jQuery("<div class='dragger-helper'></div>");
             },

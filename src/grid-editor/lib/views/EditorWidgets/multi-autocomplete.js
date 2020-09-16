@@ -56,7 +56,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
 	        
             jQuery.each(content, function(index, key){
 	            self.$el.find(".loading").addClass("go");
-                GridAjax(
+                new GridAjax(
                     "typeAheadGetText",
                     [
                         box.getGrid().getGridID(),
@@ -126,7 +126,7 @@ boxEditorControls['multi-autocomplete']=GridBackbone.View.extend({
         var self = this;
         var box=this.model.box;
         
-        GridAjax(
+        new GridAjax(
             "typeAheadSearch",
             [
                 box.getGrid().getGridID(),

@@ -6,8 +6,9 @@
 */
 
 import GridBackbone from 'backbone'
+import ich from 'icanhaz'
 
-var GridSlotStyleChangerView = GridBackbone.View.extend({
+window.GridSlotStyleChangerView = GridBackbone.View.extend({
     className:"grid-slot-style-changer style-changer",
     tagName: "div",
     events:{

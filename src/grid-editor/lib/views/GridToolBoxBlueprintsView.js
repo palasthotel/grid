@@ -6,8 +6,9 @@
 */
 
 import GridBackbone from 'backbone'
+import ich from 'icanhaz'
 
-var GridToolBoxBlueprintsView = GridBackbone.View.extend({
+window.GridToolBoxBlueprintsView = GridBackbone.View.extend({
     className: "grid-box-blueprints",
     timer:null,
     blueprints: null,
@@ -52,7 +53,7 @@ var GridToolBoxBlueprintsView = GridBackbone.View.extend({
     },
     initializesDraggable: function(){
         var self = this;
-        this.$el.find(".grid-box-dragger").draggable({
+        jQuery(this.el).find(".grid-box-dragger").draggable({
             helper: function(event, element){
                 return jQuery("<div class='dragger-helper'></div>");
             },

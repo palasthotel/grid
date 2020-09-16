@@ -7,8 +7,10 @@
 
 import GridBackbone from 'backbone'
 import _ from 'underscore'
+import ich from 'icanhaz'
+import {initHTMLEditor} from "../utils";
 
-var BoxEditor = GridBackbone.View.extend({
+window.BoxEditor = GridBackbone.View.extend({
     className: "grid-box-editor",
     events: {
         'click .grid-editor-controls [role=cancel]' : 'onCancel',
@@ -38,6 +40,7 @@ var BoxEditor = GridBackbone.View.extend({
             'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
+        console.log(contentstructure)
         var fieldcontainer=this.$el.find(".grid-dynamic-fields .grid-editor-field-wrapper");
         var views=[];
         _.each(contentstructure,function(elem){
@@ -56,19 +59,18 @@ var BoxEditor = GridBackbone.View.extend({
             fieldcontainer.append(view.render().el);
         });
         this.views=views;
-        jQuery.each(this.$el.find(".form-html"), function(index, element) {
-            CKEDITOR.replace(
-                element,{
-                customConfig : document.PathToConfig
-            });
-        });
+
+        initHTMLEditor(this.el.querySelector(".grid-editor-prolog")).then(editor=>this.prologEditor = editor);
+        initHTMLEditor(this.el.querySelector(".grid-editor-epilog")).then(editor=>this.epilogEditor = editor);
 
         if(GRID.getBoxStyles().length<1)
         {
-                this.$el.find(".grid-editor-box-styles-wrapper").hide();
+            this.$el.find(".grid-editor-box-styles-wrapper").hide();
         }
 
         this.$el.find(".grid-collapsable-shown").addClass('grid-active');
+
+
 
         jQuery.each(this.$el.find(".grid-editor-url-input"), function(index, val) {
              var $url = jQuery(val);
@@ -120,8 +122,9 @@ var BoxEditor = GridBackbone.View.extend({
         this.model.set('content',obj);
         this.model.set('title',this.$el.find(".grid-editor-title").val());
         this.model.set('titleurl',this.$el.find(".grid-editor-titleurl").val());
-        this.model.set('prolog',CKEDITOR.instances["grid-editor-prolog"].getData());
-        this.model.set('epilog',CKEDITOR.instances['grid-editor-epilog'].getData());
+
+        this.model.set('prolog',this.prologEditor.getData());
+        this.model.set('epilog',this.epilogEditor.getData());
         this.model.set('readmore',this.$el.find('.grid-editor-readmore').val());
         this.model.set('readmoreurl',this.$el.find('.grid-editor-readmoreurl').val());
         this.model.set('style',this.$el.find(".grid-editor-styles-wrapper select").val());

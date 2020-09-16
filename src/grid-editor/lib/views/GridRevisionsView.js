@@ -7,8 +7,9 @@
 
 import GridBackbone from 'backbone'
 import _ from 'underscore'
+import ich from 'icanhaz'
 
-var GridRevisionsView = GridBackbone.View.extend({
+window.GridRevisionsView = GridBackbone.View.extend({
 	tagName: 'div',
 	className: 'grid-revisions',
 	events:{

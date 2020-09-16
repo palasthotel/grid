@@ -7,7 +7,7 @@
 
 import GridBackbone from 'backbone'
 import _ from 'underscore'
-import 'icanhaz'
+import ich from 'icanhaz'
 
 window.GridView = GridBackbone.View.extend({
     tagName: 'div',

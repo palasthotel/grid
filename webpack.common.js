@@ -27,6 +27,10 @@ const editorConfig = {
             }
         ]
     },
+    externals:{
+        "jquery": "jQuery",
+        "jquery-ui": "jQuery",
+    },
 };
 
 const reuseContainerListConfig = {
@@ -63,7 +67,7 @@ const reuseContainerListConfig = {
     externals:{
         "react": "React",
         "react-dom": "ReactDOM",
-    }
+    },
 };
 
 module.exports = [editorConfig, reuseContainerListConfig]

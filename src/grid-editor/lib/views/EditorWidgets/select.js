@@ -18,6 +18,8 @@ boxEditorControls['select']=GridBackbone.View.extend({
         const structure = this.model.structure;
         const container = this.model.container;
 
+        console.debug(structure, container)
+
         const isMultiple = (typeof structure.multiple !== typeof undefined && structure.multiple);
         const values = container[structure.key];
         const hasMultipleValues = (typeof values === typeof []);
@@ -30,14 +32,15 @@ boxEditorControls['select']=GridBackbone.View.extend({
         _.each(selections,function(elem){
             var selected="";
             if(
-                (!hasMultipleValues && values === elem.key)
+                (!hasMultipleValues && `${values}` === `${elem.key}`)
                 ||
                 (hasMultipleValues && _.indexOf(values, elem.key) > -1)
             ) selected="selected";
+
             html+="<option "+selected+" value='"+elem.key+"'>"+elem.text+"</option>";
         });
         html=html+"</select>";
-        jQuery(this.$el).html(html);
+        jQuery(this.el).html(html);
         return this;
     },
     fetchValue:function(){

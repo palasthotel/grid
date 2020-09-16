@@ -6,8 +6,9 @@
 */
 
 import GridBackbone from 'backbone'
+import ich from 'icanhaz'
 
-var GridToolBoxTypesView = GridBackbone.View.extend({
+window.GridToolBoxTypesView = GridBackbone.View.extend({
     className: "grid-tool grid-element-box",
     events:{
     	"click .grid-box-type": "toggleBoxType"

@@ -8,8 +8,6 @@ import "./frameworks/jquery.iframe-transport.js"
 import "blueimp-file-upload"
 import "./frameworks/mutate.events.js"
 import "./frameworks/mutate.min.js"
-import "./frameworks/Socket.io.js"
-import "ckeditor4"
 
 // ----------------------------------------------------
 // grid custom javascript

@@ -42,7 +42,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
             this.$el.find("input.i-autocomplete").data("key",key_value);
             const box=this.model.box;
             const self=this;
-            GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key_value],{
+            new GridAjax("typeAheadGetText",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,key_value],{
                 success_fn:function(data)
                 {
                     self.$el.find(".loading").removeClass("go");
@@ -75,7 +75,7 @@ boxEditorControls['autocomplete']=GridBackbone.View.extend({
     doSearch: function(search){
         const self = this;
         const box=this.model.box;
-        GridAjax("typeAheadSearch",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
+        new GridAjax("typeAheadSearch",[box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),this.model.parentpath+this.model.structure.key,search],{
             success_fn:function(data){
                 self.$el.find(".suggestion-list").empty();
                 _.each(data.result,function(elem){

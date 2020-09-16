@@ -6,8 +6,9 @@
 */
 
 import GridBackbone from 'backbone'
+import ich from 'icanhaz'
 
-var GridToolbarView = GridBackbone.View.extend({
+window.GridToolbarView = GridBackbone.View.extend({
     id:"grid-toolbar",
     _toolContainersView: null,
     _toolBoxesView: null,

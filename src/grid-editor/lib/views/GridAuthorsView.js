@@ -5,8 +5,9 @@
 * @package Palasthotel\Grid
 */
 import GridBackbone from 'backbone'
+import ich from 'icanhaz'
 
-var Authors = GridBackbone.View.extend({
+window.Authors = GridBackbone.View.extend({
     className: "grid-authors",
     initialize: function(){
         this.listenTo(GRID.authors, "add", this.onAddAuthor);

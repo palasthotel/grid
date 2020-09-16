@@ -1,4 +1,5 @@
 import _ from 'underscore'
+import io from 'socket.io-client';
 
 export function GridAsync(){
 

@@ -6,19 +6,24 @@
 */
 
 import GridBackbone from 'backbone'
+import {initHTMLEditor} from "../../utils";
 
 boxEditorControls['html']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-html",
-    initialize:function(){
-
-    },
     render:function(){
-        var text=this.model.container[this.model.structure.key];
-        if(!text)text="";
-        this.$el.html("<label>"+this.model.structure.label+"</label><textarea name='"+this.cid+"' class='dynamic-value form-html'>"+text.replace(/\'/g, "&#39;")+"</textarea>");
+        const text=this.model.container[this.model.structure.key] || "";
+        console.log("render html")
+        this.$el.html(
+            "<label>"+this.model.structure.label+"</label>"+
+            "<textarea name='"+this.cid+"' class='dynamic-value form-html'>"+text.replace(/\'/g, "&#39;")+"</textarea>"
+        );
+        initHTMLEditor(this.el.querySelector(".form-html")).then(editor=>{
+            this.editor = editor;
+        })
+
         return this;
     },
     fetchValue:function(){
-        return CKEDITOR.instances[this.cid].getData();
+        return this.editor.getData();
     }
 });

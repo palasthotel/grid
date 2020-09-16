@@ -152,6 +152,7 @@ const GRID = window.GRID = {
 		GRID.$root.append(GRID.$loading);
 
 		GRID.gridview = new GridView({model: GRID.getModel() });
+
 		// handle rights
 		GRID.gridview.listenTo(GRID.getRights(),"change",GRID.onRights);
 
@@ -384,7 +385,7 @@ const GRID = window.GRID = {
 		container_deleted=false;
 		var container;
 		var self=this;
-		this.getView().$el.sortable({
+		jQuery(this.getView().el).sortable({
             handle: ".grid-container-sorthandle, .grid-container-reused-layer",
             items:".grid-container:not(.grid-container-type-sc)",
             placeholder: "grid-container-sort-placeholder",
@@ -439,7 +440,7 @@ const GRID = window.GRID = {
 		box_duplicated;
 		box_deleted=false;
 		box_duplicated=false;
-		this.getView().$el.find(".grid-container-type-c[data-reused=false] .grid-boxes-wrapper, .grid-container-type-sc .grid-boxes-wrapper").sortable({
+		jQuery(this.getView().el).find(".grid-container-type-c[data-reused=false] .grid-boxes-wrapper, .grid-container-type-sc .grid-boxes-wrapper").sortable({
 			items: ".grid-box",
 			handle: ".grid-box-controls",
 			//cancel: ".grid-box-edit, .grid-box-delete",

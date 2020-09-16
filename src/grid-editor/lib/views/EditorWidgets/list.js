@@ -102,12 +102,12 @@ boxEditorControls['list']=GridBackbone.View.extend({
         this.views.push(view);
         this.$list.append(view.render().el);
 
-        jQuery.each(view.$el.find(".form-html"), function(index, element) {
-            CKEDITOR.replace(
-                element,{
-                customConfig : document.PathToConfig
-            });
-        });
+        // jQuery.each(view.$el.find(".form-html"), function(index, element) {
+        //     CKEDITOR.replace(
+        //         element,{
+        //         customConfig : document.PathToConfig
+        //     });
+        // });
     },
     fetchValue:function(){
         var content=[];
