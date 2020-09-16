@@ -16,7 +16,7 @@ namespace Palasthotel\Grid;
 class API {
 
 	/**
-	 * @var iQuery
+	 * @var AbstractQuery
 	 */
 	private $query;
 	/**
@@ -37,11 +37,11 @@ class API {
 	/**
 	 * API constructor.
 	 *
-	 * @param iQuery $query
+	 * @param AbstractQuery $query
 	 * @param iHook $hook
 	 * @param string $author
 	 */
-	public function __construct(iQuery $query, iHook $hook, $author)
+	public function __construct(AbstractQuery $query, iHook $hook, $author)
 	{
 		$this->query = $query;
 		$this->hook = $hook;
@@ -635,54 +635,54 @@ class API {
 
 	public function install()
 	{
-		$this->query->execute("alter table {grid_box} add constraint {fk_box_type} foreign key (type) references {grid_box_type} (id) on update cascade ON DELETE SET NULL");
-		$this->query->execute("alter table {grid_box} add constraint {fk_box_style} foreign key (style) references {grid_box_style} (id) on update cascade ON DELETE SET NULL");
-		$this->query->execute("alter table {grid_container} add constraint {fk_container_type} foreign key (type) references {grid_container_type} (id) on update cascade on delete cascade");
-		$this->query->execute("alter table {grid_container} add constraint {fk_container_style} foreign key (style) references {grid_container_style} (id) on update cascade ON DELETE SET NULL");
-		$this->query->execute("alter table {grid_container2slot} add constraint {fk_container_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id,grid_id,grid_revision) on update cascade on delete cascade");
-		$this->query->execute("alter table {grid_container2slot} add constraint {fk_container_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
-		$this->query->execute("alter table {grid_grid2container} add constraint {fk_grid_grid} foreign key (grid_id,grid_revision) references {grid_grid} (id,revision) on update cascade on delete cascade");
-		$this->query->execute("alter table {grid_grid2container} add constraint {fk_grid_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
-		$this->query->execute("alter table {grid_slot} add constraint {fk_slot_style} foreign key (style) references {grid_slot_style} (id) on update cascade ON DELETE SET NULL");
-		$this->query->execute("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
-		$this->query->execute("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_box} add constraint {fk_box_type} foreign key (type) references {grid_box_type} (id) on update cascade ON DELETE SET NULL");
+		$this->query->prefixAndExecute("alter table {grid_box} add constraint {fk_box_style} foreign key (style) references {grid_box_style} (id) on update cascade ON DELETE SET NULL");
+		$this->query->prefixAndExecute("alter table {grid_container} add constraint {fk_container_type} foreign key (type) references {grid_container_type} (id) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_container} add constraint {fk_container_style} foreign key (style) references {grid_container_style} (id) on update cascade ON DELETE SET NULL");
+		$this->query->prefixAndExecute("alter table {grid_container2slot} add constraint {fk_container_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id,grid_id,grid_revision) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_container2slot} add constraint {fk_container_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_grid2container} add constraint {fk_grid_grid} foreign key (grid_id,grid_revision) references {grid_grid} (id,revision) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_grid2container} add constraint {fk_grid_container} foreign key (container_id,grid_id,grid_revision) references {grid_container} (id, grid_id, grid_revision) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_slot} add constraint {fk_slot_style} foreign key (style) references {grid_slot_style} (id) on update cascade ON DELETE SET NULL");
+		$this->query->prefixAndExecute("alter table {grid_slot2box} add constraint {fk_slot_slot} foreign key (slot_id,grid_id,grid_revision) references {grid_slot} (id,grid_id,grid_revision) on update cascade on delete cascade");
+		$this->query->prefixAndExecute("alter table {grid_slot2box} add constraint {fk_slot_box} foreign key (box_id,grid_id,grid_revision) references {grid_box} (id,grid_id,grid_revision) on update cascade on delete cascade");
 
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('i-0',0) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('i-0',0) ON DUPLICATE KEY UPDATE type=type;");
 
-		$this->query->execute("insert into {grid_container_type} (type, numslots) values ('c-1d1',1) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type, numslots) values ('c-1d1',1) ON DUPLICATE KEY UPDATE type=type;");
 
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d3',3) ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d3',2) ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('c-1d3-2d3',2) ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d6-1d6',6) ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('c-1d4-1d4-1d4-1d4',4) ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('c-1d2-1d2',2) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('c-1d3-1d3-1d3',3) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('c-2d3-1d3',2) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('c-1d3-2d3',2) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('c-1d6-1d6-1d6-1d6-1d6-1d6',6) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('c-1d4-1d4-1d4-1d4',4) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('c-1d2-1d2',2) ON DUPLICATE KEY UPDATE type=type;");
 
-		$this->query->execute("insert into {grid_container_type} (type,numslots, space_to_right) values ('s-1d3-0',1,'2d3') ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots, space_to_left) values ('s-0-1d3',1,'2d3') ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots) values ('sc-1d3',1) ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots, space_to_right) values ('s-1d3-0',1,'2d3') ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots, space_to_left) values ('s-0-1d3',1,'2d3') ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots) values ('sc-1d3',1) ON DUPLICATE KEY UPDATE type=type;");
 
-		$this->query->execute("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-1d3-1d3',2,'1d3') ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-1d3-1d3-0',2,'1d3') ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
-		$this->query->execute("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-2d3-0',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-1d3-1d3',2,'1d3') ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-1d3-1d3-0',2,'1d3') ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots,space_to_left) values ('c-0-2d3',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
+		$this->query->prefixAndExecute("insert into {grid_container_type} (type,numslots,space_to_right) values ('c-2d3-0',1,'1d3') ON DUPLICATE KEY UPDATE type=type;");
 
 		$this->update->install();
 	}
 
 	public function uninstall()
 	{
-		$this->query->execute("alter table {grid_box} drop foreign key {fk_box_type}");
-		$this->query->execute("alter table {grid_box} drop foreign key {fk_box_style}");
-		$this->query->execute("alter table {grid_container} drop foreign key {fk_container_type}");
-		$this->query->execute("alter table {grid_container} drop foreign key {fk_container_style}");
-		$this->query->execute("alter table {grid_container2slot} drop foreign key {fk_container_container}");
-		$this->query->execute("alter table {grid_container2slot} drop foreign key {fk_container_slot}");
-		$this->query->execute("alter table {grid_grid2container} drop foreign key {fk_grid_grid}");
-		$this->query->execute("alter table {grid_grid2container} drop foreign key {fk_grid_container}");
-		$this->query->execute("alter table {grid_slot} drop foreign key {fk_slot_style}");
-		$this->query->execute("alter table {grid_slot2box} drop foreign key {fk_slot_slot}");
-		$this->query->execute("alter table {grid_slot2box} drop foreign key {fk_slot_box}");
+		$this->query->prefixAndExecute("alter table {grid_box} drop foreign key {fk_box_type}");
+		$this->query->prefixAndExecute("alter table {grid_box} drop foreign key {fk_box_style}");
+		$this->query->prefixAndExecute("alter table {grid_container} drop foreign key {fk_container_type}");
+		$this->query->prefixAndExecute("alter table {grid_container} drop foreign key {fk_container_style}");
+		$this->query->prefixAndExecute("alter table {grid_container2slot} drop foreign key {fk_container_container}");
+		$this->query->prefixAndExecute("alter table {grid_container2slot} drop foreign key {fk_container_slot}");
+		$this->query->prefixAndExecute("alter table {grid_grid2container} drop foreign key {fk_grid_grid}");
+		$this->query->prefixAndExecute("alter table {grid_grid2container} drop foreign key {fk_grid_container}");
+		$this->query->prefixAndExecute("alter table {grid_slot} drop foreign key {fk_slot_style}");
+		$this->query->prefixAndExecute("alter table {grid_slot2box} drop foreign key {fk_slot_slot}");
+		$this->query->prefixAndExecute("alter table {grid_slot2box} drop foreign key {fk_slot_box}");
 	}
 
 	public function update()

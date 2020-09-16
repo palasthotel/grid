@@ -15,4 +15,8 @@ abstract class AbstractQuery implements iQuery {
 		return $sql;
 	}
 
+	public function prefixAndExecute($sql){
+		return $this->execute($this->prepare($sql));
+	}
+
 }

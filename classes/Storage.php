@@ -2,6 +2,7 @@
 
 namespace Palasthotel\Grid;
 
+use Palasthotel\Grid\Constants\Hook;
 use stdClass;
 
 /**
@@ -159,7 +160,7 @@ class Storage {
 			$grid->container[0]->dimension="1d1";
 			$grid->container[0]->containerid=-1;
 			$grid->container[0]->slots=array();
-			$grid->container[0]->slots[]=new grid_slot();
+			$grid->container[0]->slots[]=new GridSlot();
 			$grid->container[0]->slots[0]->storage=$this;
 			$grid->container[0]->slots[0]->grid=$grid;
 			$grid->container[0]->slots[0]->slotid=-1;
@@ -200,7 +201,7 @@ class Storage {
 		$class="grid_".$boxtype."_box";
 		if(!class_exists($class))
 		{
-			$box = new grid_error_box("class not found ".$class);
+			$box = new \grid_error_box("class not found ".$class);
 			$box->boxid=$row['box_id'];
 			$box->storage=$this;
 		} else {
@@ -433,12 +434,12 @@ order by grid_container2slot.weight asc, grid_slot2box.weight asc
 				$currentcontainer->readmoreurl=$row['container_readmoreurl'];
 				$currentcontainer->slots=array();
 				$currentcontainer->storage=$this;
-				$grid->container[]=$currentcontainer;
+				//$grid->container[]=$currentcontainer;
 				$currentslot=NULL;
 			}
 			if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
 			{
-				$currentslot=new grid_slot();
+				$currentslot=new GridSlot();
 				$currentslot->grid=$grid;
 				$currentslot->slotid=$row['slot_id'];
 				$currentslot->style=$row['slot_style'];
@@ -450,7 +451,7 @@ order by grid_container2slot.weight asc, grid_slot2box.weight asc
 			if($boxtype!=NULL)
 			{
 				$box=$this->parseBox($row);
-				$box->grid=$grid;
+				//$box->grid=$grid;
 				$currentslot->boxes[]=$box;
 			}
 		}
@@ -747,7 +748,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$query="insert into ".$this->query->prefix()."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
 			$this->query->execute($query);
 
-			$slot=new grid_slot();
+			$slot=new GridSlot();
 			$slot->grid=$grid;
 			$slot->slotid=$slotid;
 			$slot->storage=$this;

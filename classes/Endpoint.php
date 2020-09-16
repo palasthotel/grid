@@ -2,7 +2,8 @@
 
 namespace Palasthotel\Grid;
 
-use Grid\Constants\Hook;
+
+use Palasthotel\Grid\Constants\Hook;
 
 /**
  * @author Palasthotel <rezeption@palasthotel.de>

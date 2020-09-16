@@ -18,10 +18,10 @@ class UpdateBase {
 	/**
 	 * UpdateBase constructor.
 	 *
-	 * @param iQuery $query
+	 * @param AbstractQuery $query
 	 * @param string $schemaKey
 	 */
-	public function __construct(iQuery $query, $schemaKey = ""){
+	public function __construct(AbstractQuery $query, $schemaKey = ""){
 		$this->query     = $query;
 		$this->schemaKey = $schemaKey;
 	}
@@ -73,14 +73,14 @@ class UpdateBase {
 	{
 		//we assume that all updates have been applied during installation, so we're searching for the highest one and save that.
 		$schema=$this->getNeededSchemaVersion();
-		$this->query->execute("update {grid_schema} set value=".$schema." where propkey='schema_version".$this->schemaKey . "'");
+		$this->query->prefixAndExecute("update {grid_schema} set value=".$schema." where propkey='schema_version".$this->schemaKey . "'");
 	}
 
 	public function getCurrentSchemaVersion()
 	{
 		try
 		{
-			$result=$this->query->execute("select value from {grid_schema} where propkey='schema_version".$this->schemaKey . "'");
+			$result=$this->query->prefixAndExecute("select value from {grid_schema} where propkey='schema_version".$this->schemaKey . "'");
 			$row = $result->fetch_object();
 			return $row->value;
 		}
@@ -89,7 +89,7 @@ class UpdateBase {
 	}
 
 	public function install(){
-		$this->query->execute("insert into {grid_schema} (propkey) values ('schema_version".$this->schemaKey . "') ON DUPLICATE KEY UPDATE propkey = 'schema_version';");
+		$this->query->prefixAndExecute("insert into {grid_schema} (propkey) values ('schema_version".$this->schemaKey . "') ON DUPLICATE KEY UPDATE propkey = 'schema_version';");
 		$this->markAsUpdated();
 	}
 
