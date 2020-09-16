@@ -13,6 +13,6 @@ class GridHook implements iHook {
 	}
 
 	public function alter( $name, $value, $arguments ) {
-		apply_filters( 'grid_' . $name, $value, $arguments );
+		return apply_filters( 'grid_' . $name, $value, $arguments );
 	}
 }

@@ -91,7 +91,7 @@ class grid_debug_box extends grid_static_base_box {
 							"key" => 1, "text" => "Second",
 						),
 						array(
-							"key" => 1, "text" => "Third",
+							"key" => 3, "text" => "Third",
 						),
 					),
 				),

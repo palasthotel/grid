@@ -95,9 +95,6 @@ class TheGrid extends _Component {
 		} else{
 			$grid_id = $rows[0]->grid_id;
 		}
-		
-		global $grid_lib;
-		
 
 		$post = get_post( $postid );
 
@@ -168,8 +165,7 @@ class TheGrid extends _Component {
 		$formats = apply_filters( 'grid_formats', $formats );
 		$ckeditor_plugins = apply_filters('grid_ckeditor_plugins', $ckeditor_plugins);
 
-		global $grid_lib;
-		echo $grid_lib->getCKEditorConfig( $styles, $formats, $ckeditor_plugins );
+		echo $this->plugin->gridEditor->getCKEditorConfig($styles, $formats, $ckeditor_plugins);
 		die();
 	}
 

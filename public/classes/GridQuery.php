@@ -54,7 +54,7 @@ class GridQuery extends AbstractQuery {
 	 * @return mysqli_result
 	 */
 	public function execute( $sql ) {
-		return $this->getConnection()->query($this->prepare($sql));
+		return $this->getConnection()->query($sql);
 	}
 
 	/**

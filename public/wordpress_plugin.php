@@ -423,7 +423,11 @@ class Plugin {
 		foreach ( $js as $idx => $file ) {
 			wp_enqueue_script( 'grid_js_lib_' . $idx, plugins_url( 'grid-editor/' . $file, __FILE__ ) );
 		}
-		wp_enqueue_script( 'grid_wordpress_js', plugins_url( 'grid-wordpress.js', __FILE__ ) );
+		wp_enqueue_script(
+			'grid_wordpress_js',
+			plugins_url( 'grid-wordpress.js', __FILE__ ),
+			["jquery", "jquery-ui-draggable", "jquery-ui-sortable", "jquery-ui-droppable", 'media-upload']
+		);
 
 		/**
 		 * get additional widgets arrays (css | js)

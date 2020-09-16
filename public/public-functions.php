@@ -1,5 +1,6 @@
 <?php
 
+use Palasthotel\Grid\Endpoint;
 use Palasthotel\Grid\Storage;
 use Palasthotel\Grid\WordPress\Plugin;
 

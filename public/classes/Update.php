@@ -2,7 +2,7 @@
 
 namespace Palasthotel\Grid\WordPress;
 
-use Palasthotel\Grid\iQuery;
+use Palasthotel\Grid\AbstractQuery;
 use Palasthotel\Grid\UpdateBase;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
@@ -16,7 +16,7 @@ use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
 class Update extends UpdateBase
 {
-	public function __construct( iQuery $query ) {
+	public function __construct( AbstractQuery $query ) {
 		parent::__construct( $query, "_wordpress" );
 	}
 
@@ -25,7 +25,7 @@ class Update extends UpdateBase
 	// ------------------------------------------------
 	public function update_1()
 	{
-		$this->query->execute("insert into {grid_schema} (propkey) values ('schema_version".$this->schemaKey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->schemaKey."';");
+		$this->query->prefixAndExecute("insert into {grid_schema} (propkey) values ('schema_version".$this->schemaKey."') ON DUPLICATE KEY UPDATE propkey = 'schema_version".$this->schemaKey."';");
 		
 		add_action('admin_notices', array($this, 'notice_1'));
 
