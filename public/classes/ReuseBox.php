@@ -9,9 +9,9 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class ReuseBox
+class ReuseBox extends _Component
 {
-	function __construct(){
+	function onCreate(){
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 	}
 	function admin_menu(){
@@ -21,11 +21,9 @@ class ReuseBox
 	}
 
 	function render_reuse_boxes() {
-		$storage = grid_wp_get_storage();
-		global $grid_lib;
-		$editor = $grid_lib->getReuseBoxEditor();
+		$editor = $this->plugin->gridEditor->getReuseBoxEditor();
 		grid_enqueue_editor_files($editor);
-		$html = $editor->run( $storage, function( $id ) {
+		$html = $editor->run( function( $id ) {
 			return add_query_arg( array( 'page' => 'grid_edit_reuse_box', 'boxid' => $id ), admin_url( 'admin.php' ) );
 		}, function( $id ) {
 			return add_query_arg( array( 'noheader' => true, 'page' => 'grid_delete_reuse_box', 'boxid' => $id ), admin_url( 'admin.php' ) );
@@ -35,13 +33,10 @@ class ReuseBox
 
 	function edit_reuse_box() {
 		$boxid = intval($_GET['boxid']);
-		global $grid_lib;
-		$editor = $grid_lib->getReuseBoxEditor();
+		$editor = $this->plugin->gridEditor->getReuseBoxEditor();
 		grid_enqueue_editor_files($editor);
-		$storage = grid_wp_get_storage();
 		grid_wp_load_js();
 		$html = $editor->runEditor(
-			$storage,
 			$boxid,
 			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ckeditor_config' ), admin_url( 'admin.php' ) ),
 			add_query_arg( array( 'noheader' => true, 'page' => 'grid_ajax' ), admin_url( 'admin.php' ) ),

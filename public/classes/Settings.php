@@ -9,6 +9,13 @@
 namespace Palasthotel\Grid\WordPress;
 
 
+use Grid\Constants\GridCssVariantFlexbox;
+use Grid\Constants\GridCssVariantNone;
+use Grid\Constants\GridCssVariantTable;
+use const Grid\Constants\GRID_CSS_VARIANT_FLEXBOX;
+use const Grid\Constants\GRID_CSS_VARIANT_NONE;
+use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
+
 class Settings
 {
 	function __construct(){
@@ -175,18 +182,19 @@ class Settings
 	}
 
 	function frontend_css_html(){
-		$frontendCssVariant = get_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, \Grid\Constants\GRID_CSS_VARIANT_TABLE);
+		$variantTable = new GridCssVariantTable(GRID_CSS_VARIANT_TABLE);
+		$frontendCssVariant = get_option(Plugin::OPTION_FRONTEND_CSS_VARIANT, $variantTable->slug());
 		$variants = [
 			[
-				"key"   => \Grid\Constants\GRID_CSS_VARIANT_NONE,
+				"key"   => (new GridCssVariantNone(GRID_CSS_VARIANT_NONE))->slug(),
 				"label" => _x( "None", "Frontend css variant settings", Plugin::DOMAIN ),
 			],
 			[
-				"key"   => \Grid\Constants\GRID_CSS_VARIANT_TABLE,
+				"key"   => $variantTable->slug(),
 				"label" => _x( "Table", "Frontend css variant settings", Plugin::DOMAIN ),
 			],
 			[
-				"key"   => \Grid\Constants\GRID_CSS_VARIANT_FLEXBOX,
+				"key"   => (new GridCssVariantFlexbox(GRID_CSS_VARIANT_FLEXBOX))->slug(),
 				"label" => _x( "Flexbox", "Frontend css variant settings", Plugin::DOMAIN ),
 			],
 		];

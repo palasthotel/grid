@@ -9,9 +9,9 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class ContainerFactory
+class ContainerFactory extends _Component
 {
-	function __construct(){
+	function onCreate(){
 		add_action( 'admin_menu', array($this, 'admin_menu') );
 	}
 	function admin_menu(){
@@ -20,7 +20,7 @@ class ContainerFactory
 	function containers() {
 		$storage = grid_wp_get_storage();
 		global $grid_lib;
-		$editor = $grid_lib->getContainerEditor();
+		$editor = $this->plugin->gridEditor->getContainerEditor();
 		grid_enqueue_editor_files($editor);
 		$html = $editor->run( $storage );
 		echo $html;

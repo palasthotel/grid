@@ -9,9 +9,9 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class Styles
+class Styles extends _Component
 {
-	function __construct(){
+	function onCreate(){
 		add_action( 'admin_menu', array($this, 'admin_menu') );
 	}
 
@@ -27,12 +27,8 @@ class Styles
 	}
 
 	function styles() {
-		global $grid_connection;
-		$grid_connection = grid_wp_get_mysqli();
-		$storage = grid_wp_get_storage();
-		global $grid_lib;
-		$editor = $grid_lib->getStyleEditor();
-		$html = $editor->run( $storage );
+		$editor = $this->plugin->gridEditor->getStyleEditor();
+		$html = $editor->run();
 		echo $html;
 	}
 

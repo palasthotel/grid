@@ -24,6 +24,7 @@ use Exception;
 use Grid\Constants\GridCSSVariant;
 use Grid\Constants\GridCssVariantFlexbox;
 use Palasthotel\Grid\API;
+use Palasthotel\Grid\ContainerEditor;
 use Palasthotel\Grid\Editor;
 use Palasthotel\Grid\Storage;
 use const Grid\Constants\GRID_CSS_VARIANT_NONE;
@@ -154,17 +155,17 @@ class Plugin {
 		/**
 		 *  gird container factory
 		 */
-		new ContainerFactory();
+		new ContainerFactory($this);
 
 		/**
 		 *  gird container reuse
 		 */
-		new ReuseContainer();
+		new ReuseContainer($this);
 
 		/**
 		 *  gird box reuse
 		 */
-		new ReuseBox();
+		new ReuseBox($this);
 
 		/**
 		 *  gird privileges
@@ -174,7 +175,7 @@ class Plugin {
 		/**
 		 * Styles
 		 */
-		new Styles();
+		new Styles($this);
 
 		/**
 		 * copy grids
@@ -383,7 +384,7 @@ class Plugin {
 	/**
 	 * enqueue editor files
 	 *
-	 * @param null|\stdClass $editor
+	 * @param null|ContainerEditor $editor
 	 */
 	function enqueue_editor_files( $editor = NULL ) {
 		/**
@@ -391,7 +392,7 @@ class Plugin {
 		 */
 		$css = array();
 		if ( NULL != $editor ) {
-			$css = $this->gridEditor->getEditorCSS( );
+			$css = $editor->getCSS();
 		} else {
 			$css = $this->gridEditor->getEditorCSS();
 		}
@@ -413,7 +414,7 @@ class Plugin {
 		$lang = grid_get_lang();
 		$js   = array();
 		if ( NULL != $editor ) {
-			$js = $editor->getJS( $lang, false );
+			$js = $editor->getJS( false );
 		} else {
 			$js = $this->gridEditor->getEditorJS( $lang, false, false );
 		}
@@ -421,12 +422,18 @@ class Plugin {
 		 * enqueue the js array
 		 */
 		foreach ( $js as $idx => $file ) {
-			wp_enqueue_script( 'grid_js_lib_' . $idx, plugins_url( 'grid-editor/' . $file, __FILE__ ) );
+			wp_enqueue_script(
+				"grid_js_lib_$idx",
+				plugins_url( "grid-editor/$file", __FILE__ ),
+				[],
+				filemtime(plugin_dir_path(__FILE__)."/grid-editor/$file")
+			);
 		}
 		wp_enqueue_script(
-			'grid_wordpress_js',
+			"grid_wordpress_js",
 			plugins_url( 'grid-wordpress.js', __FILE__ ),
-			["jquery", "jquery-ui-draggable", "jquery-ui-sortable", "jquery-ui-droppable", 'media-upload']
+			["jquery", "jquery-ui-draggable", "jquery-ui-sortable", "jquery-ui-droppable", 'media-upload'],
+			filemtime(plugin_dir_path(__FILE__)."/grid-wordpress.js")
 		);
 
 		/**
