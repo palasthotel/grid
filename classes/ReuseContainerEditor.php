@@ -2,7 +2,9 @@
 
 namespace Palasthotel\Grid;
 
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\Hook;
+use Palasthotel\Grid\Model\Grid;
+use Palasthotel\Grid\Model\Container;
 
 /**
  * @property Editor $editor
@@ -39,7 +41,7 @@ class ReuseContainerEditor
 
 		$containerIds=$this->editor->storage->getReuseContainerIds();
 		$containerIds = $grid_db->fireHookAlter(
-		    Hook::ALTER_REUSE_CONTAINER_IDS,
+		    Core::ALTER_REUSE_CONTAINER_IDS,
             $containerIds
         );
 		$usedIds=$grid_db->getReusedContainerIds();
@@ -57,7 +59,7 @@ class ReuseContainerEditor
 			$container->classes[] = "grid-reuse-container";
 
 
-			$edit=new GridContainer();
+			$edit=new Container();
 			$edit->grid=$grid;
 			$edit->storage=$grid_db;
 			$edit->type="c-1d1";

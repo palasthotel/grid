@@ -2,7 +2,10 @@
 
 namespace Palasthotel\Grid;
 
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\Hook;
+use Palasthotel\Grid\Model\Grid;
+use Palasthotel\Grid\Model\Container;
+use Palasthotel\Grid\Model\Slot;
 
 /**
  * @property Editor editor
@@ -37,7 +40,7 @@ class ReuseBoxEditor
 		$usedIds=$this->editor->storage->getReusedBoxIds();
 
 		$boxIds = $this->editor->storage->fireHookAlter(
-			Hook::ALTER_REUSE_BOX_IDS,
+			Core::ALTER_REUSE_BOX_IDS,
 			$boxIds
 		);
 
@@ -52,7 +55,7 @@ class ReuseBoxEditor
 		$grid->container=array();
 		foreach($boxes as $box)
 		{
-			$container=new GridContainer();
+			$container=new Container();
 			$container->storage=$this->editor->storage;
 			$container->type="c-1d1";
 			$container->readmore=t("edit");
@@ -63,7 +66,7 @@ class ReuseBoxEditor
 			}
 			
 			$container->slots=array();
-			$container->slots[]=new GridSlot();
+			$container->slots[]=new Slot();
 			$container->slots[0]->storage=$this->editor->storage;
 			$container->slots[0]->boxes=array();
 			$container->slots[0]->boxes[]=$box;
