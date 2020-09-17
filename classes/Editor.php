@@ -152,7 +152,7 @@ class Editor {
 	}
 
 	public function getReuseContainerEditor() {
-		return new ReuseContainerEditor();
+		return new ReuseContainerEditor($this);
 	}
 
 	public function getReuseBoxEditor() {

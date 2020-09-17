@@ -29,14 +29,14 @@ class ReuseBoxEditor
 		return $this->editor->getEditorJS($language,$absolute);
 	}
 	
-	public function run($grid_db,$editlinkfunction,$deletelinkfunction)
+	public function run($editlinkfunction,$deletelinkfunction)
 	{
 		$grid=new Grid();
 		$grid->storage=$this->editor->storage;
-		$boxIds=$grid_db->getReuseableBoxIds();
-		$usedIds=$grid_db->getReusedBoxIds();
+		$boxIds=$this->editor->storage->getReuseableBoxIds();
+		$usedIds=$this->editor->storage->getReusedBoxIds();
 
-		$boxIds = $grid_db->fireHookAlter(
+		$boxIds = $this->editor->storage->fireHookAlter(
 			Hook::ALTER_REUSE_BOX_IDS,
 			$boxIds
 		);
@@ -44,7 +44,7 @@ class ReuseBoxEditor
 		$boxes=array();
 		foreach($boxIds as $boxid)
 		{
-			$box = $grid_db->loadReuseBox($boxid);
+			$box = $this->editor->storage->loadReuseBox($boxid);
 			$box->grid = $grid;
 			$boxes[]=$box;
 		}
@@ -53,7 +53,7 @@ class ReuseBoxEditor
 		foreach($boxes as $box)
 		{
 			$container=new GridContainer();
-			$container->storage=$grid_db;
+			$container->storage=$this->editor->storage;
 			$container->type="c-1d1";
 			$container->readmore=t("edit");
 			$container->readmoreurl=$editlinkfunction($box->boxid);
@@ -64,7 +64,7 @@ class ReuseBoxEditor
 			
 			$container->slots=array();
 			$container->slots[]=new GridSlot();
-			$container->slots[0]->storage=$grid_db;
+			$container->slots[0]->storage=$this->editor->storage;
 			$container->slots[0]->boxes=array();
 			$container->slots[0]->boxes[]=$box;
 			$grid->container[]=$container;
@@ -73,7 +73,7 @@ class ReuseBoxEditor
 		return "<div class='grid-reuse-box-list'>".$html."</div>";
 	}
 	
-	public function runEditor($grid_db,$id,$ckeditor,$ajax,$debugmode,$preview)
+	public function runEditor( $id,$ckeditor,$ajax,$debugmode,$preview)
 	{
 		return $this->editor->getEditorHTML(
 			"\"box:".$id."\"",

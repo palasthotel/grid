@@ -18,7 +18,6 @@ window.GridAjax = function GridAjax(method, params_array, settings){
 	if(typeof settings != "object"){ settings = {}; }
 	if(typeof settings.checkIsDraft === "undefined"){ settings.checkIsDraft = true; }
 	// default settings
-	console.log(this)
 	this.settings = {
 		url: GRID.SERVER,
 		async: true,

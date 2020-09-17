@@ -5,6 +5,7 @@ namespace Palasthotel\Grid;
 use Palasthotel\Grid\Constants\Hook;
 
 /**
+ * @property Editor $editor
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
@@ -13,30 +14,38 @@ use Palasthotel\Grid\Constants\Hook;
 
 class ReuseContainerEditor
 {
+	/**
+	 * ReuseContainerEditor constructor.
+	 *
+	 * @param Editor $editor
+	 */
+    public function __construct($editor){
+        $this->editor = $editor;
+    }
+
 	public function getCSS($absolute=FALSE)
 	{
-		$lib=new grid_library();
-		return $lib->getEditorCSS($absolute);
+
+		return $this->editor->getEditorCSS($absolute);
 	}
 	
 	public function getJS($language="en",$absolute=FALSE)
 	{
-		$lib=new grid_library();
-		return $lib->getEditorJS($language,$absolute);
+		return $this->editor->getEditorJS($language,$absolute);
 	}
 	
 	public function run($grid_db,$editorlinkfunction,$deletelinkfunction)
 	{
 
-		$containerIds=$grid_db->getReuseContainerIds();
+		$containerIds=$this->editor->storage->getReuseContainerIds();
 		$containerIds = $grid_db->fireHookAlter(
 		    Hook::ALTER_REUSE_CONTAINER_IDS,
             $containerIds
         );
 		$usedIds=$grid_db->getReusedContainerIds();
-		
-		$grid=new Storage();
-		$grid->storage=$grid_db;
+
+		$grid = new Grid();
+		$grid->storage=$this->editor->storage;
 		$grid->container=array();
 		foreach($containerIds as $id)
 		{
@@ -48,7 +57,7 @@ class ReuseContainerEditor
 			$container->classes[] = "grid-reuse-container";
 
 
-			$edit=new grid_container();
+			$edit=new GridContainer();
 			$edit->grid=$grid;
 			$edit->storage=$grid_db;
 			$edit->type="c-1d1";
@@ -74,10 +83,9 @@ class ReuseContainerEditor
 		return "<div class='grid-reuse-container-list'>".$grid->render(TRUE)."</div>";
 	}
 	
-	public function runEditor($grid_db,$id,$ckeditor,$ajax,$debugmode,$preview)
+	public function runEditor($id,$ckeditor,$ajax,$debugmode,$preview)
 	{
-		$grid_lib=new grid_library();
-		return $grid_lib->getEditorHTML(
+		return $this->editor->getEditorHTML(
 							"\"container:".$id."\"",
 							"container",
 							$ckeditor,
