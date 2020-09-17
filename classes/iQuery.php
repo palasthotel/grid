@@ -21,6 +21,13 @@ interface iQuery {
 	public function execute( $sql );
 
 	/**
+	 * @param string $sql
+	 *
+	 * @return mysqli_result
+	 */
+	public function prefixAndExecute($sql);
+
+	/**
 	 * @param string $str
 	 *
 	 * @return string mixed

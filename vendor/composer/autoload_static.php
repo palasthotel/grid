@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a
+class ComposerStaticInitdffcfad40b155389efa6cf4425d42cc5
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
@@ -21,14 +21,13 @@ class ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a
     );
 
     public static $classMap = array (
-        'Palasthotel\\Grid\\API' => __DIR__ . '/../..' . '/classes/API.php',
         'Palasthotel\\Grid\\AbstractQuery' => __DIR__ . '/../..' . '/classes/AbstractQuery.php',
-        'Palasthotel\\Grid\\Constants\\Hook' => __DIR__ . '/../..' . '/classes/Constants/Hook.php',
-        'Palasthotel\\Grid\\Endpoint' => __DIR__ . '/../..' . '/classes/Endpoint.php',
-        'Palasthotel\\Grid\\Grid' => __DIR__ . '/../..' . '/classes/Grid.php',
-        'Palasthotel\\Grid\\GridBase' => __DIR__ . '/../..' . '/classes/GridBase.php',
-        'Palasthotel\\Grid\\GridContainer' => __DIR__ . '/../..' . '/classes/GridContainer.php',
-        'Palasthotel\\Grid\\GridSlot' => __DIR__ . '/../..' . '/classes/GridSlot.php',
+        'Palasthotel\\Grid\\Core' => __DIR__ . '/../..' . '/classes/Core.php',
+        'Palasthotel\\Grid\\Model\\Box' => __DIR__ . '/../..' . '/classes/Model/Box.php',
+        'Palasthotel\\Grid\\Model\\Container' => __DIR__ . '/../..' . '/classes/Model/Container.php',
+        'Palasthotel\\Grid\\Model\\Grid' => __DIR__ . '/../..' . '/classes/Model/Grid.php',
+        'Palasthotel\\Grid\\Model\\Slot' => __DIR__ . '/../..' . '/classes/Model/Slot.php',
+        'Palasthotel\\Grid\\Model\\_Base' => __DIR__ . '/../..' . '/classes/Model/_Base.php',
         'Palasthotel\\Grid\\Storage' => __DIR__ . '/../..' . '/classes/Storage.php',
         'Palasthotel\\Grid\\UpdateBase' => __DIR__ . '/../..' . '/classes/UpdateBase.php',
         'Palasthotel\\Grid\\UpdateGrid' => __DIR__ . '/../..' . '/classes/UpdateGrid.php',
@@ -39,9 +38,9 @@ class ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitdffcfad40b155389efa6cf4425d42cc5::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitdffcfad40b155389efa6cf4425d42cc5::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitdffcfad40b155389efa6cf4425d42cc5::$classMap;
 
         }, null, ClassLoader::class);
     }

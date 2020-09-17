@@ -11,17 +11,17 @@ use Exception;
  */
 class UpdateBase {
 	/**
-	 * shema key for update shema identification
+	 * schema key for update schema identification
 	 */
 	var $schemaKey = "";
 
 	/**
 	 * UpdateBase constructor.
 	 *
-	 * @param AbstractQuery $query
+	 * @param iQuery $query
 	 * @param string $schemaKey
 	 */
-	public function __construct(AbstractQuery $query, $schemaKey = ""){
+	public function __construct(iQuery $query, $schemaKey = ""){
 		$this->query     = $query;
 		$this->schemaKey = $schemaKey;
 	}

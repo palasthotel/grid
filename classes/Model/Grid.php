@@ -1,8 +1,8 @@
 <?php
 
-namespace Palasthotel\Grid;
+namespace Palasthotel\Grid\Model;
 
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\Core;
 
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
@@ -11,10 +11,10 @@ use Palasthotel\Grid\Constants\Hook;
  * @package Palasthotel\Grid
  */
 
-class Grid extends GridBase {
+class Grid extends _Base {
 
 	/**
-	 * @var GridContainer[]
+	 * @var Container[]
 	 */
 	public $container;
 	/**
@@ -33,53 +33,6 @@ class Grid extends GridBase {
 	 * @var bool
 	 */
 	public $isDraft;
-
-	/**
-	 * @param bool $editmode
-	 *
-	 * @return string
-	 */
-	public function render($editmode)
-	{
-		$this->storage->fireHook(Hook::WILL_RENDER_GRID, (object) array('grid'=>$this,'editmode'=>$editmode));
-		
-		$containermap=array();
-		$containerlist=array();
-		
-		foreach($this->container as $container)
-		{
-			/**
-			 * @var $container GridContainer
-			 */
-			$html=$container->render($editmode);
-			$containermap[$container->containerid]=$html;
-			$containerlist[]=$html;
-		}
-		ob_start();
-
-
-		$found = FALSE;
-		if( is_array( $this->storage->templatesPaths) )
-		{
-			foreach ($this->storage->templatesPaths as $templatesPath) {
-				$template_path = rtrim($templatesPath.'/grid.tpl.php', "/");
-				if( file_exists($template_path) ){
-					include $template_path;
-					$found = TRUE;
-					break;
-				}				
-			}
-			
-		}
-		if(!$found)
-		{
-			include dirname( __FILE__ ) . '/../templates/grid.tpl.php';
-		}
-		
-		$output=ob_get_clean();
-		$this->storage->fireHook(Hook::DID_RENDER_GRID, (object) array('grid'=>$this, 'editmode'=>$editmode));
-		return $output;
-	}
 	
 	public function revisions()
 	{
@@ -181,7 +134,7 @@ class Grid extends GridBase {
 			return false;
 		}
 		$container=$this->container[$idx];
-		$this->storage->fireHook( Hook::DELETE_CONTAINER, (object) array("container" => $container, "index" => $idx ));
+		$this->storage->fireHook( Core::FIRE_DELETE_CONTAINER, (object) array( "container" => $container, "index" => $idx ));
 		array_splice($this->container, $idx,1);
 		$this->storeContainerOrder();
 		$this->storage->destroyContainer($container);

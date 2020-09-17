@@ -2,7 +2,9 @@
 
 namespace Palasthotel\Grid;
 
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\Model\Container;
+use Palasthotel\Grid\Model\Grid;
+use Palasthotel\Grid\Model\Slot;
 use stdClass;
 
 /**
@@ -39,7 +41,7 @@ class Storage {
 	public function __construct(iQuery $query, iHook $hook, $author="UNKNOWN") {
 		$this->query = $query;
 		$this->hook=$hook;
-		$this->author=$author;
+		$this->author=$author; // TODO: refactor author to parameters
 		$this->ajaxEndpoint=new Endpoint();
 		$this->templatesPaths = array();
 	}
@@ -60,13 +62,13 @@ class Storage {
 		$id++;
 		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
 		$this->query->execute($query);
-		$this->fireHook(Hook::CREATE_GRID, $id);
+		$this->fireHook( Core::FIRE_CREATE_GRID, $id);
 		return $id;
 	}
 	
 	public function destroyGrid($grid_id)
 	{
-		$this->fireHook(Hook::DESTROY_GRID, $grid_id);
+		$this->fireHook( Core::FIRE_DESTROY_GRID, $grid_id);
 		$query="delete from ".$this->query->prefix()."grid_box where grid_id=$grid_id";
 		$this->query->execute($query);
 		$query="delete from ".$this->query->prefix()."grid_container where grid_id=$grid_id";
@@ -115,7 +117,7 @@ class Storage {
 		$query="insert into ".$this->query->prefix()."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) select slot_id,$cloneid,grid_revision,box_id,weight from ".$this->query->prefix()."grid_slot2box where grid_id=$gridid";
 		$this->query->execute($query);
 
-		$this->fireHook(Hook::CLONE_GRID, array(
+		$this->fireHook( Core::FIRE_CLONE_GRID, array(
 			"original_id" => $gridid,
 			"clone_id" => $cloneid,
 		));
@@ -153,14 +155,14 @@ class Storage {
 			$id=$split[1];
 			$box=$this->loadReuseBox($id);
 			$grid->container=array();
-			$grid->container[]=new GridContainer();
+			$grid->container[]=new Container();
 			$grid->container[0]->grid=$grid;
 			$grid->container[0]->storage=$this;
 			$grid->container[0]->type="c";
 			$grid->container[0]->dimension="1d1";
 			$grid->container[0]->containerid=-1;
 			$grid->container[0]->slots=array();
-			$grid->container[0]->slots[]=new GridSlot();
+			$grid->container[0]->slots[]=new Slot();
 			$grid->container[0]->slots[0]->storage=$this;
 			$grid->container[0]->slots[0]->grid=$grid;
 			$grid->container[0]->slots[0]->slotid=-1;
@@ -414,7 +416,7 @@ order by grid_container2slot.weight asc, grid_slot2box.weight asc
 		{
 			if($currentcontainer==NULL || $currentcontainer->containerid!=$row['container_id'])
 			{
-				$currentcontainer=new GridContainer();
+				$currentcontainer=new Container();
 				$currentcontainer->reused=TRUE;
 				$currentcontainer->grid=NULL;
 				$currentcontainer->containerid=$row['container_id'];
@@ -439,7 +441,7 @@ order by grid_container2slot.weight asc, grid_slot2box.weight asc
 			}
 			if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
 			{
-				$currentslot=new GridSlot();
+				$currentslot=new Slot();
 				//$currentslot->grid=$grid;
 				$currentslot->slotid=$row['slot_id'];
 				$currentslot->style=$row['slot_style'];
@@ -560,7 +562,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				}
 				else
 				{
-					$currentcontainer=new GridContainer();
+					$currentcontainer=new Container();
 					$currentcontainer->reused=FALSE;
 					$currentcontainer->grid=$grid;
 					$currentcontainer->containerid=$row['container_id'];
@@ -586,7 +588,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			{
 				if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
 				{
-					$currentslot=new GridSlot();
+					$currentslot=new Slot();
 					$currentslot->grid=$grid;
 					$currentslot->slotid=$row['slot_id'];
 					$currentslot->style=$row['slot_style'];
@@ -599,67 +601,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				{
 					$box=$this->parseBox($row);
 					$box->grid=$grid;
+					$box->storage = $this;
 					$currentslot->boxes[]=$box;
 				}
 			}
 		}
 		return $grid;
-	}
-
-	//manages ajax call routing
-	public function handleAjaxCall()
-	{
-		header("Content-Type: application/json; charset=UTF-8");
-		if($_SERVER['REQUEST_METHOD']!='POST')
-		{
-			echo json_encode(array('error'=>'only POSTing is allowed'));
-		}
-		else
-		{
-			$input=file_get_contents("php://input");
-			$json=json_decode($input);
-			$method=$json->method;
-			$params=$json->params;
-
-			$this->ajaxEndpoint->storage=$this;
-			try {
-				$reflectionMethod=new \ReflectionMethod($this->ajaxEndpoint,$method);
-				$retval=$reflectionMethod->invokeArgs($this->ajaxEndpoint,$params);
-				echo json_encode(array('result'=>$retval));
-			} catch (\Exception $e) {
-				echo json_encode(array('error'=>$e->getMessage()));
-			}
-		}
-	}
-	
-	public function handleUpload()
-	{
-		$gridid=$_POST['gridid'];
-		if(preg_match("/(container:|box:|)\\d*/uisx", $gridid)!==1) {
-			return FALSE;
-		}
-		$containerid=intval($_POST['container']);
-		$slotid=intval($_POST['slot']);
-		$idx=intval($_POST['box']);
-		$file=$_FILES['file']['tmp_name'];
-		$original_filename=$_FILES['file']['name'];
-		$key=$_POST['key'];
-		$grid=$this->loadGrid($gridid);
-		foreach($grid->container as $container)
-		{
-			if($container->containerid==$containerid)
-			{
-				foreach($container->slots as $slot)
-				{
-					if($slot->slotid==$slotid)
-					{
-						$box=$slot->boxes[$idx];
-						return $box->performFileUpload($key,$file,$original_filename);
-					}
-				}
-			}
-		}
-		return FALSE;//array('result'=>FALSE,'error'=>'box or slot or container or grid not found','gridid'=>$gridid,'container'=>$containerid,'slotid'=>$slotid,'box'=>$idx);
 	}
 
 	public function reuseContainer($grid,$container,$title)
@@ -725,7 +672,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
 		$this->query->execute($query);
-		$container=new GridContainer();
+		$container=new Container();
 		$container->grid=$grid;
 		$container->storage=$this;
 		$container->containerid=$id;
@@ -748,7 +695,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			$query="insert into ".$this->query->prefix()."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
 			$this->query->execute($query);
 
-			$slot=new GridSlot();
+			$slot=new Slot();
 			$slot->grid=$grid;
 			$slot->slotid=$slotid;
 			$slot->storage=$this;
@@ -758,7 +705,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		$this->persistContainer($container);
 
-		$this->fireHook(Hook::CREATE_CONTAINER,$container );
+		$this->fireHook( Core::FIRE_CREATE_CONTAINER,$container );
 
 		return $container;
 	}
@@ -836,7 +783,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$query="update ".$this->query->prefix()."grid_grid set published=1 where id=$id and revision=$revision";
 		$this->query->execute($query);
 
-		$this->fireHook(Hook::PUBLISH_GRID, $id);
+		$this->fireHook( Core::FIRE_PUBLISH_GRID, $id);
 
 		return true;
 	}
@@ -899,7 +846,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function deleteBox($box)
 	{
 		$query="delete from ".$this->query->prefix()."grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
-		$this->query->execute($query);
+		return $this->query->execute($query);
 	}
 	
 	public function persistContainer($container)
@@ -1230,23 +1177,5 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			return $revisions;			
 		}
 		return array();
-	}
-	
-	public function getMetaTypes() {
-		$classes=get_declared_classes();
-		$metaboxes=array();
-		foreach($classes as $class)
-		{
-			if(is_subclass_of($class,"grid_box"))
-			{
-				$obj=new $class();
-				$obj->storage = $this;
-				if($obj->isMetaType())
-				{
-					$metaboxes[]=$obj;
-				}
-			}
-		}
-		return $metaboxes;		
 	}
 }

@@ -10,13 +10,24 @@ namespace Palasthotel\Grid;
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  *
- * @property Storage store
- *
  */
-class API {
+class Core {
+
+	const FIRE_CREATE_GRID = "createGrid";
+	const ALTER_REUSE_BOX_IDS = "reuse_box_ids";
+	const FIRE_CLONE_GRID = "cloneGrid";
+	const FIRE_PUBLISH_GRID = "publishGrid";
+	const FIRE_SAVE_SLOT = "save_slot";
+	const FIRE_CREATE_CONTAINER = "createContainer";
+	const FIRE_DELETE_BOX = "delete_box";
+	const FIRE_DELETE_CONTAINER = "delete_container";
+	const FIRE_SAVE_CONTAINER = "save_container";
+	const FIRE_SAVE_BOX = "save_box";
+	const ALTER_REUSE_CONTAINER_IDS = "reuse_container_ids";
+	const FIRE_DESTROY_GRID = "destroyGrid";
 
 	/**
-	 * @var AbstractQuery
+	 * @var iQuery
 	 */
 	private $query;
 	/**
@@ -25,53 +36,30 @@ class API {
 	private $hook;
 
 	/**
-	 * @var Endpoint
-	 */
-	private $endpoint;
-
-	/**
 	 * @var UpdateGrid
 	 */
 	private $update;
 
 	/**
+	 * @var Storage
+	 */
+	public $storage;
+
+	/**
 	 * API constructor.
 	 *
-	 * @param AbstractQuery $query
+	 * @param iQuery $query
 	 * @param iHook $hook
 	 * @param string $author
 	 */
-	public function __construct(AbstractQuery $query, iHook $hook, $author)
+	public function __construct(iQuery $query, iHook $hook, $author)
 	{
 		$this->query = $query;
 		$this->hook = $hook;
 
-		$this->requireBoxes();
+		$this->update  = new UpdateGrid($query);
+		$this->storage = new Storage($query, $hook, $author);
 
-		$this->update = new UpdateGrid($query);
-		$this->store = new Storage($query, $hook, $author);
-		$this->endpoint = new Endpoint();
-	}
-
-	public function requireBoxes(){
-		require_once dirname( __FILE__ ) . '/../boxes/grid_box.php';
-
-		require_once dirname( __FILE__ ) . '/../boxes/grid_error_box.php';
-
-		require_once dirname( __FILE__ ) . '/../boxes/grid_static_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_html_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_video_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_soundcloud_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_plaintext_box.php';
-
-		require_once dirname( __FILE__ ) . '/../boxes/grid_list_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_rss_box.php';
-
-		require_once dirname( __FILE__ ) . '/../boxes/grid_reference_box.php';
-
-		require_once dirname( __FILE__ ) . '/../boxes/grid_structure_configuration_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_container_configuration_box.php';
-		require_once dirname( __FILE__ ) . '/../boxes/grid_slot_configuration_box.php';
 	}
 
 	public function getDatabaseSchema()
@@ -215,7 +203,7 @@ class API {
 				'mysql_character_set'=>'utf8mb4',
 				'collate'=> 'utf8mb4_unicode_ci'
 			),
-			'grid_slot'=>array(
+			'grid_slot'                  =>array(
 				'description'=>t('stores all slots'),
 				'fields'=>array(
 					'id'=>array(
@@ -250,7 +238,7 @@ class API {
 				'mysql_character_set'=>'utf8mb4',
 				'collate'=> 'utf8mb4_unicode_ci'
 			),
-			'grid_box'=>array(
+			'Palasthotel\Grid\Model\Box' =>array(
 				'description'=>t('stores all boxes'),
 				'fields'=>array(
 					'id'=>array(
