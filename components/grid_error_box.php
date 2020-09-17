@@ -5,6 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  */
+
+use Palasthotel\Grid\Model\Box;
+
 /**
 * Error-Box that displays Error if there are some when loading grid box classes
 */

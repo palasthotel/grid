@@ -1,53 +1,17 @@
 <?php
 
-namespace Palasthotel\Grid;
 
-use grid_container_configuration_box;
-use grid_slot_configuration_box;
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\API;
+use Palasthotel\Grid\Core;
+use Palasthotel\Grid\Model\Container;
 
-/**
- * @author Palasthotel <rezeption@palasthotel.de>
- * @copyright Copyright (c) 2014, Palasthotel
- * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
- * @package Palasthotel\Grid
- */
-
-
-class GridContainer extends GridBase {
-	public $grid;
-	public $containerid;
-	public $reusetitle;
-	public $type; // Type is one of c (container), s(sidebar deprecated), sc (container for sidebar editor deprecated), i(invisible)
-	public $type_id; // ID of the type as provided by database
-	public $dimension; // The dimension defines how many Slots a Container has, an how they are proportioned.
-	public $space_to_left;
-	public $space_to_right;
-	public $style; // Allows to separete diffente Styles of Containers.
-	public $classes = array();
-	public $title;
-	public $titleurl;
-	public $readmore;
-	public $readmoreurl;
-	public $prolog;
-	public $epilog;
-	public $reused;
-	public $position;
-	public $slots;
-	public $config = null;
-
-	public function __construct()
-	{
-		$this->slots =array();
-		$this->classes = array();
-	}
-		
+class grid_container extends Container {
 	public function render($editmode)
 	{
 		$this->classes[] = "grid-container";
 		$this->classes[] = "grid-container-".$this->type;
-		
-		$this->storage->fireHook(Hook::WILL_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+
+		$this->storage->fireHook( API::FIRE_WILL_RENDER_CONTAINER, (object) array( "container" => $this, 'editmode' =>$editmode) );
 
 		if(!$editmode){
 
@@ -86,8 +50,8 @@ class GridContainer extends GridBase {
 			}
 
 		}
-		
-		switch (count($this->slots)) 
+
+		switch (count($this->slots))
 		{
 			case 0:
 				$this->classes[] = "grid-container-has-no-slot";
@@ -109,17 +73,17 @@ class GridContainer extends GridBase {
 		foreach($this->slots as $slot)
 		{
 			$slot->dimension = $slots_dimension[$counter++];
-		    switch (count($slot->boxes)) {
-		        case 0:
-		            $slot->classes[] = "grid-slot-has-no-box";
-		            break;
-		        case 1:
-		            $slot->classes[] = "grid-slot-has-one-box";
-		            break;
-		        default:
-		            $slot->classes[] = "grid-slot-has-multiple-boxes";
-		            break;
-		    }
+			switch (count($slot->boxes)) {
+				case 0:
+					$slot->classes[] = "grid-slot-has-no-box";
+					break;
+				case 1:
+					$slot->classes[] = "grid-slot-has-one-box";
+					break;
+				default:
+					$slot->classes[] = "grid-slot-has-multiple-boxes";
+					break;
+			}
 			if ($slot == end($this->slots)){
 				$slot->classes[] = "grid-slot-last";
 			}
@@ -149,24 +113,10 @@ class GridContainer extends GridBase {
 		}
 		$output=ob_get_clean();
 
-		$this->storage->fireHook(Hook::DID_RENDER_CONTAINER, (object) array("container" => $this, 'editmode'=>$editmode) );
+		$this->storage->fireHook( API::FIRE_DID_RENDER_CONTAINER, (object) array( "container" => $this, 'editmode' =>$editmode) );
 
 		return $output;
 
 
 	}
-	
-	public function update($data)
-	{
-		$this->storage->fireHook( Hook::SAVE_CONTAINER, (object) array("container" => $this, "data" => $data ));
-		$this->style=$data->style;
-		$this->title=$data->title;
-		$this->titleurl=$data->titleurl;
-		$this->readmore=$data->readmore;
-		$this->readmoreurl=$data->readmoreurl;
-		$this->prolog=$data->prolog;
-		$this->epilog=$data->epilog;
-		return $this->storage->persistContainer($this);
-	}
-	
 }

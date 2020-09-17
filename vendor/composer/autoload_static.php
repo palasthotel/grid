@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a
+class ComposerStaticInit14e02b7dd4abab287a4c00e16ab16a98
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
@@ -22,26 +22,16 @@ class ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a
 
     public static $classMap = array (
         'Palasthotel\\Grid\\API' => __DIR__ . '/../..' . '/classes/API.php',
-        'Palasthotel\\Grid\\AbstractQuery' => __DIR__ . '/../..' . '/classes/AbstractQuery.php',
-        'Palasthotel\\Grid\\Constants\\Hook' => __DIR__ . '/../..' . '/classes/Constants/Hook.php',
         'Palasthotel\\Grid\\Endpoint' => __DIR__ . '/../..' . '/classes/Endpoint.php',
-        'Palasthotel\\Grid\\Grid' => __DIR__ . '/../..' . '/classes/Grid.php',
-        'Palasthotel\\Grid\\GridBase' => __DIR__ . '/../..' . '/classes/GridBase.php',
-        'Palasthotel\\Grid\\GridContainer' => __DIR__ . '/../..' . '/classes/GridContainer.php',
-        'Palasthotel\\Grid\\GridSlot' => __DIR__ . '/../..' . '/classes/GridSlot.php',
-        'Palasthotel\\Grid\\Storage' => __DIR__ . '/../..' . '/classes/Storage.php',
-        'Palasthotel\\Grid\\UpdateBase' => __DIR__ . '/../..' . '/classes/UpdateBase.php',
-        'Palasthotel\\Grid\\UpdateGrid' => __DIR__ . '/../..' . '/classes/UpdateGrid.php',
-        'Palasthotel\\Grid\\iHook' => __DIR__ . '/../..' . '/classes/iHook.php',
-        'Palasthotel\\Grid\\iQuery' => __DIR__ . '/../..' . '/classes/iQuery.php',
+        'Palasthotel\\Grid\\Template' => __DIR__ . '/../..' . '/classes/Template.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit19d69a6debd56bc7cc5d9732f7796e2a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit14e02b7dd4abab287a4c00e16ab16a98::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit14e02b7dd4abab287a4c00e16ab16a98::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit14e02b7dd4abab287a4c00e16ab16a98::$classMap;
 
         }, null, ClassLoader::class);
     }

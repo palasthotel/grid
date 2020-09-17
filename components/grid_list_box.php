@@ -5,16 +5,17 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  */
- /**
-* Includes STATIC CONTENT meta type, aka grid_static_box, and grid_static_base_box.
-* grid_static_base_box extends grid_static_box
+/**
+* Includes LISTS meta type, aka grid_abstract_list_box, and grid_list_box.
+* grid_list_box extends grid_abstract_list_box
 */
-/** 
-* Meta type "STATIC CONTENT"
+
+/**
+* Meta type "LISTS"
 *
 * Creates a new meta type used as category for boxes. 
 */
-class grid_static_box extends grid_box {
+class grid_abstract_list_box extends grid_box {
 	
 	/**
 	* Sets box type
@@ -22,13 +23,22 @@ class grid_static_box extends grid_box {
 	* @return string
 	*/
 	public function type() {
-		return 'static';
+		return 'abstract_list';
+	}
+
+	/**
+	* Box renders its menu label and its content in here.
+	*
+	* @return void
+	*/
+	public function build($editmode) {
+		
 	}
 	
 	/**
 	* Checks if class is meta type
 	*
-	* Makes grid_static_box a meta type
+	* Makes abstract_list_box a meta type
 	*
 	* @return boolean
 	*/
@@ -42,7 +52,7 @@ class grid_static_box extends grid_box {
 	* @return string
 	*/
 	public function metaTitle() {
-		return t("Static content");
+		return t("Lists");
 	}
 	
 	/**
@@ -53,51 +63,50 @@ class grid_static_box extends grid_box {
 	public function metaSearchCriteria() {
 		return array();
 	}
-	
+
 	/**
 	* Implements meta search
 	*
 	* @param string $criteria
 	*
-	* @param mixed $query
+	* @param mixed $search
 	*
 	* @return string[]
 	*/
-	public function metaSearch($criteria,$query) {
+	public function metaSearch($criteria,$search) {
 	    $result = array();
 	    foreach (get_declared_classes() as $class) {
-	        if (is_subclass_of($class, 'grid_static_box'))
+	        if (is_subclass_of($class, 'grid_list_box'))
 	            $result[] = $class;
 	    }
 	    $return=array();
 	    foreach($result as $class)
 	    {
 		    $instance=new $class();
-		    $instance->storage=$this->storage;
-		    $subresults=$instance->metaSearch($criteria,$query);
+		    $instance->storage = $this->storage;
+		    $subresults=$instance->metaSearch($criteria,$search);
 		    foreach($subresults as $subresult)
 		    {
 			    $return[]=$subresult;
 		    }
 	    }
 	    return $return;
-
 	}
 
 }
 
 /**
-* Static-Base-Box is considered a static content.
+* List-Box is considered an abstract list
 */
-class grid_static_base_box extends grid_static_box {
-
+class grid_list_box extends grid_abstract_list_box {
+	
 	/**
 	* Sets box type
 	*
 	* @return string
 	*/
 	public function type() {
-		return 'static_base';
+		return 'list';
 	}
 	
 	/**
@@ -108,13 +117,13 @@ class grid_static_base_box extends grid_static_box {
 	* @return void
 	*/
 	public function build($editmode) {
-		
+
 	}
 	
 	/**
 	* Checks if lass is meta type
 	*
-	* Static-Base-Box is no meta type
+	* List-Box is no meta type
 	*
 	* @return boolean
 	*/
@@ -127,15 +136,14 @@ class grid_static_base_box extends grid_static_box {
 	*
 	* @param string $criteria
 	*
-	* @param mixed $query
+	* @param mixed $search
 	*
 	* @return array
 	*/
-	public function metaSearch($criteria,$query) {
+	public function metaSearch($criteria,$search) {
 		if(get_class($this)!=get_class())
 			return array($this);
 		return array();
-
 	}
 	
 }

@@ -2,8 +2,7 @@
 
 namespace Palasthotel\Grid;
 
-
-use Palasthotel\Grid\Constants\Hook;
+use grid_box;
 
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
@@ -14,8 +13,16 @@ use Palasthotel\Grid\Constants\Hook;
 
 class Endpoint {
 
-	/** @var Storage $storage */
+	/**
+	 * @var API
+	 */
+	public $api;
+
+	/**
+	 * @var Storage $storage
+	 */
 	public $storage;
+
 
 	//only a test method to check that our ajax management works
 	public function add($a,$b) {
@@ -38,7 +45,7 @@ class Endpoint {
 		$bx['content']=$box->content;
 
 		$bx['contentstructure']= $this->storage->fireHookAlter(
-			Hook::ALTER_BOX_CONTENT_STRUCTURE,
+			API::ALTER_BOX_CONTENT_STRUCTURE,
 			$box->contentStructure(),
 			$box->type()
 		);
@@ -452,7 +459,7 @@ class Endpoint {
 	}
 
 	public function getMetaTypesAndSearchCriteria($grid_id){
-		$boxes=$this->storage->getMetaTypes();
+		$boxes=$this->api->getMetaTypes();
 		$result=array();
 		foreach($boxes as $box)
 		{

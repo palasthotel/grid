@@ -5,7 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
  */
-/** 
+
+/**
 * Meta type "REFERENCE"
 *
 * Creates a new meta type used as category for boxes. 

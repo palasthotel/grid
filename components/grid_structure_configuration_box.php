@@ -6,7 +6,10 @@
  * @package Palasthotel\Grid
  */
 
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\API;
+use Palasthotel\Grid\Model\Box;
+use Palasthotel\Grid\Core;
+use Palasthotel\Grid\Hook;
 
 /** 
 * Meta type "Configuration"
@@ -133,7 +136,7 @@ class grid_structure_configuration_base_box extends grid_structure_configuration
 
 	public function contentStructure() {
 		return $this->storage->fireHookAlter(
-			Hook::ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE,
+			API::ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE,
 			parent::contentStructure(),
 			$this->type()
 		);
