@@ -5,21 +5,13 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid-WordPress
  */
+
 /**
 * Meta type "CONTENT"
 *
 * Creates a new meta type used as category for boxes.
 */
 class grid_post_box extends grid_box {
-
-	/**
-	* Class contructor
-	*
-	* Initializes editor widgets for backend
-	*/
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	* Sets box type

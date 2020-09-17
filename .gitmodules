@@ -10,3 +10,6 @@
 [submodule "public/grid-editor"]
 	path = public/grid-editor
 	url = git@github.com:palasthotel/grid.git
+[submodule "public/grid-core"]
+	path = public/grid-core
+	url = git@github.com:palasthotel/grid.git

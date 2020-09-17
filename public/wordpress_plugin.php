@@ -24,8 +24,10 @@ use Exception;
 use Grid\Constants\GridCSSVariant;
 use Grid\Constants\GridCssVariantFlexbox;
 use Palasthotel\Grid\API;
+use Palasthotel\Grid\Core;
 use Palasthotel\Grid\ContainerEditor;
 use Palasthotel\Grid\Editor;
+use Palasthotel\Grid\Endpoint;
 use Palasthotel\Grid\Storage;
 use const Grid\Constants\GRID_CSS_VARIANT_NONE;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
@@ -46,6 +48,9 @@ if ( ! defined( 'WPINC' ) ) {
  * @property Ajax ajax
  * @property API gridAPI
  * @property Editor gridEditor
+ * @property Core gridCore
+ * @property GridHook gridHook
+ * @property GridQuery gridQuery
  */
 class Plugin {
 
@@ -85,9 +90,10 @@ class Plugin {
 		// ------------------------------------
 		// autoloader
 		// ------------------------------------
-		require_once dirname( __FILE__ ) . "/vendor/autoload.php";
+		require_once dirname(__FILE__). "/grid-core/vendor/autoload.php";
 		require_once dirname(__FILE__). "/grid-api/vendor/autoload.php";
 		require_once dirname(__FILE__). "/grid-editor/vendor/autoload.php";
+		require_once dirname( __FILE__ ) . "/vendor/autoload.php";
 
 		// ------------------------------------
 		// cache properties
@@ -114,8 +120,9 @@ class Plugin {
 		$this->gridQuery = new GridQuery();
 		$this->gridHook = new GridHook();
 		// TODO: maybe move to later action for author name
-		$this->gridAPI = new API($this->gridQuery, $this->gridHook, "");
-		$this->gridEditor = new Editor($this->gridAPI->store);
+		$this->gridCore = new Core($this->gridQuery, $this->gridHook, "");
+		$this->gridAPI = new API($this->gridCore, new Ajax());
+		$this->gridEditor = new Editor($this->gridCore->storage);
 
 		/**
 		 * wrapper for grid library storage
@@ -587,7 +594,7 @@ class Plugin {
 	 * update plugin
 	 */
 	function update() {
-		$this->gridAPI->update();
+		$this->gridCore->update();
 		$wp_update = new Update($this->gridQuery);
 		$wp_update->performUpdates();
 	}

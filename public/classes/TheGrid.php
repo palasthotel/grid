@@ -10,7 +10,7 @@ namespace Palasthotel\Grid\WordPress;
 
 
 use Grid\Constants\GridCSSVariant;
-use Palasthotel\Grid\Constants\Hook;
+use Palasthotel\Grid\Core;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
 /**
@@ -27,7 +27,7 @@ class TheGrid extends _Component {
 		add_filter( 'post_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
 		add_filter( 'page_row_actions', array( $this, 'grid_wp_actions' ), 10, 2 );
 
-		add_action('grid_'.Hook::PUBLISH_GRID, array($this, 'clear_cache'));
+		add_action( 'grid_' . Core::FIRE_PUBLISH_GRID, array($this, 'clear_cache'));
 	}
 
 	/**
@@ -185,8 +185,7 @@ class TheGrid extends _Component {
 	}
 
 	function ajax() {
-		$storage = grid_wp_get_storage();
-		$storage->handleAjaxCall();
+		$this->plugin->gridAPI->handleAjaxCall();
 		die();
 	}
 
