@@ -440,7 +440,7 @@ order by grid_container2slot.weight asc, grid_slot2box.weight asc
 			if($currentslot==NULL || $currentslot->slotid!=$row['slot_id'])
 			{
 				$currentslot=new GridSlot();
-				$currentslot->grid=$grid;
+				//$currentslot->grid=$grid;
 				$currentslot->slotid=$row['slot_id'];
 				$currentslot->style=$row['slot_style'];
 				$currentslot->boxes=array();
