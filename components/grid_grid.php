@@ -7,6 +7,23 @@ use Palasthotel\Grid\Model\Container;
 use Palasthotel\Grid\Model\Grid;
 
 class grid_grid extends Grid {
+
+	/**
+	 * @param Grid $model
+	 *
+	 * @return grid_grid
+	 */
+	public static function build($model){
+		$self = new self();
+		foreach ($model as $prop => $value){
+			$self->{$prop} = $value;
+		}
+		$self->container = array_map(function($container){
+			return grid_container::build($container);
+		}, $self->container);
+		return $self;
+	}
+
 	/**
 	 * @param bool $editmode
 	 *
@@ -28,28 +45,12 @@ class grid_grid extends Grid {
 			$containermap[$container->containerid]=$html;
 			$containerlist[]=$html;
 		}
+
 		ob_start();
+		include $templatePath = API::template()::grid($this);
+		$output=ob_get_contents();
+		ob_end_clean();
 
-
-		$found = FALSE;
-		if( is_array( $this->storage->templatesPaths) )
-		{
-			foreach ($this->storage->templatesPaths as $templatesPath) {
-				$template_path = rtrim($templatesPath.'/grid.tpl.php', "/");
-				if( file_exists($template_path) ){
-					include $template_path;
-					$found = TRUE;
-					break;
-				}
-			}
-
-		}
-		if(!$found)
-		{
-			include dirname( __FILE__ ) . '/../templates/grid.tpl.php';
-		}
-
-		$output=ob_get_clean();
 		$this->storage->fireHook( API::FIRE_DID_RENDER_GRID, (object) array( 'grid' =>$this, 'editmode' =>$editmode));
 		return $output;
 	}

@@ -6,6 +6,21 @@ use Palasthotel\Grid\Core;
 use Palasthotel\Grid\Model\Container;
 
 class grid_container extends Container {
+
+	/**
+	 * @param Container $model
+	 */
+	public static function build($model){
+		$self = new self();
+		foreach ($model as $prop => $value){
+			$self->{$prop} = $value;
+		}
+		$self->slots = array_map(function($slot){
+			return grid_slot::build($slot);
+		}, $self->slots);
+		return $self;
+	}
+
 	public function render($editmode)
 	{
 		$this->classes[] = "grid-container";
@@ -92,26 +107,11 @@ class grid_container extends Container {
 			}
 			$slots[]=$slot->render($editmode, $this);
 		}
-		ob_start();
-		$found = FALSE;
-		if( is_array( $this->storage->templatesPaths ) )
-		{
-			foreach ($this->storage->templatesPaths as $templatesPath)
-			{
-				$template_path = rtrim($templatesPath."/grid-container.tpl.php", "/");
-				if( file_exists($template_path) ){
-					include $template_path;
-					$found = TRUE;
-					break;
-				}
-			}
 
-		}
-		if(!$found)
-		{
-			include dirname(__FILE__).'/../templates/grid-container.tpl.php';
-		}
-		$output=ob_get_clean();
+		ob_start();
+		include API::template()::container($this);
+		$output=ob_get_contents();
+		ob_end_clean();
 
 		$this->storage->fireHook( API::FIRE_DID_RENDER_CONTAINER, (object) array( "container" => $this, 'editmode' =>$editmode) );
 

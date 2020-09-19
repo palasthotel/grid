@@ -6,6 +6,18 @@ use Palasthotel\Grid\Core;
 use Palasthotel\Grid\Model\Slot;
 
 class grid_slot extends Slot {
+
+	/**
+	 * @param Slot $model
+	 */
+	public static function build($model){
+		$self  = new self();
+		foreach ($model as $prop => $value){
+			$self->{$prop} = $value;
+		}
+		return $self;
+	}
+
 	public function render($editmode, $container)
 	{
 		$this->storage->fireHook( API::FIRE_WILL_RENDER_SLOT, (object) array( "container" =>$container, "slot" => $this, 'editmode' =>$editmode) );
@@ -23,24 +35,9 @@ class grid_slot extends Slot {
 		}
 
 		ob_start();
-		$found = FALSE;
-		if( is_array( $this->storage->templatesPaths) )
-		{
-			foreach ($this->storage->templatesPaths as $templatesPath) {
-				$template_path = rtrim($templatesPath.'/grid-slot.tpl.php', "/");
-				if( file_exists($template_path) ){
-					include $template_path;
-					$found = TRUE;
-					break;
-				}
-			}
-
-		}
-		if(!$found)
-		{
-			include dirname( __FILE__ ) . '/../templates/grid-slot.tpl.php';
-		}
-		$output=ob_get_clean();
+		include API::template()::slot($this);
+		$output=ob_get_contents();
+		ob_end_clean();
 
 		$this->storage->fireHook( API::FIRE_DID_RENDER_SLOT, (object) array( "container" =>$container, "slot" => $this, 'editmode' =>$editmode) );
 

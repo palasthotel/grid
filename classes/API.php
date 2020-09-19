@@ -2,14 +2,15 @@
 
 namespace Palasthotel\Grid;
 
-use grid_box;/**
+use grid_box;
+use grid_grid;
+
+/**
  * Class API
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2020, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
- *
- * @property Storage store
  *
  */
 class API {
@@ -35,16 +36,25 @@ class API {
 	 */
 	private $endpoint;
 
+	/**
+	 * @var iTemplate
+	 */
+	private static $template;
+	public static function template(){
+		return self::$template;
+	}
 
 	/**
 	 * API constructor.
 	 *
 	 * @param Core $core
 	 * @param Endpoint $endpoint
+	 * @param iTemplate $template
 	 */
-	public function __construct(Core $core, $endpoint)
+	public function __construct(Core $core, Endpoint $endpoint, iTemplate $template)
 	{
 		$this->core = $core;
+		self::$template = $template;
 
 		$this->requireBoxes();
 
@@ -52,6 +62,7 @@ class API {
 		$endpoint->api = $this;
 
 		$this->endpoint = $endpoint;
+
 	}
 
 	public function requireBoxes(){
@@ -138,6 +149,26 @@ class API {
 			}
 		}
 		return FALSE;//array('result'=>FALSE,'error'=>'box or slot or container or grid not found','gridid'=>$gridid,'container'=>$containerid,'slotid'=>$slotid,'box'=>$idx);
+	}
+
+	/**
+	 * @param $grid_id
+	 * @param bool $prefereDrafts
+	 *
+	 * @return grid_grid
+	 */
+	public function loadGrid($grid_id, $prefereDrafts = TRUE){
+		return grid_grid::build($this->core->storage->loadGrid($grid_id, $prefereDrafts));
+	}
+
+	/**
+	 * @param $grid_id
+	 * @param $revision
+	 *
+	 * @return grid_grid
+	 */
+	public function loadGridByRevision( $grid_id, $revision ){
+		return grid_grid::build($this->core->storage->loadGridByRevision( $grid_id, $revision ));
 	}
 
 	public function getMetaTypes() {
