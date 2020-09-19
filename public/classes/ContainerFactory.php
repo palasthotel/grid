@@ -18,11 +18,9 @@ class ContainerFactory extends _Component
 		add_submenu_page( 'grid_settings', 'Container types', 'Container types', 'edit_posts', 'grid_containers', array( $this, 'containers') );
 	}
 	function containers() {
-		$storage = grid_wp_get_storage();
-		global $grid_lib;
 		$editor = $this->plugin->gridEditor->getContainerEditor();
 		grid_enqueue_editor_files($editor);
-		$html = $editor->run( $storage );
+		$html = $editor->run( $this->plugin->gridCore->storage );
 		echo $html;
 	}
 }

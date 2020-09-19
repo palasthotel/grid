@@ -87,7 +87,7 @@ function grid_wp_get_privs() {
  * @return Storage grid_storage
  */
 function grid_wp_get_storage() {
-	return grid_plugin()->get_storage();
+	return grid_plugin()->gridCore->storage;
 }
 
 

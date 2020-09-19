@@ -12,18 +12,12 @@ namespace Palasthotel\Grid\WordPress;
 /**
  * @property Plugin plugin
  */
-class MetaBoxes
+class MetaBoxes extends _Component
 {
 
 	const CSS_HANDLE = "grid-meta-box-style";
 
-	/**
-	 * meta_boxes constructor.
-	 *
-	 * @param Plugin $plugin
-	 */
-	function __construct($plugin){
-		$this->plugin = $plugin;
+	function onCreate(){
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action('save_post', array($this, 'save_post'));
 	}

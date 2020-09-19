@@ -16,14 +16,12 @@ use const Grid\Constants\GRID_CSS_VARIANT_FLEXBOX;
 use const Grid\Constants\GRID_CSS_VARIANT_NONE;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
-class Settings
+class Settings extends _Component
 {
-	function __construct(){
+	function onCreate(){
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar' ), 999 );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
-
-
 	}
 
 	/**
@@ -213,7 +211,7 @@ class Settings
 	}
 
 	function default_container_style_html() {
-		$storage = grid_wp_get_storage();
+		$storage = $this->plugin->gridCore->storage;
 		$types = $storage->fetchContainerStyles();
 		$setting = get_option( 'grid_default_container_style', '__NONE__' );
 		?>
@@ -231,7 +229,7 @@ class Settings
 	}
 
 	function default_slot_style_html() {
-		$storage = grid_wp_get_storage();
+		$storage = $this->plugin->gridCore->storage;
 		$types = $storage->fetchSlotStyles();
 		$setting = get_option( 'grid_default_slot_style', '__NONE__' );
 		?>
@@ -249,7 +247,7 @@ class Settings
 	}
 
 	function default_box_style_html() {
-		$storage = grid_wp_get_storage();
+		$this->plugin->gridCore->storage;
 		$types = $storage->fetchBoxStyles();
 		$setting = get_option( 'grid_default_box_style', '__NONE__' );
 		?>
@@ -295,7 +293,7 @@ class Settings
 	}
 
 	function default_container_html() {
-		$storage = grid_wp_get_storage();
+		$storage = $this->plugin->gridCore->storage;
 		$containers = $storage->fetchContainerTypes();
 		?>
 		<select id="grid_default_container" name="grid_default_container">

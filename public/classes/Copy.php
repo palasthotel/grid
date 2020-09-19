@@ -8,18 +8,12 @@ namespace Palasthotel\Grid\WordPress;
  * @property Plugin $plugin
  * @property \wpdb wpdb
  */
-class Copy {
+class Copy extends _Component {
 
 	const AJAX_ACTION_COPY = "copy_grid";
 	const AJAX_PARAM_POST_ID = "postid";
 
-	/**
-	 * Copy constructor.
-	 *
-	 * @param Plugin $plugin
-	 */
-	public function __construct( $plugin ) {
-		$this->plugin = $plugin;
+	public function onCreate() {
 
 		global $wpdb;
 		$this->wpdb = $wpdb;
@@ -92,7 +86,7 @@ class Copy {
 		do_action(Plugin::ACTION_COPY_BEFORE, $post_id, $grid_id);
 
 		// clone the grid
-		$clone = $this->plugin->get_storage()->cloneGridById($grid_id);
+		$clone = $this->plugin->gridCore->storage->cloneGridById($grid_id);
 
 		// clone post
 		$title   = get_the_title($post_id).__(" - Copy", Plugin::DOMAIN);

@@ -51,8 +51,7 @@ class ReuseBox extends _Component
 		global $grid_lib;
 		$editor = $grid_lib->getReuseBoxEditor();
 		grid_enqueue_editor_files($editor);
-		$storage = grid_wp_get_storage();
-		$html = $editor->runDelete( $storage, $boxid );
+		$html = $editor->runDelete( $this->plugin->gridCore->storage, $boxid );
 		if ( true === $html ) {
 			wp_redirect( add_query_arg( array( 'page' => 'grid_reuse_boxes' ), admin_url( 'tools.php' ) ) );
 			return;

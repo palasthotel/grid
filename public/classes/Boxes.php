@@ -11,9 +11,9 @@ namespace Palasthotel\Grid\WordPress;
 
 use grid_rss_box;
 
-class Boxes
+class Boxes extends _Component
 {
-	function __construct(){
+	function onCreate(){
 		$dir = dirname(__FILE__);
 		require( $dir . '/../core/classes/wordpress/grid_post_box.php' );
 		require( $dir . '/../core/classes/wordpress/grid_media_box.php' );

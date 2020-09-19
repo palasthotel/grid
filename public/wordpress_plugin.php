@@ -29,6 +29,7 @@ use Palasthotel\Grid\ContainerEditor;
 use Palasthotel\Grid\Editor;
 use Palasthotel\Grid\Endpoint;
 use Palasthotel\Grid\Storage;
+use Palasthotel\Grid\Template;
 use const Grid\Constants\GRID_CSS_VARIANT_NONE;
 use const Grid\Constants\GRID_CSS_VARIANT_TABLE;
 
@@ -45,12 +46,16 @@ if ( ! defined( 'WPINC' ) ) {
  * @property TheGrid $theGrid
  * @property PositionInPost positionInPost
  * @property Post post
- * @property Ajax ajax
+ * @property Ajax $gridAjax
  * @property API gridAPI
  * @property Editor gridEditor
  * @property Core gridCore
  * @property GridHook gridHook
  * @property GridQuery gridQuery
+ * @property Boxes boxes
+ * @property MetaBoxes metaBox
+ * @property Settings settings
+ * @property Template gridTemplate
  */
 class Plugin {
 
@@ -69,6 +74,7 @@ class Plugin {
 	// ------------------------------------
 	const ACTION_COPY_BEFORE = "grid_copy_before";
 	const ACTION_COPY_AFTER = "grid_copy_after";
+	const ACTION_LOAD_CLASSES = "grid_load_classes";
 
 	// ------------------------------------
 	// options
@@ -120,9 +126,11 @@ class Plugin {
 		$this->gridQuery = new GridQuery();
 		$this->gridHook = new GridHook();
 		// TODO: maybe move to later action for author name
-		$this->gridCore = new Core($this->gridQuery, $this->gridHook, "");
-		$this->gridAPI = new API($this->gridCore, new Ajax());
-		$this->gridEditor = new Editor($this->gridCore->storage);
+		$this->gridCore     = new Core($this->gridQuery, $this->gridHook, "");
+		$this->gridTemplate = new Template();
+		$this->gridAjax     = new Ajax();
+		$this->gridAPI      = new API($this->gridCore, $this->gridAjax, $this->gridTemplate);
+		$this->gridEditor   = new Editor($this->gridCore->storage);
 
 		/**
 		 * wrapper for grid library storage
@@ -132,7 +140,7 @@ class Plugin {
 		/**
 		 * do stuff for wordpress spezific boxes
 		 */
-		new Boxes();
+		$this->boxes = new Boxes($this);
 
 		/**
 		 * the grid itself!
@@ -142,22 +150,17 @@ class Plugin {
 		/**
 		 * Styles
 		 */
-		$this->post = new Post();
+		$this->post = new Post($this);
 
 		/**
 		 * meta boxes
 		 */
-		new MetaBoxes( $this );
-
-		/**
-		 * wp ajax endpoint
-		 */
-		$this->ajax = new Ajax();
+		$this->metaBox = new MetaBoxes( $this );
 
 		/**
 		 *  Grid settings pages
 		 */
-		new Settings();
+		$this->settings = new Settings($this);
 
 		/**
 		 *  gird container factory
@@ -261,6 +264,34 @@ class Plugin {
 				)
 			);
 		}
+
+		do_action(self::ACTION_LOAD_CLASSES);
+		$storage = $this->gridCore->storage;
+		$storage->containerstyle = get_option( 'grid_default_container_style', '__NONE__' );
+		if ( '__NONE__' == $storage->containerstyle ) {
+			$storage->containerstyle = NULL;
+		}
+		$storage->slotstyle = get_option( 'grid_default_slot_style', '__NONE__' );
+		if ( '__NONE__' == $storage->slotstyle ) {
+			$storage->slotstyle = NULL;
+		}
+		$storage->boxstyle = get_option( 'grid_default_box_style', '__NONE__' );
+		if ( '__NONE__' == $storage->boxstyle ) {
+			$storage->boxstyle = NULL;
+		}
+
+		$user = wp_get_current_user();
+		$storage->author = $user->user_login;
+
+		$templatesPaths          = array();
+		$templatesPaths[]        = get_stylesheet_directory() . '/grid/';
+		$templatesPaths[]        = get_template_directory() . '/grid/';
+		$templatesPaths          = apply_filters( 'grid_templates_paths', $templatesPaths );
+		$templatesPaths[]        = dirname( __FILE__ ) . "/core/templates/wordpress";
+
+		foreach ($templatesPaths as $path){
+			$this->gridTemplate->addTemplatesPath($path);
+		}
 	}
 
 	/**
@@ -293,13 +324,6 @@ class Plugin {
 				);
 			}
 		}
-	}
-
-	/**
-	 * register wp grid endpoint
-	 */
-	function get_ajax_endpoint() {
-		return $this->ajax;
 	}
 
 	/**
@@ -342,50 +366,6 @@ class Plugin {
 		}
 
 		return false;
-	}
-
-	/**
-	 * get grid storage
-	 */
-	function get_storage() {
-		global $grid_loaded;
-		if ( ! $grid_loaded ) {
-			do_action( 'grid_load_classes' );
-			$grid_loaded = true;
-		}
-		global $grid_storage;
-		if ( ! isset( $grid_storage ) ) {
-			$user                           = wp_get_current_user();
-			$storage                        = new Storage( $this->gridQuery,$this->gridHook, $user->user_login);
-			$storage->ajaxEndpoint          = new Ajax();
-			$storage->ajaxEndpoint->storage = $storage;
-
-			// for old versions
-			$storage->templatesPath = get_stylesheet_directory() . '/grid/';
-
-			$templatesPaths          = array();
-			$templatesPaths[]        = get_stylesheet_directory() . '/grid/';
-			$templatesPaths[]        = get_template_directory() . '/grid/';
-			$templatesPaths          = apply_filters( 'grid_templates_paths', $templatesPaths );
-			$templatesPaths[]        = dirname( __FILE__ ) . "/core/templates/wordpress";
-			$storage->templatesPaths = $templatesPaths;
-
-			$storage->containerstyle = get_option( 'grid_default_container_style', '__NONE__' );
-			if ( '__NONE__' == $storage->containerstyle ) {
-				$storage->containerstyle = NULL;
-			}
-			$storage->slotstyle = get_option( 'grid_default_slot_style', '__NONE__' );
-			if ( '__NONE__' == $storage->slotstyle ) {
-				$storage->slotstyle = NULL;
-			}
-			$storage->boxstyle = get_option( 'grid_default_box_style', '__NONE__' );
-			if ( '__NONE__' == $storage->boxstyle ) {
-				$storage->boxstyle = NULL;
-			}
-			$grid_storage = $storage;
-		}
-
-		return $grid_storage;
 	}
 
 	/**

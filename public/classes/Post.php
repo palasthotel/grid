@@ -9,9 +9,9 @@
 namespace Palasthotel\Grid\WordPress;
 
 
-class Post
+class Post extends _Component
 {
-	function __construct(){
+	function onCreate(){
 		/**
 		 * add body class
 		 */
@@ -105,17 +105,16 @@ class Post
 			$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
 			if ( $wpdb->num_rows > 0 ) {
 				$grid_id = $rows[0]->grid_id;
-				$storage = grid_wp_get_storage();
 				$grid = null;
 				if ( isset( $_GET['grid_preview'] ) && intval($_GET['grid_preview']) ) {
 					if ( isset( $_GET['grid_revision'] ) ) {
 						$revision = intval($_GET['grid_revision']);
-						$grid = $storage->loadGridByRevision( $grid_id, $revision );
+						$grid = $this->plugin->gridAPI->loadGridByRevision( $grid_id, $revision );
 					} else {
-						$grid = $storage->loadGrid( $grid_id );
+						$grid = $this->plugin->gridAPI->loadGrid( $grid_id );
 					}
 				} else {
-					$grid = $storage->loadGrid( $grid_id, false );
+					$grid = $this->plugin->gridAPI->loadGrid( $grid_id, false );
 				}
 				$post->grid = $grid;
 			}

@@ -20,8 +20,7 @@ class ReuseContainer extends _Component
 		add_submenu_page( null, 'delete reuse container', 'delete reuse container', 'edit_posts', 'grid_delete_reuse_container', array( $this, 'delete_reuse_container') );
 	}
 	function reuse_containers() {
-		$storage = grid_wp_get_storage();
-		global $grid_lib;
+		$storage = $this->plugin->gridCore->storage;
 
 		$editor = $this->plugin->gridEditor->getReuseContainerEditor();
 		grid_enqueue_editor_files($editor);
@@ -50,12 +49,9 @@ class ReuseContainer extends _Component
 
 	function delete_reuse_container() {
 		$containerid = intval($_GET['containerid']);
-
-		$storage = grid_wp_get_storage();
-		global $grid_lib;
-		$editor = $grid_lib->getReuseContainerEditor();
+		$editor = $this->plugin->gridEditor->getReuseBoxEditor();
 		grid_enqueue_editor_files( $editor );
-		$html = $editor->runDelete( $storage, $containerid );
+		$html = $editor->runDelete( $this->plugin->gridCore->storage, $containerid );
 		if ( true === $html ) {
 			wp_redirect( add_query_arg( array( 'page' => 'grid_reuse_containers' ), admin_url( 'tools.php' ) ) );
 			return;

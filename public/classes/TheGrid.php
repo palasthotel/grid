@@ -84,7 +84,7 @@ class TheGrid extends _Component {
 		$rows = $wpdb->get_results( 'select grid_id from '.$wpdb->prefix."grid_nodes where nid=$postid" );
 		
 		if ( 0 == count( $rows ) ) {
-			$storage = grid_wp_get_storage();
+			$storage = $this->plugin->gridCore->storage;
 			$id = $storage->createGrid();
 			$grid = $storage->loadGrid( $id );
 			if ( '__NONE__' != get_option( 'grid_default_container', '__NONE__' ) ) {
