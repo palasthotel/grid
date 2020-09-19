@@ -16,6 +16,9 @@ class Slot extends _Base {
 	public $slotid;
 	public $style;
 	public $classes = array();
+	/**
+	 * @var Box[]
+	 */
 	public $boxes;
 	public $dimension;
 	public $config = NULL;

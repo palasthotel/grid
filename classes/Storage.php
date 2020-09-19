@@ -16,9 +16,6 @@ use stdClass;
 
 class Storage {
 
-	public $templatesPaths= NULL;
-	public $templatesPath = NULL;
-	public $ajaxEndpoint;
 	public $containerstyle=NULL;
 	public $slotstyle=NULL;
 	public $boxstyle=NULL;
@@ -26,7 +23,7 @@ class Storage {
 	/**
 	 * @var string
 	 */
-	private $author;
+	public $author;
 
 	/**
 	 * @var iQuery
@@ -42,8 +39,6 @@ class Storage {
 		$this->query = $query;
 		$this->hook=$hook;
 		$this->author=$author; // TODO: refactor author to parameters
-		$this->ajaxEndpoint=new Endpoint();
-		$this->templatesPaths = array();
 	}
 
 	public function fireHook($subject, $argument) {

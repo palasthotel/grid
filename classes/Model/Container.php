@@ -31,6 +31,9 @@ class Container extends _Base {
 	public $epilog;
 	public $reused;
 	public $position;
+	/**
+	 * @var Slot[]
+	 */
 	public $slots;
 	public $config = null;
 
