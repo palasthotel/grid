@@ -54,7 +54,7 @@ boxEditorControls['file']=GridBackbone.View.extend({
 	        	self.progressall(e, data);
 	        },
 	        always: function(e, data){
-	        	console.log(e, data);
+	        	GRID.log(e, data);
 	        }
 	    }).bind('fileuploadsubmit', { self: self }, this.getFormData);
 
@@ -78,12 +78,9 @@ boxEditorControls['file']=GridBackbone.View.extend({
 		var self = this;
 		var box=this.model.box;
 		var params = [box.getGrid().getGridID(),box.getContainer().get("id"),box.getSlot().get("id"),box.getIndex(),path,fileid];
-		console.log("getFileInfo", params);
-		GridAjax("getFileInfo",params,{
+		new GridAjax("getFileInfo",params,{
 			success_fn:function(data)
 			{
-
-				console.log(data.result.src);
 				self.$preview.append(
 					jQuery("<img>")
 					.css('max-width', '200px')

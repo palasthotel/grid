@@ -16,12 +16,17 @@ class ContainerEditor
 			'css/grid-container-editor.css'
 		);
 	}
-	
+
 	public function getJS($absolute=FALSE)
 	{
 		return array();
 	}
-	
+
+  /**
+   * @param Storage $grid_db
+   *
+   * @return false|string
+   */
 	public function run($grid_db)
 	{
 		ob_start();

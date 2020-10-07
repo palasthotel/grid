@@ -24,16 +24,16 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "compression-webpack-plugin": "^6.0.0",
+    "compression-webpack-plugin": "^6.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "webpack-cli": "^3.3.12",
     "webpack-merge": "^5.1.4",
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.2"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.11.5",
-    "@ckeditor/ckeditor5-build-classic": "^22.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^23.0.0",
     "backbone": "^1.4.0",
     "blueimp-file-upload": "^10.31.0",
     "ckeditor4": "^4.15.0",
@@ -41,7 +41,7 @@
     "jquery": "^3.5.1",
     "jquery-ui": "^1.12.1",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0",
+    "socket.io-client": "^2.3.1",
     "underscore": "^1.11.0"
   }
 }

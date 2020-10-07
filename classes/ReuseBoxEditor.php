@@ -26,15 +26,15 @@ class ReuseBoxEditor
 	{
 		return $this->editor->getEditorCSS($absolute);
 	}
-	
+
 	public function getJS($language='en',$absolute=FALSE)
 	{
 		return $this->editor->getEditorJS($language,$absolute);
 	}
-	
+
 	public function run($editlinkfunction,$deletelinkfunction)
 	{
-		$grid=new Grid();
+		$grid=new \grid_grid();
 		$grid->storage=$this->editor->storage;
 		$boxIds=$this->editor->storage->getReuseableBoxIds();
 		$usedIds=$this->editor->storage->getReusedBoxIds();
@@ -55,7 +55,7 @@ class ReuseBoxEditor
 		$grid->container=array();
 		foreach($boxes as $box)
 		{
-			$container=new Container();
+			$container=new \grid_container();
 			$container->storage=$this->editor->storage;
 			$container->type="c-1d1";
 			$container->readmore=t("edit");
@@ -64,9 +64,9 @@ class ReuseBoxEditor
 			{
 				$container->epilog="<a href=\"".$deletelinkfunction($box->boxid)."\">delete</a>";
 			}
-			
+
 			$container->slots=array();
-			$container->slots[]=new Slot();
+			$container->slots[]=new \grid_slot();
 			$container->slots[0]->storage=$this->editor->storage;
 			$container->slots[0]->boxes=array();
 			$container->slots[0]->boxes[]=$box;
@@ -75,7 +75,7 @@ class ReuseBoxEditor
 		$html=$grid->render(TRUE);
 		return "<div class='grid-reuse-box-list'>".$html."</div>";
 	}
-	
+
 	public function runEditor( $id,$ckeditor,$ajax,$debugmode,$preview)
 	{
 		return $this->editor->getEditorHTML(
@@ -87,7 +87,7 @@ class ReuseBoxEditor
 			$preview,
 			'');
 	}
-	
+
 	public function runDelete($grid_db,$id)
 	{
 		if(isset($_POST) && !empty($_POST) && $_POST['grid_delete_id']==$id)

@@ -30,21 +30,28 @@ class ReuseContainerEditor
 
 		return $this->editor->getEditorCSS($absolute);
 	}
-	
+
 	public function getJS($language="en",$absolute=FALSE)
 	{
 		return $this->editor->getEditorJS($language,$absolute);
 	}
-	
-	public function run($grid_db,$editorlinkfunction,$deletelinkfunction)
+
+  /**
+   * @param Storage $storage
+   * @param $editorlinkfunction
+   * @param $deletelinkfunction
+   *
+   * @return string
+   */
+	public function run($storage,$editorlinkfunction,$deletelinkfunction)
 	{
 
 		$containerIds=$this->editor->storage->getReuseContainerIds();
-		$containerIds = $grid_db->fireHookAlter(
+		$containerIds = $storage->fireHookAlter(
 		    Core::ALTER_REUSE_CONTAINER_IDS,
             $containerIds
         );
-		$usedIds=$grid_db->getReusedContainerIds();
+		$usedIds=$storage->getReusedContainerIds();
 
 		$grid = new Grid();
 		$grid->storage=$this->editor->storage;
@@ -54,14 +61,14 @@ class ReuseContainerEditor
 			/**
 			 * load container from reuse container
 			 */
-			$container=$grid_db->loadReuseContainer($id);
+			$container=$storage->loadReuseContainer($id);
 			$container->grid=$grid;
 			$container->classes[] = "grid-reuse-container";
 
 
-			$edit=new Container();
+			$edit=new \grid_container();
 			$edit->grid=$grid;
-			$edit->storage=$grid_db;
+			$edit->storage=$storage;
 			$edit->type="c-1d1";
 			$edit->readmore="edit";
 			$edit->slots=array();
@@ -82,9 +89,11 @@ class ReuseContainerEditor
 			$grid->container[]=$container;
 
 		}
+
+		$grid = \grid_grid::build($grid);
 		return "<div class='grid-reuse-container-list'>".$grid->render(TRUE)."</div>";
 	}
-	
+
 	public function runEditor($id,$ckeditor,$ajax,$debugmode,$preview)
 	{
 		return $this->editor->getEditorHTML(
@@ -96,7 +105,7 @@ class ReuseContainerEditor
 							$preview,
 							'');
 	}
-	
+
 	public function runDelete($grid_db,$id)
 	{
 		if(isset($_POST) && !empty($_POST) && $_POST['grid_delete_id']==$id)
