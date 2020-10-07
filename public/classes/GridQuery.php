@@ -40,6 +40,7 @@ class GridQuery extends AbstractQuery {
 			$port    = intval( $db_host[1] );
 		}
 		$connection = new mysqli( $host, DB_USER, DB_PASSWORD, DB_NAME, $port );
+		$connection->set_charset("utf8");
 		if ( $connection->connect_errno ) {
 			error_log( "WP Grid: " . $connection->connect_error, 4 );
 			wp_die( "WP Grid could not connect to database." );
