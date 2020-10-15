@@ -21,18 +21,31 @@ class ComposerStaticInitdffcfad40b155389efa6cf4425d42cc5
     );
 
     public static $classMap = array (
+        'Grid\\Constants\\GridCSSVariant' => __DIR__ . '/../..' . '/classes/Constants/GridCSSVariant.php',
+        'Grid\\Constants\\GridCssVariantFlexbox' => __DIR__ . '/../..' . '/classes/Constants/GridCSSVariantFlexbox.php',
+        'Grid\\Constants\\GridCssVariantNone' => __DIR__ . '/../..' . '/classes/Constants/GridCSSVariantNone.php',
+        'Grid\\Constants\\GridCssVariantTable' => __DIR__ . '/../..' . '/classes/Constants/GridCSSVariantTable.php',
+        'Palasthotel\\Grid\\API' => __DIR__ . '/../..' . '/classes/API.php',
         'Palasthotel\\Grid\\AbstractQuery' => __DIR__ . '/../..' . '/classes/AbstractQuery.php',
+        'Palasthotel\\Grid\\ContainerEditor' => __DIR__ . '/../..' . '/classes/ContainerEditor.php',
         'Palasthotel\\Grid\\Core' => __DIR__ . '/../..' . '/classes/Core.php',
+        'Palasthotel\\Grid\\Editor' => __DIR__ . '/../..' . '/classes/Editor.php',
+        'Palasthotel\\Grid\\Endpoint' => __DIR__ . '/../..' . '/classes/Endpoint.php',
         'Palasthotel\\Grid\\Model\\Box' => __DIR__ . '/../..' . '/classes/Model/Box.php',
         'Palasthotel\\Grid\\Model\\Container' => __DIR__ . '/../..' . '/classes/Model/Container.php',
         'Palasthotel\\Grid\\Model\\Grid' => __DIR__ . '/../..' . '/classes/Model/Grid.php',
         'Palasthotel\\Grid\\Model\\Slot' => __DIR__ . '/../..' . '/classes/Model/Slot.php',
         'Palasthotel\\Grid\\Model\\_Base' => __DIR__ . '/../..' . '/classes/Model/_Base.php',
+        'Palasthotel\\Grid\\ReuseBoxEditor' => __DIR__ . '/../..' . '/classes/ReuseBoxEditor.php',
+        'Palasthotel\\Grid\\ReuseContainerEditor' => __DIR__ . '/../..' . '/classes/ReuseContainerEditor.php',
         'Palasthotel\\Grid\\Storage' => __DIR__ . '/../..' . '/classes/Storage.php',
+        'Palasthotel\\Grid\\StyleEditor' => __DIR__ . '/../..' . '/classes/StyleEditor.php',
+        'Palasthotel\\Grid\\Template' => __DIR__ . '/../..' . '/classes/Template.php',
         'Palasthotel\\Grid\\UpdateBase' => __DIR__ . '/../..' . '/classes/UpdateBase.php',
         'Palasthotel\\Grid\\UpdateGrid' => __DIR__ . '/../..' . '/classes/UpdateGrid.php',
         'Palasthotel\\Grid\\iHook' => __DIR__ . '/../..' . '/classes/iHook.php',
         'Palasthotel\\Grid\\iQuery' => __DIR__ . '/../..' . '/classes/iQuery.php',
+        'Palasthotel\\Grid\\iTemplate' => __DIR__ . '/../..' . '/classes/iTemplate.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

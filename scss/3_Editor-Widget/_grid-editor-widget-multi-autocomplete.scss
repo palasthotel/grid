@@ -1,0 +1,24 @@
+.grid-editor-widget-multi-autocomplete{
+
+    .icon-cancel {
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-position: -80px -128px;
+        background-repeat: no-repeat;
+        float: right;
+        cursor: pointer;
+    }
+
+    .autocomplete-multiselect-item {
+        padding: 8px 15px;
+        background-color: $color-light;
+        display: inline-block;
+        margin-right: 2px;
+        margin-bottom: 3px;
+        &:hover{
+            background-color: $color-warning;
+            color: white;
+        }
+    }
+}

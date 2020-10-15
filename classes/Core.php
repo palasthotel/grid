@@ -3,7 +3,7 @@
 namespace Palasthotel\Grid;
 
 /**
- * Class API
+ * Class Core
 
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2020, Palasthotel

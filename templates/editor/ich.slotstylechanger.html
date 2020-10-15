@@ -1,0 +1,9 @@
+<div class="grid-style-changer-active"><i class="icon-style"></i><span class="grid-style-active-title">{{activestyle}}</span></div>
+{{^reused}}
+<ul class="grid-choose-style choose-style">
+	<li class="grid-slot-style slot-style" data-style="">Default style</li>
+	{{#styles}}
+	<li class="grid-slot-style slot-style" data-style="{{slug}}">{{title}}</li>
+	{{/styles}}
+</ul>
+{{/reused}}

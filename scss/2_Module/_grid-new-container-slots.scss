@@ -1,0 +1,13 @@
+.grid-new-container-slots {
+	//width: 210px;
+
+	display: table;
+	
+	padding: 3px 0;
+	border: 1px solid $color-draggable-border;
+
+	.grid-slot{
+		height: 32px;
+		border-left: 4px solid white;
+	}
+}

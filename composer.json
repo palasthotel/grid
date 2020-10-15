@@ -1,10 +1,13 @@
 {
-  "autoload": {
-    "classmap": [
-      "classes"
-    ],
-    "psr-4": {
-      "Palasthotel\\Grid\\": "classes"
+    "autoload": {
+        "classmap": [
+            "classes"
+        ],
+        "psr-4": {
+            "Palasthotel\\Grid\\": "classes"
+        }
+    },
+    "require": {
+        "ext-json": "*"
     }
-  }
 }

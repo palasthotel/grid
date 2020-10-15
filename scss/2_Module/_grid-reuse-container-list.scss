@@ -1,0 +1,69 @@
+/*
+reuse container list
+ */
+.grid-reuse-container-list{
+
+  .grid-reuse-container-edit{
+    border: 1px solid rgba(176, 186, 194, 0.7);
+    border-bottom: none;
+    position: relative;
+    margin-bottom: 0;
+    .grid-container__prolog{
+      font-size: 1.4rem;
+      padding: 8px;
+    }
+    .grid-container__readmore{
+      font-size: 1rem;
+      position: absolute;
+      right: 8px;
+      top: 8px;
+    }
+  }
+
+  .grid-reuse-container{
+    border: 1px solid rgba(176, 186, 194, 0.7);
+
+    .grid-container__title{
+      display: block;
+      background-color: white;
+      margin: 0;
+      padding: 8px;
+    }
+
+    .grid-container__content{
+      background-color: #eaeaea;
+      img{
+        max-width: 200px;
+        height: auto;
+      }
+    }
+
+  }
+
+
+}
+
+
+.grid-reuse-container-list .grid-container-title-text{
+  margin-top: 0;
+}
+
+
+.grid-reuse-container-edit{
+  border-top: 1px solid #efefef;
+}
+
+.grid-reuse-container-edit .grid-container-epilog a{
+  color: #c92c2c;
+}
+
+.grid-reuse-container-edit .grid-container-epilog{
+  padding: 0;
+  display: inline;
+  margin-right: 10px;
+}
+
+.grid-reuse-container-edit .grid-container-prolog{
+  font-weight: bold;
+  font-size: 1.3rem;
+}
