@@ -40,7 +40,6 @@ window.BoxEditor = GridBackbone.View.extend({
             'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
-        console.log(contentstructure)
         var fieldcontainer=this.$el.find(".grid-dynamic-fields .grid-editor-field-wrapper");
         var views=[];
         _.each(contentstructure,function(elem){

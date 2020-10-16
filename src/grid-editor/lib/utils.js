@@ -1,5 +1,3 @@
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
 export const hasHTMLEditor = (element) =>{
     return getHTMLEditor(element)
 }
@@ -14,13 +12,9 @@ export const initHTMLEditor = (element) => {
             resolve(getHTMLEditor(element))
             return;
         }
-        console.log("GridCKEditorConfig", window.GridCKEditorConfig, ClassicEditor.builtinPlugins.map( plugin => plugin.pluginName ));
-        ClassicEditor.create(
-            element,
-            window.GridCKEditorConfig || {}
-        ).then(editor=>{
-            jQuery(element).data("ckeditor", editor)
-            return editor
-        }).then(resolve).catch(reject);
+        // from CDN in /templates/editor/grid.tpl
+        resolve(CKEDITOR.replace(element,{
+            customConfig: document.PathToConfig
+        }))
     })
 }

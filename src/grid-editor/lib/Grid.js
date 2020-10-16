@@ -277,22 +277,6 @@ const GRID = window.GRID = {
 		}
 		this.PREVIEW_PATTERN=PREVIEW_PATTERN;
 	},
-	// CKEDITOR functions
-	useCKEDITOR: function(selector){
-		CKEDITOR.replace(
-			selector,{
-				customConfig : document.PathToConfig
-			}
-		);
-	},
-	getCKEDITORVal: function(selector){
-		return CKEDITOR.instances[selector].getData();
-	},
-	destroyCKEDITORs: function(){
-		for(var name in CKEDITOR.instances){
-		    CKEDITOR.instances[name].destroy();
-		}
-	},
 	// publishes the grid
 	publish: function(){
 		if( !GRID.getRights().get("publish") || GRID.locked() ){

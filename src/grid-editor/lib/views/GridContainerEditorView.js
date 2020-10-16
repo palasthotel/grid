@@ -8,8 +8,7 @@
 import GridBackbone from 'backbone'
 import _ from 'underscore'
 import ich from 'icanhaz'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import {initHTMLEditor} from "../utils";
 
 window.GridContainerEditor = GridBackbone.View.extend({
     className: "grid-container-editor",
@@ -37,19 +36,8 @@ window.GridContainerEditor = GridBackbone.View.extend({
             'styles':styles
         }));
 
-
-
-        jQuery.each(jQuery(this.$el).find(".form-html"), function(index, element) {
-            ClassicEditor.create(
-                element
-            ).then(editor=>{
-                jQuery(element).data("ckeditor", editor)
-            }).catch(console.error)
-            // CKEDITOR.replace(
-            //     element,{
-            //     customConfig : document.PathToConfig
-            // });
-        });
+        initHTMLEditor(this.el.querySelector(".grid-editor-prolog")).then(editor=>this.prologEditor = editor);
+        initHTMLEditor(this.el.querySelector(".grid-editor-epilog")).then(editor=>this.epilogEditor = editor);
 
         this.$el.find(".grid-collapsable-shown").addClass("grid-active");
 
@@ -92,8 +80,8 @@ window.GridContainerEditor = GridBackbone.View.extend({
         this.model.set('title',this.$el.find(class_prefix+"title").val());
         this.model.set('titleurl', this.$el.find(class_prefix+"titleurl").val());
 
-        this.model.set('prolog',jQuery(this.el).find(".grid-editor-prolog").data("ckeditor").getData());
-        this.model.set('epilog',jQuery(this.el).find(".grid-editor-epilog").data("ckeditor").getData());
+        this.model.set('prolog',this.prologEditor.getData());
+        this.model.set('epilog',this.epilogEditor.getData());
 
         this.model.set('readmore', this.$el.find(class_prefix+"readmore").val());
         this.model.set('readmoreurl',this.$el.find(class_prefix+"readmoreurl").val());

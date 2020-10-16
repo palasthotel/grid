@@ -27,16 +27,14 @@
     "compression-webpack-plugin": "^6.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
-    "webpack-merge": "^5.1.4",
-    "webpack": "^4.44.2"
+    "webpack-merge": "^5.1.4"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.11.5",
-    "@ckeditor/ckeditor5-build-classic": "^23.0.0",
     "backbone": "^1.4.0",
     "blueimp-file-upload": "^10.31.0",
-    "ckeditor4": "^4.15.0",
     "icanhaz": "^0.10.3",
     "jquery": "^3.5.1",
     "jquery-ui": "^1.12.1",
