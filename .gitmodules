@@ -1,6 +1,3 @@
-[submodule "src/grid-components"]
-	path = src/grid-components
-	url = git@github.com:palasthotel/grid.git
 [submodule "public/grid-core"]
 	path = _grid
 	url = git@github.com:palasthotel/grid.git
