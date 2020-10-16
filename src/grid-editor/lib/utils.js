@@ -14,8 +14,10 @@ export const initHTMLEditor = (element) => {
             resolve(getHTMLEditor(element))
             return;
         }
+        console.log("GridCKEditorConfig", window.GridCKEditorConfig, ClassicEditor.builtinPlugins.map( plugin => plugin.pluginName ));
         ClassicEditor.create(
-            element
+            element,
+            window.GridCKEditorConfig || {}
         ).then(editor=>{
             jQuery(element).data("ckeditor", editor)
             return editor
