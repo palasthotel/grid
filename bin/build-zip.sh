@@ -13,14 +13,14 @@ echo "Syncing files..."
 rsync -rL  "$PROJECT_PATH/public/" "$DEST_PATH/"
 
 echo "Cleanup files..."
-rm "$DEST_PATH/.gitignore"
-rm "$DEST_PATH/Butlerfile"
 rm "$DEST_PATH/composer.json"
-rm "$DEST_PATH/package.json"
-rm -r "$DEST_PATH/src"
-rm -r "$DEST_PATH/scss"
-rm -r "$DEST_PATH/bin"
-
+rm "$DEST_PATH/lib/grid/.gitignore"
+rm "$DEST_PATH/lib/grid/Butlerfile"
+rm "$DEST_PATH/lib/grid/composer.json"
+rm "$DEST_PATH/lib/grid/package.json"
+rm $DEST_PATH/lib/grid/webpack*
+rm -r "$DEST_PATH/lib/grid/src"
+rm -r "$DEST_PATH/lib/grid/scss"
 
 echo "Generating zip file..."
 cd "$BUILD_PATH" || exit
