@@ -119,14 +119,12 @@ window.ContainerView = GridBackbone.View.extend({
     },
     saveEditor: function(){
         var self = this;
+        console.debug("ContainerView saveEditor", self);
         jQuery.each(this.$el.find(".form-val"), function(index, element) {
+
             var $this = jQuery(element);
             var scope = $this.attr("scope");
-            if($this.hasClass('form-html')){
-                self.model.set(scope, GRID.getCKEDITORVal($this.attr("name") ) );
-            } else {
-                self.model.set(scope, $this.val() );
-            }
+            self.model.set(scope, $this.val() );
         });
         this.model.save();
         return this.render();
