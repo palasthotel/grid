@@ -1,11 +1,5 @@
-[submodule "public/grid-api"]
-	path = public/grid-api
-	url = git@github.com:palasthotel/grid.git
 [submodule "src/grid-components"]
 	path = src/grid-components
-	url = git@github.com:palasthotel/grid.git
-[submodule "public/grid-editor"]
-	path = public/grid-editor
 	url = git@github.com:palasthotel/grid.git
 [submodule "public/grid-core"]
 	path = _grid

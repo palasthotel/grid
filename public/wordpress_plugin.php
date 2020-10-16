@@ -96,9 +96,7 @@ class Plugin {
 		// ------------------------------------
 		// autoloader
 		// ------------------------------------
-		require_once dirname(__FILE__). "/grid-core/vendor/autoload.php";
-		require_once dirname(__FILE__). "/grid-api/vendor/autoload.php";
-		require_once dirname(__FILE__). "/grid-editor/vendor/autoload.php";
+		require_once dirname(__FILE__). "/lib/grid/vendor/autoload.php";
 		require_once dirname( __FILE__ ) . "/vendor/autoload.php";
 
 		// ------------------------------------
@@ -387,7 +385,7 @@ class Plugin {
 		 * enqueue the css array
 		 */
 		foreach ( $css as $idx => $file ) {
-			wp_enqueue_style( 'grid_css_lib_' . $idx, plugins_url( 'grid-editor/' . $file, __FILE__ ) );
+			wp_enqueue_style( 'grid_css_lib_' . $idx, plugins_url( 'lib/grid/' . $file, __FILE__ ) );
 		}
 		wp_enqueue_style( 'grid_wordpress_css', plugins_url( 'css/grid-wordpress.css', __FILE__ ) );
 		wp_enqueue_style( 'grid_wordpress_container_slots_css', add_query_arg( array(
@@ -411,9 +409,9 @@ class Plugin {
 		foreach ( $js as $idx => $file ) {
 			wp_enqueue_script(
 				"grid_js_lib_$idx",
-				plugins_url( "grid-editor/$file", __FILE__ ),
+				plugins_url( "lib/grid/$file", __FILE__ ),
 				[],
-				filemtime(plugin_dir_path(__FILE__)."/grid-editor/$file")
+				filemtime(plugin_dir_path(__FILE__)."/lib/grid/$file")
 			);
 		}
 		wp_enqueue_script(
