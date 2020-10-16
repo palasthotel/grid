@@ -12,7 +12,6 @@ boxEditorControls['html']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-html",
     render:function(){
         const text=this.model.container[this.model.structure.key] || "";
-        console.log("render html")
         this.$el.html(
             "<label>"+this.model.structure.label+"</label>"+
             "<textarea name='"+this.cid+"' class='dynamic-value form-html'>"+text.replace(/\'/g, "&#39;")+"</textarea>"
