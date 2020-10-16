@@ -8,5 +8,5 @@
 	path = public/grid-editor
 	url = git@github.com:palasthotel/grid.git
 [submodule "public/grid-core"]
-	path = public/grid-core
+	path = _grid
 	url = git@github.com:palasthotel/grid.git
