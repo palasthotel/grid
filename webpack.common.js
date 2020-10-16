@@ -5,7 +5,7 @@ const editorConfig = {
         ["grid-editor"]: path.resolve(__dirname, './src/grid-editor/grid-editor.js'),
     },
     output: {
-        path: path.resolve(__dirname)+'/js/.',
+        path: path.resolve(__dirname)+'/js/dist/.',
         filename: '[name].js',
         sourceMapFilename: '[name].map',
     },
@@ -38,7 +38,7 @@ const reuseContainerListConfig = {
         reuseContainerList: path.resolve(__dirname, './src/reuseContainerList.js'),
     },
     output: {
-        path: path.resolve(__dirname)+'/dist/.',
+        path: path.resolve(__dirname)+'/js/dist/.',
         filename: '[name].js',
         sourceMapFilename: '[name].map',
     },
