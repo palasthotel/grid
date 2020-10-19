@@ -297,7 +297,7 @@ class Storage {
 		{
 			$data=$row['content'];
 			$data=json_decode($data);
-			if(!in_array($data->boxid, $usedIds))
+			if( isset($data->boxid) && !in_array($data->boxid, $usedIds) )
 				$usedIds[]=$data->boxid;
 		}
 		return $usedIds;
