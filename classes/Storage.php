@@ -970,9 +970,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 		// This removes support for sidebars in a soft not destructive way
 		// some day we will delete all s- containers
-		return array_filter($return, function($container){
+		return array_values(array_filter($return, function($container){
 			return substr($container["type"], 0, 1)  != "s";
-		});
+		}));
 	}
 	
 	public function createContainerType($type,$space_to_left,$space_to_right,$numslots)
