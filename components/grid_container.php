@@ -57,9 +57,9 @@ class grid_container extends Container {
 				}
 
 				// remove from grid to prevent rendering in frontend
-				$slot->boxes = array_filter( $slot->boxes, function ( $box ) {
+				$slot->boxes = array_values(array_filter( $slot->boxes, function ( $box ) {
 					return ! ( $box instanceof grid_container_configuration_box || $box instanceof grid_slot_configuration_box );
-				} );
+				} ));
 			}
 
 		}
