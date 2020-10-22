@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 
 boxEditorControls['number']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-number",

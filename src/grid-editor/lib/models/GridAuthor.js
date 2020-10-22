@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 window.GridAuthor = GridBackbone.Model.extend({
 	defaults: function(){
 		return {

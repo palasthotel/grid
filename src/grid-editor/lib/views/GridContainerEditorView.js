@@ -5,9 +5,7 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
 import _ from 'underscore'
-import ich from 'icanhaz'
 import {initHTMLEditor} from "../utils";
 
 window.GridContainerEditor = GridBackbone.View.extend({

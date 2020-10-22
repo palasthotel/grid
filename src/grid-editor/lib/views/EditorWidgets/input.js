@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 boxEditorControls['input']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-input",
     initialize:function(){

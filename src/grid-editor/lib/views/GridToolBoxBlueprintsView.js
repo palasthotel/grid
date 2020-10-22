@@ -5,9 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-import ich from 'icanhaz'
-
 window.GridToolBoxBlueprintsView = GridBackbone.View.extend({
     className: "grid-box-blueprints",
     timer:null,

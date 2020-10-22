@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 window.Revisions = GridBackbone.Collection.extend({
 	model: Revision,
 	initialize: function(spec){

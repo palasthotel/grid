@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 boxEditorControls['textarea']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-textarea",
     initialize:function(){

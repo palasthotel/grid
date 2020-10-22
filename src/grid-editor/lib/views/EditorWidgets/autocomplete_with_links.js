@@ -5,7 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
 import _ from 'underscore'
 
 boxEditorControls['autocomplete-with-links']=GridBackbone.View.extend({

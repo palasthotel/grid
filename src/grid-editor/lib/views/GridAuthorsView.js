@@ -4,8 +4,6 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
 * @package Palasthotel\Grid
 */
-import GridBackbone from 'backbone'
-import ich from 'icanhaz'
 
 window.Authors = GridBackbone.View.extend({
     className: "grid-authors",

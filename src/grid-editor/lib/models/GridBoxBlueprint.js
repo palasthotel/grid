@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 window.GridBoxBlueprint = GridBackbone.Model.extend({
     initialize: function(spec){
     	if(!spec || !spec.type || spec.type == "") throw "InvalidConstructArgs GridBoxBlueprint: needs type";

@@ -6,7 +6,7 @@
 * @package Palasthotel\Grid
 */
 
-import ich from 'icanhaz'
+
 import {GridAsync} from "./GridAsync";
 
 /**

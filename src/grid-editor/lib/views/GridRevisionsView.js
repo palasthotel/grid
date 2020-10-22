@@ -5,9 +5,7 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
 import _ from 'underscore'
-import ich from 'icanhaz'
 
 window.GridRevisionsView = GridBackbone.View.extend({
 	tagName: 'div',

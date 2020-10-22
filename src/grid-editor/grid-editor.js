@@ -8,6 +8,8 @@ import "./frameworks/jquery.iframe-transport.js"
 import "blueimp-file-upload"
 import "./frameworks/mutate.events.js"
 import "./frameworks/mutate.min.js"
+import "./frameworks/ICanHaz.js"
+import './frameworks/GridBackbone.js'
 
 // ----------------------------------------------------
 // grid custom javascript

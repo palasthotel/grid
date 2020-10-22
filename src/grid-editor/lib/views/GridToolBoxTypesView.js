@@ -5,9 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-import ich from 'icanhaz'
-
 window.GridToolBoxTypesView = GridBackbone.View.extend({
     className: "grid-tool grid-element-box",
     events:{

@@ -5,7 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
 import {initHTMLEditor} from "../../utils";
 
 boxEditorControls['html']=GridBackbone.View.extend({

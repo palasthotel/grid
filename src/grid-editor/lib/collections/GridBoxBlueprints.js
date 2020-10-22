@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 window.GridBoxBlueprints = GridBackbone.Collection.extend({
 	model: GridBoxBlueprint,
 	initialize: function(spec){

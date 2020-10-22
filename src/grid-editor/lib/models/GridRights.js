@@ -5,7 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
 import _ from 'underscore'
 
 window.GridRights = GridBackbone.Model.extend({

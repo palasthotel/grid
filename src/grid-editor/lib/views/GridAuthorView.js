@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-import ich from 'icanhaz'
 
 window.Author = GridBackbone.View.extend({
     tagName: "li",

@@ -1,3 +1,5 @@
+import '../../../assets/ckeditor/ckeditor.js'
+
 export const hasHTMLEditor = (element) =>{
     return getHTMLEditor(element)
 }
