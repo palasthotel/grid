@@ -4,9 +4,28 @@
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
+ *
+ * @var Editor $this
+ * @var string $grid_id id of the grid to edit
+ * @var string $grid_mode grid or box or container.
+ * @var string $pathToCKEditorConfig url which returns the output of renderCKEditorConfig
+ * @var string $ajaxendpoint url which connects to the ajax endpoint class
+ * @var boolean $debug_mode true or false
+ * @var string $preview_url url to preview the current grid
+ * @var string $preview_pattern pattern for previews of certain
+ * @var string $async_service
+ * @var string $async_domain
+ * @var string $async_author
+ * @var string $async_path
+ * @var int $async_timeout for author grid lock in seconds (default is 5 minutes)
  */
+
+use Palasthotel\Grid\Editor;
+
 ?>
-<script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+<script>
+    var CKEDITOR_BASEPATH = '<?= $this->url; ?>/assets/ckeditor/';
+</script>
 <script type="text/javascript">
 document.ID=<?php echo $grid_id;?>;
 document.gridmode="<?php echo $grid_mode;?>";
