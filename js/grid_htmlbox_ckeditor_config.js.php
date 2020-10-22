@@ -7,7 +7,8 @@
 */
 header('Content-Type: application/javascript');
 ?>
-/*
+if(typeof CKEDITOR !== typeof undefined){
+  /*
  CKEDITOR.stylesSet.add( 'grid_styles',
  [
  // Block-level styles
@@ -19,53 +20,53 @@ header('Content-Type: application/javascript');
  { name : 'Marker: Yellow', element : 'span', styles : { 'background-color' : 'Yellow' } }
  ]);
  */
-CKEDITOR.stylesSet.add( 'grid_styles',
+  CKEDITOR.stylesSet.add( 'grid_styles',
     [
-        // Block-level styles
-        <?php
-        $tmp=array();
-        foreach($styles as $style)
-        {
-            $tmp[]=json_encode($style);
-        }
-        echo implode(",", $tmp);
-        ?>
-        //{ name : 'Fett', element : 'h2', attributes : { 'class' : 'emm-headline-bold' } },
-        //{ name : 'Mittel' , element : 'p', attributes : { 'class' : 'emm-medium' } }
+      // Block-level styles
+      <?php
+      $tmp=array();
+      foreach($styles as $style)
+      {
+        $tmp[]=json_encode($style);
+      }
+      echo implode(",", $tmp);
+      ?>
+      //{ name : 'Fett', element : 'h2', attributes : { 'class' : 'emm-headline-bold' } },
+      //{ name : 'Mittel' , element : 'p', attributes : { 'class' : 'emm-medium' } }
     ]);
-<?php
-$items=array();
-if(count($styles)>0)
-{
+  <?php
+  $items=array();
+  if(count($styles)>0)
+  {
     $items[]="Styles";
-}
-if(count($formats)>0)
-{
+  }
+  if(count($formats)>0)
+  {
     $items[]="Format";
-}
-if(!in_array("p",$formats))
-{
+  }
+  if(!in_array("p",$formats))
+  {
     $formats[]="p";
-}
+  }
 
-/**
- * add external ckeditor plugins
- */
-foreach($ckeditor_plugins as $slug => $path){
+  /**
+   * add external ckeditor plugins
+   */
+  foreach($ckeditor_plugins as $slug => $path){
     echo "CKEDITOR.plugins.addExternal('$slug', '$path');";
-}
-?>
+  }
+  ?>
 
-CKEDITOR.editorConfig = function( config ) {
+  CKEDITOR.editorConfig = function( config ) {
     config.language = 'de';
     config.toolbar = [
-        { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike'] },
-        { name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-        { name: "format", items: <?=json_encode($items)?>},
+      { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike'] },
+      { name: 'links', items: ['Link', 'Unlink', 'Anchor']},
+      { name: "format", items: <?=json_encode($items)?>},
 
-        { name: 'blockstyles', items: [  'NumberedList','BulletedList', 'Blockquote' ] },
-        { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-        { name: 'document', items: [ 'Source' ] }
+      { name: 'blockstyles', items: [  'NumberedList','BulletedList', 'Blockquote' ] },
+      { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+      { name: 'document', items: [ 'Source' ] }
     ];
 
     config.allowedContent = true;
@@ -80,9 +81,11 @@ CKEDITOR.editorConfig = function( config ) {
      *load external plugins for ckeditor
      */
     foreach($ckeditor_plugins as $slug => $path){
-        echo "config.extraPlugins = '$slug';";
+      echo "config.extraPlugins = '$slug';";
     }
     ?>
 
-};
+  };
 
+
+}

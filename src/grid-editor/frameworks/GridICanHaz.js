@@ -1,5 +1,5 @@
 // Changed line 521
-//  if (script && script.innerHTML && script.id && (script.type === "text/html" || script.type === "text/x-icanhaz")) 
+//  if (script && script.innerHTML && script.id && (script.type === "text/html" || script.type === "text/x-icanhaz"))
 //  To
 //  if (script && script.innerHTML && script.id && ( script.type === "text/grid-icanhaz")) {
 //  Because of Wordpress issues
@@ -553,6 +553,8 @@ var Mustache = function () {
             }, true);
         }
     }
+
+    window.ich = ich;
 
 })();
 })();
