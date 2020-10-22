@@ -5,8 +5,6 @@
 * @package Palasthotel\Grid
 */
 
-import GridBackbone from 'backbone'
-
 boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
     className: "grid-editor-widget grid-editor-widget-wp-mediaselect",
     events:{
@@ -72,23 +70,24 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         return this;
     },
     open_wp_media: function(){
-        var self = this;
-        var frame = wp.media({
+        const self = this;
+        const frame = wp.media({
             //title : lang_values['title-wp-media'],
             multiple : false,
             library : { type : this.media_type},
             button : { text : "Insert" }
         });
         frame.on('open',function() {
-            var selection = frame.state().get('selection');
-            var val = JSON.parse(self.$input.val());
-            var attachment = wp.media.attachment(val.id);
+            const selection = frame.state().get('selection');
+            const value = self.$input.val()
+            const val = JSON.parse(value);
+            const attachment = wp.media.attachment(val.id);
             selection.add( attachment ? [ attachment ] : [] );
         });
         frame.on('close',function() {
-            var selection = frame.state().get('selection');
+            const selection = frame.state().get('selection');
             jQuery.each(frame.state().get('selection')._byId, function(id, val) {
-                var sizes = val.get("sizes");
+                const sizes = val.get("sizes");
                 if(typeof sizes === "undefined"){
                     sizes = {
                         full: {
@@ -99,7 +98,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
                         }
                     };
                 }
-                var r_json = {
+                const r_json = {
                     id: val.id,
                     size: "full",
                     sizes: sizes
@@ -128,7 +127,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 	},
 	buildImagePreview: function(){
 
-		var json = this.get_json_from_input();
+		const json = this.get_json_from_input();
 
         if( json == null
 	        || json == ''
@@ -140,7 +139,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
             return;
         }
 
-        var $img = jQuery("<img/>");
+        const $img = jQuery("<img/>");
         $img
             .addClass("wp-mediaselect-image-preview")
             .attr("src", json.sizes.thumbnail.url)
@@ -152,12 +151,12 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 
 	},
     buildImageSizeSelect: function(){
-        var self = this;
+        const self = this;
 
         if(this.$input.val() == ""){
             return;
         }
-        var json = this.get_json_from_input();
+        const json = this.get_json_from_input();
 
         if( json == null
 			|| json == ''
@@ -170,7 +169,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
 
         this.$select_image_size.empty();
         jQuery.each(json.sizes, function(index, size) {
-             var selected = "";
+             let selected = "";
              if(json.size == index){
                 selected = "selected='selected'";
              }
@@ -184,7 +183,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         }
     },
     fetchValue:function(){
-	    var value = "";
+	    let value = "";
 	    try{
 		    value = JSON.parse(this.$input.val());
 	    } catch(e){
