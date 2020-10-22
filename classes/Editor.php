@@ -11,11 +11,19 @@ use Grid\Constants\GridCssVariantTable;
 
 /**
  * @property Storage $storage
+ * @property string url
  */
 class Editor {
 
-	public function __construct( Storage $storage ) {
+	/**
+	 * Editor constructor.
+	 *
+	 * @param Storage $storage
+	 * @param string $urlBasePath url path to library dir
+	 */
+	public function __construct( Storage $storage, string $urlBasePath ) {
 		$this->storage = $storage;
+		$this->url = $urlBasePath;
 	}
 
 	private function getHome() {
