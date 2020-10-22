@@ -42,52 +42,52 @@ document.grid.async.author = "<?php echo $async_author; ?>";
 document.grid.async.path = "<?php echo $async_path; ?>";
 document.grid.async.timeout = <?php echo $async_timeout; ?>;
 </script>
-<script id="tpl_toolbar" type="text/x-icanhaz">
+<script id="tpl_toolbar" type="text/grid-icanhaz">
 <?php require( 'ich.toolbar.html' ); ?>
 </script>
-<script id="tpl_toolContainers" type="text/x-icanhaz">
+<script id="tpl_toolContainers" type="text/grid-icanhaz">
 <?php require( "ich.toolContainers.html" ); ?>
 </script>
-<script id="tpl_toolContainersContainer" type="text/x-icanhaz">
+<script id="tpl_toolContainersContainer" type="text/grid-icanhaz">
 <?php require( "ich.toolContainersContainer.html" ); ?>
 </script>
-<script id="tpl_toolBoxes" type="text/x-icanhaz">
+<script id="tpl_toolBoxes" type="text/grid-icanhaz">
 <?php require( 'ich.toolBoxes.html' );?>
 </script>
-<script id="tpl_toolBoxesBlueprint" type="text/x-icanhaz">
+<script id="tpl_toolBoxesBlueprint" type="text/grid-icanhaz">
 <?php require( 'ich.toolBoxesBlueprint.html' );?>
 </script>
-<script id="tpl_grid" type="text/x-icanhaz">
+<script id="tpl_grid" type="text/grid-icanhaz">
 <?php require( 'ich.grid.html' );?>
 </script>
-<script id="tpl_container" type="text/x-icanhaz">
+<script id="tpl_container" type="text/grid-icanhaz">
 <?php require( 'ich.container.html' );?>
 </script>
-<script id="tpl_containereditor" type="text/x-icanhaz">
+<script id="tpl_containereditor" type="text/grid-icanhaz">
 <?php require( 'ich.containereditor.html' );?>
 </script>
-<script id="tpl_slot" type="text/x-icanhaz">
+<script id="tpl_slot" type="text/grid-icanhaz">
 <?php require( 'ich.slot.html' );?>
 </script>
-<script id="tpl_slotstylechanger" type="text/x-icanhaz">
+<script id="tpl_slotstylechanger" type="text/grid-icanhaz">
 <?php require( 'ich.slotstylechanger.html' );?>
 </script>
-<script id="tpl_box" type="text/x-icanhaz">
+<script id="tpl_box" type="text/grid-icanhaz">
 <?php require( 'ich.box.html' );?>
 </script>
-<script id="tpl_boxeditor" type="text/x-icanhaz">
+<script id="tpl_boxeditor" type="text/grid-icanhaz">
 <?php require( 'ich.boxeditor.html' );?>
 </script>
-<script id="tpl_revisions" type="text/x-icanhaz">
+<script id="tpl_revisions" type="text/grid-icanhaz">
 <?php require( 'ich.revisions.html' );?>
 </script>
-<script id="tpl_authors" type="text/x-icanhaz">
+<script id="tpl_authors" type="text/grid-icanhaz">
 <?php require( 'ich.authors.html' );?>
 </script>
-<script id="tpl_author" type="text/x-icanhaz">
+<script id="tpl_author" type="text/grid-icanhaz">
 <?php require( 'ich.author.html' );?>
 </script>
-<script id="tpl_loading" type="text/x-icanhaz">
+<script id="tpl_loading" type="text/grid-icanhaz">
 <?php require( 'ich.loading.html' );?>
 </script>
 
