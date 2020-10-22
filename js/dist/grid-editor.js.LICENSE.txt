@@ -1,0 +1,37 @@
+/*!
+    ICanHaz.js -- by @HenrikJoreteg
+  */
+
+/*!
+ * jQuery UI Touch Punch 0.2.3
+ *
+ * Copyright 2011–2014, Dave Furfero
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ *
+ * Depends:
+ *  jquery.ui.widget.js
+ *  jquery.ui.mouse.js
+ */
+
+/*!
+ * jQuery UI Widget 1.12.1
+ * http://jqueryui.com
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+
+/*!
+ICanHaz.js version 0.10.2 -- by @HenrikJoreteg
+More info at: http://icanhazjs.com
+*/
+
+/*! https://mths.be/utf8js v2.1.2 by @mathias */
+
+/**
+* @author Palasthotel <rezeption@palasthotel.de>
+* @copyright Copyright (c) 2014, Palasthotel
+* @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+* @package Palasthotel\Grid
+*/
