@@ -17,8 +17,6 @@ boxEditorControls['select']=GridBackbone.View.extend({
         const structure = this.model.structure;
         const container = this.model.container;
 
-        console.debug(structure, container)
-
         const isMultiple = (typeof structure.multiple !== typeof undefined && structure.multiple);
         const values = container[structure.key];
         const hasMultipleValues = (typeof values === typeof []);
