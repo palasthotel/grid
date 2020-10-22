@@ -1,0 +1,56 @@
+{
+  "_from": "ckeditor4",
+  "_id": "ckeditor4@4.15.0",
+  "_inBundle": false,
+  "_integrity": "sha512-OhL3gqCU2JjulhyrF24LlwLKIZ/CO5sPoiHRdDwihRkz9FOeZQnL+iMa0q/zxXY/jt1R+MxDvt4/6uiQk663hQ==",
+  "_location": "/ckeditor4",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ckeditor4",
+    "name": "ckeditor4",
+    "escapedName": "ckeditor4",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://npm.palasthotel.de/ckeditor4/-/ckeditor4-4.15.0.tgz",
+  "_shasum": "9f66bbec00f4ca1c93ce79298714cb56d21e52bc",
+  "_spec": "ckeditor4",
+  "_where": "/Users/edward/Documents/butler/GRID-DOC/docroot/wp-content/plugins/grid-git/_grid",
+  "author": {
+    "name": "CKSource",
+    "url": "https://cksource.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/ckeditor/ckeditor4/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "JavaScript WYSIWYG web text editor.",
+  "homepage": "https://ckeditor.com/ckeditor-4/",
+  "keywords": [
+    "ckeditor4",
+    "ckeditor",
+    "fckeditor",
+    "editor",
+    "wysiwyg",
+    "html",
+    "richtext",
+    "text",
+    "javascript"
+  ],
+  "license": "(GPL-2.0 OR LGPL-2.1 OR MPL-1.1)",
+  "main": "ckeditor.js",
+  "name": "ckeditor4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckeditor/ckeditor4-releases.git"
+  },
+  "version": "4.15.0"
+}
