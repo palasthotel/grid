@@ -25,7 +25,7 @@ class Box extends _Base {
 
 	/**
 	 * Reference to the Grid itself
-	 * @var Storage
+	 * @var Grid
 	 */
 	public $grid;
 

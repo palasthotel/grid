@@ -12,11 +12,35 @@ use grid_slot;
 class Template implements iTemplate {
 
 	private static $templatesPaths = [];
-	public static function paths(){
+
+	/**
+	 * @return string[]
+	 */
+	public static function paths() {
 		return self::$templatesPaths;
 	}
-	public function addTemplatesPath($absolutePath){
+
+	/**
+	 * @param string $absolutePath
+	 */
+	public function addPath( string $absolutePath ) {
 		self::$templatesPaths[] = $absolutePath;
+	}
+
+	/**
+	 * @param string $filename for example post_content.tpl.php
+	 *
+	 * @return false|string
+	 */
+	public static function getPath( string $filename ) {
+		foreach ( static::$templatesPaths as $path ) {
+			$template_path = trailingslashit( $path );
+			if ( file_exists( $template_path . $filename ) ) {
+				return $template_path . $filename;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -24,44 +48,44 @@ class Template implements iTemplate {
 	 *
 	 * @return string
 	 */
-	public static function grid( grid_grid $grid) : string{
-		foreach (self::$templatesPaths as $templatesPath) {
-			$template_path = rtrim($templatesPath.'/grid.tpl.php', "/");
-			if( file_exists($template_path) ){
+	public static function grid( grid_grid $grid ): string {
+		foreach ( self::$templatesPaths as $templatesPath ) {
+			$template_path = rtrim( $templatesPath . '/grid.tpl.php', "/" );
+			if ( file_exists( $template_path ) ) {
 				return $template_path;
 			}
 		}
+
 		return dirname( __FILE__ ) . '/../templates/components/grid.tpl.php';
 	}
 
-  /**
-   * @param grid_container $container
-   *
-   * @return string
-   */
-	public static function container( grid_container $container): string{
+	/**
+	 * @param grid_container $container
+	 *
+	 * @return string
+	 */
+	public static function container( grid_container $container ): string {
 
-		foreach (self::$templatesPaths as $templatesPath)
-		{
-			$template_path = rtrim($templatesPath."/grid-container.tpl.php", "/");
-			if( file_exists($template_path) ){
+		foreach ( self::$templatesPaths as $templatesPath ) {
+			$template_path = rtrim( $templatesPath . "/grid-container.tpl.php", "/" );
+			if ( file_exists( $template_path ) ) {
 				return $template_path;
 			}
 		}
 
-		return dirname(__FILE__).'/../templates/components/grid-container.tpl.php';
+		return dirname( __FILE__ ) . '/../templates/components/grid-container.tpl.php';
 	}
 
-  /**
-   * @param grid_slot $slot
-   *
-   * @return string
-   */
-	public static function slot( grid_slot $slot): string{
+	/**
+	 * @param grid_slot $slot
+	 *
+	 * @return string
+	 */
+	public static function slot( grid_slot $slot ): string {
 
-		foreach (self::$templatesPaths as $templatesPath) {
-			$template_path = rtrim($templatesPath.'/grid-slot.tpl.php', "/");
-			if( file_exists($template_path) ){
+		foreach ( self::$templatesPaths as $templatesPath ) {
+			$template_path = rtrim( $templatesPath . '/grid-slot.tpl.php', "/" );
+			if ( file_exists( $template_path ) ) {
 				return $template_path;
 			}
 		}
@@ -69,13 +93,13 @@ class Template implements iTemplate {
 		return dirname( __FILE__ ) . '/../templates/components/grid-slot.tpl.php';
 	}
 
-  /**
-   * @param grid_box $box
-   * @param bool $editmode
-   *
-   * @return string
-   */
-	public static function box( grid_box $box, bool $editmode): string{
+	/**
+	 * @param grid_box $box
+	 * @param bool $editmode
+	 *
+	 * @return string
+	 */
+	public static function box( grid_box $box, bool $editmode ): string {
 		$typechecks   = array();
 		$class        = get_class( $box );
 		$typechecks[] = preg_replace( "/(?:grid_(.*)_box|grid_(box))/u", "$1$2", $class );
@@ -110,10 +134,11 @@ class Template implements iTemplate {
 			}
 		}
 
-		if($editmode){
-			return dirname(__FILE__).'/../templates/components/grid-box-editmode.tpl.php';
+		if ( $editmode ) {
+			return dirname( __FILE__ ) . '/../templates/components/grid-box-editmode.tpl.php';
 		}
-		return dirname(__FILE__).'/../templates/components/grid-box.tpl.php';
+
+		return dirname( __FILE__ ) . '/../templates/components/grid-box.tpl.php';
 	}
 
 }
