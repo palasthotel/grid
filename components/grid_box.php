@@ -1,9 +1,18 @@
 <?php
 
 use Palasthotel\Grid\API;
+use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Box;
 
+/**
+ * @property iTemplate template
+ */
 class grid_box extends Box {
+
+	public function __construct() {
+		parent::__construct();
+		$this->template = API::template();
+	}
 
 	/**
 	 * Box renders its content here.
@@ -30,7 +39,7 @@ class grid_box extends Box {
 
 		ob_start();
 		$content = $this->build($editmode);
-		include API::template()::box($this, $editmode);
+		include $this->template::box($this, $editmode);
 		$output = ob_get_contents();
 		ob_end_clean();
 

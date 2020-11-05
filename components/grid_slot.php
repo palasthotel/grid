@@ -2,13 +2,23 @@
 
 
 use Palasthotel\Grid\API;
-use Palasthotel\Grid\Core;
+use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Slot;
 
+/**
+ * @property iTemplate template
+ */
 class grid_slot extends Slot {
+
+	public function __construct() {
+		parent::__construct();
+		$this->template = API::template();
+	}
 
 	/**
 	 * @param Slot $model
+	 *
+	 * @return grid_slot
 	 */
 	public static function build($model){
 		$self  = new self();
@@ -35,7 +45,7 @@ class grid_slot extends Slot {
 		}
 
 		ob_start();
-		include API::template()::slot($this);
+		include $this->template::slot($this);
 		$output=ob_get_contents();
 		ob_end_clean();
 

@@ -2,10 +2,21 @@
 
 use Palasthotel\Grid\API;
 use Palasthotel\Grid\Core;
+use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Container;
 use Palasthotel\Grid\Model\Grid;
 
+/**
+ * @property iTemplate template
+ */
 class grid_grid extends Grid {
+
+	/**
+	 * grid_grid constructor.
+	 */
+	public function __construct() {
+		$this->template = API::template();
+	}
 
 	/**
 	 * @param Grid $model

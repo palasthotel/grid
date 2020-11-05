@@ -6,6 +6,12 @@ namespace Palasthotel\Grid;
 
 interface iTemplate {
 
+	/**
+	 * @param string $filename
+	 *
+	 * @return string|false
+	 */
+	public static function getPath( string $filename );
 	public static function grid(\grid_grid $grid): string;
 	public static function container(\grid_container $container): string;
 	public static function slot(\grid_slot $slot): string;

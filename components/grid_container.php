@@ -1,12 +1,23 @@
 <?php
 
 use Palasthotel\Grid\API;
+use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Container;
 
+/**
+ * @property iTemplate template
+ */
 class grid_container extends Container {
+
+	public function __construct() {
+		parent::__construct();
+		$this->template = API::template();
+	}
 
 	/**
 	 * @param Container $model
+	 *
+	 * @return grid_container
 	 */
 	public static function build($model){
 		$self = new self();
@@ -107,7 +118,7 @@ class grid_container extends Container {
 		}
 
 		ob_start();
-		include API::template()::container($this);
+		include $this->template::container($this);
 		$output=ob_get_contents();
 		ob_end_clean();
 
