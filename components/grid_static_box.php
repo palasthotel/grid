@@ -100,16 +100,16 @@ class grid_static_base_box extends grid_static_box {
 	public function type() {
 		return 'static_base';
 	}
-	
+
 	/**
 	* Box renders its menu label and renders its content in here.
 	*
 	* @param boolean $editmode
 	*
-	* @return void
+	* @return object
 	*/
 	public function build($editmode) {
-		
+		return $this->content;
 	}
 	
 	/**
