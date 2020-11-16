@@ -29,10 +29,10 @@ class grid_abstract_list_box extends grid_box {
 	/**
 	* Box renders its menu label and its content in here.
 	*
-	* @return void
+	* @return object
 	*/
 	public function build($editmode) {
-		
+		return $this->content;
 	}
 	
 	/**
