@@ -238,7 +238,7 @@ class Core {
 				'mysql_character_set'=>'utf8mb4',
 				'collate'=> 'utf8mb4_unicode_ci'
 			),
-			'Palasthotel\Grid\Model\Box' =>array(
+			'grid_box' =>array(
 				'description'=>t('stores all boxes'),
 				'fields'=>array(
 					'id'=>array(
