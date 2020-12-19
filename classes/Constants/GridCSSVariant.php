@@ -25,12 +25,12 @@ abstract class GridCSSVariant {
 	static function getVariant($variant){
 		switch ($variant){
 			case GRID_CSS_VARIANT_NONE:
-				return new GridCssVariantNone(GRID_CSS_VARIANT_NONE);
+				return new GridCssVariantNone();
 			case GRID_CSS_VARIANT_FLEXBOX:
-				return new GridCssVariantFlexbox(GRID_CSS_VARIANT_FLEXBOX);
+				return new GridCssVariantFlexbox();
 			case GRID_CSS_VARIANT_TABLE:
 			default:
-				return new GridCssVariantTable(GRID_CSS_VARIANT_TABLE);
+				return new GridCssVariantTable();
 		}
 	}
 }
