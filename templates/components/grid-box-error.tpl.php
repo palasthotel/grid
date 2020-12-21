@@ -14,6 +14,6 @@ if ($this->style) {
 }
 
 ?>
-<div class="<?php echo implode($classes, ' '); ?>">
+<div class="<?php echo implode(' ', $classes); ?>">
   <?php echo $content; ?>
 </div>

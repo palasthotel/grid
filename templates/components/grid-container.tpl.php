@@ -36,7 +36,7 @@ if($hasSpaceAround){
 }
 ?>
 
-  <div class="<?php echo implode($classes, ' '); ?>">
+  <div class="<?php echo implode(' ', $classes); ?>">
     <div class="grid-container-content">
       <div class="grid-container-before">
         <?php if (!empty($this->title)): ?>

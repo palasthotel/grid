@@ -14,7 +14,7 @@ if ($this->style) {
 }
 
 ?>
-<div class="<?php echo implode($classes, ' '); ?>">
+<div class="<?php echo implode( ' ', $classes); ?>">
   <?php if (!empty($this->title)): ?>
     <?php if (!empty($this->titleurl)): ?>
        <h2 class="grid-box-title b-title">

@@ -18,7 +18,7 @@ if (!empty($this->style)) {
 }
 
 ?>
-<div class="<?php echo implode($classes, ' '); ?>">
+<div class="<?php echo implode( ' ', $classes); ?>">
   <?php if (!empty($boxes)) : ?>
     <div class="grid-boxes-wrapper">
       <?php echo implode("\n", $boxes); ?>

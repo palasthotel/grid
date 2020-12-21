@@ -18,7 +18,7 @@ if (!empty($this->title)) {
 }
 
 ?>
-<div class="<?php echo implode($classes, ' '); ?>">
+<div class="<?php echo implode( ' ', $classes); ?>">
   <?php if (!empty($this->title)): ?>
     <?php if (!empty($this->titleurl)): ?>
       <h2 class="grid-box-title b-title"><a class="grid-box-title-link grid-box-title-text" href="<?php echo $this->titleurl; ?>"><?php echo $this->title; ?></a></h2>
