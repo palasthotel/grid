@@ -39,7 +39,7 @@
     "icanhaz": "^0.10.3",
     "jquery": "^3.5.1",
     "jquery-ui": "^1.12.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.3.1",
     "underscore": "^1.11.0"
   }
