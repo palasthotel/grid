@@ -112,7 +112,8 @@ boxEditorControls['file']=GridBackbone.View.extend({
     	this.$key_field.val(result.result);
         this.$progress_display.text("OK!");
         this.$progress_bar_status.addClass("done");
-    },
+		jQuery( document ).trigger( "grid-fileupload-done", [result.result, e.target]); //fileID, input-object
+	},
     fetchValue:function(){
         return this.$key_field.val();
     },
