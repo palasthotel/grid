@@ -87,7 +87,7 @@ boxEditorControls['wp-mediaselect']=GridBackbone.View.extend({
         frame.on('close',function() {
             const selection = frame.state().get('selection');
             jQuery.each(frame.state().get('selection')._byId, function(id, val) {
-                const sizes = val.get("sizes");
+                let sizes = val.get("sizes");
                 if(typeof sizes === "undefined"){
                     sizes = {
                         full: {
