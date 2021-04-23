@@ -27,8 +27,6 @@ ICanHaz.js version 0.10.2 -- by @HenrikJoreteg
 More info at: http://icanhazjs.com
 */
 
-/*! https://mths.be/utf8js v2.1.2 by @mathias */
-
 /**
 * @author Palasthotel <rezeption@palasthotel.de>
 * @copyright Copyright (c) 2014, Palasthotel
