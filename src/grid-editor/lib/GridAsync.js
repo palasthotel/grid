@@ -48,7 +48,7 @@ export function GridAsync(){
 	 * init function
 	 */
 	this.init = function(){
-		if(document.grid.async.service != ''){
+		if(document.grid.async.service !== ''){
 			this.socket = io(document.grid.async.service);
 			this.initEvents();
 		}
