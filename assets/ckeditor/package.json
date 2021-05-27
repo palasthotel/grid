@@ -1,28 +1,27 @@
 {
-  "_from": "ckeditor4",
-  "_id": "ckeditor4@4.15.0",
+  "_from": "ckeditor4@^4.16.1",
+  "_id": "ckeditor4@4.16.1",
   "_inBundle": false,
-  "_integrity": "sha512-OhL3gqCU2JjulhyrF24LlwLKIZ/CO5sPoiHRdDwihRkz9FOeZQnL+iMa0q/zxXY/jt1R+MxDvt4/6uiQk663hQ==",
+  "_integrity": "sha512-dfclP3QDQfXMOrPex3s/l6b5E+MBSxhMpW3+nUM6lFX3ax1u/1tl2ETpe7iYJRtoN4TdvddL5XFweQT17woN5A==",
   "_location": "/ckeditor4",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "range",
     "registry": true,
-    "raw": "ckeditor4",
+    "raw": "ckeditor4@^4.16.1",
     "name": "ckeditor4",
     "escapedName": "ckeditor4",
-    "rawSpec": "",
+    "rawSpec": "^4.16.1",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "^4.16.1"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://npm.palasthotel.de/ckeditor4/-/ckeditor4-4.15.0.tgz",
-  "_shasum": "9f66bbec00f4ca1c93ce79298714cb56d21e52bc",
-  "_spec": "ckeditor4",
-  "_where": "/Users/edward/Documents/butler/GRID-DOC/docroot/wp-content/plugins/grid-git/_grid",
+  "_resolved": "https://npm.palasthotel.de/ckeditor4/-/ckeditor4-4.16.1.tgz",
+  "_shasum": "c1d34d032085d33e2efe3c12b30431b5f9230c16",
+  "_spec": "ckeditor4@^4.16.1",
+  "_where": "/Users/edward/Documents/butler/GES-MAG/docroot/wp-content/plugins/grid-git/_grid",
   "author": {
     "name": "CKSource",
     "url": "https://cksource.com/"
@@ -52,5 +51,5 @@
     "type": "git",
     "url": "git+https://github.com/ckeditor/ckeditor4-releases.git"
   },
-  "version": "4.15.0"
+  "version": "4.16.1"
 }
