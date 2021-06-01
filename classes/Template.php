@@ -11,28 +11,29 @@ use grid_slot;
 
 class Template implements iTemplate {
 
-  /**
-   * @var null|array
-   */
+	/**
+	 * @var null|array
+	 */
 	private $templatesPaths = null;
 
-  /**
-   * @var callable
-   */
-  private $loadPaths;
+	/**
+	 * @var callable
+	 */
+	private $loadPaths;
 
-  public function __construct(callable $loadPaths) {
-	  $this->loadPaths = $loadPaths;
-  }
+	public function __construct( callable $loadPaths ) {
+		$this->loadPaths = $loadPaths;
+	}
 
-  /**
+	/**
 	 * @return string[]
 	 */
 	public function paths(): array {
-	  if(!is_array($this->templatesPaths)){
-	    $this->templatesPaths = [];
-	    call_user_func($this->loadPaths, $this);
-    }
+		if ( ! is_array( $this->templatesPaths ) ) {
+			$this->templatesPaths = [];
+			call_user_func( $this->loadPaths, $this );
+		}
+
 		return $this->templatesPaths;
 	}
 
