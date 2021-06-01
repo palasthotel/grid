@@ -40,7 +40,7 @@ class API {
 	 * @var iTemplate
 	 */
 	private static $template;
-	public static function template(){
+	public static function template(): iTemplate {
 		return self::$template;
 	}
 

@@ -118,7 +118,7 @@ class grid_container extends Container {
 		}
 
 		ob_start();
-		include $this->template::container($this);
+		include $this->template->container($this);
 		$output=ob_get_contents();
 		ob_end_clean();
 

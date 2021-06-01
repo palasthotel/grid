@@ -57,7 +57,7 @@ class grid_grid extends Grid {
 		}
 
 		ob_start();
-		include API::template()::grid($this);
+		include API::template()->grid($this);
 		$output=ob_get_contents();
 		ob_end_clean();
 

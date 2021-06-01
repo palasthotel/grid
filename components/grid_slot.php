@@ -45,7 +45,7 @@ class grid_slot extends Slot {
 		}
 
 		ob_start();
-		include $this->template::slot($this);
+		include $this->template->slot($this);
 		$output=ob_get_contents();
 		ob_end_clean();
 

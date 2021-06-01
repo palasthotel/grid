@@ -11,20 +11,36 @@ use grid_slot;
 
 class Template implements iTemplate {
 
-	private static $templatesPaths = [];
+  /**
+   * @var null|array
+   */
+	private $templatesPaths = null;
 
-	/**
+  /**
+   * @var callable
+   */
+  private $loadPaths;
+
+  public function __construct(callable $loadPaths) {
+	  $this->loadPaths = $loadPaths;
+  }
+
+  /**
 	 * @return string[]
 	 */
-	public static function paths() {
-		return self::$templatesPaths;
+	public function paths(): array {
+	  if(!is_array($this->templatesPaths)){
+	    $this->templatesPaths = [];
+	    call_user_func($this->loadPaths, $this);
+    }
+		return $this->templatesPaths;
 	}
 
 	/**
 	 * @param string $absolutePath
 	 */
 	public function addPath( string $absolutePath ) {
-		self::$templatesPaths[] = $absolutePath;
+		$this->templatesPaths[] = $absolutePath;
 	}
 
 	/**
@@ -32,8 +48,8 @@ class Template implements iTemplate {
 	 *
 	 * @return false|string
 	 */
-	public static function getPath( string $filename ) {
-		foreach ( static::$templatesPaths as $path ) {
+	public function getPath( string $filename ) {
+		foreach ( $this->paths() as $path ) {
 			$template_path = trailingslashit( $path );
 			if ( file_exists( $template_path . $filename ) ) {
 				return $template_path . $filename;
@@ -48,8 +64,8 @@ class Template implements iTemplate {
 	 *
 	 * @return string
 	 */
-	public static function grid( grid_grid $grid ): string {
-		foreach ( self::$templatesPaths as $templatesPath ) {
+	public function grid( grid_grid $grid ): string {
+		foreach ( $this->paths() as $templatesPath ) {
 			$template_path = rtrim( $templatesPath . '/grid.tpl.php', "/" );
 			if ( file_exists( $template_path ) ) {
 				return $template_path;
@@ -64,9 +80,9 @@ class Template implements iTemplate {
 	 *
 	 * @return string
 	 */
-	public static function container( grid_container $container ): string {
+	public function container( grid_container $container ): string {
 
-		foreach ( self::$templatesPaths as $templatesPath ) {
+		foreach ( $this->paths() as $templatesPath ) {
 			$template_path = rtrim( $templatesPath . "/grid-container.tpl.php", "/" );
 			if ( file_exists( $template_path ) ) {
 				return $template_path;
@@ -81,9 +97,9 @@ class Template implements iTemplate {
 	 *
 	 * @return string
 	 */
-	public static function slot( grid_slot $slot ): string {
+	public function slot( grid_slot $slot ): string {
 
-		foreach ( self::$templatesPaths as $templatesPath ) {
+		foreach ( $this->paths() as $templatesPath ) {
 			$template_path = rtrim( $templatesPath . '/grid-slot.tpl.php', "/" );
 			if ( file_exists( $template_path ) ) {
 				return $template_path;
@@ -99,7 +115,7 @@ class Template implements iTemplate {
 	 *
 	 * @return string
 	 */
-	public static function box( grid_box $box, bool $editmode ): string {
+	public function box( grid_box $box, bool $editmode ): string {
 		$typechecks   = array();
 		$class        = get_class( $box );
 		$typechecks[] = preg_replace( "/(?:grid_(.*)_box|grid_(box))/u", "$1$2", $class );
@@ -109,7 +125,7 @@ class Template implements iTemplate {
 		}
 		foreach ( $typechecks as $type ) {
 
-			foreach ( self::$templatesPaths as $templatesPath ) {
+			foreach ( $this->paths() as $templatesPath ) {
 
 				$templatesPath = rtrim( $templatesPath, "/" );
 				if ( $templatesPath != null ) {

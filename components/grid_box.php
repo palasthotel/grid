@@ -39,7 +39,7 @@ class grid_box extends Box {
 
 		ob_start();
 		$content = $this->build($editmode);
-		include $this->template::box($this, $editmode);
+		include $this->template->box($this, $editmode);
 		$output = ob_get_contents();
 		ob_end_clean();
 
