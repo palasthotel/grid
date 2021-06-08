@@ -25,8 +25,11 @@ class API {
 	const FIRE_WILL_RENDER_GRID = "will_render_grid";
 	const FIRE_WILL_RENDER_SLOT = "will_render_slot";
 	const FIRE_DID_RENDER_SLOT = "did_render_slot";
+  const FIRE_WILL_PERFORM_FILE_UPLOAD = "will_perform_file_upload";
+  const FIRE_DID_PERFORM_FILE_UPLOAD = "did_perform_file_upload";
 
-	/**
+
+  /**
 	 * @var Core
 	 */
 	private $core;
@@ -143,8 +146,12 @@ class API {
 					if($slot->slotid==$slotid)
 					{
 						$box=$slot->boxes[$idx];
-						return $box->performFileUpload($key,$file,$original_filename);
-					}
+            $this->endpoint->storage->fireHook( API::FIRE_WILL_PERFORM_FILE_UPLOAD, (object) array( "box" => $box, "key" => $key, "file" => $file, "original_filename" => $original_filename, "grid_id" => $gridid) );
+            $fileID = $box->performFileUpload($key,$file,$original_filename);
+            $this->endpoint->storage->fireHook( API::FIRE_DID_PERFORM_FILE_UPLOAD, (object) array( "box" => $box, "file_id" => $fileID, "key" => $key, "file" => $file, "original_filename" => $original_filename, "grid_id" => $gridid) );
+
+            return $fileID;
+          }
 				}
 			}
 		}
