@@ -683,6 +683,8 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-editor-url-builder .grid-editor-url-input { width: 100%; padding-right: 130px; opacity: 0; }
 
+.grid-editor-url-builder .grid-editor-url-target { opacity: 0; display: inline-block; }
+
 .grid-editor-url-builder .grid-editor-url-button, .grid-editor-url-builder .grid-editor-url-button:focus { position: absolute; right: 0; top: 2px; width: 140px; color: #262e38; background-color: #e5e3df; }
 
 .grid-editor-url-builder.grid-editor-url-show { width: 100%; }
@@ -691,7 +693,7 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-button:hover { color: #ed5032; }
 
-.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input { opacity: 1; }
+.grid-editor-url-builder.grid-editor-url-show .grid-editor-url-input, .grid-editor-url-builder.grid-editor-url-show .grid-editor-url-target { opacity: 1; }
 
 .grid-editor-widget-autocomplete .autocomplete-wrapper, .grid-editor-autocomplete-with-links .autocomplete-wrapper, .grid-editor-widget-multi-autocomplete .autocomplete-wrapper { position: relative; }
 
