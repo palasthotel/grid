@@ -25,8 +25,10 @@ class Container extends _Base {
 	public $classes = array();
 	public $title;
 	public $titleurl;
+	public $titleurltarget;
 	public $readmore;
 	public $readmoreurl;
+	public $readmoreurltarget;
 	public $prolog;
 	public $epilog;
 	public $reused;
@@ -49,8 +51,10 @@ class Container extends _Base {
 		$this->style=$data->style;
 		$this->title=$data->title;
 		$this->titleurl=$data->titleurl;
+		$this->titleurltarget=$data->titleurltarget;
 		$this->readmore=$data->readmore;
 		$this->readmoreurl=$data->readmoreurl;
+		$this->readmoreurltarget=$data->readmoreurltarget;
 		$this->prolog=$data->prolog;
 		$this->epilog=$data->epilog;
 		return $this->storage->persistContainer($this);

@@ -68,5 +68,9 @@ document.lang_values = {
 	"confirm-leave-page": "Do you really want to leave Grid?",
 	"confirm-grid-revert": "Delete all changes?",
 
-	"info-wp-hide-adminbar": "You can expand the admin menu here. Grid needs some more space, so the admin menu is automatically collapsed."
+	"info-wp-hide-adminbar": "You can expand the admin menu here. Grid needs some more space, so the admin menu is automatically collapsed.",
+
+	"url_target": "Systemdefault",
+	"url_target_self": "Same tab",
+	"url_target_blank": "New tab",
 };

@@ -6,7 +6,7 @@
 */
 
 import _ from 'underscore'
-import {initHTMLEditor} from "../utils";
+import {buildUrlTargetOptions, initHTMLEditor} from "../utils";
 
 window.BoxEditor = GridBackbone.View.extend({
     className: "grid-box-editor",
@@ -29,12 +29,15 @@ window.BoxEditor = GridBackbone.View.extend({
                 elem.selected="";
         });
 
+        const json = this.model.toJSON();
         this.$el.html(ich.tpl_boxeditor({
             'lang_values':document.lang_values,
             'box':this.model.toJSON(),
             'b_index':this.model.getIndex(),
             'c_id':this.model.getContainer().get("id"),
             's_id':this.model.getSlot().get("id"),
+            'title_url_target': buildUrlTargetOptions(json.titleurltarget),
+            'readmore_url_target': buildUrlTargetOptions(json.readmoreurltarget),
             'styles':styles,
         }));
         var contentstructure=this.model.get("contentstructure");
@@ -122,17 +125,22 @@ window.BoxEditor = GridBackbone.View.extend({
         this.model.set('content',obj);
         this.model.set('title',this.$el.find(".grid-editor-title").val());
         this.model.set('titleurl',this.$el.find(".grid-editor-titleurl").val());
-        this.model.set('titleurltarget',"");
+        this.model.set('titleurltarget',this.$el.find("#grid-editor-titleurltarget").val());
 
         this.model.set('prolog',this.prologEditor.getData());
         this.model.set('epilog',this.epilogEditor.getData());
 
         this.model.set('readmore',this.$el.find('.grid-editor-readmore').val());
         this.model.set('readmoreurl',this.$el.find('.grid-editor-readmoreurl').val());
-        this.model.set('readmoreurltarget',"");
+        this.model.set('readmoreurltarget',this.$el.find("#grid-editor-readmoreurltarget").val());
 
         this.model.set('style',this.$el.find(".grid-editor-styles-wrapper select").val());
+
+        console.debug(this.model.toJSON());
+
         this.model.save();
+
+
 
         GRID.hideEditor(function(){
             GRID.$root_editor.html("");

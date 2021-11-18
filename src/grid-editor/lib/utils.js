@@ -20,3 +20,15 @@ export const initHTMLEditor = (element) => {
         }))
     })
 }
+
+export const buildUrlTargetOptions = (selected) => {
+    return [
+        "","_self","_blank"
+    ].map(item => {
+        return {
+            value: item,
+            label: document.lang_values[`url_target${item}`],
+            selected: selected === item ? "selected" : "",
+        }
+    })
+}

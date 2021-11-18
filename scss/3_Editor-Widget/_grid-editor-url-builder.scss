@@ -3,14 +3,16 @@
 	width: 140px;
 	@include transition();
 
-
 	font-size: 11px;
-
 
 	.grid-editor-url-input{
 		width: 100%;
 		padding-right: 130px;
 		opacity: 0;
+	}
+	.grid-editor-url-target{
+		opacity: 0;
+		display: inline-block;
 	}
 	.grid-editor-url-button,
 	.grid-editor-url-button:focus {
@@ -25,13 +27,14 @@
 	&.grid-editor-url-show {
 		width: 100%;
 		.grid-editor-url-button{
-			&:hover{
+			&:hover {
 				color: $color-warning;
 			}
 
 			background-color: transparent;
 		}
-		.grid-editor-url-input{
+		.grid-editor-url-input,
+		.grid-editor-url-target{
 			opacity: 1;
 		}
 	}

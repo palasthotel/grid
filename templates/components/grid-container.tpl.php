@@ -34,6 +34,16 @@ if($this->space_to_left != NULL) {
 if($hasSpaceAround){
 	$classes[] = "grid-container-has-space-around";
 }
+
+$titleUrlTarget = "";
+if(!empty($this->titleurltarget)){
+	$titleUrlTarget = " target='$this->titleurltarget'";
+}
+$readmoreUrlTarget = "";
+if(!empty($this->readmoreurltarget)){
+	$readmoreUrlTarget = " target='$this->readmoreurltarget'";
+}
+
 ?>
 
   <div class="<?php echo implode(' ', $classes); ?>">
@@ -41,7 +51,7 @@ if($hasSpaceAround){
       <div class="grid-container-before">
         <?php if (!empty($this->title)): ?>
           <?php if (!empty($this->titleurl)): ?>
-            <h2 class="grid-container-title"><a href="<?php echo $this->titleurl; ?>" class="grid-container-title-link grid-container-title-text"><?php echo $this->title; ?></a></h2>
+            <h2 class="grid-container-title"><a href="<?php echo $this->titleurl; ?>"<?php echo $titleUrlTarget; ?> class="grid-container-title-link grid-container-title-text"><?php echo $this->title; ?></a></h2>
           <?php else: ?>
             <h2 class="grid-container-title grid-container-title-text"><?php echo $this->title; ?></h2>
           <?php endif; ?>
@@ -71,7 +81,7 @@ if($hasSpaceAround){
         <?php endif; ?>
 
         <?php if (!empty($this->readmore)): ?>
-          <a href="<?php echo $this->readmoreurl; ?>" class="grid-container-readmore-link"><?php echo $this->readmore; ?></a>
+          <a href="<?php echo $this->readmoreurl; ?>"<?php echo $readmoreUrlTarget; ?> class="grid-container-readmore-link"><?php echo $this->readmore; ?></a>
         <?php endif; ?>
       </div>
     </div>

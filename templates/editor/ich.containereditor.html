@@ -13,6 +13,13 @@
         	<input id="grid-editor-titleurl" placeholder="Title URL" type="text" name="grid-editor-titleurl"
         	value="{{model.titleurl}}" class="grid-editor-titleurl grid-editor-url-input" />
         	<button class="grid-editor-url-button icon-link">Delete link</button>
+			<label class="grid-editor-url-target">Ziel:
+				<select id="grid-editor-titleurltarget" >
+					{{#title_url_target}}
+					<option {{selected}} value="{{value}}">{{label}}</option>
+					{{/title_url_target}}
+				</select>
+			</label>
 		</div>
 	</div>
 
@@ -38,6 +45,13 @@
 				<input id="grid-editor-readmoreurl" placeholder="Read more link URL" type="text" name="grid-editor-readmoreurl"
 				class="grid-editor-readmoreurl grid-editor-url-input" value="{{model.readmoreurl}}" />
 				<button class="grid-editor-url-button icon-link">Delete link</button>
+				<label class="grid-editor-url-target">Ziel:
+					<select id="grid-editor-readmoreurltarget" >
+						{{#readmore_url_target}}
+						<option {{selected}} value="{{value}}">{{label}}</option>
+						{{/readmore_url_target}}
+					</select>
+				</label>
 			</div>
 
 		</div>
