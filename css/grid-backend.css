@@ -531,6 +531,8 @@ h3 { word-break: break-all; font-size: 12px; }
 
 .grid-reuse-box-list .grid-container { margin-bottom: 40px; }
 
+.grid-reuse-box-list .grid-container-title { position: relative; margin: 0; padding: 10px; top: inherit; left: inherit; }
+
 .grid-reuse-box-list img { max-width: 100%; height: auto; }
 
 .grid-reuse-box-list .grid-box-editmode { background-color: white; padding: 8px; }
