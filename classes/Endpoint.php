@@ -3,6 +3,7 @@
 namespace Palasthotel\Grid;
 
 use grid_box;
+use grid_reference_box;
 
 /**
  * @author Palasthotel <rezeption@palasthotel.de>
@@ -307,7 +308,7 @@ class Endpoint {
 		return false;
 	}
 
-	public function reuseBox($gridid,$containerid,$slotid,$idx)
+	public function reuseBox($gridid,$containerid,$slotid,$idx,$reusetitle)
 	{
 		$grid=$this->storage->loadGrid($gridid);
 		if(!$grid->isDraft)
@@ -332,6 +333,8 @@ class Endpoint {
 						//2. add box to reuse grid
 						$reuseGrid=$this->storage->getReuseGrid();
 						$clone->grid=$reuseGrid;
+						$clone->reusetitle = $reusetitle;
+						$box->reusetitle = $reusetitle;
 						$clone->storage=$this->storage;
 						$clone->updateBox($box);
 						$clone->persist();
@@ -344,6 +347,7 @@ class Endpoint {
 						$reference=new grid_reference_box();
 						$reference->content->boxid=$clone->boxid;
 						$reference->storage=$this->storage;
+						$reference->reusetitle = $reusetitle;
 						$reference->grid=$grid;
 						$reference->persist();
 						$slot->addBox($idx,$reference);

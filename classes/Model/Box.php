@@ -11,8 +11,8 @@
  */
 
 namespace Palasthotel\Grid\Model;
+
 use Palasthotel\Grid\Core;
-use Palasthotel\Grid\Storage;
 use stdClass;
 
 class Box extends _Base {
@@ -42,6 +42,11 @@ class Box extends _Base {
 	public $classes = array();
 
 	/**
+	 * @var string
+	 */
+	public $reusetitle;
+
+	/**
 	 * Contains title of the box
 	 * @var string
 	 */
@@ -54,6 +59,11 @@ class Box extends _Base {
 	public $titleurl;
 
 	/**
+	 * @var string
+	 */
+	public $titleurltarget;
+
+	/**
 	 * Determines read more text
 	 * @var string
 	 */
@@ -64,6 +74,11 @@ class Box extends _Base {
 	 * @var string
 	 */
 	public $readmoreurl;
+
+	/**
+	 * @var string
+	 */
+	public $readmoreurltarget;
 
 	/**
 	 * Contains prolog content
@@ -185,14 +200,18 @@ class Box extends _Base {
 	 */
 	public function updateBox( $boxdata ) {
 		$this->storage->fireHook( Core::FIRE_SAVE_BOX, (object) array( "box" => $this, "data" => $boxdata ) );
-		$this->style       = $boxdata->style;
-		$this->title       = $boxdata->title;
-		$this->titleurl    = $boxdata->titleurl;
-		$this->readmore    = $boxdata->readmore;
-		$this->readmoreurl = $boxdata->readmoreurl;
-		$this->prolog      = $boxdata->prolog;
-		$this->epilog      = $boxdata->epilog;
-		$this->content     = $boxdata->content;
+		$this->style          = $boxdata->style;
+		$this->reusetitle     = $boxdata->reusetitle;
+		$this->title          = $boxdata->title;
+		$this->titleurl       = $boxdata->titleurl;
+		$this->titleurltarget = $boxdata->titleurltarget;
+
+		$this->readmore          = $boxdata->readmore;
+		$this->readmoreurl       = $boxdata->readmoreurl;
+		$this->readmoreurltarget = $boxdata->readmoreurltarget;
+		$this->prolog            = $boxdata->prolog;
+		$this->epilog            = $boxdata->epilog;
+		$this->content           = $boxdata->content;
 
 		return $this->persist();
 	}

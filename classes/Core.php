@@ -165,6 +165,11 @@ class Core {
 						'type'=>'text',
 						'size'=>'normal',
 					),
+					'title_url_target'=>array(
+						'description'=>t('title url target'),
+						'type'=>'text',
+						'size'=>'normal',
+					),
 					'prolog'=>array(
 						'description'=>t('prolog'),
 						'type'=>'text',
@@ -182,6 +187,11 @@ class Core {
 					),
 					'readmore_url'=>array(
 						'description'=>t('readmore url'),
+						'type'=>'text',
+						'size'=>'normal',
+					),
+					'readmore_url_target'=>array(
+						'description'=>t('readmore url target'),
 						'type'=>'text',
 						'size'=>'normal',
 					),
@@ -283,6 +293,11 @@ class Core {
 						'type'=>'text',
 						'size'=>'normal',
 					),
+					'title_url_target'=>array(
+						'description'=> t('title url target'),
+						'type'=>'text',
+						'size'=>'normal',
+					),
 					'prolog'=>array(
 						'description'=>t('prolog'),
 						'type'=>'text',
@@ -303,8 +318,18 @@ class Core {
 						'type'=>'text',
 						'size'=>'normal',
 					),
+					'readmore_url_target'=>array(
+						'description'=>t('readmore target'),
+						'type'=>'text',
+						'size'=>'normal',
+					),
 					'content'=>array(
 						'description'=>t('content'),
+						'type'=>'text',
+						'size'=>'normal',
+					),
+					'reuse_title'=>array(
+						'description'=>t('reuse title'),
 						'type'=>'text',
 						'size'=>'normal',
 					),

@@ -66,6 +66,7 @@ class ReuseBoxEditor
 			$container->slots[0]->storage=$this->editor->storage;
 			$container->slots[0]->boxes=array();
 			$container->slots[0]->boxes[]=$box;
+            $container->title = $box->reusetitle;
 			$grid->container[]=$container;
 		}
 		$html=$grid->render(TRUE);

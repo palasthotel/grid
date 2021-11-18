@@ -4,6 +4,9 @@
  * @copyright Copyright (c) 2014, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @package Palasthotel\Grid
+ *
+ * @var grid_box $this
+ * @var object $content
  */
 ?>
 <div class="grid-box-editmode">

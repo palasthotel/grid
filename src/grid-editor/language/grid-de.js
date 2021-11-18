@@ -64,6 +64,7 @@ document.lang_values = {
 
 	// Confirm
 	"confirm-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren?",
+	"prompt-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren? dann bitte einen Titel angeben.",
 	"confirm-leave-page": "Grid wirklich verlassen?",
 	"confirm-grid-revert": "Alle Änderungen verwerfen?",
 

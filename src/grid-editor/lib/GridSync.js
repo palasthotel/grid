@@ -448,7 +448,9 @@ window.GridRequest = {
 						box.getGridID(),
 						box.getSlot().getContainer().get("id"),
 						box.getSlot().get("id"),
-						box.getIndex()];
+						box.getIndex(),
+						options.reusetitle
+					];
 						GRID.log(params);
 						new GridAjax("reuseBox",params,{
 							success_fn: function(data){

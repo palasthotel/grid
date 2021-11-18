@@ -64,6 +64,7 @@ document.lang_values = {
 
 	// Confirm
 	"confirm-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed?",
+	"prompt-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed? Then please choose a title.",
 	"confirm-leave-page": "Do you really want to leave Grid?",
 	"confirm-grid-revert": "Delete all changes?",
 

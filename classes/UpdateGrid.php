@@ -144,4 +144,12 @@ class UpdateGrid extends UpdateBase
 
 	}
 
+	public function update_7(){
+		$this->query->prefixAndExecute("ALTER TABLE {grid_box} ADD reuse_title varchar(190) DEFAULT '';");
+		$this->query->prefixAndExecute("ALTER TABLE {grid_box} ADD title_url_target varchar(20) DEFAULT '' AFTER `title_url`;");
+		$this->query->prefixAndExecute("ALTER TABLE {grid_box} ADD readmore_url_target varchar(20) DEFAULT '' AFTER `readmore_url`;");
+		$this->query->prefixAndExecute("ALTER TABLE {grid_container} ADD title_url_target varchar(20) DEFAULT '' AFTER `title_url`;");
+		$this->query->prefixAndExecute("ALTER TABLE {grid_container} ADD readmore_url_target varchar(20) DEFAULT '' AFTER `readmore_url`;");
+	}
+
 }

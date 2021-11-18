@@ -3,6 +3,13 @@
   .grid-container{
     margin-bottom: 40px;
   }
+  .grid-container-title {
+    position: relative;
+    margin: 0;
+    padding: 10px;
+    top: inherit;
+    left: inherit;
+  }
   img{
     max-width: 100%;
     height: auto;

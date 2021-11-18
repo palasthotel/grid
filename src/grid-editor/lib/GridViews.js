@@ -240,6 +240,7 @@ window.BoxView = GridBackbone.View.extend({
 
         if(json.type == "reference"){
             json.reference = true;
+            if(!json.reusetitle) json.reusetitle = "Reused box";
         }
 
         json.right_move = GRID.getRights().get("move-box");

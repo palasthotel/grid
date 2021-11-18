@@ -77,15 +77,19 @@ window.GridContainerEditor = GridBackbone.View.extend({
         var class_prefix = ".grid-editor-";
         this.model.set('title',this.$el.find(class_prefix+"title").val());
         this.model.set('titleurl', this.$el.find(class_prefix+"titleurl").val());
+        this.model.set('titleurltarget', "");
 
         this.model.set('prolog',this.prologEditor.getData());
         this.model.set('epilog',this.epilogEditor.getData());
 
         this.model.set('readmore', this.$el.find(class_prefix+"readmore").val());
         this.model.set('readmoreurl',this.$el.find(class_prefix+"readmoreurl").val());
+        this.model.set('readmoreurltarget',"");
+
         this.model.set('style', this.$el.find(class_prefix+"style").val());
         this.model.set('style_label', jQuery(this.$el).find(class_prefix+"style option:selected").text());
         this.model.save();
+
         GRID.hideEditor(function(){
             GRID.$root_editor.html("");
         });

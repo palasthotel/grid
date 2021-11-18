@@ -103,8 +103,11 @@ window.BoxEditor = GridBackbone.View.extend({
 
     onMakeReusable:function(e)
     {
-        if(!confirm(document.lang_values["confirm-box-reuse"])) return;
-        this.model.save(null,{action:"reuse"});
+        const reusetitle = prompt(document.lang_values["prompt-box-reuse"]);
+        if(reusetitle === "" || reusetitle === false || reusetitle === null){
+            return;
+        }
+        this.model.save(null,{action:"reuse", reusetitle});
         GRID.hideEditor(function(){
             GRID.$root_editor.html("");
         });
@@ -119,13 +122,18 @@ window.BoxEditor = GridBackbone.View.extend({
         this.model.set('content',obj);
         this.model.set('title',this.$el.find(".grid-editor-title").val());
         this.model.set('titleurl',this.$el.find(".grid-editor-titleurl").val());
+        this.model.set('titleurltarget',"");
 
         this.model.set('prolog',this.prologEditor.getData());
         this.model.set('epilog',this.epilogEditor.getData());
+
         this.model.set('readmore',this.$el.find('.grid-editor-readmore').val());
         this.model.set('readmoreurl',this.$el.find('.grid-editor-readmoreurl').val());
+        this.model.set('readmoreurltarget',"");
+
         this.model.set('style',this.$el.find(".grid-editor-styles-wrapper select").val());
         this.model.save();
+
         GRID.hideEditor(function(){
             GRID.$root_editor.html("");
         });
