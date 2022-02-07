@@ -70,7 +70,7 @@ class grid_rss_box extends grid_list_box {
 			return $items;
 		}
 
-		return t( "RSS Feed" );
+		return (string)t( "RSS Feed" );
 
 	}
 
