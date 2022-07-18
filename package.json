@@ -38,7 +38,7 @@
     "ckeditor4": "^4.17.1",
     "icanhaz": "^0.10.3",
     "jquery": "^3.6.0",
-    "jquery-ui": "^1.13.0",
+    "jquery-ui": "^1.13.2",
     "socket.io": "^4.3.2",
     "socket.io-client": "^4.3.2",
     "underscore": "^1.13.1"
