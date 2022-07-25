@@ -8,41 +8,27 @@
 ?>
 <div class="grid-box-editmode">
   <?php
-  if( empty($this->content->html)) {
-	  echo t("Static HTML-Content");
+  if (empty($this->content->html)) {
+    echo t("Static HTML-Content");
   } else {
-
-	  $maybeHtml = $this->content->html;
-	  $start =strpos($maybeHtml, '<');
-	  $end  =strrpos($maybeHtml, '>',$start);
-
-	  $len=strlen($maybeHtml);
-
-	  if ($end !== false) {
-		  $string = substr($maybeHtml, $start);
-	  } else {
-		  $string = substr($maybeHtml, $start, $len-$start);
-	  }
-	  libxml_use_internal_errors(true);
-	  libxml_clear_errors();
-
-	  $htmlEntitiesDecoded = html_entity_decode($maybeHtml);
-	  $encodeAmpersandAgain = str_replace("&","&amp;", $htmlEntitiesDecoded);
-
-	  $xml = simplexml_load_string("<div>".$encodeAmpersandAgain."</div>");
-	  $isValidHtml = count(libxml_get_errors())==0;
-
-	  if(!$isValidHtml){
-		  echo "<p><strong>It seems your html is not valid.</strong> ⚠️</p>";
-		  echo "<pre>";
-		  var_dump(libxml_get_errors());
-		  echo "</pre>";
-		  echo "<code>";
-		  echo htmlspecialchars(preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->content->html));
-		  echo "</code>";
-	  } else {
-		  echo preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->content->html);
-	  }
+    // Prevent malformed HTML code:
+    $maybeHtml = $this->content->html;
+    libxml_use_internal_errors(true);
+    libxml_clear_errors();
+    $dom = new DOMDocument();
+    $dom->loadHTML("<?xml encoding=\"UTF-8\"><!DOCTYPE html><html><body>$maybeHtml</body>");
+    $errors = libxml_get_errors();
+    if (!empty($errors)) {
+      echo "<p><strong>It seems your html is not valid.</strong> ⚠️</p>";
+      echo "<pre>";
+      var_dump($errors);
+      echo "</pre>";
+      echo "<code>";
+      echo htmlspecialchars(preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->content->html));
+      echo "</code>";
+    } else {
+      echo preg_replace('#<script(.*?)>(.*?)</script>#is', '', $this->content->html);
+    }
   }
   ?>
 </div>
