@@ -83,7 +83,6 @@ class API {
 		require_once dirname( __FILE__ ) . '/../components/grid_error_box.php';
 
 		require_once dirname( __FILE__ ) . '/../components/grid_static_box.php';
-		require_once dirname( __FILE__ ) . '/../components/grid_html_box.php';
 		require_once dirname( __FILE__ ) . '/../components/grid_soundcloud_box.php';
 		require_once dirname( __FILE__ ) . '/../components/grid_plaintext_box.php';
 
