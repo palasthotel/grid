@@ -6,10 +6,10 @@ namespace Palasthotel\Grid;
 
 use Exception;
 
-/**
- * @property iQuery query
- */
 class UpdateBase {
+
+    public iQuery $query;
+
 	/**
 	 * schema key for update schema identification
 	 */

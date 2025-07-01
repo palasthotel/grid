@@ -9,11 +9,10 @@ use Grid\Constants\GridCssVariantFlexbox;
 use Grid\Constants\GridCssVariantNone;
 use Grid\Constants\GridCssVariantTable;
 
-/**
- * @property Storage $storage
- * @property string url
- */
 class Editor {
+
+    public Storage $storage;
+    public string $url;
 
 	/**
 	 * Editor constructor.
