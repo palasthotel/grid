@@ -4,10 +4,9 @@ use Palasthotel\Grid\API;
 use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Box;
 
-/**
- * @property iTemplate template
- */
 class grid_box extends Box {
+
+    public iTemplate $template;
 
 	public function __construct() {
 		parent::__construct();

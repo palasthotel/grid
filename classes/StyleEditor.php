@@ -10,11 +10,8 @@ namespace Palasthotel\Grid;
 
 class StyleEditor {
 
-	/**
-	 * StyleEditor constructor.
-	 *
-	 * @param Storage $storage
-	 */
+    public Storage $storage;
+	
     public function __construct(Storage $storage){
         $this->storage = $storage;
     }

@@ -3,11 +3,9 @@
 
 namespace Palasthotel\Grid;
 
-
-/**
- * @property string prefix
- */
 abstract class AbstractQuery implements iQuery {
+
+    public string $prefix;
 
 	public function prepare($sql){
 		$sql = str_replace( '{', $this->prefix(), $sql );

@@ -4,7 +4,6 @@ namespace Palasthotel\Grid;
 
 
 /**
- * @property Editor editor
  * @author Palasthotel <rezeption@palasthotel.de>
  * @copyright Copyright (c) 2020, Palasthotel
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
@@ -13,6 +12,8 @@ namespace Palasthotel\Grid;
 
 class ReuseBoxEditor
 {
+
+    public Editor $editor;
 
     public function __construct(Editor $editor){
         $this->editor = $editor;

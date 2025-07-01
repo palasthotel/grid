@@ -5,10 +5,9 @@ use Palasthotel\Grid\API;
 use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Slot;
 
-/**
- * @property iTemplate template
- */
 class grid_slot extends Slot {
+
+    public iTemplate $template;
 
 	public function __construct() {
 		parent::__construct();

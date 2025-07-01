@@ -6,10 +6,9 @@ use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Container;
 use Palasthotel\Grid\Model\Grid;
 
-/**
- * @property iTemplate template
- */
 class grid_grid extends Grid {
+
+    public iTemplate $template;
 
 	/**
 	 * grid_grid constructor.

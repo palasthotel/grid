@@ -35,6 +35,8 @@ class Box extends _Base {
 	 */
 	public $style;
 
+    public $style_label;
+
 	/**
 	 * Contains all class names
 	 * @var array

@@ -4,10 +4,9 @@ use Palasthotel\Grid\API;
 use Palasthotel\Grid\iTemplate;
 use Palasthotel\Grid\Model\Container;
 
-/**
- * @property iTemplate template
- */
 class grid_container extends Container {
+
+    public iTemplate $template;
 
 	public function __construct() {
 		parent::__construct();

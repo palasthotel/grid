@@ -14,11 +14,8 @@ use Palasthotel\Grid\Model\Grid;
 
 class ReuseContainerEditor
 {
-	/**
-	 * ReuseContainerEditor constructor.
-	 *
-	 * @param Editor $editor
-	 */
+    public Editor $editor;
+	
     public function __construct($editor){
         $this->editor = $editor;
     }

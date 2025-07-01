@@ -22,6 +22,7 @@ class Container extends _Base {
 	public $space_to_left;
 	public $space_to_right;
 	public $style; // Allows to separete diffente Styles of Containers.
+    public $style_label;
 	public $classes = array();
 	public $title;
 	public $titleurl;
