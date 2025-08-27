@@ -1056,6 +1056,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function updateContainerStyle($id,$slug,$style)
 	{
+		$slug=htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
+		$style=htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$query="update ".$this->query->prefix()."grid_container_style set slug='".$slug."', style='".$style."' where id=".$id;
 		$this->query->execute($query);
 	}
@@ -1086,6 +1088,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function createSlotStyle($slug,$style)
 	{
+		$slug=htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
+		$style=htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$query="insert into ".$this->query->prefix()."grid_slot_style (slug,style) values ('".$slug."','".$style."')";
 		$this->query->execute($query);
 	}
@@ -1098,6 +1102,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function updateSlotStyle($id,$slug,$style)
 	{
+		$slug=htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
+		$style=htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$query="update ".$this->query->prefix()."grid_slot_style set slug='".$slug."', style='".$style."' where id=".$id;
 		$this->query->execute($query);
 	}
