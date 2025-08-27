@@ -1042,6 +1042,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function createContainerStyle($slug,$style)
 	{
+		$style = htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
+		$slug = htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$query="insert into ".$this->query->prefix()."grid_container_style (slug,style) values ('".$slug."','".$style."')";
 		$this->query->execute($query);
 	}
