@@ -11,15 +11,18 @@ namespace Palasthotel\Grid;
 class StyleEditor {
 
     public Storage $storage;
-	
-    public function __construct(Storage $storage){
-        $this->storage = $storage;
+    private iHook $hook;
+
+    public function __construct(Storage $storage, iHook $hook){
+	$this->storage = $storage;
+	$this->hook = $hook;
     }
 
 	public function run()
 	{
 		if(isset($_POST) && !empty($_POST))
 		{
+			$this->hook->fire('styles_editor_post',$_POST);
 			foreach($_POST['container_styles'] as $idx=>$data)
 			{
 				if(!isset($data['id']))
@@ -93,7 +96,8 @@ class StyleEditor {
 	}
 </style>
 <div class="grid-style-editor">
-<form method="post">
+	<form method="post">
+		<?php $this->hook->fire('grid_editor_styles_get',null); ?>
 <p>Container Styles</p>
 <table>
 <tr>

@@ -12,7 +12,8 @@ use Grid\Constants\GridCssVariantTable;
 class Editor {
 
     public Storage $storage;
-    public string $url;
+	public string $url;
+	private iHook $hook;
 
 	/**
 	 * Editor constructor.
@@ -20,9 +21,10 @@ class Editor {
 	 * @param Storage $storage
 	 * @param string $urlBasePath url path to library dir
 	 */
-	public function __construct( Storage $storage, string $urlBasePath ) {
+	public function __construct( Storage $storage, string $urlBasePath, iHook $hook ) {
 		$this->storage = $storage;
 		$this->url = $urlBasePath;
+		$this->hook=$hook;
 	}
 
 	private function getHome() {
@@ -155,7 +157,7 @@ class Editor {
 
 
 	public function getStyleEditor() {
-		return new StyleEditor( $this->storage );
+		return new StyleEditor( $this->storage,$this->hook );
 	}
 
 	public function getReuseContainerEditor() {
