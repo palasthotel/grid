@@ -55,7 +55,7 @@ class Storage {
 		$row=$result->fetch_assoc();
 		$id=$row['id'];
 		$id++;
-		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values ($id,0,0,0,0,0,'".$this->author."',UNIX_TIMESTAMP())";
+		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) values (".$this->int($id).",0,0,0,0,0,'".$this->saveStr($this->author)."',UNIX_TIMESTAMP())";
 		$this->query->execute($query);
 		$this->fireHook( Core::FIRE_CREATE_GRID, $id);
 		return $id;
@@ -63,6 +63,7 @@ class Storage {
 	
 	public function destroyGrid($grid_id)
 	{
+		$grid_id=$this->int($grid_id);
 		$this->fireHook( Core::FIRE_DESTROY_GRID, $grid_id);
 		$query="delete from ".$this->query->prefix()."grid_box where grid_id=$grid_id";
 		$this->query->execute($query);
@@ -89,15 +90,14 @@ class Storage {
 	
 	public function cloneGrid($grid)
 	{
-		$gridid=$grid->gridid;
+		$gridid=$this->int($grid->gridid);
 		
 		$query="select max(id) as id from ".$this->query->prefix()."grid_grid";
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
-		$cloneid=$row['id'];
-		$cloneid++;
+		$cloneid=$this->int($row['id'])+1;
 		
-		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from ".$this->query->prefix()."grid_grid where id=$gridid";
+		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select $cloneid,revision,published,next_containerid,next_slotid,next_boxid,'".$this->saveStr($this->author)."',UNIX_TIMESTAMP() from ".$this->query->prefix()."grid_grid where id=$gridid";
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_container (id,grid_id,grid_revision,type,style,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target,reuse_containerid) select id,$cloneid,grid_revision,type,style,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target,reuse_containerid from ".$this->query->prefix()."grid_container where grid_id=$gridid";
 		$this->query->execute($query);
@@ -127,7 +127,7 @@ class Storage {
 		{
 			$grid=$this->getReuseGrid();
 			$split=explode(":",$gridId);
-			$id=$split[1];
+			$id=$this->int($split[1] ?? 0);
 			$container=$this->loadReuseContainer($id);
 			$container->reused=FALSE;
 			$grid->container=array();
@@ -147,7 +147,7 @@ class Storage {
 		{
 			$grid=$this->getReuseGrid();
 			$split=explode(":", $gridId);
-			$id=$split[1];
+			$id=$this->int($split[1] ?? 0);
 			$box=$this->loadReuseBox($id);
 			$grid->container=array();
 			$grid->container[]=new Container();
@@ -167,6 +167,7 @@ class Storage {
 			$box->storage=$this;
 			return $grid;
 		}
+		$gridId=$this->int($gridId);
 		//before we begin, we have to fetch the correct revision so we can fire off the right queries.
 		$query="select max(revision) as revision from ".$this->query->prefix()."grid_grid where id=$gridId and published=1";
 		$result=$this->query->execute($query);
@@ -270,7 +271,7 @@ class Storage {
 		from ".$this->query->prefix()."grid_box grid_box
 		left join ".$this->query->prefix()."grid_box_style grid_box_style on grid_box_style.id=grid_box.style
 		left join ".$this->query->prefix()."grid_box_type grid_box_type on grid_box_type.id=grid_box.type
-		where grid_id=-1 and grid_revision=0 and grid_box.id=$boxid";
+		where grid_id=-1 and grid_revision=0 and grid_box.id=".$this->int($boxid);
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
 		return $this->parseBox($row);
@@ -290,7 +291,7 @@ class Storage {
 	
 	public function deleteReusableBox($id)
 	{
-		$query="delete from ".$this->query->prefix()."grid_box where grid_id=-1 and grid_revision=0 and id=$id";
+		$query="delete from ".$this->query->prefix()."grid_box where grid_id=-1 and grid_revision=0 and id=".$this->int($id);
 		$this->query->execute($query);
 	}
 	
@@ -413,7 +414,7 @@ left join ".$this->query->prefix()."grid_box_type grid_box_type
 	 on grid_box.type=grid_box_type.id
 left join ".$this->query->prefix()."grid_box_style grid_box_style
 	 on grid_box.style=grid_box_style.id
-where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_container.id=$container
+where grid_container.grid_id=-1 and grid_container.grid_revision=0 and grid_container.id=".$this->int($container)."
 order by grid_container2slot.weight asc, grid_slot2box.weight asc
 ";
 		$result=$this->query->execute($query);
@@ -471,6 +472,8 @@ order by grid_container2slot.weight asc, grid_slot2box.weight asc
 	
 	public function loadGridByRevision($gridId,$revision)
 	{
+		$gridId=$this->int($gridId);
+		$revision=$this->int($revision);
 		$query="select published from ".$this->query->prefix()."grid_grid where id=$gridId and revision=$revision";
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
@@ -650,39 +653,41 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 				$result=$newslot->addBox(count($newslot->boxes),$boxcopy);
 			}
 		}
-		$query="update ".$this->query->prefix()."grid_container set reuse_title=\"".$this->saveStr($title)."\" where id=".$copy->containerid." and grid_id=-1 and grid_revision=0";
+		$query="update ".$this->query->prefix()."grid_container set reuse_title='".$this->saveStr($title)."' where id=".$this->int($copy->containerid)." and grid_id=-1 and grid_revision=0";
 		$this->query->execute($query);
 		$idx=array_search($container, $grid->container);
 		if($idx===FALSE)die("index not found");
 		$grid->removeContainer($container->containerid);
 		$replacement=$grid->insertContainer("I-0",$idx);
 		if($replacement===FALSE)die("replacement not created");
-		$query="update ".$this->query->prefix()."grid_container set reuse_containerid=".$copy->containerid." where id=".$replacement->containerid." and grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		$query="update ".$this->query->prefix()."grid_container set reuse_containerid=".$this->int($copy->containerid)." where id=".$this->int($replacement->containerid)." and grid_id=".$this->int($grid->gridid)." and grid_revision=".$this->int($grid->gridrevision);
 		$this->query->execute($query);
 		return $replacement;
 	}
 	
 	public function convertToReferenceContainer($container,$reuseid)
 	{
-		$query="update ".$this->query->prefix()."grid_container set reuse_containerid=$reuseid where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
+		$query="update ".$this->query->prefix()."grid_container set reuse_containerid=".$this->int($reuseid)." where id=".$this->int($container->containerid)." and grid_id=".$this->int($container->grid->gridid)." and grid_revision=".$this->int($container->grid->gridrevision);
 		$this->query->execute($query);
 	}
 
 	public function createContainer($grid,$containertype)
 	{
-		$query="select id,type,space_to_left,space_to_right,numslots from ".$this->query->prefix()."grid_container_type where type=\"$containertype\"";
+		$query="select id,type,space_to_left,space_to_right,numslots from ".$this->query->prefix()."grid_container_type where type='".$this->saveStr($containertype)."'";
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
-		$type=$row['id'];
+		if(!isset($row['id']))
+			throw new \Exception("unknown container type");
+		$type=$this->int($row['id']);
 		$type_space_to_left = $row['space_to_left'];
 		$type_space_to_right = $row['space_to_right'];
-		$gridid=$grid->gridid;
-		$gridrevision=$grid->gridrevision;
+		$gridid=$this->int($grid->gridid);
+		$gridrevision=$this->int($grid->gridrevision);
 		//how to fetch the ID? well, how about max+1? know nothing better. but... that might generate sync problems.
 		//OK, i need a container counter, slot counter and box counter on grid to do this.
 		$query="select next_containerid from ".$this->query->prefix()."grid_grid where id=$gridid and revision=$gridrevision";
 		$nextid=$this->query->execute($query)->fetch_assoc();
-		$id=$nextid['next_containerid'];
+		$id=$this->int($nextid['next_containerid']);
 		$query="update ".$this->query->prefix()."grid_grid set next_containerid=next_containerid+1 where id=$gridid and revision=$gridrevision";
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_container (id,grid_id,grid_revision,type) values ($id,$gridid,$gridrevision,$type)";
@@ -697,17 +702,17 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$container->slots=array();
 		$container->space_to_left = $type_space_to_left;
 		$container->space_to_right = $type_space_to_right;
-		$numslots=$row['numslots'];
+		$numslots=$this->int($row['numslots']);
 		for($i=1;$i<=$numslots;$i++)
 		{
 			$query="select next_slotid from ".$this->query->prefix()."grid_grid where id=$gridid and revision=$gridrevision";
 			$result=$this->query->execute($query);
 			$row=$result->fetch_assoc();
-			$slotid=$row['next_slotid'];
+			$slotid=$this->int($row['next_slotid']);
 			$this->query->execute("update ".$this->query->prefix()."grid_grid set next_slotid=next_slotid+1 where id=$gridid and revision=$gridrevision");
 			$query="insert into ".$this->query->prefix()."grid_slot (id,grid_id,grid_revision) values ($slotid,$gridid,$gridrevision)";
 			$this->query->execute($query);
-			$query="insert into ".$this->query->prefix()."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$container->containerid.",$gridid,$gridrevision,$slotid,$i)";
+			$query="insert into ".$this->query->prefix()."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight) values (".$this->int($container->containerid).",$gridid,$gridrevision,$slotid,$i)";
 			$this->query->execute($query);
 
 			$slot=new Slot();
@@ -727,12 +732,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function storeContainerOrder($grid)
 	{
-		$query="delete from ".$this->query->prefix()."grid_grid2container where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		$query="delete from ".$this->query->prefix()."grid_grid2container where grid_id=".$this->int($grid->gridid)." and grid_revision=".$this->int($grid->gridrevision);
 		$this->query->execute($query);
 		$i=1;
 		foreach($grid->container as $cnt)
 		{
-			$query="insert into ".$this->query->prefix()."grid_grid2container (grid_id,grid_revision,container_id,weight) values (".$grid->gridid.",".$grid->gridrevision.",".$cnt->containerid.",".$i.")";
+			$query="insert into ".$this->query->prefix()."grid_grid2container (grid_id,grid_revision,container_id,weight) values (".$this->int($grid->gridid).",".$this->int($grid->gridrevision).",".$this->int($cnt->containerid).",".$i.")";
 			$this->query->execute($query);
 			$i++;
 		}
@@ -741,12 +746,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function storeSlotOrder($slot)
 	{
 		$grid=$slot->grid;
-		$query="delete from ".$this->query->prefix()."grid_slot2box where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision." and slot_id=".$slot->slotid;
+		$query="delete from ".$this->query->prefix()."grid_slot2box where grid_id=".$this->int($grid->gridid)." and grid_revision=".$this->int($grid->gridrevision)." and slot_id=".$this->int($slot->slotid);
 		$this->query->execute($query);
 		$i=1;
 		foreach($slot->boxes as $box)
 		{
-			$query="insert into ".$this->query->prefix()."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$slot->slotid.",".$grid->gridid.",".$grid->gridrevision.",".$box->boxid.",$i)";
+			$query="insert into ".$this->query->prefix()."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) values (".$this->int($slot->slotid).",".$this->int($grid->gridid).",".$this->int($grid->gridrevision).",".$this->int($box->boxid).",$i)";
 			$this->query->execute($query);
 			$i++;
 		}
@@ -754,45 +759,46 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function createRevision($grid)
 	{
-		$query="select max(revision) as revision from ".$this->query->prefix()."grid_grid where id=".$grid->gridid;
+		$gridid=$this->int($grid->gridid);
+		$gridrevision=$this->int($grid->gridrevision);
+		$query="select max(revision) as revision from ".$this->query->prefix()."grid_grid where id=".$gridid;
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
-		$newrevision=$row['revision'];
-		$newrevision=$newrevision+1;
-		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select id,$newrevision,0,next_containerid,next_slotid,next_boxid,'".$this->author."',UNIX_TIMESTAMP() from ".$this->query->prefix()."grid_grid where id=".$grid->gridid." and revision=".$grid->gridrevision;
+		$newrevision=$this->int($row['revision'])+1;
+		$query="insert into ".$this->query->prefix()."grid_grid (id,revision,published,next_containerid,next_slotid,next_boxid,author,revision_date) select id,$newrevision,0,next_containerid,next_slotid,next_boxid,'".$this->saveStr($this->author)."',UNIX_TIMESTAMP() from ".$this->query->prefix()."grid_grid where id=".$gridid." and revision=".$gridrevision;
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_container (id,grid_id,grid_revision,type,style,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target,reuse_containerid)
 		select id,grid_id,$newrevision,type,style,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target, reuse_containerid from ".$this->query->prefix()."grid_container
-		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		where grid_id=".$gridid." and grid_revision=".$gridrevision;
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_grid2container (grid_id,grid_revision,container_id,weight)
 		select grid_id,$newrevision,container_id,weight from ".$this->query->prefix()."grid_grid2container
-		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		where grid_id=".$gridid." and grid_revision=".$gridrevision;
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_slot (id,grid_id,grid_revision,style) 
 		select id,grid_id,$newrevision,style from ".$this->query->prefix()."grid_slot
-		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		where grid_id=".$gridid." and grid_revision=".$gridrevision;
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_container2slot (container_id,grid_id,grid_revision,slot_id,weight)
 		select container_id,grid_id,$newrevision,slot_id,weight from ".$this->query->prefix()."grid_container2slot
-		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		where grid_id=".$gridid." and grid_revision=".$gridrevision;
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_box (id,grid_id,grid_revision,type,style,reuse_title,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target,content)
 		select id,grid_id,$newrevision,type,style,reuse_title,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target,content from ".$this->query->prefix()."grid_box
-		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		where grid_id=".$gridid." and grid_revision=".$gridrevision;
 		$this->query->execute($query);
 		$query="insert into ".$this->query->prefix()."grid_slot2box (slot_id,grid_id,grid_revision,box_id,weight) 
 		select slot_id,grid_id,$newrevision,box_id,weight from ".$this->query->prefix()."grid_slot2box
-		where grid_id=".$grid->gridid." and grid_revision=".$grid->gridrevision;
+		where grid_id=".$gridid." and grid_revision=".$gridrevision;
 		$this->query->execute($query);
-		return $this->loadGridByRevision($grid->gridid,$newrevision);
+		return $this->loadGridByRevision($gridid,$newrevision);
 	}
 
 	public function publishGrid($grid)
 	{
 
-		$id=$grid->gridid;
-		$revision=$grid->gridrevision;
+		$id=$this->int($grid->gridid);
+		$revision=$this->int($grid->gridrevision);
 		$query="update ".$this->query->prefix()."grid_grid set published=0 where id=$id";
 		$this->query->execute($query);
 		$query="update ".$this->query->prefix()."grid_grid set published=1 where id=$id and revision=$revision";
@@ -805,7 +811,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function gridRevisions($grid)
 	{
-		$id=$grid->gridid;
+		$id=$this->int($grid->gridid);
 		$query="select revision,author,revision_date from ".$this->query->prefix()."grid_grid where id=$id";
 		$result=$this->query->execute($query);
 		$return=array();
@@ -818,8 +824,8 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 
 	public function revokeGrid($grid)
 	{
-		$id=$grid->gridid;
-		$revision=$grid->gridrevision;
+		$id=$this->int($grid->gridid);
+		$revision=$this->int($grid->gridrevision);
 		$query="delete from ".$this->query->prefix()."grid_box where grid_id=$id and grid_revision=$revision";
 		$this->query->execute($query);
 		$query="delete from ".$this->query->prefix()."grid_slot2box where grid_id=$id and grid_revision=$revision";
@@ -846,21 +852,21 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			{
 				foreach($slot->boxes as $box)
 				{
-					$query="delete from ".$this->query->prefix()."grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+					$query="delete from ".$this->query->prefix()."grid_box where id=".$this->int($box->boxid)." and grid_id=".$this->int($box->grid->gridid)." and grid_revision=".$this->int($box->grid->gridrevision);
 					$this->query->execute($query);
 				}
-				$query="delete from ".$this->query->prefix()."grid_slot where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
+				$query="delete from ".$this->query->prefix()."grid_slot where id=".$this->int($slot->slotid)." and grid_id=".$this->int($slot->grid->gridid)." and grid_revision=".$this->int($slot->grid->gridrevision);
 				$this->query->execute($query);
 			}
 			
 		}
-		$query="delete from ".$this->query->prefix()."grid_container where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
+		$query="delete from ".$this->query->prefix()."grid_container where id=".$this->int($container->containerid)." and grid_id=".$this->int($container->grid->gridid)." and grid_revision=".$this->int($container->grid->gridrevision);
 		$this->query->execute($query);
 	}
 	
 	public function deleteBox($box)
 	{
-		$query="delete from ".$this->query->prefix()."grid_box where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+		$query="delete from ".$this->query->prefix()."grid_box where id=".$this->int($box->boxid)." and grid_id=".$this->int($box->grid->gridid)." and grid_revision=".$this->int($box->grid->gridrevision);
 		return $this->query->execute($query);
 	}
 	
@@ -872,12 +878,12 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		else
 		{
-			$query="select id from ".$this->query->prefix()."grid_container_style where slug='".$container->style."'";
+			$query="select id from ".$this->query->prefix()."grid_container_style where slug='".$this->saveStr($container->style)."'";
 			$result=$this->query->execute($query);
 			$row=$result->fetch_assoc();
 			if(!isset($row['id']))
 				return false;
-			$styleid=$row['id'];
+			$styleid=$this->int($row['id']);
 		}
 		$query="update ".$this->query->prefix()."grid_container set 
 		 style=".$styleid.", 
@@ -889,7 +895,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		 readmore='".$this->saveStr($container->readmore)."', 
 		 readmore_url='".$this->saveStr($container->readmoreurl)."',
 		 readmore_url_target='".$this->saveStr($container->readmoreurltarget)."' 
-		 where id=".$container->containerid." and grid_id=".$container->grid->gridid." and grid_revision=".$container->grid->gridrevision;
+		 where id=".$this->int($container->containerid)." and grid_id=".$this->int($container->grid->gridid)." and grid_revision=".$this->int($container->grid->gridrevision);
 		$this->query->execute($query);
 		return true;
 	}
@@ -902,14 +908,14 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		}
 		else
 		{
-			$query="select id from ".$this->query->prefix()."grid_slot_style where slug='".$slot->style."'";
+			$query="select id from ".$this->query->prefix()."grid_slot_style where slug='".$this->saveStr($slot->style)."'";
 			$result=$this->query->execute($query);
 			$row=$result->fetch_assoc();
 			if(!isset($row['id']))
 				return false;
-			$styleid=$row['id'];
+			$styleid=$this->int($row['id']);
 		}
-		$query="update ".$this->query->prefix()."grid_slot set style=".$styleid." where id=".$slot->slotid." and grid_id=".$slot->grid->gridid." and grid_revision=".$slot->grid->gridrevision;
+		$query="update ".$this->query->prefix()."grid_slot set style=".$styleid." where id=".$this->int($slot->slotid)." and grid_id=".$this->int($slot->grid->gridid)." and grid_revision=".$this->int($slot->grid->gridrevision);
 		$this->query->execute($query);
 		return true;
 	}
@@ -918,7 +924,15 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		if($str==NULL)
 			return "";
-		return $this->query->real_escape_string($str);
+		return $this->query->real_escape_string((string)$str);
+	}
+
+	/**
+	 * Ids, revisions and weights are always integers.
+	 */
+	private function int($value)
+	{
+		return intval($value);
 	}
 	
 	public function persistBox($box)
@@ -927,38 +941,40 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		$styleid="NULL";
 		if($box->style!=NULL)
 		{
-			$query="select id from ".$this->query->prefix()."grid_box_style where slug='".$box->style."'";
+			$query="select id from ".$this->query->prefix()."grid_box_style where slug='".$this->saveStr($box->style)."'";
 			$result=$this->query->execute($query);
 			$row=$result->fetch_assoc();
-			$styleid=$row['id'];
+			$styleid=isset($row['id']) ? $this->int($row['id']) : "NULL";
 		}
 		//no matter what we have to resolve the type
-		$query="select id from ".$this->query->prefix()."grid_box_type where type='".$box->type()."'";
+		$query="select id from ".$this->query->prefix()."grid_box_type where type='".$this->saveStr($box->type())."'";
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
 		if(!isset($row['id']))
 		{
-			$insertquery="insert into ".$this->query->prefix()."grid_box_type (type) values ('".$box->type()."')";
+			$insertquery="insert into ".$this->query->prefix()."grid_box_type (type) values ('".$this->saveStr($box->type())."')";
 			$this->query->execute($insertquery);
 			$result=$this->query->execute($query);
 			$row=$result->fetch_assoc();
 //			return FALSE;
 		}
-		$type=$row['id'];
+		$type=$this->int($row['id']);
+		$gridid=$this->int($box->grid->gridid);
+		$gridrevision=$this->int($box->grid->gridrevision);
 		if($box->boxid==NULL)
 		{
-			$query="select next_boxid from ".$this->query->prefix()."grid_grid where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
+			$query="select next_boxid from ".$this->query->prefix()."grid_grid where id=".$gridid." and revision=".$gridrevision;
 			$result=$this->query->execute($query);
 			$row=$result->fetch_assoc();
-			$query="update ".$this->query->prefix()."grid_grid set next_boxid=next_boxid+1 where id=".$box->grid->gridid." and revision=".$box->grid->gridrevision;
+			$query="update ".$this->query->prefix()."grid_grid set next_boxid=next_boxid+1 where id=".$gridid." and revision=".$gridrevision;
 			$this->query->execute($query);
 			
 			$query="insert into ".$this->query->prefix()."grid_box (id,grid_id,grid_revision,type,reuse_title,title,title_url,title_url_target,prolog,epilog,readmore,readmore_url,readmore_url_target,content,style) values 
-			(".$row['next_boxid'].",".$box->grid->gridid.",".$box->grid->gridrevision.",".$type."
+			(".$this->int($row['next_boxid']).",".$gridid.",".$gridrevision.",".$type."
 			,'".$this->saveStr($box->reusetitle)."','".$this->saveStr($box->title)."','".$this->saveStr($box->titleurl)."','".$this->saveStr($box->titleurltarget)."','".$this->saveStr($box->prolog)."','".$this->saveStr($box->epilog)."'
 			,'".$this->saveStr($box->readmore)."','".$this->saveStr($box->readmoreurl)."','".$this->saveStr($box->readmoreurltarget)."','".$this->saveStr(json_encode($box->content))."',".$styleid.")";
 			$result = $this->query->execute($query);
-			$box->boxid=$row['next_boxid'];
+			$box->boxid=$this->int($row['next_boxid']);
 		}
 		else
 		{
@@ -974,7 +990,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 			 readmore_url='".$this->saveStr($box->readmoreurl)."',
 			 readmore_url_target='".$this->saveStr($box->readmoreurltarget)."',
 			 content='".$this->saveStr(json_encode($box->content))."',
-			 style=".$styleid." where id=".$box->boxid." and grid_id=".$box->grid->gridid." and grid_revision=".$box->grid->gridrevision;
+			 style=".$styleid." where id=".$this->int($box->boxid)." and grid_id=".$gridid." and grid_revision=".$gridrevision;
 			$this->query->execute($query);
 		}
 		return TRUE;
@@ -1003,16 +1019,16 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function createContainerType($type,$space_to_left,$space_to_right,$numslots)
 	{
-		$query="insert into ".$this->query->prefix()."grid_container_type (type,space_to_left,space_to_right,numslots) values ('$type',";
+		$query="insert into ".$this->query->prefix()."grid_container_type (type,space_to_left,space_to_right,numslots) values ('".$this->saveStr($type)."',";
 		if($space_to_left==NULL)
 			$query.="NULL,";
 		else
-			$query.="'$space_to_left',";
+			$query.="'".$this->saveStr($space_to_left)."',";
 		if($space_to_right==NULL)
 			$query.="NULL,";
 		else
-			$query.="'$space_to_right',";
-		$query.="$numslots)";
+			$query.="'".$this->saveStr($space_to_right)."',";
+		$query.=$this->int($numslots).")";
 		$this->query->execute($query);
 	}
 	
@@ -1044,13 +1060,13 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$style = htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$slug = htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
-		$query="insert into ".$this->query->prefix()."grid_container_style (slug,style) values ('".$slug."','".$style."')";
+		$query="insert into ".$this->query->prefix()."grid_container_style (slug,style) values ('".$this->saveStr($slug)."','".$this->saveStr($style)."')";
 		$this->query->execute($query);
 	}
 	
 	public function deleteContainerStyle($id)
 	{
-		$query="delete from ".$this->query->prefix()."grid_container_style where id=".$id;
+		$query="delete from ".$this->query->prefix()."grid_container_style where id=".$this->int($id);
 		$this->query->execute($query);
 	}
 	
@@ -1058,7 +1074,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$slug=htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$style=htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
-		$query="update ".$this->query->prefix()."grid_container_style set slug='".$slug."', style='".$style."' where id=".$id;
+		$query="update ".$this->query->prefix()."grid_container_style set slug='".$this->saveStr($slug)."', style='".$this->saveStr($style)."' where id=".$this->int($id);
 		$this->query->execute($query);
 	}
 
@@ -1090,13 +1106,13 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$slug=htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$style=htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
-		$query="insert into ".$this->query->prefix()."grid_slot_style (slug,style) values ('".$slug."','".$style."')";
+		$query="insert into ".$this->query->prefix()."grid_slot_style (slug,style) values ('".$this->saveStr($slug)."','".$this->saveStr($style)."')";
 		$this->query->execute($query);
 	}
 	
 	public function deleteSlotStyle($id)
 	{
-		$query="delete from ".$this->query->prefix()."grid_slot_style where id=".$id;
+		$query="delete from ".$this->query->prefix()."grid_slot_style where id=".$this->int($id);
 		$this->query->execute($query);
 	}
 	
@@ -1104,7 +1120,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	{
 		$slug=htmlspecialchars($slug, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
 		$style=htmlspecialchars($style, ENT_QUOTES | ENT_HTML5, 'UTF-8', false);
-		$query="update ".$this->query->prefix()."grid_slot_style set slug='".$slug."', style='".$style."' where id=".$id;
+		$query="update ".$this->query->prefix()."grid_slot_style set slug='".$this->saveStr($slug)."', style='".$this->saveStr($style)."' where id=".$this->int($id);
 		$this->query->execute($query);
 	}
 	
@@ -1134,19 +1150,19 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	
 	public function createBoxStyle($slug,$style)
 	{
-		$query="insert into ".$this->query->prefix()."grid_box_style (slug,style) values ('".$slug."','".$style."')";
+		$query="insert into ".$this->query->prefix()."grid_box_style (slug,style) values ('".$this->saveStr($slug)."','".$this->saveStr($style)."')";
 		$this->query->execute($query);
 	}
 	
 	public function deleteBoxStyle($id)
 	{
-		$query="delete from ".$this->query->prefix()."grid_box_style where id=".$id;
+		$query="delete from ".$this->query->prefix()."grid_box_style where id=".$this->int($id);
 		$this->query->execute($query);
 	}
 	
 	public function updateBoxStyle($id,$slug,$style)
 	{
-		$query="update ".$this->query->prefix()."grid_box_style set slug='".$slug."', style='".$style."' where id=".$id;
+		$query="update ".$this->query->prefix()."grid_box_style set slug='".$this->saveStr($slug)."', style='".$this->saveStr($style)."' where id=".$this->int($id);
 		$this->query->execute($query);
 	}
 	
@@ -1170,7 +1186,7 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		from ".$this->query->prefix()."grid_box
 		left join ".$this->query->prefix()."grid_box_type grid_box_type on grid_box.type=grid_box_type.id
 		left join ".$this->query->prefix()."grid_box_style grid_box_style on grid_box.style=grid_box_style.id ";
-		$query.="where grid_box.id=$boxId";
+		$query.="where grid_box.id=".$this->int($boxId);
 		$result=$this->query->execute($query);
 		$row=$result->fetch_assoc();
 		return $this->parseBox($row);
@@ -1179,8 +1195,9 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 	public function fetchGridRevisions($gridid,$page=0) {
 		if(strncmp("box:",$gridid,strlen("box:"))!=0 && strncmp("container:",$gridid,strlen("container:"))!=0)
 		{
+			$gridid=$this->int($gridid);
 			$pagesize=20;
-			$offset=$page*$pagesize;
+			$offset=max(0,$this->int($page))*$pagesize;
 			$query = "SELECT revision,author,revision_date,published FROM ".$this->query->prefix()."grid_grid WHERE id = $gridid ORDER BY revision DESC LIMIT $pagesize OFFSET $offset";
 			$result=$this->query->execute($query);
 			$revisions = array();

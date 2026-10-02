@@ -96,6 +96,40 @@ class API {
 		require_once dirname( __FILE__ ) . '/../components/grid_slot_configuration_box.php';
 	}
 
+	/**
+	 * The editor always sends JSON.
+	 */
+	public static function isJsonRequest()
+	{
+		$type = $_SERVER['CONTENT_TYPE'] ?? ($_SERVER['HTTP_CONTENT_TYPE'] ?? '');
+		return stripos(trim($type), 'application/json') === 0;
+	}
+
+	/**
+	 * Only public endpoint methods are callable, never constructors, magic or static methods.
+	 *
+	 * @param mixed $method
+	 *
+	 * @return \ReflectionMethod|null
+	 */
+	public function resolveAjaxMethod($method)
+	{
+		if(!is_string($method) || $method === '' || strncmp($method, '__', 2) === 0)
+		{
+			return null;
+		}
+		if(!method_exists($this->endpoint, $method))
+		{
+			return null;
+		}
+		$reflectionMethod = new \ReflectionMethod($this->endpoint, $method);
+		if(!$reflectionMethod->isPublic() || $reflectionMethod->isStatic() || $reflectionMethod->isConstructor())
+		{
+			return null;
+		}
+		return $reflectionMethod;
+	}
+
 	//manages ajax call routing
 	public function handleAjaxCall()
 	{
@@ -103,29 +137,41 @@ class API {
 		if($_SERVER['REQUEST_METHOD']!='POST')
 		{
 			echo json_encode(array('error'=>'only POSTing is allowed'));
+			return;
 		}
-		else
+		if(!self::isJsonRequest())
 		{
-			$input=file_get_contents("php://input");
-			$json=json_decode($input);
-			$method=$json->method;
-			$params=$json->params;
+			http_response_code(415);
+			echo json_encode(array('error'=>'only JSON requests are allowed'));
+			return;
+		}
 
-			$this->endpoint->storage=$this->core->storage;
-			try {
-				$reflectionMethod=new \ReflectionMethod($this->endpoint,$method);
-				$retval=$reflectionMethod->invokeArgs($this->endpoint,$params);
-				echo json_encode(array('result'=>$retval));
-			} catch (\Exception $e) {
-				echo json_encode(array('error'=>$e->getMessage()));
-			}
+		$input=file_get_contents("php://input");
+		$json=json_decode($input);
+		$method=is_object($json) && isset($json->method) ? $json->method : null;
+		$params=is_object($json) && isset($json->params) && is_array($json->params) ? $json->params : array();
+
+		$reflectionMethod=$this->resolveAjaxMethod($method);
+		if($reflectionMethod === null)
+		{
+			http_response_code(400);
+			echo json_encode(array('error'=>'unknown method'));
+			return;
+		}
+
+		$this->endpoint->storage=$this->core->storage;
+		try {
+			$retval=$reflectionMethod->invokeArgs($this->endpoint,array_values($params));
+			echo json_encode(array('result'=>$retval));
+		} catch (\Throwable $e) {
+			echo json_encode(array('error'=>$e->getMessage()));
 		}
 	}
 
 	public function handleUpload()
 	{
-		$gridid=$_POST['gridid'];
-		if(preg_match("/(container:|box:|)\\d*/uisx", $gridid)!==1) {
+		$gridid=isset($_POST['gridid']) ? (string)$_POST['gridid'] : '';
+		if(preg_match('/^(container:|box:)?\d+$/', $gridid)!==1) {
 			return FALSE;
 		}
 		$containerid=intval($_POST['container']);
