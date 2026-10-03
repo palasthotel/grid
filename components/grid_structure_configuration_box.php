@@ -129,7 +129,7 @@ class grid_structure_configuration_base_box extends grid_structure_configuration
 	 * @return grid_structure_configuration_base_box[]
 	 */
 	public function metaSearch($criteria,$query) {
-		if(get_class($this)!=get_class())
+		if(get_class($this)!=__CLASS__)
 			return array($this);
 		return array();
 	}
