@@ -1,115 +1,94 @@
-Grid
-====
+# Grid
 
-A PHP/HTML/JS Framework to build landing pages.
-This library does not work on it's own - it needs some help from outside.
+The PHP/JS library behind the Grid page builder: storage, rendering, revisions, reusable
+containers and boxes, and the editor. It does nothing on its own - a CMS integration wires
+it to its database, hooks and templates:
 
+- [grid-wordpress](https://github.com/palasthotel/grid-wordpress) - the [Grid plugin on wordpress.org](https://wordpress.org/plugins/grid/)
+- [grid-drupal](https://github.com/palasthotel/grid-drupal)
 
-## Requirements
+## Installation
 
-* You need to provide db_query() which replaces {...} with PREFIX... and executes the statement
+Grid is a base library, not a finished package: the release tags contain the sources, and
+the integration builds the editor bundle itself. Install it with Composer from GitHub:
 
-## Supported Browsers
+```json
+{
+	"repositories": [
+		{ "type": "vcs", "url": "https://github.com/palasthotel/grid" }
+	],
+	"require": {
+		"palasthotel/grid": "^3.0"
+	}
+}
+```
 
-* Chrome
-* Firefox 4.0+
-* Safari
-* IE9+
+Then, in the integration's build step:
+
+```sh
+composer install --no-dev
+(cd vendor/palasthotel/grid && npm ci && npm run build)
+```
+
+`npm run build` writes `js/dist/grid-editor.js` and `js/dist/reuseContainerList.js`.
+The stylesheets in `css/` need no build.
 
 ## Usage
 
-* Whatever you want to do, require grid.php and instantiate a new grid_library object.
-* The grid_library object will provide you with everything you need to.
+An integration provides three adapters and hands them to the library:
 
-## grid_library
+| Interface | Provides |
+|---|---|
+| `Palasthotel\Grid\iQuery` | the table prefix, executing SQL and escaping strings |
+| `Palasthotel\Grid\iHook` | firing and filtering hooks (`fire`, `alter`) |
+| `Palasthotel\Grid\iTemplate` | where box, container and slot templates are looked up |
 
-* getFrontendCSS($absolute) returns the default frontend css path in either absolute or relative paths (relative means relative to grid.php)
-* getEditorJS($language,$absolute) returns an array of js paths to include for the editor to work correctly.
-* getEditorCSS($rtl,$absolute) returns an array of css paths to include for the editor to work correctly.
-* getCKEditorConfig($styles,$formats) returns the rendered js to be provided for the editor in order to configure CKEditor correctly.
-* getEditorHTML(...) returns the HTML for the editor to work properly.
-* getDatabaseSchema() returns the drupal-7-conform scheme of tables needed by grid.
-* install() performs the needed transformations on the tables based on the schema to set everything up.
-* uninstall() undos the transformations install() did.
-* getStyleEditor() returns the editor class for styles.
-* getReuseContainerEditor() returns the editor class for reusable containers.
-* getReuseBoxEditor() returns the editor class for reusable boxes.
-* update() performs needed database updates.
+```php
+$core   = new \Palasthotel\Grid\Core( $query, $hook, $author );
+$api    = new \Palasthotel\Grid\API( $core, new \Palasthotel\Grid\Endpoint(), $template );
+$editor = new \Palasthotel\Grid\Editor( $core->storage, $assetBaseUrl, $hook );
+```
 
-## hooks
+- `Core::getDatabaseSchema()`, `install()`, `uninstall()` and `update()` manage the tables.
+- `API::loadGrid( $id )` loads a grid for rendering; `API::handleAjaxCall()` serves the
+  editor's requests. The integration is responsible for authentication, a CSRF token and
+  checking that the user may edit the grid's post before it calls `handleAjaxCall()` -
+  grid-wordpress shows how.
+- `Editor` returns the editor's HTML, scripts and stylesheets.
 
-Grid is hookable at several points.
+Box types are classes named `grid_<type>_box` that extend `grid_box`. CMS-specific boxes
+(HTML, video, posts, media, ...) live in the integrations, not here.
 
-### Rendering
-
- - **will_render_grid** fires before grid is rendered. Is first rendering hook.
- - **did_render_grid** fires after grid was fully rendered. Is last rendering hook.
- - **will_render_container** fires before a container is rendered but after will_render_grid
- - **did_render_container** fires after a container was fully rendered but before did_render_grid
- - **will_render_slot** fires before a slot is rendered but after will_render_container
- - **did_render_slot** fires after slot was fully rendered but before did_render_container
- - **will_render_box** fires before a box is rendered but after will_render_slot
- - **did_render_box** fires after box was fully rendered but before did_render_slot
-
- ### Data manipulation
-
- - **createGrid** fires when new grid was created
- - **publishGrid** fires when grid revision changes state from draft to publish
- - **cloneGrid** fires when grid was cloned to new grid
- - **destroyGrid* fires before grid will be deleted
- - **save_container** fires before container stats are persisted
- - **delete_container**
- - **save_slot** fires before slot stats are persisted and if box is added to or removed from slot.
- - **save_box** fires before new data is persisted
- - **delete_box** fires before box is deleted
-
-
-## License
-
-GPL v3 - see license.txt
-
-## Documentation
-
-Currently there is only [a German documentation available](http://doc.the-grid.ws/). It includes both documentations for users and developers.
-
-
-Grid - API
-====
-
-Interface to talk to the data.
-
-## hooks
-
-Grid is hookable at several points.
+## Hooks
 
 ### Rendering
 
- - **will_render_grid** fires before grid is rendered. Is first rendering hook.
- - **did_render_grid** fires after grid was fully rendered. Is last rendering hook.
- - **will_render_container** fires before a container is rendered but after will_render_grid
- - **did_render_container** fires after a container was fully rendered but before did_render_grid
- - **will_render_slot** fires before a slot is rendered but after will_render_container
- - **did_render_slot** fires after slot was fully rendered but before did_render_container
- - **will_render_box** fires before a box is rendered but after will_render_slot
- - **did_render_box** fires after box was fully rendered but before did_render_slot
+- `will_render_grid` / `did_render_grid` - first and last rendering hook
+- `will_render_container` / `did_render_container`
+- `will_render_slot` / `did_render_slot`
+- `will_render_box` / `did_render_box`
 
- ### Data manipulation
+### Data
 
- - **createGrid** fires when new grid was created
- - **publishGrid** fires when grid revision changes state from draft to publish
- - **cloneGrid** fires when grid was cloned to new grid
- - **destroyGrid* fires before grid will be deleted
- - **save_container** fires before container stats are persisted
- - **delete_container**
- - **save_slot** fires before slot stats are persisted and if box is added to or removed from slot.
- - **save_box** fires before new data is persisted
- - **delete_box** fires before box is deleted
+- `createGrid`, `publishGrid`, `cloneGrid`, `destroyGrid`
+- `save_container`, `delete_container`
+- `save_slot` - also when a box is added to or removed from the slot
+- `save_box`, `delete_box`
+- `will_perform_file_upload` / `did_perform_file_upload`
 
+## Development
+
+```sh
+composer install          # autoloader and PHPUnit
+composer test             # PHPUnit
+npm ci && npm run build   # editor bundle; npm run watch while working on src/
+```
+
+Node version: `.nvmrc`. `js/dist/` and `vendor/` are build output and not committed.
+The pull request check lints PHP from 7.4 to 8.4, runs PHPUnit and builds the bundle.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for commit messages and releases.
 
 ## License
 
-GPL v3 - see license.txt
-
-## Documentation
-
-Currently there is only [a German documentation available](http://doc.the-grid.ws/). It includes both documentations for users and developers.
+See [license.txt](license.txt).
