@@ -48,3 +48,23 @@ jobs:
           coverage: none
       - run: composer install --no-interaction --no-progress
       - run: composer test
+
+  build:
+    name: Build the editor bundle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      # consumers load these by path - a renamed entry point has to fail here
+      - name: Check the files consumers load
+        run: |
+          status=0
+          for file in js/dist/grid-editor.js js/dist/reuseContainerList.js css/grid-backend.css css/grid-container-editor.css css/rtl.css; do
+            [ -s "$file" ] || { echo "::error::$file is missing or empty"; status=1; }
+          done
+          exit $status

@@ -1,4 +1,7 @@
 {
+    "name": "palasthotel/grid",
+    "description": "Grid layout library - the base for grid-wordpress and grid-drupal",
+    "type": "library",
     "autoload": {
         "classmap": [
             "classes"
