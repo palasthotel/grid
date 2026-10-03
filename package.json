@@ -1,8 +1,8 @@
 {
   "name": "grid",
   "version": "2.5.7",
-  "description": "Grid library module",
-  "main": "index.js",
+  "private": true,
+  "description": "Grid layout library - editor bundle",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "./node_modules/webpack/bin/webpack.js --watch --progress --config webpack.dev.js",
@@ -12,8 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/palasthotel/grid.git"
   },
-  "author": "Palasthotel by Edward Bock",
-  "license": "ISC",
+  "author": "Palasthotel <webmaster@palasthotel.de>",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/palasthotel/grid/issues"
   },

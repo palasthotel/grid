@@ -1,19 +1,9 @@
-*config.codekit
-*.sass-cache
-.sass-cache/
-*.DS_Cache
-*.DS_Store
 /node_modules
+/vendor
+/js/dist
 composer.lock
-.idea
-
-# OS Stuff
-.DS_Store
-ehthumbs.db
-Icon
-Thumbs.db
 /.phpunit.cache
 
-# built in the pipeline and by consumers - see README
-/js/dist
-/vendor
+.idea
+.DS_Store
+Thumbs.db
