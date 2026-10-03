@@ -85,7 +85,7 @@ npm ci && npm run build   # editor bundle; npm run watch while working on src/
 ```
 
 Node version: `.nvmrc`. `js/dist/` and `vendor/` are build output and not committed.
-The pull request check lints PHP from 7.4 to 8.4, runs PHPUnit and builds the bundle.
+Grid needs PHP 8.2 or later. The pull request check lints PHP 8.2 to 8.4, runs PHPUnit and builds the bundle.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for commit messages and releases.
 
