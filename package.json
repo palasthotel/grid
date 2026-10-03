@@ -1,8 +1,8 @@
 {
   "name": "grid",
   "version": "2.5.7",
-  "description": "Grid library module",
-  "main": "index.js",
+  "private": true,
+  "description": "Grid layout library - editor bundle",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "./node_modules/webpack/bin/webpack.js --watch --progress --config webpack.dev.js",

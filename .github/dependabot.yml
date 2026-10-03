@@ -1,0 +1,45 @@
+---
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Berlin"
+    # the editor bundle ships to integrations: runtime packages are fixes, tools are chores
+    commit-message:
+      prefix: "fix(deps)"
+      prefix-development: "chore(deps)"
+    groups:
+      npm-development:
+        dependency-type: "development"
+      npm-production:
+        dependency-type: "production"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Berlin"
+    commit-message:
+      prefix: "chore(deps)"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "Europe/Berlin"
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions:
+        patterns: ["*"]
