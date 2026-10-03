@@ -6,12 +6,27 @@
  * @package Palasthotel\Grid
  */
 
-if ( ! class_exists( "SimplePie" ) ) {
-	require dirname( __FILE__ ) . "/../libs/simplepie_1.5.2.mini.php";
-}
-
 class grid_rss_box extends grid_list_box {
-	public static $CACHE_DIR = "cache/";
+	/**
+	 * Where SimplePie caches feeds. Defaults to a directory below the system temp dir;
+	 * integrations can point it somewhere else.
+	 *
+	 * @var string|null
+	 */
+	public static $CACHE_DIR = null;
+
+	/**
+	 * @var SimplePie|null the feed of the last build()
+	 */
+	public $feed = null;
+
+	public static function cacheDir() {
+		$dir = self::$CACHE_DIR ?: rtrim( sys_get_temp_dir(), "/" ) . "/grid-rss-cache";
+		if ( ! is_dir( $dir ) ) {
+			mkdir( $dir, 0700, true );
+		}
+		return $dir;
+	}
 
 	public function __construct() {
 		parent::__construct();
@@ -27,10 +42,7 @@ class grid_rss_box extends grid_list_box {
 	public function build( $editmode ) {
 		if ( isset( $this->content->url ) && $this->content->url != "" ) {
 			$pie = new SimplePie();
-			$pie->set_cache_location( self::$CACHE_DIR );
-			if ( ! file_exists( self::$CACHE_DIR ) ) {
-				mkdir( self::$CACHE_DIR );
-			}
+			$pie->set_cache_location( self::cacheDir() );
 
 			$pie->set_feed_url( $this->content->url );
 			$pie->set_item_limit( $this->content->numItems );
