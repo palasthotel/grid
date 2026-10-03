@@ -91,4 +91,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for commit messages and releases.
 
 ## License
 
-See [license.txt](license.txt).
+GPL-3.0-or-later, see [license.txt](license.txt).
