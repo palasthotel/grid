@@ -292,9 +292,9 @@ class Endpoint {
 				{
 					if($slot->slotid==$slotid)
 					{
-						$box=null;
-						if(isset($slot->boxes[$idx]))
-							$box=$slot->boxes[$idx];
+						if(!isset($slot->boxes[$idx]))
+							return false;
+						$box=$slot->boxes[$idx];
 						$ret=$slot->removeBox($idx);
 						if($ret)
 						{
