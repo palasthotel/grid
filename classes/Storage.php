@@ -195,6 +195,13 @@ class Storage {
 	
 	private function parseBox($row)
 	{
+		if(!is_array($row))
+		{
+			// a reference to a box that does not exist (any more)
+			$box = new \grid_error_box("box not found");
+			$box->storage=$this;
+			return $box;
+		}
 		$boxtype=$row['box_type'];
 		$class="grid_".$boxtype."_box";
 		if(!class_exists($class))
@@ -217,7 +224,7 @@ class Storage {
 			$box->readmore=$row['box_readmore'];
 			$box->readmoreurl=$row['box_readmoreurl'];
 			$box->readmoreurltarget=$row["box_readmoreurltarget"];
-			$box->content=json_decode($row['box_content']);
+			$box->setContent(json_decode((string)($row['box_content'] ?? '')));
 		}		
 		return $box;
 	}

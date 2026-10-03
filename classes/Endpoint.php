@@ -516,7 +516,7 @@ class Endpoint {
 			return FALSE;
 		$class="grid_".$boxtype."_box";
 		$box=new $class();
-		$box->content=$content;
+		$box->setContent($content);
 		$box->grid=$grid;
 		$box->style=$this->storage->boxstyle;
 		$box->storage=$this->storage;
