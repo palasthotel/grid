@@ -75,7 +75,14 @@ namespace {
 	 * Smallest box Storage::parseBox() can build, so reuse boxes load without the components.
 	 */
 	#[\AllowDynamicProperties]
-	class grid_test_box {
+	class grid_test_box extends \Palasthotel\Grid\Model\Box {
+
+		public function __construct() {
+			parent::__construct();
+			$this->content->title = 'default';
+			$this->content->count = 3;
+		}
+
 
 		public function type() {
 			return 'test';
