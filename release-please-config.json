@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
-  "bootstrap-sha": "6cd3012e6720b1ce08922c4d51f9fac84ead1105",
+  "bootstrap-sha": "69ab1e01934c6d4c99fbef5a901b6d05180d038c",
   "packages": {
     ".": {
       "release-type": "node",
@@ -9,13 +9,39 @@
       "include-component-in-tag": false,
       "include-v-in-tag": true,
       "changelog-sections": [
-        { "type": "feat", "section": "Features" },
-        { "type": "fix", "section": "Bug Fixes" },
-        { "type": "docs", "section": "Documentation", "hidden": true },
-        { "type": "refactor", "section": "Code Refactoring", "hidden": true },
-        { "type": "test", "section": "Tests", "hidden": true },
-        { "type": "chore", "section": "Miscellaneous", "hidden": true },
-        { "type": "ci", "section": "CI", "hidden": true }
+        {
+          "type": "feat",
+          "section": "Features"
+        },
+        {
+          "type": "fix",
+          "section": "Bug Fixes"
+        },
+        {
+          "type": "docs",
+          "section": "Documentation",
+          "hidden": true
+        },
+        {
+          "type": "refactor",
+          "section": "Code Refactoring",
+          "hidden": true
+        },
+        {
+          "type": "test",
+          "section": "Tests",
+          "hidden": true
+        },
+        {
+          "type": "chore",
+          "section": "Miscellaneous",
+          "hidden": true
+        },
+        {
+          "type": "ci",
+          "section": "CI",
+          "hidden": true
+        }
       ]
     }
   }
