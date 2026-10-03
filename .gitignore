@@ -13,3 +13,7 @@ ehthumbs.db
 Icon
 Thumbs.db
 /.phpunit.cache
+
+# built in the pipeline and by consumers - see README
+/js/dist
+/vendor
