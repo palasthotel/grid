@@ -9,5 +9,11 @@
     },
     "require": {
         "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

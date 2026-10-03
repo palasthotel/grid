@@ -12,3 +12,4 @@ composer.lock
 ehthumbs.db
 Icon
 Thumbs.db
+/.phpunit.cache
