@@ -111,6 +111,14 @@ Box types are classes named `grid_<type>_box` that extend `grid_box`. CMS-specif
 - `save_box`, `delete_box`
 - `will_perform_file_upload` / `did_perform_file_upload`
 
+### Filters
+
+- `soundcloud_user_agent` - the User-Agent of the SoundCloud box's oEmbed requests,
+  `Mozilla/5.0 (compatible; grid/3; +https://github.com/palasthotel/grid)` by default. CDNs
+  tend to block requests from servers without a User-Agent; change it here if they block
+  this one too. In WordPress it is the filter `grid_soundcloud_user_agent`, in Drupal
+  `hook_grid_soundcloud_user_agent_alter()`.
+
 ## Development
 
 ```sh

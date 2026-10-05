@@ -98,8 +98,24 @@ EOT;
         }
     }
     
+    /**
+    * The User-Agent of the requests to SoundCloud's oEmbed endpoint. CDNs tend to block
+    * requests without one, mostly from server IPs; integrations and projects can change
+    * it through the soundcloud_user_agent alter hook.
+    *
+    * @return string
+    */
+    public function userAgent() {
+        $default = "Mozilla/5.0 (compatible; grid/3; +https://github.com/palasthotel/grid)";
+        if ($this->storage === null) {
+            return $default;
+        }
+        return (string) $this->storage->fireHookAlter(\Palasthotel\Grid\API::ALTER_SOUNDCLOUD_USER_AGENT, $default, $this);
+    }
+
     private function executeRequest($url){
 	    $curl = curl_init($url);
+	    curl_setopt($curl, CURLOPT_USERAGENT, $this->userAgent());
 	    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	    curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 	    $content = curl_exec($curl);

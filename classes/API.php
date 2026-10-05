@@ -21,6 +21,7 @@ class API {
 	const FIRE_DID_RENDER_GRID = "did_render_grid";
 	const FIRE_WILL_RENDER_BOX = "will_render_box";
 	const ALTER_CONFIGURATION_BOX_CONTENT_STRUCTURE = "configuration_box_alter_content_structure";
+	const ALTER_SOUNDCLOUD_USER_AGENT = "soundcloud_user_agent";
 	const FIRE_WILL_RENDER_CONTAINER = "will_render_container";
 	const FIRE_WILL_RENDER_GRID = "will_render_grid";
 	const FIRE_WILL_RENDER_SLOT = "will_render_slot";
