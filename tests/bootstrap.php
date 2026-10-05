@@ -13,3 +13,10 @@ require __DIR__ . '/../components/grid_error_box.php';
 	public function slot( \grid_slot $slot ): string { return ''; }
 	public function box( \grid_box $box, bool $editmode ): string { return ''; }
 } );
+
+// integrations provide t() for translations
+if ( ! function_exists( 't' ) ) {
+	function t( $str ) {
+		return $str;
+	}
+}
