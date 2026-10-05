@@ -12,6 +12,7 @@
         }
     },
     "require": {
+        "php": ">=8.2",
         "ext-json": "*",
         "simplepie/simplepie": "^1.8"
     },

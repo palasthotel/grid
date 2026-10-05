@@ -292,9 +292,9 @@ class Endpoint {
 				{
 					if($slot->slotid==$slotid)
 					{
-						$box=null;
-						if(isset($slot->boxes[$idx]))
-							$box=$slot->boxes[$idx];
+						if(!isset($slot->boxes[$idx]))
+							return false;
+						$box=$slot->boxes[$idx];
 						$ret=$slot->removeBox($idx);
 						if($ret)
 						{
@@ -516,7 +516,7 @@ class Endpoint {
 			return FALSE;
 		$class="grid_".$boxtype."_box";
 		$box=new $class();
-		$box->content=$content;
+		$box->setContent($content);
 		$box->grid=$grid;
 		$box->style=$this->storage->boxstyle;
 		$box->storage=$this->storage;

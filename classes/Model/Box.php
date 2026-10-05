@@ -120,6 +120,22 @@ class Box extends _Base {
 	}
 
 	/**
+	 * Takes the given content over the defaults this box type's constructor sets, so a
+	 * field missing from stored or posted data keeps its default instead of being undefined.
+	 *
+	 * @param object|array|null $content
+	 */
+	public function setContent( $content ) {
+		$merged = clone ( new static() )->content;
+		if ( is_object( $content ) || is_array( $content ) ) {
+			foreach ( $content as $key => $value ) {
+				$merged->$key = $value;
+			}
+		}
+		$this->content = $merged;
+	}
+
+	/**
 	 * Sets box type.
 	 *
 	 * @return string
@@ -213,7 +229,7 @@ class Box extends _Base {
 		$this->readmoreurltarget = $boxdata->readmoreurltarget;
 		$this->prolog            = $boxdata->prolog;
 		$this->epilog            = $boxdata->epilog;
-		$this->content           = $boxdata->content;
+		$this->setContent( $boxdata->content ?? null );
 
 		return $this->persist();
 	}
