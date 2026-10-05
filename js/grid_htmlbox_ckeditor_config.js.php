@@ -53,7 +53,7 @@ if(typeof CKEDITOR !== typeof undefined){
    * add external ckeditor plugins
    */
   foreach($ckeditor_plugins as $slug => $path){
-    echo "CKEDITOR.plugins.addExternal('$slug', '$path');";
+    echo "CKEDITOR.plugins.addExternal(".json_encode((string)$slug).", ".json_encode((string)$path).");";
   }
   ?>
 
@@ -71,6 +71,9 @@ if(typeof CKEDITOR !== typeof undefined){
 
     config.allowedContent = true;
 
+    // 4.22 is the last open-source CKEditor 4; its version check would tell editors to buy the LTS
+    config.versionCheck = false;
+
     config.format_tags = '<?=implode(";",$formats)?>';
     <?php if(count($styles)>0) {?>
     config.stylesSet = 'grid_styles';
@@ -80,8 +83,9 @@ if(typeof CKEDITOR !== typeof undefined){
     /**
      *load external plugins for ckeditor
      */
-    foreach($ckeditor_plugins as $slug => $path){
-      echo "config.extraPlugins = '$slug';";
+    if(count($ckeditor_plugins)>0)
+    {
+      echo "config.extraPlugins = ".json_encode(implode(",", array_map("strval", array_keys($ckeditor_plugins)))).";";
     }
     ?>
 
