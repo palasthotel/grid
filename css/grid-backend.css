@@ -2071,22 +2071,29 @@ h3 {
 	direction: ltr;
 }
 
+/*
+ * A tool shows its icon and unfolds its label to the right on hover. It grows under the
+ * pointer instead of sliding away from it, and never reaches beyond the left edge of the
+ * window (which happened in Drupal, where no admin menu sits left of the grid).
+ */
 .grid-toolbar .grid-tool-list li {
-	width: 135px;
-	right: 90px;
+	width: 45px;
 	position: relative;
 	margin: 0;
-	-webkit-transition: all 0.1337s ease;
-	transition: all 0.1337s ease;
+	overflow: hidden;
+	white-space: nowrap;
+	-webkit-transition: width 0.1337s ease;
+	transition: width 0.1337s ease;
 }
 
-.grid-toolbar .grid-tool-list li:hover {
-	right: 0;
+.grid-toolbar .grid-tool-list li:hover,
+.grid-toolbar .grid-tool-list li:focus-within {
+	width: 135px;
 }
 
 .grid-toolbar .grid-tool-list li button {
-	text-align: right;
-	padding: 5px 48px 5px 5px;
+	text-align: left;
+	padding: 5px 5px 5px 45px;
 	margin: 0;
 	font-size: 12px;
 	width: 100%;
@@ -2100,14 +2107,13 @@ h3 {
 .grid-toolbar .grid-tool-list li button [class^="icon-"],
 .grid-toolbar .grid-tool-list li button [class*=" icon-"] {
 	position: absolute;
-	right: 11px;
+	left: 14px;
 	top: 13px;
 	font-size: 16px;
 	font-family: "Entypo";
 }
 
 .grid-toolbar .grid-tool-list li button:hover {
-	padding-right: 38px;
 	color: white;
 	background-color: #3f4853;
 }
@@ -2118,7 +2124,7 @@ h3 {
 	button
 	.indicator-authors-count {
 	position: absolute;
-	right: 18px;
+	left: 18px;
 	top: 10px;
 	font-size: 16px;
 }
