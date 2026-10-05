@@ -156,4 +156,24 @@ class UpdateGrid extends UpdateBase
 		$this->query->prefixAndExecute("ALTER TABLE {grid_grid} ADD changed int unsigned NOT NULL DEFAULT 0;");
 	}
 
+	/**
+	 * A container, slot or box is linked once per grid revision. Duplicate links (left
+	 * by overlapping saves) showed the element twice; the oldest link is kept.
+	 */
+	public function update_9(){
+		$links = array(
+			'grid_grid2container' => array( 'container_id', 'container_once' ),
+			'grid_container2slot' => array( 'slot_id', 'slot_once' ),
+			'grid_slot2box'       => array( 'box_id', 'box_once' ),
+		);
+		foreach ( $links as $table => list( $column, $key ) ) {
+			$this->query->prefixAndExecute(
+				"DELETE newer FROM {".$table."} newer JOIN {".$table."} older"
+				." ON newer.grid_id=older.grid_id AND newer.grid_revision=older.grid_revision"
+				." AND newer.".$column."=older.".$column." AND newer.id>older.id;"
+			);
+			$this->query->prefixAndExecute("ALTER TABLE {".$table."} ADD UNIQUE KEY ".$key." (grid_id, grid_revision, ".$column.");");
+		}
+	}
+
 }
