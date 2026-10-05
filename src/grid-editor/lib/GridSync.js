@@ -10,6 +10,15 @@ import _ from 'underscore'
 // ------------------------------------
 // ajax Object
 // -----------------------------------
+// Endpoint methods that change the grid - keep in sync with API::WRITE_METHODS
+var GRID_WRITE_METHODS = [
+	'addcontainer', 'addreusecontainer', 'movecontainer', 'deletecontainer', 'updatecontainer',
+	'movebox', 'removebox', 'reusebox', 'reusecontainer', 'createbox', 'updatebox',
+	'updateslotstyle', 'publishdraft', 'revertdraft', 'settorevision'
+];
+// writes go out one after another, each with the version the previous one returned
+var gridWriteQueue = jQuery.Deferred().resolve().promise();
+
 window.GridAjax = function GridAjax(method, params_array, settings){
 	// two required variables
 	var json={};
@@ -26,6 +35,13 @@ window.GridAjax = function GridAjax(method, params_array, settings){
 		contentType: "application/json; charset=utf-8",
 		error: function(jqXHR, textStatus, error){
 			GRID.finishLoading();
+			if(jqXHR.status === 409){
+				// someone else changed the grid since we loaded it
+				var message = document.lang_values["grid-changed-elsewhere"] || (jqXHR.responseJSON && jqXHR.responseJSON.message);
+				alert(message);
+				GRID.reload();
+				return;
+			}
    // 			GRID.log("!--- error Method: "+method);
 			// GRID.log(jqXHR);
 			// GRID.log(textStatus);
@@ -54,6 +70,9 @@ window.GridAjax = function GridAjax(method, params_array, settings){
 			// GRID.log(jqXHR);
 			// GRID.log(json);
 			// GRID.log("---------!");
+			if(data && typeof data.version !== "undefined"){
+				GRID.version = data.version;
+			}
 			GRID.log(["AJAX Success",settings]);
 			if(typeof settings.success_fn == 'function' ){
 				settings.success_fn(data, textStatus, jqXHR);
@@ -69,8 +88,22 @@ window.GridAjax = function GridAjax(method, params_array, settings){
 	// overwrite settings
 	jQuery.extend(true,this.settings, settings);
 	// sends the request to the server
+	var isWrite = GRID_WRITE_METHODS.indexOf(String(method).toLowerCase()) !== -1;
 	this.send = function(){
-		jQuery.ajax(this.settings);
+		var ajaxSettings = this.settings;
+		var run = function(){
+			var payload = jQuery.extend({}, json);
+			if(isWrite && typeof GRID.version !== "undefined"){
+				payload.version = GRID.version;
+			}
+			ajaxSettings.data = JSON.stringify(payload);
+			return jQuery.ajax(ajaxSettings);
+		};
+		if(!isWrite){
+			run();
+			return;
+		}
+		gridWriteQueue = gridWriteQueue.then(run, run);
 	};
 	if(!this.settings.wait){ this.send(); }
 };

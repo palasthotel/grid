@@ -106,6 +106,33 @@ class API {
 	}
 
 	/**
+	 * Endpoint methods that change a grid. They are checked against the version the
+	 * editor last saw, so two people editing the same grid cannot silently overwrite
+	 * or misplace each other's changes.
+	 */
+	const WRITE_METHODS = array(
+		'addcontainer', 'addreusecontainer', 'movecontainer', 'deletecontainer', 'updatecontainer',
+		'movebox', 'removebox', 'reusebox', 'reusecontainer', 'createbox', 'updatebox',
+		'updateslotstyle', 'publishdraft', 'revertdraft', 'settorevision',
+	);
+
+	/**
+	 * The grid a call refers to, if it is a regular one. Reusable boxes and containers
+	 * ("box:<id>", "container:<id>") share one grid and are not version-checked.
+	 *
+	 * @param array $params
+	 *
+	 * @return int|null
+	 */
+	public static function versionedGridId( array $params ) {
+		$gridId = $params[0] ?? null;
+		if ( ( is_int( $gridId ) || is_string( $gridId ) ) && preg_match( '/^\d+$/', (string) $gridId ) === 1 ) {
+			return intval( $gridId );
+		}
+		return null;
+	}
+
+	/**
 	 * Only public endpoint methods are callable, never constructors, magic or static methods.
 	 *
 	 * @param mixed $method
@@ -146,25 +173,55 @@ class API {
 			return;
 		}
 
-		$input=file_get_contents("php://input");
-		$json=json_decode($input);
+		$json=json_decode(file_get_contents("php://input"));
+		$response=$this->dispatch($json);
+		http_response_code($response['status']);
+		echo json_encode($response['body']);
+	}
+
+	/**
+	 * Runs one editor request: resolves the method, checks the grid version for writes
+	 * and calls the endpoint.
+	 *
+	 * @param mixed $json the decoded request body: method, params and optionally version
+	 *
+	 * @return array{status: int, body: array}
+	 */
+	public function dispatch($json)
+	{
 		$method=is_object($json) && isset($json->method) ? $json->method : null;
-		$params=is_object($json) && isset($json->params) && is_array($json->params) ? $json->params : array();
+		$params=is_object($json) && isset($json->params) && is_array($json->params) ? array_values($json->params) : array();
 
 		$reflectionMethod=$this->resolveAjaxMethod($method);
 		if($reflectionMethod === null)
 		{
-			http_response_code(400);
-			echo json_encode(array('error'=>'unknown method'));
-			return;
+			return array('status'=>400, 'body'=>array('error'=>'unknown method'));
 		}
 
 		$this->endpoint->storage=$this->core->storage;
+		$storage=$this->core->storage;
+		$gridId=self::versionedGridId($params);
+		$isWrite=in_array(strtolower($reflectionMethod->getName()), self::WRITE_METHODS, true);
+
+		// editors that send no version (older bundles, other clients) are not checked
+		if($isWrite && $gridId !== null && isset($json->version) && intval($json->version) !== $storage->gridVersion($gridId))
+		{
+			return array('status'=>409, 'body'=>array(
+				'error'=>'conflict',
+				'message'=>t('This grid has been changed by someone else in the meantime.'),
+				'version'=>$storage->gridVersion($gridId),
+			));
+		}
+
 		try {
-			$retval=$reflectionMethod->invokeArgs($this->endpoint,array_values($params));
-			echo json_encode(array('result'=>$retval));
+			$body=array('result'=>$reflectionMethod->invokeArgs($this->endpoint,$params));
+			if($gridId !== null)
+			{
+				$body['version']=$isWrite ? $storage->touchGrid($gridId) : $storage->gridVersion($gridId);
+			}
+			return array('status'=>200, 'body'=>$body);
 		} catch (\Throwable $e) {
-			echo json_encode(array('error'=>$e->getMessage()));
+			return array('status'=>200, 'body'=>array('error'=>$e->getMessage()));
 		}
 	}
 

@@ -63,6 +63,7 @@ document.lang_values = {
 								"If you want to proceed choose a Reuse-Title and confirm:",
 
 	// Confirm
+	"grid-changed-elsewhere": "This grid has been changed by someone else in the meantime. It is reloaded now - please check it and repeat your last change.",
 	"confirm-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed?",
 	"prompt-box-reuse": "Once a box is reusable you cannot modify it within this grid anymore.\nProceed? Then please choose a title.",
 	"confirm-leave-page": "Do you really want to leave Grid?",
