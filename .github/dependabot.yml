@@ -18,6 +18,12 @@ updates:
         dependency-type: "development"
       npm-production:
         dependency-type: "production"
+    ignore:
+      # React 18 changes the render API; the reuse container list moves with the 4.0 editor
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: "composer"
@@ -29,6 +35,10 @@ updates:
       timezone: "Europe/Berlin"
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # PHPUnit 12 needs PHP 8.3; the tests run on the minimum, PHP 8.2
+      - dependency-name: "phpunit/phpunit"
+        update-types: ["version-update:semver-major"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: "github-actions"
