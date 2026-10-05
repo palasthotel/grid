@@ -33,6 +33,41 @@ composer install --no-dev
 `npm run build` writes `js/dist/grid-editor.js` and `js/dist/reuseContainerList.js`.
 The stylesheets in `css/` need no build.
 
+## Upgrading to 3.0
+
+3.0 changes how integrations get the library and what it requires. For grid-wordpress
+and grid-drupal the new versions do this for you; custom integrations and projects that
+copied grid into their repository have to adapt.
+
+**Before you update a live site, back up its database.** Schema update 9 deletes
+duplicate links between grids, containers, slots and boxes (see below).
+
+1. **PHP 8.2 or later.**
+2. **Composer instead of a Git submodule or a copy.** Install `palasthotel/grid` from
+   GitHub (see [Installation](#installation)) and load Composer's autoloader. The release
+   tags no longer contain `vendor/` or `js/dist/`.
+3. **Build the editor bundle yourself:** `npm ci && npm run build` in the library
+   directory, as part of your build or deploy. The stylesheets in `css/` need no build.
+4. **`Editor` takes your `iHook` as third argument:**
+   `new Editor( $core->storage, $assetBaseUrl, $hook )`.
+5. **The HTML and video boxes are not part of the library any more.** Integrations bring
+   their own `grid_html_box` and `grid_video_box`; grid-wordpress and grid-drupal do.
+6. **Run the schema updates** by calling `Core::update()` once after updating, e.g. from
+   your plugin's or module's update routine:
+   - update 8 adds a change counter to `grid_grid`;
+   - update 9 deletes duplicate rows in `grid_grid2container`, `grid_container2slot` and
+     `grid_slot2box` - only rows that link the same element a second time within one
+     grid revision, the oldest link is kept - and adds unique keys. An element that was
+     shown twice because of such a duplicate is shown once afterwards.
+7. **SimplePie comes from Composer** (`simplepie/simplepie` 1.8). If your project ships its
+   own SimplePie copy, remove it, or load it only when no `SimplePie` class exists.
+8. **The editor endpoint only accepts JSON requests** and only calls public `Endpoint`
+   methods. It still does not authenticate - check the user's permission, a CSRF token
+   and that the user may edit the grid's post before you call `API::handleAjaxCall()`.
+9. **Editors are protected against overwriting each other.** A change based on an outdated
+   copy of a grid is rejected with HTTP 409 and the editor reloads. Clients that send no
+   version keep working unchecked.
+
 ## Usage
 
 An integration provides three adapters and hands them to the library:
