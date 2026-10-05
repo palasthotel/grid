@@ -152,4 +152,8 @@ class UpdateGrid extends UpdateBase
 		$this->query->prefixAndExecute("ALTER TABLE {grid_container} ADD readmore_url_target varchar(20) DEFAULT '' AFTER `readmore_url`;");
 	}
 
+	public function update_8(){
+		$this->query->prefixAndExecute("ALTER TABLE {grid_grid} ADD changed int unsigned NOT NULL DEFAULT 0;");
+	}
+
 }

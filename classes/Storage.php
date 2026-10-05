@@ -1199,6 +1199,24 @@ order by grid_grid2container.weight,grid_container2slot.weight,grid_slot2box.wei
 		return $this->parseBox($row);
 	}
 
+	/**
+	 * How often the grid has been changed. Every revision row is counted up, so the
+	 * maximum keeps growing across new drafts and deleted revisions.
+	 */
+	public function gridVersion($gridId)
+	{
+		$query="select max(changed) as changed from ".$this->query->prefix()."grid_grid where id=".$this->int($gridId);
+		$row=$this->query->execute($query)->fetch_assoc();
+		return isset($row['changed']) ? $this->int($row['changed']) : 0;
+	}
+
+	public function touchGrid($gridId)
+	{
+		$query="update ".$this->query->prefix()."grid_grid set changed=changed+1 where id=".$this->int($gridId);
+		$this->query->execute($query);
+		return $this->gridVersion($gridId);
+	}
+
 	public function fetchGridRevisions($gridid,$page=0) {
 		if(strncmp("box:",$gridid,strlen("box:"))!=0 && strncmp("container:",$gridid,strlen("container:"))!=0)
 		{

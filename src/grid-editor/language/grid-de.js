@@ -63,6 +63,7 @@ document.lang_values = {
 								"Bitte Verwaltungstitel eingeben und bestätigen:",
 
 	// Confirm
+	"grid-changed-elsewhere": "Dieses Grid wurde inzwischen von jemand anderem geändert. Es wird jetzt neu geladen – bitte prüfen und die letzte Änderung wiederholen.",
 	"confirm-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren?",
 	"prompt-box-reuse": "Wenn eine Box wiederverwendbar gemacht wurde kann sie in diesem Grid nicht mehr bearbeitet werden.\nFortfahren? dann bitte einen Titel angeben.",
 	"confirm-leave-page": "Grid wirklich verlassen?",
