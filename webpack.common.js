@@ -56,7 +56,6 @@ const reuseContainerListConfig = {
                             "@babel/preset-react",
                         ],
                         plugins: [
-                            "@babel/plugin-proposal-object-rest-spread",
                             "@babel/plugin-transform-runtime",
                         ],
                     }
