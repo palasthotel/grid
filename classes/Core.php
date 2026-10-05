@@ -383,6 +383,9 @@ class Core {
 					),
 				),
 				'primary key'=>array('id'),
+				'unique keys'=>array(
+					'container_once'=>array('grid_id','grid_revision','container_id'),
+				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
 				'collate'=> 'utf8mb4_unicode_ci'
@@ -429,6 +432,9 @@ class Core {
 					),
 				),
 				'primary key'=>array('id'),
+				'unique keys'=>array(
+					'slot_once'=>array('grid_id','grid_revision','slot_id'),
+				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
 				'collate'=> 'utf8mb4_unicode_ci'
@@ -475,6 +481,9 @@ class Core {
 					),
 				),
 				'primary key'=>array('id'),
+				'unique keys'=>array(
+					'box_once'=>array('grid_id','grid_revision','box_id'),
+				),
 				'mysql_engine'=>'InnoDB',
 				'mysql_character_set'=>'utf8mb4',
 				'collate'=> 'utf8mb4_unicode_ci'
