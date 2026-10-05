@@ -71,6 +71,9 @@ if(typeof CKEDITOR !== typeof undefined){
 
     config.allowedContent = true;
 
+    // 4.22 is the last open-source CKEditor 4; its version check would tell editors to buy the LTS
+    config.versionCheck = false;
+
     config.format_tags = '<?=implode(";",$formats)?>';
     <?php if(count($styles)>0) {?>
     config.stylesSet = 'grid_styles';
