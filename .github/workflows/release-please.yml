@@ -1,7 +1,7 @@
 name: Release Please
 
-# Releases the grid library from conventional commits. There is no deploy: grid-wordpress
-# and grid-drupal pick up a release themselves.
+# Releases the grid library from conventional commits. There is no deploy: wp-grid
+# and drupal-grid pick up a release themselves.
 
 on:
   push:

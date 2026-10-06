@@ -4,8 +4,8 @@ The PHP/JS library behind the Grid page builder: storage, rendering, revisions, 
 containers and boxes, and the editor. It does nothing on its own - a CMS integration wires
 it to its database, hooks and templates:
 
-- [grid-wordpress](https://github.com/palasthotel/grid-wordpress) - the [Grid plugin on wordpress.org](https://wordpress.org/plugins/grid/)
-- [grid-drupal](https://github.com/palasthotel/grid-drupal)
+- [wp-grid](https://github.com/palasthotel/wp-grid) - the [Grid plugin on wordpress.org](https://wordpress.org/plugins/grid/)
+- [drupal-grid](https://github.com/palasthotel/drupal-grid)
 
 ## Installation
 
@@ -30,13 +30,19 @@ composer install --no-dev
 (cd vendor/palasthotel/grid && npm ci && npm run build)
 ```
 
+The package type is `drupal-library`. A Drupal project with the usual installer path
+(`"web/libraries/{$name}": ["type:drupal-library"]`) installs the library to
+`libraries/grid`, where the editor's scripts and stylesheets are reachable from the web;
+build the bundle there. Projects without `composer/installers`, such as a WordPress
+plugin, get it in `vendor/palasthotel/grid` as before.
+
 `npm run build` writes `js/dist/grid-editor.js` and `js/dist/reuseContainerList.js`.
 The stylesheets in `css/` need no build.
 
 ## Upgrading to 3.0
 
-3.0 changes how integrations get the library and what it requires. For grid-wordpress
-and grid-drupal the new versions do this for you; custom integrations and projects that
+3.0 changes how integrations get the library and what it requires. For wp-grid
+and drupal-grid the new versions do this for you; custom integrations and projects that
 copied grid into their repository have to adapt.
 
 **Before you update a live site, back up its database.** Schema update 9 deletes
@@ -51,7 +57,7 @@ duplicate links between grids, containers, slots and boxes (see below).
 4. **`Editor` takes your `iHook` as third argument:**
    `new Editor( $core->storage, $assetBaseUrl, $hook )`.
 5. **The HTML and video boxes are not part of the library any more.** Integrations bring
-   their own `grid_html_box` and `grid_video_box`; grid-wordpress and grid-drupal do.
+   their own `grid_html_box` and `grid_video_box`; wp-grid and drupal-grid do.
 6. **Run the schema updates** by calling `Core::update()` once after updating, e.g. from
    your plugin's or module's update routine:
    - update 8 adds a change counter to `grid_grid`;
@@ -88,7 +94,7 @@ $editor = new \Palasthotel\Grid\Editor( $core->storage, $assetBaseUrl, $hook );
 - `API::loadGrid( $id )` loads a grid for rendering; `API::handleAjaxCall()` serves the
   editor's requests. The integration is responsible for authentication, a CSRF token and
   checking that the user may edit the grid's post before it calls `handleAjaxCall()` -
-  grid-wordpress shows how.
+  wp-grid shows how.
 - `Editor` returns the editor's HTML, scripts and stylesheets.
 
 Box types are classes named `grid_<type>_box` that extend `grid_box`. CMS-specific boxes

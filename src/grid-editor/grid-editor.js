@@ -2,6 +2,7 @@
 // ----------------------------------------------------
 // frameworks
 // ----------------------------------------------------
+import "./frameworks/jquery4-compat.js";
 import "jquery-ui";
 import "./frameworks/jquery.ui.touch-punch.js";
 import "./frameworks/jquery.iframe-transport.js";
