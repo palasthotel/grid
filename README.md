@@ -30,6 +30,12 @@ composer install --no-dev
 (cd vendor/palasthotel/grid && npm ci && npm run build)
 ```
 
+The package type is `drupal-library`. A Drupal project with the usual installer path
+(`"web/libraries/{$name}": ["type:drupal-library"]`) installs the library to
+`libraries/grid`, where the editor's scripts and stylesheets are reachable from the web;
+build the bundle there. Projects without `composer/installers`, such as a WordPress
+plugin, get it in `vendor/palasthotel/grid` as before.
+
 `npm run build` writes `js/dist/grid-editor.js` and `js/dist/reuseContainerList.js`.
 The stylesheets in `css/` need no build.
 
