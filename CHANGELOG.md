@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.1.0](https://github.com/palasthotel/grid/compare/v3.0.0...v3.1.0) (2026-10-06)
+
+
+### Features
+
+* install into Drupal's libraries directory ([4bc8f75](https://github.com/palasthotel/grid/commit/4bc8f75ff692908d2bee5306d47dad414241d2a8))
+* install into Drupal's libraries directory ([4d66615](https://github.com/palasthotel/grid/commit/4d66615e0d46046a7834e445aedf79badae4f4a7))
+
+
+### Bug Fixes
+
+* run the editor with jQuery 4 ([916eb78](https://github.com/palasthotel/grid/commit/916eb78e5a99753e512fb7ffecdef84a04685c1e))
+
 ## [3.0.0](https://github.com/palasthotel/grid/compare/v2.5.7...v3.0.0) (2026-10-05)
 
 
