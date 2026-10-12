@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.1.1](https://github.com/palasthotel/grid/compare/v3.1.0...v3.1.1) (2026-10-12)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/runtime ([4fb173f](https://github.com/palasthotel/grid/commit/4fb173f1e5827c446e4c74fc327dec0c2526b973))
+* **deps:** bump @babel/runtime from 8.0.5 to 8.0.7 in the npm-production group ([c711f48](https://github.com/palasthotel/grid/commit/c711f48bb798c189047d76a4645bfdbe48ec2688))
+* keep .gitignore, tests and CI files out of the Composer archive ([9558268](https://github.com/palasthotel/grid/commit/9558268d781effebdbb8d840eea4cfba7714881a))
+
 ## [3.1.0](https://github.com/palasthotel/grid/compare/v3.0.0...v3.1.0) (2026-10-06)
 
 
