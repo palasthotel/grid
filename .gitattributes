@@ -1,0 +1,15 @@
+# Kept out of the archive Composer installs (--prefer-dist) for wp-grid and drupal-grid.
+#
+# Not here: everything the two build the editor from inside the installed library -
+# package.json, package-lock.json, .nvmrc, webpack.*.js, src/, js/, css/, assets/.
+#
+# .gitignore must not ship: it ignores /js/dist, so a project committing the installed
+# library (wp-grid as plugin copy, drupal-grid's libraries/grid) silently left out the
+# built editor.
+/.gitignore export-ignore
+/.gitattributes export-ignore
+/.github export-ignore
+/tests export-ignore
+/phpunit.xml.dist export-ignore
+/release-please-config.json export-ignore
+/.release-please-manifest.json export-ignore
