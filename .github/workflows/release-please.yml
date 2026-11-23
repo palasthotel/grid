@@ -24,7 +24,21 @@ jobs:
           permission-pull-requests: write
 
       - uses: googleapis/release-please-action@v5
+        id: release
         with:
           token: ${{ steps.app-token.outputs.token }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+
+      # A release PR waits for someone to merge it: assign it like the Dependabot PRs.
+      # Adding an assignee twice changes nothing; a failed assignment only warns.
+      - name: Assign the release PR
+        if: steps.release.outputs.prs_created == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PRS: ${{ steps.release.outputs.prs }}
+        run: |
+          for number in $(jq -r '.[].number' <<< "$PRS"); do
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$number/assignees" -f "assignees[]=JanaME" --silent \
+              || echo "::warning::Could not assign #$number"
+          done

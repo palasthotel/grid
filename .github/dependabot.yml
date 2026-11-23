@@ -9,6 +9,8 @@ updates:
       day: "monday"
       time: "07:00"
       timezone: "Europe/Berlin"
+    assignees:
+      - "JanaME"
     # the editor bundle ships to integrations: runtime packages are fixes, tools are chores
     commit-message:
       prefix: "fix(deps)"
@@ -33,6 +35,8 @@ updates:
       day: "monday"
       time: "07:00"
       timezone: "Europe/Berlin"
+    assignees:
+      - "JanaME"
     commit-message:
       prefix: "chore(deps)"
     ignore:
@@ -48,6 +52,8 @@ updates:
       day: "monday"
       time: "07:00"
       timezone: "Europe/Berlin"
+    assignees:
+      - "JanaME"
     commit-message:
       prefix: "ci"
     groups:
