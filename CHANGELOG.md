@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.2](https://github.com/palasthotel/grid/compare/v3.1.1...v3.1.2) (2026-11-23)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/runtime ([#512](https://github.com/palasthotel/grid/issues/512)) ([5ba6cf2](https://github.com/palasthotel/grid/commit/5ba6cf2dfb5b8b27f7920353aaeb863ac1cb1945))
+
 ## [3.1.1](https://github.com/palasthotel/grid/compare/v3.1.0...v3.1.1) (2026-10-12)
 
 
