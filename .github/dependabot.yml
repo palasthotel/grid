@@ -40,9 +40,10 @@ updates:
     commit-message:
       prefix: "chore(deps)"
     ignore:
-      # PHPUnit 12 needs PHP 8.3; the tests run on the minimum, PHP 8.2
+      # PHPUnit 12 needs PHP 8.3; the tests run on the minimum, PHP 8.2. By version,
+      # not update-types: a requirement update from ^11 to ^13 got past semver-major.
       - dependency-name: "phpunit/phpunit"
-        update-types: ["version-update:semver-major"]
+        versions: [">= 12"]
     open-pull-requests-limit: 5
 
   - package-ecosystem: "github-actions"
