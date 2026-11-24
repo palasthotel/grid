@@ -29,7 +29,15 @@ class ReuseBoxEditor
 		return $this->editor->getEditorJS($language,$absolute);
 	}
 
-	public function run($editlinkfunction,$deletelinkfunction)
+	/**
+	 * @param callable      $editlinkfunction   box id => url of the editor
+	 * @param callable      $deletelinkfunction box id => url of the delete page
+	 * @param callable|null $trashlinkfunction  optional, box id => url of a "put to trash" page.
+	 *                                          Without it no such link is shown.
+	 *
+	 * @return string
+	 */
+	public function run($editlinkfunction,$deletelinkfunction,$trashlinkfunction=null)
 	{
 		$grid=new \grid_grid();
 		$grid->storage=$this->editor->storage;
@@ -57,9 +65,18 @@ class ReuseBoxEditor
 			$container->type="c-1d1";
 			$container->readmore=t("edit");
 			$container->readmoreurl=$editlinkfunction($box->boxid);
+			$epilogLinks=array();
 			if(!in_array($box->boxid, $usedIds))
 			{
-				$container->epilog="<a href=\"".$deletelinkfunction($box->boxid)."\">delete</a>";
+				$epilogLinks[]="<a href=\"".$deletelinkfunction($box->boxid)."\">delete</a>";
+			}
+			if($trashlinkfunction!==null)
+			{
+				$epilogLinks[]="<a href=\"".htmlspecialchars((string)$trashlinkfunction($box->boxid),ENT_QUOTES)."\">put to trash</a>";
+			}
+			if(!empty($epilogLinks))
+			{
+				$container->epilog=implode(" | ",$epilogLinks);
 			}
 
 			$container->slots=array();
