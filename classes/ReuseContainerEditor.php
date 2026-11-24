@@ -35,10 +35,12 @@ class ReuseContainerEditor
    * @param Storage $storage
    * @param $editorlinkfunction
    * @param $deletelinkfunction
+   * @param callable|null $trashlinkfunction optional, container id => url of a
+   *   "put to trash" page. Without it no such link is shown.
    *
    * @return string
    */
-	public function run($storage,$editorlinkfunction,$deletelinkfunction)
+	public function run($storage,$editorlinkfunction,$deletelinkfunction,$trashlinkfunction=null)
 	{
 
 		$containerIds=$this->editor->storage->getReuseContainerIds();
@@ -70,9 +72,18 @@ class ReuseContainerEditor
 			$edit->prolog=$container->reusetitle;
 			$edit->readmoreurl=$editorlinkfunction($id);
 			$edit->classes[] = "grid-reuse-container-edit";
+			$epilogLinks=array();
 			if(!in_array($id, $usedIds))
 			{
-				$edit->epilog="<a class='btn-delete' href=\"".$deletelinkfunction($id)."\">delete</a>";
+				$epilogLinks[]="<a class='btn-delete' href=\"".$deletelinkfunction($id)."\">delete</a>";
+			}
+			if($trashlinkfunction!==null)
+			{
+				$epilogLinks[]="<a class='btn-trash' href=\"".htmlspecialchars((string)$trashlinkfunction($id),ENT_QUOTES)."\">put to trash</a>";
+			}
+			if(!empty($epilogLinks))
+			{
+				$edit->epilog=implode(" | ",$epilogLinks);
 			}
 
 			/**
