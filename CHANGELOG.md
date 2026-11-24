@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/palasthotel/grid/compare/v3.1.2...v3.2.0) (2026-11-24)
+
+
+### Features
+
+* let integrations add a "put to trash" link to the reusable lists ([70701d0](https://github.com/palasthotel/grid/commit/70701d072d064356e67a449a9c32fe5a100627ca))
+
 ## [3.1.2](https://github.com/palasthotel/grid/compare/v3.1.1...v3.1.2) (2026-11-23)
 
 
